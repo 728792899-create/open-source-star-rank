@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "status": "ready",
+  "timezone": "Asia/Shanghai",
+  "updated_at": "2026-07-15T14:26:24Z",
+  "latest_date": "2026-07-14",
+  "available_dates": [
+    "2026-07-14"
+  ],
+  "methodology_version": "gharchive-public-watch-events-v1",
+  "freshness_threshold_hours": 36,
+  "latest_source_metrics": {
+    "provider": "gh_archive_bigquery",
+    "dataset": "githubarchive.day",
+    "table_dates": [
+      "20260713",
+      "20260714"
+    ],
+    "estimated_bytes": 575217475,
+    "bytes_processed": 0,
+    "maximum_bytes_billed": 25769803776,
+    "observed_watch_event_count": 1329,
+    "observed_repository_count": 1158,
+    "metadata_attempted_count": 500,
+    "metadata_success_count": 482,
+    "metadata_not_found_count": 1,
+    "metadata_filtered_count": 17,
+    "api_request_count": 500,
+    "api_retry_count": 0
+  }
+}
