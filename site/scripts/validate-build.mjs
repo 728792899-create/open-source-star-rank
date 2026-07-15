@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { eventRankingIsFresh } from '../src/scripts/event-freshness-utils.mjs';
 
 const siteRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(siteRoot, 'dist');
@@ -84,10 +85,6 @@ if (dataIndex.status === 'ready') {
   if (!sitemap.includes(`<lastmod>${new Date(JSON.parse(await readFile(dailyJson, 'utf8')).window_end).toISOString()}</lastmod>`)) {
     throw new Error('Historical sitemap entry is missing the ranking window lastmod');
   }
-} else if (dataIndex.schema_version === '1.2.0') {
-  for (const marker of ['有效基线 0/2', 'data-countdown', '不计入日榜基线']) {
-    if (!indexHtml.includes(marker)) throw new Error(`Initialization page is missing ${marker}`);
-  }
 }
 
 if (eventIndex.status === 'ready') {
@@ -99,11 +96,24 @@ if (eventIndex.status === 'ready') {
   ]) {
     if (!existsSync(path.join(dist, relative))) throw new Error(`Ready event build is missing ${relative}`);
   }
+}
+
+const eventIsDefault = eventRankingIsFresh(eventIndex, dataIndex);
+if (eventIsDefault) {
   for (const marker of ['data-ranking-mode="event"', '公共事件新增榜', 'GH Archive']) {
     if (!indexHtml.includes(marker)) throw new Error(`Event-first homepage is missing ${marker}`);
   }
-} else if (dataIndex.status === 'ready' && !indexHtml.includes('公共事件榜尚未完成首次采集')) {
-  throw new Error('Candidate fallback homepage is missing the public event warning');
+} else if (dataIndex.status === 'ready') {
+  const fallbackMarker = eventIndex.status === 'ready'
+    ? '公共事件榜已超过 36 小时未更新'
+    : '公共事件榜尚未完成首次采集';
+  if (!indexHtml.includes(fallbackMarker)) {
+    throw new Error(`Candidate fallback homepage is missing ${fallbackMarker}`);
+  }
+} else if (dataIndex.schema_version === '1.2.0') {
+  for (const marker of ['有效基线 0/2', 'data-countdown', '不计入日榜基线']) {
+    if (!indexHtml.includes(marker)) throw new Error(`Initialization page is missing ${marker}`);
+  }
 }
 
 console.log(`Validated static build (${dataIndex.status})`);
