@@ -73,6 +73,27 @@ class OperationsTests(unittest.TestCase):
                 require_valid_capture=True,
             )
 
+    def test_event_watchdog_requires_yesterday_beijing_date(self) -> None:
+        index = {
+            "updated_at": "2026-07-16T23:35:00Z",
+            "freshness_threshold_hours": 36,
+            "status": "ready",
+            "latest_date": "2026-07-16",
+        }
+        result = check_freshness(
+            index,
+            now=dt.datetime(2026, 7, 17, 0, 15, tzinfo=dt.timezone.utc),
+            require_yesterday_date=True,
+        )
+        self.assertEqual(result["latest_date"], "2026-07-16")
+        index["latest_date"] = "2026-07-15"
+        with self.assertRaises(ValueError):
+            check_freshness(
+                index,
+                now=dt.datetime(2026, 7, 17, 0, 15, tzinfo=dt.timezone.utc),
+                require_yesterday_date=True,
+            )
+
     def test_incident_is_single_and_closes_after_recovery(self) -> None:
         client = FakeIssueClient()
         first = update_incident(

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://728792899-create.github.io/open-source-star-rank/data/schema/event-daily.schema.json",
+  "title": "Open Source Star Rank public WatchEvent daily ranking",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "date", "timezone", "window_start", "window_end", "generated_at",
+    "methodology_version", "source_metrics", "eligible_count", "entries"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "date": { "$ref": "#/$defs/date" },
+    "timezone": { "const": "Asia/Shanghai" },
+    "window_start": { "type": "string", "format": "date-time" },
+    "window_end": { "type": "string", "format": "date-time" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "methodology_version": { "const": "gharchive-public-watch-events-v1" },
+    "source_metrics": { "$ref": "#/$defs/source_metrics" },
+    "eligible_count": { "type": "integer", "minimum": 100, "maximum": 500 },
+    "entries": {
+      "type": "array",
+      "minItems": 100,
+      "maxItems": 100,
+      "items": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "$defs": {
+    "date": { "type": "string", "format": "date", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "source_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider", "dataset", "table_dates", "estimated_bytes", "bytes_processed",
+        "maximum_bytes_billed", "observed_watch_event_count", "observed_repository_count",
+        "metadata_attempted_count", "metadata_success_count", "metadata_not_found_count",
+        "metadata_filtered_count", "api_request_count", "api_retry_count"
+      ],
+      "properties": {
+        "provider": { "const": "gh_archive_bigquery" },
+        "dataset": { "const": "githubarchive.day" },
+        "table_dates": {
+          "type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^\\d{8}$" }
+        },
+        "estimated_bytes": { "type": "integer", "minimum": 0, "maximum": 25769803776 },
+        "bytes_processed": { "type": "integer", "minimum": 0, "maximum": 25769803776 },
+        "maximum_bytes_billed": { "type": "integer", "minimum": 1, "maximum": 25769803776 },
+        "observed_watch_event_count": { "type": "integer", "minimum": 0 },
+        "observed_repository_count": { "type": "integer", "minimum": 0 },
+        "metadata_attempted_count": { "type": "integer", "minimum": 0, "maximum": 500 },
+        "metadata_success_count": { "type": "integer", "minimum": 0, "maximum": 500 },
+        "metadata_not_found_count": { "type": "integer", "minimum": 0, "maximum": 500 },
+        "metadata_filtered_count": { "type": "integer", "minimum": 0, "maximum": 500 },
+        "api_request_count": { "type": "integer", "minimum": 0 },
+        "api_retry_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository_id", "full_name", "description", "language", "stars_total", "stars_added",
+        "watch_events", "rank", "rank_change", "trend_7d", "html_url", "owner_avatar_url"
+      ],
+      "properties": {
+        "repository_id": { "type": "integer", "minimum": 1 },
+        "full_name": { "type": "string", "minLength": 3, "pattern": "^[^/]+/[^/]+$" },
+        "description": { "type": ["string", "null"] },
+        "language": { "type": ["string", "null"] },
+        "stars_total": { "type": "integer", "minimum": 0 },
+        "stars_added": { "type": "integer", "minimum": 1 },
+        "watch_events": { "type": "integer", "minimum": 1 },
+        "rank": { "type": "integer", "minimum": 1, "maximum": 100 },
+        "rank_change": { "type": ["integer", "null"] },
+        "trend_7d": {
+          "type": "array", "minItems": 7, "maxItems": 7,
+          "items": { "type": ["integer", "null"], "minimum": 0 }
+        },
+        "html_url": { "type": "string", "format": "uri", "pattern": "^https://github\\.com/" },
+        "owner_avatar_url": { "type": ["string", "null"], "format": "uri" }
+      }
+    }
+  }
+}

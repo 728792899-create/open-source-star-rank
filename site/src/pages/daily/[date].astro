@@ -2,7 +2,7 @@
 import type { GetStaticPaths } from 'astro';
 import RankingView from '../../components/RankingView.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { readDailyRanking, readRankingIndex } from '../../lib/data';
+import { readDailyRanking, readEventRankingIndex, readRankingIndex } from '../../lib/data';
 
 export const getStaticPaths = (() => {
   const index = readRankingIndex();
@@ -12,6 +12,7 @@ export const getStaticPaths = (() => {
 const { date } = Astro.params;
 if (!date) throw new Error('Missing daily ranking date');
 const index = readRankingIndex();
+const eventIndex = readEventRankingIndex();
 const ranking = readDailyRanking(date);
 const title = `${ranking.date} GitHub Star 日榜｜开源星榜`;
 const description = `${ranking.date} GitHub 开源项目 Star 净增 Top ${ranking.entries.length}，覆盖 ${ranking.candidate_count} 个候选仓库。`;
@@ -27,8 +28,17 @@ const structuredData = {
     name: entry.full_name,
   })),
 };
+const sameDateEventAvailable = eventIndex.available_dates.includes(ranking.date);
+const alternateEventDate = sameDateEventAvailable ? ranking.date : eventIndex.latest_date;
+const alternateLabel = sameDateEventAvailable ? '查看同日公共事件新增榜' : '查看最新公共事件新增榜';
 ---
 
 <BaseLayout title={title} description={description} structuredData={structuredData} socialImagePath={`/social/daily-${ranking.date}.png`}>
-  <RankingView ranking={ranking} index={index} isLatest={ranking.date === index.latest_date} />
+  <RankingView
+    ranking={ranking}
+    index={index}
+    isLatest={ranking.date === index.latest_date}
+    alternateHref={alternateEventDate ? `/events/daily/${alternateEventDate}/` : undefined}
+    alternateLabel={alternateLabel}
+  />
 </BaseLayout>

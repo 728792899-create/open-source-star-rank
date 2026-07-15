@@ -1,0 +1,46 @@
+---
+import type { GetStaticPaths } from 'astro';
+import RankingView from '../../../components/RankingView.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import {
+  readEventDailyRanking, readEventRankingIndex, readRankingIndex,
+} from '../../../lib/data';
+
+export const getStaticPaths = (() => {
+  const index = readEventRankingIndex();
+  return index.available_dates.map((date) => ({ params: { date } }));
+}) satisfies GetStaticPaths;
+
+const { date } = Astro.params;
+if (!date) throw new Error('Missing public event ranking date');
+const index = readEventRankingIndex();
+const candidateIndex = readRankingIndex();
+const ranking = readEventDailyRanking(date);
+const title = `${ranking.date} GitHub 公共事件新增 Star 榜｜开源星榜`;
+const description = `${ranking.date} GitHub 公开 WatchEvent 新增 Star Top ${ranking.entries.length}，观察 ${ranking.source_metrics.observed_repository_count} 个仓库。`;
+const structuredData = {
+  '@context': 'https://schema.org', '@type': 'ItemList',
+  name: `${ranking.date} GitHub 公共事件新增 Star 排行`,
+  numberOfItems: ranking.entries.length,
+  itemListElement: ranking.entries.map((entry) => ({
+    '@type': 'ListItem', position: entry.rank, url: entry.html_url, name: entry.full_name,
+  })),
+};
+const sameDateCandidateAvailable = candidateIndex.available_dates.includes(ranking.date);
+const alternateCandidateDate = sameDateCandidateAvailable ? ranking.date : candidateIndex.latest_date;
+const alternateLabel = sameDateCandidateAvailable ? '查看同日候选池净增榜' : '查看最新候选池净增榜';
+---
+
+<BaseLayout title={title} description={description} structuredData={structuredData} socialImagePath={`/social/events-daily-${ranking.date}.png`}>
+  <RankingView
+    ranking={ranking}
+    index={index}
+    isLatest={ranking.date === index.latest_date}
+    mode="event"
+    availableDates={index.available_dates}
+    routePrefix="/events/daily"
+    dataPrefix="/data/events/daily"
+    alternateHref={alternateCandidateDate ? `/daily/${alternateCandidateDate}/` : undefined}
+    alternateLabel={alternateLabel}
+  />
+</BaseLayout>

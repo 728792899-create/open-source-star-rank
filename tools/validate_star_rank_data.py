@@ -65,6 +65,8 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
         "language": 0,
         "period": 0,
         "repositories": 0,
+        "event_index": 0,
+        "event_daily": 0,
     }
     state_path = root / "state" / "candidates.json"
     if state_path.exists():
@@ -211,6 +213,76 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
             if index["periods"][f"{days}d"]["latest_date"] != (max(actual_period_dates) if actual_period_dates else None):
                 raise SchemaValidationError(f"{days} 日榜 latest_date 不一致")
 
+    event_index_path = public_dir / "events" / "index.json"
+    if event_index_path.exists():
+        event_index = read_json(event_index_path)
+        validate_payload("event_index", event_index, schema_dir)
+        counts["event_index"] = 1
+        event_dates: set[str] = set()
+        event_payloads: dict[str, dict[str, Any]] = {}
+        for path in sorted((public_dir / "events" / "daily").glob("????-??-??.json")):
+            payload = read_json(path)
+            validate_payload("event_daily", payload, schema_dir)
+            if payload["date"] != path.stem:
+                raise SchemaValidationError(f"事件榜日期与文件名不一致：{path}")
+            start = timestamp(payload["window_start"])
+            end = timestamp(payload["window_end"])
+            generated_at = timestamp(payload["generated_at"])
+            if end - start != dt.timedelta(days=1):
+                raise SchemaValidationError(f"事件榜统计窗口必须严格为 24 小时：{path}")
+            if start.astimezone(ZoneInfo("Asia/Shanghai")).date().isoformat() != payload["date"]:
+                raise SchemaValidationError(f"事件榜日期与北京时间窗口不一致：{path}")
+            if generated_at < end:
+                raise SchemaValidationError(f"事件榜不得在统计窗口结束前生成：{path}")
+            source = payload["source_metrics"]
+            expected_tables = sorted(
+                {
+                    start.astimezone(dt.timezone.utc).strftime("%Y%m%d"),
+                    (end.astimezone(dt.timezone.utc) - dt.timedelta(microseconds=1)).strftime("%Y%m%d"),
+                }
+            )
+            if source["table_dates"] != expected_tables:
+                raise SchemaValidationError(f"事件榜 GH Archive 日表与统计窗口不一致：{path}")
+            if source["estimated_bytes"] > source["maximum_bytes_billed"] or source["bytes_processed"] > source["maximum_bytes_billed"]:
+                raise SchemaValidationError(f"事件榜 BigQuery 扫描量超过费用上限：{path}")
+            if source["metadata_success_count"] != payload["eligible_count"]:
+                raise SchemaValidationError(f"事件榜元数据成功数与可用数不一致：{path}")
+            if source["observed_repository_count"] < source["metadata_attempted_count"]:
+                raise SchemaValidationError(f"事件榜观察仓库数小于元数据尝试数：{path}")
+            if source["metadata_attempted_count"] != source["metadata_success_count"] + source["metadata_not_found_count"] + source["metadata_filtered_count"]:
+                raise SchemaValidationError(f"事件榜元数据采集计数不守恒：{path}")
+            entries = payload["entries"]
+            if len(entries) != 100:
+                raise SchemaValidationError(f"事件榜必须完整发布 Top 100：{path}")
+            if len({item["repository_id"] for item in entries}) != len(entries):
+                raise SchemaValidationError(f"事件榜包含重复仓库 ID：{path}")
+            if any(item["watch_events"] < item["stars_added"] for item in entries):
+                raise SchemaValidationError(f"事件榜 WatchEvent 数不得小于唯一用户数：{path}")
+            expected = sorted(
+                entries,
+                key=lambda item: (
+                    -item["stars_added"], -item["watch_events"], -item["stars_total"], item["full_name"].casefold()
+                ),
+            )
+            if entries != expected or [item["rank"] for item in entries] != list(range(1, len(entries) + 1)):
+                raise SchemaValidationError(f"事件榜排序或名次不一致：{path}")
+            event_dates.add(path.stem)
+            event_payloads[path.stem] = payload
+            counts["event_daily"] += 1
+        if set(event_index["available_dates"]) != event_dates:
+            raise SchemaValidationError("事件榜索引日期与日榜文件不一致")
+        if event_index["available_dates"] != sorted(event_dates, reverse=True):
+            raise SchemaValidationError("事件榜索引日期必须按倒序排列")
+        latest_event_date = max(event_dates) if event_dates else None
+        if event_index["latest_date"] != latest_event_date:
+            raise SchemaValidationError("事件榜 latest_date 与公开日榜不一致")
+        if (event_index["status"] == "ready") != bool(event_dates):
+            raise SchemaValidationError("事件榜 status 与公开日榜不一致")
+        if latest_event_date:
+            latest_event = event_payloads[latest_event_date]
+            if event_index["updated_at"] != latest_event["generated_at"] or event_index["latest_source_metrics"] != latest_event["source_metrics"]:
+                raise SchemaValidationError("事件榜索引与最新日榜不一致")
+
     published_schemas = public_dir / "schema"
     for filename in (
         "state.schema.json",
@@ -221,6 +293,8 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
         "language-index.schema.json",
         "period.schema.json",
         "repositories.schema.json",
+        "event-index.schema.json",
+        "event-daily.schema.json",
     ):
         if not (published_schemas / filename).is_file():
             raise SchemaValidationError(f"公开数据缺少 Schema：{published_schemas / filename}")

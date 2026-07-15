@@ -20,6 +20,8 @@ SCHEMA_FILES = {
     "language_index": "language-index.schema.json",
     "period": "period.schema.json",
     "repositories": "repositories.schema.json",
+    "event_index": "event-index.schema.json",
+    "event_daily": "event-daily.schema.json",
 }
 
 

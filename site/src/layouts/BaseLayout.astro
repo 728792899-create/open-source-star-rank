@@ -10,8 +10,8 @@ interface Props {
 }
 
 const {
-  title = '开源星榜｜GitHub 开源项目每日 Star 净增排行',
-  description = '每天追踪 GitHub 开源项目候选池，用连续快照呈现 Star 净增 Top 100。',
+  title = '开源星榜｜GitHub 公共事件新增与候选池净增排行',
+  description = '每日呈现 GitHub 公共 WatchEvent 新增 Star 信号，并保留候选池连续快照净增榜。',
   structuredData,
   socialImagePath = '/og.png',
 } = Astro.props;
@@ -60,7 +60,8 @@ const socialImage = new URL(withBase(socialImagePath), Astro.site ?? Astro.url.o
         <span>开源星榜</span>
       </a>
       <nav aria-label="主导航">
-        <a href={withBase('/')}>每日排行</a>
+        <a href={withBase('/')}>新增榜</a>
+        <a href={withBase('/daily/') }>净增榜</a>
         <a href={withBase('/period/7d/')}>7 日榜</a>
         <a href={withBase('/period/30d/')}>30 日榜</a>
         <a href={withBase('/language/')}>语言</a>
@@ -70,8 +71,8 @@ const socialImage = new URL(withBase(socialImagePath), Astro.site ?? Astro.url.o
     </header>
     <slot />
     <footer class="site-footer">
-      <p><strong>开源星榜</strong>是候选池观测榜，不代表 GitHub 全站无遗漏。</p>
-      <p>数据来自 GitHub 公共 API · 北京时间每日更新</p>
+      <p><strong>开源星榜</strong>是公共事件与候选池观测榜，不是 GitHub 官方全站统计。</p>
+      <p>数据来自 GH Archive 与 GitHub 公共 API · 北京时间每日更新</p>
     </footer>
   </body>
 </html>

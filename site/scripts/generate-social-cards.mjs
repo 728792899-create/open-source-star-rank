@@ -31,6 +31,10 @@ for (const file of await jsonFiles(path.join(dataRoot, 'daily'))) {
   const ranking = JSON.parse(await readFile(file, 'utf8'));
   jobs.push({ ranking, label: 'Daily Top 100', name: `daily-${ranking.date}.png` });
 }
+for (const file of await jsonFiles(path.join(dataRoot, 'events', 'daily'))) {
+  const ranking = JSON.parse(await readFile(file, 'utf8'));
+  jobs.push({ ranking, label: 'Public Event Top 100', name: `events-daily-${ranking.date}.png`, eventMode: true });
+}
 for (const file of await jsonFiles(path.join(dataRoot, 'period'))) {
   const ranking = JSON.parse(await readFile(file, 'utf8'));
   jobs.push({ ranking, label: `${ranking.period_days} Day Top 100`, name: `period-${ranking.period_days}d-${ranking.date}.png` });

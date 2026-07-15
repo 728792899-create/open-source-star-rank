@@ -77,7 +77,7 @@ function periodRanking(days) {
 }
 
 await rm(outputRoot, { recursive: true, force: true });
-for (const directory of ['daily', 'language', 'period/7d', 'period/30d']) {
+for (const directory of ['daily', 'events/daily', 'language', 'period/7d', 'period/30d']) {
   await mkdir(path.join(outputRoot, directory), { recursive: true });
 }
 
@@ -107,6 +107,69 @@ for (const language of languages) {
 for (const days of [7, 30]) {
   const ranking = periodRanking(days);
   await writeFile(path.join(outputRoot, 'period', `${days}d`, `${ranking.date}.json`), `${JSON.stringify(ranking, null, 2)}\n`);
+}
+
+const eventDates = dates.slice(0, 7);
+const eventSourceMetrics = (date) => {
+  const localDate = new Date(`${date}T00:00:00+08:00`);
+  const startUtc = new Date(localDate.getTime());
+  const endUtc = new Date(localDate.getTime() + 86_400_000 - 1);
+  return {
+    provider: 'gh_archive_bigquery',
+    dataset: 'githubarchive.day',
+    table_dates: [isoDate(startUtc), isoDate(endUtc)].map((item) => item.replaceAll('-', '')),
+    estimated_bytes: 1_073_741_824,
+    bytes_processed: 943_718_400,
+    maximum_bytes_billed: 25_769_803_776,
+    observed_watch_event_count: 18_432,
+    observed_repository_count: 7_614,
+    metadata_attempted_count: 105,
+    metadata_success_count: 100,
+    metadata_not_found_count: 3,
+    metadata_filtered_count: 2,
+    api_request_count: 105,
+    api_retry_count: 1,
+  };
+};
+const eventEntries = (dayOffset) => Array.from({ length: 100 }, (_, offset) => {
+  const rank = offset + 1;
+  const repositoryId = 30_001 + offset;
+  const starsAdded = 1_500 - offset * 11 + dayOffset;
+  return {
+    repository_id: repositoryId,
+    full_name: `public-event-labs/project-${String(rank).padStart(3, '0')}`,
+    description: `Public WatchEvent fixture project ${rank} for event ranking checks.`,
+    language: languages[offset % languages.length].name,
+    stars_total: 250_000 - offset * 151,
+    stars_added: starsAdded,
+    watch_events: starsAdded + (offset % 5),
+    rank,
+    rank_change: dayOffset === 0 ? null : (rank % 5) - 2,
+    trend_7d: Array.from({ length: 7 }, (_, trendOffset) => {
+      const observedDay = dayOffset - (6 - trendOffset);
+      return observedDay < 0 ? null : 1_500 - offset * 11 + observedDay;
+    }),
+    html_url: `https://github.com/public-event-labs/project-${String(rank).padStart(3, '0')}`,
+    owner_avatar_url: null,
+  };
+});
+for (const [reverseOffset, date] of [...eventDates].reverse().entries()) {
+  const localStart = new Date(`${date}T00:00:00+08:00`);
+  const localEnd = new Date(localStart.getTime() + 86_400_000);
+  const generatedAt = new Date(localEnd.getTime() + 7.75 * 3_600_000).toISOString();
+  const ranking = {
+    schema_version: '1.0.0',
+    date,
+    timezone: 'Asia/Shanghai',
+    window_start: localStart.toISOString(),
+    window_end: localEnd.toISOString(),
+    generated_at: generatedAt,
+    methodology_version: 'gharchive-public-watch-events-v1',
+    source_metrics: eventSourceMetrics(date),
+    eligible_count: 100,
+    entries: eventEntries(reverseOffset),
+  };
+  await writeFile(path.join(outputRoot, 'events', 'daily', `${date}.json`), `${JSON.stringify(ranking, null, 2)}\n`);
 }
 
 const historyDates = Array.from({ length: 30 }, (_, offset) => isoDate(shift(latestDate, offset - 29)));
@@ -159,10 +222,19 @@ const languageIndex = {
   languages: languages.map((language) => ({ ...language, language: language.name, candidate_count: 500, latest_date: isoDate(latestDate), available_dates: dates, status: 'ready' })).map(({ name, ...item }) => item),
 };
 const catalog = { schema_version: '1.2.0', updated_at: updatedAt, timezone: 'Asia/Shanghai', candidate_count: 2_000, repositories };
+const latestEventDate = eventDates[0];
+const latestEventGeneratedAt = new Date(new Date(`${latestEventDate}T00:00:00+08:00`).getTime() + 31.75 * 3_600_000).toISOString();
+const eventIndex = {
+  schema_version: '1.0.0', status: 'ready', timezone: 'Asia/Shanghai', updated_at: latestEventGeneratedAt,
+  latest_date: latestEventDate, available_dates: eventDates,
+  methodology_version: 'gharchive-public-watch-events-v1', freshness_threshold_hours: 36,
+  latest_source_metrics: eventSourceMetrics(latestEventDate),
+};
 
 await writeFile(path.join(outputRoot, 'index.json'), `${JSON.stringify(index, null, 2)}\n`);
+await writeFile(path.join(outputRoot, 'events', 'index.json'), `${JSON.stringify(eventIndex, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'language', 'index.json'), `${JSON.stringify(languageIndex, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'repositories.json'), `${JSON.stringify(catalog, null, 2)}\n`);
 await cp(schemaRoot, path.join(outputRoot, 'schema'), { recursive: true });
 
-console.log(`Prepared 40 days, 2,000 repositories, language and period rankings at ${outputRoot}`);
+console.log(`Prepared 40 candidate days, 7 public event days, 2,000 repositories, language and period rankings at ${outputRoot}`);

@@ -19,6 +19,9 @@ const files = [
   'data/index.json',
   'data/daily/2026-07-14.json',
   'data/daily/2026-07-13.json',
+  'events/daily/2026-07-14/index.html',
+  'data/events/index.json',
+  'data/events/daily/2026-07-14.json',
   'period/7d/2026-07-14/index.html',
   'data/period/7d/2026-07-14.json',
   'language/typescript-ed0504f7/daily/2026-07-14/index.html',
@@ -26,6 +29,7 @@ const files = [
   'repo/10001/index.html',
   'data/repositories.json',
   'social/daily-2026-07-14.png',
+  'social/events-daily-2026-07-14.png',
   'rss.xml',
   'atom.xml',
   'feed.json',
@@ -53,4 +57,4 @@ const second = await hashes();
 if (JSON.stringify(first) !== JSON.stringify(second)) {
   throw new Error(`Build is not reproducible:\n${JSON.stringify({ first, second }, null, 2)}`);
 }
-console.log(`Verified ${files.length} reproducible HTML/JSON artifacts`);
+console.log(`Verified ${files.length} reproducible HTML, JSON, feed, and social artifacts`);

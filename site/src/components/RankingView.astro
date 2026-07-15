@@ -1,16 +1,22 @@
 ---
-import type { DailyRanking, LanguageRanking, PeriodRanking, RankingIndex } from '../types';
+import type {
+  DailyRanking, EventDailyRanking, EventRankingEntry, EventRankingIndex, LanguageRanking,
+  PeriodRanking, RankingEntry, RankingIndex,
+} from '../types';
 import { withBase } from '../lib/paths';
 import FreshnessStatus from './FreshnessStatus.astro';
 
 interface Props {
-  ranking: DailyRanking | LanguageRanking | PeriodRanking;
-  index: RankingIndex;
+  ranking: DailyRanking | LanguageRanking | PeriodRanking | EventDailyRanking;
+  index: RankingIndex | EventRankingIndex;
   isLatest?: boolean;
-  mode?: 'daily' | 'language' | 'period';
+  mode?: 'daily' | 'language' | 'period' | 'event';
   availableDates?: string[];
   routePrefix?: string;
   dataPrefix?: string;
+  alternateHref?: string;
+  alternateLabel?: string;
+  fallbackNotice?: string;
 }
 
 const {
@@ -21,17 +27,26 @@ const {
   availableDates = index.available_dates,
   routePrefix = '/daily',
   dataPrefix = '/data/daily',
+  alternateHref,
+  alternateLabel,
+  fallbackNotice,
 } = Astro.props;
+const isEvent = mode === 'event' && 'source_metrics' in ranking;
+const eventRanking = isEvent ? ranking as EventDailyRanking : null;
+const snapshotRanking = !isEvent ? ranking as DailyRanking | LanguageRanking | PeriodRanking : null;
 const periodDays = 'period_days' in ranking ? ranking.period_days : null;
 const languageName = 'language' in ranking ? ranking.language : null;
-const hasRepositoryPages = index.schema_version === '1.2.0';
-const modeLabel = periodDays ? `${periodDays} day signal` : languageName ? `${languageName} signal` : 'Daily signal';
+const hasRepositoryPages = !isEvent && index.schema_version === '1.2.0';
+const modeLabel = isEvent ? 'Public event signal' : periodDays ? `${periodDays} day signal` : languageName ? `${languageName} signal` : 'Daily signal';
 const headline = periodDays
   ? `近 ${periodDays} 日，哪些项目升温最快？`
   : languageName
     ? `${languageName} 项目，昨日谁在升温？`
-    : '昨日，哪些开源项目正在升温？';
-const gainLabel = periodDays ? `${periodDays} 日净增` : '日净增';
+    : isEvent ? '昨日，哪些开源项目获得最多新 Star？' : '昨日，哪些开源项目正在升温？';
+const gainLabel = isEvent ? '日新增' : periodDays ? `${periodDays} 日净增` : '日净增';
+const heroCopy = isEvent
+  ? '按 GH Archive 公开 WatchEvent 的唯一用户数排序。这是新增 Star 信号，不扣除取消 Star。'
+  : '按有效连续快照的 Star 净增排序。缺失日期不补零、不插值，只记录真实发生的关注变化。';
 const languages = [...new Set(ranking.entries.map((entry) => entry.language).filter(Boolean) as string[])].sort((a, b) => a.localeCompare(b));
 const dateIndex = availableDates.indexOf(ranking.date);
 const newer = dateIndex > 0 ? availableDates[dateIndex - 1] : null;
@@ -40,6 +55,8 @@ const formatNumber = (value: number) => new Intl.NumberFormat('zh-CN').format(va
 const formatCompact = (value: number) => new Intl.NumberFormat('zh-CN', { notation: 'compact', maximumFractionDigits: 1 }).format(value);
 const formatDate = (value: string) => new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(`${value}T12:00:00+08:00`));
 const formatTime = (value: string) => new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(value));
+const formatBytes = (value: number) => `${(value / 1024 ** 3).toFixed(2)} GiB`;
+const entryGain = (entry: RankingEntry | EventRankingEntry) => 'stars_added' in entry ? entry.stars_added : entry.stars_gained;
 const makeTrendShape = (values: Array<number | null>) => {
   const numericValues = values.filter((value): value is number => value !== null);
   const maximum = Math.max(1, ...numericValues.map((value) => Math.abs(value)));
@@ -55,11 +72,16 @@ const rankingJsonPath = withBase(`${dataPrefix}/${ranking.date}.json`);
 ---
 
 <main id="main-content" data-ranking data-ranking-mode={mode} data-daily-path={rankingPath} data-ranking-date={ranking.date} class="shell ranking-page">
+  <nav class="ranking-mode-switcher" aria-label="榜单口径">
+    <strong>{isEvent ? '公共事件新增榜' : '候选池净增榜'}</strong>
+    {alternateHref && alternateLabel && <a href={withBase(alternateHref)}>{alternateLabel} →</a>}
+  </nav>
+  {fallbackNotice && <p class="pipeline-fallback" role="status">{fallbackNotice}</p>}
   <section class="hero">
     <div>
       <p class="eyebrow">{modeLabel} · {formatDate(ranking.date)}</p>
       <h1>{headline}</h1>
-      <p class="hero-copy">按有效连续快照的 Star 净增排序。缺失日期不补零、不插值，只记录真实发生的关注变化。</p>
+      <p class="hero-copy">{heroCopy}</p>
     </div>
     <div class="hero-stamp" aria-label={`榜单日期 ${ranking.date}`}>
       <span>{isLatest ? 'LATEST' : 'ARCHIVE'}</span>
@@ -71,30 +93,42 @@ const rankingJsonPath = withBase(`${dataPrefix}/${ranking.date}.json`);
   <FreshnessStatus updatedAt={index.updated_at} thresholdHours={index.freshness_threshold_hours} />
 
   <section class="metrics" aria-label="榜单统计">
-    <div><span>候选池</span><strong>{formatNumber(ranking.candidate_count)}</strong><small>个公开仓库</small></div>
-    <div><span>可比较</span><strong>{formatNumber(ranking.eligible_count)}</strong><small>拥有连续快照</small></div>
-    <div><span>上榜项目</span><strong>{ranking.entries.length}</strong><small>按净增排序</small></div>
+    <div><span>{isEvent ? '事件仓库' : '候选池'}</span><strong>{formatNumber(eventRanking?.source_metrics.observed_repository_count ?? snapshotRanking?.candidate_count ?? 0)}</strong><small>{isEvent ? '个仓库获得公开 Star 事件' : '个公开仓库'}</small></div>
+    <div><span>{isEvent ? '元数据可用' : '可比较'}</span><strong>{formatNumber(ranking.eligible_count)}</strong><small>{isEvent ? '通过公开性与状态校验' : '拥有连续快照'}</small></div>
+    <div><span>上榜项目</span><strong>{ranking.entries.length}</strong><small>{isEvent ? '按新增排序' : '按净增排序'}</small></div>
     <div><span>采样窗口</span><strong>{formatTime(ranking.window_start)}</strong><small>至 {formatTime(ranking.window_end)}</small></div>
   </section>
 
-  <details class="collection-details">
+  {isEvent ? <details class="collection-details">
+    <summary>查看 GH Archive 与费用保护信息</summary>
+    <dl>
+      <div><dt>WatchEvent</dt><dd>{formatNumber(eventRanking!.source_metrics.observed_watch_event_count)}</dd></div>
+      <div><dt>BigQuery 扫描</dt><dd>{formatBytes(eventRanking!.source_metrics.bytes_processed)}</dd></div>
+      <div><dt>扫描硬上限</dt><dd>{formatBytes(eventRanking!.source_metrics.maximum_bytes_billed)}</dd></div>
+      <div><dt>源表</dt><dd>{eventRanking!.source_metrics.table_dates.join(' / ')}</dd></div>
+      <div><dt>元数据成功</dt><dd>{formatNumber(eventRanking!.source_metrics.metadata_success_count)}</dd></div>
+      <div><dt>404 / 过滤</dt><dd>{eventRanking!.source_metrics.metadata_not_found_count} / {eventRanking!.source_metrics.metadata_filtered_count}</dd></div>
+      <div><dt>API 请求 / 重试</dt><dd>{eventRanking!.source_metrics.api_request_count} / {eventRanking!.source_metrics.api_retry_count}</dd></div>
+      <div><dt>数据来源</dt><dd>GH Archive</dd></div>
+    </dl>
+  </details> : <details class="collection-details">
     <summary>查看本次采集覆盖信息</summary>
     <dl>
-      <div><dt>最近创建搜索</dt><dd>{formatNumber(ranking.collection.search_result_counts.recent_created)}</dd></div>
-      <div><dt>近期活跃搜索</dt><dd>{formatNumber(ranking.collection.search_result_counts.recent_active)}</dd></div>
-      <div><dt>成熟项目搜索</dt><dd>{formatNumber(ranking.collection.search_result_counts.established_active)}</dd></div>
-      <div><dt>去重新发现</dt><dd>{formatNumber(ranking.collection.unique_discovered_count)}</dd></div>
-      <div><dt>候选进 / 出</dt><dd>+{formatNumber(ranking.collection.candidate_added_count)} / −{formatNumber(ranking.collection.candidate_removed_count)}</dd></div>
-      <div><dt>API 请求 / 重试</dt><dd>{formatNumber(ranking.collection.api_request_count)} / {formatNumber(ranking.collection.api_retry_count)}</dd></div>
-      <div><dt>快照完整率</dt><dd>{(ranking.collection.snapshot_completeness * 100).toFixed(1)}%</dd></div>
+      <div><dt>最近创建搜索</dt><dd>{formatNumber(snapshotRanking!.collection.search_result_counts.recent_created)}</dd></div>
+      <div><dt>近期活跃搜索</dt><dd>{formatNumber(snapshotRanking!.collection.search_result_counts.recent_active)}</dd></div>
+      <div><dt>成熟项目搜索</dt><dd>{formatNumber(snapshotRanking!.collection.search_result_counts.established_active)}</dd></div>
+      <div><dt>去重新发现</dt><dd>{formatNumber(snapshotRanking!.collection.unique_discovered_count)}</dd></div>
+      <div><dt>候选进 / 出</dt><dd>+{formatNumber(snapshotRanking!.collection.candidate_added_count)} / −{formatNumber(snapshotRanking!.collection.candidate_removed_count)}</dd></div>
+      <div><dt>API 请求 / 重试</dt><dd>{formatNumber(snapshotRanking!.collection.api_request_count)} / {formatNumber(snapshotRanking!.collection.api_retry_count)}</dd></div>
+      <div><dt>快照完整率</dt><dd>{(snapshotRanking!.collection.snapshot_completeness * 100).toFixed(1)}%</dd></div>
     </dl>
-  </details>
+  </details>}
 
   <section class="ranking-section" aria-labelledby="ranking-title">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">Observed {languageName ? 'language top 50' : 'top 100'}</p>
-        <h2 id="ranking-title">{languageName ? `${languageName} ` : ''}{periodDays ? `${periodDays} 日 ` : ''}Star 净增排行</h2>
+        <p class="eyebrow">{isEvent ? 'Public events top 100' : `Observed ${languageName ? 'language top 50' : 'top 100'}`}</p>
+        <h2 id="ranking-title">{isEvent ? 'Star 新增排行' : `${languageName ? `${languageName} ` : ''}${periodDays ? `${periodDays} 日 ` : ''}Star 净增排行`}</h2>
       </div>
       <div class="date-tools">
         <label class="date-picker">
@@ -131,7 +165,7 @@ const rankingJsonPath = withBase(`${dataPrefix}/${ranking.date}.json`);
       <p class="filter-count" aria-live="polite"><strong data-visible-count>{ranking.entries.length}</strong> / {ranking.entries.length} 个项目</p>
     </div>
 
-    <div class="ranking-table" role="table" aria-label={`${ranking.date} Star 净增排行`}>
+    <div class="ranking-table" role="table" aria-label={`${ranking.date} Star ${isEvent ? '新增' : '净增'}排行`}>
       <div class="table-head" role="row">
         <span role="columnheader">排名 / 变化</span>
         <span role="columnheader">项目</span>
@@ -141,6 +175,7 @@ const rankingJsonPath = withBase(`${dataPrefix}/${ranking.date}.json`);
       </div>
       <div class="table-body">
         {ranking.entries.map((entry) => {
+          const gained = entryGain(entry);
           const trendShape = makeTrendShape(entry.trend_7d);
           const searchText = `${entry.full_name} ${entry.description ?? ''}`;
           const movement = entry.rank_change === null ? '新上榜' : entry.rank_change > 0 ? `↑${entry.rank_change}` : entry.rank_change < 0 ? `↓${Math.abs(entry.rank_change)}` : '—';
@@ -177,11 +212,11 @@ const rankingJsonPath = withBase(`${dataPrefix}/${ranking.date}.json`);
               <div
                 class="trend-cell"
                 role="cell"
-                aria-label={`最近七日净增：${entry.trend_7d.map((value) => value ?? '无数据').join('、')}`}
+                aria-label={`最近七日${isEvent ? '新增' : '净增'}：${entry.trend_7d.map((value) => value ?? '无数据').join('、')}`}
                 style={`--trend-shape:${trendShape}`}
               ></div>
-              <div class:list={['stars-cell', 'numeric', { negative: entry.stars_gained < 0 }]} role="cell" data-mobile-label={`总 Star / ${gainLabel}`}>
-                {formatCompact(entry.stars_total)} · {entry.stars_gained >= 0 ? '+' : ''}{formatNumber(entry.stars_gained)}
+              <div class:list={['stars-cell', 'numeric', { negative: gained < 0 }]} role="cell" data-mobile-label={`总 Star / ${gainLabel}`}>
+                {formatCompact(entry.stars_total)} · {gained >= 0 ? '+' : ''}{formatNumber(gained)}
               </div>
             </div>
           );
@@ -196,7 +231,7 @@ const rankingJsonPath = withBase(`${dataPrefix}/${ranking.date}.json`);
 
   <aside class="method-note" aria-label="榜单口径提示">
     <span aria-hidden="true">i</span>
-    <p><strong>这是一张观测榜。</strong>GitHub 搜索不支持按每日增量检索全站项目，因此榜单来自持续追踪的候选池；新项目获得两个快照后才参与排名。</p>
+    <p><strong>这是一张观测榜。</strong>{isEvent ? 'GH Archive 来自 GitHub 公开事件流，数字表示唯一用户的新增 Star 信号，不是 GitHub 官方全站统计。' : 'GitHub 搜索不支持按每日增量检索全站项目，因此净增榜来自持续追踪的候选池；新项目获得两个快照后才参与排名。'}</p>
     <a href={withBase('/methodology/')}>完整口径 →</a>
   </aside>
 </main>
