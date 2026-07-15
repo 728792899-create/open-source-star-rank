@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://728792899-create.github.io/open-source-star-rank/data/schema/index.schema.json",
+  "title": "Open Source Star Rank public index",
+  "type": "object",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": { "properties": { "schema_version": { "const": "1.2.0" } }, "required": ["schema_version"] },
+      "then": { "required": ["sampling", "periods"] }
+    }
+  ],
+  "required": [
+    "schema_version",
+    "status",
+    "timezone",
+    "updated_at",
+    "latest_date",
+    "available_dates",
+    "candidate_count",
+    "methodology_version",
+    "freshness_threshold_hours",
+    "latest_collection"
+  ],
+  "properties": {
+    "schema_version": { "enum": ["1.1.0", "1.2.0"] },
+    "status": { "enum": ["initializing", "ready"] },
+    "timezone": { "const": "Asia/Shanghai" },
+    "updated_at": { "type": ["string", "null"], "format": "date-time" },
+    "latest_date": { "oneOf": [{ "$ref": "#/$defs/date" }, { "type": "null" }] },
+    "available_dates": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/date" }
+    },
+    "candidate_count": { "type": "integer", "minimum": 0, "maximum": 2000 },
+    "methodology_version": { "const": "candidate-pool-snapshot-v1" },
+    "freshness_threshold_hours": { "type": "integer", "const": 36 },
+    "latest_collection": {
+      "oneOf": [{ "$ref": "#/$defs/collection" }, { "type": "null" }]
+    },
+    "sampling": { "$ref": "#/$defs/sampling" },
+    "periods": { "$ref": "#/$defs/periods" }
+  },
+  "$defs": {
+    "date": { "type": "string", "format": "date", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "progress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["completed", "required"],
+      "properties": {
+        "completed": { "type": "integer", "minimum": 0, "maximum": 30 },
+        "required": { "enum": [7, 30] }
+      }
+    },
+    "sampling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_local_time", "valid_window_start", "valid_window_end", "latest_snapshot_at", "latest_snapshot_valid", "latest_snapshot_reason", "latest_valid_snapshot_at", "consecutive_valid_snapshots", "next_scheduled_at", "expected_first_ranking_at", "period_progress"],
+      "properties": {
+        "target_local_time": { "const": "00:20" },
+        "valid_window_start": { "const": "00:00" },
+        "valid_window_end": { "const": "03:00" },
+        "latest_snapshot_at": { "type": ["string", "null"], "format": "date-time" },
+        "latest_snapshot_valid": { "type": "boolean" },
+        "latest_snapshot_reason": { "enum": ["missing", "within_window", "outside_window"] },
+        "latest_valid_snapshot_at": { "type": ["string", "null"], "format": "date-time" },
+        "consecutive_valid_snapshots": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "next_scheduled_at": { "type": ["string", "null"], "format": "date-time" },
+        "expected_first_ranking_at": { "type": ["string", "null"], "format": "date-time" },
+        "period_progress": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["7d", "30d"],
+          "properties": {
+            "7d": { "$ref": "#/$defs/progress" },
+            "30d": { "$ref": "#/$defs/progress" }
+          }
+        }
+      }
+    },
+    "period_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["latest_date", "available_dates"],
+      "properties": {
+        "latest_date": { "oneOf": [{ "$ref": "#/$defs/date" }, { "type": "null" }] },
+        "available_dates": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/date" } }
+      }
+    },
+    "periods": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["7d", "30d"],
+      "properties": {
+        "7d": { "$ref": "#/$defs/period_state" },
+        "30d": { "$ref": "#/$defs/period_state" }
+      }
+    },
+    "collection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "search_result_counts",
+        "unique_discovered_count",
+        "candidate_added_count",
+        "candidate_removed_count",
+        "api_request_count",
+        "api_retry_count",
+        "snapshot_expected_count",
+        "snapshot_complete_count",
+        "snapshot_completeness"
+      ],
+      "properties": {
+        "search_result_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["recent_created", "recent_active", "established_active"],
+          "properties": {
+            "recent_created": { "type": "integer", "minimum": 0, "maximum": 1000 },
+            "recent_active": { "type": "integer", "minimum": 0, "maximum": 500 },
+            "established_active": { "type": "integer", "minimum": 0, "maximum": 500 }
+          }
+        },
+        "unique_discovered_count": { "type": "integer", "minimum": 0 },
+        "candidate_added_count": { "type": "integer", "minimum": 0 },
+        "candidate_removed_count": { "type": "integer", "minimum": 0 },
+        "api_request_count": { "type": "integer", "minimum": 0 },
+        "api_retry_count": { "type": "integer", "minimum": 0 },
+        "snapshot_expected_count": { "type": "integer", "minimum": 1, "maximum": 2000 },
+        "snapshot_complete_count": { "type": "integer", "minimum": 1, "maximum": 2000 },
+        "snapshot_completeness": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    }
+  }
+}
