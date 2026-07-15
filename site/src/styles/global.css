@@ -69,6 +69,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .freshness-status.stale .freshness-dot { background: var(--red); box-shadow: 0 0 0 4px rgba(163, 60, 47, .14); }
 .freshness-status.initializing .freshness-dot { background: var(--gold); box-shadow: 0 0 0 4px rgba(201, 139, 24, .14); }
 .freshness-status.warning .freshness-dot { background: var(--gold); box-shadow: 0 0 0 4px rgba(201, 139, 24, .18); }
+.ranking-mode-switcher { min-height: 48px; margin-top: 18px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 18px; border: 1px solid var(--ink); background: var(--surface); font-size: 12px; }
+.ranking-mode-switcher strong { letter-spacing: .04em; }
+.ranking-mode-switcher a { color: var(--muted); font-weight: 760; text-underline-offset: 4px; }
+.pipeline-fallback { margin: 12px 0 0; padding: 13px 16px; border: 1px solid #d29b35; background: #fff0c9; color: #76510b; font-size: 13px; font-weight: 700; line-height: 1.6; }
 .noscript-note { margin: 0 0 20px; color: var(--muted); font-size: 12px; }
 
 .metrics { display: grid; grid-template-columns: repeat(4, 1fr); border-block: 1px solid var(--ink); background: var(--surface); }
@@ -263,6 +267,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .brand { font-size: 14px; }
   .brand-mark { width: 26px; height: 26px; }
   .hero { min-height: 0; padding: 70px 0 42px; align-items: flex-start; }
+  .ranking-mode-switcher { align-items: flex-start; flex-direction: column; gap: 8px; }
   .hero h1, .methodology h1, .initialization h1 { font-size: clamp(42px, 14vw, 64px); }
   .hero-stamp { display: none; }
   .hero-copy { font-size: 15px; }

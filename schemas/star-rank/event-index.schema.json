@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://728792899-create.github.io/open-source-star-rank/data/schema/event-index.schema.json",
+  "title": "Open Source Star Rank public event index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "timezone",
+    "updated_at",
+    "latest_date",
+    "available_dates",
+    "methodology_version",
+    "freshness_threshold_hours",
+    "latest_source_metrics"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "status": { "enum": ["initializing", "ready"] },
+    "timezone": { "const": "Asia/Shanghai" },
+    "updated_at": { "type": ["string", "null"], "format": "date-time" },
+    "latest_date": { "oneOf": [{ "$ref": "#/$defs/date" }, { "type": "null" }] },
+    "available_dates": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/date" }
+    },
+    "methodology_version": { "const": "gharchive-public-watch-events-v1" },
+    "freshness_threshold_hours": { "const": 36 },
+    "latest_source_metrics": {
+      "oneOf": [{ "$ref": "#/$defs/source_metrics" }, { "type": "null" }]
+    }
+  },
+  "$defs": {
+    "date": { "type": "string", "format": "date", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "source_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider", "dataset", "table_dates", "estimated_bytes", "bytes_processed",
+        "maximum_bytes_billed", "observed_watch_event_count", "observed_repository_count",
+        "metadata_attempted_count", "metadata_success_count", "metadata_not_found_count",
+        "metadata_filtered_count", "api_request_count", "api_retry_count"
+      ],
+      "properties": {
+        "provider": { "const": "gh_archive_bigquery" },
+        "dataset": { "const": "githubarchive.day" },
+        "table_dates": {
+          "type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^\\d{8}$" }
+        },
+        "estimated_bytes": { "type": "integer", "minimum": 0, "maximum": 25769803776 },
+        "bytes_processed": { "type": "integer", "minimum": 0, "maximum": 25769803776 },
+        "maximum_bytes_billed": { "type": "integer", "minimum": 1, "maximum": 25769803776 },
+        "observed_watch_event_count": { "type": "integer", "minimum": 0 },
+        "observed_repository_count": { "type": "integer", "minimum": 0 },
+        "metadata_attempted_count": { "type": "integer", "minimum": 0, "maximum": 500 },
+        "metadata_success_count": { "type": "integer", "minimum": 0, "maximum": 500 },
+        "metadata_not_found_count": { "type": "integer", "minimum": 0, "maximum": 500 },
+        "metadata_filtered_count": { "type": "integer", "minimum": 0, "maximum": 500 },
+        "api_request_count": { "type": "integer", "minimum": 0 },
+        "api_retry_count": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

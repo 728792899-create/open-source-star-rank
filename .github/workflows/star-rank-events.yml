@@ -1,26 +1,22 @@
-name: Update and publish Open Source Star Rank
+name: Update and publish public event star rank
 
 on:
   schedule:
-    # 00:20 Asia/Shanghai. Scheduled workflows may start later under GitHub load.
-    - cron: "20 16 * * *"
+    # 07:30 Asia/Shanghai, after the documented public Events API delay window.
+    - cron: "30 23 * * *"
   workflow_dispatch:
     inputs:
       mode:
-        description: Validation, collection, recovery deployment, or confirmed replacement
+        description: Validation, collection, recovery deployment, or explicit replacement
         type: choice
         options:
           - collect_publish
           - validate
           - deploy_existing
-          - replace_snapshot
-        default: collect_publish
-      snapshot_date:
-        description: Required for replace_snapshot; must equal today's Beijing date (YYYY-MM-DD)
-        type: string
-        required: false
-      data_ref:
-        description: Optional star-rank-data commit SHA for deploy_existing recovery
+          - replace_day
+        default: validate
+      date:
+        description: Optional Beijing ranking date; required for replace_day (YYYY-MM-DD)
         type: string
         required: false
 
@@ -37,6 +33,7 @@ jobs:
     timeout-minutes: 45
     permissions:
       contents: write
+      id-token: write
     outputs:
       should_deploy: ${{ steps.mode.outputs.should_deploy }}
       run_mode: ${{ steps.mode.outputs.run_mode }}
@@ -46,6 +43,7 @@ jobs:
       SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
       BASE_PATH: /${{ github.event.repository.name }}
       PUBLIC_REPOSITORY: ${{ github.repository }}
+      GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
     steps:
       - name: Checkout star rank
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
@@ -60,20 +58,11 @@ jobs:
         run: |
           set -euo pipefail
           mode="$REQUESTED_MODE"
-          if [[ "${{ github.event_name }}" == "schedule" ]]; then
-            mode="collect_publish"
-          fi
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then mode="collect_publish"; fi
           case "$mode" in
-            validate)
-              should_deploy=false
-              ;;
-            collect_publish|deploy_existing|replace_snapshot)
-              should_deploy=true
-              ;;
-            *)
-              echo "Unsupported mode: $mode" >&2
-              exit 2
-              ;;
+            validate) should_deploy=false ;;
+            collect_publish|deploy_existing|replace_day) should_deploy=true ;;
+            *) echo "Unsupported mode: $mode" >&2; exit 2 ;;
           esac
           echo "run_mode=$mode" >> "$GITHUB_OUTPUT"
           echo "should_deploy=$should_deploy" >> "$GITHUB_OUTPUT"
@@ -92,29 +81,20 @@ jobs:
           cache: npm
           cache-dependency-path: site/package-lock.json
 
-      - name: Install validation dependencies
-        run: python -m pip install --requirement requirements-star-rank.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --requirement requirements-star-rank.txt
+          npm ci --prefix site
 
       - name: Prepare isolated data branch worktree
         shell: bash
         env:
           RUN_MODE: ${{ steps.mode.outputs.run_mode }}
-          DATA_REF: ${{ inputs.data_ref }}
         run: |
           set -euo pipefail
           data_dir="$RUNNER_TEMP/star-rank-data"
           if git fetch origin refs/heads/star-rank-data:refs/remotes/origin/star-rank-data; then
-            if [[ "$RUN_MODE" == "deploy_existing" && -n "$DATA_REF" ]]; then
-              if [[ ! "$DATA_REF" =~ ^[0-9a-fA-F]{40}$ ]]; then
-                echo "data_ref must be a full 40-character commit SHA" >&2
-                exit 2
-              fi
-              resolved_ref="$(git rev-parse --verify --end-of-options "$DATA_REF^{commit}")"
-              git merge-base --is-ancestor "$resolved_ref" refs/remotes/origin/star-rank-data
-              git worktree add --detach "$data_dir" "$resolved_ref"
-            else
-              git worktree add -B star-rank-data "$data_dir" refs/remotes/origin/star-rank-data
-            fi
+            git worktree add -B star-rank-data "$data_dir" refs/remotes/origin/star-rank-data
           elif [[ "$RUN_MODE" == "deploy_existing" ]]; then
             echo "star-rank-data does not exist; deploy_existing cannot continue" >&2
             exit 1
@@ -125,64 +105,56 @@ jobs:
           fi
           echo "STAR_RANK_DATA_DIR=$data_dir" >> "$GITHUB_ENV"
 
-      - name: Run collector and contract tests
+      - name: Authenticate to Google Cloud without a service-account key
+        if: steps.mode.outputs.run_mode != 'deploy_existing'
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3
+        with:
+          project_id: ${{ vars.GCP_PROJECT_ID }}
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+
+      - name: Validate collectors
         run: python -m unittest discover -s tests -v
 
-      - name: Collect daily snapshot
+      - name: Collect public WatchEvent ranking
         if: steps.mode.outputs.run_mode != 'deploy_existing'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_MODE: ${{ steps.mode.outputs.run_mode }}
-          SNAPSHOT_DATE: ${{ inputs.snapshot_date }}
+          RANKING_DATE: ${{ inputs.date }}
         shell: bash
         run: |
           set -euo pipefail
-          args=(
-            --data-dir "$STAR_RANK_DATA_DIR"
-            --seed-repositories-file data/seed-repositories.json
-            --max-candidates 2000
-          )
-          if [[ "$RUN_MODE" == "replace_snapshot" ]]; then
-            if [[ -z "$SNAPSHOT_DATE" ]]; then
-              echo "snapshot_date is required for replace_snapshot" >&2
-              exit 2
-            fi
-            args+=(--replace-snapshot --replace-date "$SNAPSHOT_DATE")
+          args=(--data-dir "$STAR_RANK_DATA_DIR" --maximum-bytes-billed 25769803776 --raw-limit 500 --top-limit 100)
+          if [[ -n "$RANKING_DATE" ]]; then args+=(--date "$RANKING_DATE"); fi
+          if [[ "$RUN_MODE" == "validate" ]]; then args+=(--dry-run); fi
+          if [[ "$RUN_MODE" == "replace_day" ]]; then
+            if [[ -z "$RANKING_DATE" ]]; then echo "date is required for replace_day" >&2; exit 2; fi
+            args+=(--replace-day)
           fi
-          if [[ "$RUN_MODE" != "validate" ]]; then
-            args+=(--require-valid-capture)
-          fi
-          python -m tools.star_rank "${args[@]}"
+          python -m tools.event_star_rank "${args[@]}"
 
       - name: Validate staged data contracts
         run: python tools/validate_star_rank_data.py --data-dir "$STAR_RANK_DATA_DIR" --sync-schemas
 
-      - name: Install site dependencies
-        working-directory: site
-        run: npm ci
-
-      - name: Test and type-check site
+      - name: Test and build site
         working-directory: site
         run: |
           npm test
           STAR_RANK_DATA_DIR="$STAR_RANK_DATA_DIR/public" npm run check
-
-      - name: Build and validate static site
-        working-directory: site
-        run: |
           STAR_RANK_DATA_DIR="$STAR_RANK_DATA_DIR/public" npm run build
           npm run validate-build
 
-      - name: Commit validated data branch
-        if: steps.mode.outputs.run_mode == 'collect_publish' || steps.mode.outputs.run_mode == 'replace_snapshot'
+      - name: Commit validated event data
+        if: steps.mode.outputs.run_mode == 'collect_publish' || steps.mode.outputs.run_mode == 'replace_day'
         shell: bash
         run: |
           set -euo pipefail
           git -C "$STAR_RANK_DATA_DIR" config user.name "github-actions[bot]"
           git -C "$STAR_RANK_DATA_DIR" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git -C "$STAR_RANK_DATA_DIR" add state snapshots public
+          git -C "$STAR_RANK_DATA_DIR" add state/events public/events public/schema
           if ! git -C "$STAR_RANK_DATA_DIR" diff --cached --quiet; then
-            git -C "$STAR_RANK_DATA_DIR" commit -m "Update star rank snapshot"
+            git -C "$STAR_RANK_DATA_DIR" commit -m "Update public event star rank"
             git -C "$STAR_RANK_DATA_DIR" push origin HEAD:star-rank-data
           fi
 
@@ -207,15 +179,12 @@ jobs:
     steps:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
-
       - name: Deploy GitHub Pages
         id: deployment
         uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
 
   incident:
-    if: >-
-      always() &&
-      (github.event_name == 'schedule' || inputs.mode != 'validate')
+    if: always() && (github.event_name == 'schedule' || inputs.mode != 'validate')
     needs: [build, deploy]
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -223,20 +192,12 @@ jobs:
       contents: read
       issues: write
     steps:
-      - name: Checkout incident helper
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
-
-      - name: Open or close incident
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - name: Open or close public event incident
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BUILD_RESULT: ${{ needs.build.result }}
-          DEPLOY_RESULT: ${{ needs.deploy.result }}
+          RESULT: ${{ needs.build.result }}/${{ needs.deploy.result }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        shell: bash
         run: |
-          set -euo pipefail
-          if [[ "$BUILD_RESULT" == "success" && "$DEPLOY_RESULT" == "success" ]]; then
-            python tools/star_rank_incident.py --status close --details "采集和部署已恢复：$RUN_URL"
-          else
-            python tools/star_rank_incident.py --status open --details "build=$BUILD_RESULT, deploy=$DEPLOY_RESULT；运行记录：$RUN_URL"
-          fi
+          if [[ "$RESULT" == "success/success" ]]; then status=close; else status=open; fi
+          python tools/star_rank_incident.py --status "$status" --title "[开源星榜] 公共事件榜故障" --label "star-rank-events-incident" --details "事件榜工作流：$RESULT；$RUN_URL"

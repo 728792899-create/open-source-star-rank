@@ -2,24 +2,53 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Initialization from '../components/Initialization.astro';
 import RankingView from '../components/RankingView.astro';
-import { readDailyRanking, readRankingIndex } from '../lib/data';
+import {
+  eventRankingIsFresh, readDailyRanking, readEventDailyRanking, readEventRankingIndex, readRankingIndex,
+} from '../lib/data';
 
-const index = readRankingIndex();
-const ranking = index.latest_date ? readDailyRanking(index.latest_date) : null;
+const candidateIndex = readRankingIndex();
+const eventIndex = readEventRankingIndex();
+const candidateRanking = candidateIndex.latest_date ? readDailyRanking(candidateIndex.latest_date) : null;
+const eventFresh = eventRankingIsFresh(eventIndex, candidateIndex);
+const eventRanking = eventFresh && eventIndex.latest_date ? readEventDailyRanking(eventIndex.latest_date) : null;
+const ranking = eventRanking ?? candidateRanking;
+const isEvent = Boolean(eventRanking);
+const fallbackNotice = !isEvent && candidateRanking
+  ? eventIndex.status === 'ready'
+    ? '公共事件榜已超过 36 小时未更新，首页已自动回退到候选池净增榜。'
+    : '公共事件榜尚未完成首次采集，当前展示候选池净增榜。'
+  : undefined;
 const structuredData = ranking ? {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: `${ranking.date} GitHub 开源项目 Star 净增排行`,
+  name: `${ranking.date} GitHub 开源项目 Star ${isEvent ? '新增' : '净增'}排行`,
   numberOfItems: ranking.entries.length,
   itemListElement: ranking.entries.map((entry) => ({
-    '@type': 'ListItem',
-    position: entry.rank,
-    url: entry.html_url,
-    name: entry.full_name,
+    '@type': 'ListItem', position: entry.rank, url: entry.html_url, name: entry.full_name,
   })),
 } : undefined;
+const socialImagePath = isEvent && ranking ? `/social/events-daily-${ranking.date}.png`
+  : ranking ? `/social/daily-${ranking.date}.png` : '/og.png';
 ---
 
-<BaseLayout structuredData={structuredData} socialImagePath={ranking ? `/social/daily-${ranking.date}.png` : '/og.png'}>
-  {ranking ? <RankingView ranking={ranking} index={index} isLatest /> : <Initialization index={index} />}
+<BaseLayout
+  title={isEvent ? '开源星榜｜GitHub 公共事件新增 Star 排行' : undefined}
+  description={isEvent ? '按 GH Archive 公开 WatchEvent 统计每日获得 Star 的唯一用户数。' : undefined}
+  structuredData={structuredData}
+  socialImagePath={socialImagePath}
+>
+  {ranking ? <RankingView
+    ranking={ranking}
+    index={isEvent ? eventIndex : candidateIndex}
+    isLatest
+    mode={isEvent ? 'event' : 'daily'}
+    availableDates={isEvent ? eventIndex.available_dates : candidateIndex.available_dates}
+    routePrefix={isEvent ? '/events/daily' : '/daily'}
+    dataPrefix={isEvent ? '/data/events/daily' : '/data/daily'}
+    alternateHref={isEvent
+      ? candidateIndex.latest_date ? `/daily/${candidateIndex.latest_date}/` : undefined
+      : eventIndex.latest_date ? `/events/daily/${eventIndex.latest_date}/` : undefined}
+    alternateLabel={isEvent ? '查看候选池净增榜' : '查看公共事件新增榜'}
+    fallbackNotice={fallbackNotice}
+  /> : <Initialization index={candidateIndex} />}
 </BaseLayout>

@@ -2,12 +2,15 @@ import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import type {
   DailyRanking,
+  EventDailyRanking,
+  EventRankingIndex,
   LanguageIndex,
   LanguageRanking,
   PeriodRanking,
   RankingIndex,
   RepositoryCatalog,
 } from '../types';
+import { eventRankingIsFresh as compareEventFreshness } from '../scripts/event-freshness-utils.mjs';
 
 const dataRoot = path.resolve(process.cwd(), 'generated', 'data');
 
@@ -44,4 +47,25 @@ export function readRepositoryCatalog(): RepositoryCatalog {
     return { schema_version: '1.1.0', updated_at: '', timezone: 'Asia/Shanghai', candidate_count: 0, repositories: [] };
   }
   return JSON.parse(readFileSync(file, 'utf8')) as RepositoryCatalog;
+}
+
+export function readEventRankingIndex(): EventRankingIndex {
+  const file = path.join(dataRoot, 'events', 'index.json');
+  if (!existsSync(file)) {
+    return {
+      schema_version: '1.0.0', status: 'initializing', timezone: 'Asia/Shanghai', updated_at: null,
+      latest_date: null, available_dates: [], methodology_version: 'gharchive-public-watch-events-v1',
+      freshness_threshold_hours: 36, latest_source_metrics: null,
+    };
+  }
+  return JSON.parse(readFileSync(file, 'utf8')) as EventRankingIndex;
+}
+
+export function readEventDailyRanking(date: string): EventDailyRanking {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error(`Invalid event ranking date: ${date}`);
+  return JSON.parse(readFileSync(path.join(dataRoot, 'events', 'daily', `${date}.json`), 'utf8')) as EventDailyRanking;
+}
+
+export function eventRankingIsFresh(eventIndex: EventRankingIndex, candidateIndex: RankingIndex): boolean {
+  return compareEventFreshness(eventIndex, candidateIndex);
 }

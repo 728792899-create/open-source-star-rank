@@ -2,6 +2,24 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 const latestPath = 'daily/2026-07-14/';
+const latestEventPath = 'events/daily/2026-07-14/';
+
+test('defaults the homepage to the fresh public event ranking and exposes the candidate switch', async ({ page }) => {
+  await page.goto('');
+  await expect(page.getByRole('heading', { name: 'Star 新增排行' })).toBeVisible();
+  await expect(page.locator('[data-ranking-mode="event"] [data-ranking-row]')).toHaveCount(100);
+  await expect(page.getByRole('link', { name: /查看候选池净增榜/ })).toBeVisible();
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /social\/events-daily-2026-07-14\.png$/);
+});
+
+test('publishes the public event archive with direct GitHub links and source metrics', async ({ page }) => {
+  await page.goto(latestEventPath);
+  await expect(page.getByRole('heading', { name: 'Star 新增排行' })).toBeVisible();
+  await expect(page.locator('[data-ranking-row]')).toHaveCount(100);
+  await page.getByText('查看 GH Archive 与费用保护信息').click();
+  await expect(page.getByText('0.88 GiB')).toBeVisible();
+  await expect(page.getByRole('link', { name: 'public-event-labs/project-001' })).toHaveAttribute('href', 'https://github.com/public-event-labs/project-001');
+});
 
 test('renders 100 static rows and passes automated accessibility checks', async ({ page }) => {
   await page.goto(latestPath);
@@ -31,6 +49,11 @@ test('navigates historical dates and keeps direct no-JavaScript content readable
   await page.goto(latestPath);
   await page.getByLabel('选择历史榜单日期').selectOption('/open-source-star-rank/daily/2026-07-13/');
   await expect(page).toHaveURL(/daily\/2026-07-13\/$/);
+  await expect(page.getByRole('link', { name: '查看同日公共事件新增榜 →' }))
+    .toHaveAttribute('href', '/open-source-star-rank/events/daily/2026-07-13/');
+  await page.goto('events/daily/2026-07-13/');
+  await expect(page.getByRole('link', { name: '查看同日候选池净增榜 →' }))
+    .toHaveAttribute('href', '/open-source-star-rank/daily/2026-07-13/');
   const context = await browser.newContext({ javaScriptEnabled: false });
   const noScriptPage = await context.newPage();
   await noScriptPage.goto(latestPath);
@@ -73,7 +96,8 @@ test('provides a useful 404 page and keyboard focus', async ({ page }) => {
 
 test('publishes status, period, language and stable repository history routes', async ({ page }) => {
   await page.goto('status/');
-  await expect(page.getByRole('heading', { name: '采样质量' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '候选池采样质量' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '公共事件与费用保护' })).toBeVisible();
   await expect(page.getByText('零点窗口内，可用于排行')).toBeVisible();
 
   await page.goto('period/7d/');

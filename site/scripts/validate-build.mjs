@@ -22,6 +22,9 @@ const required = [
   'data/schema/language-index.schema.json',
   'data/schema/period.schema.json',
   'data/schema/repositories.schema.json',
+  'data/schema/event-index.schema.json',
+  'data/schema/event-daily.schema.json',
+  'data/events/index.json',
   'og.png',
   'robots.txt',
   'rss.xml',
@@ -41,6 +44,10 @@ for (const marker of ['lang="zh-CN"', 'rel="canonical"', 'application/ld+json', 
 const dataIndex = JSON.parse(await readFile(path.join(dist, 'data/index.json'), 'utf8'));
 if (!['1.1.0', '1.2.0'].includes(dataIndex.schema_version) || dataIndex.freshness_threshold_hours !== 36) {
   throw new Error('Published index does not satisfy a supported public contract');
+}
+const eventIndex = JSON.parse(await readFile(path.join(dist, 'data/events/index.json'), 'utf8'));
+if (eventIndex.schema_version !== '1.0.0' || eventIndex.freshness_threshold_hours !== 36) {
+  throw new Error('Published event index does not satisfy the 1.0.0 public contract');
 }
 const rss = await readFile(path.join(dist, 'rss.xml'), 'utf8');
 if (!rss.includes('<rss version="2.0">') || !rss.includes('开源星榜')) {
@@ -81,6 +88,22 @@ if (dataIndex.status === 'ready') {
   for (const marker of ['有效基线 0/2', 'data-countdown', '不计入日榜基线']) {
     if (!indexHtml.includes(marker)) throw new Error(`Initialization page is missing ${marker}`);
   }
+}
+
+if (eventIndex.status === 'ready') {
+  const date = eventIndex.latest_date;
+  for (const relative of [
+    `events/daily/${date}/index.html`,
+    `data/events/daily/${date}.json`,
+    `social/events-daily-${date}.png`,
+  ]) {
+    if (!existsSync(path.join(dist, relative))) throw new Error(`Ready event build is missing ${relative}`);
+  }
+  for (const marker of ['data-ranking-mode="event"', '公共事件新增榜', 'GH Archive']) {
+    if (!indexHtml.includes(marker)) throw new Error(`Event-first homepage is missing ${marker}`);
+  }
+} else if (dataIndex.status === 'ready' && !indexHtml.includes('公共事件榜尚未完成首次采集')) {
+  throw new Error('Candidate fallback homepage is missing the public event warning');
 }
 
 console.log(`Validated static build (${dataIndex.status})`);

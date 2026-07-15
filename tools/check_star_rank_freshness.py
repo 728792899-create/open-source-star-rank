@@ -26,6 +26,7 @@ def check_freshness(
     now: dt.datetime,
     require_today: bool = False,
     require_valid_capture: bool = False,
+    require_yesterday_date: bool = False,
 ) -> dict:
     updated_text = index.get("updated_at")
     if not isinstance(updated_text, str):
@@ -48,6 +49,10 @@ def check_freshness(
             valid = local.hour < 3
         if not valid:
             raise ValueError("最近快照不在北京时间 00:00–03:00 有效窗口内")
+    if require_yesterday_date:
+        expected = (now.astimezone(TIMEZONE).date() - dt.timedelta(days=1)).isoformat()
+        if index.get("latest_date") != expected:
+            raise ValueError(f"北京时间昨日事件榜尚未发布，期望 {expected}")
     return {
         "updated_at": updated_text,
         "age_hours": round(max(0.0, age.total_seconds() / 3600), 2),
@@ -63,6 +68,7 @@ def main() -> int:
     parser.add_argument("--now", help="用于测试的 ISO-8601 时间")
     parser.add_argument("--require-today", action="store_true")
     parser.add_argument("--require-valid-capture", action="store_true")
+    parser.add_argument("--require-yesterday-date", action="store_true")
     args = parser.parse_args()
     now = parse_time(args.now) if args.now else dt.datetime.now(dt.timezone.utc)
     try:
@@ -72,6 +78,7 @@ def main() -> int:
             now=now,
             require_today=args.require_today,
             require_valid_capture=args.require_valid_capture,
+            require_yesterday_date=args.require_yesterday_date,
         )
     except (OSError, json.JSONDecodeError, TypeError, ValueError) as exc:
         parser.error(str(exc))
