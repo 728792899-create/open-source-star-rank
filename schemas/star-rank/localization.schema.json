@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://728792899-create.github.io/open-source-star-rank/data/schema/localization.schema.json",
+  "title": "Open Source Star Rank repository localization catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "locale",
+    "generated_at",
+    "model",
+    "prompt_version",
+    "coverage",
+    "repositories"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "locale": { "const": "zh-CN" },
+    "generated_at": { "type": ["string", "null"], "format": "date-time" },
+    "model": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "prompt_version": { "const": "repository-localization-v1" },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["eligible_count", "localized_count", "pending_count", "failed_count", "coverage_ratio"],
+      "properties": {
+        "eligible_count": { "type": "integer", "minimum": 0 },
+        "localized_count": { "type": "integer", "minimum": 0 },
+        "pending_count": { "type": "integer", "minimum": 0 },
+        "failed_count": { "type": "integer", "minimum": 0 },
+        "coverage_ratio": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "repositories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "repository_id",
+          "source_full_name",
+          "source_hash",
+          "display_name_zh",
+          "description_zh",
+          "generated_at",
+          "provenance"
+        ],
+        "properties": {
+          "repository_id": { "type": "integer", "minimum": 1 },
+          "source_full_name": { "type": "string", "pattern": "^[^/]+/[^/]+$" },
+          "source_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "display_name_zh": { "type": "string", "minLength": 1, "maxLength": 80 },
+          "description_zh": { "type": ["string", "null"], "maxLength": 280 },
+          "generated_at": { "type": "string", "format": "date-time" },
+          "provenance": { "enum": ["github_models", "manual"] }
+        }
+      }
+    }
+  }
+}

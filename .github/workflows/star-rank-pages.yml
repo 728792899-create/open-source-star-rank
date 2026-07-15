@@ -37,6 +37,7 @@ jobs:
     timeout-minutes: 45
     permissions:
       contents: write
+      models: read
     outputs:
       should_deploy: ${{ steps.mode.outputs.should_deploy }}
       run_mode: ${{ steps.mode.outputs.run_mode }}
@@ -153,6 +154,17 @@ jobs:
             args+=(--require-valid-capture)
           fi
           python -m tools.star_rank "${args[@]}"
+
+      - name: Localize newly ranked repositories
+        if: steps.mode.outputs.run_mode == 'collect_publish' || steps.mode.outputs.run_mode == 'replace_snapshot'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LOCALIZATION_MODEL: ${{ vars.LOCALIZATION_MODEL || 'openai/gpt-4.1-mini' }}
+          LOCALIZATION_MAX_PROJECTS: ${{ vars.LOCALIZATION_MAX_PROJECTS || '200' }}
+        run: >-
+          python -m tools.localize_repositories
+          --data-dir "$STAR_RANK_DATA_DIR"
+          --overrides-file data/localization-overrides.zh-CN.json
 
       - name: Validate staged data contracts
         run: python tools/validate_star_rank_data.py --data-dir "$STAR_RANK_DATA_DIR" --sync-schemas

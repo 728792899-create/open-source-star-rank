@@ -1,7 +1,8 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { readRepositoryCatalog } from '../../lib/data';
+import { readLocalizationCatalog, readRepositoryCatalog } from '../../lib/data';
+import { localizedRepositoryContent } from '../../lib/localization';
 
 export const getStaticPaths = (() => readRepositoryCatalog().repositories.map((repository) => ({
   params: { repository_id: String(repository.repository_id) },
@@ -9,24 +10,40 @@ export const getStaticPaths = (() => readRepositoryCatalog().repositories.map((r
 }))) satisfies GetStaticPaths;
 
 const { repository } = Astro.props;
+const content = localizedRepositoryContent(readLocalizationCatalog(), repository.repository_id, repository.full_name, repository.description);
 const formatNumber = (value: number) => new Intl.NumberFormat('zh-CN').format(value);
 const values = repository.history_30d.map((item) => item.stars_gained).filter((value): value is number => value !== null);
 const maximum = Math.max(1, ...values.map((value) => Math.abs(value)));
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareSourceCode',
-  name: repository.full_name,
-  description: repository.description,
+  name: content.displayName,
+  alternateName: repository.full_name,
+  description: content.description,
   codeRepository: repository.html_url,
   programmingLanguage: repository.language,
 };
 ---
 
-<BaseLayout title={`${repository.full_name} Star 历史｜开源星榜`} description={`${repository.full_name} 在开源星榜候选池中的排名与近 30 日真实 Star 变化。`} structuredData={structuredData}>
+<BaseLayout title={`${content.displayName} Star 历史｜开源星榜`} description={`${content.displayName}（${repository.full_name}）在开源星榜候选池中的排名与近 30 日真实 Star 变化。`} structuredData={structuredData}>
   <main id="main-content" class="shell repo-page">
     <p class="eyebrow">Repository #{repository.repository_id} · stable identity</p>
     <div class="repo-hero">
-      <div><h1>{repository.full_name}</h1><p>{repository.description || 'GitHub 未提供项目描述。'}</p></div>
+      <div>
+        {content.localized ? <>
+          <h1 data-content-language="zh">{content.displayName}</h1>
+          <h1 data-content-language="original">{repository.full_name}</h1>
+          <div class="repo-source-name" data-content-language="zh">{repository.full_name}<span class="translation-badge">{content.provenance === 'manual' ? '人工校订' : 'AI 译'}</span></div>
+          <p>
+            <span data-content-language="zh">{content.description || 'GitHub 未提供项目描述。'}</span>
+            <span data-content-language="original">{repository.description || 'No description provided.'}</span>
+          </p>
+        </> : <>
+          <h1>{repository.full_name}</h1>
+          <div class="repo-source-name"><span class="translation-pending">中文待生成</span></div>
+          <p>{repository.description || 'No description provided.'}</p>
+        </>}
+      </div>
       <a href={repository.html_url} target="_blank" rel="noreferrer">打开 GitHub ↗</a>
     </div>
     <dl class="repo-metrics">

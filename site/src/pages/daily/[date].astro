@@ -2,7 +2,8 @@
 import type { GetStaticPaths } from 'astro';
 import RankingView from '../../components/RankingView.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { readDailyRanking, readEventRankingIndex, readRankingIndex } from '../../lib/data';
+import { readDailyRanking, readEventRankingIndex, readLocalizationCatalog, readRankingIndex } from '../../lib/data';
+import { localizedRepositoryContent } from '../../lib/localization';
 
 export const getStaticPaths = (() => {
   const index = readRankingIndex();
@@ -14,6 +15,7 @@ if (!date) throw new Error('Missing daily ranking date');
 const index = readRankingIndex();
 const eventIndex = readEventRankingIndex();
 const ranking = readDailyRanking(date);
+const localization = readLocalizationCatalog();
 const title = `${ranking.date} GitHub Star 日榜｜开源星榜`;
 const description = `${ranking.date} GitHub 开源项目 Star 净增 Top ${ranking.entries.length}，覆盖 ${ranking.candidate_count} 个候选仓库。`;
 const structuredData = {
@@ -25,7 +27,7 @@ const structuredData = {
     '@type': 'ListItem',
     position: entry.rank,
     url: entry.html_url,
-    name: entry.full_name,
+    name: localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description).displayName,
   })),
 };
 const sameDateEventAvailable = eventIndex.available_dates.includes(ranking.date);

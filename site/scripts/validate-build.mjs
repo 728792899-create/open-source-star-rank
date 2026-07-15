@@ -25,7 +25,9 @@ const required = [
   'data/schema/repositories.schema.json',
   'data/schema/event-index.schema.json',
   'data/schema/event-daily.schema.json',
+  'data/schema/localization.schema.json',
   'data/events/index.json',
+  'data/i18n/zh-CN/repositories.json',
   'og.png',
   'robots.txt',
   'rss.xml',
@@ -41,6 +43,9 @@ const indexHtml = await readFile(path.join(dist, 'index.html'), 'utf8');
 for (const marker of ['lang="zh-CN"', 'rel="canonical"', 'application/ld+json', 'property="og:image"', '开源星榜']) {
   if (!indexHtml.includes(marker)) throw new Error(`Homepage is missing ${marker}`);
 }
+for (const marker of ['data-project-language="zh"', 'data-project-language="original"', '项目内容']) {
+  if (!indexHtml.includes(marker)) throw new Error(`Homepage is missing localization control ${marker}`);
+}
 
 const dataIndex = JSON.parse(await readFile(path.join(dist, 'data/index.json'), 'utf8'));
 if (!['1.1.0', '1.2.0'].includes(dataIndex.schema_version) || dataIndex.freshness_threshold_hours !== 36) {
@@ -49,6 +54,13 @@ if (!['1.1.0', '1.2.0'].includes(dataIndex.schema_version) || dataIndex.freshnes
 const eventIndex = JSON.parse(await readFile(path.join(dist, 'data/events/index.json'), 'utf8'));
 if (eventIndex.schema_version !== '1.0.0' || eventIndex.freshness_threshold_hours !== 36) {
   throw new Error('Published event index does not satisfy the 1.0.0 public contract');
+}
+const localization = JSON.parse(await readFile(path.join(dist, 'data/i18n/zh-CN/repositories.json'), 'utf8'));
+if (localization.schema_version !== '1.0.0' || localization.locale !== 'zh-CN') {
+  throw new Error('Published localization catalog does not satisfy the 1.0.0 public contract');
+}
+if (localization.coverage.localized_count !== localization.repositories.length) {
+  throw new Error('Published localization coverage is inconsistent');
 }
 const rss = await readFile(path.join(dist, 'rss.xml'), 'utf8');
 if (!rss.includes('<rss version="2.0">') || !rss.includes('开源星榜')) {

@@ -4,7 +4,9 @@ import Initialization from '../components/Initialization.astro';
 import RankingView from '../components/RankingView.astro';
 import {
   eventRankingIsFresh, readDailyRanking, readEventDailyRanking, readEventRankingIndex, readRankingIndex,
+  readLocalizationCatalog,
 } from '../lib/data';
+import { localizedRepositoryContent } from '../lib/localization';
 
 const candidateIndex = readRankingIndex();
 const eventIndex = readEventRankingIndex();
@@ -13,6 +15,7 @@ const eventFresh = eventRankingIsFresh(eventIndex, candidateIndex);
 const eventRanking = eventFresh && eventIndex.latest_date ? readEventDailyRanking(eventIndex.latest_date) : null;
 const ranking = eventRanking ?? candidateRanking;
 const isEvent = Boolean(eventRanking);
+const localization = readLocalizationCatalog();
 const fallbackNotice = !isEvent && candidateRanking
   ? eventIndex.status === 'ready'
     ? '公共事件榜已超过 36 小时未更新，首页已自动回退到候选池净增榜。'
@@ -24,7 +27,8 @@ const structuredData = ranking ? {
   name: `${ranking.date} GitHub 开源项目 Star ${isEvent ? '新增' : '净增'}排行`,
   numberOfItems: ranking.entries.length,
   itemListElement: ranking.entries.map((entry) => ({
-    '@type': 'ListItem', position: entry.rank, url: entry.html_url, name: entry.full_name,
+    '@type': 'ListItem', position: entry.rank, url: entry.html_url,
+    name: localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description).displayName,
   })),
 } : undefined;
 const socialImagePath = isEvent && ranking ? `/social/events-daily-${ranking.date}.png`

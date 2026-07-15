@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
-import { readDailyRanking, readRankingIndex } from '../lib/data';
+import { readDailyRanking, readLocalizationCatalog, readRankingIndex } from '../lib/data';
+import { localizedRepositoryContent } from '../lib/localization';
 import { withBase } from '../lib/paths';
 
 const escapeXml = (value: string) => value
@@ -12,12 +13,16 @@ const escapeXml = (value: string) => value
 export const GET: APIRoute = ({ site }) => {
   const origin = site ?? new URL('https://728792899-create.github.io/open-source-star-rank/');
   const index = readRankingIndex();
+  const localization = readLocalizationCatalog();
   const channelUrl = new URL(withBase('/'), origin).toString();
   const feedUrl = new URL(withBase('/rss.xml'), origin).toString();
   const items = index.available_dates.slice(0, 30).map((date) => {
     const ranking = readDailyRanking(date);
     const link = new URL(withBase(`/daily/${date}/`), origin).toString();
-    const top = ranking.entries.slice(0, 10).map((entry) => `#${entry.rank} ${entry.full_name}（${entry.stars_gained >= 0 ? '+' : ''}${entry.stars_gained}）`).join('；');
+    const top = ranking.entries.slice(0, 10).map((entry) => {
+      const content = localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description);
+      return `#${entry.rank} ${content.displayName}（${entry.full_name}，${entry.stars_gained >= 0 ? '+' : ''}${entry.stars_gained}）`;
+    }).join('；');
     return [
       '<item>',
       `<title>${escapeXml(`${date} GitHub Star 净增排行`)}</title>`,

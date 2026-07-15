@@ -6,6 +6,7 @@ import type {
   EventRankingIndex,
   LanguageIndex,
   LanguageRanking,
+  LocalizationCatalog,
   PeriodRanking,
   RankingIndex,
   RepositoryCatalog,
@@ -13,6 +14,7 @@ import type {
 import { eventRankingIsFresh as compareEventFreshness } from '../scripts/event-freshness-utils.mjs';
 
 const dataRoot = path.resolve(process.cwd(), 'generated', 'data');
+let localizationCatalog: LocalizationCatalog | undefined;
 
 export function readRankingIndex(): RankingIndex {
   return JSON.parse(readFileSync(path.join(dataRoot, 'index.json'), 'utf8')) as RankingIndex;
@@ -64,6 +66,25 @@ export function readEventRankingIndex(): EventRankingIndex {
 export function readEventDailyRanking(date: string): EventDailyRanking {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error(`Invalid event ranking date: ${date}`);
   return JSON.parse(readFileSync(path.join(dataRoot, 'events', 'daily', `${date}.json`), 'utf8')) as EventDailyRanking;
+}
+
+export function readLocalizationCatalog(): LocalizationCatalog {
+  if (localizationCatalog) return localizationCatalog;
+  const file = path.join(dataRoot, 'i18n', 'zh-CN', 'repositories.json');
+  if (existsSync(file)) {
+    localizationCatalog = JSON.parse(readFileSync(file, 'utf8')) as LocalizationCatalog;
+    return localizationCatalog;
+  }
+  localizationCatalog = {
+    schema_version: '1.0.0',
+    locale: 'zh-CN',
+    generated_at: null,
+    model: 'openai/gpt-4.1-mini',
+    prompt_version: 'repository-localization-v1',
+    coverage: { eligible_count: 0, localized_count: 0, pending_count: 0, failed_count: 0, coverage_ratio: 1 },
+    repositories: [],
+  };
+  return localizationCatalog;
 }
 
 export function eventRankingIsFresh(eventIndex: EventRankingIndex, candidateIndex: RankingIndex): boolean {

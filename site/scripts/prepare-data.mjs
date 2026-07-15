@@ -57,6 +57,19 @@ if (!existsSync(eventIndexPath)) {
 }
 
 await run(process.env.PYTHON ?? 'python3', [
+  path.join(repositoryRoot, 'tools', 'localize_repositories.py'),
+  '--data-dir',
+  generated,
+  '--overrides-file',
+  path.join(repositoryRoot, 'data', 'localization-overrides.zh-CN.json'),
+  '--offline',
+  '--public-only',
+  '--deterministic',
+]);
+await rm(path.join(publicData, 'i18n'), { recursive: true, force: true });
+await cp(path.join(generated, 'i18n'), path.join(publicData, 'i18n'), { recursive: true });
+
+await run(process.env.PYTHON ?? 'python3', [
   path.join(repositoryRoot, 'tools', 'validate_star_rank_data.py'),
   '--data-dir',
   generated,

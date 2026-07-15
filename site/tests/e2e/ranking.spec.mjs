@@ -18,7 +18,8 @@ test('publishes the public event archive with direct GitHub links and source met
   await expect(page.locator('[data-ranking-row]')).toHaveCount(100);
   await page.getByText('查看 GH Archive 与费用保护信息').click();
   await expect(page.getByText('0.88 GiB')).toBeVisible();
-  await expect(page.getByRole('link', { name: 'public-event-labs/project-001' })).toHaveAttribute('href', 'https://github.com/public-event-labs/project-001');
+  await expect(page.getByRole('link', { name: /测试项目 30001/ })).toHaveAttribute('href', 'https://github.com/public-event-labs/project-001');
+  await expect(page.locator('.project-source-name').filter({ hasText: 'public-event-labs/project-001' })).toBeVisible();
 });
 
 test('renders 100 static rows and passes automated accessibility checks', async ({ page }) => {
@@ -58,7 +59,8 @@ test('navigates historical dates and keeps direct no-JavaScript content readable
   const noScriptPage = await context.newPage();
   await noScriptPage.goto(latestPath);
   await expect(noScriptPage.locator('[data-ranking-row]')).toHaveCount(100);
-  await expect(noScriptPage.getByRole('link', { name: 'fixture-labs/repo-001', exact: true })).toBeVisible();
+  await expect(noScriptPage.getByRole('link', { name: /测试项目 10001/ })).toBeVisible();
+  await expect(noScriptPage.locator('.project-source-name').filter({ hasText: 'fixture-labs/repo-001' })).toBeVisible();
   await context.close();
 });
 
@@ -74,6 +76,32 @@ test('copies ranking and project links with stable repository anchors', async ({
   await expect(page.locator('[data-action-status]')).toContainText('已复制');
   const projectLink = await page.evaluate(() => navigator.clipboard.readText());
   expect(projectLink).toContain('#repo-10001');
+});
+
+test('defaults project content to Chinese and persists the original-content switch', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'share', {
+      configurable: true,
+      value: async (data) => { window.__lastShareData = data; },
+    });
+  });
+  await page.goto(latestPath);
+  await expect(page.getByRole('link', { name: /测试项目 10001/ })).toBeVisible();
+  await expect(page.locator('.project-source-name').filter({ hasText: 'fixture-labs/repo-001' })).toBeVisible();
+  await page.getByRole('button', { name: /分享 fixture-labs\/repo-001/ }).click();
+  await expect.poll(() => page.evaluate(() => window.__lastShareData?.title)).toContain('测试项目 10001');
+  await page.getByRole('button', { name: '原文' }).click();
+  await expect(page).toHaveURL(/display=original/);
+  await expect(page.getByRole('link', { name: 'fixture-labs/repo-001', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: /分享 fixture-labs\/repo-001/ }).click();
+  await expect.poll(() => page.evaluate(() => window.__lastShareData?.title)).toContain('fixture-labs/repo-001');
+  await page.reload();
+  await expect(page.getByRole('button', { name: '原文' })).toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('button', { name: '中文' }).click();
+  await expect(page).not.toHaveURL(/display=/);
+  const search = page.getByRole('searchbox', { name: '搜索项目' });
+  await search.fill('中文功能名');
+  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(100);
 });
 
 for (const width of [390, 768, 1440]) {
@@ -110,7 +138,8 @@ test('publishes status, period, language and stable repository history routes', 
   await expect(page.locator('[data-ranking-row]')).toHaveCount(50);
 
   await page.goto('repo/10001/');
-  await expect(page.getByRole('heading', { name: 'fixture-labs/repo-001' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /测试项目 10001/ })).toBeVisible();
+  await expect(page.locator('.repo-source-name').filter({ hasText: 'fixture-labs/repo-001' })).toBeVisible();
   await expect(page.getByRole('heading', { name: '真实历史' })).toBeVisible();
   await expect(page.getByRole('row')).toHaveCount(31);
 });
@@ -122,6 +151,8 @@ test('publishes canonical ranking pages and three feed formats', async ({ page, 
   for (const feed of ['rss.xml', 'atom.xml', 'feed.json']) {
     const response = await request.get(feed);
     expect(response.ok()).toBeTruthy();
-    expect((await response.text()).length).toBeGreaterThan(100);
+    const body = await response.text();
+    expect(body.length).toBeGreaterThan(100);
+    expect(body).toContain('测试项目 10001');
   }
 });

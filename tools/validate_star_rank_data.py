@@ -12,8 +12,10 @@ from zoneinfo import ZoneInfo
 
 try:
     from tools.star_rank_schema import SchemaValidationError, sync_public_schemas, validate_payload
+    from tools.localize_repositories import discover_ranked_repositories, repository_source_hash
 except ModuleNotFoundError:  # pragma: no cover - direct script execution fallback
     from star_rank_schema import SchemaValidationError, sync_public_schemas, validate_payload
+    from localize_repositories import discover_ranked_repositories, repository_source_hash
 
 
 def read_json(path: Path) -> Any:
@@ -67,6 +69,7 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
         "repositories": 0,
         "event_index": 0,
         "event_daily": 0,
+        "localization": 0,
     }
     state_path = root / "state" / "candidates.json"
     if state_path.exists():
@@ -283,8 +286,35 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
             if event_index["updated_at"] != latest_event["generated_at"] or event_index["latest_source_metrics"] != latest_event["source_metrics"]:
                 raise SchemaValidationError("事件榜索引与最新日榜不一致")
 
+    localization_path = public_dir / "i18n" / "zh-CN" / "repositories.json"
+    if localization_path.exists():
+        localization = read_json(localization_path)
+        validate_payload("localization", localization, schema_dir)
+        ranked_repositories = discover_ranked_repositories(public_dir)
+        entries = localization["repositories"]
+        repository_ids = [item["repository_id"] for item in entries]
+        if repository_ids != sorted(set(repository_ids)):
+            raise SchemaValidationError("中文本地化目录 repository_id 必须唯一且升序")
+        if any(repository_id not in ranked_repositories for repository_id in repository_ids):
+            raise SchemaValidationError("中文本地化目录包含未进入任何公开榜单的仓库")
+        for item in entries:
+            source = ranked_repositories[item["repository_id"]]
+            if item["source_full_name"] != source["full_name"] or item["source_hash"] != repository_source_hash(source):
+                raise SchemaValidationError(f"中文本地化源信息已失效：{item['repository_id']}")
+        coverage = localization["coverage"]
+        eligible_count = len(ranked_repositories)
+        localized_count = len(entries)
+        expected_ratio = round(localized_count / eligible_count, 6) if eligible_count else 1
+        if coverage["eligible_count"] != eligible_count or coverage["localized_count"] != localized_count:
+            raise SchemaValidationError("中文本地化覆盖数量与公开榜单不一致")
+        if coverage["pending_count"] != eligible_count - localized_count or coverage["coverage_ratio"] != expected_ratio:
+            raise SchemaValidationError("中文本地化待处理数量或覆盖率不一致")
+        if coverage["failed_count"] > coverage["pending_count"]:
+            raise SchemaValidationError("中文本地化失败数不得超过待处理数")
+        counts["localization"] = 1
+
     published_schemas = public_dir / "schema"
-    for filename in (
+    required_schema_files = [
         "state.schema.json",
         "snapshot.schema.json",
         "index.schema.json",
@@ -295,7 +325,10 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
         "repositories.schema.json",
         "event-index.schema.json",
         "event-daily.schema.json",
-    ):
+    ]
+    if localization_path.exists():
+        required_schema_files.append("localization.schema.json")
+    for filename in required_schema_files:
         if not (published_schemas / filename).is_file():
             raise SchemaValidationError(f"公开数据缺少 Schema：{published_schemas / filename}")
     return counts

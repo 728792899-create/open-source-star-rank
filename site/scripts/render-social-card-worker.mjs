@@ -7,21 +7,23 @@ const escapeXml = (value) => String(value)
 
 function cardSvg(ranking, label, eventMode = false) {
   const rows = ranking.entries.slice(0, 5).map((entry, index) => {
-    const y = 270 + index * 54;
-    const name = entry.full_name.length > 42 ? `${entry.full_name.slice(0, 40)}…` : entry.full_name;
+    const y = 263 + index * 60;
+    const displayName = entry.display_name_zh || entry.full_name;
+    const name = displayName.length > 34 ? `${displayName.slice(0, 32)}…` : displayName;
+    const sourceName = entry.full_name.length > 48 ? `${entry.full_name.slice(0, 46)}…` : entry.full_name;
     const growth = eventMode ? entry.stars_added : entry.stars_gained;
     const gained = `${growth >= 0 ? '+' : ''}${growth.toLocaleString('en-US')}`;
-    return `<text x="94" y="${y}" font-size="28" font-weight="750" fill="#171814">${String(entry.rank).padStart(2, '0')}  ${escapeXml(name)}</text><text x="1100" y="${y}" text-anchor="end" font-size="27" font-weight="800" fill="#1c7650">${gained}</text>`;
+    return `<text x="94" y="${y}" font-size="25" font-weight="750" fill="#171814">${String(entry.rank).padStart(2, '0')}  ${escapeXml(name)}</text><text x="146" y="${y + 20}" font-size="12" font-weight="650" fill="#68685e">${escapeXml(sourceName)}</text><text x="1100" y="${y + 8}" text-anchor="end" font-size="27" font-weight="800" fill="#1c7650">${gained}</text>`;
   }).join('');
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
     <rect width="1200" height="630" fill="#f3efe4"/><path d="M0 70H1200M0 560H1200" stroke="#cbc4b4"/>
     <circle cx="88" cy="83" r="27" fill="#171814"/><path d="M88 65l5 12 13 1-10 9 3 13-11-7-11 7 3-13-10-9 13-1z" fill="#f2dcae"/>
-    <text x="132" y="94" font-family="sans-serif" font-size="29" font-weight="800" fill="#171814">OPEN SOURCE STAR RANK</text>
+    <text x="132" y="94" font-family="sans-serif" font-size="29" font-weight="800" fill="#171814">开源星榜</text>
     <text x="1110" y="92" text-anchor="end" font-family="monospace" font-size="20" font-weight="700" fill="#c98b18">${escapeXml(label.toUpperCase())}</text>
-    <text x="88" y="178" font-family="sans-serif" font-size="56" font-weight="850" letter-spacing="-2" fill="#171814">${escapeXml(ranking.date)} · ${eventMode ? 'NEW STARS' : 'NET STAR GROWTH'}</text>
-    <text x="90" y="222" font-family="sans-serif" font-size="20" fill="#68685e">${eventMode ? 'GH ARCHIVE PUBLIC WATCH EVENTS' : 'CANDIDATE POOL SIGNAL'} · ${ranking.eligible_count.toLocaleString('en-US')} ${eventMode ? 'ELIGIBLE' : 'COMPARABLE'} REPOSITORIES · UTC+8</text>
+    <text x="88" y="178" font-family="sans-serif" font-size="54" font-weight="850" letter-spacing="-2" fill="#171814">${escapeXml(ranking.date)} · ${eventMode ? '新增 STAR' : 'STAR 净增'}</text>
+    <text x="90" y="222" font-family="sans-serif" font-size="20" fill="#68685e">${eventMode ? 'GH ARCHIVE 公开 WATCH EVENT' : '候选池连续快照'} · ${ranking.eligible_count.toLocaleString('zh-CN')} 个可比较仓库 · UTC+8</text>
     <g font-family="Arial,sans-serif">${rows}</g>
-    <text x="90" y="595" font-family="sans-serif" font-size="18" fill="#68685e">${eventMode ? 'PUBLIC EVENT SIGNAL · UNIQUE ACTORS · NOT GITHUB OFFICIAL GLOBAL STATISTICS' : 'GITHUB PUBLIC API · VALID MIDNIGHT SNAPSHOTS · NO ZERO-FILL · NO INTERPOLATION'}</text>
+    <text x="90" y="595" font-family="sans-serif" font-size="18" fill="#68685e">${eventMode ? '公共事件信号 · 唯一用户数 · 非 GITHUB 官方全站统计' : 'GITHUB 公共 API · 有效零点快照 · 不补零 · 不插值'}</text>
   </svg>`;
 }
 

@@ -4,6 +4,8 @@ import type {
   PeriodRanking, RankingEntry, RankingIndex,
 } from '../types';
 import { withBase } from '../lib/paths';
+import { readLocalizationCatalog } from '../lib/data';
+import { localizedRepositoryContent } from '../lib/localization';
 import FreshnessStatus from './FreshnessStatus.astro';
 
 interface Props {
@@ -69,6 +71,7 @@ const makeTrendShape = (values: Array<number | null>) => {
 };
 const rankingPath = withBase(`${routePrefix}/${ranking.date}/`);
 const rankingJsonPath = withBase(`${dataPrefix}/${ranking.date}.json`);
+const localization = readLocalizationCatalog();
 ---
 
 <main id="main-content" data-ranking data-ranking-mode={mode} data-daily-path={rankingPath} data-ranking-date={ranking.date} class="shell ranking-page">
@@ -177,7 +180,8 @@ const rankingJsonPath = withBase(`${dataPrefix}/${ranking.date}.json`);
         {ranking.entries.map((entry) => {
           const gained = entryGain(entry);
           const trendShape = makeTrendShape(entry.trend_7d);
-          const searchText = `${entry.full_name} ${entry.description ?? ''}`;
+          const content = localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description);
+          const searchText = `${entry.full_name} ${entry.description ?? ''} ${content.displayName} ${content.description ?? ''}`;
           const movement = entry.rank_change === null ? '新上榜' : entry.rank_change > 0 ? `↑${entry.rank_change}` : entry.rank_change < 0 ? `↓${Math.abs(entry.rank_change)}` : '—';
           const movementClass = entry.rank_change === null ? 'new' : entry.rank_change > 0 ? 'up' : entry.rank_change < 0 ? 'down' : 'flat';
           return (
@@ -196,17 +200,34 @@ const rankingJsonPath = withBase(`${dataPrefix}/${ranking.date}.json`);
                 aria-label={`排名 ${entry.rank}，变化 ${movement}`}
               >{String(entry.rank).padStart(2, '0')}</strong>
               <div class="project-cell" role="cell">
-                <a class="project-link" href={hasRepositoryPages ? withBase(`/repo/${entry.repository_id}/`) : entry.html_url} target={hasRepositoryPages ? undefined : '_blank'} rel={hasRepositoryPages ? undefined : 'noreferrer'}>{entry.full_name}</a>
+                <div class="project-copy">
+                  {content.localized ? <>
+                    <a class="project-link" data-content-language="zh" href={hasRepositoryPages ? withBase(`/repo/${entry.repository_id}/`) : entry.html_url} target={hasRepositoryPages ? undefined : '_blank'} rel={hasRepositoryPages ? undefined : 'noreferrer'}>{content.displayName}</a>
+                    <a class="project-link" data-content-language="original" href={hasRepositoryPages ? withBase(`/repo/${entry.repository_id}/`) : entry.html_url} target={hasRepositoryPages ? undefined : '_blank'} rel={hasRepositoryPages ? undefined : 'noreferrer'}>{entry.full_name}</a>
+                    <span class="project-source-row" data-content-language="zh">
+                      <span class="project-source-name">{entry.full_name}</span>
+                      <span class="translation-badge" title={content.provenance === 'manual' ? '人工校订中文内容' : 'GitHub Models 生成的中文内容'}>{content.provenance === 'manual' ? '人工校订' : 'AI 译'}</span>
+                    </span>
+                    <p>
+                      <span data-content-language="zh">{content.description || 'GitHub 未提供项目描述。'}</span>
+                      <span data-content-language="original">{entry.description || 'No description provided.'}</span>
+                    </p>
+                  </> : <>
+                    <a class="project-link" href={hasRepositoryPages ? withBase(`/repo/${entry.repository_id}/`) : entry.html_url} target={hasRepositoryPages ? undefined : '_blank'} rel={hasRepositoryPages ? undefined : 'noreferrer'}>{entry.full_name}</a>
+                    <span class="project-source-row"><span class="translation-pending">中文待生成</span></span>
+                    <p>{entry.description || 'No description provided.'}</p>
+                  </>}
+                </div>
                 {hasRepositoryPages && <a class="github-link" href={entry.html_url} target="_blank" rel="noreferrer" aria-label={`在 GitHub 打开 ${entry.full_name}`}>GitHub ↗</a>}
                 <button
                   class="share-project"
                   type="button"
                   data-share-project
-                  data-share-name={entry.full_name}
+                  data-share-name-zh={content.displayName}
+                  data-share-name-original={entry.full_name}
                   data-share-rank={entry.rank}
                   aria-label={`分享 ${entry.full_name} 的第 ${entry.rank} 名`}
                 >分享</button>
-                <p>{entry.description || 'No description provided.'}</p>
               </div>
               <div class="language-cell" role="cell">{entry.language || 'Other'}</div>
               <div
@@ -291,12 +312,16 @@ const rankingJsonPath = withBase(`${dataPrefix}/${ranking.date}.json`);
     const setStatus = (message: string) => {
       if (actionStatus) actionStatus.textContent = message;
     };
-    const rankingUrl = new URL(dailyPath, window.location.origin).toString();
+    const rankingUrl = () => {
+      const url = new URL(dailyPath, window.location.origin);
+      if (document.documentElement.dataset.projectLanguage === 'original') url.searchParams.set('display', 'original');
+      return url.toString();
+    };
     root.addEventListener('click', async (event) => {
       if (!(event.target instanceof Element)) return;
       if (event.target.closest('[data-copy-ranking]')) {
         try {
-          await copyText(rankingUrl);
+          await copyText(rankingUrl());
           setStatus('榜单链接已复制');
         } catch {
           setStatus('复制失败，请从地址栏复制');
@@ -305,10 +330,12 @@ const rankingJsonPath = withBase(`${dataPrefix}/${ranking.date}.json`);
       }
       const button = event.target.closest('[data-share-project]');
       if (button instanceof HTMLButtonElement) {
-        const name = button.dataset.shareName ?? 'GitHub 项目';
+        const name = document.documentElement.dataset.projectLanguage === 'original'
+          ? button.dataset.shareNameOriginal ?? 'GitHub 项目'
+          : button.dataset.shareNameZh ?? button.dataset.shareNameOriginal ?? 'GitHub 项目';
         const rank = button.dataset.shareRank ?? '';
         const row = button.closest('[data-ranking-row]');
-        const url = `${rankingUrl}#${row?.id ?? ''}`;
+        const url = `${rankingUrl()}#${row?.id ?? ''}`;
         const shareData = {
           title: `${name}｜开源星榜第 ${rank} 名`,
           text: `${name} 在 ${rankingDate} 开源星榜位列第 ${rank} 名。`,
