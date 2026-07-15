@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://728792899-create.github.io/open-source-star-rank/data/schema/repositories.schema.json",
+  "title": "Open Source Star Rank repository catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "updated_at", "timezone", "candidate_count", "repositories"],
+  "properties": {
+    "schema_version": { "const": "1.2.0" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "timezone": { "const": "Asia/Shanghai" },
+    "candidate_count": { "type": "integer", "minimum": 0, "maximum": 2000 },
+    "repositories": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 2000,
+      "items": { "$ref": "#/$defs/repository" }
+    }
+  },
+  "$defs": {
+    "history": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["date", "stars_total", "stars_gained", "rank"],
+      "properties": {
+        "date": { "type": "string", "format": "date" },
+        "stars_total": { "type": ["integer", "null"], "minimum": 0 },
+        "stars_gained": { "type": ["integer", "null"] },
+        "rank": { "type": ["integer", "null"], "minimum": 1, "maximum": 100 }
+      }
+    },
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository_id", "full_name", "description", "language", "stars_total", "html_url", "owner_avatar_url", "knowledge_url", "first_seen_date", "last_seen_date", "history_30d"],
+      "properties": {
+        "repository_id": { "type": "integer", "minimum": 1 },
+        "full_name": { "type": "string", "pattern": "^[^/]+/[^/]+$" },
+        "description": { "type": ["string", "null"] },
+        "language": { "type": ["string", "null"] },
+        "stars_total": { "type": "integer", "minimum": 0 },
+        "html_url": { "type": "string", "format": "uri" },
+        "owner_avatar_url": { "type": ["string", "null"], "format": "uri" },
+        "knowledge_url": { "type": ["string", "null"] },
+        "first_seen_date": { "type": ["string", "null"], "format": "date" },
+        "last_seen_date": { "type": ["string", "null"], "format": "date" },
+        "history_30d": { "type": "array", "minItems": 30, "maxItems": 30, "items": { "$ref": "#/$defs/history" } }
+      }
+    }
+  }
+}

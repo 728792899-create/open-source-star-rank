@@ -1,0 +1,60 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { readRepositoryCatalog } from '../../lib/data';
+
+export const getStaticPaths = (() => readRepositoryCatalog().repositories.map((repository) => ({
+  params: { repository_id: String(repository.repository_id) },
+  props: { repository },
+}))) satisfies GetStaticPaths;
+
+const { repository } = Astro.props;
+const formatNumber = (value: number) => new Intl.NumberFormat('zh-CN').format(value);
+const values = repository.history_30d.map((item) => item.stars_gained).filter((value): value is number => value !== null);
+const maximum = Math.max(1, ...values.map((value) => Math.abs(value)));
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareSourceCode',
+  name: repository.full_name,
+  description: repository.description,
+  codeRepository: repository.html_url,
+  programmingLanguage: repository.language,
+};
+---
+
+<BaseLayout title={`${repository.full_name} Star 历史｜开源星榜`} description={`${repository.full_name} 在开源星榜候选池中的排名与近 30 日真实 Star 变化。`} structuredData={structuredData}>
+  <main id="main-content" class="shell repo-page">
+    <p class="eyebrow">Repository #{repository.repository_id} · stable identity</p>
+    <div class="repo-hero">
+      <div><h1>{repository.full_name}</h1><p>{repository.description || 'GitHub 未提供项目描述。'}</p></div>
+      <a href={repository.html_url} target="_blank" rel="noreferrer">打开 GitHub ↗</a>
+    </div>
+    <dl class="repo-metrics">
+      <div><dt>当前 Star</dt><dd>{formatNumber(repository.stars_total)}</dd></div>
+      <div><dt>主要语言</dt><dd>{repository.language || 'Other'}</dd></div>
+      <div><dt>首次发现</dt><dd>{repository.first_seen_date || '未知'}</dd></div>
+      <div><dt>最近追踪</dt><dd>{repository.last_seen_date || '未知'}</dd></div>
+    </dl>
+
+    <section class="history-section" aria-labelledby="history-title">
+      <div class="section-heading"><div><p class="eyebrow">30 day true history</p><h2 id="history-title">真实历史</h2></div></div>
+      <div class="history-chart" aria-label="近 30 日 Star 净增柱状图">
+        {repository.history_30d.map((item) => <div title={`${item.date}: ${item.stars_gained ?? '无数据'}`}>
+          {item.stars_gained === null
+            ? <span class="missing"></span>
+            : <span class:list={{ negative: item.stars_gained < 0 }} style={`height:${Math.max(4, Math.round((Math.abs(item.stars_gained) / maximum) * 100))}%`}></span>}
+        </div>)}
+      </div>
+      <div class="history-table" role="table" aria-label="近 30 日 Star 与排名记录">
+        <div role="row"><strong role="columnheader">日期</strong><strong role="columnheader">总 Star</strong><strong role="columnheader">净增</strong><strong role="columnheader">日榜排名</strong></div>
+        {repository.history_30d.toReversed().map((item) => <div role="row">
+          <time role="cell" datetime={item.date}>{item.date}</time>
+          <span role="cell">{item.stars_total === null ? '—' : formatNumber(item.stars_total)}</span>
+          <span role="cell">{item.stars_gained === null ? '—' : `${item.stars_gained >= 0 ? '+' : ''}${formatNumber(item.stars_gained)}`}</span>
+          <span role="cell">{item.rank === null ? '—' : `#${item.rank}`}</span>
+        </div>)}
+      </div>
+      <p class="history-note">— 表示当日缺少有效连续快照，或项目当日不在可比较候选中；不补零，不插值。</p>
+    </section>
+  </main>
+</BaseLayout>

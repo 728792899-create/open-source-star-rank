@@ -1,0 +1,77 @@
+---
+import '../styles/global.css';
+import { withBase } from '../lib/paths';
+
+interface Props {
+  title?: string;
+  description?: string;
+  structuredData?: Record<string, unknown>;
+  socialImagePath?: string;
+}
+
+const {
+  title = '开源星榜｜GitHub 开源项目每日 Star 净增排行',
+  description = '每天追踪 GitHub 开源项目候选池，用连续快照呈现 Star 净增 Top 100。',
+  structuredData,
+  socialImagePath = '/og.png',
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
+const socialImage = new URL(withBase(socialImagePath), Astro.site ?? Astro.url.origin).toString();
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f3efe4" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23171814'/%3E%3Cpath d='m16 5 3.1 6.3 6.9 1-5 4.8 1.2 6.9-6.2-3.2L9.8 24l1.2-6.9-5-4.8 6.9-1z' fill='%23f2dcae'/%3E%3C/svg%3E" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title="开源星榜每日排行" href={new URL(withBase('/rss.xml'), Astro.site ?? Astro.url.origin).toString()} />
+    <link rel="alternate" type="application/atom+xml" title="开源星榜 Atom" href={new URL(withBase('/atom.xml'), Astro.site ?? Astro.url.origin).toString()} />
+    <link rel="alternate" type="application/feed+json" title="开源星榜 JSON Feed" href={new URL(withBase('/feed.json'), Astro.site ?? Astro.url.origin).toString()} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <title>{title}</title>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData ?? {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: '开源星榜',
+      url: new URL(withBase('/'), Astro.site ?? Astro.url.origin).toString(),
+      description,
+      inLanguage: 'zh-CN',
+    })} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <header class="site-header">
+      <a class="brand" href={withBase('/')} aria-label="开源星榜首页">
+        <span class="brand-mark" aria-hidden="true">★</span>
+        <span>开源星榜</span>
+      </a>
+      <nav aria-label="主导航">
+        <a href={withBase('/')}>每日排行</a>
+        <a href={withBase('/period/7d/')}>7 日榜</a>
+        <a href={withBase('/period/30d/')}>30 日榜</a>
+        <a href={withBase('/language/')}>语言</a>
+        <a href={withBase('/status/')}>状态</a>
+        <a href={withBase('/methodology/')}>数据口径</a>
+      </nav>
+    </header>
+    <slot />
+    <footer class="site-footer">
+      <p><strong>开源星榜</strong>是候选池观测榜，不代表 GitHub 全站无遗漏。</p>
+      <p>数据来自 GitHub 公共 API · 北京时间每日更新</p>
+    </footer>
+  </body>
+</html>

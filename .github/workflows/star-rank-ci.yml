@@ -1,0 +1,100 @@
+name: Validate Open Source Star Rank
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/star-rank-*.yml"
+      - ".github/dependabot.yml"
+      - "schemas/star-rank/**"
+      - "site/**"
+      - "tests/**"
+      - "tools/star_rank*.py"
+      - "tools/check_star_rank_freshness.py"
+      - "requirements-star-rank.txt"
+      - "data/seed-repositories.json"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/star-rank-*.yml"
+      - ".github/dependabot.yml"
+      - "schemas/star-rank/**"
+      - "site/**"
+      - "tests/**"
+      - "tools/star_rank*.py"
+      - "tools/check_star_rank_freshness.py"
+      - "requirements-star-rank.txt"
+      - "data/seed-repositories.json"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: star-rank-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      ASTRO_TELEMETRY_DISABLED: "1"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-star-rank.txt
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --requirement requirements-star-rank.txt
+          npm ci --prefix site
+
+      - name: Validate collector and repository
+        run: |
+          python -m unittest discover -s tests -v
+
+      - name: Validate static site
+        working-directory: site
+        run: |
+          npm test
+          npm run check
+          npm run build
+          npm run validate-build
+          STAR_RANK_DATA_DIR="$PWD/tests/fixtures/ready-data" BASE_PATH=/open-source-star-rank npm run build
+          npm run validate-build
+          npm run test:reproducible
+          npm audit --omit=dev
+
+      - name: Install Chromium for interaction tests
+        working-directory: site
+        run: npx playwright install --with-deps chromium
+
+      - name: Run interaction and accessibility tests
+        working-directory: site
+        run: npm run test:e2e
+
+      - name: Enforce Lighthouse quality gates
+        working-directory: site
+        run: npm run lighthouse
+
+      - name: Preserve Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: lighthouse-reports
+          path: site/.lighthouseci
+          if-no-files-found: warn
+          include-hidden-files: true
+          retention-days: 7

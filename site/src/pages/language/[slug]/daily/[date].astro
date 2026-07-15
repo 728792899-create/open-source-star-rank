@@ -1,0 +1,39 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import RankingView from '../../../../components/RankingView.astro';
+import { readLanguageIndex, readLanguageRanking, readRankingIndex } from '../../../../lib/data';
+
+export const getStaticPaths = (() => {
+  const languages = readLanguageIndex();
+  return languages.languages.flatMap((language) => language.available_dates.map((date) => ({
+    params: { slug: language.slug, date }, props: { language, date },
+  })));
+}) satisfies GetStaticPaths;
+
+const { language, date } = Astro.props;
+const index = readRankingIndex();
+const ranking = readLanguageRanking(language.slug, date);
+const structuredData = {
+  '@context': 'https://schema.org', '@type': 'ItemList', name: `${date} ${language.language} GitHub Star 净增榜`,
+  numberOfItems: ranking.entries.length,
+  itemListElement: ranking.entries.map((entry) => ({ '@type': 'ListItem', position: entry.rank, url: entry.html_url, name: entry.full_name })),
+};
+---
+
+<BaseLayout
+  title={`${date} ${language.language} GitHub Star 榜｜开源星榜`}
+  description={`${date} ${language.language} GitHub 开源项目独立 Star 净增 Top ${ranking.entries.length}。`}
+  structuredData={structuredData}
+  socialImagePath={`/social/language-${language.slug}-${date}.png`}
+>
+  <RankingView
+    ranking={ranking}
+    index={index}
+    mode="language"
+    isLatest={date === language.latest_date}
+    availableDates={language.available_dates}
+    routePrefix={`/language/${language.slug}/daily`}
+    dataPrefix={`/data/language/${language.slug}/daily`}
+  />
+</BaseLayout>

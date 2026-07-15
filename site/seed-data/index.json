@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.2.0",
+  "status": "initializing",
+  "timezone": "Asia/Shanghai",
+  "updated_at": "2026-07-15T04:13:00Z",
+  "latest_date": null,
+  "available_dates": [],
+  "candidate_count": 0,
+  "methodology_version": "candidate-pool-snapshot-v1",
+  "freshness_threshold_hours": 36,
+  "latest_collection": null,
+  "sampling": {
+    "target_local_time": "00:20",
+    "valid_window_start": "00:00",
+    "valid_window_end": "03:00",
+    "latest_snapshot_at": "2026-07-15T04:13:00Z",
+    "latest_snapshot_valid": false,
+    "latest_snapshot_reason": "outside_window",
+    "latest_valid_snapshot_at": null,
+    "consecutive_valid_snapshots": 0,
+    "next_scheduled_at": "2026-07-16T00:20:00+08:00",
+    "expected_first_ranking_at": "2026-07-17T01:00:00+08:00",
+    "period_progress": {
+      "7d": { "completed": 0, "required": 7 },
+      "30d": { "completed": 0, "required": 30 }
+    }
+  },
+  "periods": {
+    "7d": { "latest_date": null, "available_dates": [] },
+    "30d": { "latest_date": null, "available_dates": [] }
+  }
+}

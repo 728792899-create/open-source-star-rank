@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FreshnessStatus from '../../components/FreshnessStatus.astro';
+import { readRankingIndex } from '../../lib/data';
+
+const index = readRankingIndex();
+const sampling = index.sampling;
+const collection = index.latest_collection;
+const formatDateTime = (value: string | null | undefined) => value
+  ? new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value))
+  : '尚无';
+const reasonLabel: Record<string, string> = {
+  missing: '尚无快照',
+  within_window: '零点窗口内，可用于排行',
+  outside_window: '零点窗口外，仅供审计',
+};
+const structuredData = {
+  '@context': 'https://schema.org', '@type': 'Dataset', name: '开源星榜采样与发布状态',
+  dateModified: index.updated_at, temporalCoverage: 'P30D', inLanguage: 'zh-CN',
+};
+---
+
+<BaseLayout title="采样与发布状态｜开源星榜" description="查看开源星榜的零点快照质量、API 覆盖、数据完整率和周期榜积累进度。" structuredData={structuredData}>
+  <main id="main-content" class="shell status-page">
+    <FreshnessStatus updatedAt={index.updated_at} thresholdHours={index.freshness_threshold_hours} captureValid={sampling?.latest_snapshot_valid ?? true} />
+    <p class="eyebrow">System status · public evidence</p>
+    <h1>每一张榜，<br />都有可核对的时间窗口。</h1>
+    <p class="status-lead">有效采样目标为北京时间 00:20，只接受 00:00–03:00 内的快照。相邻快照必须日期连续且相隔 21–27 小时。</p>
+
+    <section class="status-grid" aria-labelledby="sampling-title">
+      <div class="section-heading"><div><p class="eyebrow">Sampling quality</p><h2 id="sampling-title">采样质量</h2></div></div>
+      <dl>
+        <div><dt>最近快照</dt><dd>{formatDateTime(sampling?.latest_snapshot_at)}</dd></div>
+        <div><dt>质量结论</dt><dd class:list={{ warning: sampling && !sampling.latest_snapshot_valid }}>{reasonLabel[sampling?.latest_snapshot_reason ?? 'missing'] ?? sampling?.latest_snapshot_reason}</dd></div>
+        <div><dt>最近有效快照</dt><dd>{formatDateTime(sampling?.latest_valid_snapshot_at)}</dd></div>
+        <div><dt>有效基线</dt><dd>{sampling?.consecutive_valid_snapshots ?? 0} / 2</dd></div>
+        <div><dt>下次计划采样</dt><dd>{formatDateTime(sampling?.next_scheduled_at)}</dd></div>
+        <div><dt>预计首榜</dt><dd>{formatDateTime(sampling?.expected_first_ranking_at)}</dd></div>
+      </dl>
+    </section>
+
+    <section class="status-grid" aria-labelledby="coverage-title">
+      <div class="section-heading"><div><p class="eyebrow">Collection coverage</p><h2 id="coverage-title">采集覆盖</h2></div></div>
+      {collection ? <dl>
+        <div><dt>最近创建搜索</dt><dd>{collection.search_result_counts.recent_created.toLocaleString('zh-CN')}</dd></div>
+        <div><dt>近期活跃搜索</dt><dd>{collection.search_result_counts.recent_active.toLocaleString('zh-CN')}</dd></div>
+        <div><dt>成熟项目搜索</dt><dd>{collection.search_result_counts.established_active.toLocaleString('zh-CN')}</dd></div>
+        <div><dt>去重新发现</dt><dd>{collection.unique_discovered_count.toLocaleString('zh-CN')}</dd></div>
+        <div><dt>候选池进 / 出</dt><dd>+{collection.candidate_added_count} / −{collection.candidate_removed_count}</dd></div>
+        <div><dt>API 请求 / 重试</dt><dd>{collection.api_request_count} / {collection.api_retry_count}</dd></div>
+        <div><dt>快照有效 / 预期</dt><dd>{collection.snapshot_complete_count} / {collection.snapshot_expected_count}</dd></div>
+        <div><dt>完整率</dt><dd>{(collection.snapshot_completeness * 100).toFixed(1)}%</dd></div>
+      </dl> : <p class="empty-copy">尚未完成首次采集。</p>}
+    </section>
+
+    <section class="status-grid" aria-labelledby="progress-title">
+      <div class="section-heading"><div><p class="eyebrow">Availability</p><h2 id="progress-title">真实数据积累</h2></div></div>
+      <dl>
+        <div><dt>日榜</dt><dd>{index.latest_date ? `已发布至 ${index.latest_date}` : `基线 ${sampling?.consecutive_valid_snapshots ?? 0}/2`}</dd></div>
+        <div><dt>7 日榜</dt><dd>{sampling?.period_progress['7d'].completed ?? 0} / 7</dd></div>
+        <div><dt>30 日榜</dt><dd>{sampling?.period_progress['30d'].completed ?? 0} / 30</dd></div>
+        <div><dt>公共数据版本</dt><dd>{index.schema_version}</dd></div>
+      </dl>
+    </section>
+  </main>
+</BaseLayout>

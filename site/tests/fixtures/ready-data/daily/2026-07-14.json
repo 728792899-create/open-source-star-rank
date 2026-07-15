@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.1.0",
+  "date": "2026-07-14",
+  "timezone": "Asia/Shanghai",
+  "window_start": "2026-07-14T16:20:00Z",
+  "window_end": "2026-07-15T16:20:00Z",
+  "candidate_count": 2000,
+  "eligible_count": 1842,
+  "collection": {
+    "search_result_counts": {
+      "recent_created": 1000,
+      "recent_active": 500,
+      "established_active": 500
+    },
+    "unique_discovered_count": 1812,
+    "candidate_added_count": 83,
+    "candidate_removed_count": 51,
+    "api_request_count": 42,
+    "api_retry_count": 1,
+    "snapshot_expected_count": 2000,
+    "snapshot_complete_count": 2000,
+    "snapshot_completeness": 1.0
+  },
+  "entries": [
+    {
+      "repository_id": 1,
+      "full_name": "signal-labs/bright-star",
+      "description": "A fast local-first toolkit for creative developers.",
+      "language": "TypeScript",
+      "stars_total": 24810,
+      "stars_gained": 1284,
+      "rank": 1,
+      "rank_change": 3,
+      "trend_7d": [120, 180, 245, 330, 486, 790, 1284],
+      "html_url": "https://github.com/signal-labs/bright-star",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/9919?v=4",
+      "knowledge_url": null
+    },
+    {
+      "repository_id": 2,
+      "full_name": "alibaba/lumenx",
+      "description": "AI-powered visual production workspace.",
+      "language": "Python",
+      "stars_total": 10600,
+      "stars_gained": 842,
+      "rank": 2,
+      "rank_change": null,
+      "trend_7d": [null, null, 126, 204, 316, 518, 842],
+      "html_url": "https://github.com/alibaba/lumenx",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/1961952?v=4",
+      "knowledge_url": null
+    },
+    {
+      "repository_id": 3,
+      "full_name": "terminal-labs/quiet-tool",
+      "description": null,
+      "language": "Go",
+      "stars_total": 4210,
+      "stars_gained": -4,
+      "rank": 3,
+      "rank_change": -1,
+      "trend_7d": [16, 12, 8, 4, 2, 0, -4],
+      "html_url": "https://github.com/terminal-labs/quiet-tool",
+      "owner_avatar_url": null,
+      "knowledge_url": null
+    }
+  ]
+}

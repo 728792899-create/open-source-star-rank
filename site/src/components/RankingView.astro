@@ -1,0 +1,313 @@
+---
+import type { DailyRanking, LanguageRanking, PeriodRanking, RankingIndex } from '../types';
+import { withBase } from '../lib/paths';
+import FreshnessStatus from './FreshnessStatus.astro';
+
+interface Props {
+  ranking: DailyRanking | LanguageRanking | PeriodRanking;
+  index: RankingIndex;
+  isLatest?: boolean;
+  mode?: 'daily' | 'language' | 'period';
+  availableDates?: string[];
+  routePrefix?: string;
+  dataPrefix?: string;
+}
+
+const {
+  ranking,
+  index,
+  isLatest = false,
+  mode = 'daily',
+  availableDates = index.available_dates,
+  routePrefix = '/daily',
+  dataPrefix = '/data/daily',
+} = Astro.props;
+const periodDays = 'period_days' in ranking ? ranking.period_days : null;
+const languageName = 'language' in ranking ? ranking.language : null;
+const hasRepositoryPages = index.schema_version === '1.2.0';
+const modeLabel = periodDays ? `${periodDays} day signal` : languageName ? `${languageName} signal` : 'Daily signal';
+const headline = periodDays
+  ? `近 ${periodDays} 日，哪些项目升温最快？`
+  : languageName
+    ? `${languageName} 项目，昨日谁在升温？`
+    : '昨日，哪些开源项目正在升温？';
+const gainLabel = periodDays ? `${periodDays} 日净增` : '日净增';
+const languages = [...new Set(ranking.entries.map((entry) => entry.language).filter(Boolean) as string[])].sort((a, b) => a.localeCompare(b));
+const dateIndex = availableDates.indexOf(ranking.date);
+const newer = dateIndex > 0 ? availableDates[dateIndex - 1] : null;
+const older = dateIndex >= 0 && dateIndex < availableDates.length - 1 ? availableDates[dateIndex + 1] : null;
+const formatNumber = (value: number) => new Intl.NumberFormat('zh-CN').format(value);
+const formatCompact = (value: number) => new Intl.NumberFormat('zh-CN', { notation: 'compact', maximumFractionDigits: 1 }).format(value);
+const formatDate = (value: string) => new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(`${value}T12:00:00+08:00`));
+const formatTime = (value: string) => new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(value));
+const makeTrendShape = (values: Array<number | null>) => {
+  const numericValues = values.filter((value): value is number => value !== null);
+  const maximum = Math.max(1, ...numericValues.map((value) => Math.abs(value)));
+  const points = values.map((value, index) => {
+    const x = Math.round((index / Math.max(1, values.length - 1)) * 100);
+    const height = value === null ? 5 : Math.max(10, Math.round((Math.abs(value) / maximum) * 100));
+    return `${x}% ${100 - height}%`;
+  });
+  return `polygon(0 100%, ${points.join(', ')}, 100% 100%)`;
+};
+const rankingPath = withBase(`${routePrefix}/${ranking.date}/`);
+const rankingJsonPath = withBase(`${dataPrefix}/${ranking.date}.json`);
+---
+
+<main id="main-content" data-ranking data-ranking-mode={mode} data-daily-path={rankingPath} data-ranking-date={ranking.date} class="shell ranking-page">
+  <section class="hero">
+    <div>
+      <p class="eyebrow">{modeLabel} · {formatDate(ranking.date)}</p>
+      <h1>{headline}</h1>
+      <p class="hero-copy">按有效连续快照的 Star 净增排序。缺失日期不补零、不插值，只记录真实发生的关注变化。</p>
+    </div>
+    <div class="hero-stamp" aria-label={`榜单日期 ${ranking.date}`}>
+      <span>{isLatest ? 'LATEST' : 'ARCHIVE'}</span>
+      <strong>{ranking.date.slice(5).replace('-', ' / ')}</strong>
+      <small>UTC + 8</small>
+    </div>
+  </section>
+
+  <FreshnessStatus updatedAt={index.updated_at} thresholdHours={index.freshness_threshold_hours} />
+
+  <section class="metrics" aria-label="榜单统计">
+    <div><span>候选池</span><strong>{formatNumber(ranking.candidate_count)}</strong><small>个公开仓库</small></div>
+    <div><span>可比较</span><strong>{formatNumber(ranking.eligible_count)}</strong><small>拥有连续快照</small></div>
+    <div><span>上榜项目</span><strong>{ranking.entries.length}</strong><small>按净增排序</small></div>
+    <div><span>采样窗口</span><strong>{formatTime(ranking.window_start)}</strong><small>至 {formatTime(ranking.window_end)}</small></div>
+  </section>
+
+  <details class="collection-details">
+    <summary>查看本次采集覆盖信息</summary>
+    <dl>
+      <div><dt>最近创建搜索</dt><dd>{formatNumber(ranking.collection.search_result_counts.recent_created)}</dd></div>
+      <div><dt>近期活跃搜索</dt><dd>{formatNumber(ranking.collection.search_result_counts.recent_active)}</dd></div>
+      <div><dt>成熟项目搜索</dt><dd>{formatNumber(ranking.collection.search_result_counts.established_active)}</dd></div>
+      <div><dt>去重新发现</dt><dd>{formatNumber(ranking.collection.unique_discovered_count)}</dd></div>
+      <div><dt>候选进 / 出</dt><dd>+{formatNumber(ranking.collection.candidate_added_count)} / −{formatNumber(ranking.collection.candidate_removed_count)}</dd></div>
+      <div><dt>API 请求 / 重试</dt><dd>{formatNumber(ranking.collection.api_request_count)} / {formatNumber(ranking.collection.api_retry_count)}</dd></div>
+      <div><dt>快照完整率</dt><dd>{(ranking.collection.snapshot_completeness * 100).toFixed(1)}%</dd></div>
+    </dl>
+  </details>
+
+  <section class="ranking-section" aria-labelledby="ranking-title">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Observed {languageName ? 'language top 50' : 'top 100'}</p>
+        <h2 id="ranking-title">{languageName ? `${languageName} ` : ''}{periodDays ? `${periodDays} 日 ` : ''}Star 净增排行</h2>
+      </div>
+      <div class="date-tools">
+        <label class="date-picker">
+          <span>历史日期</span>
+          <select data-date-selector aria-label="选择历史榜单日期">
+            {availableDates.map((date) => <option value={withBase(`${routePrefix}/${date}/`)} selected={date === ranking.date}>{date}</option>)}
+          </select>
+        </label>
+        <div class="date-nav" aria-label="历史榜单日期">
+          {older ? <a href={withBase(`${routePrefix}/${older}/`)} aria-label={`查看 ${older} 榜单`}>← 前一日</a> : <span>← 前一日</span>}
+          {newer ? <a href={withBase(`${routePrefix}/${newer}/`)} aria-label={`查看 ${newer} 榜单`}>后一日 →</a> : <span>后一日 →</span>}
+        </div>
+      </div>
+    </div>
+
+    <div class="ranking-actions" aria-label="榜单操作">
+      <button type="button" data-copy-ranking>复制榜单链接</button>
+      <a href={rankingJsonPath} download>下载当日 JSON</a>
+      <span class="action-status" data-action-status aria-live="polite"></span>
+    </div>
+
+    <div class="filters" role="search">
+      <label>
+        <span>搜索项目</span>
+        <input data-search type="search" placeholder="仓库名或描述" autocomplete="off" />
+      </label>
+      <label>
+        <span>编程语言</span>
+        <select data-language>
+          <option value="">全部语言</option>
+          {languages.map((language) => <option value={language}>{language}</option>)}
+        </select>
+      </label>
+      <p class="filter-count" aria-live="polite"><strong data-visible-count>{ranking.entries.length}</strong> / {ranking.entries.length} 个项目</p>
+    </div>
+
+    <div class="ranking-table" role="table" aria-label={`${ranking.date} Star 净增排行`}>
+      <div class="table-head" role="row">
+        <span role="columnheader">排名 / 变化</span>
+        <span role="columnheader">项目</span>
+        <span role="columnheader">语言</span>
+        <span role="columnheader">7 日趋势</span>
+        <span role="columnheader">总 Star / {gainLabel}</span>
+      </div>
+      <div class="table-body">
+        {ranking.entries.map((entry) => {
+          const trendShape = makeTrendShape(entry.trend_7d);
+          const searchText = `${entry.full_name} ${entry.description ?? ''}`;
+          const movement = entry.rank_change === null ? '新上榜' : entry.rank_change > 0 ? `↑${entry.rank_change}` : entry.rank_change < 0 ? `↓${Math.abs(entry.rank_change)}` : '—';
+          const movementClass = entry.rank_change === null ? 'new' : entry.rank_change > 0 ? 'up' : entry.rank_change < 0 ? 'down' : 'flat';
+          return (
+            <div
+              id={`repo-${entry.repository_id}`}
+              class="ranking-row"
+              role="row"
+              data-ranking-row
+              data-search-text={searchText.toLocaleLowerCase()}
+              data-language={entry.language ?? ''}
+            >
+              <strong
+                class:list={['rank-cell', movementClass]}
+                role="cell"
+                data-movement={movement}
+                aria-label={`排名 ${entry.rank}，变化 ${movement}`}
+              >{String(entry.rank).padStart(2, '0')}</strong>
+              <div class="project-cell" role="cell">
+                <a class="project-link" href={hasRepositoryPages ? withBase(`/repo/${entry.repository_id}/`) : entry.html_url} target={hasRepositoryPages ? undefined : '_blank'} rel={hasRepositoryPages ? undefined : 'noreferrer'}>{entry.full_name}</a>
+                {hasRepositoryPages && <a class="github-link" href={entry.html_url} target="_blank" rel="noreferrer" aria-label={`在 GitHub 打开 ${entry.full_name}`}>GitHub ↗</a>}
+                <button
+                  class="share-project"
+                  type="button"
+                  data-share-project
+                  data-share-name={entry.full_name}
+                  data-share-rank={entry.rank}
+                  aria-label={`分享 ${entry.full_name} 的第 ${entry.rank} 名`}
+                >分享</button>
+                <p>{entry.description || 'No description provided.'}</p>
+              </div>
+              <div class="language-cell" role="cell">{entry.language || 'Other'}</div>
+              <div
+                class="trend-cell"
+                role="cell"
+                aria-label={`最近七日净增：${entry.trend_7d.map((value) => value ?? '无数据').join('、')}`}
+                style={`--trend-shape:${trendShape}`}
+              ></div>
+              <div class:list={['stars-cell', 'numeric', { negative: entry.stars_gained < 0 }]} role="cell" data-mobile-label={`总 Star / ${gainLabel}`}>
+                {formatCompact(entry.stars_total)} · {entry.stars_gained >= 0 ? '+' : ''}{formatNumber(entry.stars_gained)}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+    <div class="empty-state" data-empty-state hidden>
+      <strong>没有匹配的项目</strong>
+      <p>试试缩短关键词，或切换到全部语言。</p>
+    </div>
+  </section>
+
+  <aside class="method-note" aria-label="榜单口径提示">
+    <span aria-hidden="true">i</span>
+    <p><strong>这是一张观测榜。</strong>GitHub 搜索不支持按每日增量检索全站项目，因此榜单来自持续追踪的候选池；新项目获得两个快照后才参与排名。</p>
+    <a href={withBase('/methodology/')}>完整口径 →</a>
+  </aside>
+</main>
+
+<script>
+  import { matchesEntry } from '../scripts/filter-utils.mjs';
+
+  const root = document.querySelector('[data-ranking]');
+  if (root) {
+    const initializeRanking = () => {
+      if (!(root instanceof HTMLElement) || root.dataset.rankingEnhanced === 'true') return;
+      root.dataset.rankingEnhanced = 'true';
+    const search = root.querySelector('[data-search]');
+    const language = root.querySelector('[data-language]');
+    const visibleCount = root.querySelector('[data-visible-count]');
+    const emptyState = root.querySelector('[data-empty-state]');
+    const actionStatus = root.querySelector('[data-action-status]');
+    const dailyPath = root.getAttribute('data-daily-path') ?? window.location.pathname;
+    const rankingDate = root.getAttribute('data-ranking-date') ?? '';
+    const params = new URLSearchParams(window.location.search);
+    const initialQuery = params.get('q') ?? '';
+    const initialLanguage = params.get('language') ?? '';
+    if (search instanceof HTMLInputElement) search.value = initialQuery;
+    if (language instanceof HTMLSelectElement) language.value = initialLanguage;
+
+    const apply = () => {
+      const query = search instanceof HTMLInputElement ? search.value : '';
+      const selectedLanguage = language instanceof HTMLSelectElement ? language.value : '';
+      let count = 0;
+      for (const row of root.querySelectorAll('[data-ranking-row]')) {
+        if (!(row instanceof HTMLElement)) continue;
+        const visible = matchesEntry(
+          { searchText: row.dataset.searchText ?? '', language: row.dataset.language ?? '' },
+          query,
+          selectedLanguage,
+        );
+        row.hidden = !visible;
+        if (visible) count += 1;
+      }
+      if (visibleCount) visibleCount.textContent = String(count);
+      if (emptyState instanceof HTMLElement) emptyState.hidden = count !== 0;
+      const next = new URL(window.location.href);
+      query.trim() ? next.searchParams.set('q', query.trim()) : next.searchParams.delete('q');
+      selectedLanguage ? next.searchParams.set('language', selectedLanguage) : next.searchParams.delete('language');
+      window.history.replaceState({}, '', next);
+    };
+    search?.addEventListener('input', apply);
+    language?.addEventListener('change', apply);
+
+    const copyText = async (value: string) => {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(value);
+        return;
+      }
+      throw new Error('Clipboard API unavailable');
+    };
+    const setStatus = (message: string) => {
+      if (actionStatus) actionStatus.textContent = message;
+    };
+    const rankingUrl = new URL(dailyPath, window.location.origin).toString();
+    root.addEventListener('click', async (event) => {
+      if (!(event.target instanceof Element)) return;
+      if (event.target.closest('[data-copy-ranking]')) {
+        try {
+          await copyText(rankingUrl);
+          setStatus('榜单链接已复制');
+        } catch {
+          setStatus('复制失败，请从地址栏复制');
+        }
+        return;
+      }
+      const button = event.target.closest('[data-share-project]');
+      if (button instanceof HTMLButtonElement) {
+        const name = button.dataset.shareName ?? 'GitHub 项目';
+        const rank = button.dataset.shareRank ?? '';
+        const row = button.closest('[data-ranking-row]');
+        const url = `${rankingUrl}#${row?.id ?? ''}`;
+        const shareData = {
+          title: `${name}｜开源星榜第 ${rank} 名`,
+          text: `${name} 在 ${rankingDate} 开源星榜位列第 ${rank} 名。`,
+          url,
+        };
+        try {
+          if (navigator.share) {
+            await navigator.share(shareData);
+            setStatus('分享面板已打开');
+          } else {
+            await copyText(url);
+            setStatus(`${name} 的排名链接已复制`);
+          }
+        } catch (error) {
+          if (error instanceof DOMException && error.name === 'AbortError') return;
+          try {
+            await copyText(url);
+            setStatus(`${name} 的排名链接已复制`);
+          } catch {
+            setStatus('分享失败，请稍后重试');
+          }
+        }
+      }
+    });
+    if (initialQuery.trim() || initialLanguage) apply();
+    };
+    root.addEventListener('change', (event) => {
+      if (event.target instanceof HTMLSelectElement && event.target.matches('[data-date-selector]') && event.target.value) {
+        window.location.assign(event.target.value);
+      }
+    });
+    for (const eventName of ['focusin', 'pointerdown', 'keydown']) {
+      root.addEventListener(eventName, initializeRanking, { capture: true, once: true });
+    }
+    if (window.location.search) initializeRanking();
+  }
+</script>

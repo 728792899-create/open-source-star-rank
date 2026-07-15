@@ -1,0 +1,13 @@
+{
+  "status": 403,
+  "reason": "rate limited",
+  "headers": {
+    "X-RateLimit-Limit": "1000",
+    "X-RateLimit-Remaining": "0",
+    "X-RateLimit-Reset": "1784107200"
+  },
+  "body": {
+    "message": "API rate limit exceeded",
+    "documentation_url": "https://docs.github.com/rest/using-the-rest-api/rate-limits-for-the-rest-api"
+  }
+}

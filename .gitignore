@@ -1,0 +1,13 @@
+.DS_Store
+*.tmp
+*.bak
+site/node_modules/
+site/dist/
+site/.astro/
+site/generated/
+site/public/data/
+site/public/social/
+site/.e2e-data/
+site/.lighthouseci/
+site/playwright-report/
+site/test-results/

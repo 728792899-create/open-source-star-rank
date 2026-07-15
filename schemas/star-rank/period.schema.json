@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://728792899-create.github.io/open-source-star-rank/data/schema/period.schema.json",
+  "title": "Open Source Star Rank period ranking",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "date", "period_days", "timezone", "window_start", "window_end", "window_quality", "candidate_count", "eligible_count", "collection", "entries"],
+  "properties": {
+    "schema_version": { "const": "1.2.0" },
+    "date": { "type": "string", "format": "date" },
+    "period_days": { "enum": [7, 30] },
+    "timezone": { "const": "Asia/Shanghai" },
+    "window_start": { "type": "string", "format": "date-time" },
+    "window_end": { "type": "string", "format": "date-time" },
+    "window_quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["duration_minutes", "valid_for_ranking", "reason"],
+      "properties": {
+        "duration_minutes": { "type": "integer", "minimum": 8820, "maximum": 48600 },
+        "valid_for_ranking": { "const": true },
+        "reason": { "const": "valid" }
+      }
+    },
+    "candidate_count": { "type": "integer", "minimum": 1, "maximum": 2000 },
+    "eligible_count": { "type": "integer", "minimum": 0, "maximum": 2000 },
+    "collection": { "$ref": "#/$defs/collection" },
+    "entries": { "type": "array", "maxItems": 100, "items": { "$ref": "#/$defs/entry" } }
+  },
+  "$defs": {
+    "collection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["search_result_counts", "unique_discovered_count", "candidate_added_count", "candidate_removed_count", "api_request_count", "api_retry_count", "snapshot_expected_count", "snapshot_complete_count", "snapshot_completeness"],
+      "properties": {
+        "search_result_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["recent_created", "recent_active", "established_active"],
+          "properties": {
+            "recent_created": { "type": "integer", "minimum": 0, "maximum": 1000 },
+            "recent_active": { "type": "integer", "minimum": 0, "maximum": 500 },
+            "established_active": { "type": "integer", "minimum": 0, "maximum": 500 }
+          }
+        },
+        "unique_discovered_count": { "type": "integer", "minimum": 0 },
+        "candidate_added_count": { "type": "integer", "minimum": 0 },
+        "candidate_removed_count": { "type": "integer", "minimum": 0 },
+        "api_request_count": { "type": "integer", "minimum": 0 },
+        "api_retry_count": { "type": "integer", "minimum": 0 },
+        "snapshot_expected_count": { "type": "integer", "minimum": 1, "maximum": 2000 },
+        "snapshot_complete_count": { "type": "integer", "minimum": 1, "maximum": 2000 },
+        "snapshot_completeness": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository_id", "full_name", "description", "language", "stars_total", "stars_gained", "html_url", "owner_avatar_url", "knowledge_url", "trend_7d", "rank", "rank_change"],
+      "properties": {
+        "repository_id": { "type": "integer", "minimum": 1 },
+        "full_name": { "type": "string", "pattern": "^[^/]+/[^/]+$" },
+        "description": { "type": ["string", "null"] },
+        "language": { "type": ["string", "null"] },
+        "stars_total": { "type": "integer", "minimum": 0 },
+        "stars_gained": { "type": "integer" },
+        "html_url": { "type": "string", "format": "uri" },
+        "owner_avatar_url": { "type": ["string", "null"], "format": "uri" },
+        "knowledge_url": { "type": ["string", "null"] },
+        "trend_7d": { "type": "array", "minItems": 7, "maxItems": 7, "items": { "type": ["integer", "null"] } },
+        "rank": { "type": "integer", "minimum": 1, "maximum": 100 },
+        "rank_change": { "type": ["integer", "null"] }
+      }
+    }
+  }
+}

@@ -1,0 +1,61 @@
+import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const repository = process.env.GITHUB_REPOSITORY?.split('/')[1] ?? 'open-source-star-rank';
+const site = process.env.SITE_URL ?? `https://728792899-create.github.io/${repository}`;
+const base = process.env.BASE_PATH ?? '/';
+const siteRoot = path.dirname(fileURLToPath(import.meta.url));
+const dataRoot = path.resolve(process.env.STAR_RANK_DATA_DIR ?? path.join(siteRoot, 'seed-data'));
+const lastModifiedByPath = new Map();
+try {
+  const index = JSON.parse(readFileSync(path.join(dataRoot, 'index.json'), 'utf8'));
+  if (index.updated_at) {
+    lastModifiedByPath.set('/', new Date(index.updated_at));
+    lastModifiedByPath.set('/status/', new Date(index.updated_at));
+  }
+  for (const date of index.available_dates ?? []) {
+    const ranking = JSON.parse(readFileSync(path.join(dataRoot, 'daily', `${date}.json`), 'utf8'));
+    lastModifiedByPath.set(`/daily/${date}/`, new Date(ranking.window_end));
+  }
+  for (const range of ['7d', '30d']) {
+    for (const date of index.periods?.[range]?.available_dates ?? []) {
+      const ranking = JSON.parse(readFileSync(path.join(dataRoot, 'period', range, `${date}.json`), 'utf8'));
+      lastModifiedByPath.set(`/period/${range}/${date}/`, new Date(ranking.window_end));
+      if (date === index.periods?.[range]?.latest_date) lastModifiedByPath.set(`/period/${range}/`, new Date(ranking.window_end));
+    }
+  }
+  const languages = JSON.parse(readFileSync(path.join(dataRoot, 'language', 'index.json'), 'utf8'));
+  if (languages.updated_at) lastModifiedByPath.set('/language/', new Date(languages.updated_at));
+  for (const language of languages.languages ?? []) {
+    for (const date of language.available_dates ?? []) {
+      const ranking = JSON.parse(readFileSync(path.join(dataRoot, 'language', language.slug, 'daily', `${date}.json`), 'utf8'));
+      lastModifiedByPath.set(`/language/${language.slug}/daily/${date}/`, new Date(ranking.window_end));
+    }
+  }
+  const repositories = JSON.parse(readFileSync(path.join(dataRoot, 'repositories.json'), 'utf8'));
+  for (const repository of repositories.repositories ?? []) {
+    lastModifiedByPath.set(`/repo/${repository.repository_id}/`, new Date(repositories.updated_at));
+  }
+} catch {
+  // prepare-data and the build validator provide the actionable data error.
+}
+
+export default defineConfig({
+  site,
+  base,
+  output: 'static',
+  trailingSlash: 'always',
+  build: { inlineStylesheets: 'always' },
+  devToolbar: { enabled: false },
+  integrations: [sitemap({
+    serialize(item) {
+      const pathname = new URL(item.url).pathname;
+      const basePrefix = base === '/' ? '' : base.replace(/\/$/, '');
+      const route = basePrefix && pathname.startsWith(basePrefix) ? pathname.slice(basePrefix.length) : pathname;
+      return lastModifiedByPath.has(route) ? { ...item, lastmod: lastModifiedByPath.get(route) } : item;
+    },
+  })],
+});

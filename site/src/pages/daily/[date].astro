@@ -1,0 +1,34 @@
+---
+import type { GetStaticPaths } from 'astro';
+import RankingView from '../../components/RankingView.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { readDailyRanking, readRankingIndex } from '../../lib/data';
+
+export const getStaticPaths = (() => {
+  const index = readRankingIndex();
+  return index.available_dates.map((date) => ({ params: { date } }));
+}) satisfies GetStaticPaths;
+
+const { date } = Astro.params;
+if (!date) throw new Error('Missing daily ranking date');
+const index = readRankingIndex();
+const ranking = readDailyRanking(date);
+const title = `${ranking.date} GitHub Star 日榜｜开源星榜`;
+const description = `${ranking.date} GitHub 开源项目 Star 净增 Top ${ranking.entries.length}，覆盖 ${ranking.candidate_count} 个候选仓库。`;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: `${ranking.date} GitHub 开源项目 Star 净增排行`,
+  numberOfItems: ranking.entries.length,
+  itemListElement: ranking.entries.map((entry) => ({
+    '@type': 'ListItem',
+    position: entry.rank,
+    url: entry.html_url,
+    name: entry.full_name,
+  })),
+};
+---
+
+<BaseLayout title={title} description={description} structuredData={structuredData} socialImagePath={`/social/daily-${ranking.date}.png`}>
+  <RankingView ranking={ranking} index={index} isLatest={ranking.date === index.latest_date} />
+</BaseLayout>

@@ -1,0 +1,53 @@
+name: Monitor Open Source Star Rank storage
+
+on:
+  schedule:
+    # 02:15 Asia/Shanghai on the first day of each month.
+    - cron: "15 18 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  branch-size:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository history
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+        with:
+          fetch-depth: 0
+
+      - name: Measure repository object storage
+        id: size
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin refs/heads/star-rank-data:refs/remotes/origin/star-rank-data
+          size_kib=$(git count-objects -v | awk '/^size-pack:/{print $2}')
+          size_mib=$(( (size_kib + 1023) / 1024 ))
+          echo "size_mib=$size_mib" >> "$GITHUB_OUTPUT"
+          git count-objects -vH
+
+      - name: Maintain storage issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SIZE_MIB: ${{ steps.size.outputs.size_mib }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if (( SIZE_MIB > 500 )); then
+            python tools/star_rank_incident.py \
+              --status open \
+              --title "[开源星榜] 数据分支需要压缩" \
+              --label "star-rank-maintenance" \
+              --details "仓库压缩对象约 ${SIZE_MIB} MiB，已超过 500 MiB 门槛。"
+          else
+            python tools/star_rank_incident.py \
+              --status close \
+              --title "[开源星榜] 数据分支需要压缩" \
+              --label "star-rank-maintenance" \
+              --details "当前压缩对象约 ${SIZE_MIB} MiB，低于维护门槛。"
+          fi

@@ -1,0 +1,103 @@
+import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+
+const latestPath = 'daily/2026-07-14/';
+
+test('renders 100 static rows and passes automated accessibility checks', async ({ page }) => {
+  await page.goto(latestPath);
+  await expect(page.getByRole('heading', { name: 'Star 净增排行' })).toBeVisible();
+  await expect(page.locator('[data-ranking-row]')).toHaveCount(100);
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations).toEqual([]);
+});
+
+test('restores search and language filters from the URL and shows an empty state', async ({ page }) => {
+  await page.goto(latestPath);
+  const search = page.getByRole('searchbox', { name: '搜索项目' });
+  await search.fill('repo-042');
+  await expect(page).toHaveURL(/q=repo-042/);
+  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(1);
+  await page.reload();
+  await expect(search).toHaveValue('repo-042');
+  await search.fill('missing-project');
+  await expect(page.locator('[data-empty-state]')).toBeVisible();
+  await search.fill('');
+  await page.getByLabel('编程语言').selectOption('Python');
+  await expect(page).toHaveURL(/language=Python/);
+  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(25);
+});
+
+test('navigates historical dates and keeps direct no-JavaScript content readable', async ({ page, browser }) => {
+  await page.goto(latestPath);
+  await page.getByLabel('选择历史榜单日期').selectOption('/open-source-star-rank/daily/2026-07-13/');
+  await expect(page).toHaveURL(/daily\/2026-07-13\/$/);
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const noScriptPage = await context.newPage();
+  await noScriptPage.goto(latestPath);
+  await expect(noScriptPage.locator('[data-ranking-row]')).toHaveCount(100);
+  await expect(noScriptPage.getByRole('link', { name: 'fixture-labs/repo-001', exact: true })).toBeVisible();
+  await context.close();
+});
+
+test('copies ranking and project links with stable repository anchors', async ({ page, context }) => {
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  await page.addInitScript(() => Object.defineProperty(navigator, 'share', { value: undefined }));
+  await page.goto(latestPath);
+  await page.getByRole('button', { name: '复制榜单链接' }).click();
+  await expect(page.locator('[data-action-status]')).toContainText('已复制');
+  const rankingLink = await page.evaluate(() => navigator.clipboard.readText());
+  expect(rankingLink).toContain('/daily/2026-07-14/');
+  await page.getByRole('button', { name: /分享 fixture-labs\/repo-001/ }).click();
+  await expect(page.locator('[data-action-status]')).toContainText('已复制');
+  const projectLink = await page.evaluate(() => navigator.clipboard.readText());
+  expect(projectLink).toContain('#repo-10001');
+});
+
+for (const width of [390, 768, 1440]) {
+  test(`has no horizontal overflow at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(latestPath);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
+}
+
+test('provides a useful 404 page and keyboard focus', async ({ page }) => {
+  await page.goto('/not-a-real-page/');
+  await expect(page.getByRole('heading', { name: '404' })).toBeVisible();
+  await page.goto(latestPath);
+  const copyButton = page.getByRole('button', { name: '复制榜单链接' });
+  await copyButton.focus();
+  await expect(copyButton).toBeFocused();
+});
+
+test('publishes status, period, language and stable repository history routes', async ({ page }) => {
+  await page.goto('status/');
+  await expect(page.getByRole('heading', { name: '采样质量' })).toBeVisible();
+  await expect(page.getByText('零点窗口内，可用于排行')).toBeVisible();
+
+  await page.goto('period/7d/');
+  await expect(page.getByRole('heading', { name: '7 日 Star 净增排行' })).toBeVisible();
+  await expect(page.locator('[data-ranking-row]')).toHaveCount(100);
+
+  await page.goto('language/');
+  await page.getByRole('link', { name: /TypeScript/ }).click();
+  await expect(page.getByRole('heading', { name: 'TypeScript Star 净增排行' })).toBeVisible();
+  await expect(page.locator('[data-ranking-row]')).toHaveCount(50);
+
+  await page.goto('repo/10001/');
+  await expect(page.getByRole('heading', { name: 'fixture-labs/repo-001' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '真实历史' })).toBeVisible();
+  await expect(page.getByRole('row')).toHaveCount(31);
+});
+
+test('publishes canonical ranking pages and three feed formats', async ({ page, request }) => {
+  await page.goto(latestPath);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/daily\/2026-07-14\/$/);
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /social\/daily-2026-07-14\.png$/);
+  for (const feed of ['rss.xml', 'atom.xml', 'feed.json']) {
+    const response = await request.get(feed);
+    expect(response.ok()).toBeTruthy();
+    expect((await response.text()).length).toBeGreaterThan(100);
+  }
+});

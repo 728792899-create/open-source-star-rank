@@ -1,0 +1,70 @@
+name: Monitor Open Source Star Rank freshness
+
+on:
+  schedule:
+    # 01:15 Asia/Shanghai, after the 01:00 publication SLO.
+    - cron: "15 17 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: open-source-star-rank-watchdog
+  cancel-in-progress: true
+
+jobs:
+  freshness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout monitoring helpers
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+        with:
+          fetch-depth: 0
+
+      - name: Read latest data branch index
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin refs/heads/star-rank-data:refs/remotes/origin/star-rank-data
+          git show refs/remotes/origin/star-rank-data:public/index.json > "$RUNNER_TEMP/data-index.json"
+
+      - name: Check data branch freshness
+        run: python tools/check_star_rank_freshness.py --index "$RUNNER_TEMP/data-index.json" --require-today --require-valid-capture
+
+      - name: Check published site freshness
+        env:
+          SITE_INDEX: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/data/index.json
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 --output "$RUNNER_TEMP/site-index.json" "$SITE_INDEX"
+          python tools/check_star_rank_freshness.py --index "$RUNNER_TEMP/site-index.json" --require-today --require-valid-capture
+          cmp "$RUNNER_TEMP/data-index.json" "$RUNNER_TEMP/site-index.json"
+
+  incident:
+    if: always()
+    needs: freshness
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Checkout incident helper
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+
+      - name: Open or close freshness incident
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RESULT: ${{ needs.freshness.result }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$RESULT" == "success" ]]; then
+            python tools/star_rank_incident.py --status close --details "数据分支与公开站点均为今日版本：$RUN_URL"
+          else
+            python tools/star_rank_incident.py --status open --details "01:15 新鲜度检查失败：$RUN_URL"
+          fi

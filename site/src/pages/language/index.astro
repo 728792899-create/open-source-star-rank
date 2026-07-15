@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { readLanguageIndex } from '../../lib/data';
+import { withBase } from '../../lib/paths';
+
+const languageIndex = readLanguageIndex();
+const ready = languageIndex.languages.filter((item) => item.status === 'ready');
+const accumulating = languageIndex.languages.filter((item) => item.status !== 'ready');
+const structuredData = {
+  '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'GitHub 编程语言 Star 净增榜',
+  hasPart: ready.map((item) => ({ '@type': 'ItemList', name: `${item.language} Star 净增榜` })),
+};
+---
+
+<BaseLayout title="GitHub 编程语言 Star 净增榜｜开源星榜" description="从当日全部可比较候选项目中生成的 GitHub 独立语言 Star 净增榜。" structuredData={structuredData}>
+  <main id="main-content" class="shell language-page">
+    <p class="eyebrow">Language index · independent rankings</p>
+    <h1>每种语言，<br />都有自己的升温速度。</h1>
+    <p class="status-lead">语言榜从当日全部可比较候选中独立排名，不是从全局 Top 100 二次筛选。至少有 5 个可比较项目才会发布。</p>
+
+    <section class="language-list" aria-labelledby="ready-languages">
+      <div class="section-heading"><div><p class="eyebrow">Published</p><h2 id="ready-languages">已发布语言榜</h2></div><strong>{ready.length}</strong></div>
+      {ready.length ? <div class="language-cards">
+        {ready.map((item) => <a href={withBase(`/language/${item.slug}/daily/${item.latest_date}/`)}>
+          <span>{item.language}</span><strong>{item.candidate_count.toLocaleString('zh-CN')} 个候选</strong><small>更新至 {item.latest_date} →</small>
+        </a>)}
+      </div> : <p class="empty-copy">首个有效日榜发布后，符合门槛的语言榜会自动出现。</p>}
+    </section>
+
+    {accumulating.length > 0 && <section class="language-list" aria-labelledby="pending-languages">
+      <div class="section-heading"><div><p class="eyebrow">Candidate pool</p><h2 id="pending-languages">候选池语言</h2></div><strong>{accumulating.length}</strong></div>
+      <div class="language-cards pending">
+        {accumulating.map((item) => <div><span>{item.language}</span><strong>{item.candidate_count.toLocaleString('zh-CN')} 个候选</strong><small>等待有效日榜</small></div>)}
+      </div>
+    </section>}
+  </main>
+</BaseLayout>

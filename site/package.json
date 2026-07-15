@@ -1,0 +1,33 @@
+{
+  "name": "open-source-star-rank-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare-data": "node scripts/prepare-data.mjs",
+    "dev": "npm run prepare-data && astro dev",
+    "check": "npm run prepare-data && astro check",
+    "build": "npm run prepare-data && node scripts/generate-social-cards.mjs && astro build",
+    "test": "node --test tests/*.test.mjs",
+    "validate-build": "node scripts/validate-build.mjs",
+    "preview": "astro preview",
+    "test:e2e": "playwright test",
+    "test:reproducible": "node scripts/test-reproducible-build.mjs",
+    "lighthouse": "lhci autorun"
+  },
+  "overrides": {
+    "esbuild": "0.28.1",
+    "tmp": "0.2.7",
+    "uuid": "11.1.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.9",
+    "@astrojs/sitemap": "3.7.3",
+    "@axe-core/playwright": "4.12.1",
+    "@lhci/cli": "0.15.1",
+    "@playwright/test": "1.61.1",
+    "@resvg/resvg-js": "^2.6.2",
+    "astro": "6.4.8",
+    "typescript": "5.9.3"
+  }
+}

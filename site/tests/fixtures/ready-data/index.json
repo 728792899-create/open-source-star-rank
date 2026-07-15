@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.1.0",
+  "status": "ready",
+  "timezone": "Asia/Shanghai",
+  "updated_at": "2026-07-15T16:20:00Z",
+  "latest_date": "2026-07-14",
+  "available_dates": ["2026-07-14"],
+  "candidate_count": 2000,
+  "methodology_version": "candidate-pool-snapshot-v1",
+  "freshness_threshold_hours": 36,
+  "latest_collection": {
+    "search_result_counts": {
+      "recent_created": 1000,
+      "recent_active": 500,
+      "established_active": 500
+    },
+    "unique_discovered_count": 1812,
+    "candidate_added_count": 83,
+    "candidate_removed_count": 51,
+    "api_request_count": 42,
+    "api_retry_count": 1,
+    "snapshot_expected_count": 2000,
+    "snapshot_complete_count": 2000,
+    "snapshot_completeness": 1.0
+  }
+}

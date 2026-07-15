@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/paths';
+---
+
+<BaseLayout title="页面未找到｜开源星榜" description="请求的开源星榜页面不存在，请返回最新榜单或查看数据口径。">
+  <main id="main-content" class="not-found shell">
+    <p class="eyebrow">Page not found</p>
+    <h1>404</h1>
+    <h2>这一天没有留在星图上。</h2>
+    <p>链接可能已过期，或所选日期尚未生成真实榜单。历史榜单一旦发布会永久保留。</p>
+    <nav aria-label="404 页面导航">
+      <a class="text-link" href={withBase('/')}>返回最新榜单 →</a>
+      <a class="text-link" href={withBase('/methodology/')}>查看数据口径 →</a>
+    </nav>
+  </main>
+</BaseLayout>

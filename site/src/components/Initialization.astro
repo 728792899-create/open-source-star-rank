@@ -1,0 +1,76 @@
+---
+import type { RankingIndex } from '../types';
+import { withBase } from '../lib/paths';
+import FreshnessStatus from './FreshnessStatus.astro';
+
+interface Props { index: RankingIndex }
+const { index } = Astro.props;
+const sampling = index.sampling;
+const collection = index.latest_collection;
+const validBaselines = sampling?.consecutive_valid_snapshots ?? 0;
+const nextSampling = sampling?.next_scheduled_at ?? null;
+const firstRanking = sampling?.expected_first_ranking_at ?? null;
+const formatTime = (value: string | null) => value
+  ? new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(value))
+  : '等待首次有效采样';
+---
+
+<main id="main-content" class="initialization shell">
+  <FreshnessStatus
+    updatedAt={index.updated_at}
+    thresholdHours={index.freshness_threshold_hours}
+    captureValid={sampling?.latest_snapshot_valid ?? true}
+    captureReason={sampling?.latest_snapshot_reason === 'outside_window' ? '不在北京时间 00:00–03:00' : sampling?.latest_snapshot_reason}
+  />
+  <p class="eyebrow">Candidate pool · 初始化</p>
+  <h1>有效基线 {validBaselines}/2，<br />星光正在积累。</h1>
+  <p class="initialization-copy">
+    真实日榜只使用北京时间 00:00–03:00 的连续快照，间隔必须为 21–27 小时。缺失和无效日期不补造，达到门槛后会自动解锁日榜。
+  </p>
+  <div class="initialization-grid initialization-grid-wide" aria-label="初始化状态">
+    <div><span>当前候选</span><strong>{index.candidate_count.toLocaleString('zh-CN')}</strong></div>
+    <div><span>有效基线</span><strong>{validBaselines}/2</strong></div>
+    <div><span>下次采样</span><strong class="small-value">{formatTime(nextSampling)}</strong></div>
+    <div><span>预计首榜</span><strong class="small-value">{formatTime(firstRanking)}</strong></div>
+  </div>
+  {nextSampling && <p class="countdown" data-countdown data-target={nextSampling}>距下次计划采样：<span>正在计算…</span></p>}
+
+  {collection && (
+    <section class="coverage-panel" aria-labelledby="coverage-title">
+      <div><p class="eyebrow">Collection coverage</p><h2 id="coverage-title">本次采集覆盖</h2></div>
+      <dl>
+        <div><dt>最近创建</dt><dd>{collection.search_result_counts.recent_created.toLocaleString('zh-CN')}</dd></div>
+        <div><dt>近期活跃</dt><dd>{collection.search_result_counts.recent_active.toLocaleString('zh-CN')}</dd></div>
+        <div><dt>成熟项目</dt><dd>{collection.search_result_counts.established_active.toLocaleString('zh-CN')}</dd></div>
+        <div><dt>API 请求 / 重试</dt><dd>{collection.api_request_count} / {collection.api_retry_count}</dd></div>
+        <div><dt>快照完整率</dt><dd>{(collection.snapshot_completeness * 100).toFixed(1)}%</dd></div>
+      </dl>
+    </section>
+  )}
+  <div class="inline-links">
+    <a class="text-link" href={withBase('/status/')}>查看完整采样状态 <span aria-hidden="true">→</span></a>
+    <a class="text-link" href={withBase('/methodology/')}>了解排行如何生成 <span aria-hidden="true">→</span></a>
+  </div>
+</main>
+
+<script>
+  const countdown = document.querySelector('[data-countdown]');
+  if (countdown instanceof HTMLElement) {
+    const output = countdown.querySelector('span');
+    const target = Date.parse(countdown.dataset.target ?? '');
+    const update = () => {
+      const difference = target - Date.now();
+      if (!output || !Number.isFinite(target)) return;
+      if (difference <= 0) {
+        output.textContent = '计划时间已到，等待工作流完成';
+        return;
+      }
+      const hours = Math.floor(difference / 3_600_000);
+      const minutes = Math.floor((difference % 3_600_000) / 60_000);
+      const seconds = Math.floor((difference % 60_000) / 1_000);
+      output.textContent = `${hours} 小时 ${minutes} 分 ${seconds} 秒`;
+    };
+    update();
+    window.setInterval(update, 1_000);
+  }
+</script>

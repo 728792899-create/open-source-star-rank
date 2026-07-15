@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Initialization from '../components/Initialization.astro';
+import RankingView from '../components/RankingView.astro';
+import { readDailyRanking, readRankingIndex } from '../lib/data';
+
+const index = readRankingIndex();
+const ranking = index.latest_date ? readDailyRanking(index.latest_date) : null;
+const structuredData = ranking ? {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: `${ranking.date} GitHub 开源项目 Star 净增排行`,
+  numberOfItems: ranking.entries.length,
+  itemListElement: ranking.entries.map((entry) => ({
+    '@type': 'ListItem',
+    position: entry.rank,
+    url: entry.html_url,
+    name: entry.full_name,
+  })),
+} : undefined;
+---
+
+<BaseLayout structuredData={structuredData} socialImagePath={ranking ? `/social/daily-${ranking.date}.png` : '/og.png'}>
+  {ranking ? <RankingView ranking={ranking} index={index} isLatest /> : <Initialization index={index} />}
+</BaseLayout>
