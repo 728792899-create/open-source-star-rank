@@ -10,9 +10,11 @@ on:
       - "tests/**"
       - "tools/star_rank*.py"
       - "tools/event_star_rank.py"
+      - "tools/localize_repositories.py"
       - "tools/check_star_rank_freshness.py"
       - "requirements-star-rank.txt"
       - "data/seed-repositories.json"
+      - "data/localization-overrides.zh-CN.json"
   push:
     branches: [main]
     paths:
@@ -23,9 +25,11 @@ on:
       - "tests/**"
       - "tools/star_rank*.py"
       - "tools/event_star_rank.py"
+      - "tools/localize_repositories.py"
       - "tools/check_star_rank_freshness.py"
       - "requirements-star-rank.txt"
       - "data/seed-repositories.json"
+      - "data/localization-overrides.zh-CN.json"
 
 permissions:
   contents: read

@@ -3,7 +3,8 @@ import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ProgressState from '../../../components/ProgressState.astro';
 import RankingView from '../../../components/RankingView.astro';
-import { readPeriodRanking, readRankingIndex } from '../../../lib/data';
+import { readLocalizationCatalog, readPeriodRanking, readRankingIndex } from '../../../lib/data';
+import { localizedRepositoryContent } from '../../../lib/localization';
 
 export const getStaticPaths = (() => [
   { params: { range: '7d' }, props: { days: 7 as const } },
@@ -14,11 +15,15 @@ const { days } = Astro.props;
 const index = readRankingIndex();
 const period = index.periods?.[`${days}d`];
 const ranking = period?.latest_date ? readPeriodRanking(days, period.latest_date) : null;
+const localization = readLocalizationCatalog();
 const title = `GitHub 近 ${days} 日 Star 净增榜｜开源星榜`;
 const structuredData = ranking ? {
   '@context': 'https://schema.org', '@type': 'ItemList', name: `${ranking.date} GitHub 近 ${days} 日 Star 净增榜`,
   numberOfItems: ranking.entries.length,
-  itemListElement: ranking.entries.map((entry) => ({ '@type': 'ListItem', position: entry.rank, url: entry.html_url, name: entry.full_name })),
+  itemListElement: ranking.entries.map((entry) => ({
+    '@type': 'ListItem', position: entry.rank, url: entry.html_url,
+    name: localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description).displayName,
+  })),
 } : undefined;
 ---
 

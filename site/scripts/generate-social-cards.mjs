@@ -9,9 +9,22 @@ const siteRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'
 const dataRoot = path.join(siteRoot, 'generated', 'data');
 const outputRoot = path.join(siteRoot, 'public', 'social');
 const fontFile = [
+  '/System/Library/Fonts/Supplemental/Arial Unicode.ttf',
+  '/System/Library/Fonts/PingFang.ttc',
   '/System/Library/Fonts/Helvetica.ttc',
+  '/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc',
+  '/usr/share/fonts/opentype/noto/NotoSansCJKSC-Regular.otf',
   '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',
 ].find((candidate) => existsSync(candidate));
+const localizationPath = path.join(dataRoot, 'i18n', 'zh-CN', 'repositories.json');
+const localization = existsSync(localizationPath)
+  ? JSON.parse(await readFile(localizationPath, 'utf8'))
+  : { repositories: [] };
+const localizedNames = new Map(localization.repositories.map((entry) => [entry.repository_id, entry.display_name_zh]));
+const withLocalizedNames = (ranking) => ({
+  ...ranking,
+  entries: ranking.entries.map((entry) => ({ ...entry, display_name_zh: localizedNames.get(entry.repository_id) ?? null })),
+});
 
 async function jsonFiles(root) {
   if (!existsSync(root)) return [];
@@ -29,19 +42,19 @@ await mkdir(outputRoot, { recursive: true });
 const jobs = [];
 for (const file of await jsonFiles(path.join(dataRoot, 'daily'))) {
   const ranking = JSON.parse(await readFile(file, 'utf8'));
-  jobs.push({ ranking, label: 'Daily Top 100', name: `daily-${ranking.date}.png` });
+  jobs.push({ ranking: withLocalizedNames(ranking), label: '每日净增 Top 100', name: `daily-${ranking.date}.png` });
 }
 for (const file of await jsonFiles(path.join(dataRoot, 'events', 'daily'))) {
   const ranking = JSON.parse(await readFile(file, 'utf8'));
-  jobs.push({ ranking, label: 'Public Event Top 100', name: `events-daily-${ranking.date}.png`, eventMode: true });
+  jobs.push({ ranking: withLocalizedNames(ranking), label: '公共事件新增 Top 100', name: `events-daily-${ranking.date}.png`, eventMode: true });
 }
 for (const file of await jsonFiles(path.join(dataRoot, 'period'))) {
   const ranking = JSON.parse(await readFile(file, 'utf8'));
-  jobs.push({ ranking, label: `${ranking.period_days} Day Top 100`, name: `period-${ranking.period_days}d-${ranking.date}.png` });
+  jobs.push({ ranking: withLocalizedNames(ranking), label: `${ranking.period_days} 日净增 Top 100`, name: `period-${ranking.period_days}d-${ranking.date}.png` });
 }
 for (const file of (await jsonFiles(path.join(dataRoot, 'language'))).filter((item) => !item.endsWith('/index.json'))) {
   const ranking = JSON.parse(await readFile(file, 'utf8'));
-  jobs.push({ ranking, label: `${ranking.language} Top 50`, name: `language-${ranking.slug}-${ranking.date}.png` });
+  jobs.push({ ranking: withLocalizedNames(ranking), label: `${ranking.language} Top 50`, name: `language-${ranking.slug}-${ranking.date}.png` });
 }
 const queue = [...jobs];
 async function renderQueue() {

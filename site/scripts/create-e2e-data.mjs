@@ -1,4 +1,5 @@
 import { cp, mkdir, rm, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -231,10 +232,49 @@ const eventIndex = {
   latest_source_metrics: eventSourceMetrics(latestEventDate),
 };
 
+const localizationSources = new Map();
+for (const language of languages) {
+  for (const entry of rankingEntries(39, 50, language.name)) localizationSources.set(entry.repository_id, entry);
+}
+for (const entry of rankingEntries(39)) localizationSources.set(entry.repository_id, entry);
+for (const entry of eventEntries(6)) localizationSources.set(entry.repository_id, entry);
+const localizedRepositories = [...localizationSources.values()]
+  .sort((left, right) => left.repository_id - right.repository_id)
+  .map((entry) => ({
+    repository_id: entry.repository_id,
+    source_full_name: entry.full_name,
+    source_hash: createHash('sha256').update(JSON.stringify({
+      description: entry.description,
+      full_name: entry.full_name,
+      repository_id: entry.repository_id,
+    })).digest('hex'),
+    display_name_zh: `测试项目 ${entry.repository_id}｜中文功能名`,
+    description_zh: `用于验证开源星榜中文显示、原文切换和响应式布局的测试项目 ${entry.repository_id}。`,
+    generated_at: latestEventGeneratedAt,
+    provenance: 'github_models',
+  }));
+const localizationCatalog = {
+  schema_version: '1.0.0',
+  locale: 'zh-CN',
+  generated_at: latestEventGeneratedAt,
+  model: 'openai/gpt-4.1-mini',
+  prompt_version: 'repository-localization-v1',
+  coverage: {
+    eligible_count: localizedRepositories.length,
+    localized_count: localizedRepositories.length,
+    pending_count: 0,
+    failed_count: 0,
+    coverage_ratio: 1,
+  },
+  repositories: localizedRepositories,
+};
+
 await writeFile(path.join(outputRoot, 'index.json'), `${JSON.stringify(index, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'events', 'index.json'), `${JSON.stringify(eventIndex, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'language', 'index.json'), `${JSON.stringify(languageIndex, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'repositories.json'), `${JSON.stringify(catalog, null, 2)}\n`);
+await mkdir(path.join(outputRoot, 'i18n', 'zh-CN'), { recursive: true });
+await writeFile(path.join(outputRoot, 'i18n', 'zh-CN', 'repositories.json'), `${JSON.stringify(localizationCatalog, null, 2)}\n`);
 await cp(schemaRoot, path.join(outputRoot, 'schema'), { recursive: true });
 
 console.log(`Prepared 40 candidate days, 7 public event days, 2,000 repositories, language and period rankings at ${outputRoot}`);

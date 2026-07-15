@@ -22,6 +22,7 @@ SCHEMA_FILES = {
     "repositories": "repositories.schema.json",
     "event_index": "event-index.schema.json",
     "event_daily": "event-daily.schema.json",
+    "localization": "localization.schema.json",
 }
 
 

@@ -194,3 +194,31 @@ export interface EventDailyRanking {
   eligible_count: number;
   entries: EventRankingEntry[];
 }
+
+export interface LocalizationCoverage {
+  eligible_count: number;
+  localized_count: number;
+  pending_count: number;
+  failed_count: number;
+  coverage_ratio: number;
+}
+
+export interface RepositoryLocalization {
+  repository_id: number;
+  source_full_name: string;
+  source_hash: string;
+  display_name_zh: string;
+  description_zh: string | null;
+  generated_at: string;
+  provenance: 'github_models' | 'manual';
+}
+
+export interface LocalizationCatalog {
+  schema_version: '1.0.0';
+  locale: 'zh-CN';
+  generated_at: string | null;
+  model: string;
+  prompt_version: 'repository-localization-v1';
+  coverage: LocalizationCoverage;
+  repositories: RepositoryLocalization[];
+}

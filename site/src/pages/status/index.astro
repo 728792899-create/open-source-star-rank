@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FreshnessStatus from '../../components/FreshnessStatus.astro';
-import { eventRankingIsFresh, readEventRankingIndex, readRankingIndex } from '../../lib/data';
+import { eventRankingIsFresh, readEventRankingIndex, readLocalizationCatalog, readRankingIndex } from '../../lib/data';
 
 const index = readRankingIndex();
 const eventIndex = readEventRankingIndex();
@@ -9,6 +9,7 @@ const eventFresh = eventRankingIsFresh(eventIndex, index);
 const sampling = index.sampling;
 const collection = index.latest_collection;
 const eventMetrics = eventIndex.latest_source_metrics;
+const localization = readLocalizationCatalog();
 const formatDateTime = (value: string | null | undefined) => value
   ? new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value))
   : '尚无';
@@ -87,6 +88,20 @@ const structuredData = {
         <div><dt>7 日榜</dt><dd>{sampling?.period_progress['7d'].completed ?? 0} / 7</dd></div>
         <div><dt>30 日榜</dt><dd>{sampling?.period_progress['30d'].completed ?? 0} / 30</dd></div>
         <div><dt>公共数据版本</dt><dd>{index.schema_version} / events {eventIndex.schema_version}</dd></div>
+      </dl>
+    </section>
+
+    <section class="status-grid" aria-labelledby="localization-title">
+      <div class="section-heading"><div><p class="eyebrow">Project content localization</p><h2 id="localization-title">项目内容中文覆盖</h2></div></div>
+      <dl>
+        <div><dt>已进入公开榜单</dt><dd>{localization.coverage.eligible_count.toLocaleString('zh-CN')}</dd></div>
+        <div><dt>已有有效中文内容</dt><dd>{localization.coverage.localized_count.toLocaleString('zh-CN')}</dd></div>
+        <div><dt>覆盖率</dt><dd class:list={{ warning: localization.coverage.pending_count > 0 }}>{(localization.coverage.coverage_ratio * 100).toFixed(1)}%</dd></div>
+        <div><dt>待生成 / 最近失败</dt><dd class:list={{ warning: localization.coverage.pending_count > 0 }}>{localization.coverage.pending_count} / {localization.coverage.failed_count}</dd></div>
+        <div><dt>默认模型</dt><dd>{localization.model}</dd></div>
+        <div><dt>提示词版本</dt><dd>{localization.prompt_version}</dd></div>
+        <div><dt>最近整理</dt><dd>{formatDateTime(localization.generated_at)}</dd></div>
+        <div><dt>回退策略</dt><dd>译文不可用时显示 GitHub 原文</dd></div>
       </dl>
     </section>
   </main>

@@ -2,7 +2,8 @@
 import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import RankingView from '../../../../components/RankingView.astro';
-import { readLanguageIndex, readLanguageRanking, readRankingIndex } from '../../../../lib/data';
+import { readLanguageIndex, readLanguageRanking, readLocalizationCatalog, readRankingIndex } from '../../../../lib/data';
+import { localizedRepositoryContent } from '../../../../lib/localization';
 
 export const getStaticPaths = (() => {
   const languages = readLanguageIndex();
@@ -14,10 +15,14 @@ export const getStaticPaths = (() => {
 const { language, date } = Astro.props;
 const index = readRankingIndex();
 const ranking = readLanguageRanking(language.slug, date);
+const localization = readLocalizationCatalog();
 const structuredData = {
   '@context': 'https://schema.org', '@type': 'ItemList', name: `${date} ${language.language} GitHub Star 净增榜`,
   numberOfItems: ranking.entries.length,
-  itemListElement: ranking.entries.map((entry) => ({ '@type': 'ListItem', position: entry.rank, url: entry.html_url, name: entry.full_name })),
+  itemListElement: ranking.entries.map((entry) => ({
+    '@type': 'ListItem', position: entry.rank, url: entry.html_url,
+    name: localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description).displayName,
+  })),
 };
 ---
 

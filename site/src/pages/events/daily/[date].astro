@@ -3,8 +3,9 @@ import type { GetStaticPaths } from 'astro';
 import RankingView from '../../../components/RankingView.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import {
-  readEventDailyRanking, readEventRankingIndex, readRankingIndex,
+  readEventDailyRanking, readEventRankingIndex, readLocalizationCatalog, readRankingIndex,
 } from '../../../lib/data';
+import { localizedRepositoryContent } from '../../../lib/localization';
 
 export const getStaticPaths = (() => {
   const index = readEventRankingIndex();
@@ -16,6 +17,7 @@ if (!date) throw new Error('Missing public event ranking date');
 const index = readEventRankingIndex();
 const candidateIndex = readRankingIndex();
 const ranking = readEventDailyRanking(date);
+const localization = readLocalizationCatalog();
 const title = `${ranking.date} GitHub 公共事件新增 Star 榜｜开源星榜`;
 const description = `${ranking.date} GitHub 公开 WatchEvent 新增 Star Top ${ranking.entries.length}，观察 ${ranking.source_metrics.observed_repository_count} 个仓库。`;
 const structuredData = {
@@ -23,7 +25,8 @@ const structuredData = {
   name: `${ranking.date} GitHub 公共事件新增 Star 排行`,
   numberOfItems: ranking.entries.length,
   itemListElement: ranking.entries.map((entry) => ({
-    '@type': 'ListItem', position: entry.rank, url: entry.html_url, name: entry.full_name,
+    '@type': 'ListItem', position: entry.rank, url: entry.html_url,
+    name: localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description).displayName,
   })),
 };
 const sameDateCandidateAvailable = candidateIndex.available_dates.includes(ranking.date);

@@ -34,6 +34,7 @@ jobs:
     permissions:
       contents: write
       id-token: write
+      models: read
     outputs:
       should_deploy: ${{ steps.mode.outputs.should_deploy }}
       run_mode: ${{ steps.mode.outputs.run_mode }}
@@ -134,6 +135,17 @@ jobs:
           fi
           python -m tools.event_star_rank "${args[@]}"
 
+      - name: Localize newly ranked repositories
+        if: steps.mode.outputs.run_mode == 'collect_publish' || steps.mode.outputs.run_mode == 'replace_day'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LOCALIZATION_MODEL: ${{ vars.LOCALIZATION_MODEL || 'openai/gpt-4.1-mini' }}
+          LOCALIZATION_MAX_PROJECTS: ${{ vars.LOCALIZATION_MAX_PROJECTS || '200' }}
+        run: >-
+          python -m tools.localize_repositories
+          --data-dir "$STAR_RANK_DATA_DIR"
+          --overrides-file data/localization-overrides.zh-CN.json
+
       - name: Validate staged data contracts
         run: python tools/validate_star_rank_data.py --data-dir "$STAR_RANK_DATA_DIR" --sync-schemas
 
@@ -152,7 +164,7 @@ jobs:
           set -euo pipefail
           git -C "$STAR_RANK_DATA_DIR" config user.name "github-actions[bot]"
           git -C "$STAR_RANK_DATA_DIR" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git -C "$STAR_RANK_DATA_DIR" add state/events public/events public/schema
+          git -C "$STAR_RANK_DATA_DIR" add state/events state/localization public/events public/i18n public/schema
           if ! git -C "$STAR_RANK_DATA_DIR" diff --cached --quiet; then
             git -C "$STAR_RANK_DATA_DIR" commit -m "Update public event star rank"
             git -C "$STAR_RANK_DATA_DIR" push origin HEAD:star-rank-data
