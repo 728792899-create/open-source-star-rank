@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "taxonomy_version": "1.0.0",
-  "generated_at": "2026-07-16T10:11:56.986605Z",
+  "generated_at": "2026-07-16T17:49:06.870328Z",
   "repositories": [
     {
       "repository_id": 3482588,
@@ -110,6 +110,33 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 21329550,
+      "source_full_name": "wireshark/wireshark",
+      "source_hash": "b1e390677123fdac48bf88ec308c8caf1aad7c4f95b4c9269c9dc507cb7ee6db",
+      "primary_category": "systems-network-hardware",
+      "project_type": "other",
+      "use_cases": [
+        "system-admin-optimization",
+        "network-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 21331090,
+      "source_full_name": "4ian/GDevelop",
+      "source_hash": "8c5516d39b3263905bb78ff6e896a2e8a616c18976dfbd67d626a23b00ceb091",
+      "primary_category": "creative-media",
+      "project_type": "platform-service",
+      "use_cases": [
+        "games-emulation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 21737465,
       "source_full_name": "sindresorhus/awesome",
       "source_hash": "f576752e505e3c3d45426f53523fcca4590050b65fff451cd8805dce5a2fac58",
@@ -137,6 +164,196 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 22067521,
+      "source_full_name": "ocornut/imgui",
+      "source_hash": "b4e94813382d4325bc5ede6b4280349464d0235705b7bc24d93e5625adb9313d",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "design-ui-ux"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 22394357,
+      "source_full_name": "osquery/osquery",
+      "source_hash": "ac0fcfa6923da1e78cd1c7c670929737beeebe97218435164da0311dd5e545a3",
+      "primary_category": "security-privacy",
+      "project_type": "application",
+      "use_cases": [
+        "observability",
+        "security-defense",
+        "system-admin-optimization"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 23357588,
+      "source_full_name": "protocolbuffers/protobuf",
+      "source_hash": "16e27309d2114a93b75f839d5b0c160faa386f3a1c5ac28905b8347ab58ee027",
+      "primary_category": "data-infrastructure",
+      "project_type": "library-framework",
+      "use_cases": [
+        "database-storage"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 24420506,
+      "source_full_name": "v8/v8",
+      "source_hash": "797989754aefe30b3c603f3dd455bdf7f832d7bf8776c7c12b89cbcb9a5a7268",
+      "primary_category": "developer-tools",
+      "project_type": "other",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 25459400,
+      "source_full_name": "pinpoint-apm/pinpoint",
+      "source_hash": "20ad2bf06e7d4f75ed421db62ab2ab093b425f7a71bf3dcfbcfc1e3d82743d98",
+      "primary_category": "devops-observability",
+      "project_type": "application",
+      "use_cases": [
+        "devops-deployment",
+        "observability"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 26133979,
+      "source_full_name": "mozilla-mobile/firefox-ios",
+      "source_hash": "c9fc5c167a950a6a146e5195b9a8f0785d7d999d91e06dcae83694cd44bf9622",
+      "primary_category": "web-app-development",
+      "project_type": "application",
+      "use_cases": [
+        "web-frontend",
+        "mobile-cross-platform"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 26784827,
+      "source_full_name": "dotnet/core",
+      "source_hash": "aa1a0e88418bad6190d569dc9690968915ba44a00689d937b3d07a51b0eab32f",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "resource-discovery"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 27549019,
+      "source_full_name": "stylelint/stylelint",
+      "source_hash": "36430017e3759773e9383876909010c73a47052dd4936eacc2a14d92b066a788",
+      "primary_category": "developer-tools",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 27954927,
+      "source_full_name": "ben-manes/caffeine",
+      "source_hash": "138c5077c1ba46af4ced4c6ddf394aca8b9117db011387ff5a20d9be29b1bedc",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 28232663,
+      "source_full_name": "dotnet/orleans",
+      "source_hash": "959f2cdf781c3ad9a4cbdd48740c9d6044862da84c85d086f228680b5f297e1f",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 29028775,
+      "source_full_name": "react/react-native",
+      "source_hash": "ec41c71a940c4273e93771f61bce088403a6263e91e264b4dfe91ef7a279d7c8",
+      "primary_category": "web-app-development",
+      "project_type": "library-framework",
+      "use_cases": [
+        "web-frontend",
+        "mobile-cross-platform"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 29078997,
+      "source_full_name": "dotnet/roslyn",
+      "source_hash": "ec1a60f9220e1843d90aed4dbb1197fde6e725144186fae1ee0fcc8834eb8ae9",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "ai-coding"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 29126334,
+      "source_full_name": "EasyCorp/EasyAdminBundle",
+      "source_hash": "c595446a52ee438a63bcd0b02ca6ca27b2ed3d9de4b73261c1e6cb4e2aecd1f5",
+      "primary_category": "web-app-development",
+      "project_type": "application",
+      "use_cases": [
+        "api-backend",
+        "web-frontend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 29207621,
+      "source_full_name": "caddyserver/caddy",
+      "source_hash": "100d6e7f7acc5623412e9d392750bd01ff6a0bca0acc6c08cf4dec26d90b28e2",
+      "primary_category": "systems-network-hardware",
+      "project_type": "application",
+      "use_cases": [
+        "web-frontend",
+        "system-admin-optimization",
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 29745084,
       "source_full_name": "Leantime/leantime",
       "source_hash": "041e22f8bd190105f76d426b3613f454234f459a61c867a9172a06589fac853d",
@@ -148,6 +365,60 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-16T10:11:56.986605Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 30215226,
+      "source_full_name": "dataplat/dbatools",
+      "source_hash": "16f9c422970e70d89710f9ee55fd6b76c614cc7afaf3e051eaee03f137c6a8bf",
+      "primary_category": "developer-tools",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "system-admin-optimization"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 30675533,
+      "source_full_name": "google/fonts",
+      "source_hash": "356b146c07997ee66840969a9d68bbc654c3caa8422981089d7f1c5d53f500ae",
+      "primary_category": "creative-media",
+      "project_type": "other",
+      "use_cases": [
+        "resource-discovery"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 30737688,
+      "source_full_name": "dotnet/ClangSharp",
+      "source_hash": "3cb4a8b52757474a8141a171ff8b72f2d03477e7859fa4c9d1b3706db26d6fb0",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "ai-coding"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 31558937,
+      "source_full_name": "gravitational/teleport",
+      "source_hash": "d85781f2573692ddab274fccee16a71d7b5c534825d102feaab2e6670f5ac27b",
+      "primary_category": "security-privacy",
+      "project_type": "application",
+      "use_cases": [
+        "security-defense",
+        "privacy-local",
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
       "provenance": "github_models"
     },
     {
@@ -299,6 +570,139 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 112785414,
+      "source_full_name": "alibaba/spring-cloud-alibaba",
+      "source_hash": "e1b62b3d6d190c2bd77ba23f073101ab1f79ab4b2d3671050acf648cd56fee62",
+      "primary_category": "industry-solutions",
+      "project_type": "library-framework",
+      "use_cases": [
+        "api-backend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 118497841,
+      "source_full_name": "GoogleContainerTools/jib",
+      "source_hash": "b101bbff4e87bec65ef21894aae03ec32ac9291ffe21715091a6d8c64ff5801c",
+      "primary_category": "devops-observability",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "devops-deployment"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 120156076,
+      "source_full_name": "cloudreve/cloudreve",
+      "source_hash": "eeb2c9e80bb1b2ac84d8f990674fafbf3e8204a295edee4e649c9073ce9655c5",
+      "primary_category": "productivity-collaboration",
+      "project_type": "application",
+      "use_cases": [
+        "database-storage",
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 120360765,
+      "source_full_name": "chromium/chromium",
+      "source_hash": "3da486e865f31a110c6dba97f41247628453c834177464d2bd61773f4e02065b",
+      "primary_category": "systems-network-hardware",
+      "project_type": "other",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 120568143,
+      "source_full_name": "wezterm/wezterm",
+      "source_hash": "d6d89656fb9ccdccd755391c022d8b53b4c976ce941069090b4bbc140e0e5d98",
+      "primary_category": "systems-network-hardware",
+      "project_type": "application",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 122135934,
+      "source_full_name": "leo-arch/clifm",
+      "source_hash": "ee1746a97c2383d0d9552494fbf89426bb970bd02ec146a3cf86b08e779eb076",
+      "primary_category": "productivity-collaboration",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "system-admin-optimization"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 125098880,
+      "source_full_name": "ValveSoftware/Proton",
+      "source_hash": "b223917a5b8af2dce9d3996a0a3b1b77e0f690888139f61a400f00005507abf7",
+      "primary_category": "industry-solutions",
+      "project_type": "application",
+      "use_cases": [
+        "games-emulation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 126493684,
+      "source_full_name": "gotenberg/gotenberg",
+      "source_hash": "acb9c982bc2f59aa2ded96986462217a8eb9a7436ac4deb485974d8d9f69a131",
+      "primary_category": "developer-tools",
+      "project_type": "platform-service",
+      "use_cases": [
+        "api-backend",
+        "documents-office"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 128479644,
+      "source_full_name": "esphome/esphome",
+      "source_hash": "43ac57c8a815527b54ceef6b8e3dfba7c7ec6844a9e8636673c01075516f1fa0",
+      "primary_category": "industry-solutions",
+      "project_type": "application",
+      "use_cases": [
+        "agents-automation",
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 129717717,
+      "source_full_name": "grafana/loki",
+      "source_hash": "973925b4376b6672e1a7343131367c5e2ef39220895837429894d3bf3ff2e1be",
+      "primary_category": "devops-observability",
+      "project_type": "platform-service",
+      "use_cases": [
+        "observability"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 132750724,
       "source_full_name": "codecrafters-io/build-your-own-x",
       "source_hash": "75af60756bec2dd1536053fbb1778cbc769c65c08fed4d8ae27225493c5a1cc6",
@@ -312,6 +716,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 133134007,
+      "source_full_name": "OpenAPITools/openapi-generator",
+      "source_hash": "53f60ec6947fe8e3e4c7faf5f933572ca339dbc64e190df701a0b97b664b4ead",
+      "primary_category": "developer-tools",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "api-backend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 138393139,
       "source_full_name": "trimstray/the-book-of-secret-knowledge",
       "source_hash": "fad67260144597cb9c6f244637ce02b960a0d482d04c6f88589eafe959226572",
@@ -322,6 +739,123 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-16T06:51:50.292861Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 138552196,
+      "source_full_name": "nautechsystems/nautilus_trader",
+      "source_hash": "cb64f7a09aaf65d12b1ef4ba14f70b26aad5bb8589804fb9dabce20581e82f8b",
+      "primary_category": "industry-solutions",
+      "project_type": "application",
+      "use_cases": [
+        "finance-trading"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 143455116,
+      "source_full_name": "google/filament",
+      "source_hash": "59ef2ada335c6943cf88323a49359191af114e2c0e4a6a51873dfe67c866194e",
+      "primary_category": "creative-media",
+      "project_type": "library-framework",
+      "use_cases": [
+        "image-video-audio"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 149026292,
+      "source_full_name": "cube-js/cube",
+      "source_hash": "622dfbb7ddcfc4a91d40f4b533cc718de943b5c01f50d3e7e3a49cf201cdb912",
+      "primary_category": "data-infrastructure",
+      "project_type": "library-framework",
+      "use_cases": [
+        "data-analysis-visualization"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 149121954,
+      "source_full_name": "openjdk/jdk",
+      "source_hash": "c38beb34e4a5542ea33c7adda40a12e719c1c3640564bd36386d1a4b96e6842a",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 151977818,
+      "source_full_name": "felangel/bloc",
+      "source_hash": "7b8cfd54c8bedad2e725edc810488171a792ba5fcc14b457c60aec3e71d11891",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "ai-coding"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 153097643,
+      "source_full_name": "openvinotoolkit/openvino",
+      "source_hash": "d6cde8906acfe8665ef2d5dca040d04047ab87decf56098baa2df2e857e84f3c",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 153711945,
+      "source_full_name": "dotnet/wpf",
+      "source_hash": "24b9e91b4d7b425657ace7cc3cf44b64a14a92f20c5bd94a8c863f0dc2c803f3",
+      "primary_category": "web-app-development",
+      "project_type": "library-framework",
+      "use_cases": [
+        "web-frontend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 154201259,
+      "source_full_name": "facebook/hermes",
+      "source_hash": "17d248efc0badcf2e43c0618bdb9336e85b77c04c94e02f3586d1b6facfe4877",
+      "primary_category": "developer-tools",
+      "project_type": "other",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 155220641,
+      "source_full_name": "huggingface/transformers",
+      "source_hash": "6ee685980b5b952f988ba3fea72311145504957f584f95ec792e383ff984e996",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-16T17:49:06.870328Z",
       "provenance": "github_models"
     },
     {
@@ -571,20 +1105,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 817326197,
-      "source_full_name": "screenpipe/screenpipe",
-      "source_hash": "fb60be8b399eae9f636a859880769c264c4b178fba74d4ffcd6d3005aa4d88ec",
-      "primary_category": "ai-machine-learning",
-      "project_type": "application",
-      "use_cases": [
-        "agents-automation",
-        "privacy-local"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-16T06:51:50.292861Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 842102124,
       "source_full_name": "gnmyt/Nexterm",
       "source_hash": "80abd7d58f06e653bb4a4ec1c6564455a94e0e3bef83d50af5165ac51814a255",
@@ -815,20 +1335,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1021174826,
-      "source_full_name": "phishdestroy/destroylist",
-      "source_hash": "3645cfa5fd5ce5d9cb902302ea2c8587b7dc7c7c5535ec4e969f7a4240c6290c",
-      "primary_category": "security-privacy",
-      "project_type": "platform-service",
-      "use_cases": [
-        "api-backend",
-        "security-defense"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-16T06:51:50.292861Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1024554267,
       "source_full_name": "NousResearch/hermes-agent",
       "source_hash": "6108faff7a45bcbe1f8b7bc29c1cd7b3595778ceaab161bf703feb47b51d8fe0",
@@ -1033,20 +1539,6 @@
       "use_cases": [
         "ai-coding",
         "design-ui-ux"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-16T06:51:50.292861Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1113573066,
-      "source_full_name": "hugohe3/ppt-master",
-      "source_hash": "f0365f3de6921e0ce41d5c83b504f37d9ab94e40ccbab4272372e861e0d43d79",
-      "primary_category": "ai-machine-learning",
-      "project_type": "application",
-      "use_cases": [
-        "documents-office",
-        "content-generation"
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-16T06:51:50.292861Z",

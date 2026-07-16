@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.2.0",
+  "date": "2026-07-16",
+  "timezone": "Asia/Shanghai",
+  "window_start": "2026-07-15T17:41:48Z",
+  "window_end": "2026-07-16T17:42:12Z",
+  "window_quality": {
+    "duration_minutes": 1440,
+    "valid_for_ranking": true,
+    "reason": "valid"
+  },
+  "candidate_count": 2000,
+  "collection": {
+    "search_result_counts": {
+      "recent_created": 1000,
+      "recent_active": 500,
+      "established_active": 500
+    },
+    "unique_discovered_count": 1896,
+    "candidate_added_count": 973,
+    "candidate_removed_count": 967,
+    "api_request_count": 635,
+    "api_retry_count": 0,
+    "snapshot_expected_count": 2000,
+    "snapshot_complete_count": 2000,
+    "snapshot_completeness": 1.0
+  },
+  "language": "Lua",
+  "slug": "lua-b897ce72",
+  "eligible_count": 5,
+  "entries": [
+    {
+      "repository_id": 8986217,
+      "full_name": "koreader/koreader",
+      "description": "An ebook reader application supporting PDF, DjVu, EPUB, FB2 and many more formats, running on Cervantes, Kindle, Kobo, PocketBook and Android devices",
+      "language": "Lua",
+      "stars_total": 27789,
+      "stars_gained": 18,
+      "html_url": "https://github.com/koreader/koreader",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/3957564?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        18
+      ],
+      "rank": 1,
+      "rank_change": null
+    },
+    {
+      "repository_id": 838849799,
+      "full_name": "amzxyz/rime-wanxiang",
+      "description": "「万象拼音」：把算法留在幕后，把纯粹还给指尖，用更优质的数据，接管你的候选。Q群：11033572 / 11631066",
+      "language": "Lua",
+      "stars_total": 4185,
+      "stars_gained": 9,
+      "html_url": "https://github.com/amzxyz/rime-wanxiang",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/129564993?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        9
+      ],
+      "rank": 2,
+      "rank_change": null
+    },
+    {
+      "repository_id": 180481986,
+      "full_name": "apache/apisix",
+      "description": "The Cloud-Native API Gateway and AI Gateway",
+      "language": "Lua",
+      "stars_total": 16876,
+      "stars_gained": 4,
+      "html_url": "https://github.com/apache/apisix",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/47359?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        4
+      ],
+      "rank": 3,
+      "rank_change": null
+    },
+    {
+      "repository_id": 34847907,
+      "full_name": "ntop/ntopng",
+      "description": "Web-based Traffic and Cybersecurity Network Traffic Monitoring",
+      "language": "Lua",
+      "stars_total": 7957,
+      "stars_gained": 3,
+      "html_url": "https://github.com/ntop/ntopng",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/12014789?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        3
+      ],
+      "rank": 4,
+      "rank_change": null
+    },
+    {
+      "repository_id": 42586612,
+      "full_name": "cmusatyalab/openface",
+      "description": "Face recognition with deep neural networks.",
+      "language": "Lua",
+      "stars_total": 15426,
+      "stars_gained": 1,
+      "html_url": "https://github.com/cmusatyalab/openface",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/3372991?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1
+      ],
+      "rank": 5,
+      "rank_change": null
+    }
+  ]
+}

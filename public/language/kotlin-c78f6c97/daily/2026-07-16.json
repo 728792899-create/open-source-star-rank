@@ -1,0 +1,341 @@
+{
+  "schema_version": "1.2.0",
+  "date": "2026-07-16",
+  "timezone": "Asia/Shanghai",
+  "window_start": "2026-07-15T17:41:48Z",
+  "window_end": "2026-07-16T17:42:12Z",
+  "window_quality": {
+    "duration_minutes": 1440,
+    "valid_for_ranking": true,
+    "reason": "valid"
+  },
+  "candidate_count": 2000,
+  "collection": {
+    "search_result_counts": {
+      "recent_created": 1000,
+      "recent_active": 500,
+      "established_active": 500
+    },
+    "unique_discovered_count": 1896,
+    "candidate_added_count": 973,
+    "candidate_removed_count": 967,
+    "api_request_count": 635,
+    "api_retry_count": 0,
+    "snapshot_expected_count": 2000,
+    "snapshot_complete_count": 2000,
+    "snapshot_completeness": 1.0
+  },
+  "language": "Kotlin",
+  "slug": "kotlin-c78f6c97",
+  "eligible_count": 14,
+  "entries": [
+    {
+      "repository_id": 186733095,
+      "full_name": "2dust/v2rayNG",
+      "description": "A V2Ray client for Android, support Xray core and v2fly core",
+      "language": "Kotlin",
+      "stars_total": 59632,
+      "stars_gained": 39,
+      "html_url": "https://github.com/2dust/v2rayNG",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/31833384?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        39
+      ],
+      "rank": 1,
+      "rank_change": null
+    },
+    {
+      "repository_id": 3432266,
+      "full_name": "JetBrains/kotlin",
+      "description": "The Kotlin Programming Language. ",
+      "language": "Kotlin",
+      "stars_total": 53177,
+      "stars_gained": 18,
+      "html_url": "https://github.com/JetBrains/kotlin",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/878437?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        18
+      ],
+      "rank": 2,
+      "rank_change": null
+    },
+    {
+      "repository_id": 1048623630,
+      "full_name": "rukamori/ArchiveTune",
+      "description": "The Cutest Material 3 Expressive Music Player With Support Local File and Youtube Music for Android.",
+      "language": "Kotlin",
+      "stars_total": 3598,
+      "stars_gained": 18,
+      "html_url": "https://github.com/rukamori/ArchiveTune",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/107134739?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        18
+      ],
+      "rank": 3,
+      "rank_change": null
+    },
+    {
+      "repository_id": 478710402,
+      "full_name": "T8RIN/ImageToolbox",
+      "description": "🖼️ Image Toolbox is a powerful app for advanced image manipulation. It offers dozens of features, from basic tools like crop and draw to filters, OCR, and a wide range of image processing options",
+      "language": "Kotlin",
+      "stars_total": 13769,
+      "stars_gained": 14,
+      "html_url": "https://github.com/T8RIN/ImageToolbox",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/52178347?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        14
+      ],
+      "rank": 4,
+      "rank_change": null
+    },
+    {
+      "repository_id": 519845229,
+      "full_name": "open-ani/animeko",
+      "description": "集找番、追番、看番的一站式弹幕追番平台，云收藏同步 (Bangumi)，离线缓存，BitTorrent，弹幕云过滤。100% Kotlin/Compose Multiplatform",
+      "language": "Kotlin",
+      "stars_total": 18899,
+      "stars_gained": 13,
+      "html_url": "https://github.com/open-ani/animeko",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/166622089?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        13
+      ],
+      "rank": 5,
+      "rank_change": null
+    },
+    {
+      "repository_id": 413723669,
+      "full_name": "easybangumiorg/EasyBangumi",
+      "description": "纯纯看番，使用 Compose 开发的 Android 看番软件，支持多番剧源",
+      "language": "Kotlin",
+      "stars_total": 3901,
+      "stars_gained": 13,
+      "html_url": "https://github.com/easybangumiorg/EasyBangumi",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/126157665?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        13
+      ],
+      "rank": 6,
+      "rank_change": null
+    },
+    {
+      "repository_id": 750550657,
+      "full_name": "iamgio/quarkdown",
+      "description": "🪐 Markdown with superpowers: from ideas to papers, presentations, websites, books, and knowledge bases.",
+      "language": "Kotlin",
+      "stars_total": 15765,
+      "stars_gained": 12,
+      "html_url": "https://github.com/iamgio/quarkdown",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/16124324?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        12
+      ],
+      "rank": 7,
+      "rank_change": null
+    },
+    {
+      "repository_id": 7716883,
+      "full_name": "ankidroid/Anki-Android",
+      "description": "AnkiDroid: Anki flashcards on Android. Your secret trick to achieve superhuman information retention.",
+      "language": "Kotlin",
+      "stars_total": 11397,
+      "stars_gained": 9,
+      "html_url": "https://github.com/ankidroid/Anki-Android",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/3320903?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        9
+      ],
+      "rank": 8,
+      "rank_change": null
+    },
+    {
+      "repository_id": 970794049,
+      "full_name": "vivizzz007/vivi-music",
+      "description": "Vivi-Music is an expressive Material 3–based YouTube Music client for Android.",
+      "language": "Kotlin",
+      "stars_total": 1365,
+      "stars_gained": 6,
+      "html_url": "https://github.com/vivizzz007/vivi-music",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/208284282?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        6
+      ],
+      "rank": 9,
+      "rank_change": null
+    },
+    {
+      "repository_id": 1459486,
+      "full_name": "JetBrains/ideavim",
+      "description": "IdeaVim – A Vim engine for JetBrains IDEs",
+      "language": "Kotlin",
+      "stars_total": 10242,
+      "stars_gained": 2,
+      "html_url": "https://github.com/JetBrains/ideavim",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/878437?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        2
+      ],
+      "rank": 10,
+      "rank_change": null
+    },
+    {
+      "repository_id": 161651256,
+      "full_name": "jellyfin/jellyfin-androidtv",
+      "description": "Android TV Client for Jellyfin",
+      "language": "Kotlin",
+      "stars_total": 4385,
+      "stars_gained": 2,
+      "html_url": "https://github.com/jellyfin/jellyfin-androidtv",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/45698031?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        2
+      ],
+      "rank": 11,
+      "rank_change": null
+    },
+    {
+      "repository_id": 974197583,
+      "full_name": "Kotlin/kotlin-lsp",
+      "description": "Kotlin Language Server and plugin for Visual Studio Code",
+      "language": "Kotlin",
+      "stars_total": 3423,
+      "stars_gained": 1,
+      "html_url": "https://github.com/Kotlin/kotlin-lsp",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/1446536?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1
+      ],
+      "rank": 12,
+      "rank_change": null
+    },
+    {
+      "repository_id": 208070025,
+      "full_name": "KasperskyLab/Kaspresso",
+      "description": "Android UI test framework ",
+      "language": "Kotlin",
+      "stars_total": 1924,
+      "stars_gained": 0,
+      "html_url": "https://github.com/KasperskyLab/Kaspresso",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/20599646?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0
+      ],
+      "rank": 13,
+      "rank_change": null
+    },
+    {
+      "repository_id": 523011227,
+      "full_name": "slackhq/circuit",
+      "description": "⚡️ A Compose-driven architecture for Kotlin and Android applications.",
+      "language": "Kotlin",
+      "stars_total": 1843,
+      "stars_gained": 0,
+      "html_url": "https://github.com/slackhq/circuit",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/6911160?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0
+      ],
+      "rank": 14,
+      "rank_change": null
+    }
+  ]
+}

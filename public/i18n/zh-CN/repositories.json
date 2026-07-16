@@ -1,17 +1,278 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-07-16T10:11:42.866351Z",
+  "generated_at": "2026-07-16T17:46:53.472669Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
-    "eligible_count": 167,
-    "localized_count": 167,
-    "pending_count": 0,
-    "failed_count": 0,
-    "coverage_ratio": 1.0
+    "eligible_count": 644,
+    "localized_count": 303,
+    "pending_count": 341,
+    "failed_count": 61,
+    "coverage_ratio": 0.470497
   },
   "repositories": [
+    {
+      "repository_id": 3314,
+      "source_full_name": "spree/spree",
+      "source_hash": "591fffe9ac4eb7af9e684bd4de1ede3d380ea39c4eb8473762c286c811a31657",
+      "display_name_zh": "spree｜开源电子商务平台，含 REST API 和 SDK支持",
+      "description_zh": "spree 是一个开源电子商务平台，支持 B2B、市场和企业应用，提供 REST API 和 TypeScript SDK，并包含生产就绪的 Next.js 商店前端。支持自托管，无供应商锁定，无平台费用。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 8514,
+      "source_full_name": "rails/rails",
+      "source_hash": "e88c397a54cd24c4b960e56e17ae18786ed98f73c81cef6aaea643227823041c",
+      "display_name_zh": "rails｜Ruby on Rails 框架",
+      "description_zh": "Ruby on Rails 是一个基于 Ruby 语言的开源 Web 应用框架。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 437011,
+      "source_full_name": "openzfs/zfs",
+      "source_hash": "7b5ff9e676c21b57bb0457ea7a4ba601465905e3c205059014066c47d4bc7657",
+      "display_name_zh": "zfs｜OpenZFS 文件系统",
+      "description_zh": "OpenZFS 是 Linux 和 FreeBSD 上的开源文件系统。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 507775,
+      "source_full_name": "elastic/elasticsearch",
+      "source_hash": "d33193833fb37e8f00f27578403d76f06b584ea471c677c813ffb63cd09ca9ab",
+      "display_name_zh": "elasticsearch｜分布式 RESTful 搜索引擎",
+      "description_zh": "elasticsearch 是一个免费开源的分布式 RESTful 搜索引擎。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 537699,
+      "source_full_name": "Kitware/CMake",
+      "source_hash": "e5b777fb1ef187cdc9683b9dd399ec86f027e66d9289e8500cebb2e73241b902",
+      "display_name_zh": "CMake｜跨平台构建系统工具",
+      "description_zh": "CMake 是一个跨平台的自动化构建系统工具。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 538746,
+      "source_full_name": "ruby/ruby",
+      "source_hash": "fb66eaf6108fda0fb5be867a103fb8cc5159092a05e3c325a2527f50b2b06504",
+      "display_name_zh": "ruby｜Ruby 编程语言",
+      "description_zh": "Ruby 是一种动态、面向对象的编程语言。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 641512,
+      "source_full_name": "openstreetmap/openstreetmap-website",
+      "source_hash": "1c31a977fb06ffbabfa69f0d3fbff0da6b7b15bc76713ef54bf9124ab1848230",
+      "display_name_zh": "openstreetmap-website｜OpenStreetMap Rails 应用",
+      "description_zh": "openstreetmap-website 是支持 OpenStreetMap 的 Rails 应用程序。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 689344,
+      "source_full_name": "libretro/RetroArch",
+      "source_hash": "b28cec80784bd5b0269622f9eb483bb2f74c930d4833f8dbd1c615dc87183147",
+      "display_name_zh": "RetroArch｜跨平台 libretro API 前端，GPLv3 许可",
+      "description_zh": "RetroArch 是一个跨平台的 libretro API 前端，采用 GPLv3 许可。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 927442,
+      "source_full_name": "postgres/postgres",
+      "source_hash": "a196cb180e6dd08b0bf562e4e5f349a1ad521fab25dbbe183579d649dfa3e889",
+      "display_name_zh": "postgres｜PostgreSQL 官方 GIT 镜像",
+      "description_zh": "postgres 是官方 PostgreSQL GIT 仓库的镜像。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1459486,
+      "source_full_name": "JetBrains/ideavim",
+      "source_hash": "87695c4611953a786858f56bed055844c862efc70131524afdddba363a8be108",
+      "display_name_zh": "ideavim｜JetBrains IDEs 的 Vim 引擎",
+      "description_zh": "ideavim 是 JetBrains IDEs 的 Vim 引擎插件。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1548202,
+      "source_full_name": "matomo-org/matomo",
+      "source_hash": "dd63377e3c3d948e2188e270f1969d704db9adcebe5470d644d13b72fa6fbab9",
+      "display_name_zh": "matomo｜开源网站和应用数据分析平台",
+      "description_zh": "matomo 是领先的开源网站和应用数据分析平台，注重隐私保护。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1579990,
+      "source_full_name": "MonoGame/MonoGame",
+      "source_hash": "7fe9677ab18299bee87b5e6e64b3c54eae6208afd4eac8fe229e8b0b4e45bdf9",
+      "display_name_zh": "MonoGame｜跨平台游戏开发框架",
+      "description_zh": "MonoGame 是一个用于创建跨平台游戏的框架。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1614410,
+      "source_full_name": "FFmpeg/FFmpeg",
+      "source_hash": "7ee8a77e9fe9c287715b30ca78e6c7a6ae8eab1860a4ee50bcdbf92574b3ffb9",
+      "display_name_zh": "FFmpeg｜开源音视频处理工具",
+      "description_zh": "FFmpeg 是一个开源的音视频处理工具库。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1864233,
+      "source_full_name": "frappe/erpnext",
+      "source_hash": "c83bd0221e8da533cb833f90fb097771a8e4405eedfc7f3367b94c21e4767fc3",
+      "display_name_zh": "erpnext｜免费开源企业资源计划（ERP）系统",
+      "description_zh": "erpnext 是一个免费开源的企业资源计划（ERP）系统。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1903522,
+      "source_full_name": "php/php-src",
+      "source_hash": "b72c7b7c27661310fa8cb0a9c4fef0e1e342cb1eb854adfaa60f62288c911ac4",
+      "display_name_zh": "php-src｜PHP 解释器源代码",
+      "description_zh": "php-src 是 PHP 解释器的源代码。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1979797,
+      "source_full_name": "FreeRDP/FreeRDP",
+      "source_hash": "9c5755f83ffb8e7c4b2a4b8e9d10e3e789c57a581d757555e4958cffefb6f15f",
+      "display_name_zh": "FreeRDP｜免费远程桌面协议库和客户端",
+      "description_zh": "FreeRDP 是一个免费的远程桌面协议库和客户端。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 2096579,
+      "source_full_name": "markedjs/marked",
+      "source_hash": "2b41288808d4bebb4fa7f4e03a8016d5550dec0d72a1cd3a31fe33ed4107ee0a",
+      "display_name_zh": "marked｜快速 Markdown 解析器和编译器",
+      "description_zh": "marked 是一个快速的 Markdown 解析和编译器。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 2179920,
+      "source_full_name": "woocommerce/woocommerce",
+      "source_hash": "bd43de562950e026ab4d18ff3884c7c762ce36d8e9effe969b8ce402f88f2228",
+      "display_name_zh": "woocommerce｜基于 WordPress 的开源电子商务平台",
+      "description_zh": "woocommerce 是基于 WordPress 的可定制开源电子商务平台。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 2310495,
+      "source_full_name": "ceph/ceph",
+      "source_hash": "be7865618cc3dfb551b3770f13598b01f9db62623597726184d7d7bf9bac2dad",
+      "display_name_zh": "ceph｜分布式对象、块和文件存储平台",
+      "description_zh": "ceph 是一个分布式对象、块和文件存储平台。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 2352744,
+      "source_full_name": "apereo/cas",
+      "source_hash": "829e559022674e9bdf8a292a27317a20244801ddf395d007186ab65b7a38871f",
+      "display_name_zh": "apereo｜CAS 身份认证与单点登录",
+      "description_zh": "CAS 是 Apereo 提供的身份认证与单点登录解决方案。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 2489216,
+      "source_full_name": "JetBrains/intellij-community",
+      "source_hash": "19e58101337d5a6d89f20c7b2a9f7034ec744ac3f4af3bbc3d613540f81dbcba",
+      "display_name_zh": "JetBrains｜IntelliJ IDEA 集成开发环境",
+      "description_zh": "IntelliJ IDEA 及其平台的集成开发环境。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 2500088,
+      "source_full_name": "gitlabhq/gitlabhq",
+      "source_hash": "2e34a3ae42eb8f02c5ba11bcca86729cf48bc8a3962efd248233d5f866738a14",
+      "display_name_zh": "gitlabhq｜GitLab CE 社区版",
+      "description_zh": "GitLab CE 镜像，社区版代码托管平台。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 2656556,
+      "source_full_name": "zotero/zotero",
+      "source_hash": "59483d3613bae362b54c86c724f41b16070dc856ed197b00fe8a21654c39b89d",
+      "display_name_zh": "zotero｜Zotero 文献管理工具",
+      "description_zh": "Zotero 是一款免费易用的文献管理工具，支持收集、组织、注释和引用研究资料。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 2889328,
+      "source_full_name": "WordPress/WordPress",
+      "source_hash": "a89b40eb5ff946952030a07f545a25a861891e40c666ceff38764e99b5a113ce",
+      "display_name_zh": "WordPress｜WordPress Git 镜像",
+      "description_zh": "WordPress 的 Git 镜像仓库，非开发主仓库。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 2928948,
+      "source_full_name": "Azure/azure-sdk-for-java",
+      "source_hash": "8039ce9fd6032fe9d8634df8e4273f003fa8bb022c70203ef7c20c7298c3cad5",
+      "display_name_zh": "azure-sdk-for-java｜Azure SDK for Java 开发工具包",
+      "description_zh": "Azure SDK for Java 的活跃开发仓库，提供 Java 语言的 Azure 服务开发工具包。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 3199002,
+      "source_full_name": "raspberrypi/linux",
+      "source_hash": "013e45b3bae08c83213633fa11a63ca18138f99bf5a044cd03378240bf0e3be1",
+      "display_name_zh": "linux｜树莓派 Linux 内核源码",
+      "description_zh": "树莓派官方内核源码，包含针对树莓派的 Linux 内核构建。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 3299208,
+      "source_full_name": "videolan/vlc",
+      "source_hash": "d9ca1a50ed6b88adf8e659d411cdef3a6fbf56d623e3ca71c10eb5209e27de1d",
+      "display_name_zh": "videolan｜VLC 媒体播放器",
+      "description_zh": "VLC 媒体播放器，支持多种格式播放。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 3431193,
+      "source_full_name": "yiisoft/yii2",
+      "source_hash": "933ff2e3db96c50a17e5a09f87916ed986bd98b6c78eed7cf91c4b22e18ba8c9",
+      "display_name_zh": "yiisoft｜Yii2 PHP 框架",
+      "description_zh": "Yii 2 是一个快速、安全的专业 PHP 框架。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 3432266,
+      "source_full_name": "JetBrains/kotlin",
+      "source_hash": "b9b000c6e48c2d5e7168c5ffbebc8ebe8ecc48e57fc555533c48da6bfdca8668",
+      "display_name_zh": "JetBrains｜Kotlin 编程语言",
+      "description_zh": "Kotlin 编程语言。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
     {
       "repository_id": 3482588,
       "source_full_name": "danielmiessler/SecLists",
@@ -19,6 +280,42 @@
       "display_name_zh": "SecLists｜安全测试列表集合（含 URLs）",
       "description_zh": "SecLists 是安全测试人员的辅助工具，收集了多种用于安全评估的列表，包括用户名、密码、URLs、敏感数据模式、模糊测试载荷、Web Shell 等。",
       "generated_at": "2026-07-16T10:11:42.866351Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 3618133,
+      "source_full_name": "web-platform-tests/wpt",
+      "source_hash": "0f8de119ae33b8bcc892bada673847557037063c4a2a242d4dd8faa80d5d971c",
+      "display_name_zh": "web-platform-tests｜WHATWG Web 平台测试套件",
+      "description_zh": "Web 平台规范的测试套件，涵盖 WHATWG、W3C 等标准。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 3623050,
+      "source_full_name": "Homebrew/homebrew-cask",
+      "source_hash": "cff1929f014404990051385ec288aeac9e4d64fcabaed6b18da6ece31d51e246",
+      "display_name_zh": "Homebrew｜homebrew-cask CLI 应用管理",
+      "description_zh": "macOS 应用二进制分发的命令行管理工具。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 4095287,
+      "source_full_name": "rubocop/rubocop",
+      "source_hash": "3d1efca4b30bacc172628347e3fc683a5dfd63e31e527160a3241407790882d4",
+      "display_name_zh": "rubocop｜Ruby 静态代码分析器",
+      "description_zh": "基于社区 Ruby 代码风格指南的静态代码分析和格式化工具。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 4151993,
+      "source_full_name": "OpenVPN/openvpn",
+      "source_hash": "574701c3c1809e677f1dca694eab6d25b689b2befdfadf0f0ea614ef7a3a93da",
+      "display_name_zh": "OpenVPN｜开源 VPN 守护进程",
+      "description_zh": "OpenVPN 是一款开源的虚拟专用网络（VPN）守护进程。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
       "provenance": "github_models"
     },
     {
@@ -31,12 +328,237 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 4869294,
+      "source_full_name": "radareorg/radare2",
+      "source_hash": "6b53c746985e038fa8e1bdd8de7b8f297efbd5140c3583ce1aa58c5876d739e3",
+      "display_name_zh": "radareorg｜radare2 UNIX 逆向工程框架",
+      "description_zh": "类 UNIX 的逆向工程框架及命令行工具集。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 4992906,
+      "source_full_name": "pmd/pmd",
+      "source_hash": "baea41a3dd258619e5e54d79a3aa6f80bb2a20c74bf7743d7006a37ab41e8d9a",
+      "display_name_zh": "pmd｜多语言静态代码分析器",
+      "description_zh": "支持多语言的可扩展静态代码分析器。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 5298790,
+      "source_full_name": "PX4/PX4-Autopilot",
+      "source_hash": "1840cbda706202592b03a16654bf2ab7cf3d5d172809db2253dc7709a7426e3a",
+      "display_name_zh": "PX4｜PX4 无人机自动驾驶软件",
+      "description_zh": "PX4 无人机自动驾驶软件。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 5349565,
+      "source_full_name": "prestodb/presto",
+      "source_hash": "456d84735196b672b8f6f8b0e01fb109be55bef5526c38668aa51203387adb79",
+      "display_name_zh": "prestodb｜Presto 分布式 SQL 查询引擎",
+      "description_zh": "Presto 是用于大数据的分布式 SQL 查询引擎。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 5736080,
+      "source_full_name": "FreeCAD/FreeCAD",
+      "source_hash": "994207fb73593b6dc08702eefc4de4a9731beb47c29a47f881438b555a6c1c12",
+      "display_name_zh": "FreeCAD｜FreeCAD 三维参数化建模",
+      "description_zh": "FreeCAD 是一款免费开源的跨平台三维参数化建模软件。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 6296790,
+      "source_full_name": "spring-projects/spring-boot",
+      "source_hash": "c5ecbcee9cd07b8e27a00e4d809dd1bfd97a079f2a3ddfae168237af71e36770",
+      "display_name_zh": "spring-projects｜Spring Boot 应用开发框架",
+      "description_zh": "Spring Boot 简化了基于 Spring 的生产级应用开发。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 6358188,
+      "source_full_name": "apache/druid",
+      "source_hash": "03fbefc30c356ce9d4fae632b866919a7ef1750c7027a1bceb4b5f566abb7ff8",
+      "display_name_zh": "druid｜Apache Druid实时分析数据库",
+      "description_zh": "Apache Druid：高性能实时分析数据库。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 6443435,
+      "source_full_name": "nats-io/nats-server",
+      "source_hash": "a5dcdfe428901ad5e3dfe487e826858b6ea5223f027a2c3a842e4fadd885cbbf",
+      "display_name_zh": "nats-server｜NATS.io高性能消息服务器",
+      "description_zh": "NATS.io的高性能服务器，支持云和边缘原生消息系统。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 6899875,
+      "source_full_name": "opf/openproject",
+      "source_hash": "cd8ba3f7eb5c572d88e93ef5fb33ec382a454e1bd8e68cde4f67456fa6b80733",
+      "display_name_zh": "openproject｜开源项目管理软件OpenProject",
+      "description_zh": "OpenProject是领先的开源项目管理软件，支持产品、项目和组合管理，具备敏捷规划、问题跟踪、路线图、甘特图、时间跟踪和协作功能。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 7177269,
+      "source_full_name": "shadowsocks/shadowsocks-libev",
+      "source_hash": "051b4eaccbacb9d4792d14df906d8b6ae3cae2e9ec19a4d1458778a0e1911ad5",
+      "display_name_zh": "shadowsocks-libev｜shadowsocks libev版本",
+      "description_zh": "shadowsocks的libev版本，仅修复漏洞，未来开发转向shadowsocks-rust。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 7512484,
+      "source_full_name": "ArduPilot/ardupilot",
+      "source_hash": "5afabbb38357f7d36326c289b63f959fdc7586f74d9482e3903ed2ca8c98253e",
+      "display_name_zh": "ardupilot｜ArduPilot飞行器控制源码",
+      "description_zh": "ArduPlane、ArduCopter、ArduRover和ArduSub的源码。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 7548986,
+      "source_full_name": "laravel/framework",
+      "source_hash": "fc05e8544c207d371081b645dae9fe0abe21f043140debb921f7d595a0bd8d95",
+      "display_name_zh": "framework｜Laravel Web应用框架",
+      "description_zh": "Laravel是一个具有表达性和优雅语法的Web应用框架。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 7569578,
+      "source_full_name": "discourse/discourse",
+      "source_hash": "6e63d0644509d36971744f7b940f448d1517b32fdaef2680ef3c1644e0afec02",
+      "display_name_zh": "discourse｜社区讨论平台discourse",
+      "description_zh": "discourse是一个免费、开放且简洁的社区讨论平台。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 7613257,
+      "source_full_name": "SeleniumHQ/selenium",
+      "source_hash": "9b7d219f107a5d6c519c81f7b626417e205d54223b859426dcab8db46f995b5d",
+      "display_name_zh": "selenium｜浏览器自动化框架selenium",
+      "description_zh": "selenium是一个浏览器自动化框架及生态系统。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 7634677,
+      "source_full_name": "openssl/openssl",
+      "source_hash": "a908b6ad7b5732305c5f13b6a5930c35a151f3136de51c9ea4fdc8541c307917",
+      "display_name_zh": "openssl｜openssl通用TLS和加密库",
+      "description_zh": "通用TLS和加密库。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 7716883,
+      "source_full_name": "ankidroid/Anki-Android",
+      "source_hash": "ee8bdb27fa3dad5bbea7b211e9e1cbb4c612ac9dd2e2b638444ff8a3b2e4b951",
+      "display_name_zh": "Anki-Android｜AnkiDroid记忆卡片应用",
+      "description_zh": "AnkiDroid：Android平台上的Anki记忆卡片应用。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 7921466,
+      "source_full_name": "KhronosGroup/glTF",
+      "source_hash": "1d06c92b51a352dfffb353513aadcdd49798cdf7048d0b0c4f634305e1e08c73",
+      "display_name_zh": "glTF｜glTF 3D资产传输格式",
+      "description_zh": "glTF——运行时3D资产传输格式。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 8986217,
+      "source_full_name": "koreader/koreader",
+      "source_hash": "4de41acc40b226d478eff797f1aa03e1d3b3b66b028366ab1e187bf1356d4991",
+      "display_name_zh": "koreader｜支持PDF、EPUB、FB2的电子书阅读器koreader",
+      "description_zh": "koreader是一款支持PDF、DjVu、EPUB、FB2等多种格式的电子书阅读器，兼容Cervantes、Kindle、Kobo、PocketBook和Android设备。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 9384267,
+      "source_full_name": "electron/electron",
+      "source_hash": "736ad6b779d472183eab0cdbda8be2f589faf670dbc0b50fa77f53878699ce32",
+      "display_name_zh": "electron｜基于HTML和CSS的跨平台桌面应用框架electron",
+      "description_zh": "electron：使用JavaScript、HTML和CSS构建跨平台桌面应用。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 9524997,
       "source_full_name": "glfw/glfw",
       "source_hash": "de559733fb14b32e6e9c4907531e136978a9031911ddae7126a21e537a140a51",
       "display_name_zh": "glfw｜跨平台图形与输入库（支持 ES）",
       "description_zh": "glfw 是一个跨平台库，支持 OpenGL、OpenGL ES、Vulkan 以及窗口和输入管理。",
       "generated_at": "2026-07-16T10:11:42.866351Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 9852918,
+      "source_full_name": "TryGhost/Ghost",
+      "source_hash": "d080b41ba11575bd3fcd3f44193962cac58291322df6656983d649b3f9068e42",
+      "display_name_zh": "Ghost｜现代出版平台Ghost",
+      "description_zh": "Ghost：现代出版、会员、订阅和新闻通讯的独立技术平台。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 10744183,
+      "source_full_name": "netdata/netdata",
+      "source_hash": "d49f0d79ee9e4a6532d9cfa2f12b01a9e14f5c0b27e00fd258c7ba2b813a1262",
+      "display_name_zh": "netdata｜AI驱动的全栈监控工具netdata",
+      "description_zh": "netdata：快速实现AI驱动的全栈监控，适合精简团队。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 11008207,
+      "source_full_name": "vitessio/vitess",
+      "source_hash": "75c78abae205d319e88c910ce804e95b7d8d090211e6ec2fb995c36b84effbd5",
+      "display_name_zh": "vitess｜MySQL水平扩展数据库集群系统Vitess",
+      "description_zh": "Vitess是用于MySQL水平扩展的数据库集群系统。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 11125589,
+      "source_full_name": "keycloak/keycloak",
+      "source_hash": "2a5682ecbb61106dc3037843d13a27c4c39f41b09721463df3a8d8d36e653bc7",
+      "display_name_zh": "keycloak｜开源身份与访问管理系统keycloak",
+      "description_zh": "keycloak：现代应用和服务的开源身份与访问管理。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 11205780,
+      "source_full_name": "motdotla/dotenv",
+      "source_hash": "2ec2877afb815349556afcb63ffef69ebe7ff223835379dc9babfad2111beda4",
+      "display_name_zh": "dotenv｜Node.js环境变量加载工具dotenv",
+      "description_zh": "dotenv：为Node.js项目加载.env环境变量。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 11981144,
+      "source_full_name": "languagetool-org/languagetool",
+      "source_hash": "b2dc7a07dc906fdcf6bc976b6cbbb24158a0e51ca1443ed6828235bb568e64c5",
+      "display_name_zh": "languagetool｜支持25种语言的语法检查工具",
+      "description_zh": "languagetool：支持25种以上语言的风格和语法检查工具。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
       "provenance": "github_models"
     },
     {
@@ -49,12 +571,111 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 13179939,
+      "source_full_name": "m-ab-s/media-autobuild_suite",
+      "source_hash": "5b420e26dae7b23ab8169dadb4f9c494e5d75e97c4ca1144b95b8bf9fa30d3ff",
+      "display_name_zh": "media-autobuild_suite｜Mingw-w64编译环境搭建脚本",
+      "description_zh": "media-autobuild_suite：Windows批处理脚本，帮助搭建Mingw-w64编译环境，用于构建ffmpeg及其他多媒体工具。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 13233158,
+      "source_full_name": "obsproject/obs-studio",
+      "source_hash": "60ece0ee2d02c3440499d7c2605c6cf7adbb1e47b899af2c3557af23d5bb96d2",
+      "display_name_zh": "obs-studio｜OBS 直播与录屏软件",
+      "description_zh": "OBS 是一款免费开源的直播和屏幕录制软件。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 13428264,
+      "source_full_name": "ShareX/ShareX",
+      "source_hash": "4c6d21dbd5d586bb1ea6ebdf1c252546cfd74947731346e8ef1cbf9902df3338",
+      "display_name_zh": "ShareX｜屏幕捕获与文件上传工具",
+      "description_zh": "ShareX 是一款免费开源的屏幕捕获和录制工具，支持多种文件上传。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 14303048,
+      "source_full_name": "mamedev/mame",
+      "source_hash": "4dc43c6b33d3744c3a9df462670c3d3000e0ecee0f08fe633d6d5644633c22d7",
+      "display_name_zh": "mame｜街机游戏模拟器",
+      "description_zh": "MAME 是一个多平台的街机游戏模拟器。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 14447732,
+      "source_full_name": "msys2/MINGW-packages",
+      "source_hash": "2e09dfa18e370da1e20398f04346754dbfacb6b501a63e4e6a7061614203fef7",
+      "display_name_zh": "MINGW-packages｜MSYS2 下的 MinGW-w64 包脚本",
+      "description_zh": "MINGW-packages 是用于 MSYS2 环境下构建 MinGW-w64 目标的包脚本集合。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 14712850,
       "source_full_name": "syncthing/syncthing",
       "source_hash": "6ac679aa47432cf2887d7e95dbbcadb3c1aa22cc19bffe4fa26cbb3bb28efe07",
       "display_name_zh": "syncthing｜持续文件同步工具",
       "description_zh": "开源的持续文件同步工具。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 15019962,
+      "source_full_name": "tldr-pages/tldr",
+      "source_hash": "78bb7d4a53c37432a9d4598b174affa5d7e0019fb1e6670857b61f8849aec487",
+      "display_name_zh": "tldr｜命令行简明手册",
+      "description_zh": "tldr 提供社区协作的命令行简明使用手册。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 15231212,
+      "source_full_name": "Automattic/jetpack",
+      "source_hash": "2d0fec70614148c7be6717a48e82273813a3bde3a2bf1dba392ae2aff7f4578d",
+      "display_name_zh": "jetpack｜WordPress 安全与性能工具",
+      "description_zh": "jetpack 是由 WordPress 专家开发的安全、性能和营销工具，帮助提升 WP 网站表现。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 15337142,
+      "source_full_name": "micropython/micropython",
+      "source_hash": "749f8d20dc2ae3ada4d2f9922480137c0cf0693b66ab7c93fe89d19ecb4e2630",
+      "display_name_zh": "micropython｜微控制器 Python 实现",
+      "description_zh": "MicroPython 是针对微控制器和受限系统的精简高效 Python 实现。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 15634981,
+      "source_full_name": "godotengine/godot",
+      "source_hash": "ed17bc73d7cf040b824ef6ee94751221341dbfeb03b37e78ab4e094074929ef3",
+      "display_name_zh": "godot｜跨平台 2D/3D 游戏引擎",
+      "description_zh": "Godot 是一款跨平台的 2D 和 3D 游戏引擎。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 15720445,
+      "source_full_name": "marko-js/marko",
+      "source_hash": "1d35df8b450d6582826550b10151817b050ac3197a75119191a38c267c6e9338",
+      "display_name_zh": "marko｜基于 HTML 的声明式 Web 语言",
+      "description_zh": "marko 是一种基于 HTML 的声明式语言，用于构建 Web 应用。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 16089035,
+      "source_full_name": "wekan/wekan",
+      "source_hash": "1038cbca13d02a09f133d0467fa6130abf58ed2656a1b1aaa48a966653c77207",
+      "display_name_zh": "wekan｜开源看板工具（FLOSS）",
+      "description_zh": "wekan 是基于 Meteor 的开源看板工具，适合 FLOSS 开发者使用，PRs 仅限开发。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
       "provenance": "github_models"
     },
     {
@@ -67,6 +688,42 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 16607898,
+      "source_full_name": "harness/harness",
+      "source_hash": "9d8b822ec8b1419b1a8630c8ebfb36702ddd6f4522cceb5d3d2a6b7e98a82bcd",
+      "display_name_zh": "harness｜集成 CI/CD 的开发平台",
+      "description_zh": "Harness Open Source 是集成源码管理、CI/CD 流水线和托管开发环境的开发平台。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 17620347,
+      "source_full_name": "dotnet/aspnetcore",
+      "source_hash": "8781d3c34df1383f75733da19a3a3a450cf63bd1bc9e3e39388574ca66c467c0",
+      "display_name_zh": "aspnetcore｜跨平台 ASP.NET Core 框架",
+      "description_zh": "ASP.NET Core 是跨平台的 .NET 框架，用于构建现代云端 Web 应用。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 17803236,
+      "source_full_name": "rclone/rclone",
+      "source_hash": "2584c43b1400d3c1e803e1df04835451c6b9085d2adf7ba97ef84bd8a94dac26",
+      "display_name_zh": "rclone｜支持 S3 和 B2 的云存储同步工具",
+      "description_zh": "rclone 是支持 S3 和 B2 等多种云存储的同步工具。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 18348651,
+      "source_full_name": "OpenRCT2/OpenRCT2",
+      "source_hash": "d4314f938c81e4b712b3d044cdaa5f81d0e8960ea179cedda0a765a314120963",
+      "display_name_zh": "OpenRCT2｜过山车大亨 2 开源重制版",
+      "description_zh": "OpenRCT2 是过山车大亨 2 的开源重制版。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 19415064,
       "source_full_name": "ossu/computer-science",
       "source_hash": "b6b53bb1cc54cf81c831f77b3694b290eaa7db84985ded9da61d079541c9ad9c",
@@ -76,12 +733,84 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 19696006,
+      "source_full_name": "playcanvas/engine",
+      "source_hash": "b20d566129e91d21a0933fb727ae377e75bf683e9bc7b42f4c7c59bc7f5ef7e6",
+      "display_name_zh": "engine｜基于 WebGL 的网页图形引擎",
+      "description_zh": "engine 是基于 WebGL、WebGPU、WebXR 和 glTF 的强大网页图形运行时。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 19994257,
+      "source_full_name": "go-delve/delve",
+      "source_hash": "fb335908fdc9656a13e42465d5c356f0473f5017821a7a40451d297555b0bbfe",
+      "display_name_zh": "delve｜Go 语言调试器",
+      "description_zh": "delve 是 Go 语言的调试器。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 20300177,
+      "source_full_name": "google/guava",
+      "source_hash": "e998692618578e89e63991a7d8b083891f4b00312e65cfe56670a57334693e54",
+      "display_name_zh": "guava｜Google Java 核心库",
+      "description_zh": "guava 是 Google 提供的 Java 核心库集合。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 20387062,
+      "source_full_name": "horsicq/Detect-It-Easy",
+      "source_hash": "5f43d9b5c3e9fb1cd7c50eddad010a78184be70f50d355f7984dabbf401abe3c",
+      "display_name_zh": "Detect-It-Easy｜跨平台文件类型检测",
+      "description_zh": "Detect-It-Easy 是一款跨平台的文件类型检测工具。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 20587599,
+      "source_full_name": "apache/flink",
+      "source_hash": "9b46f11cebd44fb3337ca8d972949d1e587db792935837cb41766c1e9060a725",
+      "display_name_zh": "flink｜Apache 流处理框架",
+      "description_zh": "flink 是 Apache 的流处理框架。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 20773773,
+      "source_full_name": "bazelbuild/bazel",
+      "source_hash": "39e53807d35a3dec3fd7d27a6f85e91f361c26cb73a329f07328a4c98e430971",
+      "display_name_zh": "bazel｜多语言构建系统",
+      "description_zh": "bazel 是一款快速、可扩展的多语言构建系统。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 21289110,
       "source_full_name": "vinta/awesome-python",
       "source_hash": "7af4339a71c72a1bf7e0fb71fa32f31967850d6370fa15b5b0b2d5d3096fe5e8",
       "display_name_zh": "awesome-python｜Python资源精选列表",
       "description_zh": "Python框架、库、工具和资源的精选列表。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 21329550,
+      "source_full_name": "wireshark/wireshark",
+      "source_hash": "d1906abc2ccd7b35d0af7b1c9fd90619f7e0d67d9445f16f9e976cb636d71a29",
+      "display_name_zh": "wireshark｜Wireshark 网络协议分析工具",
+      "description_zh": "Wireshark 的只读 Git 镜像仓库。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 21331090,
+      "source_full_name": "4ian/GDevelop",
+      "source_hash": "b6eb739b08ee87e511551b8b146729a79008e9bcba698ee6434b67a57a1a0865",
+      "display_name_zh": "GDevelop｜GDevelop 游戏引擎",
+      "description_zh": "开源跨平台的 2D/3D 多人游戏引擎，适合所有人使用。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
       "provenance": "github_models"
     },
     {
@@ -103,12 +832,174 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 22067521,
+      "source_full_name": "ocornut/imgui",
+      "source_hash": "d6f61fee81f9e19e17ab2343f943f34ae480f1d5d09c285649c40439fba2814f",
+      "display_name_zh": "imgui｜Dear ImGui 图形用户界面库",
+      "description_zh": "Dear ImGui：无依赖的轻量级 C++ 图形用户界面库。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 22394357,
+      "source_full_name": "osquery/osquery",
+      "source_hash": "e7975b7f24ef69ae391cd9b4d1622c375c583310354626582e118f261d308a85",
+      "display_name_zh": "osquery｜osquery SQL 操作系统监控工具",
+      "description_zh": "基于 SQL 的操作系统监控、检测和分析工具。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 23357588,
+      "source_full_name": "protocolbuffers/protobuf",
+      "source_hash": "5a685a92d93925cd43c692341a396d9d4c9e6fed316b8bfe86b33af6f6a0babd",
+      "display_name_zh": "protobuf｜Protocol Buffers 数据交换格式",
+      "description_zh": "Google 的数据交换格式 Protocol Buffers。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 24420506,
+      "source_full_name": "v8/v8",
+      "source_hash": "640122876366a08e32acd557823effc2b0a55b8a55dcefadcab92318a7067e14",
+      "display_name_zh": "v8｜V8 JavaScript 引擎",
+      "description_zh": "V8 JavaScript 引擎的官方 Git 镜像仓库。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 25459400,
+      "source_full_name": "pinpoint-apm/pinpoint",
+      "source_hash": "fcdf7e86cfd28fdd5009abea33deead8340027c29ab64bf049b7cd5f58340d33",
+      "display_name_zh": "pinpoint｜pinpoint APM 性能管理工具",
+      "description_zh": "面向大规模分布式系统的应用性能管理（APM）工具。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 26133979,
+      "source_full_name": "mozilla-mobile/firefox-ios",
+      "source_hash": "9dc1e801357b7ab986da511cfe53229e176d99aba3135864b584e33422e92ce8",
+      "display_name_zh": "firefox-ios｜Firefox iOS 浏览器",
+      "description_zh": "适用于 iOS 平台的 Firefox 浏览器。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 26784827,
+      "source_full_name": "dotnet/core",
+      "source_hash": "c9f474b18c202f09129e30f9cc2443300a14c3d49ebef81cc12446c66e1f127c",
+      "display_name_zh": "core｜.NET 核心资讯",
+      "description_zh": ".NET 相关的新闻、公告和版本说明。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 27549019,
+      "source_full_name": "stylelint/stylelint",
+      "source_hash": "ecd81872c129d22d2520f5e14a4e6ae0fc01980e49cc7832d51fe995b458fa51",
+      "display_name_zh": "stylelint｜stylelint CSS 代码检查工具",
+      "description_zh": "强大的 CSS 代码检查工具，帮助避免错误并规范代码。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 27954927,
+      "source_full_name": "ben-manes/caffeine",
+      "source_hash": "21f5a9087184d6b8f87b4541d95aac97938bf28083d7a1c75afd2cf27bc09117",
+      "display_name_zh": "caffeine｜Caffeine 高性能缓存库",
+      "description_zh": "高性能的 Java 缓存库。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 28232663,
+      "source_full_name": "dotnet/orleans",
+      "source_hash": "011d9c1af9f6f3e46b99c2fd3df3cf2b95a481f560c81cd620fbf78b4388c20d",
+      "display_name_zh": "orleans｜Orleans .NET 云原生框架",
+      "description_zh": "面向 .NET 的云原生应用框架。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 29028775,
+      "source_full_name": "react/react-native",
+      "source_hash": "79345c91d7b9b5bbae3ae6454cdf8d5ed81cf78e6e5c74a2b68311b422139696",
+      "display_name_zh": "react-native｜React Native 原生应用框架",
+      "description_zh": "基于 React 的原生应用开发框架。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 29078997,
+      "source_full_name": "dotnet/roslyn",
+      "source_hash": "5ba282786094cf884529609346873e37f8f618cbd1bd1ea178a8df369bb81bc6",
+      "display_name_zh": "roslyn｜Roslyn .NET 编译器",
+      "description_zh": "Roslyn .NET 编译器为 C# 和 Visual Basic 语言提供丰富的代码分析 APIs。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 29126334,
+      "source_full_name": "EasyCorp/EasyAdminBundle",
+      "source_hash": "e1d9fe14708d4c4d230ee6721a3833823c5d8d1166bdd4a8ef476a9b907d3ed6",
+      "display_name_zh": "EasyAdminBundle｜EasyAdmin 管理后台生成器",
+      "description_zh": "Symfony 应用的快速现代化管理后台生成器。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 29207621,
+      "source_full_name": "caddyserver/caddy",
+      "source_hash": "07986ee6fdcec8abcae0dde94fc36e2527b73edd81a7f030250d0a56f321b23f",
+      "display_name_zh": "caddy｜Caddy HTTP/1-2-3 多平台 Web 服务器",
+      "description_zh": "支持 HTTP/1、2、3 和自动 HTTPS 的快速多平台 Web 服务器。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 29745084,
       "source_full_name": "Leantime/leantime",
       "source_hash": "80c7981c5b2ef59d0bbbcac9d99f4f372296790c5385ea426ebbd21fa8befa87",
       "display_name_zh": "leantime｜面向 ADHD 用户的项目管理系统",
       "description_zh": "leantime 是一款面向非项目经理的目标导向项目管理系统，设计时考虑了 ADHD、自闭症和阅读障碍用户的需求。",
       "generated_at": "2026-07-16T10:11:42.866351Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 30215226,
+      "source_full_name": "dataplat/dbatools",
+      "source_hash": "08f5ea8865e0952507cee46e85c1fb0a8caac6c29eefda471566f469ce15e1e4",
+      "display_name_zh": "dbatools｜dbatools SQL Server 自动化工具",
+      "description_zh": "SQL Server 自动化和实例迁移工具，安全快速且免费。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 30675533,
+      "source_full_name": "google/fonts",
+      "source_hash": "dc704b74d810b0e160277c2e1f66b10b8c34da97116c0dd3fb381f5d25322d5f",
+      "display_name_zh": "fonts｜Google Fonts 字体资源",
+      "description_zh": "Google Fonts 的字体文件及相关问题跟踪。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 30737688,
+      "source_full_name": "dotnet/ClangSharp",
+      "source_hash": "5b71eebb9764b470f8fb409e162714b15d267ac5cf1e02a9c0c874e49e12164a",
+      "display_name_zh": "ClangSharp｜ClangSharp .NET 绑定",
+      "description_zh": "为 .NET 提供的 Clang 绑定，使用 C# 编写。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 31558937,
+      "source_full_name": "gravitational/teleport",
+      "source_hash": "611a9cc033b69c7f8e42e4118b837b2c1d0537a4a08640ae8092e7ba9a67d577",
+      "display_name_zh": "teleport｜Teleport 基础设施访问安全工具",
+      "description_zh": "简便且安全的基础设施访问和保护方案。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
       "provenance": "github_models"
     },
     {
@@ -121,6 +1012,87 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 32873313,
+      "source_full_name": "systemd/systemd",
+      "source_hash": "feb19c64698c77618f25a807c08a1bef0eb2312b66b6ca8b5ec7395f6ed16ed4",
+      "display_name_zh": "systemd｜系统和服务管理器",
+      "description_zh": "systemd 系统和服务管理器",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 32944298,
+      "source_full_name": "Z3Prover/z3",
+      "source_hash": "c3d15d1d39c9b96cf508824c727ad3bad35582a0f2e56c121f2fcebdec588268",
+      "display_name_zh": "z3｜Z3 定理证明器",
+      "description_zh": "Z3 定理证明器",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 33014811,
+      "source_full_name": "notepad-plus-plus/notepad-plus-plus",
+      "source_hash": "9d8d35179998060efa2e789364e1ab92d1ceb5c88733a738e63bef4015da3a4b",
+      "display_name_zh": "notepad-plus-plus｜官方代码仓库",
+      "description_zh": "Notepad++ 官方代码仓库",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 33212527,
+      "source_full_name": "RailsEventStore/rails_event_store",
+      "source_hash": "d3e1c81f581d7784938abbcb261623345ccbad29a4fb594510a4123580d30798",
+      "display_name_zh": "rails_event_store｜Ruby 事件存储实现",
+      "description_zh": "基于 Active Record 的 Ruby 事件存储实现",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 34302698,
+      "source_full_name": "serverless/serverless",
+      "source_hash": "7bd91203af24f9cf38d9c47b074c38363cfa4da9275d6d4466c977d6ba49b872",
+      "display_name_zh": "serverless｜基于 AWS 的无服务器框架",
+      "description_zh": "基于 AWS Lambda 的无服务器应用框架",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 34847907,
+      "source_full_name": "ntop/ntopng",
+      "source_hash": "0ff9c568ce4ab3d1613cfbc92743a493b5ad6cffb887572bda9ca6cdb5c0d251",
+      "display_name_zh": "ntopng｜网络流量与安全监控",
+      "description_zh": "基于 Web 的网络流量和网络安全监控工具",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 35065891,
+      "source_full_name": "GoogleCloudPlatform/nodejs-docs-samples",
+      "source_hash": "e145dc46165e60a91baf81615122cbe74670f4d175bec9017df750dd3f9f2584",
+      "display_name_zh": "nodejs-docs-samples｜Google Cloud Node.js 示例",
+      "description_zh": "Google Cloud Platform 产品的 Node.js 示例代码",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 35726310,
+      "source_full_name": "dart-lang/sdk",
+      "source_hash": "6972571ff07ea0a3cf629d402b8e16a4630a27088ae23873b899e6ae1033b77c",
+      "display_name_zh": "sdk｜Dart SDK（含 VM 和 JS 编译器）",
+      "description_zh": "包含 VM、JS 和 Wasm 编译器的 Dart SDK",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 35780977,
+      "source_full_name": "ImageMagick/ImageMagick",
+      "source_hash": "f4ed466cee769911d6b766e17791cc4dc1f1d6720a5ee5dac6e970776680fe94",
+      "display_name_zh": "ImageMagick｜支持 200+ 格式的图像处理与 APIs",
+      "description_zh": "支持 200 多种格式的图像处理软件，提供丰富的命令行工具和 APIs",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 36633370,
       "source_full_name": "awesome-selfhosted/awesome-selfhosted",
       "source_hash": "73b95087953815ea74496146ff6061a08f9c8f823d2ff4a436d870ea3d74acfd",
@@ -130,12 +1102,291 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 36836475,
+      "source_full_name": "tmux/tmux",
+      "source_hash": "ac3d27a1e0eeac9342c64f1b106ddcf1d91130787b501df82cb63f3093e86383",
+      "display_name_zh": "tmux｜终端复用器",
+      "description_zh": "tmux 终端复用器源代码",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 37060852,
+      "source_full_name": "betaflight/betaflight",
+      "source_hash": "751a3b0d97306ce3c77ea084f8aeb4f06a81e57fca325708157a0b3a4636b5d4",
+      "display_name_zh": "betaflight｜开源飞控固件",
+      "description_zh": "开源飞控固件",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 37346186,
+      "source_full_name": "termux/termux-packages",
+      "source_hash": "199e0c8b9bf03435c1fce73a3b1e0d21ac7dd4fe1ed174a2d2cac7d2f635590c",
+      "display_name_zh": "termux-packages｜Termux 软件包构建系统",
+      "description_zh": "Termux 的软件包构建系统",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 37912398,
+      "source_full_name": "nginx/nginx",
+      "source_hash": "25e478398aa02ec72e6388c2e2a9174214a5e77d838a156800403ac25682f66c",
+      "display_name_zh": "nginx｜官方 NGINX 代码仓库",
+      "description_zh": "官方 NGINX 开源代码仓库",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 38182966,
+      "source_full_name": "TelegramBots/Telegram.Bot",
+      "source_hash": "306a502a3f2725d9189fa4daeafb1d36bbd6bbc9f3f57838dd930b90c9ed5c21",
+      "display_name_zh": "Telegram.Bot｜.NET Telegram 机器人 API 客户端",
+      "description_zh": ".NET 客户端实现的 Telegram 机器人 API",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 39315600,
+      "source_full_name": "be5invis/Iosevka",
+      "source_hash": "b4aa41f71cf89a628060a4b6e794f833a88354054519925b83d65f654d5b572e",
+      "display_name_zh": "Iosevka｜多用途代码字体",
+      "description_zh": "多用途代码字体",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 39321023,
+      "source_full_name": "prebid/Prebid.js",
+      "source_hash": "21160987cc35d079980c9c83725b2ae3757d2fa8e4b1741ba0c740d350b2a0d8",
+      "display_name_zh": "Prebid.js｜头部竞价广告管理库",
+      "description_zh": "无需编写代码即可管理头部竞价广告合作伙伴的开源库",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 40556106,
+      "source_full_name": "wazuh/wazuh",
+      "source_hash": "dbe758d495e8c1f44397c23286983f8d942e40e64813ce8f3d169bd5dd16c722",
+      "display_name_zh": "wazuh｜统一 XDR 和 SIEM 安全平台",
+      "description_zh": "统一 XDR 和 SIEM 保护的开源安全平台",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 41394739,
+      "source_full_name": "libratbag/libratbag",
+      "source_hash": "e3d60ed63e4c9c007f7710749ec6e225b281a94e4e61eb8e69deb531d1588e17",
+      "display_name_zh": "libratbag｜基于 DBus 的输入设备配置守护进程",
+      "description_zh": "用于配置高端及游戏鼠标的 DBus 守护进程",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 41718185,
+      "source_full_name": "PatrickJS/awesome-angular",
+      "source_hash": "ad1d6d9496ab120d108fd28d6443dab6a85bb349bf6a2c1fdf82e68f2ba4caab",
+      "display_name_zh": "awesome-angular｜精选 Angular 资源列表",
+      "description_zh": "精选的优秀 Angular 资源列表",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 41889031,
+      "source_full_name": "TeamNewPipe/NewPipe",
+      "source_hash": "25d257f16069d0bc61ea5a167cbde1eddb5483ee2d411de3c0c619c1a6ba731f",
+      "display_name_zh": "NewPipe｜Android 轻量级流媒体前端",
+      "description_zh": "Android 平台的轻量级自由流媒体前端",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 41986369,
+      "source_full_name": "pingcap/tidb",
+      "source_hash": "f609b88eb235a6ed266fd8dc5e3f1eef7893e426a692eabec47eb4031bba1cdc",
+      "display_name_zh": "tidb｜分布式数据库系统（支持ACID）",
+      "description_zh": "TiDB 是一个支持 ACID 事务，内置事务、分析和向量搜索功能的分布式数据库，适用于不可预测增长的智能工作负载。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 42283287,
+      "source_full_name": "preactjs/preact",
+      "source_hash": "e2c8be69071f810811c70f6991997da86bbd9d8c662e7014c63589a18444a17f",
+      "display_name_zh": "preact｜轻量级 React 替代框架（3kB，API，DOM）",
+      "description_zh": "preact 是一个体积仅 3kB 的快速 React 替代品，提供相同的现代 API，支持组件和虚拟 DOM。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 42586612,
+      "source_full_name": "cmusatyalab/openface",
+      "source_hash": "a513396b8330c7e46337a2aff58aaf7cdfe296e329460c6e076b2e19ad6005a1",
+      "display_name_zh": "openface｜基于深度学习的人脸识别",
+      "description_zh": "openface 是基于深度神经网络的人脸识别工具。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 43425480,
+      "source_full_name": "wilsonfreitas/awesome-quant",
+      "source_hash": "36003325712040015af2d1e3ab32be804d17b462235389e14174b669d17b8263",
+      "display_name_zh": "awesome-quant｜量化金融资源精选",
+      "description_zh": "awesome-quant 是一个为量化金融领域精选的优秀库、包和资源列表。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 43723161,
+      "source_full_name": "helm/helm",
+      "source_hash": "fa14d86754ef938a581bf0b9e74302421651b59dcd3d1d53efb9751c1652ae57",
+      "display_name_zh": "helm｜Kubernetes 包管理器",
+      "description_zh": "helm 是 Kubernetes 的包管理工具。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 43975673,
+      "source_full_name": "KDE/krita",
+      "source_hash": "c508371b1a0136ec80d93be4664dda55597a8fe558a1b6ba1b383397180aaad5",
+      "display_name_zh": "krita｜KDE 数字绘画软件",
+      "description_zh": "Krita 是基于 KDE 和 Qt 框架的免费开源跨平台数字绘画应用，提供从零开始创作数字艺术的完整解决方案。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 44838949,
+      "source_full_name": "swiftlang/swift",
+      "source_hash": "6ad2026cd323976d0fa347e31448fa4a93e832a06837ed66c0a41cab900b9b28",
+      "display_name_zh": "swift｜Swift 编程语言",
+      "description_zh": "Swift 是一种编程语言。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 44897462,
+      "source_full_name": "JustArchiNET/ArchiSteamFarm",
+      "source_hash": "5878298b82a12bef4135a093d8a5f5353a33418a7ae0c62caafcfad3aa275c11",
+      "display_name_zh": "ArchiSteamFarm｜Steam 卡牌收集工具",
+      "description_zh": "ArchiSteamFarm 是一个用 C# 编写的应用，主要用于同时从多个账户收集 Steam 卡牌。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 45497910,
+      "source_full_name": "swiftlang/swift-evolution",
+      "source_hash": "aa90595bf9d86f9b6bf0eee2aa3b000230f5e0e7b2180b0eae38cc0d453b8fe1",
+      "display_name_zh": "swift-evolution｜Swift 语言演进提案",
+      "description_zh": "swift-evolution 维护 Swift 编程语言的变更提案和用户可见的增强功能。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 45821540,
+      "source_full_name": "openwrt/openwrt",
+      "source_hash": "5383df52b7013821f51f7907cf16222723b1c6b3e03b995ee45f8b7d49c75e3e",
+      "display_name_zh": "openwrt｜OpenWrt 项目镜像",
+      "description_zh": "openwrt 仓库为 OpenWrt 项目的镜像，仅供参考和接受拉取请求。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 46755185,
+      "source_full_name": "bitwarden/server",
+      "source_hash": "7913a4532b1a566461f5b8d3809fbf5fe194d96c3fecc4fd0dac3a27a5802b53",
+      "display_name_zh": "server｜Bitwarden 后端服务（含API）",
+      "description_zh": "server 是 Bitwarden 的基础设施和后端组件，包括 API、数据库和 Docker 配置。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 46964895,
+      "source_full_name": "star7th/showdoc",
+      "source_hash": "def8711a1a9c11d89d641671345fa26489adce380b918c5d05695d3d1eda8025",
+      "display_name_zh": "showdoc｜IT 团队在线文档工具（支持API）",
+      "description_zh": "showdoc 是一款适合 IT 团队在线共享文档的工具，支持 API 文档和技术文档管理。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 48109239,
+      "source_full_name": "cilium/cilium",
+      "source_hash": "10c476331ac2dbc55099ccb31af3ff85a29e0bd04ad8e500634afed04e9bcbad",
+      "display_name_zh": "cilium｜基于 eBPF 的网络与安全解决方案",
+      "description_zh": "cilium 基于 eBPF 技术，提供网络、安全和可观测性功能。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 48769241,
       "source_full_name": "penpot/penpot",
       "source_hash": "6bfa15995b53c12bf28380272f4fae71e385b7e94b4625e2bbeaa72e1c73f569",
       "display_name_zh": "penpot｜开源设计协作平台",
       "description_zh": "面向产品团队的开源设计协作平台。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 49014795,
+      "source_full_name": "phpstan/phpstan",
+      "source_hash": "74e98f25f6a33eef7eaebc22097e27d5b96ba7e15c1a4b8cc3d6ca90dba343df",
+      "display_name_zh": "phpstan｜PHP 静态代码分析工具",
+      "description_zh": "phpstan 是一款 PHP 静态分析工具，可在不运行代码的情况下发现代码中的错误。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 49122742,
+      "source_full_name": "binarywang/WxJava",
+      "source_hash": "cafb0ebcf3d823c663c2144e85dce34d8695c063b1f195be296c57bb865a6e4f",
+      "display_name_zh": "WxJava｜微信 Java 开发 SDK",
+      "description_zh": "WxJava 是微信开发的 Java SDK，支持微信支付、开放平台、小程序、企业微信、视频号和公众号的后端开发。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 49662222,
+      "source_full_name": "oracle/graal",
+      "source_hash": "742070800eafd005487574423cd4f37e419ef90ec2c9f289fc528c06cde2dde7",
+      "display_name_zh": "graal｜GraalVM 本地编译工具",
+      "description_zh": "graal 是 GraalVM，能将应用编译为启动迅速、扩展快速且资源占用少的本地可执行文件。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 49876476,
+      "source_full_name": "apache/shardingsphere",
+      "source_hash": "b9afb81fb378bcd83643a5ed34819d009bc48f1918b580bb9929f0651044ea2c",
+      "display_name_zh": "shardingsphere｜分布式 SQL 框架",
+      "description_zh": "shardingsphere 是一个分布式 SQL 解决方案，支持数据库分片、扩展性和安全性。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 50160261,
+      "source_full_name": "PaperMC/Paper",
+      "source_hash": "0d2d2c173d3c365b09c45800b50c76d96aac4e0f8f1fb3f34ed52ee254a1fa10",
+      "display_name_zh": "Paper｜高性能 Minecraft 服务器",
+      "description_zh": "Paper 是一款高性能的 Minecraft 服务器，致力于修复游戏玩法和机制的不一致性。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 50205233,
+      "source_full_name": "debezium/debezium",
+      "source_hash": "4e3a957adc695039ce5fcb967edc9424647b5ce5a0a07192cd39eb403d09de4d",
+      "display_name_zh": "debezium｜数据库变更数据捕获工具",
+      "description_zh": "debezium 提供多种数据库的变更数据捕获功能。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 52481933,
+      "source_full_name": "navidrome/navidrome",
+      "source_hash": "8fee2a02e7ca3a72f5885d88fbef7a839069067103b34a1e84993e85d3b90f77",
+      "display_name_zh": "navidrome｜个人音乐流媒体服务",
+      "description_zh": "navidrome 是个人音乐流媒体服务。",
+      "generated_at": "2026-07-16T17:46:53.472669Z",
       "provenance": "github_models"
     },
     {
@@ -391,15 +1642,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 817326197,
-      "source_full_name": "screenpipe/screenpipe",
-      "source_hash": "21d3f7115bf1fafd0b72e28b6d33f6ba2bd90849aa65a8bdcd8790e1f4dd6dd4",
-      "display_name_zh": "screenpipe｜YC S26 全天候 AI 记录与连接平台",
-      "description_zh": "screenpipe 是 YC S26 项目，提供全天候（24/7）本地私密安全的 AI 记录工具，支持连接 OpenClaw、Hermes 代理及 100 多个应用。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 842102124,
       "source_full_name": "gnmyt/Nexterm",
       "source_hash": "11ff5707d0e2991176967a2a98b1b8ceaaf8e8d4ac981fbca78a85ee2310f120",
@@ -544,15 +1786,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1021174826,
-      "source_full_name": "phishdestroy/destroylist",
-      "source_hash": "eec8e72582ce97721a2fec1f5202cedfd0d332714135b3bea568ce5a6672d39f",
-      "display_name_zh": "destroylist｜实时钓鱼诈骗域名黑名单API",
-      "description_zh": "destroylist 是一个实时钓鱼和诈骗域名黑名单，包含17万+威胁，88.8万+社区用户，提供免费API和多种格式。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1024554267,
       "source_full_name": "NousResearch/hermes-agent",
       "source_hash": "f3cbaafc5464ce7876bf0ddd42c3c2db358ffd8df92aa0c98d3d76354b7c1ebe",
@@ -684,15 +1917,6 @@
       "source_hash": "f03e7050dc0a14b776c6484ce49f6e92c68d8e34ab0d0ab37b1f85e9f0f535a8",
       "display_name_zh": "ui-ux-pro-max-skill｜AI SKILL UI UX设计智能",
       "description_zh": "一个提供设计智能的AI技能，支持构建专业的多平台UI/UX界面。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1113573066,
-      "source_full_name": "hugohe3/ppt-master",
-      "source_hash": "ba1ae3afdbc7c4385e19dce426334fce3712e7e1056e3017c62a6c061be619b0",
-      "display_name_zh": "ppt-master｜AI 生成可编辑 PowerPoint 工具",
-      "description_zh": "AI 生成可编辑的 PowerPoint 文件，支持原生形状与动画、可编辑图表与表格、语音讲稿及自定义模板。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
     },
