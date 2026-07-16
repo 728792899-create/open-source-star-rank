@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-07-16T05:19:11.000860Z",
+  "generated_at": "2026-07-16T05:25:33.987831Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 164,
-    "localized_count": 144,
-    "pending_count": 20,
-    "failed_count": 20,
-    "coverage_ratio": 0.878049
+    "localized_count": 164,
+    "pending_count": 0,
+    "failed_count": 0,
+    "coverage_ratio": 1.0
   },
   "repositories": [
     {
@@ -1270,6 +1270,186 @@
       "display_name_zh": "ponytail｜AI 代理懒人思维工具",
       "description_zh": "使您的 AI 代理像最懒的资深开发者一样思考，强调写更少代码。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1266884317,
+      "source_full_name": "kunchenguid/firstmate",
+      "source_hash": "c426e5dff8faadd821ec0cc5495dcfde88a3a5493a33fc8f84a848dc41a0814c",
+      "display_name_zh": "firstmate｜对话代理协作工具",
+      "description_zh": "与单一代理对话，协同完成任务。",
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1267485499,
+      "source_full_name": "vorssaint/vorssaint-utils",
+      "source_hash": "984febfc9c177959c1da3e42f10023872a2e1dede38b6caea913800dbf7cc87c",
+      "display_name_zh": "vorssaint-utils｜macOS 菜单栏工具包",
+      "description_zh": "免费开源的 macOS 菜单栏工具包。",
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1277572326,
+      "source_full_name": "NVIDIA-NeMo/labs-molt",
+      "source_hash": "a981b107cc64d9ea20487c17b7374993d0edac49d9a739aedaab34f57219c8c4",
+      "display_name_zh": "labs-molt｜实验室项目",
+      "description_zh": null,
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1279781303,
+      "source_full_name": "quantskills/quantskills",
+      "source_hash": "659654b0adb5bc256ff428bbdd836f0ce26eb1c412662c7cd71a5d9906ea275e",
+      "display_name_zh": "quantskills｜全景导航工具",
+      "description_zh": "QuantSkills 组织的全景导航工具。",
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1281772914,
+      "source_full_name": "tryRAMDAQ/RAMDAQ",
+      "source_hash": "dfce5dc0ff214271adeeb0d806d4c6f963abcf2dcc2e250d73dde07339e68194",
+      "display_name_zh": "RAMDAQ｜基于 ETH 的 GPU 计算 NASDAQ",
+      "description_zh": "基于 RAMDAQ 的计算 NASDAQ，按小时租用 GPUs，调用 139+ 模型，支持 H100 价格多空交易，使用 ETH 支付。",
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1282650900,
+      "source_full_name": "deer-flow/llm-space",
+      "source_hash": "b598656d0acb0d5448a5784c0e4e72dae7169320db32fb388a40361e56148bcb",
+      "display_name_zh": "llm-space｜代理原型桌面应用",
+      "description_zh": "本地优先的桌面应用，用于原型设计代理想法，检查每个执行步骤，重放失败并评估性能。",
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1283138527,
+      "source_full_name": "threerocks/hand-drawn-styles",
+      "source_hash": "b2162e733c27df192f411972c56595dee485788f6cc6abbfc24f79856e38277b",
+      "display_name_zh": "hand-drawn-styles｜内置 5 种手绘画风提示词生成",
+      "description_zh": "Claude Code 技能：内置 5 种手绘画风配方，生成可复制的生图提示词，包括儿童涂色、极简线条、蜡笔童涂、吉卜力、小豆人涂鸦。",
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1285011400,
+      "source_full_name": "intercom/2x-skills",
+      "source_hash": "15ede8b18a5ba48a8cc28c4e5026e93554b63c2281fac449946e8c137547ccb3",
+      "display_name_zh": "2x-skills｜通用 Claude 技能集合",
+      "description_zh": "一组通用的 Claude 技能集合，适合广泛使用。",
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1286080397,
+      "source_full_name": "JustVugg/colibri",
+      "source_hash": "b18e9869ab00de991ffd29af99c79fdb4bef908ea9fb91ed97efad756afa80d4",
+      "display_name_zh": "colibri｜GLM-5.2 744B 模型轻量运行引擎",
+      "description_zh": "在 25GB RAM 的消费级机器上运行 GLM-5.2（744B MoE），纯 C 语言实现，无依赖，专家模型从磁盘流式加载。",
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1287460663,
+      "source_full_name": "elder-plinius/T3MP3ST",
+      "source_hash": "88591ab96c79b3e5f79f4c08a8735828457b006adeea71e0809b3d3e8b11022f",
+      "display_name_zh": "T3MP3ST｜自主红队多代理平台",
+      "description_zh": "自主红队平台，多代理进攻安全元框架。",
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1290949417,
+      "source_full_name": "suiyuebaobao/C-SSH",
+      "source_hash": "9621ff159dc14ab1c6873df16a3e1e1f435e68bd1473cf33fcd658aa51acb772",
+      "display_name_zh": "C-SSH｜跨平台 SSH 运维与 AI 助手",
+      "description_zh": "原生跨平台 SSH 运维工具，支持 tmux 会话持久化、常驻监控及内置 AI 助手，适用于 Windows 和 Android，永久免费，开源即将发布。",
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1291501023,
+      "source_full_name": "oso95/scroll-world",
+      "source_hash": "44b8229fbbd759f98c66c5065bf4a11dc7b5f52d8b2ec942b12367d3ea7da814",
+      "display_name_zh": "scroll-world｜品牌转滚动 3D 世界技能",
+      "description_zh": "将任意品牌转换为可滚动的 3D 世界的技能。",
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1291544092,
+      "source_full_name": "Sahir619/fable-method",
+      "source_hash": "005064974bbca4ab7b689ea2d7d5bb4245a3922575d9765c4313e2c379545231",
+      "display_name_zh": "fable-method｜Claude Fable 5 工作流技能",
+      "description_zh": "Fable 工作流：Claude Fable 5 的工作原理，提炼为任何模型可运行的技能，并附带评估机制。",
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1293054306,
+      "source_full_name": "modiqo/waggle",
+      "source_hash": "ab212153ab537bdb0ab7133a2debc76f66296e53b315ec508fb7add5b48931d1",
+      "display_name_zh": "waggle｜MCP 原生代理交接引用层",
+      "description_zh": "为代理交接提供可归属、可解析的工件引用，使用约 30 字节的令牌替代粘贴上下文，MCP 原生，代理框架的引用层。",
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1293806470,
+      "source_full_name": "nv-tlabs/ardy",
+      "source_hash": "ff9059f14f79a6c9cfa18b0baac767d0c77a0cfb43dcd5509b9c616bbc5cf15f",
+      "display_name_zh": "ardy｜ARDY 自回归扩散人体动作生成（SIGGRAPH 2026）",
+      "description_zh": "ARDY：用于交互式人体动作生成的自回归扩散混合表示方法，SIGGRAPH 2026 官方实现。",
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1295568163,
+      "source_full_name": "JexTradesLab/scaling-octo-engine",
+      "source_hash": "316eb6cdeda7d09f0ad200ac609cbcfd29cfc46669fd25f44adc2de9ed7bc25e",
+      "display_name_zh": "scaling-octo-engine｜引擎项目",
+      "description_zh": null,
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1296349582,
+      "source_full_name": "aws-samples/sample-specship",
+      "source_hash": "b0e0c6315b428e746b6d9e1dca483751cfb23db39cb16e6ce8db83d6b9d804f0",
+      "display_name_zh": "sample-specship｜AI 编码代理规范驱动工作流",
+      "description_zh": "面向 AI 编码代理的规范驱动自主工程工作流：侦察、规划、构建、验证、交付，支持 TDD、对抗验证及质量门控，封装为 Kiro Power。",
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1297316519,
+      "source_full_name": "MDX-Tom/gpt-5.6-instruct",
+      "source_hash": "3904caa418b97a9d59f9302fe0096d8ce8d5612b9722a7afd1a9e6b5e7c29df8",
+      "display_name_zh": "gpt-5.6-instruct｜gpt-5.6 Codex CLI 破甲测试包",
+      "description_zh": "针对 gpt-5.6 系列的 Codex CLI 破甲提示词与测试包。",
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1298660286,
+      "source_full_name": "x4gKing/Marzban-Panel",
+      "source_hash": "52e7f32506b0c9ce97fb6c337bee3e4323618d551d5359a6944a59a923bb1272",
+      "display_name_zh": "Marzban-Panel｜面板项目",
+      "description_zh": null,
+      "generated_at": "2026-07-16T05:25:33.987831Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1298710636,
+      "source_full_name": "pro-deploy/aegil",
+      "source_hash": "4b61885f90596b228be5495080c4622c7782ba3e18b96adc5cbf03d137abaa3b",
+      "display_name_zh": "aegil｜项目",
+      "description_zh": null,
+      "generated_at": "2026-07-16T05:25:33.987831Z",
       "provenance": "github_models"
     },
     {
