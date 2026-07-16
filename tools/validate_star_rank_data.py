@@ -13,9 +13,15 @@ from zoneinfo import ZoneInfo
 try:
     from tools.star_rank_schema import SchemaValidationError, sync_public_schemas, validate_payload
     from tools.localize_repositories import discover_ranked_repositories, repository_source_hash
+    from tools.classify_repositories import (
+        build_classification_sources,
+        classification_source_hash,
+        load_taxonomy,
+    )
 except ModuleNotFoundError:  # pragma: no cover - direct script execution fallback
     from star_rank_schema import SchemaValidationError, sync_public_schemas, validate_payload
     from localize_repositories import discover_ranked_repositories, repository_source_hash
+    from classify_repositories import build_classification_sources, classification_source_hash, load_taxonomy
 
 
 def read_json(path: Path) -> Any:
@@ -70,6 +76,7 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
         "event_index": 0,
         "event_daily": 0,
         "localization": 0,
+        "classification": 0,
     }
     state_path = root / "state" / "candidates.json"
     if state_path.exists():
@@ -313,6 +320,46 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
             raise SchemaValidationError("中文本地化失败数不得超过待处理数")
         counts["localization"] = 1
 
+    classification_index_path = public_dir / "classification" / "index.json"
+    classification_repositories_path = public_dir / "classification" / "repositories.json"
+    if classification_index_path.exists() != classification_repositories_path.exists():
+        raise SchemaValidationError("项目分类索引与仓库目录必须同时存在")
+    if classification_index_path.exists():
+        classification_index = read_json(classification_index_path)
+        classification_repositories = read_json(classification_repositories_path)
+        validate_payload("classification_index", classification_index, schema_dir)
+        validate_payload("classification_repositories", classification_repositories, schema_dir)
+        taxonomy_path = Path(__file__).resolve().parents[1] / "data" / "classification-taxonomy.zh-CN.json"
+        taxonomy = load_taxonomy(taxonomy_path)
+        for field in ("taxonomy_version", "locale", "categories", "project_types", "use_cases"):
+            if classification_index[field] != taxonomy[field]:
+                raise SchemaValidationError(f"项目分类索引与固定词表不一致：{field}")
+        if classification_repositories["taxonomy_version"] != taxonomy["taxonomy_version"]:
+            raise SchemaValidationError("项目分类仓库目录词表版本不一致")
+        sources = build_classification_sources(public_dir)
+        entries = classification_repositories["repositories"]
+        repository_ids = [item["repository_id"] for item in entries]
+        if repository_ids != sorted(set(repository_ids)):
+            raise SchemaValidationError("项目分类 repository_id 必须唯一且升序")
+        if any(repository_id not in sources for repository_id in repository_ids):
+            raise SchemaValidationError("项目分类包含未进入任何公开榜单的仓库")
+        for item in entries:
+            source = sources[item["repository_id"]]
+            expected_hash = classification_source_hash(source, taxonomy["taxonomy_version"])
+            if item["source_full_name"] != source["full_name"] or item["source_hash"] != expected_hash:
+                raise SchemaValidationError(f"项目分类源信息已失效：{item['repository_id']}")
+        coverage = classification_index["coverage"]
+        eligible_count = len(sources)
+        classified_count = len(entries)
+        expected_ratio = round(classified_count / eligible_count, 6) if eligible_count else 1
+        if coverage["eligible_count"] != eligible_count or coverage["classified_count"] != classified_count:
+            raise SchemaValidationError("项目分类覆盖数量与公开榜单不一致")
+        if coverage["pending_count"] != eligible_count - classified_count or coverage["coverage_ratio"] != expected_ratio:
+            raise SchemaValidationError("项目分类待处理数量或覆盖率不一致")
+        if coverage["failed_count"] > coverage["pending_count"]:
+            raise SchemaValidationError("项目分类失败数不得超过待处理数")
+        counts["classification"] = 1
+
     published_schemas = public_dir / "schema"
     required_schema_files = [
         "state.schema.json",
@@ -328,6 +375,11 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
     ]
     if localization_path.exists():
         required_schema_files.append("localization.schema.json")
+    if classification_index_path.exists():
+        required_schema_files.extend([
+            "classification-index.schema.json",
+            "classification-repositories.schema.json",
+        ])
     for filename in required_schema_files:
         if not (published_schemas / filename).is_file():
             raise SchemaValidationError(f"公开数据缺少 Schema：{published_schemas / filename}")

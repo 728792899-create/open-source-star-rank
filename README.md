@@ -2,7 +2,7 @@
 
 [![数据采集与发布](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-pages.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-pages.yml)
 [![公共事件榜](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-events.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-events.yml)
-[![中文项目内容](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-localization.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-localization.yml)
+[![中文内容与分类](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-localization.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-localization.yml)
 [![质量校验](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-ci.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-ci.yml)
 
 开源星榜同时发布两种独立信号：基于 GH Archive 公开 `WatchEvent` 的每日新增榜，以及用北京时间连续快照生成的候选池净增榜。两者都是观测信号，不宣称是 GitHub 官方全站完整榜。
@@ -12,6 +12,8 @@
 - 公开数据：https://728792899-create.github.io/open-source-star-rank/data/index.json
 - 公共事件数据：https://728792899-create.github.io/open-source-star-rank/data/events/index.json
 - 中文项目内容：https://728792899-create.github.io/open-source-star-rank/data/i18n/zh-CN/repositories.json
+- 项目分类：https://728792899-create.github.io/open-source-star-rank/category/
+- 分类数据：https://728792899-create.github.io/open-source-star-rank/data/classification/index.json
 - 数据契约：https://728792899-create.github.io/open-source-star-rank/data/schema/index.schema.json
 - 订阅：[RSS](https://728792899-create.github.io/open-source-star-rank/rss.xml) · [Atom](https://728792899-create.github.io/open-source-star-rank/atom.xml) · [JSON Feed](https://728792899-create.github.io/open-source-star-rank/feed.json)
 
@@ -26,6 +28,8 @@
 - 事件查询先 dry-run，单次最多扫描 24 GiB；生产要求使用未绑定结算账号的 BigQuery Sandbox 项目。
 - 项目中文功能名与简介由 GitHub Models 生成并按 repository ID 缓存；页面始终保留原始仓库名，模型不可用时回退 GitHub 原文，不阻塞榜单。
 - GitHub Models 只使用 Actions 自带令牌和免费额度，不启用付费额度；人工修订位于 `data/localization-overrides.zh-CN.json`。
+- 项目方向、产品形态和 1–4 个适用场景从版本化固定词表中选择；分类页只是当前默认榜 Top 100 的子集，保留全局排名，不是独立分类榜。
+- 分类人工修正位于 `data/classification-overrides.zh-CN.json`；词表位于 `data/classification-taxonomy.zh-CN.json`，调整标签含义必须升级 `taxonomy_version`。
 - 本仓库不包含、依赖或链接任何私有知识库内容；固定种子仅保存公开 GitHub 仓库名。
 
 ## 本地开发

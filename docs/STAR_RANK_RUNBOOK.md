@@ -103,7 +103,7 @@ gcloud iam service-accounts keys list \
 4. 核对 `/data/events/index.json`、`/data/events/daily/YYYY-MM-DD.json`、`/events/daily/YYYY-MM-DD/`、首页、状态页与事件分享图。
 5. 保留 07:30 定时任务与 08:15 watchdog，连续观察 7 天的扫描字节、事件延迟、排名变化与趋势空值。
 
-## 2.5 中文项目内容初始化
+## 2.5 中文项目内容与分类初始化
 
 中文项目内容使用 GitHub Models 和 Actions 自带的 `GITHUB_TOKEN`，不创建模型 API 密钥。两个采集任务和独立补全任务只申请 `models: read`；模型限流、免费额度耗尽或单批响应不合格时保留已有缓存并显示 GitHub 原文，不得让榜单采集失败。
 
@@ -112,9 +112,13 @@ gcloud iam service-accounts keys list \
 3. 可选创建仓库变量 `LOCALIZATION_MAX_PROJECTS`，两个采集工作流默认每次处理 200 个，独立补全任务默认处理 400 个。
 4. 手动运行 `Backfill and publish Chinese project content` 的 `validate`，确认缓存、Schema 和站点构建通过；此模式不调用模型、不提交、不部署。
 5. 运行 `backfill_publish`，核对 `state/localization/zh-CN/repositories.json`、`public/i18n/zh-CN/repositories.json` 和 `/status/` 的覆盖率。
-6. 检查最新首页 Top 100 的中文功能名、中文简介、原始仓库名和“中文 / 原文”切换；覆盖不足时由每日 09:00 补全任务继续处理。
+6. 同一任务会在翻译后运行分类；可选仓库变量为 `CLASSIFICATION_MODEL`（默认 `openai/gpt-4.1-mini`）和 `CLASSIFICATION_MAX_PROJECTS`（采集任务默认 200，补全任务默认 400）。
+7. 核对 `state/classification/repositories.json`、`public/classification/index.json`、`public/classification/repositories.json` 与 `/status/` 的覆盖数字。
+8. 检查最新首页 Top 100 的中文内容、分类标签与“中文 / 原文”切换；中文和分类覆盖率在正式发布前均必须达到 100%。
 
 需要人工修正时，在主分支的 `data/localization-overrides.zh-CN.json` 按 repository ID 增加 `display_name_zh` 和 `description_zh`。人工修正优先于模型缓存；合并后运行 `backfill_publish`。不得直接编辑数据分支中的公开译文。
+
+分类人工修正写入 `data/classification-overrides.zh-CN.json`，每项必须提供 `repository_id`、`primary_category`、`project_type` 和 1–4 个 `use_cases`，且值必须来自 `data/classification-taxonomy.zh-CN.json`。修改词表含义时必须升级 `taxonomy_version`并全量重新分类，不得静默改变旧标签语义。
 
 ## 3. 日常运行与告警
 
@@ -126,7 +130,7 @@ gcloud iam service-accounts keys list \
 - 每月检查 Git 对象体积；超过 500 MiB 时创建 `[开源星榜] 数据分支需要压缩`。
 - 事件任务在北京时间 07:30 汇总前一日，目标 08:00 前发布；08:15 watchdog 检查数据分支与站点的事件日期和完整文件哈希。
 - 事件身份、dry-run、24 GiB 上限、正式查询、GitHub 元数据、Schema 或部署任一失败时，同一 `[开源星榜] 公共事件榜故障` Issue 会打开或更新；不提交残缺事件数据，候选池榜继续可用。
-- 中文补全任务在北京时间 09:00 检查所有已进入公开榜单的项目。模型失败只更新状态中的待处理/失败数，不触发核心榜单故障 Issue；Schema 或站点构建失败时不提交、不部署。
+- 中文与分类补全任务在北京时间 09:00 检查所有已进入公开榜单的项目，先翻译、后分类。模型失败保留旧缓存或待处理状态，不触发核心榜单故障 Issue；Schema 或站点构建失败时不提交、不部署。
 
 ## 4. 手动模式
 
@@ -146,7 +150,7 @@ gcloud iam service-accounts keys list \
 
 事件工作流也提供 `deploy_existing`：不进行 Google 身份验证、不访问 BigQuery，只用数据分支当前成功内容恢复站点。
 
-中文补全工作流的 `deploy_existing` 同样不访问 GitHub Models，只使用数据分支中已经通过校验的缓存重建网站。
+中文与分类补全工作流的 `deploy_existing` 同样不访问 GitHub Models，只使用数据分支中已经通过校验的翻译和分类缓存重建网站。
 
 ### 替换当天错误快照
 

@@ -15,8 +15,15 @@ test('marks data stale only after the configured threshold', () => {
 });
 
 test('filters by repository text and language together', () => {
-  const entry = { searchText: 'Owner/Repo A useful toolkit', language: 'TypeScript' };
+  const entry = {
+    searchText: 'Owner/Repo A useful toolkit AI 编程', language: 'TypeScript',
+    category: 'developer-tools', projectType: 'cli-developer-tool', scenarios: ['ai-coding', 'general-tools'],
+  };
   assert.equal(matchesEntry(entry, 'useful', 'TypeScript'), true);
   assert.equal(matchesEntry(entry, 'owner/repo', 'Python'), false);
   assert.equal(matchesEntry(entry, 'missing', ''), false);
+  assert.equal(matchesEntry(entry, 'AI 编程', '', 'developer-tools', 'cli-developer-tool', 'ai-coding'), true);
+  assert.equal(matchesEntry(entry, '', '', 'security-privacy', '', ''), false);
+  assert.equal(matchesEntry(entry, '', '', '', 'application', ''), false);
+  assert.equal(matchesEntry(entry, '', '', '', '', 'self-hosting'), false);
 });

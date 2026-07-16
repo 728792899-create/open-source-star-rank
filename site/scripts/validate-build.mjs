@@ -14,6 +14,7 @@ const required = [
   'period/7d/index.html',
   'period/30d/index.html',
   'language/index.html',
+  'category/index.html',
   'data/index.json',
   'data/schema/index.schema.json',
   'data/schema/daily.schema.json',
@@ -26,8 +27,12 @@ const required = [
   'data/schema/event-index.schema.json',
   'data/schema/event-daily.schema.json',
   'data/schema/localization.schema.json',
+  'data/schema/classification-index.schema.json',
+  'data/schema/classification-repositories.schema.json',
   'data/events/index.json',
   'data/i18n/zh-CN/repositories.json',
+  'data/classification/index.json',
+  'data/classification/repositories.json',
   'og.png',
   'robots.txt',
   'rss.xml',
@@ -61,6 +66,19 @@ if (localization.schema_version !== '1.0.0' || localization.locale !== 'zh-CN') 
 }
 if (localization.coverage.localized_count !== localization.repositories.length) {
   throw new Error('Published localization coverage is inconsistent');
+}
+const classificationIndex = JSON.parse(await readFile(path.join(dist, 'data/classification/index.json'), 'utf8'));
+const classificationCatalog = JSON.parse(await readFile(path.join(dist, 'data/classification/repositories.json'), 'utf8'));
+if (classificationIndex.schema_version !== '1.0.0' || classificationIndex.taxonomy_version !== '1.0.0') {
+  throw new Error('Published classification index does not satisfy the 1.0.0 public contract');
+}
+if (classificationIndex.coverage.classified_count !== classificationCatalog.repositories.length) {
+  throw new Error('Published classification coverage is inconsistent');
+}
+for (const category of classificationIndex.categories) {
+  if (!existsSync(path.join(dist, 'category', category.id, 'index.html'))) {
+    throw new Error(`Classification page is missing: ${category.id}`);
+  }
 }
 const rss = await readFile(path.join(dist, 'rss.xml'), 'utf8');
 if (!rss.includes('<rss version="2.0">') || !rss.includes('开源星榜')) {
@@ -125,6 +143,29 @@ if (eventIsDefault) {
 } else if (dataIndex.schema_version === '1.2.0') {
   for (const marker of ['有效基线 0/2', 'data-countdown', '不计入日榜基线']) {
     if (!indexHtml.includes(marker)) throw new Error(`Initialization page is missing ${marker}`);
+  }
+}
+
+const defaultRanking = eventIsDefault
+  ? JSON.parse(await readFile(path.join(dist, 'data/events/daily', `${eventIndex.latest_date}.json`), 'utf8'))
+  : dataIndex.latest_date
+    ? JSON.parse(await readFile(path.join(dist, 'data/daily', `${dataIndex.latest_date}.json`), 'utf8'))
+    : null;
+if (defaultRanking) {
+  const classificationById = new Map(classificationCatalog.repositories.map((item) => [item.repository_id, item]));
+  for (const category of classificationIndex.categories) {
+    const expectedIds = defaultRanking.entries
+      .filter((entry) => classificationById.get(entry.repository_id)?.primary_category === category.id)
+      .map((entry) => String(entry.repository_id));
+    const categoryHtml = await readFile(path.join(dist, 'category', category.id, 'index.html'), 'utf8');
+    const actualIds = [...categoryHtml.matchAll(/id="repo-(\d+)"[^>]*data-ranking-row/g)].map((match) => match[1]);
+    if (JSON.stringify(actualIds) !== JSON.stringify(expectedIds)) {
+      throw new Error(`Classification page ${category.id} is not an ordered subset of the current default ranking`);
+    }
+    const expectedRobots = expectedIds.length ? 'index,follow' : 'noindex,follow';
+    if (!categoryHtml.includes(`name="robots" content="${expectedRobots}"`)) {
+      throw new Error(`Classification page ${category.id} has an incorrect robots policy`);
+    }
   }
 }
 

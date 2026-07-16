@@ -7,6 +7,7 @@ interface Props {
   description?: string;
   structuredData?: Record<string, unknown>;
   socialImagePath?: string;
+  robots?: string;
 }
 
 const {
@@ -14,6 +15,7 @@ const {
   description = '每日呈现 GitHub 公共 WatchEvent 新增 Star 信号，并保留候选池连续快照净增榜。',
   structuredData,
   socialImagePath = '/og.png',
+  robots = 'index,follow',
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
 const socialImage = new URL(withBase(socialImagePath), Astro.site ?? Astro.url.origin).toString();
@@ -26,6 +28,7 @@ const socialImage = new URL(withBase(socialImagePath), Astro.site ?? Astro.url.o
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
     <meta name="theme-color" content="#f3efe4" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23171814'/%3E%3Cpath d='m16 5 3.1 6.3 6.9 1-5 4.8 1.2 6.9-6.2-3.2L9.8 24l1.2-6.9-5-4.8 6.9-1z' fill='%23f2dcae'/%3E%3C/svg%3E" />
     <link rel="canonical" href={canonical} />
@@ -76,6 +79,7 @@ const socialImage = new URL(withBase(socialImagePath), Astro.site ?? Astro.url.o
         <a href={withBase('/period/7d/')}>7 日榜</a>
         <a href={withBase('/period/30d/')}>30 日榜</a>
         <a href={withBase('/language/')}>语言</a>
+        <a href={withBase('/category/')}>分类</a>
         <a href={withBase('/status/')}>状态</a>
         <a href={withBase('/methodology/')}>数据口径</a>
       </nav>

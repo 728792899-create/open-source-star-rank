@@ -70,6 +70,21 @@ await rm(path.join(publicData, 'i18n'), { recursive: true, force: true });
 await cp(path.join(generated, 'i18n'), path.join(publicData, 'i18n'), { recursive: true });
 
 await run(process.env.PYTHON ?? 'python3', [
+  path.join(repositoryRoot, 'tools', 'classify_repositories.py'),
+  '--data-dir',
+  generated,
+  '--taxonomy-file',
+  path.join(repositoryRoot, 'data', 'classification-taxonomy.zh-CN.json'),
+  '--overrides-file',
+  path.join(repositoryRoot, 'data', 'classification-overrides.zh-CN.json'),
+  '--offline',
+  '--public-only',
+  '--deterministic',
+]);
+await rm(path.join(publicData, 'classification'), { recursive: true, force: true });
+await cp(path.join(generated, 'classification'), path.join(publicData, 'classification'), { recursive: true });
+
+await run(process.env.PYTHON ?? 'python3', [
   path.join(repositoryRoot, 'tools', 'validate_star_rank_data.py'),
   '--data-dir',
   generated,

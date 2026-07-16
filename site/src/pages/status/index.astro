@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FreshnessStatus from '../../components/FreshnessStatus.astro';
-import { eventRankingIsFresh, readEventRankingIndex, readLocalizationCatalog, readRankingIndex } from '../../lib/data';
+import { eventRankingIsFresh, readClassificationIndex, readEventRankingIndex, readLocalizationCatalog, readRankingIndex } from '../../lib/data';
 
 const index = readRankingIndex();
 const eventIndex = readEventRankingIndex();
@@ -10,6 +10,7 @@ const sampling = index.sampling;
 const collection = index.latest_collection;
 const eventMetrics = eventIndex.latest_source_metrics;
 const localization = readLocalizationCatalog();
+const classification = readClassificationIndex();
 const formatDateTime = (value: string | null | undefined) => value
   ? new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value))
   : '尚无';
@@ -102,6 +103,20 @@ const structuredData = {
         <div><dt>提示词版本</dt><dd>{localization.prompt_version}</dd></div>
         <div><dt>最近整理</dt><dd>{formatDateTime(localization.generated_at)}</dd></div>
         <div><dt>回退策略</dt><dd>译文不可用时显示 GitHub 原文</dd></div>
+      </dl>
+    </section>
+
+    <section class="status-grid" aria-labelledby="classification-title">
+      <div class="section-heading"><div><p class="eyebrow">Project taxonomy coverage</p><h2 id="classification-title">项目分类覆盖</h2></div></div>
+      <dl>
+        <div><dt>已进入公开榜单</dt><dd>{classification.coverage.eligible_count.toLocaleString('zh-CN')}</dd></div>
+        <div><dt>已完成分类</dt><dd>{classification.coverage.classified_count.toLocaleString('zh-CN')}</dd></div>
+        <div><dt>覆盖率</dt><dd class:list={{ warning: classification.coverage.pending_count > 0 }}>{(classification.coverage.coverage_ratio * 100).toFixed(1)}%</dd></div>
+        <div><dt>待分类 / 最近失败</dt><dd class:list={{ warning: classification.coverage.pending_count > 0 }}>{classification.coverage.pending_count} / {classification.coverage.failed_count}</dd></div>
+        <div><dt>默认模型</dt><dd>{classification.model}</dd></div>
+        <div><dt>词表 / 提示词版本</dt><dd>{classification.taxonomy_version} / {classification.prompt_version}</dd></div>
+        <div><dt>最近整理</dt><dd>{formatDateTime(classification.generated_at)}</dd></div>
+        <div><dt>回退策略</dt><dd>分类不可用时标记待生成，不影响榜单</dd></div>
       </dl>
     </section>
   </main>

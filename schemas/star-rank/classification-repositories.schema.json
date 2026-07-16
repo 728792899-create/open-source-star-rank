@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://728792899-create.github.io/open-source-star-rank/data/schema/classification-repositories.schema.json",
+  "title": "Open Source Star Rank repository classifications",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "taxonomy_version", "generated_at", "repositories"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "taxonomy_version": { "const": "1.0.0" },
+    "generated_at": { "type": ["string", "null"], "format": "date-time" },
+    "repositories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["repository_id", "source_full_name", "source_hash", "primary_category", "project_type", "use_cases", "taxonomy_version", "generated_at", "provenance"],
+        "properties": {
+          "repository_id": { "type": "integer", "minimum": 1 },
+          "source_full_name": { "type": "string", "pattern": "^[^/]+/[^/]+$" },
+          "source_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "primary_category": { "enum": ["ai-machine-learning", "developer-tools", "web-app-development", "data-infrastructure", "devops-observability", "security-privacy", "systems-network-hardware", "creative-media", "productivity-collaboration", "education-resources", "science-research", "industry-solutions", "other"] },
+          "project_type": { "enum": ["application", "cli-developer-tool", "library-framework", "platform-service", "model-dataset", "plugin-extension", "tutorial-resource", "other"] },
+          "use_cases": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 4,
+            "uniqueItems": true,
+            "items": { "enum": ["ai-coding", "agents-automation", "rag-knowledge", "model-training-inference", "data-analysis-visualization", "database-storage", "api-backend", "web-frontend", "mobile-cross-platform", "devops-deployment", "observability", "search-scraping", "security-defense", "privacy-local", "system-admin-optimization", "network-tools", "documents-office", "content-generation", "image-video-audio", "design-ui-ux", "personal-productivity", "team-collaboration", "self-hosting", "learning-tutorial", "scientific-research", "finance-trading", "health-fitness", "games-emulation", "dataset-benchmark", "resource-discovery", "general-tools"] }
+          },
+          "taxonomy_version": { "const": "1.0.0" },
+          "generated_at": { "type": "string", "format": "date-time" },
+          "provenance": { "enum": ["github_models", "manual"] }
+        }
+      }
+    }
+  }
+}
