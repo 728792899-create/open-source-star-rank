@@ -4,9 +4,10 @@ interface Props {
   thresholdHours: number;
   captureValid?: boolean;
   captureReason?: string;
+  compact?: boolean;
 }
 
-const { updatedAt, thresholdHours, captureValid = true, captureReason = '' } = Astro.props;
+const { updatedAt, thresholdHours, captureValid = true, captureReason = '', compact = false } = Astro.props;
 const formatted = updatedAt
   ? new Intl.DateTimeFormat('zh-CN', {
       timeZone: 'Asia/Shanghai',
@@ -20,7 +21,7 @@ const formatted = updatedAt
 ---
 
 <aside
-  class:list={['freshness-status', { initializing: !updatedAt, warning: updatedAt && !captureValid }]}
+  class:list={['freshness-status', { compact, initializing: !updatedAt, warning: updatedAt && !captureValid }]}
   data-freshness
   data-updated-at={updatedAt ?? ''}
   data-threshold-hours={thresholdHours}
@@ -31,7 +32,9 @@ const formatted = updatedAt
   <p data-freshness-message>
     {formatted ? (
       captureValid
-        ? <>最近采样：<time datetime={updatedAt ?? undefined}>{formatted}</time>（北京时间）</>
+        ? compact
+          ? <>数据正常 · 最近采样 <time datetime={updatedAt ?? undefined}>{formatted}</time>（北京时间）</>
+          : <>最近采样：<time datetime={updatedAt ?? undefined}>{formatted}</time>（北京时间）</>
         : <>候选池已于 <time datetime={updatedAt ?? undefined}>{formatted}</time> 采样，但不计入日榜基线（{captureReason || '不在零点有效窗口'}）。</>
     ) : '正在等待首个真实快照。'}
   </p>
@@ -57,13 +60,16 @@ const formatted = updatedAt
       const threshold = Number(element.dataset.thresholdHours || 36);
       const stale = freshnessState(updatedAt, threshold).status === 'stale';
       const warning = element.classList.contains('warning');
+      const compact = element.classList.contains('compact');
       element.classList.toggle('stale', stale);
       const message = element.querySelector('[data-freshness-message]');
       if (message) {
         if (warning && !stale) continue;
         message.textContent = stale
           ? `数据已超过 ${threshold} 小时未更新；当前仍展示最后一次成功发布（${formatter.format(new Date(updatedAt))}）。`
-          : `最近采样：${formatter.format(new Date(updatedAt))}（北京时间），数据正常。`;
+          : compact
+            ? `数据正常 · 最近采样 ${formatter.format(new Date(updatedAt))}（北京时间）`
+            : `最近采样：${formatter.format(new Date(updatedAt))}（北京时间），数据正常。`;
       }
     }
   };

@@ -7,6 +7,9 @@ const latestEventPath = 'events/daily/2026-07-14/';
 test('defaults the homepage to the fresh public event ranking and exposes the candidate switch', async ({ page }) => {
   await page.goto('');
   await expect(page.getByRole('heading', { name: 'Star 新增排行' })).toBeVisible();
+  await expect(page.locator('main h1')).toHaveCount(1);
+  await expect(page.locator('main h2')).toHaveCount(0);
+  await expect(page.locator('.freshness-status.compact')).toContainText('数据正常');
   await expect(page.locator('[data-ranking-mode="event"] [data-ranking-row]')).toHaveCount(100);
   await expect(page.getByRole('link', { name: /查看候选池净增榜/ })).toBeVisible();
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /social\/events-daily-2026-07-14\.png$/);
@@ -16,7 +19,7 @@ test('publishes the public event archive with direct GitHub links and source met
   await page.goto(latestEventPath);
   await expect(page.getByRole('heading', { name: 'Star 新增排行' })).toBeVisible();
   await expect(page.locator('[data-ranking-row]')).toHaveCount(100);
-  await page.getByText('查看 GH Archive 与费用保护信息').click();
+  await page.getByText(/查看数据详情：GH Archive/).click();
   await expect(page.getByText('0.88 GiB')).toBeVisible();
   await expect(page.getByRole('link', { name: /测试项目 30001/ })).toHaveAttribute('href', 'https://github.com/public-event-labs/project-001');
   await expect(page.locator('.project-source-name').filter({ hasText: 'public-event-labs/project-001' })).toBeVisible();
@@ -125,12 +128,21 @@ test('defaults project content to Chinese and persists the original-content swit
   await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(100);
 });
 
-for (const width of [390, 768, 1440]) {
+for (const { width, maximumFirstRowTop } of [
+  { width: 390, maximumFirstRowTop: 900 },
+  { width: 768, maximumFirstRowTop: 900 },
+  { width: 1024, maximumFirstRowTop: 760 },
+  { width: 1440, maximumFirstRowTop: 760 },
+]) {
   test(`has no horizontal overflow at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto(latestPath);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(0);
+    const summaryHeight = await page.locator('.ranking-summary').evaluate((element) => element.getBoundingClientRect().height);
+    const firstRowTop = await page.locator('[data-ranking-row]').first().evaluate((element) => element.getBoundingClientRect().top);
+    expect(summaryHeight).toBeLessThanOrEqual(190);
+    expect(firstRowTop).toBeLessThanOrEqual(maximumFirstRowTop);
   });
   test(`category page has no horizontal overflow at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
@@ -139,6 +151,26 @@ for (const width of [390, 768, 1440]) {
     expect(overflow).toBeLessThanOrEqual(0);
   });
 }
+
+test('collapses advanced filters on mobile and reopens them for restored URL state', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 900 });
+  await page.goto(latestPath);
+  const filters = page.locator('[data-advanced-filters]');
+  await expect(filters).not.toHaveAttribute('open', '');
+  const summary = page.getByText('更多筛选', { exact: false });
+  await summary.focus();
+  await expect(summary).toBeFocused();
+  await summary.click();
+  await expect(filters).toHaveAttribute('open', '');
+  await page.getByLabel('编程语言').selectOption('Python');
+  await expect(page).toHaveURL(/language=Python/);
+  await expect(summary).toContainText('1 项已启用');
+  await page.reload();
+  await expect(filters).toHaveAttribute('open', '');
+  await expect(page.getByLabel('编程语言')).toHaveValue('Python');
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations).toEqual([]);
+});
 
 test('provides a useful 404 page and keyboard focus', async ({ page }) => {
   await page.goto('/not-a-real-page/');
