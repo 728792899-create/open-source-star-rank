@@ -50,7 +50,6 @@ const snapshotRanking = !isEvent ? ranking as DailyRanking | LanguageRanking | P
 const periodDays = 'period_days' in ranking ? ranking.period_days : null;
 const languageName = 'language' in ranking ? ranking.language : null;
 const hasRepositoryPages = !isEvent && index.schema_version === '1.2.0';
-const modeLabel = isEvent ? 'Public event signal' : periodDays ? `${periodDays} day signal` : languageName ? `${languageName} signal` : 'Daily signal';
 const defaultHeadline = periodDays
   ? `近 ${periodDays} 日，哪些项目升温最快？`
   : languageName
@@ -101,20 +100,20 @@ const sectionTitle = sectionTitleOverride ?? (isEvent ? 'Star 新增排行' : `$
     {alternateHref && alternateLabel && <a href={withBase(alternateHref)}>{alternateLabel} →</a>}
   </nav>
   {fallbackNotice && <p class="pipeline-fallback" role="status">{fallbackNotice}</p>}
-  <section class="hero">
+  <header class="ranking-summary" aria-labelledby="ranking-title">
     <div>
-      <p class="eyebrow">{modeLabel} · {formatDate(ranking.date)}</p>
-      <h1>{headline}</h1>
-      <p class="hero-copy">{heroCopy}</p>
+      <p class="eyebrow">{sectionEyebrow} · {formatDate(ranking.date)}</p>
+      <h1 id="ranking-title">{sectionTitle}</h1>
+      <p class="ranking-summary-copy"><strong>{headline}</strong><span>{heroCopy}</span></p>
     </div>
-    <div class="hero-stamp" aria-label={`榜单日期 ${ranking.date}`}>
+    <time class="ranking-date-chip" datetime={ranking.date} aria-label={`榜单日期 ${ranking.date}`}>
       <span>{isLatest ? 'LATEST' : 'ARCHIVE'}</span>
-      <strong>{ranking.date.slice(5).replace('-', ' / ')}</strong>
-      <small>UTC + 8</small>
-    </div>
-  </section>
+      <strong>{ranking.date}</strong>
+      <small>UTC+8</small>
+    </time>
+  </header>
 
-  <FreshnessStatus updatedAt={index.updated_at} thresholdHours={index.freshness_threshold_hours} />
+  <FreshnessStatus updatedAt={index.updated_at} thresholdHours={index.freshness_threshold_hours} compact />
 
   <section class="metrics" aria-label="榜单统计">
     <div><span>{isEvent ? '事件仓库' : '候选池'}</span><strong>{formatNumber(eventRanking?.source_metrics.observed_repository_count ?? snapshotRanking?.candidate_count ?? 0)}</strong><small>{isEvent ? '个仓库获得公开 Star 事件' : '个公开仓库'}</small></div>
@@ -124,7 +123,7 @@ const sectionTitle = sectionTitleOverride ?? (isEvent ? 'Star 新增排行' : `$
   </section>
 
   {isEvent ? <details class="collection-details">
-    <summary>查看 GH Archive 与费用保护信息</summary>
+    <summary>查看数据详情：GH Archive、覆盖与费用保护</summary>
     <dl>
       <div><dt>WatchEvent</dt><dd>{formatNumber(eventRanking!.source_metrics.observed_watch_event_count)}</dd></div>
       <div><dt>BigQuery 扫描</dt><dd>{formatBytes(eventRanking!.source_metrics.bytes_processed)}</dd></div>
@@ -136,7 +135,7 @@ const sectionTitle = sectionTitleOverride ?? (isEvent ? 'Star 新增排行' : `$
       <div><dt>数据来源</dt><dd>GH Archive</dd></div>
     </dl>
   </details> : <details class="collection-details">
-    <summary>查看本次采集覆盖信息</summary>
+    <summary>查看数据详情：搜索覆盖、API 与快照完整性</summary>
     <dl>
       <div><dt>最近创建搜索</dt><dd>{formatNumber(snapshotRanking!.collection.search_result_counts.recent_created)}</dd></div>
       <div><dt>近期活跃搜索</dt><dd>{formatNumber(snapshotRanking!.collection.search_result_counts.recent_active)}</dd></div>
@@ -149,10 +148,11 @@ const sectionTitle = sectionTitleOverride ?? (isEvent ? 'Star 新增排行' : `$
   </details>}
 
   <section class="ranking-section" aria-labelledby="ranking-title">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">{sectionEyebrow}</p>
-        <h2 id="ranking-title">{sectionTitle}</h2>
+    <div class="ranking-toolbar">
+      <div class="ranking-actions" aria-label="榜单操作">
+        <button type="button" data-copy-ranking>复制榜单链接</button>
+        <a href={rankingJsonPath} download>下载当日 JSON</a>
+        <span class="action-status" data-action-status aria-live="polite"></span>
       </div>
       {showDateTools && <div class="date-tools">
         <label class="date-picker">
@@ -168,47 +168,57 @@ const sectionTitle = sectionTitleOverride ?? (isEvent ? 'Star 新增排行' : `$
       </div>}
     </div>
 
-    <div class="ranking-actions" aria-label="榜单操作">
-      <button type="button" data-copy-ranking>复制榜单链接</button>
-      <a href={rankingJsonPath} download>下载当日 JSON</a>
-      <span class="action-status" data-action-status aria-live="polite"></span>
-    </div>
-
     <div class="filters" role="search">
-      <label>
+      <label class="filter-search">
         <span>搜索项目</span>
         <input data-search type="search" placeholder="仓库名或描述" autocomplete="off" />
       </label>
-      <label>
-        <span>编程语言</span>
-        <select data-language>
-          <option value="">全部语言</option>
-          {languages.map((language) => <option value={language}>{language}</option>)}
-        </select>
-      </label>
-      <label>
-        <span>项目方向</span>
-        <select data-category>
-          <option value="">全部方向</option>
-          {usedCategories.map((term) => <option value={term.id}>{term.label}</option>)}
-        </select>
-      </label>
-      <label>
-        <span>产品形态</span>
-        <select data-project-type>
-          <option value="">全部形态</option>
-          {usedProjectTypes.map((term) => <option value={term.id}>{term.label}</option>)}
-        </select>
-      </label>
-      <label>
-        <span>适用场景</span>
-        <select data-scenario>
-          <option value="">全部场景</option>
-          {usedUseCases.map((term) => <option value={term.id}>{term.label}</option>)}
-        </select>
-      </label>
+      <details class="advanced-filters" data-advanced-filters open>
+        <summary>更多筛选 <span data-advanced-filter-summary>未启用</span></summary>
+        <div class="advanced-filter-grid">
+          <label>
+            <span>编程语言</span>
+            <select data-language>
+              <option value="">全部语言</option>
+              {languages.map((language) => <option value={language}>{language}</option>)}
+            </select>
+          </label>
+          <label>
+            <span>项目方向</span>
+            <select data-category>
+              <option value="">全部方向</option>
+              {usedCategories.map((term) => <option value={term.id}>{term.label}</option>)}
+            </select>
+          </label>
+          <label>
+            <span>产品形态</span>
+            <select data-project-type>
+              <option value="">全部形态</option>
+              {usedProjectTypes.map((term) => <option value={term.id}>{term.label}</option>)}
+            </select>
+          </label>
+          <label>
+            <span>适用场景</span>
+            <select data-scenario>
+              <option value="">全部场景</option>
+              {usedUseCases.map((term) => <option value={term.id}>{term.label}</option>)}
+            </select>
+          </label>
+        </div>
+      </details>
       <p class="filter-count" aria-live="polite"><strong data-visible-count>{ranking.entries.length}</strong> / {ranking.entries.length} 个项目</p>
     </div>
+    <script is:inline>
+      (() => {
+        if (!window.matchMedia('(max-width: 680px)').matches) return;
+        const parameters = new URLSearchParams(window.location.search);
+        const hasAdvancedSelection = ['language', 'category', 'type', 'scenario'].some((name) => parameters.has(name));
+        if (hasAdvancedSelection) return;
+        const script = document.currentScript;
+        const filters = script?.previousElementSibling;
+        filters?.querySelector('[data-advanced-filters]')?.removeAttribute('open');
+      })();
+    </script>
 
     <div class="ranking-table" role="table" aria-label={`${ranking.date} Star ${isEvent ? '新增' : '净增'}排行`}>
       <div class="table-head" role="row">
@@ -324,6 +334,8 @@ const sectionTitle = sectionTitleOverride ?? (isEvent ? 'Star 新增排行' : `$
     const category = root.querySelector('[data-category]');
     const projectType = root.querySelector('[data-project-type]');
     const scenario = root.querySelector('[data-scenario]');
+    const advancedFilters = root.querySelector('[data-advanced-filters]');
+    const advancedFilterSummary = root.querySelector('[data-advanced-filter-summary]');
     const visibleCount = root.querySelector('[data-visible-count]');
     const emptyState = root.querySelector('[data-empty-state]');
     const actionStatus = root.querySelector('[data-action-status]');
@@ -340,6 +352,8 @@ const sectionTitle = sectionTitleOverride ?? (isEvent ? 'Star 新增排行' : `$
     if (category instanceof HTMLSelectElement && initialCategory) category.value = initialCategory;
     if (projectType instanceof HTMLSelectElement && initialProjectType) projectType.value = initialProjectType;
     if (scenario instanceof HTMLSelectElement && initialScenario) scenario.value = initialScenario;
+    const initialAdvancedCount = [initialLanguage, initialCategory, initialProjectType, initialScenario].filter(Boolean).length;
+    if (advancedFilters instanceof HTMLDetailsElement && initialAdvancedCount > 0) advancedFilters.open = true;
 
     const apply = () => {
       const query = search instanceof HTMLInputElement ? search.value : '';
@@ -347,6 +361,7 @@ const sectionTitle = sectionTitleOverride ?? (isEvent ? 'Star 新增排行' : `$
       const selectedCategory = category instanceof HTMLSelectElement ? category.value : '';
       const selectedProjectType = projectType instanceof HTMLSelectElement ? projectType.value : '';
       const selectedScenario = scenario instanceof HTMLSelectElement ? scenario.value : '';
+      const activeAdvancedCount = [selectedLanguage, selectedCategory, selectedProjectType, selectedScenario].filter(Boolean).length;
       let count = 0;
       for (const row of root.querySelectorAll('[data-ranking-row]')) {
         if (!(row instanceof HTMLElement)) continue;
@@ -366,6 +381,9 @@ const sectionTitle = sectionTitleOverride ?? (isEvent ? 'Star 新增排行' : `$
         if (visible) count += 1;
       }
       if (visibleCount) visibleCount.textContent = String(count);
+      if (advancedFilterSummary) {
+        advancedFilterSummary.textContent = activeAdvancedCount > 0 ? `${activeAdvancedCount} 项已启用` : '未启用';
+      }
       if (emptyState instanceof HTMLElement) emptyState.hidden = count !== 0;
       const next = new URL(window.location.href);
       query.trim() ? next.searchParams.set('q', query.trim()) : next.searchParams.delete('q');
