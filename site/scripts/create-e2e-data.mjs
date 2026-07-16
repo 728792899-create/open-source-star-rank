@@ -1,4 +1,4 @@
-import { cp, mkdir, rm, writeFile } from 'node:fs/promises';
+import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -7,6 +7,7 @@ const siteRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'
 const repositoryRoot = path.resolve(siteRoot, '..');
 const outputRoot = path.join(siteRoot, '.e2e-data');
 const schemaRoot = path.join(repositoryRoot, 'schemas', 'star-rank');
+const taxonomy = JSON.parse(await readFile(path.join(repositoryRoot, 'data', 'classification-taxonomy.zh-CN.json'), 'utf8'));
 const latestDate = new Date('2026-07-14T12:00:00Z');
 const isoDate = (value) => value.toISOString().slice(0, 10);
 const shift = (value, days) => new Date(value.getTime() + days * 86_400_000);
@@ -269,12 +270,70 @@ const localizationCatalog = {
   repositories: localizedRepositories,
 };
 
+const localizedById = new Map(localizedRepositories.map((item) => [item.repository_id, item]));
+const fixtureCategories = taxonomy.categories.filter((term) => term.id !== 'other');
+const classifiedRepositories = [...localizationSources.values()]
+  .sort((left, right) => left.repository_id - right.repository_id)
+  .map((entry, offset) => {
+    const localized = localizedById.get(entry.repository_id);
+    const sourceHash = createHash('sha256').update(JSON.stringify({
+      description: entry.description,
+      description_zh: localized?.description_zh ?? null,
+      display_name_zh: localized?.display_name_zh ?? null,
+      full_name: entry.full_name,
+      language: entry.language ?? null,
+      repository_id: entry.repository_id,
+      taxonomy_version: taxonomy.taxonomy_version,
+    })).digest('hex');
+    return {
+      repository_id: entry.repository_id,
+      source_full_name: entry.full_name,
+      source_hash: sourceHash,
+      primary_category: fixtureCategories[offset % fixtureCategories.length].id,
+      project_type: taxonomy.project_types[offset % taxonomy.project_types.length].id,
+      use_cases: [
+        taxonomy.use_cases[offset % taxonomy.use_cases.length].id,
+        taxonomy.use_cases[(offset + 7) % taxonomy.use_cases.length].id,
+      ],
+      taxonomy_version: taxonomy.taxonomy_version,
+      generated_at: latestEventGeneratedAt,
+      provenance: 'github_models',
+    };
+  });
+const classificationIndex = {
+  schema_version: '1.0.0',
+  taxonomy_version: taxonomy.taxonomy_version,
+  locale: taxonomy.locale,
+  generated_at: latestEventGeneratedAt,
+  model: 'openai/gpt-4.1-mini',
+  prompt_version: 'repository-classification-v1',
+  coverage: {
+    eligible_count: classifiedRepositories.length,
+    classified_count: classifiedRepositories.length,
+    pending_count: 0,
+    failed_count: 0,
+    coverage_ratio: 1,
+  },
+  categories: taxonomy.categories,
+  project_types: taxonomy.project_types,
+  use_cases: taxonomy.use_cases,
+};
+const classificationCatalog = {
+  schema_version: '1.0.0',
+  taxonomy_version: taxonomy.taxonomy_version,
+  generated_at: latestEventGeneratedAt,
+  repositories: classifiedRepositories,
+};
+
 await writeFile(path.join(outputRoot, 'index.json'), `${JSON.stringify(index, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'events', 'index.json'), `${JSON.stringify(eventIndex, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'language', 'index.json'), `${JSON.stringify(languageIndex, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'repositories.json'), `${JSON.stringify(catalog, null, 2)}\n`);
 await mkdir(path.join(outputRoot, 'i18n', 'zh-CN'), { recursive: true });
 await writeFile(path.join(outputRoot, 'i18n', 'zh-CN', 'repositories.json'), `${JSON.stringify(localizationCatalog, null, 2)}\n`);
+await mkdir(path.join(outputRoot, 'classification'), { recursive: true });
+await writeFile(path.join(outputRoot, 'classification', 'index.json'), `${JSON.stringify(classificationIndex, null, 2)}\n`);
+await writeFile(path.join(outputRoot, 'classification', 'repositories.json'), `${JSON.stringify(classificationCatalog, null, 2)}\n`);
 await cp(schemaRoot, path.join(outputRoot, 'schema'), { recursive: true });
 
-console.log(`Prepared 40 candidate days, 7 public event days, 2,000 repositories, language and period rankings at ${outputRoot}`);
+console.log(`Prepared 40 candidate days, 7 public event days, 2,000 repositories, localization and classification fixtures at ${outputRoot}`);

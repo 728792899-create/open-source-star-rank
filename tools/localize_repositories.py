@@ -129,6 +129,7 @@ def discover_ranked_repositories(public_dir: Path) -> dict[int, dict[str, Any]]:
                     "repository_id": repository_id,
                     "full_name": str(item["full_name"]),
                     "description": item.get("description"),
+                    "language": item.get("language"),
                 }
                 key = (date, priority, path.as_posix())
                 previous = sources.get(repository_id)

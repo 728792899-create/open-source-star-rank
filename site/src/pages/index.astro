@@ -3,24 +3,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Initialization from '../components/Initialization.astro';
 import RankingView from '../components/RankingView.astro';
 import {
-  eventRankingIsFresh, readDailyRanking, readEventDailyRanking, readEventRankingIndex, readRankingIndex,
   readLocalizationCatalog,
 } from '../lib/data';
 import { localizedRepositoryContent } from '../lib/localization';
+import { readDefaultRanking } from '../lib/default-ranking';
 
-const candidateIndex = readRankingIndex();
-const eventIndex = readEventRankingIndex();
-const candidateRanking = candidateIndex.latest_date ? readDailyRanking(candidateIndex.latest_date) : null;
-const eventFresh = eventRankingIsFresh(eventIndex, candidateIndex);
-const eventRanking = eventFresh && eventIndex.latest_date ? readEventDailyRanking(eventIndex.latest_date) : null;
-const ranking = eventRanking ?? candidateRanking;
-const isEvent = Boolean(eventRanking);
+const { candidateIndex, eventIndex, ranking, isEvent, fallbackNotice } = readDefaultRanking();
 const localization = readLocalizationCatalog();
-const fallbackNotice = !isEvent && candidateRanking
-  ? eventIndex.status === 'ready'
-    ? '公共事件榜已超过 36 小时未更新，首页已自动回退到候选池净增榜。'
-    : '公共事件榜尚未完成首次采集，当前展示候选池净增榜。'
-  : undefined;
 const structuredData = ranking ? {
   '@context': 'https://schema.org',
   '@type': 'ItemList',

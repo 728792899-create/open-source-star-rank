@@ -146,6 +146,18 @@ jobs:
           --data-dir "$STAR_RANK_DATA_DIR"
           --overrides-file data/localization-overrides.zh-CN.json
 
+      - name: Classify newly ranked repositories
+        if: steps.mode.outputs.run_mode == 'collect_publish' || steps.mode.outputs.run_mode == 'replace_day'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CLASSIFICATION_MODEL: ${{ vars.CLASSIFICATION_MODEL || 'openai/gpt-4.1-mini' }}
+          CLASSIFICATION_MAX_PROJECTS: ${{ vars.CLASSIFICATION_MAX_PROJECTS || '200' }}
+        run: >-
+          python -m tools.classify_repositories
+          --data-dir "$STAR_RANK_DATA_DIR"
+          --taxonomy-file data/classification-taxonomy.zh-CN.json
+          --overrides-file data/classification-overrides.zh-CN.json
+
       - name: Validate staged data contracts
         run: python tools/validate_star_rank_data.py --data-dir "$STAR_RANK_DATA_DIR" --sync-schemas
 
@@ -164,7 +176,7 @@ jobs:
           set -euo pipefail
           git -C "$STAR_RANK_DATA_DIR" config user.name "github-actions[bot]"
           git -C "$STAR_RANK_DATA_DIR" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git -C "$STAR_RANK_DATA_DIR" add state/events state/localization public/events public/i18n public/schema
+          git -C "$STAR_RANK_DATA_DIR" add state/events state/localization state/classification public/events public/i18n public/classification public/schema
           if ! git -C "$STAR_RANK_DATA_DIR" diff --cached --quiet; then
             git -C "$STAR_RANK_DATA_DIR" commit -m "Update public event star rank"
             git -C "$STAR_RANK_DATA_DIR" push origin HEAD:star-rank-data

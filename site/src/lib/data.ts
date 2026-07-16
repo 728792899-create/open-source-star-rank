@@ -2,6 +2,8 @@ import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import type {
   DailyRanking,
+  ClassificationIndex,
+  ClassificationRepositoryCatalog,
   EventDailyRanking,
   EventRankingIndex,
   LanguageIndex,
@@ -15,6 +17,8 @@ import { eventRankingIsFresh as compareEventFreshness } from '../scripts/event-f
 
 const dataRoot = path.resolve(process.cwd(), 'generated', 'data');
 let localizationCatalog: LocalizationCatalog | undefined;
+let classificationIndex: ClassificationIndex | undefined;
+let classificationRepositories: ClassificationRepositoryCatalog | undefined;
 
 export function readRankingIndex(): RankingIndex {
   return JSON.parse(readFileSync(path.join(dataRoot, 'index.json'), 'utf8')) as RankingIndex;
@@ -85,6 +89,35 @@ export function readLocalizationCatalog(): LocalizationCatalog {
     repositories: [],
   };
   return localizationCatalog;
+}
+
+export function readClassificationIndex(): ClassificationIndex {
+  if (classificationIndex) return classificationIndex;
+  const file = path.join(dataRoot, 'classification', 'index.json');
+  if (existsSync(file)) {
+    classificationIndex = JSON.parse(readFileSync(file, 'utf8')) as ClassificationIndex;
+    return classificationIndex;
+  }
+  classificationIndex = {
+    schema_version: '1.0.0', taxonomy_version: '1.0.0', locale: 'zh-CN', generated_at: null,
+    model: 'openai/gpt-4.1-mini', prompt_version: 'repository-classification-v1',
+    coverage: { eligible_count: 0, classified_count: 0, pending_count: 0, failed_count: 0, coverage_ratio: 1 },
+    categories: [], project_types: [], use_cases: [],
+  };
+  return classificationIndex;
+}
+
+export function readClassificationRepositories(): ClassificationRepositoryCatalog {
+  if (classificationRepositories) return classificationRepositories;
+  const file = path.join(dataRoot, 'classification', 'repositories.json');
+  if (existsSync(file)) {
+    classificationRepositories = JSON.parse(readFileSync(file, 'utf8')) as ClassificationRepositoryCatalog;
+    return classificationRepositories;
+  }
+  classificationRepositories = {
+    schema_version: '1.0.0', taxonomy_version: '1.0.0', generated_at: null, repositories: [],
+  };
+  return classificationRepositories;
 }
 
 export function eventRankingIsFresh(eventIndex: EventRankingIndex, candidateIndex: RankingIndex): boolean {

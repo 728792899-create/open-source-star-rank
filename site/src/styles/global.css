@@ -108,7 +108,7 @@ html[data-project-language="original"] [data-content-language="original"] { disp
 .ranking-actions button, .ranking-actions a { min-height: 44px; padding: 0 14px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer; text-decoration: none; font-size: 12px; font-weight: 760; }
 .ranking-actions button:hover, .ranking-actions a:hover { background: var(--ink); color: var(--paper); }
 .action-status { margin-left: auto; color: var(--green); font-size: 12px; font-weight: 700; }
-.filters { display: grid; grid-template-columns: minmax(220px, 1fr) 220px auto; gap: 12px; align-items: end; padding: 15px; border: 1px solid var(--line); background: rgba(255,255,255,.35); }
+.filters { display: grid; grid-template-columns: minmax(190px, 1.45fr) repeat(4, minmax(115px, 1fr)) auto; gap: 10px; align-items: end; padding: 15px; border: 1px solid var(--line); background: rgba(255,255,255,.35); }
 .filters label { display: grid; gap: 7px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 .filters input, .filters select { width: 100%; min-height: 44px; padding: 0 13px; border: 1px solid var(--line); border-radius: 0; background: #fbf8f0; color: var(--ink); outline: none; }
 .filters input:focus, .filters select:focus { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold-soft); }
@@ -142,6 +142,11 @@ html[data-project-language="original"] [data-content-language="original"] { disp
 .project-source-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .translation-badge, .translation-pending { flex: none; padding: 2px 5px; border: 1px solid var(--line); color: #76510b; background: #fff0c9; font-size: 8px; font-weight: 800; }
 .translation-pending { color: var(--muted); background: var(--paper-deep); }
+.classification-tags { display: flex; min-width: 0; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
+.classification-tags span, .classification-tags a, .classification-pending { padding: 3px 6px; border: 1px solid #d7cfbd; background: #f2eee3; color: #5c594f; font-size: 8px; font-weight: 760; line-height: 1.2; text-decoration: none; }
+.classification-tags a { border-color: #dbc17a; background: var(--gold-soft); color: #684c0c; }
+.classification-tags a:hover { border-color: var(--gold); color: var(--ink); }
+.classification-pending { width: max-content; margin-top: 3px; color: var(--muted); }
 .project-cell p { margin: 1px 0 0; overflow: hidden; color: var(--muted); font-size: 12px; line-height: 1.4; white-space: nowrap; text-overflow: ellipsis; }
 .language-cell { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 12px; }
 .language-cell::before { content: ""; flex: 0 0 7px; width: 7px; height: 7px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 3px var(--gold-soft); }
@@ -225,6 +230,12 @@ html[data-project-language="original"] [data-content-language="original"] { disp
 .history-table > div { min-height: 42px; padding: 9px 12px; display: grid; grid-template-columns: 1.3fr repeat(3, 1fr); align-items: center; border-bottom: 1px solid var(--line); font: 650 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; }
 .history-table > div:first-child { background: var(--paper-deep); text-transform: uppercase; font-size: 10px; }
 .history-note { color: var(--muted); font-size: 12px; line-height: 1.7; }
+.repo-classification { margin-top: 54px; }
+.repo-classification dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; border: 1px solid var(--line); }
+.repo-classification dl div { padding: 18px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); }
+.repo-classification dt { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.repo-classification dd { margin: 8px 0 0; line-height: 1.55; }
+.repo-classification a { color: #684c0c; text-underline-offset: 3px; }
 
 .methodology { padding: 100px 0 120px; }
 .methodology h1 { max-width: 900px; }
@@ -256,6 +267,7 @@ html[data-project-language="original"] [data-content-language="original"] { disp
   .status-grid dl div:nth-child(4n+1), .status-grid dl div:nth-child(4n+2) { border-right: 1px solid var(--line); }
   .status-grid dl div:nth-child(2n) { border-right: 0; }
   .language-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .filters { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .metrics > div:nth-child(2) { border-right: 0; }
   .metrics > div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
   .table-head { display: none; }
@@ -315,8 +327,8 @@ html[data-project-language="original"] [data-content-language="original"] { disp
   .methodology section { grid-template-columns: 1fr; gap: 14px; }
   .methodology h2 { font-size: 25px; }
   .collection-details dl { grid-template-columns: 1fr; }
-  .coverage-panel dl, .status-grid dl, .language-cards, .repo-metrics { grid-template-columns: 1fr; }
-  .coverage-panel dl div, .status-grid dl div, .status-grid dl div:nth-child(n), .repo-metrics div { border-right: 0; border-bottom: 1px solid var(--line); }
+  .coverage-panel dl, .status-grid dl, .language-cards, .repo-metrics, .repo-classification dl { grid-template-columns: 1fr; }
+  .coverage-panel dl div, .status-grid dl div, .status-grid dl div:nth-child(n), .repo-metrics div, .repo-classification dl div { border-right: 0; border-bottom: 1px solid var(--line); }
   .status-page, .language-page, .repo-page, .progress-page { padding: 68px 0 88px; }
   .status-page > h1, .language-page > h1, .progress-page > h1 { font-size: clamp(40px, 13vw, 58px); }
   .repo-hero { align-items: flex-start; flex-direction: column; }

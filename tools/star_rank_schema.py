@@ -23,6 +23,8 @@ SCHEMA_FILES = {
     "event_index": "event-index.schema.json",
     "event_daily": "event-daily.schema.json",
     "localization": "localization.schema.json",
+    "classification_index": "classification-index.schema.json",
+    "classification_repositories": "classification-repositories.schema.json",
 }
 
 

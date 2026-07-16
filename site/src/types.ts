@@ -222,3 +222,48 @@ export interface LocalizationCatalog {
   coverage: LocalizationCoverage;
   repositories: RepositoryLocalization[];
 }
+
+export interface ClassificationTerm {
+  id: string;
+  label: string;
+}
+
+export interface ClassificationCoverage {
+  eligible_count: number;
+  classified_count: number;
+  pending_count: number;
+  failed_count: number;
+  coverage_ratio: number;
+}
+
+export interface ClassificationIndex {
+  schema_version: '1.0.0';
+  taxonomy_version: '1.0.0';
+  locale: 'zh-CN';
+  generated_at: string | null;
+  model: string;
+  prompt_version: 'repository-classification-v1';
+  coverage: ClassificationCoverage;
+  categories: ClassificationTerm[];
+  project_types: ClassificationTerm[];
+  use_cases: ClassificationTerm[];
+}
+
+export interface RepositoryClassification {
+  repository_id: number;
+  source_full_name: string;
+  source_hash: string;
+  primary_category: string;
+  project_type: string;
+  use_cases: string[];
+  taxonomy_version: '1.0.0';
+  generated_at: string;
+  provenance: 'github_models' | 'manual';
+}
+
+export interface ClassificationRepositoryCatalog {
+  schema_version: '1.0.0';
+  taxonomy_version: '1.0.0';
+  generated_at: string | null;
+  repositories: RepositoryClassification[];
+}

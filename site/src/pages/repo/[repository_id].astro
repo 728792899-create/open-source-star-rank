@@ -1,8 +1,10 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { readLocalizationCatalog, readRepositoryCatalog } from '../../lib/data';
+import { classificationLabels, classificationMap } from '../../lib/classification';
+import { readClassificationIndex, readClassificationRepositories, readLocalizationCatalog, readRepositoryCatalog } from '../../lib/data';
 import { localizedRepositoryContent } from '../../lib/localization';
+import { withBase } from '../../lib/paths';
 
 export const getStaticPaths = (() => readRepositoryCatalog().repositories.map((repository) => ({
   params: { repository_id: String(repository.repository_id) },
@@ -11,6 +13,12 @@ export const getStaticPaths = (() => readRepositoryCatalog().repositories.map((r
 
 const { repository } = Astro.props;
 const content = localizedRepositoryContent(readLocalizationCatalog(), repository.repository_id, repository.full_name, repository.description);
+const classificationIndex = readClassificationIndex();
+const classification = classificationMap(readClassificationRepositories()).get(repository.repository_id);
+const labels = classificationLabels(classificationIndex);
+const categoryLabel = classification ? labels.categories.get(classification.primary_category) : null;
+const projectTypeLabel = classification ? labels.projectTypes.get(classification.project_type) : null;
+const useCaseLabels = classification?.use_cases.map((id) => labels.useCases.get(id)).filter(Boolean) as string[] | undefined;
 const formatNumber = (value: number) => new Intl.NumberFormat('zh-CN').format(value);
 const values = repository.history_30d.map((item) => item.stars_gained).filter((value): value is number => value !== null);
 const maximum = Math.max(1, ...values.map((value) => Math.abs(value)));
@@ -22,6 +30,8 @@ const structuredData = {
   description: content.description,
   codeRepository: repository.html_url,
   programmingLanguage: repository.language,
+  applicationCategory: categoryLabel,
+  keywords: [projectTypeLabel, ...(useCaseLabels ?? [])].filter(Boolean),
 };
 ---
 
@@ -52,6 +62,16 @@ const structuredData = {
       <div><dt>首次发现</dt><dd>{repository.first_seen_date || '未知'}</dd></div>
       <div><dt>最近追踪</dt><dd>{repository.last_seen_date || '未知'}</dd></div>
     </dl>
+
+    <section class="repo-classification" aria-labelledby="repo-classification-title">
+      <div class="section-heading"><div><p class="eyebrow">Project taxonomy</p><h2 id="repo-classification-title">方向与适用场景</h2></div></div>
+      {classification ? <dl>
+        <div><dt>项目方向</dt><dd><a href={withBase(`/category/${classification.primary_category}/`)}>{categoryLabel}</a></dd></div>
+        <div><dt>产品形态</dt><dd>{projectTypeLabel}</dd></div>
+        <div><dt>适用场景</dt><dd>{useCaseLabels?.join('、')}</dd></div>
+        <div><dt>分类来源</dt><dd>{classification.provenance === 'manual' ? '人工修正' : 'GitHub Models 生成'} · 词表 {classification.taxonomy_version}</dd></div>
+      </dl> : <p class="empty-copy">分类待生成；这不影响项目排名和原始 GitHub 数据。</p>}
+    </section>
 
     <section class="history-section" aria-labelledby="history-title">
       <div class="section-heading"><div><p class="eyebrow">30 day true history</p><h2 id="history-title">真实历史</h2></div></div>

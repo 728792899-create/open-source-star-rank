@@ -39,6 +39,14 @@ try {
   for (const repository of repositories.repositories ?? []) {
     lastModifiedByPath.set(`/repo/${repository.repository_id}/`, new Date(repositories.updated_at));
   }
+  const classification = JSON.parse(readFileSync(path.join(dataRoot, 'classification', 'index.json'), 'utf8'));
+  if (classification.generated_at) {
+    const classifiedAt = new Date(classification.generated_at);
+    lastModifiedByPath.set('/category/', classifiedAt);
+    for (const category of classification.categories ?? []) {
+      lastModifiedByPath.set(`/category/${category.id}/`, classifiedAt);
+    }
+  }
 } catch {
   // prepare-data and the build validator provide the actionable data error.
 }

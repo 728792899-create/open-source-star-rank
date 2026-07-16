@@ -4,7 +4,8 @@ import type {
   PeriodRanking, RankingEntry, RankingIndex,
 } from '../types';
 import { withBase } from '../lib/paths';
-import { readLocalizationCatalog } from '../lib/data';
+import { readClassificationIndex, readClassificationRepositories, readLocalizationCatalog } from '../lib/data';
+import { classificationLabels, classificationMap } from '../lib/classification';
 import { localizedRepositoryContent } from '../lib/localization';
 import FreshnessStatus from './FreshnessStatus.astro';
 
@@ -19,6 +20,11 @@ interface Props {
   alternateHref?: string;
   alternateLabel?: string;
   fallbackNotice?: string;
+  headlineOverride?: string;
+  sectionTitleOverride?: string;
+  sectionEyebrowOverride?: string;
+  rankingPathOverride?: string;
+  showDateTools?: boolean;
 }
 
 const {
@@ -32,6 +38,11 @@ const {
   alternateHref,
   alternateLabel,
   fallbackNotice,
+  headlineOverride,
+  sectionTitleOverride,
+  sectionEyebrowOverride,
+  rankingPathOverride,
+  showDateTools = true,
 } = Astro.props;
 const isEvent = mode === 'event' && 'source_metrics' in ranking;
 const eventRanking = isEvent ? ranking as EventDailyRanking : null;
@@ -40,7 +51,7 @@ const periodDays = 'period_days' in ranking ? ranking.period_days : null;
 const languageName = 'language' in ranking ? ranking.language : null;
 const hasRepositoryPages = !isEvent && index.schema_version === '1.2.0';
 const modeLabel = isEvent ? 'Public event signal' : periodDays ? `${periodDays} day signal` : languageName ? `${languageName} signal` : 'Daily signal';
-const headline = periodDays
+const defaultHeadline = periodDays
   ? `近 ${periodDays} 日，哪些项目升温最快？`
   : languageName
     ? `${languageName} 项目，昨日谁在升温？`
@@ -69,9 +80,19 @@ const makeTrendShape = (values: Array<number | null>) => {
   });
   return `polygon(0 100%, ${points.join(', ')}, 100% 100%)`;
 };
-const rankingPath = withBase(`${routePrefix}/${ranking.date}/`);
+const rankingPath = withBase(rankingPathOverride ?? `${routePrefix}/${ranking.date}/`);
 const rankingJsonPath = withBase(`${dataPrefix}/${ranking.date}.json`);
 const localization = readLocalizationCatalog();
+const classificationIndex = readClassificationIndex();
+const classifications = classificationMap(readClassificationRepositories());
+const labels = classificationLabels(classificationIndex);
+const usedClassifications = ranking.entries.map((entry) => classifications.get(entry.repository_id)).filter(Boolean);
+const usedCategories = classificationIndex.categories.filter((term) => usedClassifications.some((item) => item?.primary_category === term.id));
+const usedProjectTypes = classificationIndex.project_types.filter((term) => usedClassifications.some((item) => item?.project_type === term.id));
+const usedUseCases = classificationIndex.use_cases.filter((term) => usedClassifications.some((item) => item?.use_cases.includes(term.id)));
+const headline = headlineOverride ?? defaultHeadline;
+const sectionEyebrow = sectionEyebrowOverride ?? (isEvent ? 'Public events top 100' : `Observed ${languageName ? 'language top 50' : 'top 100'}`);
+const sectionTitle = sectionTitleOverride ?? (isEvent ? 'Star 新增排行' : `${languageName ? `${languageName} ` : ''}${periodDays ? `${periodDays} 日 ` : ''}Star 净增排行`);
 ---
 
 <main id="main-content" data-ranking data-ranking-mode={mode} data-daily-path={rankingPath} data-ranking-date={ranking.date} class="shell ranking-page">
@@ -130,10 +151,10 @@ const localization = readLocalizationCatalog();
   <section class="ranking-section" aria-labelledby="ranking-title">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">{isEvent ? 'Public events top 100' : `Observed ${languageName ? 'language top 50' : 'top 100'}`}</p>
-        <h2 id="ranking-title">{isEvent ? 'Star 新增排行' : `${languageName ? `${languageName} ` : ''}${periodDays ? `${periodDays} 日 ` : ''}Star 净增排行`}</h2>
+        <p class="eyebrow">{sectionEyebrow}</p>
+        <h2 id="ranking-title">{sectionTitle}</h2>
       </div>
-      <div class="date-tools">
+      {showDateTools && <div class="date-tools">
         <label class="date-picker">
           <span>历史日期</span>
           <select data-date-selector aria-label="选择历史榜单日期">
@@ -144,7 +165,7 @@ const localization = readLocalizationCatalog();
           {older ? <a href={withBase(`${routePrefix}/${older}/`)} aria-label={`查看 ${older} 榜单`}>← 前一日</a> : <span>← 前一日</span>}
           {newer ? <a href={withBase(`${routePrefix}/${newer}/`)} aria-label={`查看 ${newer} 榜单`}>后一日 →</a> : <span>后一日 →</span>}
         </div>
-      </div>
+      </div>}
     </div>
 
     <div class="ranking-actions" aria-label="榜单操作">
@@ -165,6 +186,27 @@ const localization = readLocalizationCatalog();
           {languages.map((language) => <option value={language}>{language}</option>)}
         </select>
       </label>
+      <label>
+        <span>项目方向</span>
+        <select data-category>
+          <option value="">全部方向</option>
+          {usedCategories.map((term) => <option value={term.id}>{term.label}</option>)}
+        </select>
+      </label>
+      <label>
+        <span>产品形态</span>
+        <select data-project-type>
+          <option value="">全部形态</option>
+          {usedProjectTypes.map((term) => <option value={term.id}>{term.label}</option>)}
+        </select>
+      </label>
+      <label>
+        <span>适用场景</span>
+        <select data-scenario>
+          <option value="">全部场景</option>
+          {usedUseCases.map((term) => <option value={term.id}>{term.label}</option>)}
+        </select>
+      </label>
       <p class="filter-count" aria-live="polite"><strong data-visible-count>{ranking.entries.length}</strong> / {ranking.entries.length} 个项目</p>
     </div>
 
@@ -181,7 +223,11 @@ const localization = readLocalizationCatalog();
           const gained = entryGain(entry);
           const trendShape = makeTrendShape(entry.trend_7d);
           const content = localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description);
-          const searchText = `${entry.full_name} ${entry.description ?? ''} ${content.displayName} ${content.description ?? ''}`;
+          const classification = classifications.get(entry.repository_id);
+          const categoryLabel = classification ? labels.categories.get(classification.primary_category) : null;
+          const projectTypeLabel = classification ? labels.projectTypes.get(classification.project_type) : null;
+          const useCaseLabels = classification?.use_cases.map((id) => labels.useCases.get(id)).filter(Boolean) as string[] | undefined;
+          const searchText = `${entry.full_name} ${entry.description ?? ''} ${content.displayName} ${content.description ?? ''} ${categoryLabel ?? ''} ${projectTypeLabel ?? ''} ${useCaseLabels?.join(' ') ?? ''}`;
           const movement = entry.rank_change === null ? '新上榜' : entry.rank_change > 0 ? `↑${entry.rank_change}` : entry.rank_change < 0 ? `↓${Math.abs(entry.rank_change)}` : '—';
           const movementClass = entry.rank_change === null ? 'new' : entry.rank_change > 0 ? 'up' : entry.rank_change < 0 ? 'down' : 'flat';
           return (
@@ -192,6 +238,9 @@ const localization = readLocalizationCatalog();
               data-ranking-row
               data-search-text={searchText.toLocaleLowerCase()}
               data-language={entry.language ?? ''}
+              data-category={classification?.primary_category ?? ''}
+              data-project-type={classification?.project_type ?? ''}
+              data-scenarios={classification?.use_cases.join(',') ?? ''}
             >
               <strong
                 class:list={['rank-cell', movementClass]}
@@ -217,6 +266,11 @@ const localization = readLocalizationCatalog();
                     <span class="project-source-row"><span class="translation-pending">中文待生成</span></span>
                     <p>{entry.description || 'No description provided.'}</p>
                   </>}
+                  {classification ? <div class="classification-tags" aria-label="项目分类">
+                    <a href={withBase(`/category/${classification.primary_category}/`)}>{categoryLabel}</a>
+                    <span>{projectTypeLabel}</span>
+                    {useCaseLabels?.slice(0, 2).map((label) => <span>{label}</span>)}
+                  </div> : <span class="classification-pending">分类待生成</span>}
                 </div>
                 {hasRepositoryPages && <a class="github-link" href={entry.html_url} target="_blank" rel="noreferrer" aria-label={`在 GitHub 打开 ${entry.full_name}`}>GitHub ↗</a>}
                 <button
@@ -267,6 +321,9 @@ const localization = readLocalizationCatalog();
       root.dataset.rankingEnhanced = 'true';
     const search = root.querySelector('[data-search]');
     const language = root.querySelector('[data-language]');
+    const category = root.querySelector('[data-category]');
+    const projectType = root.querySelector('[data-project-type]');
+    const scenario = root.querySelector('[data-scenario]');
     const visibleCount = root.querySelector('[data-visible-count]');
     const emptyState = root.querySelector('[data-empty-state]');
     const actionStatus = root.querySelector('[data-action-status]');
@@ -275,19 +332,35 @@ const localization = readLocalizationCatalog();
     const params = new URLSearchParams(window.location.search);
     const initialQuery = params.get('q') ?? '';
     const initialLanguage = params.get('language') ?? '';
-    if (search instanceof HTMLInputElement) search.value = initialQuery;
-    if (language instanceof HTMLSelectElement) language.value = initialLanguage;
+    const initialCategory = params.get('category') ?? '';
+    const initialProjectType = params.get('type') ?? '';
+    const initialScenario = params.get('scenario') ?? '';
+    if (search instanceof HTMLInputElement && initialQuery) search.value = initialQuery;
+    if (language instanceof HTMLSelectElement && initialLanguage) language.value = initialLanguage;
+    if (category instanceof HTMLSelectElement && initialCategory) category.value = initialCategory;
+    if (projectType instanceof HTMLSelectElement && initialProjectType) projectType.value = initialProjectType;
+    if (scenario instanceof HTMLSelectElement && initialScenario) scenario.value = initialScenario;
 
     const apply = () => {
       const query = search instanceof HTMLInputElement ? search.value : '';
       const selectedLanguage = language instanceof HTMLSelectElement ? language.value : '';
+      const selectedCategory = category instanceof HTMLSelectElement ? category.value : '';
+      const selectedProjectType = projectType instanceof HTMLSelectElement ? projectType.value : '';
+      const selectedScenario = scenario instanceof HTMLSelectElement ? scenario.value : '';
       let count = 0;
       for (const row of root.querySelectorAll('[data-ranking-row]')) {
         if (!(row instanceof HTMLElement)) continue;
         const visible = matchesEntry(
-          { searchText: row.dataset.searchText ?? '', language: row.dataset.language ?? '' },
+          {
+            searchText: row.dataset.searchText ?? '', language: row.dataset.language ?? '',
+            category: row.dataset.category ?? '', projectType: row.dataset.projectType ?? '',
+            scenarios: (row.dataset.scenarios ?? '').split(',').filter(Boolean),
+          },
           query,
           selectedLanguage,
+          selectedCategory,
+          selectedProjectType,
+          selectedScenario,
         );
         row.hidden = !visible;
         if (visible) count += 1;
@@ -297,10 +370,16 @@ const localization = readLocalizationCatalog();
       const next = new URL(window.location.href);
       query.trim() ? next.searchParams.set('q', query.trim()) : next.searchParams.delete('q');
       selectedLanguage ? next.searchParams.set('language', selectedLanguage) : next.searchParams.delete('language');
+      selectedCategory ? next.searchParams.set('category', selectedCategory) : next.searchParams.delete('category');
+      selectedProjectType ? next.searchParams.set('type', selectedProjectType) : next.searchParams.delete('type');
+      selectedScenario ? next.searchParams.set('scenario', selectedScenario) : next.searchParams.delete('scenario');
       window.history.replaceState({}, '', next);
     };
     search?.addEventListener('input', apply);
     language?.addEventListener('change', apply);
+    category?.addEventListener('change', apply);
+    projectType?.addEventListener('change', apply);
+    scenario?.addEventListener('change', apply);
 
     const copyText = async (value: string) => {
       if (navigator.clipboard?.writeText) {
@@ -360,14 +439,14 @@ const localization = readLocalizationCatalog();
         }
       }
     });
-    if (initialQuery.trim() || initialLanguage) apply();
+    apply();
     };
     root.addEventListener('change', (event) => {
       if (event.target instanceof HTMLSelectElement && event.target.matches('[data-date-selector]') && event.target.value) {
         window.location.assign(event.target.value);
       }
     });
-    for (const eventName of ['focusin', 'pointerdown', 'keydown']) {
+    for (const eventName of ['focusin', 'pointerdown', 'keydown', 'change']) {
       root.addEventListener(eventName, initializeRanking, { capture: true, once: true });
     }
     if (window.location.search) initializeRanking();

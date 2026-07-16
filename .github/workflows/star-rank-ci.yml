@@ -11,10 +11,13 @@ on:
       - "tools/star_rank*.py"
       - "tools/event_star_rank.py"
       - "tools/localize_repositories.py"
+      - "tools/classify_repositories.py"
       - "tools/check_star_rank_freshness.py"
       - "requirements-star-rank.txt"
       - "data/seed-repositories.json"
       - "data/localization-overrides.zh-CN.json"
+      - "data/classification-taxonomy.zh-CN.json"
+      - "data/classification-overrides.zh-CN.json"
   push:
     branches: [main]
     paths:
@@ -26,10 +29,13 @@ on:
       - "tools/star_rank*.py"
       - "tools/event_star_rank.py"
       - "tools/localize_repositories.py"
+      - "tools/classify_repositories.py"
       - "tools/check_star_rank_freshness.py"
       - "requirements-star-rank.txt"
       - "data/seed-repositories.json"
       - "data/localization-overrides.zh-CN.json"
+      - "data/classification-taxonomy.zh-CN.json"
+      - "data/classification-overrides.zh-CN.json"
 
 permissions:
   contents: read

@@ -1,4 +1,4 @@
-name: Backfill and publish Chinese project content
+name: Backfill and publish Chinese content and classification
 
 on:
   schedule:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: Validate cache, backfill missing content, or redeploy existing data
+        description: Validate caches, backfill Chinese content and classification, or redeploy existing data
         type: choice
         options:
           - validate
@@ -88,8 +88,8 @@ jobs:
           git worktree add -B star-rank-data "$data_dir" refs/remotes/origin/star-rank-data
           echo "STAR_RANK_DATA_DIR=$data_dir" >> "$GITHUB_ENV"
 
-      - name: Validate localization code
-        run: python -m unittest tests.test_localize_repositories -v
+      - name: Validate localization and classification code
+        run: python -m unittest tests.test_localize_repositories tests.test_classify_repositories -v
 
       - name: Refresh Chinese project content
         if: steps.mode.outputs.run_mode != 'deploy_existing'
@@ -107,6 +107,23 @@ jobs:
           if [[ "${{ steps.mode.outputs.run_mode }}" == "validate" ]]; then args+=(--offline); fi
           python -m tools.localize_repositories "${args[@]}"
 
+      - name: Refresh project classifications
+        if: steps.mode.outputs.run_mode != 'deploy_existing'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CLASSIFICATION_MODEL: ${{ vars.CLASSIFICATION_MODEL || 'openai/gpt-4.1-mini' }}
+          CLASSIFICATION_MAX_PROJECTS: ${{ vars.CLASSIFICATION_MAX_PROJECTS || '400' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(
+            --data-dir "$STAR_RANK_DATA_DIR"
+            --taxonomy-file data/classification-taxonomy.zh-CN.json
+            --overrides-file data/classification-overrides.zh-CN.json
+          )
+          if [[ "${{ steps.mode.outputs.run_mode }}" == "validate" ]]; then args+=(--offline); fi
+          python -m tools.classify_repositories "${args[@]}"
+
       - name: Validate data and build site
         run: |
           python tools/validate_star_rank_data.py --data-dir "$STAR_RANK_DATA_DIR" --sync-schemas
@@ -122,9 +139,9 @@ jobs:
           set -euo pipefail
           git -C "$STAR_RANK_DATA_DIR" config user.name "github-actions[bot]"
           git -C "$STAR_RANK_DATA_DIR" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git -C "$STAR_RANK_DATA_DIR" add state/localization public/i18n public/schema
+          git -C "$STAR_RANK_DATA_DIR" add state/localization state/classification public/i18n public/classification public/schema
           if ! git -C "$STAR_RANK_DATA_DIR" diff --cached --quiet; then
-            git -C "$STAR_RANK_DATA_DIR" commit -m "Update Chinese project content"
+            git -C "$STAR_RANK_DATA_DIR" commit -m "Update Chinese project content and classification"
             git -C "$STAR_RANK_DATA_DIR" push origin HEAD:star-rank-data
           fi
 

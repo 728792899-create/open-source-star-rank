@@ -46,6 +46,27 @@ test('restores search and language filters from the URL and shows an empty state
   await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(25);
 });
 
+test('combines direction, product type and scenario filters without renumbering ranks', async ({ page }) => {
+  await page.goto(latestPath);
+  const firstRow = page.locator('[data-ranking-row]').first();
+  const category = await firstRow.getAttribute('data-category') ?? '';
+  const projectType = await firstRow.getAttribute('data-project-type') ?? '';
+  const scenario = (await firstRow.getAttribute('data-scenarios') ?? '').split(',')[0];
+  await page.getByLabel('项目方向').selectOption(category);
+  await page.getByLabel('产品形态').selectOption(projectType);
+  await page.getByLabel('适用场景').selectOption(scenario);
+  await expect(page).toHaveURL(new RegExp(`category=${category}.*type=${projectType}.*scenario=${scenario}`));
+  const visible = page.locator('[data-ranking-row]:visible');
+  await expect(visible.first()).toHaveAttribute('data-category', category);
+  await expect(visible.first()).toHaveAttribute('data-project-type', projectType);
+  const originalRank = (await visible.first().locator('.rank-cell').textContent())?.trim() ?? '';
+  await page.reload();
+  await expect(page.getByLabel('项目方向')).toHaveValue(category);
+  await expect(page.getByLabel('产品形态')).toHaveValue(projectType);
+  await expect(page.getByLabel('适用场景')).toHaveValue(scenario);
+  await expect(page.locator('[data-ranking-row]:visible').first().locator('.rank-cell')).toHaveText(originalRank);
+});
+
 test('navigates historical dates and keeps direct no-JavaScript content readable', async ({ page, browser }) => {
   await page.goto(latestPath);
   await page.getByLabel('选择历史榜单日期').selectOption('/open-source-star-rank/daily/2026-07-13/');
@@ -111,6 +132,12 @@ for (const width of [390, 768, 1440]) {
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(0);
   });
+  test(`category page has no horizontal overflow at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('category/ai-machine-learning/');
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
 }
 
 test('provides a useful 404 page and keyboard focus', async ({ page }) => {
@@ -127,6 +154,7 @@ test('publishes status, period, language and stable repository history routes', 
   await expect(page.getByRole('heading', { name: '候选池采样质量' })).toBeVisible();
   await expect(page.getByRole('heading', { name: '公共事件与费用保护' })).toBeVisible();
   await expect(page.getByText('零点窗口内，可用于排行')).toBeVisible();
+  await expect(page.getByRole('heading', { name: '项目分类覆盖' })).toBeVisible();
 
   await page.goto('period/7d/');
   await expect(page.getByRole('heading', { name: '7 日 Star 净增排行' })).toBeVisible();
@@ -141,7 +169,32 @@ test('publishes status, period, language and stable repository history routes', 
   await expect(page.getByRole('heading', { name: /测试项目 10001/ })).toBeVisible();
   await expect(page.locator('.repo-source-name').filter({ hasText: 'fixture-labs/repo-001' })).toBeVisible();
   await expect(page.getByRole('heading', { name: '真实历史' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '方向与适用场景' })).toBeVisible();
   await expect(page.getByRole('row')).toHaveCount(31);
+});
+
+test('publishes static category subsets with original global ranks and empty noindex policy', async ({ page, browser }) => {
+  await page.goto('category/');
+  await expect(page.getByRole('heading', { name: '项目方向' })).toBeVisible();
+  await expect(page.locator('.category-cards > a')).toHaveCount(13);
+
+  await page.goto('category/ai-machine-learning/');
+  const rows = page.locator('[data-ranking-row]');
+  expect(await rows.count()).toBeGreaterThan(0);
+  for (const row of await rows.all()) await expect(row).toHaveAttribute('data-category', 'ai-machine-learning');
+  const ranks = (await rows.locator('.rank-cell').allTextContents()).map((rank) => Number(rank.trim()));
+  expect(ranks).not.toEqual(ranks.map((_, index) => index + 1));
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/category\/ai-machine-learning\/$/);
+
+  const noScriptContext = await browser.newContext({ javaScriptEnabled: false });
+  const noScriptPage = await noScriptContext.newPage();
+  await noScriptPage.goto('category/ai-machine-learning/');
+  expect(await noScriptPage.locator('[data-ranking-row]').count()).toBeGreaterThan(0);
+  await noScriptContext.close();
+
+  await page.goto('category/other/');
+  await expect(page.locator('[data-ranking-row]')).toHaveCount(0);
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,follow');
 });
 
 test('publishes canonical ranking pages and three feed formats', async ({ page, request }) => {

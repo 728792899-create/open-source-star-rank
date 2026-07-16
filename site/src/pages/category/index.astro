@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { classificationMap } from '../../lib/classification';
+import { readClassificationIndex, readClassificationRepositories } from '../../lib/data';
+import { readDefaultRanking } from '../../lib/default-ranking';
+import { withBase } from '../../lib/paths';
+
+const classificationIndex = readClassificationIndex();
+const classifications = classificationMap(readClassificationRepositories());
+const { ranking, isEvent } = readDefaultRanking();
+const counts = new Map(classificationIndex.categories.map((term) => [term.id, 0]));
+for (const entry of ranking?.entries ?? []) {
+  const classification = classifications.get(entry.repository_id);
+  if (classification) counts.set(classification.primary_category, (counts.get(classification.primary_category) ?? 0) + 1);
+}
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'GitHub 开源项目方向分类',
+  description: '按项目方向浏览当前开源星榜 Top 100，保留原始全局排名。',
+  hasPart: classificationIndex.categories.map((term) => ({
+    '@type': 'ItemList',
+    name: term.label,
+    numberOfItems: counts.get(term.id) ?? 0,
+    url: new URL(withBase(`/category/${term.id}/`), Astro.site ?? Astro.url.origin).toString(),
+  })),
+};
+---
+
+<BaseLayout
+  title="GitHub 开源项目方向分类｜开源星榜"
+  description="按 AI、开发者工具、Web、数据基础设施等方向浏览当前开源星榜 Top 100，分类筛选不改变全局排名。"
+  structuredData={structuredData}
+>
+  <main id="main-content" class="shell language-page category-page">
+    <p class="eyebrow">Project taxonomy · current top 100</p>
+    <h1>不只看语言，<br />也看项目解决什么。</h1>
+    <p class="status-lead">这里只组织当前默认榜 Top 100，保留每个项目的原始全局排名，不生成独立分类排行。当前口径：{isEvent ? '公共事件新增榜' : '候选池净增榜'}。</p>
+
+    <section class="language-list" aria-labelledby="category-list-title">
+      <div class="section-heading"><div><p class="eyebrow">Fixed taxonomy 1.0</p><h2 id="category-list-title">项目方向</h2></div><strong>{classificationIndex.categories.length}</strong></div>
+      <div class="language-cards category-cards">
+        {classificationIndex.categories.map((term) => <a href={withBase(`/category/${term.id}/`)}>
+          <span>{term.label}</span>
+          <strong>{counts.get(term.id) ?? 0} 个项目</strong>
+          <small>{(counts.get(term.id) ?? 0) > 0 ? '查看全局排名 →' : '当前榜暂无项目'}</small>
+        </a>)}
+      </div>
+    </section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,64 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RankingView from '../../components/RankingView.astro';
+import { classificationMap } from '../../lib/classification';
+import { readClassificationIndex, readClassificationRepositories, readLocalizationCatalog } from '../../lib/data';
+import { readDefaultRanking } from '../../lib/default-ranking';
+import { localizedRepositoryContent } from '../../lib/localization';
+
+export const getStaticPaths = (() => readClassificationIndex().categories.map((category) => ({
+  params: { slug: category.id },
+  props: { category },
+}))) satisfies GetStaticPaths;
+
+const { category } = Astro.props;
+const selection = readDefaultRanking();
+const classificationCatalog = readClassificationRepositories();
+const classifications = classificationMap(classificationCatalog);
+const localization = readLocalizationCatalog();
+const ranking = selection.ranking ? ({
+  ...selection.ranking,
+  entries: selection.ranking.entries.filter((entry) => classifications.get(entry.repository_id)?.primary_category === category.id),
+} as typeof selection.ranking) : null;
+const hasProjects = Boolean(ranking?.entries.length);
+const structuredData = ranking ? {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: `${category.label} GitHub 开源项目｜当前开源星榜`,
+  numberOfItems: ranking.entries.length,
+  itemListElement: ranking.entries.map((entry) => ({
+    '@type': 'ListItem',
+    position: entry.rank,
+    url: entry.html_url,
+    name: localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description).displayName,
+  })),
+} : undefined;
+---
+
+<BaseLayout
+  title={`${category.label} GitHub 开源项目｜开源星榜`}
+  description={`当前开源星榜 Top 100 中属于“${category.label}”的项目，保留原始全局排名。`}
+  structuredData={structuredData}
+  robots={hasProjects ? 'index,follow' : 'noindex,follow'}
+>
+  {ranking ? <RankingView
+    ranking={ranking}
+    index={selection.index}
+    isLatest
+    mode={selection.isEvent ? 'event' : 'daily'}
+    availableDates={selection.isEvent ? selection.eventIndex.available_dates : selection.candidateIndex.available_dates}
+    routePrefix={selection.isEvent ? '/events/daily' : '/daily'}
+    dataPrefix={selection.isEvent ? '/data/events/daily' : '/data/daily'}
+    fallbackNotice={selection.fallbackNotice}
+    headlineOverride={`${category.label}，当前哪些项目在升温？`}
+    sectionEyebrowOverride="Current default top 100 subset"
+    sectionTitleOverride={`${category.label}项目`}
+    rankingPathOverride={`/category/${category.id}/`}
+    showDateTools={false}
+  /> : <main id="main-content" class="shell language-page category-page">
+    <p class="eyebrow">Current default top 100 subset</p>
+    <h1>{category.label}</h1>
+    <p class="empty-copy">尚无可用默认榜数据。榜单发布后，该页会自动显示符合方向的项目。</p>
+  </main>}
+</BaseLayout>

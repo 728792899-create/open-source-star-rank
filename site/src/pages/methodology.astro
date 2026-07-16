@@ -86,5 +86,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <a class="text-link" href="https://docs.github.com/en/github-models" target="_blank" rel="noreferrer">了解 GitHub Models →</a>
       </div>
     </section>
+
+    <section>
+      <span class="section-number">08</span>
+      <div>
+        <h2>项目方向、产品形态与适用场景</h2>
+        <p>项目分类是帮助理解用途的展示层。GitHub Models 只使用公开仓库名、原始描述、编程语言及已验证的中文内容，从版本化的固定词表中选择一个主方向、一个产品形态和 1–4 个适用场景。不读取 README，也不增加 GitHub API 请求。</p>
+        <p>结果按 repository ID 缓存；来源描述、语言、中文内容或词表版本变化时自动失效。人工修正始终优先于模型结果；模型不可用时保留旧缓存或显示“分类待生成”，不阻断日榜。</p>
+        <p>分类页只是当前默认榜 Top 100 的静态子集，始终保留原始全局排名；不得将其解读为独立分类榜，也不会改变 Star 数据。</p>
+      </div>
+    </section>
   </main>
 </BaseLayout>
