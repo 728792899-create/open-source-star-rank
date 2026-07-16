@@ -25,9 +25,9 @@ jobs:
           set -euo pipefail
           git fetch origin refs/heads/star-rank-data:refs/remotes/origin/star-rank-data
           git show refs/remotes/origin/star-rank-data:public/events/index.json > "$RUNNER_TEMP/data-event-index.json"
-          python tools/check_star_rank_freshness.py --index "$RUNNER_TEMP/data-event-index.json" --require-yesterday-date
+          python tools/check_star_rank_freshness.py --index "$RUNNER_TEMP/data-event-index.json" --require-yesterday-date --require-complete-event-coverage
           curl --fail --location --retry 3 --output "$RUNNER_TEMP/site-event-index.json" "$SITE_INDEX"
-          python tools/check_star_rank_freshness.py --index "$RUNNER_TEMP/site-event-index.json" --require-yesterday-date
+          python tools/check_star_rank_freshness.py --index "$RUNNER_TEMP/site-event-index.json" --require-yesterday-date --require-complete-event-coverage
           cmp "$RUNNER_TEMP/data-event-index.json" "$RUNNER_TEMP/site-event-index.json"
 
   incident:

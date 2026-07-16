@@ -1,6 +1,6 @@
 # 开源星榜站点
 
-这是公共事件新增榜与候选池净增榜共存的静态站点。Astro 在构建时读取机器生成的 JSON，把事件日榜、净增日榜、7/30 日榜、独立语言榜、项目历史、中文项目内容、固定词表分类和公开数据接口一起静态发布。
+这是全站公开事件新增榜与候选池净增榜共存的静态站点。Astro 在构建时读取机器生成的 JSON，把事件日榜、净增日榜、7/30 日榜、独立语言榜、项目历史、中文项目内容、固定词表分类和公开数据接口一起静态发布。
 
 ## 本地验证
 
@@ -34,7 +34,7 @@ Lighthouse CI 使用 desktop 预设并强制 Performance ≥ 90、Accessibility 
 
 ## 生产数据
 
-`tools/star_rank.py` 维护候选池快照与净增数据；`tools/event_star_rank.py` 查询 GH Archive BigQuery 日表，按 repository ID 汇总并从 GitHub 补齐前 500 名元数据；`tools/localize_repositories.py` 生成中文项目内容；`tools/classify_repositories.py` 再从版本化固定词表中生成项目方向、产品形态和适用场景。两种展示数据都按 repository ID 缓存。三个生产工作流共享同一并发组和 `star-rank-data` 分支，站点只读取该分支中的 `public/`。
+`tools/star_rank.py` 维护候选池快照与净增数据；`tools/event_star_rank.py` 扫描 GH Archive BigQuery 日表中的全部公开事件，按 repository ID 汇总全部 `WatchEvent`，再按全局顺序补齐元数据直至获得 100 个有效项目；`tools/localize_repositories.py` 生成中文项目内容；`tools/classify_repositories.py` 再从版本化固定词表中生成项目方向、产品形态和适用场景。两种展示数据都按 repository ID 缓存。三个生产工作流共享同一并发组和 `star-rank-data` 分支，站点只读取该分支中的 `public/`。
 
 GitHub Pages 使用 GitHub Actions 发布。手动工作流支持四种模式：
 
@@ -43,4 +43,4 @@ GitHub Pages 使用 GitHub Actions 发布。手动工作流支持四种模式：
 - `deploy_existing`：不调用 GitHub API，直接使用数据分支恢复部署。
 - `replace_snapshot`：仅替换当天快照，必须同时填写当天北京时间日期，且只能在 00:00–03:00 有效窗口执行。
 
-候选池接口保持 `1.2.0` 契约不变，同时兼容历史 `1.1.0`。事件榜、中文目录和分类目录各自使用独立 `1.0.0` 契约；入口分别为 `/data/events/index.json`、`/data/i18n/zh-CN/repositories.json` 和 `/data/classification/index.json`。没有有效译文或分类时构建仍继续成功，分别回退 GitHub 原文或“分类待生成”。完整初始化、恢复和故障处理流程见 [运行手册](../docs/STAR_RANK_RUNBOOK.md)。
+候选池接口保持 `1.2.0` 契约不变，同时兼容历史 `1.1.0`。事件榜使用 `1.1.0` 契约并兼容历史 `1.0.0`；中文目录和分类目录继续使用独立 `1.0.0` 契约。入口分别为 `/data/events/index.json`、`/data/i18n/zh-CN/repositories.json` 和 `/data/classification/index.json`。没有有效译文或分类时构建仍继续成功，分别回退 GitHub 原文或“分类待生成”。完整初始化、恢复和故障处理流程见 [运行手册](../docs/STAR_RANK_RUNBOOK.md)。

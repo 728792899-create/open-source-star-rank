@@ -75,15 +75,26 @@ class OperationsTests(unittest.TestCase):
 
     def test_event_watchdog_requires_yesterday_beijing_date(self) -> None:
         index = {
+            "schema_version": "1.1.0",
             "updated_at": "2026-07-16T23:35:00Z",
             "freshness_threshold_hours": 36,
             "status": "ready",
             "latest_date": "2026-07-16",
+            "latest_source_metrics": {
+                "scope": "github_public_events_as_archived_by_gh_archive",
+                "counting_unit": "unique_actor_repository_pair",
+                "expected_hour_count": 24,
+                "observed_hour_count": 24,
+                "missing_hours": [],
+                "ranking_complete": True,
+                "metadata_success_count": 100,
+            },
         }
         result = check_freshness(
             index,
             now=dt.datetime(2026, 7, 17, 0, 15, tzinfo=dt.timezone.utc),
             require_yesterday_date=True,
+            require_complete_event_coverage=True,
         )
         self.assertEqual(result["latest_date"], "2026-07-16")
         index["latest_date"] = "2026-07-15"
@@ -92,6 +103,32 @@ class OperationsTests(unittest.TestCase):
                 index,
                 now=dt.datetime(2026, 7, 17, 0, 15, tzinfo=dt.timezone.utc),
                 require_yesterday_date=True,
+                require_complete_event_coverage=True,
+            )
+
+    def test_event_watchdog_rejects_incomplete_hourly_coverage(self) -> None:
+        index = {
+            "schema_version": "1.1.0",
+            "updated_at": "2026-07-16T23:35:00Z",
+            "freshness_threshold_hours": 36,
+            "status": "ready",
+            "latest_date": "2026-07-16",
+            "latest_source_metrics": {
+                "scope": "github_public_events_as_archived_by_gh_archive",
+                "counting_unit": "unique_actor_repository_pair",
+                "expected_hour_count": 24,
+                "observed_hour_count": 23,
+                "missing_hours": ["2026-07-16T03:00:00Z"],
+                "ranking_complete": True,
+                "metadata_success_count": 100,
+            },
+        }
+        with self.assertRaisesRegex(ValueError, "小时覆盖"):
+            check_freshness(
+                index,
+                now=dt.datetime(2026, 7, 17, 0, 15, tzinfo=dt.timezone.utc),
+                require_yesterday_date=True,
+                require_complete_event_coverage=True,
             )
 
     def test_incident_is_single_and_closes_after_recovery(self) -> None:

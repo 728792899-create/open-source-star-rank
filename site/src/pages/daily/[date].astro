@@ -32,7 +32,7 @@ const structuredData = {
 };
 const sameDateEventAvailable = eventIndex.available_dates.includes(ranking.date);
 const alternateEventDate = sameDateEventAvailable ? ranking.date : eventIndex.latest_date;
-const alternateLabel = sameDateEventAvailable ? '查看同日公共事件新增榜' : '查看最新公共事件新增榜';
+const alternateLabel = sameDateEventAvailable ? '查看同日全站公开事件新增榜' : '查看最新全站公开事件新增榜';
 ---
 
 <BaseLayout title={title} description={description} structuredData={structuredData} socialImagePath={`/social/daily-${ranking.date}.png`}>

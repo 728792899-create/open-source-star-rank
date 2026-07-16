@@ -12,7 +12,7 @@
 
 ## 2. 公共事件榜 GCP Sandbox 初始化
 
-公共事件榜必须使用一个专用、未绑定结算账号的 GCP 项目。BigQuery Sandbox 在没有信用卡或结算账号的情况下可查询公共数据集，并具有每月 1 TiB 查询免费额度。不得为该项目启用结算；不创建自有 BigQuery 表、不执行 DML、不使用流式写入或数据传输服务。
+全站公开事件新增榜必须使用一个专用、未绑定结算账号的 GCP 项目。BigQuery Sandbox 在没有信用卡或结算账号的情况下可查询公共数据集，并具有每月 1 TiB 查询免费额度。不得为该项目启用结算；不创建自有 BigQuery 表、不执行 DML、不使用流式写入或数据传输服务。
 
 ### 2.1 创建最小权限身份
 
@@ -97,11 +97,12 @@ gcloud iam service-accounts keys list \
 
 ### 2.4 事件榜首次发布
 
-1. 手动运行 `Update and publish public event star rank`，选择 `validate`。该模式只完成 OIDC 身份验证、BigQuery dry-run、全部测试、Schema 与站点构建，不查询正式结果、不写数据、不部署。
-2. 在日志中确认 `estimated_bytes` 不超过 `25769803776`。
-3. 手动选择 `collect_publish`采集昨日，检查 `star-rank-data` 中的 `public/events/`、`state/events/`与 `public/schema/`。
-4. 核对 `/data/events/index.json`、`/data/events/daily/YYYY-MM-DD.json`、`/events/daily/YYYY-MM-DD/`、首页、状态页与事件分享图。
-5. 保留 07:30 定时任务与 08:15 watchdog，连续观察 7 天的扫描字节、事件延迟、排名变化与趋势空值。
+1. 手动运行 `Update and publish public event star rank`，选择 `validate`。该模式先 dry-run，再执行真实全量聚合并验证 24/24 小时覆盖；不调用 GitHub 元数据 API、不写数据、不部署。
+2. 在日志中确认 `estimated_bytes` 和 `bytes_processed` 均不超过 `25769803776`，`observed_hours` 为 `24`。
+3. 手动选择 `collect_publish` 采集昨日；若昨日已经存在旧版 `1.0.0` 日榜，则改用 `replace_day` 显式替换该日期。检查 `star-rank-data` 中的 `public/events/`、`state/events/`与 `public/schema/`。
+4. 核对 `/data/events/index.json`、`/data/events/daily/YYYY-MM-DD.json`、`/events/daily/YYYY-MM-DD/`、首页、状态页与事件分享图。新版事件契约必须为 `1.1.0`、方法论为 `gharchive-public-watch-events-v2`。
+5. 确认 `source_metrics` 的小时覆盖为 24/24、`ranking_complete` 为 `true`、公开条目恰好 100；全量仓库精简聚合只保存于 `state/events/daily/` 并保留最近 30 天。
+6. 保留 07:30 定时任务与 08:15 watchdog，连续观察 7 天的扫描字节、事件延迟、排名变化与趋势空值。
 
 ## 2.5 中文项目内容与分类初始化
 
@@ -129,7 +130,7 @@ gcloud iam service-accounts keys list \
 - 采集和网站恢复后，同一 Issue 自动关闭。不要另建重复故障 Issue。
 - 每月检查 Git 对象体积；超过 500 MiB 时创建 `[开源星榜] 数据分支需要压缩`。
 - 事件任务在北京时间 07:30 汇总前一日，目标 08:00 前发布；08:15 watchdog 检查数据分支与站点的事件日期和完整文件哈希。
-- 事件身份、dry-run、24 GiB 上限、正式查询、GitHub 元数据、Schema 或部署任一失败时，同一 `[开源星榜] 公共事件榜故障` Issue 会打开或更新；不提交残缺事件数据，候选池榜继续可用。
+- 事件身份、dry-run、24 GiB 上限、24 小时覆盖、正式查询、GitHub 元数据、Schema 或部署任一失败时，同一 `[开源星榜] 公共事件榜故障` Issue 会打开或更新；不提交残缺事件数据，首页保留最近一次成功的全站公开事件榜并显示过期警告，候选池榜继续在 `/daily/` 独立可用。
 - 中文与分类补全任务在北京时间 09:00 检查所有已进入公开榜单的项目，先翻译、后分类。模型失败保留旧缓存或待处理状态，不触发核心榜单故障 Issue；Schema 或站点构建失败时不提交、不部署。
 
 ## 4. 手动模式
@@ -148,7 +149,7 @@ gcloud iam service-accounts keys list \
 
 使用 `deploy_existing`。该模式不调用 GitHub API、不改变数据分支，适用于 Pages 临时故障或部署产物丢失。默认使用数据分支最新提交；恢复演练时可在 `data_ref` 输入该分支历史中的指定 commit SHA，工作流会校验它确实属于 `star-rank-data`。
 
-事件工作流也提供 `deploy_existing`：不进行 Google 身份验证、不访问 BigQuery，只用数据分支当前成功内容恢复站点。
+事件工作流也提供 `deploy_existing`：不进行 Google 身份验证、不访问 BigQuery，只用数据分支当前成功内容恢复站点。首页不会因事件数据超过 36 小时而切换口径，而是保留旧事件榜并显示醒目的过期状态。
 
 中文与分类补全工作流的 `deploy_existing` 同样不访问 GitHub Models，只使用数据分支中已经通过校验的翻译和分类缓存重建网站。
 
@@ -158,7 +159,7 @@ gcloud iam service-accounts keys list \
 
 ### 回补或替换事件日榜
 
-事件工作流使用 `replace_day`，并必须显式填写单个北京时间日期。采集器只接受昨日或最近 7 天内的日期，拒绝未来日期、第八天及更早日期和批量跨月扫描。普通 `collect_publish` 重跑会复用已有日榜；只有 `replace_day` 才会重新查询，并由 Git 历史保留变更记录。
+事件工作流使用 `replace_day`，并必须显式填写单个北京时间日期。采集器只接受昨日或最近 7 天内的日期，拒绝未来日期、第八天及更早日期和批量跨月扫描。普通 `collect_publish` 重跑会复用已有日榜；只有 `replace_day` 才会重新查询，并由 Git 历史保留变更记录。替换后会重算后续可用日榜的排名变化与 7 日趋势。
 
 ## 5. 数据分支恢复
 
@@ -193,6 +194,7 @@ gcloud iam service-accounts keys list \
 - 使用 `deploy_existing` 恢复同一数据提交。
 - 使用相同源代码和数据提交连续构建两次，核心 HTML 与 JSON 哈希一致。
 - 连续 14 个北京时间自然日无人工改数；页面、公开 JSON 和数据分支统计一致。
-- 事件榜连续 7 天在 08:00 前发布；单次实际扫描不超过 24 GiB，服务账号无 JSON 私钥，项目结算仍为禁用。
+- 全站公开事件榜连续 7 天在 08:00 前发布；每天 24/24 小时覆盖、公开 Top 100 完整、页面与 JSON 一致；单次实际扫描不超过 24 GiB，服务账号无 JSON 私钥，项目结算仍为禁用。
+- 使用测试夹具移除一个源小时，确认任务在元数据 API、数据提交和 Pages 部署前失败，线上仍保留上一版。
 
 GitHub 定时任务属于尽力调度，01:00 是服务目标而非平台保证；01:15 watchdog 是漏跑和延迟的兜底发现机制。

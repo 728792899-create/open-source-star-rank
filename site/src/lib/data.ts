@@ -13,7 +13,6 @@ import type {
   RankingIndex,
   RepositoryCatalog,
 } from '../types';
-import { eventRankingIsFresh as compareEventFreshness } from '../scripts/event-freshness-utils.mjs';
 
 const dataRoot = path.resolve(process.cwd(), 'generated', 'data');
 let localizationCatalog: LocalizationCatalog | undefined;
@@ -59,8 +58,8 @@ export function readEventRankingIndex(): EventRankingIndex {
   const file = path.join(dataRoot, 'events', 'index.json');
   if (!existsSync(file)) {
     return {
-      schema_version: '1.0.0', status: 'initializing', timezone: 'Asia/Shanghai', updated_at: null,
-      latest_date: null, available_dates: [], methodology_version: 'gharchive-public-watch-events-v1',
+      schema_version: '1.1.0', status: 'initializing', timezone: 'Asia/Shanghai', updated_at: null,
+      latest_date: null, available_dates: [], methodology_version: 'gharchive-public-watch-events-v2',
       freshness_threshold_hours: 36, latest_source_metrics: null,
     };
   }
@@ -118,8 +117,4 @@ export function readClassificationRepositories(): ClassificationRepositoryCatalo
     schema_version: '1.0.0', taxonomy_version: '1.0.0', generated_at: null, repositories: [],
   };
   return classificationRepositories;
-}
-
-export function eventRankingIsFresh(eventIndex: EventRankingIndex, candidateIndex: RankingIndex): boolean {
-  return compareEventFreshness(eventIndex, candidateIndex);
 }

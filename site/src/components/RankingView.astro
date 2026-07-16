@@ -54,10 +54,10 @@ const defaultHeadline = periodDays
   ? `近 ${periodDays} 日，哪些项目升温最快？`
   : languageName
     ? `${languageName} 项目，昨日谁在升温？`
-    : isEvent ? '昨日，哪些开源项目获得最多新 Star？' : '昨日，哪些开源项目正在升温？';
+    : isEvent ? '昨日，全站公开事件中哪些项目获得最多新 Star？' : '昨日，哪些开源项目正在升温？';
 const gainLabel = isEvent ? '日新增' : periodDays ? `${periodDays} 日净增` : '日净增';
 const heroCopy = isEvent
-  ? '按 GH Archive 公开 WatchEvent 的唯一用户数排序。这是新增 Star 信号，不扣除取消 Star。'
+  ? '扫描 GH Archive 归档的全部 GitHub 公开事件，按为仓库加星的唯一用户数排序；不扣除取消 Star。'
   : '按有效连续快照的 Star 净增排序。缺失日期不补零、不插值，只记录真实发生的关注变化。';
 const languages = [...new Set(ranking.entries.map((entry) => entry.language).filter(Boolean) as string[])].sort((a, b) => a.localeCompare(b));
 const dateIndex = availableDates.indexOf(ranking.date);
@@ -90,13 +90,14 @@ const usedCategories = classificationIndex.categories.filter((term) => usedClass
 const usedProjectTypes = classificationIndex.project_types.filter((term) => usedClassifications.some((item) => item?.project_type === term.id));
 const usedUseCases = classificationIndex.use_cases.filter((term) => usedClassifications.some((item) => item?.use_cases.includes(term.id)));
 const headline = headlineOverride ?? defaultHeadline;
-const sectionEyebrow = sectionEyebrowOverride ?? (isEvent ? 'Public events top 100' : `Observed ${languageName ? 'language top 50' : 'top 100'}`);
-const sectionTitle = sectionTitleOverride ?? (isEvent ? 'Star 新增排行' : `${languageName ? `${languageName} ` : ''}${periodDays ? `${periodDays} 日 ` : ''}Star 净增排行`);
+const sectionEyebrow = sectionEyebrowOverride ?? (isEvent ? 'Global public events top 100' : `Observed ${languageName ? 'language top 50' : 'top 100'}`);
+const sectionTitle = sectionTitleOverride ?? (isEvent ? '全站公开事件新增 Star 排行' : `${languageName ? `${languageName} ` : ''}${periodDays ? `${periodDays} 日 ` : ''}Star 净增排行`);
+const uniqueAdditionCount = eventRanking?.source_metrics.unique_star_addition_count ?? null;
 ---
 
 <main id="main-content" data-ranking data-ranking-mode={mode} data-daily-path={rankingPath} data-ranking-date={ranking.date} class="shell ranking-page">
   <nav class="ranking-mode-switcher" aria-label="榜单口径">
-    <strong>{isEvent ? '公共事件新增榜' : '候选池净增榜'}</strong>
+    <strong>{isEvent ? '全站公开事件新增榜' : '候选池净增榜'}</strong>
     {alternateHref && alternateLabel && <a href={withBase(alternateHref)}>{alternateLabel} →</a>}
   </nav>
   {fallbackNotice && <p class="pipeline-fallback" role="status">{fallbackNotice}</p>}
@@ -116,8 +117,8 @@ const sectionTitle = sectionTitleOverride ?? (isEvent ? 'Star 新增排行' : `$
   <FreshnessStatus updatedAt={index.updated_at} thresholdHours={index.freshness_threshold_hours} compact />
 
   <section class="metrics" aria-label="榜单统计">
-    <div><span>{isEvent ? '事件仓库' : '候选池'}</span><strong>{formatNumber(eventRanking?.source_metrics.observed_repository_count ?? snapshotRanking?.candidate_count ?? 0)}</strong><small>{isEvent ? '个仓库获得公开 Star 事件' : '个公开仓库'}</small></div>
-    <div><span>{isEvent ? '元数据可用' : '可比较'}</span><strong>{formatNumber(ranking.eligible_count)}</strong><small>{isEvent ? '通过公开性与状态校验' : '拥有连续快照'}</small></div>
+    <div><span>{isEvent ? '全站事件仓库' : '候选池'}</span><strong>{formatNumber(eventRanking?.source_metrics.observed_repository_count ?? snapshotRanking?.candidate_count ?? 0)}</strong><small>{isEvent ? '个仓库获得公开 Star 事件' : '个公开仓库'}</small></div>
+    <div><span>{isEvent ? '唯一新增' : '可比较'}</span><strong>{isEvent ? uniqueAdditionCount === null ? '—' : formatNumber(uniqueAdditionCount) : formatNumber(ranking.eligible_count)}</strong><small>{isEvent ? uniqueAdditionCount === null ? '旧版数据未汇总' : '用户—仓库唯一对' : '拥有连续快照'}</small></div>
     <div><span>上榜项目</span><strong>{ranking.entries.length}</strong><small>{isEvent ? '按新增排序' : '按净增排序'}</small></div>
     <div><span>采样窗口</span><strong>{formatTime(ranking.window_start)}</strong><small>至 {formatTime(ranking.window_end)}</small></div>
   </section>
@@ -126,13 +127,16 @@ const sectionTitle = sectionTitleOverride ?? (isEvent ? 'Star 新增排行' : `$
     <summary>查看数据详情：GH Archive、覆盖与费用保护</summary>
     <dl>
       <div><dt>WatchEvent</dt><dd>{formatNumber(eventRanking!.source_metrics.observed_watch_event_count)}</dd></div>
+      <div><dt>唯一新增</dt><dd>{uniqueAdditionCount === null ? '旧版未记录' : formatNumber(uniqueAdditionCount)}</dd></div>
+      <div><dt>24 小时覆盖</dt><dd>{eventRanking!.source_metrics.observed_hour_count === undefined ? '旧版未记录' : `${eventRanking!.source_metrics.observed_hour_count} / ${eventRanking!.source_metrics.expected_hour_count} 小时`}</dd></div>
+      <div><dt>排行完整性</dt><dd>{eventRanking!.source_metrics.ranking_complete ? '已验证 Top 100' : '旧版规则'}</dd></div>
       <div><dt>BigQuery 扫描</dt><dd>{formatBytes(eventRanking!.source_metrics.bytes_processed)}</dd></div>
       <div><dt>扫描硬上限</dt><dd>{formatBytes(eventRanking!.source_metrics.maximum_bytes_billed)}</dd></div>
       <div><dt>源表</dt><dd>{eventRanking!.source_metrics.table_dates.join(' / ')}</dd></div>
       <div><dt>元数据成功</dt><dd>{formatNumber(eventRanking!.source_metrics.metadata_success_count)}</dd></div>
       <div><dt>404 / 过滤</dt><dd>{eventRanking!.source_metrics.metadata_not_found_count} / {eventRanking!.source_metrics.metadata_filtered_count}</dd></div>
       <div><dt>API 请求 / 重试</dt><dd>{eventRanking!.source_metrics.api_request_count} / {eventRanking!.source_metrics.api_retry_count}</dd></div>
-      <div><dt>数据来源</dt><dd>GH Archive</dd></div>
+      <div><dt>数据范围</dt><dd>GH Archive 归档的 GitHub 公开事件</dd></div>
     </dl>
   </details> : <details class="collection-details">
     <summary>查看数据详情：搜索覆盖、API 与快照完整性</summary>
@@ -316,7 +320,7 @@ const sectionTitle = sectionTitleOverride ?? (isEvent ? 'Star 新增排行' : `$
 
   <aside class="method-note" aria-label="榜单口径提示">
     <span aria-hidden="true">i</span>
-    <p><strong>这是一张观测榜。</strong>{isEvent ? 'GH Archive 来自 GitHub 公开事件流，数字表示唯一用户的新增 Star 信号，不是 GitHub 官方全站统计。' : 'GitHub 搜索不支持按每日增量检索全站项目，因此净增榜来自持续追踪的候选池；新项目获得两个快照后才参与排名。'}</p>
+    <p><strong>这是一张观测榜。</strong>{isEvent ? '“全站”限定为 GH Archive 实际归档的 GitHub 公开事件范围；数字表示每个仓库的唯一新增加星用户，不包含私有活动或取消 Star，不是 GitHub 官方统计。' : 'GitHub 搜索不支持按每日增量检索全站项目，因此净增榜来自持续追踪的候选池；新项目获得两个快照后才参与排名。'}</p>
     <a href={withBase('/methodology/')}>完整口径 →</a>
   </aside>
 </main>

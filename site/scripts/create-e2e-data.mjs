@@ -1,4 +1,4 @@
-import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -119,11 +119,17 @@ const eventSourceMetrics = (date) => {
   return {
     provider: 'gh_archive_bigquery',
     dataset: 'githubarchive.day',
+    scope: 'github_public_events_as_archived_by_gh_archive',
+    counting_unit: 'unique_actor_repository_pair',
     table_dates: [isoDate(startUtc), isoDate(endUtc)].map((item) => item.replaceAll('-', '')),
     estimated_bytes: 1_073_741_824,
     bytes_processed: 943_718_400,
     maximum_bytes_billed: 25_769_803_776,
-    observed_watch_event_count: 18_432,
+    expected_hour_count: 24,
+    observed_hour_count: 24,
+    missing_hours: [],
+    unique_star_addition_count: 120_000,
+    observed_watch_event_count: 123_456,
     observed_repository_count: 7_614,
     metadata_attempted_count: 105,
     metadata_success_count: 100,
@@ -131,6 +137,7 @@ const eventSourceMetrics = (date) => {
     metadata_filtered_count: 2,
     api_request_count: 105,
     api_retry_count: 1,
+    ranking_complete: true,
   };
 };
 const eventEntries = (dayOffset) => Array.from({ length: 100 }, (_, offset) => {
@@ -160,13 +167,13 @@ for (const [reverseOffset, date] of [...eventDates].reverse().entries()) {
   const localEnd = new Date(localStart.getTime() + 86_400_000);
   const generatedAt = new Date(localEnd.getTime() + 7.75 * 3_600_000).toISOString();
   const ranking = {
-    schema_version: '1.0.0',
+    schema_version: '1.1.0',
     date,
     timezone: 'Asia/Shanghai',
     window_start: localStart.toISOString(),
     window_end: localEnd.toISOString(),
     generated_at: generatedAt,
-    methodology_version: 'gharchive-public-watch-events-v1',
+    methodology_version: 'gharchive-public-watch-events-v2',
     source_metrics: eventSourceMetrics(date),
     eligible_count: 100,
     entries: eventEntries(reverseOffset),
@@ -227,9 +234,9 @@ const catalog = { schema_version: '1.2.0', updated_at: updatedAt, timezone: 'Asi
 const latestEventDate = eventDates[0];
 const latestEventGeneratedAt = new Date(new Date(`${latestEventDate}T00:00:00+08:00`).getTime() + 31.75 * 3_600_000).toISOString();
 const eventIndex = {
-  schema_version: '1.0.0', status: 'ready', timezone: 'Asia/Shanghai', updated_at: latestEventGeneratedAt,
+  schema_version: '1.1.0', status: 'ready', timezone: 'Asia/Shanghai', updated_at: latestEventGeneratedAt,
   latest_date: latestEventDate, available_dates: eventDates,
-  methodology_version: 'gharchive-public-watch-events-v1', freshness_threshold_hours: 36,
+  methodology_version: 'gharchive-public-watch-events-v2', freshness_threshold_hours: 36,
   latest_source_metrics: eventSourceMetrics(latestEventDate),
 };
 
@@ -334,6 +341,11 @@ await writeFile(path.join(outputRoot, 'i18n', 'zh-CN', 'repositories.json'), `${
 await mkdir(path.join(outputRoot, 'classification'), { recursive: true });
 await writeFile(path.join(outputRoot, 'classification', 'index.json'), `${JSON.stringify(classificationIndex, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'classification', 'repositories.json'), `${JSON.stringify(classificationCatalog, null, 2)}\n`);
-await cp(schemaRoot, path.join(outputRoot, 'schema'), { recursive: true });
+const fixtureSchemaRoot = path.join(outputRoot, 'schema');
+await mkdir(fixtureSchemaRoot, { recursive: true });
+for (const filename of await readdir(schemaRoot)) {
+  if (!filename.endsWith('.schema.json')) continue;
+  await copyFile(path.join(schemaRoot, filename), path.join(fixtureSchemaRoot, filename));
+}
 
 console.log(`Prepared 40 candidate days, 7 public event days, 2,000 repositories, localization and classification fixtures at ${outputRoot}`);

@@ -141,12 +141,19 @@ export interface RepositoryCatalog {
 export interface EventSourceMetrics {
   provider: 'gh_archive_bigquery';
   dataset: 'githubarchive.day';
+  scope?: 'github_public_events_as_archived_by_gh_archive';
+  counting_unit?: 'unique_actor_repository_pair';
   table_dates: string[];
+  expected_hour_count?: 24;
+  observed_hour_count?: number;
+  missing_hours?: string[];
   estimated_bytes: number;
   bytes_processed: number;
   maximum_bytes_billed: number;
+  unique_star_addition_count?: number;
   observed_watch_event_count: number;
   observed_repository_count: number;
+  ranking_complete?: true;
   metadata_attempted_count: number;
   metadata_success_count: number;
   metadata_not_found_count: number;
@@ -156,13 +163,13 @@ export interface EventSourceMetrics {
 }
 
 export interface EventRankingIndex {
-  schema_version: '1.0.0';
+  schema_version: '1.0.0' | '1.1.0';
   status: 'initializing' | 'ready';
   timezone: 'Asia/Shanghai';
   updated_at: string | null;
   latest_date: string | null;
   available_dates: string[];
-  methodology_version: 'gharchive-public-watch-events-v1';
+  methodology_version: 'gharchive-public-watch-events-v1' | 'gharchive-public-watch-events-v2';
   freshness_threshold_hours: 36;
   latest_source_metrics: EventSourceMetrics | null;
 }
@@ -183,13 +190,13 @@ export interface EventRankingEntry {
 }
 
 export interface EventDailyRanking {
-  schema_version: '1.0.0';
+  schema_version: '1.0.0' | '1.1.0';
   date: string;
   timezone: 'Asia/Shanghai';
   window_start: string;
   window_end: string;
   generated_at: string;
-  methodology_version: 'gharchive-public-watch-events-v1';
+  methodology_version: 'gharchive-public-watch-events-v1' | 'gharchive-public-watch-events-v2';
   source_metrics: EventSourceMetrics;
   eligible_count: number;
   entries: EventRankingEntry[];

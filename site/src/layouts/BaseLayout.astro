@@ -11,8 +11,8 @@ interface Props {
 }
 
 const {
-  title = '开源星榜｜GitHub 公共事件新增与候选池净增排行',
-  description = '每日呈现 GitHub 公共 WatchEvent 新增 Star 信号，并保留候选池连续快照净增榜。',
+  title = '开源星榜｜GitHub 全站公开事件新增与候选池净增排行',
+  description = '每日汇总 GH Archive 归档的 GitHub 全站公开 WatchEvent 新增 Star 信号，并保留候选池连续快照净增榜。',
   structuredData,
   socialImagePath = '/og.png',
   robots = 'index,follow',
@@ -91,7 +91,7 @@ const socialImage = new URL(withBase(socialImagePath), Astro.site ?? Astro.url.o
     </header>
     <slot />
     <footer class="site-footer">
-      <p><strong>开源星榜</strong>是公共事件与候选池观测榜，不是 GitHub 官方全站统计。</p>
+      <p><strong>开源星榜</strong>的“全站”限定为 GH Archive 实际归档的 GitHub 公开事件，不是 GitHub 官方统计。</p>
       <p>数据来自 GH Archive 与 GitHub 公共 API · 北京时间每日更新</p>
     </footer>
     <script is:inline>

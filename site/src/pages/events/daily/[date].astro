@@ -18,11 +18,11 @@ const index = readEventRankingIndex();
 const candidateIndex = readRankingIndex();
 const ranking = readEventDailyRanking(date);
 const localization = readLocalizationCatalog();
-const title = `${ranking.date} GitHub 公共事件新增 Star 榜｜开源星榜`;
-const description = `${ranking.date} GitHub 公开 WatchEvent 新增 Star Top ${ranking.entries.length}，观察 ${ranking.source_metrics.observed_repository_count} 个仓库。`;
+const title = `${ranking.date} GitHub 全站公开事件新增 Star 榜｜开源星榜`;
+const description = `${ranking.date} GH Archive 归档的 GitHub 全站公开 WatchEvent 新增 Star Top ${ranking.entries.length}，观察 ${ranking.source_metrics.observed_repository_count} 个获星仓库。`;
 const structuredData = {
   '@context': 'https://schema.org', '@type': 'ItemList',
-  name: `${ranking.date} GitHub 公共事件新增 Star 排行`,
+  name: `${ranking.date} GitHub 全站公开事件新增 Star 排行`,
   numberOfItems: ranking.entries.length,
   itemListElement: ranking.entries.map((entry) => ({
     '@type': 'ListItem', position: entry.rank, url: entry.html_url,

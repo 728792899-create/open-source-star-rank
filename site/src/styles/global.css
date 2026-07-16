@@ -264,6 +264,7 @@ html[data-project-language="original"] [data-content-language="original"] { disp
 .not-found nav { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 30px; }
 
 @media (max-width: 980px) {
+  .ranking-date-chip { display: none; }
   .site-header nav { order: 3; width: 100%; margin-left: 0; gap: 18px; overflow-x: auto; padding-bottom: 4px; white-space: nowrap; }
   .content-language-switcher { margin-left: auto; }
   .collection-details dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -309,6 +310,10 @@ html[data-project-language="original"] [data-content-language="original"] { disp
   .ranking-summary h1 { font-size: clamp(32px, 10.5vw, 44px); }
   .ranking-summary-copy { margin-top: 10px; font-size: 11px; line-height: 1.45; }
   .ranking-summary-copy strong { width: 100%; }
+  [data-ranking-mode="event"] .ranking-summary { padding-block: 15px 13px; }
+  [data-ranking-mode="event"] .ranking-summary .eyebrow { margin-bottom: 7px; font-size: 10px; }
+  [data-ranking-mode="event"] .ranking-summary h1 { font-size: clamp(29px, 8.5vw, 35px); line-height: .98; }
+  [data-ranking-mode="event"] .ranking-summary-copy { margin-top: 7px; font-size: 10.5px; line-height: 1.35; }
   .ranking-date-chip { min-width: 92px; padding: 9px 10px; }
   .ranking-date-chip strong { font-size: 11px; }
   .methodology h1, .initialization h1 { font-size: clamp(42px, 14vw, 64px); }

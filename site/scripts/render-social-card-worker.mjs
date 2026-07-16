@@ -21,9 +21,9 @@ function cardSvg(ranking, label, eventMode = false) {
     <text x="132" y="94" font-family="sans-serif" font-size="29" font-weight="800" fill="#171814">开源星榜</text>
     <text x="1110" y="92" text-anchor="end" font-family="monospace" font-size="20" font-weight="700" fill="#c98b18">${escapeXml(label.toUpperCase())}</text>
     <text x="88" y="178" font-family="sans-serif" font-size="54" font-weight="850" letter-spacing="-2" fill="#171814">${escapeXml(ranking.date)} · ${eventMode ? '新增 STAR' : 'STAR 净增'}</text>
-    <text x="90" y="222" font-family="sans-serif" font-size="20" fill="#68685e">${eventMode ? 'GH ARCHIVE 公开 WATCH EVENT' : '候选池连续快照'} · ${ranking.eligible_count.toLocaleString('zh-CN')} 个可比较仓库 · UTC+8</text>
+    <text x="90" y="222" font-family="sans-serif" font-size="20" fill="#68685e">${eventMode ? 'GH ARCHIVE 全站公开 WATCH EVENT' : '候选池连续快照'} · ${(eventMode ? ranking.source_metrics.observed_repository_count : ranking.eligible_count).toLocaleString('zh-CN')} 个仓库 · UTC+8</text>
     <g font-family="Arial,sans-serif">${rows}</g>
-    <text x="90" y="595" font-family="sans-serif" font-size="18" fill="#68685e">${eventMode ? '公共事件信号 · 唯一用户数 · 非 GITHUB 官方全站统计' : 'GITHUB 公共 API · 有效零点快照 · 不补零 · 不插值'}</text>
+    <text x="90" y="595" font-family="sans-serif" font-size="18" fill="#68685e">${eventMode ? '全站公开事件 · 唯一用户数 · 非 GITHUB 官方统计' : 'GITHUB 公共 API · 有效零点快照 · 不补零 · 不插值'}</text>
   </svg>`;
 }
 

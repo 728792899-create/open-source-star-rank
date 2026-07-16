@@ -261,6 +261,15 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
                 raise SchemaValidationError(f"事件榜观察仓库数小于元数据尝试数：{path}")
             if source["metadata_attempted_count"] != source["metadata_success_count"] + source["metadata_not_found_count"] + source["metadata_filtered_count"]:
                 raise SchemaValidationError(f"事件榜元数据采集计数不守恒：{path}")
+            if payload["schema_version"] == "1.1.0":
+                if source["expected_hour_count"] != 24 or source["observed_hour_count"] != 24 or source["missing_hours"]:
+                    raise SchemaValidationError(f"事件榜 GH Archive 小时覆盖不是 24/24：{path}")
+                if source["unique_star_addition_count"] > source["observed_watch_event_count"]:
+                    raise SchemaValidationError(f"事件榜唯一新增数超过 WatchEvent 总数：{path}")
+                if source["unique_star_addition_count"] < sum(item["stars_added"] for item in payload["entries"]):
+                    raise SchemaValidationError(f"事件榜全站唯一新增数小于 Top 100 之和：{path}")
+                if not source["ranking_complete"] or source["metadata_success_count"] != 100:
+                    raise SchemaValidationError(f"事件榜未证明完整 Top 100：{path}")
             entries = payload["entries"]
             if len(entries) != 100:
                 raise SchemaValidationError(f"事件榜必须完整发布 Top 100：{path}")
@@ -268,12 +277,18 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
                 raise SchemaValidationError(f"事件榜包含重复仓库 ID：{path}")
             if any(item["watch_events"] < item["stars_added"] for item in entries):
                 raise SchemaValidationError(f"事件榜 WatchEvent 数不得小于唯一用户数：{path}")
-            expected = sorted(
-                entries,
-                key=lambda item: (
-                    -item["stars_added"], -item["watch_events"], -item["stars_total"], item["full_name"].casefold()
-                ),
-            )
+            if payload["schema_version"] == "1.1.0":
+                expected = sorted(
+                    entries,
+                    key=lambda item: (-item["stars_added"], -item["watch_events"], item["repository_id"]),
+                )
+            else:
+                expected = sorted(
+                    entries,
+                    key=lambda item: (
+                        -item["stars_added"], -item["watch_events"], -item["stars_total"], item["full_name"].casefold()
+                    ),
+                )
             if entries != expected or [item["rank"] for item in entries] != list(range(1, len(entries) + 1)):
                 raise SchemaValidationError(f"事件榜排序或名次不一致：{path}")
             event_dates.add(path.stem)
@@ -292,6 +307,8 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
             latest_event = event_payloads[latest_event_date]
             if event_index["updated_at"] != latest_event["generated_at"] or event_index["latest_source_metrics"] != latest_event["source_metrics"]:
                 raise SchemaValidationError("事件榜索引与最新日榜不一致")
+            if event_index["schema_version"] != latest_event["schema_version"] or event_index["methodology_version"] != latest_event["methodology_version"]:
+                raise SchemaValidationError("事件榜索引版本与最新日榜不一致")
 
     localization_path = public_dir / "i18n" / "zh-CN" / "repositories.json"
     if localization_path.exists():
