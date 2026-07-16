@@ -1,17 +1,53 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-07-16T05:25:33.987831Z",
+  "generated_at": "2026-07-16T10:11:42.866351Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
-    "eligible_count": 164,
-    "localized_count": 164,
+    "eligible_count": 167,
+    "localized_count": 167,
     "pending_count": 0,
     "failed_count": 0,
     "coverage_ratio": 1.0
   },
   "repositories": [
+    {
+      "repository_id": 3482588,
+      "source_full_name": "danielmiessler/SecLists",
+      "source_hash": "b16b0eba3dcd0c1e63a5983bbaaebb709e9a81a8c00d3e2460edf9c201e65ace",
+      "display_name_zh": "SecLists｜安全测试列表集合（含 URLs）",
+      "description_zh": "SecLists 是安全测试人员的辅助工具，收集了多种用于安全评估的列表，包括用户名、密码、URLs、敏感数据模式、模糊测试载荷、Web Shell 等。",
+      "generated_at": "2026-07-16T10:11:42.866351Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 4542716,
+      "source_full_name": "NixOS/nixpkgs",
+      "source_hash": "fbf26fd33a175ba613099e42a2022309eda65ed3de48fd9b8884ae989fd8116c",
+      "display_name_zh": "nixpkgs｜NixOS 软件包集合",
+      "description_zh": "nixpkgs 是 NixOS 的软件包集合。",
+      "generated_at": "2026-07-16T10:11:42.866351Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 9524997,
+      "source_full_name": "glfw/glfw",
+      "source_hash": "de559733fb14b32e6e9c4907531e136978a9031911ddae7126a21e537a140a51",
+      "display_name_zh": "glfw｜跨平台图形与输入库（支持 ES）",
+      "description_zh": "glfw 是一个跨平台库，支持 OpenGL、OpenGL ES、Vulkan 以及窗口和输入管理。",
+      "generated_at": "2026-07-16T10:11:42.866351Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 11986447,
+      "source_full_name": "xournalpp/xournalpp",
+      "source_hash": "c601cb8d5ed1db4cbfb2aca4a4354ab48f9653003fa516b5161b5bccf12f96ca",
+      "display_name_zh": "xournalpp｜手写笔记与 PDF 注释软件（基于 GTK3，支持 SUSE）",
+      "description_zh": "xournalpp 是一款支持 PDF 注释的手写笔记软件，基于 C++ 和 GTK3，支持 Linux（如 Ubuntu、Debian、Arch、SUSE）、macOS 和 Windows 10，支持 Wacom 等手写设备。",
+      "generated_at": "2026-07-16T10:11:42.866351Z",
+      "provenance": "github_models"
+    },
     {
       "repository_id": 14712850,
       "source_full_name": "syncthing/syncthing",
@@ -55,6 +91,24 @@
       "display_name_zh": "awesome｜精选主题列表",
       "description_zh": "涵盖各种有趣主题的精选列表。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 21872392,
+      "source_full_name": "josephmisiti/awesome-machine-learning",
+      "source_hash": "ab67bb4221a8595f522c5f01655e667979266e0ee4115494c2023d6bdae51a8f",
+      "display_name_zh": "awesome-machine-learning｜精选机器学习资源列表",
+      "description_zh": "awesome-machine-learning 是一个精选的机器学习框架、库和软件列表。",
+      "generated_at": "2026-07-16T10:11:42.866351Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 29745084,
+      "source_full_name": "Leantime/leantime",
+      "source_hash": "80c7981c5b2ef59d0bbbcac9d99f4f372296790c5385ea426ebbd21fa8befa87",
+      "display_name_zh": "leantime｜面向 ADHD 用户的项目管理系统",
+      "description_zh": "leantime 是一款面向非项目经理的目标导向项目管理系统，设计时考虑了 ADHD、自闭症和阅读障碍用户的需求。",
+      "generated_at": "2026-07-16T10:11:42.866351Z",
       "provenance": "github_models"
     },
     {
@@ -103,6 +157,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 60462847,
+      "source_full_name": "OasisDEX/oasis",
+      "source_hash": "f0a279d9120608db661c81f901c599793b9ff0b1645de559aa57f09176f46eba",
+      "display_name_zh": "oasis｜去中心化代币市场",
+      "description_zh": "oasis 是一个去中心化的代币交易市场。",
+      "generated_at": "2026-07-16T10:11:42.866351Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 62607227,
       "source_full_name": "yangshun/tech-interview-handbook",
       "source_hash": "9b21ea80561f982b1a6f7051332fe8d98d66e168c19cd629a042e0d3df9c5dca",
@@ -127,6 +190,15 @@
       "display_name_zh": "project-based-learning｜项目驱动学习教程",
       "description_zh": "精选的基于项目的编程教程列表。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 94061307,
+      "source_full_name": "vadimdemedes/ink",
+      "source_hash": "1f8c11a678278c11bd5eec44d34740f5fb5ba51796d09ff264e21ab814cb8792",
+      "display_name_zh": "ink｜交互式命令行 React 库",
+      "description_zh": "ink 是用于构建交互式命令行应用的 React 库。",
+      "generated_at": "2026-07-16T10:11:42.866351Z",
       "provenance": "github_models"
     },
     {
@@ -166,12 +238,21 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 214587193,
-      "source_full_name": "supabase/supabase",
-      "source_hash": "59cf150409cf8f48c395a49909f3cc1e7533722612dbab0d1aeac6ac7f9407a8",
-      "display_name_zh": "supabase｜Postgres开发平台支持AI",
-      "description_zh": "基于Postgres的开发平台，支持Web、移动和AI应用。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
+      "repository_id": 190823163,
+      "source_full_name": "Datalux/Osintgram",
+      "source_hash": "2bfec1cfe2f0ed13a7bb2b15022a03244edb059ecd624d8499c7843da603e8fe",
+      "display_name_zh": "Osintgram｜Instagram OSINT 分析工具",
+      "description_zh": "Osintgram 是一款针对 Instagram 的 OSINT 工具，提供交互式命令行界面，可通过用户昵称分析 Instagram 账户。",
+      "generated_at": "2026-07-16T10:11:42.866351Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 191332397,
+      "source_full_name": "SpacehuhnTech/WiFiDuck",
+      "source_hash": "293500036b6acd7694e58bc9de5e3dbcfd7fdaa056264c1b5add8578f47d9d81",
+      "display_name_zh": "WiFiDuck｜无线按键注入攻击平台",
+      "description_zh": "WiFiDuck 是一个无线按键注入攻击平台。",
+      "generated_at": "2026-07-16T10:11:42.866351Z",
       "provenance": "github_models"
     },
     {
@@ -229,33 +310,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 537603333,
-      "source_full_name": "openai/whisper",
-      "source_hash": "1ddba95df1dd108a98abfa2ec291bd897b6994d7bc2a8f35ffb93063a0730694",
-      "display_name_zh": "whisper｜鲁棒语音识别",
-      "description_zh": "whisper 是一个基于大规模弱监督的鲁棒语音识别系统。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 585146387,
-      "source_full_name": "shadcn-ui/ui",
-      "source_hash": "59a358fbadf0ae2af5451d474a018499e91ab3da466289bce27c8d9733a57302",
-      "display_name_zh": "ui｜无障碍组件库与代码分发平台",
-      "description_zh": "ui 提供一套设计精美、无障碍的组件和代码分发平台，支持多种主流框架，开源且开放代码。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 589831718,
-      "source_full_name": "Comfy-Org/ComfyUI",
-      "source_hash": "10edd7deeaa5b4f366a34979d35ff5d2a69e2d5e3c3fb8fd0aded56e41d28091",
-      "display_name_zh": "ComfyUI｜扩散模型图形用户界面（GUI）",
-      "description_zh": "ComfyUI 是一个功能强大且模块化的扩散模型图形用户界面（GUI）、API 和后端，采用图形/节点界面。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 596377730,
       "source_full_name": "openobserve/openobserve",
       "source_hash": "60db8c87da217515b8529d1d7d86d9cdf33ca766ad9a62c734d405287950cf27",
@@ -279,15 +333,6 @@
       "source_hash": "e13f5cb01bb80f8ab04da17a582fcc1a629afe9d3d80e63ed48e384f4b747b44",
       "display_name_zh": "system-design-101｜系统设计入门教程",
       "description_zh": "system-design-101 通过图示和简明语言解释复杂系统，帮助用户准备系统设计面试。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 721767116,
-      "source_full_name": "clash-verge-rev/clash-verge-rev",
-      "source_hash": "521bf412320028b596b83d1ed121ec02dc6c439d08df6043e2b06a18e0856f74",
-      "display_name_zh": "clash-verge-rev｜跨平台代理 GUI 客户端",
-      "description_zh": "clash-verge-rev 是基于 Tauri 的现代图形用户界面（GUI）客户端，支持 Windows、macOS 和 Linux，提供定制化代理体验。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
     },
@@ -468,15 +513,6 @@
       "source_hash": "ca1082037b6989b4f9cefd155b2252efac2e9f4992862f54a6e81fbcf2202c43",
       "display_name_zh": "system_prompts_leaks｜系统提示提取合集",
       "description_zh": "提取自Anthropic的Claude Fable 5、Opus 4.8、Claude Code、Claude Design，OpenAI的ChatGPT GPT-5.6、Codex GPT-5.6、GPT-5.5，Google的Gemini 3.5 Flash、3.1 Pro、Antigravity，xAI的Grok、Cursor、Copilot、VS Code、Perplexity等系统提示，定期更新。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 979115477,
-      "source_full_name": "bytedance/deer-flow",
-      "source_hash": "c166669dae5b458e3d8e7b4722572b207496e6318a38577021f236c014d80b3a",
-      "display_name_zh": "deer-flow｜开源长时任务超级智能代理",
-      "description_zh": "deer-flow 是一个开源的长时任务超级智能代理，支持沙箱、记忆、工具和子代理协作完成复杂任务。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
     },
@@ -882,15 +918,6 @@
       "source_hash": "5ad24cbfffbf7b8081e4319742b1594b625b80c5a5b676b198cdd71b8ebc3785",
       "display_name_zh": "codebase-memory-mcp｜高性能代码智能MCP服务器（含MCP、158、99%）",
       "description_zh": "高性能代码智能MCP服务器，将代码库索引为持久知识图谱，支持158种语言，查询延迟亚毫秒，令牌使用减少99%，单一静态二进制文件，无依赖。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1170821064,
-      "source_full_name": "paperclipai/paperclip",
-      "source_hash": "78e4d2f330673a22b77b68f5bba2ace615dffd29a30a4277ca76f989414963e3",
-      "display_name_zh": "paperclip｜开源代理管理应用",
-      "description_zh": "开源应用，用于管理工作中的代理。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
     },

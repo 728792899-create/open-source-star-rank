@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://728792899-create.github.io/open-source-star-rank/data/schema/event-daily.schema.json",
-  "title": "Open Source Star Rank public WatchEvent daily ranking",
+  "title": "Open Source Star Rank global public WatchEvent daily ranking",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -9,15 +9,15 @@
     "methodology_version", "source_metrics", "eligible_count", "entries"
   ],
   "properties": {
-    "schema_version": { "const": "1.0.0" },
+    "schema_version": { "enum": ["1.0.0", "1.1.0"] },
     "date": { "$ref": "#/$defs/date" },
     "timezone": { "const": "Asia/Shanghai" },
     "window_start": { "type": "string", "format": "date-time" },
     "window_end": { "type": "string", "format": "date-time" },
     "generated_at": { "type": "string", "format": "date-time" },
-    "methodology_version": { "const": "gharchive-public-watch-events-v1" },
+    "methodology_version": { "enum": ["gharchive-public-watch-events-v1", "gharchive-public-watch-events-v2"] },
     "source_metrics": { "$ref": "#/$defs/source_metrics" },
-    "eligible_count": { "type": "integer", "minimum": 100, "maximum": 500 },
+    "eligible_count": { "type": "integer", "minimum": 100, "maximum": 900 },
     "entries": {
       "type": "array",
       "minItems": 100,
@@ -25,6 +25,19 @@
       "items": { "$ref": "#/$defs/entry" }
     }
   },
+  "allOf": [
+    {
+      "if": { "properties": { "schema_version": { "const": "1.0.0" } }, "required": ["schema_version"] },
+      "then": { "properties": { "methodology_version": { "const": "gharchive-public-watch-events-v1" } } },
+      "else": {
+        "properties": {
+          "methodology_version": { "const": "gharchive-public-watch-events-v2" },
+          "source_metrics": { "$ref": "#/$defs/source_metrics_v2" },
+          "eligible_count": { "const": 100 }
+        }
+      }
+    }
+  ],
   "$defs": {
     "date": { "type": "string", "format": "date", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
     "source_metrics": {
@@ -39,22 +52,43 @@
       "properties": {
         "provider": { "const": "gh_archive_bigquery" },
         "dataset": { "const": "githubarchive.day" },
+        "scope": { "const": "github_public_events_as_archived_by_gh_archive" },
+        "counting_unit": { "const": "unique_actor_repository_pair" },
         "table_dates": {
           "type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true,
           "items": { "type": "string", "pattern": "^\\d{8}$" }
         },
+        "expected_hour_count": { "const": 24 },
+        "observed_hour_count": { "type": "integer", "minimum": 0, "maximum": 24 },
+        "missing_hours": {
+          "type": "array", "maxItems": 24, "uniqueItems": true,
+          "items": { "type": "string", "format": "date-time" }
+        },
         "estimated_bytes": { "type": "integer", "minimum": 0, "maximum": 25769803776 },
         "bytes_processed": { "type": "integer", "minimum": 0, "maximum": 25769803776 },
         "maximum_bytes_billed": { "type": "integer", "minimum": 1, "maximum": 25769803776 },
+        "unique_star_addition_count": { "type": "integer", "minimum": 1 },
         "observed_watch_event_count": { "type": "integer", "minimum": 0 },
         "observed_repository_count": { "type": "integer", "minimum": 0 },
-        "metadata_attempted_count": { "type": "integer", "minimum": 0, "maximum": 500 },
-        "metadata_success_count": { "type": "integer", "minimum": 0, "maximum": 500 },
-        "metadata_not_found_count": { "type": "integer", "minimum": 0, "maximum": 500 },
-        "metadata_filtered_count": { "type": "integer", "minimum": 0, "maximum": 500 },
+        "ranking_complete": { "const": true },
+        "metadata_attempted_count": { "type": "integer", "minimum": 0, "maximum": 900 },
+        "metadata_success_count": { "type": "integer", "minimum": 0, "maximum": 900 },
+        "metadata_not_found_count": { "type": "integer", "minimum": 0, "maximum": 900 },
+        "metadata_filtered_count": { "type": "integer", "minimum": 0, "maximum": 900 },
         "api_request_count": { "type": "integer", "minimum": 0 },
         "api_retry_count": { "type": "integer", "minimum": 0 }
       }
+    },
+    "source_metrics_v2": {
+      "allOf": [
+        { "$ref": "#/$defs/source_metrics" },
+        {
+          "required": [
+            "scope", "counting_unit", "expected_hour_count", "observed_hour_count",
+            "missing_hours", "unique_star_addition_count", "ranking_complete"
+          ]
+        }
+      ]
     },
     "entry": {
       "type": "object",

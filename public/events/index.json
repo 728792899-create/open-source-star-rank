@@ -1,32 +1,39 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "status": "ready",
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-07-16T00:15:38Z",
+  "updated_at": "2026-07-16T10:11:14Z",
   "latest_date": "2026-07-15",
   "available_dates": [
     "2026-07-15",
     "2026-07-14"
   ],
-  "methodology_version": "gharchive-public-watch-events-v1",
+  "methodology_version": "gharchive-public-watch-events-v2",
   "freshness_threshold_hours": 36,
   "latest_source_metrics": {
     "provider": "gh_archive_bigquery",
     "dataset": "githubarchive.day",
+    "scope": "github_public_events_as_archived_by_gh_archive",
+    "counting_unit": "unique_actor_repository_pair",
     "table_dates": [
       "20260714",
       "20260715"
     ],
+    "expected_hour_count": 24,
+    "observed_hour_count": 24,
+    "missing_hours": [],
     "estimated_bytes": 581281378,
-    "bytes_processed": 581281378,
+    "bytes_processed": 0,
     "maximum_bytes_billed": 25769803776,
+    "unique_star_addition_count": 2800,
     "observed_watch_event_count": 2803,
     "observed_repository_count": 2303,
-    "metadata_attempted_count": 500,
-    "metadata_success_count": 472,
-    "metadata_not_found_count": 15,
-    "metadata_filtered_count": 13,
-    "api_request_count": 500,
+    "ranking_complete": true,
+    "metadata_attempted_count": 105,
+    "metadata_success_count": 100,
+    "metadata_not_found_count": 5,
+    "metadata_filtered_count": 0,
+    "api_request_count": 105,
     "api_retry_count": 0
   }
 }
