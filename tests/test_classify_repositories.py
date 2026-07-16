@@ -255,6 +255,50 @@ class ClassifyRepositoriesTests(unittest.TestCase):
                 with self.assertRaises(ClassificationModelUnavailable):
                     client.classify([source(1)])
 
+    def test_model_schema_uses_only_supported_array_keywords(self) -> None:
+        captured = {}
+
+        class Response:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args):
+                return False
+
+            def read(self):
+                return json.dumps({
+                    "choices": [{"message": {"content": json.dumps({
+                        "repositories": [{
+                            "repository_id": 1,
+                            "primary_category": "developer-tools",
+                            "project_type": "cli-developer-tool",
+                            "use_cases": ["ai-coding"],
+                        }]
+                    })}}]
+                }).encode()
+
+        def opener(request, **_kwargs):
+            captured.update(json.loads(request.data.decode()))
+            return Response()
+
+        client = GitHubModelsClassificationClient("token", self.taxonomy, opener=opener)
+        client.classify([source(1)])
+        schema = captured["response_format"]["json_schema"]["schema"]
+        use_cases = schema["properties"]["repositories"]["items"]["properties"]["use_cases"]
+        self.assertEqual(set(use_cases), {"type", "items"})
+
+    def test_http_error_includes_safe_service_detail(self) -> None:
+        body = io.BytesIO(json.dumps({"error": {"message": "Unsupported schema keyword: uniqueItems"}}).encode())
+
+        def opener(*_args, **_kwargs):
+            raise urllib.error.HTTPError("https://models.github.ai", 400, "bad request", {}, body)
+
+        client = GitHubModelsClassificationClient(
+            "token", self.taxonomy, opener=opener, sleeper=lambda _seconds: None
+        )
+        with self.assertRaisesRegex(ClassificationModelUnavailable, "Unsupported schema keyword"):
+            client.classify([source(1)])
+
 
 if __name__ == "__main__":
     unittest.main()

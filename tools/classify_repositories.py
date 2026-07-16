@@ -309,9 +309,6 @@ class GitHubModelsClassificationClient:
                                         "project_type": {"type": "string", "enum": taxonomy_ids(self.taxonomy, "project_types")},
                                         "use_cases": {
                                             "type": "array",
-                                            "minItems": 1,
-                                            "maxItems": 4,
-                                            "uniqueItems": True,
                                             "items": {"type": "string", "enum": taxonomy_ids(self.taxonomy, "use_cases")},
                                         },
                                     },
@@ -348,10 +345,19 @@ class GitHubModelsClassificationClient:
                 return entries
             except urllib.error.HTTPError as exc:
                 last_error = exc
+                try:
+                    error_body = exc.read().decode("utf-8", errors="replace")
+                    error_payload = json.loads(error_body)
+                    error_detail = str(error_payload.get("error", {}).get("message") or error_payload.get("message") or "")
+                except (AttributeError, json.JSONDecodeError):
+                    error_detail = ""
+                finally:
+                    exc.close()
+                detail = f"：{error_detail[:300]}" if error_detail else ""
                 if exc.code in (401, 403, 429):
-                    raise ClassificationModelUnavailable(f"GitHub Models HTTP {exc.code}") from exc
+                    raise ClassificationModelUnavailable(f"GitHub Models HTTP {exc.code}{detail}") from exc
                 if exc.code < 500 or attempt == 1:
-                    raise ClassificationModelUnavailable(f"GitHub Models HTTP {exc.code}") from exc
+                    raise ClassificationModelUnavailable(f"GitHub Models HTTP {exc.code}{detail}") from exc
             except (
                 urllib.error.URLError,
                 TimeoutError,
