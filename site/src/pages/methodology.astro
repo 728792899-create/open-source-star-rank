@@ -4,19 +4,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout
   title="数据口径｜开源星榜"
-  description="了解公共事件新增 Star 与候选池快照净增 Star 的差异、GH Archive 覆盖边界和费用保护。"
+  description="了解 GitHub 全站公开事件新增 Star 与候选池快照净增 Star 的差异、GH Archive 覆盖边界和费用保护。"
 >
   <main id="main-content" class="methodology shell">
     <p class="eyebrow">Methodology · dual ranking</p>
     <h1>新增与净增，<br /><em>分开说清。</em></h1>
-    <p class="methodology-lead">开源星榜同时发布“公共事件新增榜”与“候选池净增榜”。两者回答不同问题，都不是 GitHub 官方全站统计；首页优先展示及时的公共事件榜，数据缺失或相对快照落后超过 36 小时时自动回退。</p>
+    <p class="methodology-lead">开源星榜同时发布“GitHub 全站公开事件新增榜”与“候选池净增榜”。“全站”限定为 GH Archive 实际归档的 GitHub 公开事件范围，不代表 GitHub 内部或官方统计。首页始终保持这一新增口径；超过 36 小时未更新时保留最近成功榜并显示警告，不切换成候选池榜。</p>
 
     <section>
       <span class="section-number">01</span>
       <div>
-        <h2>公共事件新增榜如何计算</h2>
+        <h2>全站公开事件新增榜如何计算</h2>
         <div class="formula"><span>当日新增</span><strong>=</strong><span>北京时间当日对该仓库产生 WatchEvent 的唯一用户数</span></div>
-        <p>每个用户对同一仓库每天最多计一次，重复事件按事件 ID 去重。统计窗口严格为北京时间 00:00 至次日 00:00，排序依次比较唯一用户新增数、WatchEvent 数、当前总 Star 与仓库全名。</p>
+        <p>每个用户对同一仓库每天最多计一次，重复事件按事件 ID 去重。统计窗口严格为北京时间 00:00 至次日 00:00。先聚合当天全部获星仓库，再按唯一用户数降序、WatchEvent 数降序、仓库 ID 升序全局排序；总 Star 和仓库名仅用于展示。</p>
         <p>它是“新增”信号，不扣除用户同日或之后取消 Star 的数量，因此不等于 Star 总数的净变化。</p>
       </div>
     </section>
@@ -37,8 +37,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <span class="section-number">03</span>
       <div>
         <h2>GH Archive 覆盖边界与延迟</h2>
-        <p>GH Archive 是第三方的 GitHub 公共事件归档。事件榜只覆盖它实际捕获并可在公共 BigQuery 数据集中查询的 WatchEvent，不覆盖私有活动，也不保证等同 GitHub 内部的完整记录。</p>
-        <p>GitHub 公共事件 API 可能延迟，GH Archive 也按小时更新；因此任务在北京时间 07:30 汇总前一自然日，为上游留出缓冲。公开榜依然应被视为发现信号，而不是 GitHub 官方全站证明。</p>
+        <p>GH Archive 是第三方的 GitHub 公开事件归档。事件榜扫描目标时间窗口内它实际归档的全部公开事件，但不覆盖私有活动，也不保证等同 GitHub 内部的完整记录。</p>
+        <p>每次发布前会生成 24 个预期 UTC 小时并校验每小时都有源事件；任何小时缺失都会使整次任务失败。任务在北京时间 07:30 汇总前一自然日，为按小时更新的上游留出缓冲。</p>
         <div class="inline-links">
           <a class="text-link" href="https://www.gharchive.org/" target="_blank" rel="noreferrer">了解 GH Archive →</a>
           <a class="text-link" href="https://docs.github.com/en/rest/activity/events" target="_blank" rel="noreferrer">查看 GitHub Events 延迟说明 →</a>
@@ -70,9 +70,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <span class="section-number">06</span>
       <div>
         <h2>失败时如何保护数据</h2>
-        <p>两条流水线独立校验与发布。BigQuery 身份、dry-run、扫描额度、GitHub 元数据、Top 100 数量或 JSON Schema 任一校验失败时，事件任务不会提交残缺文件、不会覆盖 Pages；候选池榜仍可用。快照采集失败也只保留上一份成功榜单。</p>
+        <p>两条流水线独立校验与发布。BigQuery 身份、dry-run、24 小时覆盖、扫描额度、GitHub 元数据、完整 Top 100 或 JSON Schema 任一校验失败时，事件任务不会提交残缺文件、不会覆盖 Pages；首页保留上一份全站公开事件榜并显示过期警告。</p>
         <p>事件榜先按 repository ID 汇总，再从 GitHub 补充当前名称与状态；重命名不会拆成两个项目。404、转私有、Fork、归档、禁用项目会被过滤；限流或连续网络失败则整个任务失败。</p>
-        <p>公开 Top 100 永久保留，用于 7 日趋势计算的 Top 500 构建状态保留 30 日。该状态不属于站点公开 JSON 接口，但位于公开仓库的数据分支，仍可被读取。某仓库未进入当日 Top 500 时，趋势写为空值，不解释为 0。</p>
+        <p>公开 Top 100 永久保留；当日全部获星仓库的精简聚合状态保留 30 日，用于计算真实 7 日趋势。该状态不形成公开 JSON 接口；某仓库当日没有可用公开加星事件时，趋势保留为空值，不解释为 0。</p>
       </div>
     </section>
 

@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Initialization from '../components/Initialization.astro';
+import EventInitialization from '../components/EventInitialization.astro';
 import RankingView from '../components/RankingView.astro';
 import {
   readLocalizationCatalog,
@@ -8,40 +8,36 @@ import {
 import { localizedRepositoryContent } from '../lib/localization';
 import { readDefaultRanking } from '../lib/default-ranking';
 
-const { candidateIndex, eventIndex, ranking, isEvent, fallbackNotice } = readDefaultRanking();
+const { candidateIndex, eventIndex, ranking } = readDefaultRanking();
 const localization = readLocalizationCatalog();
 const structuredData = ranking ? {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: `${ranking.date} GitHub 开源项目 Star ${isEvent ? '新增' : '净增'}排行`,
+  name: `${ranking.date} GitHub 全站公开事件新增 Star 排行`,
   numberOfItems: ranking.entries.length,
   itemListElement: ranking.entries.map((entry) => ({
     '@type': 'ListItem', position: entry.rank, url: entry.html_url,
     name: localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description).displayName,
   })),
 } : undefined;
-const socialImagePath = isEvent && ranking ? `/social/events-daily-${ranking.date}.png`
-  : ranking ? `/social/daily-${ranking.date}.png` : '/og.png';
+const socialImagePath = ranking ? `/social/events-daily-${ranking.date}.png` : '/og.png';
 ---
 
 <BaseLayout
-  title={isEvent ? '开源星榜｜GitHub 公共事件新增 Star 排行' : undefined}
-  description={isEvent ? '按 GH Archive 公开 WatchEvent 统计每日获得 Star 的唯一用户数。' : undefined}
+  title="开源星榜｜GitHub 全站公开事件新增 Star 排行"
+  description="按 GH Archive 归档的 GitHub 全站公开 WatchEvent，统计北京时间每日为仓库加星的唯一用户数。"
   structuredData={structuredData}
   socialImagePath={socialImagePath}
 >
   {ranking ? <RankingView
     ranking={ranking}
-    index={isEvent ? eventIndex : candidateIndex}
+    index={eventIndex}
     isLatest
-    mode={isEvent ? 'event' : 'daily'}
-    availableDates={isEvent ? eventIndex.available_dates : candidateIndex.available_dates}
-    routePrefix={isEvent ? '/events/daily' : '/daily'}
-    dataPrefix={isEvent ? '/data/events/daily' : '/data/daily'}
-    alternateHref={isEvent
-      ? candidateIndex.latest_date ? `/daily/${candidateIndex.latest_date}/` : undefined
-      : eventIndex.latest_date ? `/events/daily/${eventIndex.latest_date}/` : undefined}
-    alternateLabel={isEvent ? '查看候选池净增榜' : '查看公共事件新增榜'}
-    fallbackNotice={fallbackNotice}
-  /> : <Initialization index={candidateIndex} />}
+    mode="event"
+    availableDates={eventIndex.available_dates}
+    routePrefix="/events/daily"
+    dataPrefix="/data/events/daily"
+    alternateHref={candidateIndex.latest_date ? `/daily/${candidateIndex.latest_date}/` : '/daily/'}
+    alternateLabel="查看候选池净增榜"
+  /> : <EventInitialization index={eventIndex} />}
 </BaseLayout>

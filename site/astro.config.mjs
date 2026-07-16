@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -10,15 +10,31 @@ const base = process.env.BASE_PATH ?? '/';
 const siteRoot = path.dirname(fileURLToPath(import.meta.url));
 const dataRoot = path.resolve(process.env.STAR_RANK_DATA_DIR ?? path.join(siteRoot, 'seed-data'));
 const lastModifiedByPath = new Map();
+const rememberLatest = (route, value) => {
+  const next = new Date(value);
+  const previous = lastModifiedByPath.get(route);
+  if (!Number.isNaN(next.getTime()) && (!previous || next > previous)) lastModifiedByPath.set(route, next);
+};
 try {
   const index = JSON.parse(readFileSync(path.join(dataRoot, 'index.json'), 'utf8'));
   if (index.updated_at) {
-    lastModifiedByPath.set('/', new Date(index.updated_at));
-    lastModifiedByPath.set('/status/', new Date(index.updated_at));
+    rememberLatest('/status/', index.updated_at);
   }
   for (const date of index.available_dates ?? []) {
     const ranking = JSON.parse(readFileSync(path.join(dataRoot, 'daily', `${date}.json`), 'utf8'));
     lastModifiedByPath.set(`/daily/${date}/`, new Date(ranking.window_end));
+  }
+  const eventIndexPath = path.join(dataRoot, 'events', 'index.json');
+  if (existsSync(eventIndexPath)) {
+    const eventIndex = JSON.parse(readFileSync(eventIndexPath, 'utf8'));
+    if (eventIndex.updated_at) {
+      rememberLatest('/', eventIndex.updated_at);
+      rememberLatest('/status/', eventIndex.updated_at);
+    }
+    for (const date of eventIndex.available_dates ?? []) {
+      const ranking = JSON.parse(readFileSync(path.join(dataRoot, 'events', 'daily', `${date}.json`), 'utf8'));
+      lastModifiedByPath.set(`/events/daily/${date}/`, new Date(ranking.window_end));
+    }
   }
   for (const range of ['7d', '30d']) {
     for (const date of index.periods?.[range]?.available_dates ?? []) {

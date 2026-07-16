@@ -2,7 +2,6 @@ import { readFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { eventRankingIsFresh } from '../src/scripts/event-freshness-utils.mjs';
 
 const siteRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(siteRoot, 'dist');
@@ -57,8 +56,18 @@ if (!['1.1.0', '1.2.0'].includes(dataIndex.schema_version) || dataIndex.freshnes
   throw new Error('Published index does not satisfy a supported public contract');
 }
 const eventIndex = JSON.parse(await readFile(path.join(dist, 'data/events/index.json'), 'utf8'));
-if (eventIndex.schema_version !== '1.0.0' || eventIndex.freshness_threshold_hours !== 36) {
-  throw new Error('Published event index does not satisfy the 1.0.0 public contract');
+if (!['1.0.0', '1.1.0'].includes(eventIndex.schema_version) || eventIndex.freshness_threshold_hours !== 36) {
+  throw new Error('Published event index does not satisfy a supported public contract');
+}
+if (eventIndex.schema_version === '1.1.0' && eventIndex.status === 'ready') {
+  if (eventIndex.methodology_version !== 'gharchive-public-watch-events-v2') {
+    throw new Error('Event index 1.1.0 is missing the v2 methodology');
+  }
+  const metrics = eventIndex.latest_source_metrics;
+  if (metrics?.expected_hour_count !== 24 || metrics?.observed_hour_count !== 24 || metrics?.missing_hours?.length !== 0) {
+    throw new Error('Event index 1.1.0 does not prove complete 24-hour coverage');
+  }
+  if (metrics?.ranking_complete !== true) throw new Error('Event index 1.1.0 is not a complete Top 100');
 }
 const localization = JSON.parse(await readFile(path.join(dist, 'data/i18n/zh-CN/repositories.json'), 'utf8'));
 if (localization.schema_version !== '1.0.0' || localization.locale !== 'zh-CN') {
@@ -126,23 +135,21 @@ if (eventIndex.status === 'ready') {
   ]) {
     if (!existsSync(path.join(dist, relative))) throw new Error(`Ready event build is missing ${relative}`);
   }
+  const eventRanking = JSON.parse(await readFile(path.join(dist, 'data', 'events', 'daily', `${date}.json`), 'utf8'));
+  const sitemap = await readFile(path.join(dist, 'sitemap-0.xml'), 'utf8');
+  if (!sitemap.includes(`<lastmod>${new Date(eventRanking.window_end).toISOString()}</lastmod>`)) {
+    throw new Error('Event sitemap entry is missing the ranking window lastmod');
+  }
 }
 
-const eventIsDefault = eventRankingIsFresh(eventIndex, dataIndex);
+const eventIsDefault = eventIndex.status === 'ready' && Boolean(eventIndex.latest_date);
 if (eventIsDefault) {
-  for (const marker of ['data-ranking-mode="event"', '公共事件新增榜', 'GH Archive']) {
+  for (const marker of ['data-ranking-mode="event"', '全站公开事件新增榜', 'GH Archive']) {
     if (!indexHtml.includes(marker)) throw new Error(`Event-first homepage is missing ${marker}`);
   }
-} else if (dataIndex.status === 'ready') {
-  const fallbackMarker = eventIndex.status === 'ready'
-    ? '公共事件榜已超过 36 小时未更新'
-    : '公共事件榜尚未完成首次采集';
-  if (!indexHtml.includes(fallbackMarker)) {
-    throw new Error(`Candidate fallback homepage is missing ${fallbackMarker}`);
-  }
-} else if (dataIndex.schema_version === '1.2.0') {
-  for (const marker of ['有效基线 0/2', 'data-countdown', '不计入日榜基线']) {
-    if (!indexHtml.includes(marker)) throw new Error(`Initialization page is missing ${marker}`);
+} else {
+  for (const marker of ['全站公开事件', '24 小时覆盖', '候选池净增榜']) {
+    if (!indexHtml.includes(marker)) throw new Error(`Event initialization page is missing ${marker}`);
   }
 }
 

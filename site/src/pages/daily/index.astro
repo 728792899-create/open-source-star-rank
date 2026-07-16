@@ -15,6 +15,6 @@ const ranking = index.latest_date ? readDailyRanking(index.latest_date) : null;
     index={index}
     isLatest
     alternateHref={eventIndex.latest_date ? `/events/daily/${eventIndex.latest_date}/` : undefined}
-    alternateLabel="查看公共事件新增榜"
+    alternateLabel="查看全站公开事件新增榜"
   /> : <Initialization index={index} />}
 </BaseLayout>

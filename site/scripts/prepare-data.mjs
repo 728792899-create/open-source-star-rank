@@ -1,4 +1,4 @@
-import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { copyFile, cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { execFile } from 'node:child_process';
 import path from 'node:path';
@@ -12,6 +12,14 @@ const generated = path.join(siteRoot, 'generated', 'data');
 const publicData = path.join(siteRoot, 'public', 'data');
 const schemaSource = path.join(repositoryRoot, 'schemas', 'star-rank');
 const run = promisify(execFile);
+
+async function copyPublicSchemas(destination) {
+  await mkdir(destination, { recursive: true });
+  for (const filename of await readdir(schemaSource)) {
+    if (!filename.endsWith('.schema.json')) continue;
+    await copyFile(path.join(schemaSource, filename), path.join(destination, filename));
+  }
+}
 
 if (!existsSync(path.join(source, 'index.json'))) {
   throw new Error(`Missing star rank index: ${path.join(source, 'index.json')}`);
@@ -33,19 +41,19 @@ await mkdir(path.dirname(generated), { recursive: true });
 await mkdir(path.dirname(publicData), { recursive: true });
 await cp(source, generated, { recursive: true });
 await cp(source, publicData, { recursive: true });
-await cp(schemaSource, path.join(generated, 'schema'), { recursive: true, force: true });
-await cp(schemaSource, path.join(publicData, 'schema'), { recursive: true, force: true });
+await copyPublicSchemas(path.join(generated, 'schema'));
+await copyPublicSchemas(path.join(publicData, 'schema'));
 
 const eventIndexPath = path.join(generated, 'events', 'index.json');
 if (!existsSync(eventIndexPath)) {
   const eventIndex = {
-    schema_version: '1.0.0',
+    schema_version: '1.1.0',
     status: 'initializing',
     timezone: 'Asia/Shanghai',
     updated_at: null,
     latest_date: null,
     available_dates: [],
-    methodology_version: 'gharchive-public-watch-events-v1',
+    methodology_version: 'gharchive-public-watch-events-v2',
     freshness_threshold_hours: 36,
     latest_source_metrics: null,
   };

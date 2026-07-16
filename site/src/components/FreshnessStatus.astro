@@ -5,9 +5,10 @@ interface Props {
   captureValid?: boolean;
   captureReason?: string;
   compact?: boolean;
+  initializingMessage?: string;
 }
 
-const { updatedAt, thresholdHours, captureValid = true, captureReason = '', compact = false } = Astro.props;
+const { updatedAt, thresholdHours, captureValid = true, captureReason = '', compact = false, initializingMessage = '正在等待首个真实快照。' } = Astro.props;
 const formatted = updatedAt
   ? new Intl.DateTimeFormat('zh-CN', {
       timeZone: 'Asia/Shanghai',
@@ -36,7 +37,7 @@ const formatted = updatedAt
           ? <>数据正常 · 最近采样 <time datetime={updatedAt ?? undefined}>{formatted}</time>（北京时间）</>
           : <>最近采样：<time datetime={updatedAt ?? undefined}>{formatted}</time>（北京时间）</>
         : <>候选池已于 <time datetime={updatedAt ?? undefined}>{formatted}</time> 采样，但不计入日榜基线（{captureReason || '不在零点有效窗口'}）。</>
-    ) : '正在等待首个真实快照。'}
+    ) : initializingMessage}
   </p>
 </aside>
 <noscript><p class="noscript-note">数据新鲜度需要 JavaScript 动态判断，请同时核对页面显示的实际采样时间。</p></noscript>

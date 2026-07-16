@@ -27,6 +27,7 @@ def check_freshness(
     require_today: bool = False,
     require_valid_capture: bool = False,
     require_yesterday_date: bool = False,
+    require_complete_event_coverage: bool = False,
 ) -> dict:
     updated_text = index.get("updated_at")
     if not isinstance(updated_text, str):
@@ -53,12 +54,29 @@ def check_freshness(
         expected = (now.astimezone(TIMEZONE).date() - dt.timedelta(days=1)).isoformat()
         if index.get("latest_date") != expected:
             raise ValueError(f"北京时间昨日事件榜尚未发布，期望 {expected}")
+    if require_complete_event_coverage:
+        if index.get("schema_version") != "1.1.0":
+            raise ValueError("全站公开事件索引尚未升级至 1.1.0")
+        metrics = index.get("latest_source_metrics")
+        if not isinstance(metrics, dict):
+            raise ValueError("全站公开事件索引缺少来源指标")
+        if (
+            metrics.get("scope") != "github_public_events_as_archived_by_gh_archive"
+            or metrics.get("counting_unit") != "unique_actor_repository_pair"
+            or metrics.get("expected_hour_count") != 24
+            or metrics.get("observed_hour_count") != 24
+            or metrics.get("missing_hours") != []
+        ):
+            raise ValueError("全站公开事件小时覆盖或统计口径不完整")
+        if metrics.get("ranking_complete") is not True or metrics.get("metadata_success_count") != 100:
+            raise ValueError("全站公开事件 Top 100 不完整")
     return {
         "updated_at": updated_text,
         "age_hours": round(max(0.0, age.total_seconds() / 3600), 2),
         "status": index.get("status"),
         "latest_date": index.get("latest_date"),
         "latest_snapshot_valid": (index.get("sampling") or {}).get("latest_snapshot_valid"),
+        "observed_hour_count": (index.get("latest_source_metrics") or {}).get("observed_hour_count"),
     }
 
 
@@ -69,6 +87,7 @@ def main() -> int:
     parser.add_argument("--require-today", action="store_true")
     parser.add_argument("--require-valid-capture", action="store_true")
     parser.add_argument("--require-yesterday-date", action="store_true")
+    parser.add_argument("--require-complete-event-coverage", action="store_true")
     args = parser.parse_args()
     now = parse_time(args.now) if args.now else dt.datetime.now(dt.timezone.utc)
     try:
@@ -79,6 +98,7 @@ def main() -> int:
             require_today=args.require_today,
             require_valid_capture=args.require_valid_capture,
             require_yesterday_date=args.require_yesterday_date,
+            require_complete_event_coverage=args.require_complete_event_coverage,
         )
     except (OSError, json.JSONDecodeError, TypeError, ValueError) as exc:
         parser.error(str(exc))

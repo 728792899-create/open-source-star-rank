@@ -126,9 +126,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          args=(--data-dir "$STAR_RANK_DATA_DIR" --maximum-bytes-billed 25769803776 --raw-limit 500 --top-limit 100)
+          args=(--data-dir "$STAR_RANK_DATA_DIR" --maximum-bytes-billed 25769803776 --top-limit 100 --metadata-attempt-limit 900)
           if [[ -n "$RANKING_DATE" ]]; then args+=(--date "$RANKING_DATE"); fi
-          if [[ "$RUN_MODE" == "validate" ]]; then args+=(--dry-run); fi
+          if [[ "$RUN_MODE" == "validate" ]]; then args+=(--validate-only); fi
           if [[ "$RUN_MODE" == "replace_day" ]]; then
             if [[ -z "$RANKING_DATE" ]]; then echo "date is required for replace_day" >&2; exit 2; fi
             args+=(--replace-day)

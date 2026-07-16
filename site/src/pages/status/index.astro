@@ -1,11 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FreshnessStatus from '../../components/FreshnessStatus.astro';
-import { eventRankingIsFresh, readClassificationIndex, readEventRankingIndex, readLocalizationCatalog, readRankingIndex } from '../../lib/data';
+import { readClassificationIndex, readEventRankingIndex, readLocalizationCatalog, readRankingIndex } from '../../lib/data';
 
 const index = readRankingIndex();
 const eventIndex = readEventRankingIndex();
-const eventFresh = eventRankingIsFresh(eventIndex, index);
+const eventAvailable = eventIndex.status === 'ready' && Boolean(eventIndex.latest_date);
 const sampling = index.sampling;
 const collection = index.latest_collection;
 const eventMetrics = eventIndex.latest_source_metrics;
@@ -25,17 +25,17 @@ const structuredData = {
 };
 ---
 
-<BaseLayout title="采样与发布状态｜开源星榜" description="查看公共事件榜与候选池净增榜的更新状态、BigQuery 费用保护与数据完整性。" structuredData={structuredData}>
+<BaseLayout title="采样与发布状态｜开源星榜" description="查看全站公开事件新增榜与候选池净增榜的更新状态、BigQuery 费用保护与数据完整性。" structuredData={structuredData}>
   <main id="main-content" class="shell status-page">
-    <FreshnessStatus updatedAt={index.updated_at} thresholdHours={index.freshness_threshold_hours} captureValid={sampling?.latest_snapshot_valid ?? true} />
+    <FreshnessStatus updatedAt={eventIndex.updated_at} thresholdHours={eventIndex.freshness_threshold_hours} />
     <p class="eyebrow">System status · public evidence</p>
     <h1>两张榜，<br />两条独立可核对的流水线。</h1>
-    <p class="status-lead">公共事件榜每日汇总 GH Archive WatchEvent；候选池榜用北京时间连续快照计算净增。事件数据缺失或相对候选池更新落后超过 36 小时时，首页自动回退到净增榜。</p>
+    <p class="status-lead">全站公开事件榜每日汇总 GH Archive 归档的全部公开 WatchEvent；候选池榜用北京时间连续快照计算净增。首页始终保持全站公开事件口径，超过 36 小时未更新时保留旧榜并显示过期警告。</p>
 
     <section class="status-grid" aria-labelledby="pipelines-title">
       <div class="section-heading"><div><p class="eyebrow">Pipeline health</p><h2 id="pipelines-title">双流水线状态</h2></div></div>
       <dl>
-        <div><dt>公共事件榜</dt><dd class:list={{ warning: !eventFresh }}>{eventFresh ? '可用，首页默认展示' : '不可用，首页已回退'}</dd></div>
+        <div><dt>全站公开事件榜</dt><dd class:list={{ warning: !eventAvailable }}>{eventAvailable ? '可用，首页固定展示' : '初始化中，首页不使用候选池替代'}</dd></div>
         <div><dt>事件榜最新日期</dt><dd>{eventIndex.latest_date ?? '尚无'}</dd></div>
         <div><dt>事件榜生成时间</dt><dd>{formatDateTime(eventIndex.updated_at)}</dd></div>
         <div><dt>候选池净增榜</dt><dd class:list={{ warning: sampling && !sampling.latest_snapshot_valid }}>{sampling?.latest_snapshot_valid === false ? '最新快照不合格，保留旧榜' : index.latest_date ? '最新成功榜可用' : '正在积累基线'}</dd></div>
@@ -43,17 +43,20 @@ const structuredData = {
     </section>
 
     <section class="status-grid" aria-labelledby="events-title">
-      <div class="section-heading"><div><p class="eyebrow">Public event coverage</p><h2 id="events-title">公共事件与费用保护</h2></div></div>
+      <div class="section-heading"><div><p class="eyebrow">Public event coverage</p><h2 id="events-title">全站公开事件与费用保护</h2></div></div>
       {eventMetrics ? <dl>
+        <div><dt>24 小时覆盖</dt><dd class:list={{ warning: eventMetrics.observed_hour_count !== undefined && eventMetrics.observed_hour_count !== 24 }}>{eventMetrics.observed_hour_count === undefined ? '旧版未记录' : `${eventMetrics.observed_hour_count} / ${eventMetrics.expected_hour_count} 小时`}</dd></div>
+        <div><dt>全站唯一新增</dt><dd>{eventMetrics.unique_star_addition_count?.toLocaleString('zh-CN') ?? '旧版未记录'}</dd></div>
         <div><dt>WatchEvent</dt><dd>{eventMetrics.observed_watch_event_count.toLocaleString('zh-CN')}</dd></div>
-        <div><dt>观察到的仓库</dt><dd>{eventMetrics.observed_repository_count.toLocaleString('zh-CN')}</dd></div>
+        <div><dt>全站获星仓库</dt><dd>{eventMetrics.observed_repository_count.toLocaleString('zh-CN')}</dd></div>
+        <div><dt>Top 100 完整性</dt><dd>{eventMetrics.ranking_complete ? '已验证' : '旧版规则'}</dd></div>
         <div><dt>BigQuery 实际扫描</dt><dd>{(eventMetrics.bytes_processed / 1024 ** 3).toFixed(2)} GiB</dd></div>
         <div><dt>单次硬上限</dt><dd>{(eventMetrics.maximum_bytes_billed / 1024 ** 3).toFixed(2)} GiB</dd></div>
         <div><dt>元数据尝试 / 成功</dt><dd>{eventMetrics.metadata_attempted_count} / {eventMetrics.metadata_success_count}</dd></div>
         <div><dt>404 / 过滤</dt><dd>{eventMetrics.metadata_not_found_count} / {eventMetrics.metadata_filtered_count}</dd></div>
         <div><dt>GitHub API 请求 / 重试</dt><dd>{eventMetrics.api_request_count} / {eventMetrics.api_retry_count}</dd></div>
         <div><dt>GH Archive 表</dt><dd>{eventMetrics.table_dates.join(' / ')}</dd></div>
-      </dl> : <p class="empty-copy">尚未完成首次公共事件采集；候选池净增榜继续可用。</p>}
+      </dl> : <p class="empty-copy">尚未完成首次全站公开事件采集；首页会保持初始化状态，候选池净增榜可从独立入口访问。</p>}
     </section>
 
     <section class="status-grid" aria-labelledby="sampling-title">

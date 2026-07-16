@@ -30,6 +30,8 @@ const files = [
   'data/repositories.json',
   'category/index.html',
   'category/ai-machine-learning/index.html',
+  'status/index.html',
+  'methodology/index.html',
   'data/classification/index.json',
   'data/classification/repositories.json',
   'social/daily-2026-07-14.png',
@@ -37,6 +39,7 @@ const files = [
   'rss.xml',
   'atom.xml',
   'feed.json',
+  'sitemap-0.xml',
 ];
 
 function run(command, args) {

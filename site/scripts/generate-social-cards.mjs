@@ -46,7 +46,7 @@ for (const file of await jsonFiles(path.join(dataRoot, 'daily'))) {
 }
 for (const file of await jsonFiles(path.join(dataRoot, 'events', 'daily'))) {
   const ranking = JSON.parse(await readFile(file, 'utf8'));
-  jobs.push({ ranking: withLocalizedNames(ranking), label: '公共事件新增 Top 100', name: `events-daily-${ranking.date}.png`, eventMode: true });
+  jobs.push({ ranking: withLocalizedNames(ranking), label: '全站公开事件新增 Top 100', name: `events-daily-${ranking.date}.png`, eventMode: true });
 }
 for (const file of await jsonFiles(path.join(dataRoot, 'period'))) {
   const ranking = JSON.parse(await readFile(file, 'utf8'));
