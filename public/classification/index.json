@@ -1,0 +1,229 @@
+{
+  "schema_version": "1.0.0",
+  "taxonomy_version": "1.0.0",
+  "locale": "zh-CN",
+  "generated_at": "2026-07-16T06:39:01.320363Z",
+  "model": "openai/gpt-4.1-mini",
+  "prompt_version": "repository-classification-v1",
+  "coverage": {
+    "eligible_count": 164,
+    "classified_count": 0,
+    "pending_count": 164,
+    "failed_count": 164,
+    "coverage_ratio": 0.0
+  },
+  "categories": [
+    {
+      "id": "ai-machine-learning",
+      "label": "AI 与机器学习"
+    },
+    {
+      "id": "developer-tools",
+      "label": "开发者工具"
+    },
+    {
+      "id": "web-app-development",
+      "label": "Web 与应用开发"
+    },
+    {
+      "id": "data-infrastructure",
+      "label": "数据与基础设施"
+    },
+    {
+      "id": "devops-observability",
+      "label": "DevOps 与可观测性"
+    },
+    {
+      "id": "security-privacy",
+      "label": "安全与隐私"
+    },
+    {
+      "id": "systems-network-hardware",
+      "label": "系统、网络与硬件"
+    },
+    {
+      "id": "creative-media",
+      "label": "设计、内容与媒体"
+    },
+    {
+      "id": "productivity-collaboration",
+      "label": "效率与协作"
+    },
+    {
+      "id": "education-resources",
+      "label": "教育与资源"
+    },
+    {
+      "id": "science-research",
+      "label": "科学与研究"
+    },
+    {
+      "id": "industry-solutions",
+      "label": "行业应用"
+    },
+    {
+      "id": "other",
+      "label": "其他"
+    }
+  ],
+  "project_types": [
+    {
+      "id": "application",
+      "label": "应用"
+    },
+    {
+      "id": "cli-developer-tool",
+      "label": "CLI/开发工具"
+    },
+    {
+      "id": "library-framework",
+      "label": "库/框架"
+    },
+    {
+      "id": "platform-service",
+      "label": "平台/服务"
+    },
+    {
+      "id": "model-dataset",
+      "label": "模型/数据集"
+    },
+    {
+      "id": "plugin-extension",
+      "label": "插件/扩展"
+    },
+    {
+      "id": "tutorial-resource",
+      "label": "教程/资源集合"
+    },
+    {
+      "id": "other",
+      "label": "其他"
+    }
+  ],
+  "use_cases": [
+    {
+      "id": "ai-coding",
+      "label": "AI 编程"
+    },
+    {
+      "id": "agents-automation",
+      "label": "智能体与自动化"
+    },
+    {
+      "id": "rag-knowledge",
+      "label": "RAG 与知识库"
+    },
+    {
+      "id": "model-training-inference",
+      "label": "模型训练与推理"
+    },
+    {
+      "id": "data-analysis-visualization",
+      "label": "数据分析与可视化"
+    },
+    {
+      "id": "database-storage",
+      "label": "数据库与存储"
+    },
+    {
+      "id": "api-backend",
+      "label": "API 与后端"
+    },
+    {
+      "id": "web-frontend",
+      "label": "Web 与前端"
+    },
+    {
+      "id": "mobile-cross-platform",
+      "label": "移动与跨平台"
+    },
+    {
+      "id": "devops-deployment",
+      "label": "DevOps 与部署"
+    },
+    {
+      "id": "observability",
+      "label": "可观测性"
+    },
+    {
+      "id": "search-scraping",
+      "label": "搜索与抓取"
+    },
+    {
+      "id": "security-defense",
+      "label": "安全防护"
+    },
+    {
+      "id": "privacy-local",
+      "label": "隐私与本地运行"
+    },
+    {
+      "id": "system-admin-optimization",
+      "label": "系统管理与优化"
+    },
+    {
+      "id": "network-tools",
+      "label": "网络工具"
+    },
+    {
+      "id": "documents-office",
+      "label": "文档与办公"
+    },
+    {
+      "id": "content-generation",
+      "label": "内容生成"
+    },
+    {
+      "id": "image-video-audio",
+      "label": "图像/视频/音频"
+    },
+    {
+      "id": "design-ui-ux",
+      "label": "设计与 UI/UX"
+    },
+    {
+      "id": "personal-productivity",
+      "label": "个人效率"
+    },
+    {
+      "id": "team-collaboration",
+      "label": "团队协作"
+    },
+    {
+      "id": "self-hosting",
+      "label": "自托管"
+    },
+    {
+      "id": "learning-tutorial",
+      "label": "学习与教程"
+    },
+    {
+      "id": "scientific-research",
+      "label": "科学研究"
+    },
+    {
+      "id": "finance-trading",
+      "label": "金融与交易"
+    },
+    {
+      "id": "health-fitness",
+      "label": "健康与健身"
+    },
+    {
+      "id": "games-emulation",
+      "label": "游戏与模拟"
+    },
+    {
+      "id": "dataset-benchmark",
+      "label": "数据集与评测"
+    },
+    {
+      "id": "resource-discovery",
+      "label": "资源发现"
+    },
+    {
+      "id": "general-tools",
+      "label": "通用工具"
+    }
+  ]
+}
