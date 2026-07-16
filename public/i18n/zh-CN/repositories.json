@@ -1,15 +1,52 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-07-16T00:17:38.699224Z",
+  "generated_at": "2026-07-16T03:53:42.102481Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 164,
-    "localized_count": 0,
-    "pending_count": 164,
-    "failed_count": 164,
-    "coverage_ratio": 0.0
+    "localized_count": 4,
+    "pending_count": 160,
+    "failed_count": 160,
+    "coverage_ratio": 0.02439
   },
-  "repositories": []
+  "repositories": [
+    {
+      "repository_id": 1298890549,
+      "source_full_name": "littledivy/mimic",
+      "source_hash": "078edd5ddc832c5f2fa5b138bf60141013d9acefd83c031267e61e07e6c528d3",
+      "display_name_zh": "mimic｜应用拦截与调用库",
+      "description_zh": "拦截任意应用，并通过 Python 以库的形式调用。",
+      "generated_at": "2026-07-16T03:53:42.102481Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1298998324,
+      "source_full_name": "oil-oil/beautify-github-readme",
+      "source_hash": "d2cf9105bf021f17be168276581d7861b58af31409f451ab9d408a756f2b7b78",
+      "display_name_zh": "beautify-github-readme｜GitHub README 美化工具",
+      "description_zh": "设计清晰、主题化的 GitHub README 首页，支持 SVG 标题、真实示例和可维护的 Markdown。",
+      "generated_at": "2026-07-16T03:53:42.102481Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1299518666,
+      "source_full_name": "Retro-Diffusion/pixel-art-fixer",
+      "source_hash": "53756c1a3252334576c7b7e94bfe60eb8fc91fed363ded4966639278c7c83051",
+      "display_name_zh": "pixel-art-fixer｜像素艺术图像转换器",
+      "description_zh": "将图像转换为像素艺术风格。",
+      "generated_at": "2026-07-16T03:53:42.102481Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1300024503,
+      "source_full_name": "QuantumByteOSS/quantumbyte",
+      "source_hash": "01be92eb7cb279c981e44a628f45f94c638adf9497938225172e1eacd389e5cc",
+      "display_name_zh": "quantumbyte｜开源应用构建引擎",
+      "description_zh": "开源应用构建引擎，旨在实现可用的应用程序。",
+      "generated_at": "2026-07-16T03:53:42.102481Z",
+      "provenance": "github_models"
+    }
+  ]
 }
