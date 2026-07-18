@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-07-18T00:14:53.937273Z",
+  "generated_at": "2026-07-18T03:47:25.856321Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 724,
-    "localized_count": 720,
-    "pending_count": 4,
-    "failed_count": 4,
-    "coverage_ratio": 0.994475
+    "localized_count": 721,
+    "pending_count": 3,
+    "failed_count": 3,
+    "coverage_ratio": 0.995856
   },
   "repositories": [
     {
@@ -4357,6 +4357,15 @@
       "display_name_zh": "Picoware｜ADV 和 ESP32 设备定制固件",
       "description_zh": "Picoware 是针对 PicoCalc、Cardputer ADV、视频游戏模块及其他 ESP32/Raspberry Pi Pico 设备的开源定制固件。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 992755069,
+      "source_full_name": "ccusage/ccusage",
+      "source_hash": "8ea7886da19c945fb807c30a087b7d508633a89e55de147e1426924770f596e4",
+      "display_name_zh": "ccusage｜命令行工具",
+      "description_zh": "npx 命令行工具 ccusage。",
+      "generated_at": "2026-07-18T03:47:25.856321Z",
       "provenance": "github_models"
     },
     {
