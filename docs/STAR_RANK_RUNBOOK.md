@@ -121,6 +121,16 @@ gcloud iam service-accounts keys list \
 
 分类人工修正写入 `data/classification-overrides.zh-CN.json`，每项必须提供 `repository_id`、`primary_category`、`project_type` 和 1–4 个 `use_cases`，且值必须来自 `data/classification-taxonomy.zh-CN.json`。修改词表含义时必须升级 `taxonomy_version`并全量重新分类，不得静默改变旧标签语义。
 
+## 2.6 分类独立榜与全站历史星标榜
+
+分类独立榜（编程语言 / 项目方向 / 产品形态 / 适用场景，路径 `/board/` 与 `/category/`）不需要独立采集：事件任务在发布 Top 100 之后，继续向下补全同一日增量序列，生成最多 1,000 项的扩展分类池 `public/events/category/YYYY-MM-DD.json`（保留最近 14 天）。池为尽力而为：补全不足 1,000 项时按实际数量发布，不会让事件榜失败。站点在构建时把最新分类池与分类缓存组合成各维度的独立前 100，分类内重新排名。
+
+全站历史星标榜（`/all-time/`）由 `Collect and publish all-time star board` 工作流生成：
+
+1. 手动运行 `validate`，确认 GitHub 搜索采集、Schema 与站点构建通过；此模式不提交、不部署。
+2. 运行 `collect_publish`，核对 `public/alltime/top-1000.json` 与 `public/alltime/index.json`，并确认 `/all-time/` 页面条目与 JSON 一致。
+3. 该任务默认每周一北京时间 10:00 运行；数据来自 GitHub Search 按 star 降序的前 1,000 个未 fork、未归档公开仓库（约 10 次 API 请求），采集后会触发中文内容与分类补全，使新入榜项目获得中文与分类标签。
+
 ## 3. 日常运行与告警
 
 - 主任务在北京时间 00:20 调度，目标是在 01:00 前完成。
@@ -131,7 +141,8 @@ gcloud iam service-accounts keys list \
 - 每月检查 Git 对象体积；超过 500 MiB 时创建 `[开源星榜] 数据分支需要压缩`。
 - 事件任务在北京时间 07:30 汇总前一日，目标 08:00 前发布；08:15 watchdog 检查数据分支与站点的事件日期和完整文件哈希。
 - 事件身份、dry-run、24 GiB 上限、24 小时覆盖、正式查询、GitHub 元数据、Schema 或部署任一失败时，同一 `[开源星榜] 公共事件榜故障` Issue 会打开或更新；不提交残缺事件数据，首页保留最近一次成功的全站公开事件榜并显示过期警告，候选池榜继续在 `/daily/` 独立可用。
-- 中文与分类补全任务在北京时间 09:00 检查所有已进入公开榜单的项目，先翻译、后分类。模型失败保留旧缓存或待处理状态，不触发核心榜单故障 Issue；Schema 或站点构建失败时不提交、不部署。
+- 中文与分类补全任务在北京时间 09:00 检查所有已进入公开榜单的项目（含扩展分类池与历史星标榜），先翻译、后分类。模型失败保留旧缓存或待处理状态，不触发核心榜单故障 Issue；Schema 或站点构建失败时不提交、不部署。
+- 全站历史星标榜任务每周一北京时间 10:00 重新采集前 1,000 名；失败时保留上一版榜单，站点显示旧数据与更新时间，不影响每日榜单发布。
 
 ## 4. 手动模式
 

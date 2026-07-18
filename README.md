@@ -13,7 +13,10 @@
 - 全站公开事件数据：https://728792899-create.github.io/open-source-star-rank/data/events/index.json
 - 中文项目内容：https://728792899-create.github.io/open-source-star-rank/data/i18n/zh-CN/repositories.json
 - 项目分类：https://728792899-create.github.io/open-source-star-rank/category/
+- 分类独立榜总览：https://728792899-create.github.io/open-source-star-rank/board/
+- 全部历史星标 Top 1000：https://728792899-create.github.io/open-source-star-rank/all-time/
 - 分类数据：https://728792899-create.github.io/open-source-star-rank/data/classification/index.json
+- 历史星标数据：https://728792899-create.github.io/open-source-star-rank/data/alltime/top-1000.json
 - 数据契约：https://728792899-create.github.io/open-source-star-rank/data/schema/index.schema.json
 - 订阅：[RSS](https://728792899-create.github.io/open-source-star-rank/rss.xml) · [Atom](https://728792899-create.github.io/open-source-star-rank/atom.xml) · [JSON Feed](https://728792899-create.github.io/open-source-star-rank/feed.json)
 
@@ -26,10 +29,11 @@
 - 有效快照必须在北京时间 00:00–03:00 采集，相邻日期连续且间隔为 21–27 小时。
 - 缺失日期不补采、不补零、不插值。
 - 机器数据保存在独立的 `star-rank-data` 分支；公开日榜永久保留，完整候选快照保留最近 90 日。
-- 事件查询先 dry-run，单次最多扫描 24 GiB；全量仓库精简聚合仅在数据分支保留最近 30 天，公开接口只发布 Top 100 与汇总指标。生产要求使用未绑定结算账号的 BigQuery Sandbox 项目。
+- 事件查询先 dry-run，单次最多扫描 24 GiB；全量仓库精简聚合仅在数据分支保留最近 30 天，公开接口发布 Top 100、汇总指标与最多 1,000 项的扩展分类池（保留最近 14 天）。生产要求使用未绑定结算账号的 BigQuery Sandbox 项目。
 - 项目中文功能名与简介由 GitHub Models 生成并按 repository ID 缓存；页面始终保留原始仓库名，模型不可用时回退 GitHub 原文，不阻塞榜单。
 - GitHub Models 只使用 Actions 自带令牌和免费额度，不启用付费额度；人工修订位于 `data/localization-overrides.zh-CN.json`。
-- 项目方向、产品形态和 1–4 个适用场景从版本化固定词表中选择；分类页只是当前默认榜 Top 100 的子集，保留全局排名，不是独立分类榜。
+- 项目方向、产品形态和 1–4 个适用场景从版本化固定词表中选择；每个编程语言、项目方向、产品形态和适用场景都从当日扩展分类池中生成各自独立的前 100 榜（分类内重新排名），同时保留全站总榜可随时切换。
+- 全站历史星标榜通过 GitHub 搜索按累计 Star 降序采集前 1,000 个未 fork、未归档的公开仓库，每周更新一次；它是累计口径的“名人堂”，与每日新增榜相互独立。
 - 分类人工修正位于 `data/classification-overrides.zh-CN.json`；词表位于 `data/classification-taxonomy.zh-CN.json`，调整标签含义必须升级 `taxonomy_version`。
 - 本仓库不包含、依赖或链接任何私有知识库内容；固定种子仅保存公开 GitHub 仓库名。
 

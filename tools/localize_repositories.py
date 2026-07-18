@@ -115,26 +115,38 @@ def discover_ranked_repositories(public_dir: Path) -> dict[int, dict[str, Any]]:
         (public_dir / "period", 0),
         (public_dir / "language", 1),
         (public_dir / "daily", 2),
-        (public_dir / "events" / "daily", 3),
+        (public_dir / "events" / "category", 3),
+        (public_dir / "events" / "daily", 4),
     )
+
+    def register(payload: Mapping[str, Any], *, date: str, priority: int, path: Path) -> None:
+        for item in payload.get("entries", []):
+            repository_id = int(item["repository_id"])
+            source = {
+                "repository_id": repository_id,
+                "full_name": str(item["full_name"]),
+                "description": item.get("description"),
+                "language": item.get("language"),
+            }
+            key = (date, priority, path.as_posix())
+            previous = sources.get(repository_id)
+            if previous is None or key > previous[0]:
+                sources[repository_id] = (key, source)
+
     for root, priority in groups:
         if not root.exists():
             continue
         for path in sorted(root.rglob("????-??-??.json")):
             payload = read_json(path)
-            date = str(payload.get("date", path.stem))
-            for item in payload.get("entries", []):
-                repository_id = int(item["repository_id"])
-                source = {
-                    "repository_id": repository_id,
-                    "full_name": str(item["full_name"]),
-                    "description": item.get("description"),
-                    "language": item.get("language"),
-                }
-                key = (date, priority, path.as_posix())
-                previous = sources.get(repository_id)
-                if previous is None or key > previous[0]:
-                    sources[repository_id] = (key, source)
+            register(payload, date=str(payload.get("date", path.stem)), priority=priority, path=path)
+
+    # The all-time board is undated; give it the lowest preference so any fresh
+    # dated ranking metadata wins, while repositories that only appear here still
+    # become eligible for Chinese content and classification.
+    alltime_path = public_dir / "alltime" / "top-1000.json"
+    if alltime_path.is_file():
+        register(read_json(alltime_path), date="", priority=-1, path=alltime_path)
+
     return {repository_id: source for repository_id, (_, source) in sorted(sources.items())}
 
 

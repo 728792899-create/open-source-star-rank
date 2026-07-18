@@ -2,8 +2,11 @@ import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import type {
   DailyRanking,
+  AllTimeBoard,
+  AllTimeIndex,
   ClassificationIndex,
   ClassificationRepositoryCatalog,
+  EventCategoryPool,
   EventDailyRanking,
   EventRankingIndex,
   LanguageIndex,
@@ -69,6 +72,37 @@ export function readEventRankingIndex(): EventRankingIndex {
 export function readEventDailyRanking(date: string): EventDailyRanking {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error(`Invalid event ranking date: ${date}`);
   return JSON.parse(readFileSync(path.join(dataRoot, 'events', 'daily', `${date}.json`), 'utf8')) as EventDailyRanking;
+}
+
+export function readEventCategoryPool(date: string): EventCategoryPool | null {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error(`Invalid category pool date: ${date}`);
+  const file = path.join(dataRoot, 'events', 'category', `${date}.json`);
+  if (!existsSync(file)) return null;
+  return JSON.parse(readFileSync(file, 'utf8')) as EventCategoryPool;
+}
+
+export function readLatestEventCategoryPool(): EventCategoryPool | null {
+  const latest = readEventRankingIndex().latest_date;
+  if (!latest) return null;
+  return readEventCategoryPool(latest);
+}
+
+export function readAllTimeIndex(): AllTimeIndex {
+  const file = path.join(dataRoot, 'alltime', 'index.json');
+  if (!existsSync(file)) {
+    return {
+      schema_version: '1.0.0', status: 'initializing', updated_at: null,
+      methodology_version: 'github-search-most-starred-v1', entry_count: 0, top_stars: null,
+      freshness_threshold_hours: 192,
+    };
+  }
+  return JSON.parse(readFileSync(file, 'utf8')) as AllTimeIndex;
+}
+
+export function readAllTimeBoard(): AllTimeBoard | null {
+  const file = path.join(dataRoot, 'alltime', 'top-1000.json');
+  if (!existsSync(file)) return null;
+  return JSON.parse(readFileSync(file, 'utf8')) as AllTimeBoard;
 }
 
 export function readLocalizationCatalog(): LocalizationCatalog {

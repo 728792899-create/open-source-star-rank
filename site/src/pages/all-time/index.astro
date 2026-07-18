@@ -1,0 +1,267 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FreshnessStatus from '../../components/FreshnessStatus.astro';
+import { classificationLabels, classificationMap } from '../../lib/classification';
+import {
+  readAllTimeBoard, readAllTimeIndex, readClassificationIndex, readClassificationRepositories, readLocalizationCatalog,
+} from '../../lib/data';
+import { localizedRepositoryContent } from '../../lib/localization';
+import { withBase } from '../../lib/paths';
+
+const board = readAllTimeBoard();
+const index = readAllTimeIndex();
+const localization = readLocalizationCatalog();
+const classificationIndex = readClassificationIndex();
+const classifications = classificationMap(readClassificationRepositories());
+const labels = classificationLabels(classificationIndex);
+const entries = board?.entries ?? [];
+const maxStars = entries.length ? entries[0].stars_total : 1;
+const formatNumber = (value: number) => new Intl.NumberFormat('zh-CN').format(value);
+const formatCompact = (value: number) => new Intl.NumberFormat('zh-CN', { notation: 'compact', maximumFractionDigits: 1 }).format(value);
+const formatDateTime = (value: string | null) => value
+  ? new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(value))
+  : '—';
+const languages = [...new Set(entries.map((entry) => entry.language).filter(Boolean) as string[])].sort((a, b) => a.localeCompare(b));
+const used = entries.map((entry) => classifications.get(entry.repository_id)).filter(Boolean);
+const usedCategories = classificationIndex.categories.filter((term) => used.some((item) => item?.primary_category === term.id));
+const usedProjectTypes = classificationIndex.project_types.filter((term) => used.some((item) => item?.project_type === term.id));
+const usedUseCases = classificationIndex.use_cases.filter((term) => used.some((item) => item?.use_cases.includes(term.id)));
+const shareBar = (stars: number) => {
+  const height = Math.max(8, Math.round((stars / Math.max(1, maxStars)) * 100));
+  return `polygon(0 100%, 0 ${100 - height}%, 100% ${100 - height}%, 100% 100%)`;
+};
+const structuredData = entries.length ? {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'GitHub 全站历史最高星开源项目 Top 1000',
+  numberOfItems: entries.length,
+  itemListElement: entries.slice(0, 100).map((entry) => ({
+    '@type': 'ListItem', position: entry.rank, url: entry.html_url,
+    name: localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description).displayName,
+  })),
+} : undefined;
+---
+
+<BaseLayout
+  title="全部历史星标 Top 1000｜开源星榜"
+  description="按累计 Star 数排列的 GitHub 全站最高星公开仓库 Top 1000，可按语言、方向、形态、场景筛选。"
+  structuredData={structuredData}
+  robots={entries.length ? 'index,follow' : 'noindex,follow'}
+>
+  {entries.length ? <main id="main-content" data-alltime class="shell ranking-page">
+    <nav class="ranking-mode-switcher" aria-label="榜单口径">
+      <strong>全部历史星标榜</strong>
+      <a href={withBase('/')}>返回全部榜单 →</a>
+    </nav>
+    <header class="ranking-summary">
+      <div>
+        <p class="eyebrow">All-time most starred · Top {formatNumber(entries.length)}</p>
+        <h1 id="ranking-title">全部历史星标 Top 1000</h1>
+        <p class="ranking-summary-copy"><strong>哪些开源项目积累了最多 Star？</strong><span>按 GitHub 搜索的累计 Star 数降序排列，是一张跨越时间的“名人堂”，与每日新增榜互补。</span></p>
+      </div>
+      <time class="ranking-date-chip" aria-label="更新时间">
+        <span>ALLTIME</span>
+        <strong>{formatCompact(index.top_stars ?? maxStars)}</strong>
+        <small>MAX ★</small>
+      </time>
+    </header>
+
+    <FreshnessStatus updatedAt={index.updated_at} thresholdHours={index.freshness_threshold_hours} compact />
+
+    <section class="metrics" aria-label="榜单统计">
+      <div><span>收录项目</span><strong>{formatNumber(entries.length)}</strong><small>累计 Star 最高的公开仓库</small></div>
+      <div><span>最高星标</span><strong>{formatCompact(index.top_stars ?? maxStars)}</strong><small>榜首累计 Star</small></div>
+      <div><span>数据来源</span><strong>GitHub</strong><small>Search 按 star 降序</small></div>
+      <div><span>更新时间</span><strong>{formatDateTime(index.updated_at)}</strong><small>北京时间</small></div>
+    </section>
+
+    <section class="ranking-section" aria-labelledby="ranking-title">
+      <div class="ranking-toolbar">
+        <div class="ranking-actions" aria-label="榜单操作">
+          <button type="button" data-copy-ranking>复制榜单链接</button>
+          <a href={withBase('/data/alltime/top-1000.json')} download>下载 JSON</a>
+          <span class="action-status" data-action-status aria-live="polite"></span>
+        </div>
+      </div>
+
+      <div class="filters" role="search">
+        <label class="filter-search">
+          <span>搜索项目</span>
+          <input data-search type="search" placeholder="仓库名或描述" autocomplete="off" />
+        </label>
+        <details class="advanced-filters" data-advanced-filters open>
+          <summary>更多筛选 <span data-advanced-filter-summary>未启用</span></summary>
+          <div class="advanced-filter-grid">
+            <label><span>编程语言</span>
+              <select data-language><option value="">全部语言</option>{languages.map((language) => <option value={language}>{language}</option>)}</select>
+            </label>
+            <label><span>项目方向</span>
+              <select data-category><option value="">全部方向</option>{usedCategories.map((term) => <option value={term.id}>{term.label}</option>)}</select>
+            </label>
+            <label><span>产品形态</span>
+              <select data-project-type><option value="">全部形态</option>{usedProjectTypes.map((term) => <option value={term.id}>{term.label}</option>)}</select>
+            </label>
+            <label><span>适用场景</span>
+              <select data-scenario><option value="">全部场景</option>{usedUseCases.map((term) => <option value={term.id}>{term.label}</option>)}</select>
+            </label>
+          </div>
+        </details>
+        <p class="filter-count" aria-live="polite"><strong data-visible-count>{entries.length}</strong> / {entries.length} 个项目</p>
+      </div>
+
+      <div class="ranking-table" role="table" aria-label="全部历史星标 Top 1000">
+        <div class="table-head" role="row">
+          <span role="columnheader">排名</span>
+          <span role="columnheader">项目</span>
+          <span role="columnheader">语言</span>
+          <span role="columnheader">星标占比</span>
+          <span role="columnheader">总 Star</span>
+        </div>
+        <div class="table-body">
+          {entries.map((entry) => {
+            const content = localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description);
+            const classification = classifications.get(entry.repository_id);
+            const categoryLabel = classification ? labels.categories.get(classification.primary_category) : null;
+            const projectTypeLabel = classification ? labels.projectTypes.get(classification.project_type) : null;
+            const useCaseLabels = classification?.use_cases.map((id) => labels.useCases.get(id)).filter(Boolean) as string[] | undefined;
+            const searchText = `${entry.full_name} ${entry.description ?? ''} ${content.displayName} ${content.description ?? ''} ${categoryLabel ?? ''} ${projectTypeLabel ?? ''} ${useCaseLabels?.join(' ') ?? ''}`;
+            return (
+              <div
+                id={`repo-${entry.repository_id}`}
+                class="ranking-row"
+                role="row"
+                data-ranking-row
+                data-search-text={searchText.toLocaleLowerCase()}
+                data-language={entry.language ?? ''}
+                data-category={classification?.primary_category ?? ''}
+                data-project-type={classification?.project_type ?? ''}
+                data-scenarios={classification?.use_cases.join(',') ?? ''}
+              >
+                <strong class="rank-cell flat" role="cell" aria-label={`历史排名 ${entry.rank}`}>{String(entry.rank).padStart(2, '0')}</strong>
+                <div class="project-cell" role="cell">
+                  <div class="project-copy">
+                    {content.localized ? <>
+                      <a class="project-link" data-content-language="zh" href={entry.html_url} target="_blank" rel="noreferrer">{content.displayName}</a>
+                      <a class="project-link" data-content-language="original" href={entry.html_url} target="_blank" rel="noreferrer">{entry.full_name}</a>
+                      <span class="project-source-row" data-content-language="zh">
+                        <span class="project-source-name">{entry.full_name}</span>
+                        <span class="translation-badge" title={content.provenance === 'manual' ? '人工校订中文内容' : 'GitHub Models 生成的中文内容'}>{content.provenance === 'manual' ? '人工校订' : 'AI 译'}</span>
+                      </span>
+                      <p>
+                        <span data-content-language="zh">{content.description || 'GitHub 未提供项目描述。'}</span>
+                        <span data-content-language="original">{entry.description || 'No description provided.'}</span>
+                      </p>
+                    </> : <>
+                      <a class="project-link" href={entry.html_url} target="_blank" rel="noreferrer">{entry.full_name}</a>
+                      <span class="project-source-row"><span class="translation-pending">中文待生成</span></span>
+                      <p>{entry.description || 'No description provided.'}</p>
+                    </>}
+                    {classification ? <div class="classification-tags" aria-label="项目分类">
+                      <a href={withBase(`/category/${classification.primary_category}/`)}>{categoryLabel}</a>
+                      <span>{projectTypeLabel}</span>
+                      {useCaseLabels?.slice(0, 2).map((label) => <span>{label}</span>)}
+                    </div> : <span class="classification-pending">分类待生成</span>}
+                  </div>
+                </div>
+                <div class="language-cell" role="cell">{entry.language || 'Other'}</div>
+                <div class="trend-cell" role="cell" aria-label={`累计 Star 约为榜首的 ${Math.round((entry.stars_total / Math.max(1, maxStars)) * 100)}%`} style={`--trend-shape:${shareBar(entry.stars_total)}`}></div>
+                <div class="stars-cell numeric" role="cell" data-mobile-label="总 Star">{formatCompact(entry.stars_total)}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div class="empty-state" data-empty-state hidden>
+        <strong>没有匹配的项目</strong>
+        <p>试试缩短关键词，或切换到全部语言。</p>
+      </div>
+    </section>
+
+    <aside class="method-note" aria-label="榜单口径提示">
+      <span aria-hidden="true">i</span>
+      <p><strong>这是一张历史累计榜。</strong>数据来自 GitHub 搜索按 star 数降序的前 1000 个公开仓库，反映长期累计的关注度，不是每日新增；与每日新增榜和分类独立榜互补。</p>
+      <a href={withBase('/board/')}>查看分类独立榜 →</a>
+    </aside>
+  </main> : <main id="main-content" class="shell language-page category-page">
+    <p class="eyebrow">All-time most starred</p>
+    <h1>全部历史星标 Top 1000</h1>
+    <p class="empty-copy">历史星标榜尚未生成。采集任务运行后，这里会展示 GitHub 全站累计 Star 最高的前 1000 个公开仓库。</p>
+    <p><a href={withBase('/')}>返回全部榜单 →</a></p>
+  </main>}
+</BaseLayout>
+
+<script>
+  import { matchesEntry } from '../../scripts/filter-utils.mjs';
+
+  const root = document.querySelector('[data-alltime]');
+  if (root instanceof HTMLElement) {
+    const search = root.querySelector('[data-search]');
+    const language = root.querySelector('[data-language]');
+    const category = root.querySelector('[data-category]');
+    const projectType = root.querySelector('[data-project-type]');
+    const scenario = root.querySelector('[data-scenario]');
+    const advancedFilters = root.querySelector('[data-advanced-filters]');
+    const advancedFilterSummary = root.querySelector('[data-advanced-filter-summary]');
+    const visibleCount = root.querySelector('[data-visible-count]');
+    const emptyState = root.querySelector('[data-empty-state]');
+    const actionStatus = root.querySelector('[data-action-status]');
+    const params = new URLSearchParams(window.location.search);
+    const restore = (element: Element | null, value: string) => { if (element instanceof HTMLInputElement || element instanceof HTMLSelectElement) element.value = value; };
+    restore(search, params.get('q') ?? '');
+    restore(language, params.get('language') ?? '');
+    restore(category, params.get('category') ?? '');
+    restore(projectType, params.get('type') ?? '');
+    restore(scenario, params.get('scenario') ?? '');
+    if (advancedFilters instanceof HTMLDetailsElement
+      && [params.get('language'), params.get('category'), params.get('type'), params.get('scenario')].some(Boolean)) {
+      advancedFilters.open = true;
+    }
+
+    const apply = () => {
+      const query = search instanceof HTMLInputElement ? search.value : '';
+      const selectedLanguage = language instanceof HTMLSelectElement ? language.value : '';
+      const selectedCategory = category instanceof HTMLSelectElement ? category.value : '';
+      const selectedProjectType = projectType instanceof HTMLSelectElement ? projectType.value : '';
+      const selectedScenario = scenario instanceof HTMLSelectElement ? scenario.value : '';
+      const activeCount = [selectedLanguage, selectedCategory, selectedProjectType, selectedScenario].filter(Boolean).length;
+      let count = 0;
+      for (const row of root.querySelectorAll('[data-ranking-row]')) {
+        if (!(row instanceof HTMLElement)) continue;
+        const visible = matchesEntry(
+          {
+            searchText: row.dataset.searchText ?? '', language: row.dataset.language ?? '',
+            category: row.dataset.category ?? '', projectType: row.dataset.projectType ?? '',
+            scenarios: (row.dataset.scenarios ?? '').split(',').filter(Boolean),
+          },
+          query, selectedLanguage, selectedCategory, selectedProjectType, selectedScenario,
+        );
+        row.hidden = !visible;
+        if (visible) count += 1;
+      }
+      if (visibleCount) visibleCount.textContent = String(count);
+      if (advancedFilterSummary) advancedFilterSummary.textContent = activeCount > 0 ? `${activeCount} 项已启用` : '未启用';
+      if (emptyState instanceof HTMLElement) emptyState.hidden = count !== 0;
+      const next = new URL(window.location.href);
+      const sync = (key: string, value: string) => value ? next.searchParams.set(key, value) : next.searchParams.delete(key);
+      sync('q', query.trim());
+      sync('language', selectedLanguage);
+      sync('category', selectedCategory);
+      sync('type', selectedProjectType);
+      sync('scenario', selectedScenario);
+      window.history.replaceState({}, '', next);
+    };
+    for (const control of [search, language, category, projectType, scenario]) {
+      control?.addEventListener('input', apply);
+      control?.addEventListener('change', apply);
+    }
+    root.querySelector('[data-copy-ranking]')?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        if (actionStatus) actionStatus.textContent = '榜单链接已复制';
+      } catch {
+        if (actionStatus) actionStatus.textContent = '复制失败，请从地址栏复制';
+      }
+    });
+    apply();
+  }
+</script>

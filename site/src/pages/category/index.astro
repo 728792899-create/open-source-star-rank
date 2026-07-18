@@ -1,23 +1,24 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { classificationMap } from '../../lib/classification';
-import { readClassificationIndex, readClassificationRepositories } from '../../lib/data';
-import { readDefaultRanking } from '../../lib/default-ranking';
+import {
+  readClassificationIndex, readClassificationRepositories, readEventRankingIndex, readLatestEventCategoryPool,
+} from '../../lib/data';
+import { facetCounts } from '../../lib/facet-rankings';
 import { withBase } from '../../lib/paths';
 
 const classificationIndex = readClassificationIndex();
 const classifications = classificationMap(readClassificationRepositories());
-const { ranking, isEvent } = readDefaultRanking();
-const counts = new Map(classificationIndex.categories.map((term) => [term.id, 0]));
-for (const entry of ranking?.entries ?? []) {
-  const classification = classifications.get(entry.repository_id);
-  if (classification) counts.set(classification.primary_category, (counts.get(classification.primary_category) ?? 0) + 1);
-}
+const pool = readLatestEventCategoryPool();
+const eventIndex = readEventRankingIndex();
+const counts = pool
+  ? facetCounts(pool, classifications, 'category', classificationIndex.categories.map((term) => term.id))
+  : new Map<string, number>();
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
-  name: 'GitHub 开源项目方向分类',
-  description: '按项目方向浏览当前开源星榜 Top 100，保留原始全局排名。',
+  name: 'GitHub 开源项目方向分类独立榜',
+  description: '按项目方向浏览各自独立的每日新增 Star 前 100 榜。',
   hasPart: classificationIndex.categories.map((term) => ({
     '@type': 'ItemList',
     name: term.label,
@@ -28,14 +29,15 @@ const structuredData = {
 ---
 
 <BaseLayout
-  title="GitHub 开源项目方向分类｜开源星榜"
-  description="按 AI、开发者工具、Web、数据基础设施等方向浏览当前开源星榜 Top 100，分类筛选不改变全局排名。"
+  title="GitHub 开源项目方向分类独立榜｜开源星榜"
+  description="按 AI、开发者工具、Web、数据基础设施等方向，浏览各自独立的每日新增 Star 前 100 榜。"
   structuredData={structuredData}
 >
   <main id="main-content" class="shell language-page category-page">
-    <p class="eyebrow">Project taxonomy · current top 100</p>
+    <p class="eyebrow">Direction boards · daily gain</p>
     <h1>不只看语言，<br />也看项目解决什么。</h1>
-    <p class="status-lead">这里只组织当前默认榜 Top 100，保留每个项目的原始全局排名，不生成独立分类排行。当前口径：{isEvent ? '全站公开事件新增榜' : '尚无全站事件榜'}。</p>
+    <p class="status-lead">每个方向都有自己独立的「每日新增 Star 前 100」榜，名次在方向内重新排序，不再只是全站榜的子集。{eventIndex.status === 'ready' ? '当前口径：全站公开事件新增榜的扩展候选池。' : '扩展候选池发布后自动生效。'}</p>
+    <p class="status-lead"><a href={withBase('/board/')}>查看全部四个维度的独立榜（语言 · 方向 · 形态 · 场景）→</a> · <a href={withBase('/all-time/')}>全部历史星标 Top 1000 →</a></p>
 
     <section class="language-list" aria-labelledby="category-list-title">
       <div class="section-heading"><div><p class="eyebrow">Fixed taxonomy 1.0</p><h2 id="category-list-title">项目方向</h2></div><strong>{classificationIndex.categories.length}</strong></div>
@@ -43,7 +45,7 @@ const structuredData = {
         {classificationIndex.categories.map((term) => <a href={withBase(`/category/${term.id}/`)}>
           <span>{term.label}</span>
           <strong>{counts.get(term.id) ?? 0} 个项目</strong>
-          <small>{(counts.get(term.id) ?? 0) > 0 ? '查看全局排名 →' : '当前榜暂无项目'}</small>
+          <small>{(counts.get(term.id) ?? 0) > 0 ? '查看独立榜 →' : '暂无入池项目'}</small>
         </a>)}
       </div>
     </section>

@@ -1,0 +1,173 @@
+name: Collect and publish all-time star board
+
+on:
+  schedule:
+    # 10:00 Asia/Shanghai every Monday, after the daily collectors.
+    - cron: "0 2 * * 1"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Validate the collector, collect and publish, or redeploy existing data
+        type: choice
+        options:
+          - validate
+          - collect_publish
+          - deploy_existing
+        default: validate
+
+permissions:
+  contents: read
+
+concurrency:
+  group: open-source-star-rank-data
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    permissions:
+      contents: write
+      models: read
+    outputs:
+      should_deploy: ${{ steps.mode.outputs.should_deploy }}
+    env:
+      PYTHONUNBUFFERED: "1"
+      ASTRO_TELEMETRY_DISABLED: "1"
+      SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+      BASE_PATH: /${{ github.event.repository.name }}
+      PUBLIC_REPOSITORY: ${{ github.repository }}
+    steps:
+      - name: Checkout star rank
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+        with:
+          fetch-depth: 0
+
+      - name: Resolve run mode
+        id: mode
+        env:
+          REQUESTED_MODE: ${{ inputs.mode }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mode="$REQUESTED_MODE"
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then mode="collect_publish"; fi
+          case "$mode" in
+            validate) should_deploy=false ;;
+            collect_publish|deploy_existing) should_deploy=true ;;
+            *) echo "Unsupported mode: $mode" >&2; exit 2 ;;
+          esac
+          echo "run_mode=$mode" >> "$GITHUB_OUTPUT"
+          echo "should_deploy=$should_deploy" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-star-rank.txt
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --requirement requirements-star-rank.txt
+          npm ci --prefix site
+
+      - name: Prepare isolated data branch worktree
+        shell: bash
+        run: |
+          set -euo pipefail
+          data_dir="$RUNNER_TEMP/star-rank-data"
+          git fetch origin refs/heads/star-rank-data:refs/remotes/origin/star-rank-data
+          git worktree add -B star-rank-data "$data_dir" refs/remotes/origin/star-rank-data
+          echo "STAR_RANK_DATA_DIR=$data_dir" >> "$GITHUB_ENV"
+
+      - name: Validate collector
+        run: python -m unittest tests.test_alltime_star_rank -v
+
+      - name: Collect all-time most-starred board
+        if: steps.mode.outputs.run_mode != 'deploy_existing'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python -m tools.alltime_star_rank --data-dir "$STAR_RANK_DATA_DIR"
+
+      - name: Localize newly listed repositories
+        if: steps.mode.outputs.run_mode == 'collect_publish'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LOCALIZATION_MODEL: ${{ vars.LOCALIZATION_MODEL || 'openai/gpt-4.1-mini' }}
+          LOCALIZATION_MAX_PROJECTS: ${{ vars.LOCALIZATION_MAX_PROJECTS || '400' }}
+        run: >-
+          python -m tools.localize_repositories
+          --data-dir "$STAR_RANK_DATA_DIR"
+          --overrides-file data/localization-overrides.zh-CN.json
+
+      - name: Classify newly listed repositories
+        if: steps.mode.outputs.run_mode == 'collect_publish'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CLASSIFICATION_MODEL: ${{ vars.CLASSIFICATION_MODEL || 'openai/gpt-4.1-mini' }}
+          CLASSIFICATION_MAX_PROJECTS: ${{ vars.CLASSIFICATION_MAX_PROJECTS || '400' }}
+        run: >-
+          python -m tools.classify_repositories
+          --data-dir "$STAR_RANK_DATA_DIR"
+          --taxonomy-file data/classification-taxonomy.zh-CN.json
+          --overrides-file data/classification-overrides.zh-CN.json
+
+      - name: Refresh offline coverage for validate runs
+        if: steps.mode.outputs.run_mode == 'validate'
+        run: |
+          python -m tools.localize_repositories --data-dir "$STAR_RANK_DATA_DIR" --overrides-file data/localization-overrides.zh-CN.json --offline
+          python -m tools.classify_repositories --data-dir "$STAR_RANK_DATA_DIR" --taxonomy-file data/classification-taxonomy.zh-CN.json --overrides-file data/classification-overrides.zh-CN.json --offline
+
+      - name: Validate data and build site
+        run: |
+          python tools/validate_star_rank_data.py --data-dir "$STAR_RANK_DATA_DIR" --sync-schemas
+          npm test --prefix site
+          STAR_RANK_DATA_DIR="$STAR_RANK_DATA_DIR/public" npm run check --prefix site
+          STAR_RANK_DATA_DIR="$STAR_RANK_DATA_DIR/public" npm run build --prefix site
+          npm run validate-build --prefix site
+
+      - name: Commit validated all-time data
+        if: steps.mode.outputs.run_mode == 'collect_publish'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git -C "$STAR_RANK_DATA_DIR" config user.name "github-actions[bot]"
+          git -C "$STAR_RANK_DATA_DIR" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C "$STAR_RANK_DATA_DIR" add state/localization state/classification public/alltime public/i18n public/classification public/schema
+          if ! git -C "$STAR_RANK_DATA_DIR" diff --cached --quiet; then
+            git -C "$STAR_RANK_DATA_DIR" commit -m "Update all-time star board"
+            git -C "$STAR_RANK_DATA_DIR" push origin HEAD:star-rank-data
+          fi
+
+      - name: Upload GitHub Pages artifact
+        if: steps.mode.outputs.should_deploy == 'true'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: site/dist
+
+  deploy:
+    if: needs.build.outputs.should_deploy == 'true'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
