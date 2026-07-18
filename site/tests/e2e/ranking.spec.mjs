@@ -223,7 +223,7 @@ test('publishes status, period, language and stable repository history routes', 
   await expect(page.getByRole('row')).toHaveCount(31);
 });
 
-test('publishes static category subsets with original global ranks and empty noindex policy', async ({ page, browser }) => {
+test('publishes independent category boards with renumbered ranks and empty noindex policy', async ({ page, browser }) => {
   await page.goto('category/');
   await expect(page.getByRole('heading', { name: '项目方向' })).toBeVisible();
   await expect(page.locator('.category-cards > a')).toHaveCount(13);
@@ -233,7 +233,11 @@ test('publishes static category subsets with original global ranks and empty noi
   expect(await rows.count()).toBeGreaterThan(0);
   for (const row of await rows.all()) await expect(row).toHaveAttribute('data-category', 'ai-machine-learning');
   const ranks = (await rows.locator('.rank-cell').allTextContents()).map((rank) => Number(rank.trim()));
-  expect(ranks).not.toEqual(ranks.map((_, index) => index + 1));
+  expect(ranks).toEqual(ranks.map((_, index) => index + 1));
+  const gains = (await rows.locator('.stars-cell').allTextContents())
+    .map((text) => Number(text.split('+')[1]?.replaceAll(/[^0-9]/g, '') ?? '0'));
+  expect(gains).toEqual([...gains].sort((left, right) => right - left));
+  await expect(page.getByRole('link', { name: '返回全部榜单 →' })).toBeVisible();
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/category\/ai-machine-learning\/$/);
 
   const noScriptContext = await browser.newContext({ javaScriptEnabled: false });
@@ -245,6 +249,46 @@ test('publishes static category subsets with original global ranks and empty noi
   await page.goto('category/other/');
   await expect(page.locator('[data-ranking-row]')).toHaveCount(0);
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,follow');
+});
+
+test('publishes the unified board hub with per-dimension independent boards', async ({ page }) => {
+  await page.goto('board/');
+  await expect(page.getByRole('heading', { name: /每个分类/ })).toBeVisible();
+  for (const section of ['项目方向', '编程语言', '产品形态', '适用场景']) {
+    await expect(page.getByRole('heading', { name: section, exact: true })).toBeVisible();
+  }
+  await expect(page.getByRole('link', { name: /← 返回全部榜单/ })).toBeVisible();
+  await expect(page.getByRole('link', { name: /全部历史星标 Top 1000/ })).toBeVisible();
+
+  await page.locator('.language-cards a', { hasText: 'TypeScript' }).first().click();
+  await expect(page).toHaveURL(/board\/language\/typescript-[0-9a-f]{8}\/$/);
+  const rows = page.locator('[data-ranking-row]');
+  expect(await rows.count()).toBeGreaterThan(0);
+  for (const row of await rows.all()) await expect(row).toHaveAttribute('data-language', 'TypeScript');
+  const ranks = (await rows.locator('.rank-cell').allTextContents()).map((rank) => Number(rank.trim()));
+  expect(ranks).toEqual(ranks.map((_, index) => index + 1));
+
+  await page.goto('board/scenario/ai-coding/');
+  const scenarioRows = page.locator('[data-ranking-row]');
+  expect(await scenarioRows.count()).toBeGreaterThan(0);
+  const scenarios = await Promise.all((await scenarioRows.all()).map((row) => row.getAttribute('data-scenarios')));
+  for (const value of scenarios) expect((value ?? '').split(',')).toContain('ai-coding');
+});
+
+test('publishes the all-time top 1000 board with cumulative star ordering and filters', async ({ page }) => {
+  await page.goto('all-time/');
+  await expect(page.getByRole('heading', { name: '全部历史星标 Top 1000' })).toBeVisible();
+  const rows = page.locator('[data-ranking-row]');
+  await expect(rows).toHaveCount(200);
+  const ranks = (await rows.locator('.rank-cell').allTextContents()).map((rank) => Number(rank.trim()));
+  expect(ranks).toEqual(ranks.map((_, index) => index + 1));
+  await page.getByLabel('编程语言').selectOption('Python');
+  await expect(page).toHaveURL(/language=Python/);
+  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(50);
+  await page.getByLabel('编程语言').selectOption('');
+  const search = page.getByRole('searchbox', { name: '搜索项目' });
+  await search.fill('project-001');
+  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(1);
 });
 
 test('publishes canonical ranking pages and three feed formats', async ({ page, request }) => {

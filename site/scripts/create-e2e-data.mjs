@@ -79,7 +79,7 @@ function periodRanking(days) {
 }
 
 await rm(outputRoot, { recursive: true, force: true });
-for (const directory of ['daily', 'events/daily', 'language', 'period/7d', 'period/30d']) {
+for (const directory of ['daily', 'events/daily', 'events/category', 'alltime', 'language', 'period/7d', 'period/30d']) {
   await mkdir(path.join(outputRoot, directory), { recursive: true });
 }
 
@@ -181,6 +181,72 @@ for (const [reverseOffset, date] of [...eventDates].reverse().entries()) {
   await writeFile(path.join(outputRoot, 'events', 'daily', `${date}.json`), `${JSON.stringify(ranking, null, 2)}\n`);
 }
 
+// Extended daily-gain pool that seeds the independent facet boards.
+const poolDate = eventDates[0];
+const poolLocalStart = new Date(`${poolDate}T00:00:00+08:00`);
+const poolLocalEnd = new Date(poolLocalStart.getTime() + 86_400_000);
+const poolGeneratedAt = new Date(poolLocalEnd.getTime() + 7.75 * 3_600_000).toISOString();
+const poolEntries = Array.from({ length: 300 }, (_, offset) => {
+  const rank = offset + 1;
+  const repositoryId = 40_001 + offset;
+  const starsAdded = 3_000 - offset * 7;
+  return {
+    repository_id: repositoryId,
+    full_name: `pool-labs/project-${String(rank).padStart(3, '0')}`,
+    description: `Extended pool fixture project ${rank} for independent facet board checks.`,
+    language: languages[offset % languages.length].name,
+    stars_total: 80_000 - offset * 53,
+    stars_added: starsAdded,
+    watch_events: starsAdded + (offset % 4),
+    rank,
+    html_url: `https://github.com/pool-labs/project-${String(rank).padStart(3, '0')}`,
+    owner_avatar_url: null,
+  };
+});
+const categoryPool = {
+  schema_version: '1.0.0',
+  date: poolDate,
+  timezone: 'Asia/Shanghai',
+  window_start: poolLocalStart.toISOString(),
+  window_end: poolLocalEnd.toISOString(),
+  generated_at: poolGeneratedAt,
+  methodology_version: 'gharchive-public-watch-events-v2',
+  pool_size: poolEntries.length,
+  entries: poolEntries,
+};
+
+// All-time most-starred board.
+const alltimeEntries = Array.from({ length: 200 }, (_, offset) => {
+  const rank = offset + 1;
+  const repositoryId = 50_001 + offset;
+  return {
+    repository_id: repositoryId,
+    full_name: `hall-of-fame/project-${String(rank).padStart(3, '0')}`,
+    description: `All-time most-starred fixture project ${rank} for historical board checks.`,
+    language: languages[offset % languages.length].name,
+    stars_total: 2_000_000 - offset * 1_500,
+    rank,
+    html_url: `https://github.com/hall-of-fame/project-${String(rank).padStart(3, '0')}`,
+    owner_avatar_url: null,
+  };
+});
+const alltimeBoard = {
+  schema_version: '1.0.0',
+  generated_at: poolGeneratedAt,
+  methodology_version: 'github-search-most-starred-v1',
+  source_metrics: {
+    provider: 'github_search', sort: 'stars', minimum_stars: 10_000,
+    search_result_count: alltimeEntries.length, api_request_count: 2, api_retry_count: 0,
+  },
+  entry_count: alltimeEntries.length,
+  entries: alltimeEntries,
+};
+const alltimeIndex = {
+  schema_version: '1.0.0', status: 'ready', updated_at: poolGeneratedAt,
+  methodology_version: 'github-search-most-starred-v1', entry_count: alltimeEntries.length,
+  top_stars: alltimeEntries[0].stars_total, freshness_threshold_hours: 192,
+};
+
 const historyDates = Array.from({ length: 30 }, (_, offset) => isoDate(shift(latestDate, offset - 29)));
 const repositories = Array.from({ length: 2_000 }, (_, offset) => {
   const repositoryId = 10_001 + offset;
@@ -246,6 +312,8 @@ for (const language of languages) {
 }
 for (const entry of rankingEntries(39)) localizationSources.set(entry.repository_id, entry);
 for (const entry of eventEntries(6)) localizationSources.set(entry.repository_id, entry);
+for (const entry of poolEntries) localizationSources.set(entry.repository_id, entry);
+for (const entry of alltimeEntries) localizationSources.set(entry.repository_id, entry);
 const localizedRepositories = [...localizationSources.values()]
   .sort((left, right) => left.repository_id - right.repository_id)
   .map((entry) => ({
@@ -334,6 +402,9 @@ const classificationCatalog = {
 
 await writeFile(path.join(outputRoot, 'index.json'), `${JSON.stringify(index, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'events', 'index.json'), `${JSON.stringify(eventIndex, null, 2)}\n`);
+await writeFile(path.join(outputRoot, 'events', 'category', `${latestEventDate}.json`), `${JSON.stringify(categoryPool, null, 2)}\n`);
+await writeFile(path.join(outputRoot, 'alltime', 'top-1000.json'), `${JSON.stringify(alltimeBoard, null, 2)}\n`);
+await writeFile(path.join(outputRoot, 'alltime', 'index.json'), `${JSON.stringify(alltimeIndex, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'language', 'index.json'), `${JSON.stringify(languageIndex, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'repositories.json'), `${JSON.stringify(catalog, null, 2)}\n`);
 await mkdir(path.join(outputRoot, 'i18n', 'zh-CN'), { recursive: true });

@@ -1,0 +1,83 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import RankingView from '../../../components/RankingView.astro';
+import { classificationMap } from '../../../lib/classification';
+import {
+  readClassificationIndex, readClassificationRepositories, readEventRankingIndex,
+  readLatestEventCategoryPool, readLocalizationCatalog,
+} from '../../../lib/data';
+import {
+  BOARD_DIMENSIONS, buildFacetRanking, dimensionValues, facetValueSlug, type FacetDimensionMeta,
+} from '../../../lib/facet-rankings';
+import { localizedRepositoryContent } from '../../../lib/localization';
+import { withBase } from '../../../lib/paths';
+
+export const getStaticPaths = (() => {
+  const classificationIndex = readClassificationIndex();
+  const pool = readLatestEventCategoryPool();
+  const paths: Array<{ params: Record<string, string>; props: Record<string, unknown> }> = [];
+  for (const meta of BOARD_DIMENSIONS) {
+    for (const value of dimensionValues(meta, classificationIndex, pool)) {
+      paths.push({
+        params: { dimension: meta.routeSegment, value: facetValueSlug(meta.dimension, value.id) },
+        props: { meta, rawValue: value.id, label: value.label },
+      });
+    }
+  }
+  return paths;
+}) satisfies GetStaticPaths;
+
+const { meta, rawValue, label } = Astro.props as { meta: FacetDimensionMeta; rawValue: string; label: string };
+const eventIndex = readEventRankingIndex();
+const pool = readLatestEventCategoryPool();
+const classifications = classificationMap(readClassificationRepositories());
+const localization = readLocalizationCatalog();
+const ranking = pool ? buildFacetRanking(pool, classifications, meta.dimension, rawValue) : null;
+const hasProjects = Boolean(ranking?.entries.length);
+const structuredData = hasProjects ? {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: `${label} GitHub 开源项目｜${meta.labelZh}独立榜`,
+  numberOfItems: ranking!.entries.length,
+  itemListElement: ranking!.entries.map((entry) => ({
+    '@type': 'ListItem',
+    position: entry.rank,
+    url: entry.html_url,
+    name: localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description).displayName,
+  })),
+} : undefined;
+---
+
+<BaseLayout
+  title={`${label} 独立榜｜${meta.labelZh}｜开源星榜`}
+  description={`“${label}”（${meta.labelZh}）的独立前 100 榜，按 GH Archive 每日新增 Star 在该维度内重新排名。`}
+  structuredData={structuredData}
+  robots={hasProjects ? 'index,follow' : 'noindex,follow'}
+>
+  {hasProjects ? <RankingView
+    ranking={ranking!}
+    index={eventIndex}
+    isLatest
+    mode="event"
+    variant="facet"
+    showDateTools={false}
+    downloadable={false}
+    headlineOverride={`${label}，昨日哪些项目新增 Star 最多？`}
+    sectionEyebrowOverride={`${meta.eyebrow} · ${label}`}
+    sectionTitleOverride={`${label}·${meta.labelZh}独立榜`}
+    switcherLabelOverride={`${label}·${meta.labelZh}独立榜`}
+    alternateHref="/board/"
+    alternateLabel="返回独立榜总览"
+    rankingPathOverride={`/board/${meta.routeSegment}/${facetValueSlug(meta.dimension, rawValue)}/`}
+  /> : <main id="main-content" class="shell language-page category-page">
+    <nav class="ranking-mode-switcher" aria-label="榜单口径">
+      <strong>{label}·{meta.labelZh}独立榜</strong>
+      <a href={withBase('/board/')}>返回独立榜总览 →</a>
+    </nav>
+    <p class="eyebrow">{meta.eyebrow} · {label}</p>
+    <h1>{label}</h1>
+    <p class="empty-copy">该{meta.labelZh}暂无进入扩展候选池的项目。榜单发布并完成分类后，这里会自动显示“{label}”的独立前 100。</p>
+    <p><a href={withBase('/board/')}>浏览全部独立榜 →</a></p>
+  </main>}
+</BaseLayout>

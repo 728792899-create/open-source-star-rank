@@ -45,7 +45,12 @@ METHODOLOGY_VERSION = "gharchive-public-watch-events-v2"
 DEFAULT_MAXIMUM_BYTES_BILLED = 24 * 1024**3
 DEFAULT_TOP_LIMIT = 100
 DEFAULT_METADATA_ATTEMPT_LIMIT = 900
+DEFAULT_CATEGORY_POOL_LIMIT = 0
+MAX_CATEGORY_POOL_LIMIT = 1000
+DEFAULT_CATEGORY_POOL_ATTEMPT_LIMIT = 3000
+CATEGORY_POOL_SCHEMA_VERSION = "1.0.0"
 EVENT_STATE_RETENTION_DAYS = 30
+EVENT_POOL_RETENTION_DAYS = 14
 FRESHNESS_THRESHOLD_HOURS = 36
 DATASET = "githubarchive.day"
 EVENT_SCOPE = "github_public_events_as_archived_by_gh_archive"
@@ -220,6 +225,111 @@ def enrich_aggregates(
         "api_request_count": int(client.request_count),
         "api_retry_count": int(client.retry_count),
     }
+
+
+def enrich_category_pool(
+    client: GitHubClient,
+    rows: Sequence[Mapping[str, Any]],
+    *,
+    base_enriched: Sequence[Mapping[str, Any]],
+    base_attempted: int,
+    pool_limit: int,
+    attempt_limit: int,
+) -> list[dict[str, Any]]:
+    """Continue metadata enrichment past the strict Top 100 to seed facet boards.
+
+    The extended pool is best-effort: it reuses the already-enriched Top 100 and
+    walks further down the same daily-gain-ordered aggregate until it collects
+    ``pool_limit`` valid public repositories or exhausts a bounded attempt budget.
+    Unlike the Top 100 it never fails the run when it comes up short.
+    """
+
+    enriched: list[dict[str, Any]] = list(base_enriched)
+    attempted = base_attempted
+    for aggregate in rows[base_attempted:]:
+        if len(enriched) >= pool_limit or attempted >= attempt_limit:
+            break
+        attempted += 1
+        try:
+            payload = client.get_repository_by_id(int(aggregate["repository_id"]))
+        except StarRankError as exc:
+            # The Actions token only has 1,000 requests per hour; a rate limit or
+            # transient failure here must shrink the optional pool, never sink
+            # the already-validated daily publication.
+            print(f"警告：分类池元数据补全提前结束（已收集 {len(enriched)} 项）：{exc}", file=sys.stderr)
+            break
+        if payload is None:
+            continue
+        if (
+            payload.get("private")
+            or payload.get("visibility") not in (None, "public")
+            or payload.get("fork")
+            or payload.get("archived")
+            or payload.get("disabled")
+        ):
+            continue
+        enriched.append(_metadata_record(payload, aggregate))
+    return enriched[:pool_limit]
+
+
+def build_category_pool(
+    *,
+    date: dt.date,
+    generated_at: dt.datetime,
+    enriched: Sequence[Mapping[str, Any]],
+) -> dict[str, Any]:
+    start, end = event_window(date)
+    ordered = sorted(
+        enriched,
+        key=lambda item: (
+            -int(item["stars_added"]),
+            -int(item["watch_events"]),
+            -int(item["stars_total"]),
+            str(item["full_name"]).casefold(),
+        ),
+    )
+    entries = [
+        {
+            "repository_id": int(item["repository_id"]),
+            "full_name": str(item["full_name"]),
+            "description": item.get("description"),
+            "language": item.get("language"),
+            "stars_total": int(item["stars_total"]),
+            "stars_added": int(item["stars_added"]),
+            "watch_events": int(item["watch_events"]),
+            "rank": rank,
+            "html_url": str(item["html_url"]),
+            "owner_avatar_url": item.get("owner_avatar_url"),
+        }
+        for rank, item in enumerate(ordered, start=1)
+    ]
+    return {
+        "schema_version": CATEGORY_POOL_SCHEMA_VERSION,
+        "date": date.isoformat(),
+        "timezone": TIMEZONE,
+        "window_start": isoformat(start),
+        "window_end": isoformat(end),
+        "generated_at": isoformat(generated_at),
+        "methodology_version": METHODOLOGY_VERSION,
+        "pool_size": len(entries),
+        "entries": entries,
+    }
+
+
+def prune_event_pools(pool_dir: Path, *, current_date: dt.date) -> list[Path]:
+    cutoff = current_date - dt.timedelta(days=EVENT_POOL_RETENTION_DAYS - 1)
+    removed: list[Path] = []
+    if not pool_dir.exists():
+        return removed
+    for path in pool_dir.glob("????-??-??.json"):
+        try:
+            date = dt.date.fromisoformat(path.stem)
+        except ValueError:
+            continue
+        if date < cutoff:
+            path.unlink()
+            removed.append(path)
+    return sorted(removed)
 
 
 def validate_event_coverage(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
@@ -471,11 +581,17 @@ def run_event_update(
     maximum_bytes_billed: int = DEFAULT_MAXIMUM_BYTES_BILLED,
     top_limit: int = DEFAULT_TOP_LIMIT,
     metadata_attempt_limit: int = DEFAULT_METADATA_ATTEMPT_LIMIT,
+    category_pool_limit: int = DEFAULT_CATEGORY_POOL_LIMIT,
+    category_pool_attempt_limit: int = DEFAULT_CATEGORY_POOL_ATTEMPT_LIMIT,
     dry_run: bool = False,
     validate_only: bool = False,
     replace_day: bool = False,
 ) -> dict[str, Any]:
     validate_requested_date(date, now=generated_at)
+    if category_pool_limit and (category_pool_limit < top_limit or category_pool_limit > MAX_CATEGORY_POOL_LIMIT):
+        raise DataIntegrityError(
+            f"分类池深度必须在 {top_limit} 到 {MAX_CATEGORY_POOL_LIMIT} 之间，或为 0 表示不生成"
+        )
     if maximum_bytes_billed < 1 or maximum_bytes_billed > DEFAULT_MAXIMUM_BYTES_BILLED:
         raise DataIntegrityError(f"maximum-bytes-billed 不得超过 {DEFAULT_MAXIMUM_BYTES_BILLED}")
     if top_limit != DEFAULT_TOP_LIMIT:
@@ -561,12 +677,28 @@ def run_event_update(
         atomic_write_json(public_dir / "events" / "daily" / f"{ranking_date.isoformat()}.json", payload)
     atomic_write_json(public_dir / "events" / "index.json", index)
     removed = prune_event_states(state_dir, current_date=date)
+    pool_size = 0
+    if category_pool_limit:
+        pool_enriched = enrich_category_pool(
+            github,
+            rows,
+            base_enriched=enriched,
+            base_attempted=int(metadata_metrics["metadata_attempted_count"]),
+            pool_limit=category_pool_limit,
+            attempt_limit=category_pool_attempt_limit,
+        )
+        pool = build_category_pool(date=date, generated_at=generated_at, enriched=pool_enriched)
+        validate_payload("event_category_pool", pool)
+        atomic_write_json(public_dir / "events" / "category" / f"{date.isoformat()}.json", pool)
+        prune_event_pools(public_dir / "events" / "category", current_date=date)
+        pool_size = pool["pool_size"]
     return {
         "status": "updated",
         "ranking": rebuilt[date],
         "index": index,
         "estimated_bytes": estimated_bytes,
         "removed_state_count": len(removed),
+        "category_pool_size": pool_size,
     }
 
 
@@ -577,6 +709,18 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--maximum-bytes-billed", type=int, default=DEFAULT_MAXIMUM_BYTES_BILLED)
     parser.add_argument("--top-limit", type=int, default=DEFAULT_TOP_LIMIT)
     parser.add_argument("--metadata-attempt-limit", type=int, default=DEFAULT_METADATA_ATTEMPT_LIMIT)
+    parser.add_argument(
+        "--category-pool-limit",
+        type=int,
+        default=DEFAULT_CATEGORY_POOL_LIMIT,
+        help="额外补全的日增量池深度，用于生成独立分类榜；0 表示不生成",
+    )
+    parser.add_argument(
+        "--category-pool-attempt-limit",
+        type=int,
+        default=DEFAULT_CATEGORY_POOL_ATTEMPT_LIMIT,
+        help="生成分类池时允许检查的全局候选上限",
+    )
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--validate-only", action="store_true")
     parser.add_argument("--replace-day", action="store_true")
@@ -605,6 +749,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             maximum_bytes_billed=args.maximum_bytes_billed,
             top_limit=args.top_limit,
             metadata_attempt_limit=args.metadata_attempt_limit,
+            category_pool_limit=args.category_pool_limit,
+            category_pool_attempt_limit=args.category_pool_attempt_limit,
             dry_run=args.dry_run,
             validate_only=args.validate_only,
             replace_day=args.replace_day,

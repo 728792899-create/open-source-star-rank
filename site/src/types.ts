@@ -202,6 +202,72 @@ export interface EventDailyRanking {
   entries: EventRankingEntry[];
 }
 
+export interface EventCategoryPoolEntry {
+  repository_id: number;
+  full_name: string;
+  description: string | null;
+  language: string | null;
+  stars_total: number;
+  stars_added: number;
+  watch_events: number;
+  rank: number;
+  html_url: string;
+  owner_avatar_url: string | null;
+}
+
+export interface EventCategoryPool {
+  schema_version: '1.0.0';
+  date: string;
+  timezone: 'Asia/Shanghai';
+  window_start: string;
+  window_end: string;
+  generated_at: string;
+  methodology_version: 'gharchive-public-watch-events-v1' | 'gharchive-public-watch-events-v2';
+  pool_size: number;
+  entries: EventCategoryPoolEntry[];
+}
+
+export interface AllTimeEntry {
+  repository_id: number;
+  full_name: string;
+  description: string | null;
+  language: string | null;
+  stars_total: number;
+  rank: number;
+  html_url: string;
+  owner_avatar_url: string | null;
+}
+
+export interface AllTimeSourceMetrics {
+  provider: 'github_search';
+  sort: 'stars';
+  minimum_stars: number;
+  search_result_count: number;
+  api_request_count: number;
+  api_retry_count: number;
+}
+
+export interface AllTimeBoard {
+  schema_version: '1.0.0';
+  generated_at: string;
+  methodology_version: 'github-search-most-starred-v1';
+  source_metrics: AllTimeSourceMetrics;
+  entry_count: number;
+  entries: AllTimeEntry[];
+}
+
+export interface AllTimeIndex {
+  schema_version: '1.0.0';
+  status: 'initializing' | 'ready';
+  updated_at: string | null;
+  methodology_version: 'github-search-most-starred-v1';
+  entry_count: number;
+  top_stars: number | null;
+  freshness_threshold_hours: number;
+}
+
+export type FacetDimension = 'language' | 'category' | 'type' | 'scenario';
+
 export interface LocalizationCoverage {
   eligible_count: number;
   localized_count: number;

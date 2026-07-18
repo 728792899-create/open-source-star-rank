@@ -75,6 +75,8 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
         "repositories": 0,
         "event_index": 0,
         "event_daily": 0,
+        "event_category_pool": 0,
+        "alltime": 0,
         "localization": 0,
         "classification": 0,
     }
@@ -310,6 +312,63 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
             if event_index["schema_version"] != latest_event["schema_version"] or event_index["methodology_version"] != latest_event["methodology_version"]:
                 raise SchemaValidationError("事件榜索引版本与最新日榜不一致")
 
+    pool_dir = public_dir / "events" / "category"
+    if pool_dir.exists():
+        for path in sorted(pool_dir.glob("????-??-??.json")):
+            payload = read_json(path)
+            validate_payload("event_category_pool", payload, schema_dir)
+            if payload["date"] != path.stem:
+                raise SchemaValidationError(f"分类池日期与文件名不一致：{path}")
+            start = timestamp(payload["window_start"])
+            end = timestamp(payload["window_end"])
+            if end - start != dt.timedelta(days=1):
+                raise SchemaValidationError(f"分类池统计窗口必须严格为 24 小时：{path}")
+            if start.astimezone(ZoneInfo("Asia/Shanghai")).date().isoformat() != payload["date"]:
+                raise SchemaValidationError(f"分类池日期与北京时间窗口不一致：{path}")
+            entries = payload["entries"]
+            if payload["pool_size"] != len(entries):
+                raise SchemaValidationError(f"分类池 pool_size 与条目数不一致：{path}")
+            if len({item["repository_id"] for item in entries}) != len(entries):
+                raise SchemaValidationError(f"分类池包含重复仓库 ID：{path}")
+            if any(item["watch_events"] < item["stars_added"] for item in entries):
+                raise SchemaValidationError(f"分类池 WatchEvent 数不得小于唯一用户数：{path}")
+            expected = sorted(
+                entries,
+                key=lambda item: (
+                    -item["stars_added"], -item["watch_events"], -item["stars_total"], item["full_name"].casefold()
+                ),
+            )
+            if entries != expected or [item["rank"] for item in entries] != list(range(1, len(entries) + 1)):
+                raise SchemaValidationError(f"分类池排序或名次不一致：{path}")
+            counts["event_category_pool"] += 1
+
+    alltime_index_path = public_dir / "alltime" / "index.json"
+    alltime_board_path = public_dir / "alltime" / "top-1000.json"
+    if alltime_index_path.exists() != alltime_board_path.exists():
+        raise SchemaValidationError("全站历史榜索引与榜单文件必须同时存在")
+    if alltime_board_path.exists():
+        alltime_index = read_json(alltime_index_path)
+        alltime_board = read_json(alltime_board_path)
+        validate_payload("alltime_index", alltime_index, schema_dir)
+        validate_payload("alltime", alltime_board, schema_dir)
+        entries = alltime_board["entries"]
+        if alltime_board["entry_count"] != len(entries):
+            raise SchemaValidationError("全站历史榜 entry_count 与条目数不一致")
+        if len({item["repository_id"] for item in entries}) != len(entries):
+            raise SchemaValidationError("全站历史榜包含重复仓库 ID")
+        expected = sorted(entries, key=lambda item: (-item["stars_total"], item["full_name"].casefold()))
+        if entries != expected or [item["rank"] for item in entries] != list(range(1, len(entries) + 1)):
+            raise SchemaValidationError("全站历史榜排序或名次不一致")
+        if alltime_index["entry_count"] != len(entries):
+            raise SchemaValidationError("全站历史榜索引 entry_count 与榜单不一致")
+        if alltime_index["top_stars"] != (entries[0]["stars_total"] if entries else None):
+            raise SchemaValidationError("全站历史榜索引 top_stars 与榜单不一致")
+        if alltime_index["updated_at"] != alltime_board["generated_at"]:
+            raise SchemaValidationError("全站历史榜索引 updated_at 与榜单不一致")
+        if (alltime_index["status"] == "ready") != bool(entries):
+            raise SchemaValidationError("全站历史榜索引 status 与榜单不一致")
+        counts["alltime"] += 1
+
     localization_path = public_dir / "i18n" / "zh-CN" / "repositories.json"
     if localization_path.exists():
         localization = read_json(localization_path)
@@ -390,6 +449,13 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
         "event-index.schema.json",
         "event-daily.schema.json",
     ]
+    if pool_dir.exists():
+        required_schema_files.append("event-category-pool.schema.json")
+    if alltime_board_path.exists():
+        required_schema_files.extend([
+            "alltime.schema.json",
+            "alltime-index.schema.json",
+        ])
     if localization_path.exists():
         required_schema_files.append("localization.schema.json")
     if classification_index_path.exists():

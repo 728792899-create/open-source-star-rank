@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { classificationMap } from '../../lib/classification';
+import {
+  readAllTimeIndex, readClassificationIndex, readClassificationRepositories, readEventRankingIndex,
+  readLatestEventCategoryPool,
+} from '../../lib/data';
+import {
+  BOARD_DIMENSIONS, CATEGORY_DIMENSION, dimensionValues, facetCounts, facetValueSlug, type FacetDimensionMeta,
+} from '../../lib/facet-rankings';
+import { withBase } from '../../lib/paths';
+
+const classificationIndex = readClassificationIndex();
+const classifications = classificationMap(readClassificationRepositories());
+const pool = readLatestEventCategoryPool();
+const eventIndex = readEventRankingIndex();
+const allTime = readAllTimeIndex();
+
+interface Section {
+  meta: FacetDimensionMeta;
+  basePath: string;
+  items: Array<{ id: string; label: string; count: number; href: string }>;
+}
+
+function buildSection(meta: FacetDimensionMeta, basePath: string): Section {
+  const values = dimensionValues(meta, classificationIndex, pool);
+  const counts = pool ? facetCounts(pool, classifications, meta.dimension, values.map((value) => value.id)) : new Map<string, number>();
+  const items = values.map((value) => ({
+    id: value.id,
+    label: value.label,
+    count: counts.get(value.id) ?? 0,
+    href: withBase(`${basePath}${facetValueSlug(meta.dimension, value.id)}/`),
+  }));
+  items.sort((left, right) => right.count - left.count || left.label.localeCompare(right.label));
+  return { meta, basePath, items };
+}
+
+const sections: Section[] = [
+  buildSection(CATEGORY_DIMENSION, '/category/'),
+  buildSection(BOARD_DIMENSIONS[0], '/board/language/'),
+  buildSection(BOARD_DIMENSIONS[1], '/board/type/'),
+  buildSection(BOARD_DIMENSIONS[2], '/board/scenario/'),
+];
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'GitHub 开源项目分类独立榜总览',
+  description: '按编程语言、项目方向、产品形态与适用场景，浏览各自独立的每日新增 Star 前 100 榜。',
+};
+---
+
+<BaseLayout
+  title="分类独立榜总览｜开源星榜"
+  description="按编程语言、项目方向、产品形态、适用场景浏览各自独立的每日新增 Star 前 100 榜，并可切回全部榜单或全部历史星标 Top 1000。"
+  structuredData={structuredData}
+>
+  <main id="main-content" class="shell language-page category-page">
+    <p class="eyebrow">Independent boards · daily gain</p>
+    <h1>每个分类，<br />都有自己的前 100。</h1>
+    <p class="status-lead">从全站公开事件榜的扩展候选池出发，每个编程语言、项目方向、产品形态和适用场景都有独立的「每日新增 Star 前 100」榜，名次在该维度内重新排序。{eventIndex.status === 'ready' ? '' : '扩展候选池发布后自动生效。'}</p>
+    <p class="status-lead">
+      <a href={withBase('/')}>← 返回全部榜单（全站新增榜）</a>
+      · <a href={withBase('/all-time/')}>全部历史星标 Top 1000 →</a>
+      {allTime.status === 'ready' && allTime.top_stars ? <span>（最高约 {new Intl.NumberFormat('zh-CN', { notation: 'compact', maximumFractionDigits: 1 }).format(allTime.top_stars)} Star）</span> : null}
+    </p>
+
+    {sections.map((section) => <section class="language-list" aria-label={`${section.meta.labelZh}独立榜`}>
+      <div class="section-heading"><div><p class="eyebrow">{section.meta.eyebrow}</p><h2>{section.meta.labelZh}</h2></div><strong>{section.items.length}</strong></div>
+      {section.items.length ? <div class="language-cards category-cards">
+        {section.items.map((item) => <a href={item.href}>
+          <span>{item.label}</span>
+          <strong>{item.count} 个项目</strong>
+          <small>{item.count > 0 ? '查看独立榜 →' : '暂无入池项目'}</small>
+        </a>)}
+      </div> : <p class="empty-copy">扩展候选池发布后，这里会列出所有{section.meta.labelZh}的独立榜。</p>}
+    </section>)}
+  </main>
+</BaseLayout>

@@ -14,6 +14,8 @@ const required = [
   'period/30d/index.html',
   'language/index.html',
   'category/index.html',
+  'board/index.html',
+  'all-time/index.html',
   'data/index.json',
   'data/schema/index.schema.json',
   'data/schema/daily.schema.json',
@@ -25,6 +27,9 @@ const required = [
   'data/schema/repositories.schema.json',
   'data/schema/event-index.schema.json',
   'data/schema/event-daily.schema.json',
+  'data/schema/event-category-pool.schema.json',
+  'data/schema/alltime.schema.json',
+  'data/schema/alltime-index.schema.json',
   'data/schema/localization.schema.json',
   'data/schema/classification-index.schema.json',
   'data/schema/classification-repositories.schema.json',
@@ -153,26 +158,45 @@ if (eventIsDefault) {
   }
 }
 
-const defaultRanking = eventIsDefault
-  ? JSON.parse(await readFile(path.join(dist, 'data/events/daily', `${eventIndex.latest_date}.json`), 'utf8'))
-  : dataIndex.latest_date
-    ? JSON.parse(await readFile(path.join(dist, 'data/daily', `${dataIndex.latest_date}.json`), 'utf8'))
-    : null;
-if (defaultRanking) {
-  const classificationById = new Map(classificationCatalog.repositories.map((item) => [item.repository_id, item]));
-  for (const category of classificationIndex.categories) {
-    const expectedIds = defaultRanking.entries
-      .filter((entry) => classificationById.get(entry.repository_id)?.primary_category === category.id)
-      .map((entry) => String(entry.repository_id));
-    const categoryHtml = await readFile(path.join(dist, 'category', category.id, 'index.html'), 'utf8');
-    const actualIds = [...categoryHtml.matchAll(/id="repo-(\d+)"[^>]*data-ranking-row/g)].map((match) => match[1]);
-    if (JSON.stringify(actualIds) !== JSON.stringify(expectedIds)) {
-      throw new Error(`Classification page ${category.id} is not an ordered subset of the current default ranking`);
-    }
-    const expectedRobots = expectedIds.length ? 'index,follow' : 'noindex,follow';
-    if (!categoryHtml.includes(`name="robots" content="${expectedRobots}"`)) {
-      throw new Error(`Classification page ${category.id} has an incorrect robots policy`);
-    }
+const poolPath = eventIndex.latest_date
+  ? path.join(dist, 'data', 'events', 'category', `${eventIndex.latest_date}.json`)
+  : null;
+const pool = poolPath && existsSync(poolPath) ? JSON.parse(await readFile(poolPath, 'utf8')) : null;
+const classificationById = new Map(classificationCatalog.repositories.map((item) => [item.repository_id, item]));
+const sortPool = (entries) => [...entries].sort((left, right) =>
+  right.stars_added - left.stars_added
+  || right.watch_events - left.watch_events
+  || right.stars_total - left.stars_total
+  || left.full_name.toLocaleLowerCase().localeCompare(right.full_name.toLocaleLowerCase()));
+const rowIds = (html) => [...html.matchAll(/id="repo-(\d+)"[^>]*data-ranking-row/g)].map((match) => match[1]);
+for (const category of classificationIndex.categories) {
+  const expectedIds = pool
+    ? sortPool(pool.entries.filter((entry) => classificationById.get(entry.repository_id)?.primary_category === category.id))
+      .slice(0, 100)
+      .map((entry) => String(entry.repository_id))
+    : [];
+  const categoryHtml = await readFile(path.join(dist, 'category', category.id, 'index.html'), 'utf8');
+  const actualIds = rowIds(categoryHtml);
+  if (JSON.stringify(actualIds) !== JSON.stringify(expectedIds)) {
+    throw new Error(`Category board ${category.id} does not match the extended pool top 100`);
+  }
+  const expectedRobots = expectedIds.length ? 'index,follow' : 'noindex,follow';
+  if (!categoryHtml.includes(`name="robots" content="${expectedRobots}"`)) {
+    throw new Error(`Category board ${category.id} has an incorrect robots policy`);
+  }
+}
+
+const allTimeIndexPath = path.join(dist, 'data', 'alltime', 'index.json');
+if (existsSync(allTimeIndexPath)) {
+  const allTimeIndex = JSON.parse(await readFile(allTimeIndexPath, 'utf8'));
+  const allTimeBoard = JSON.parse(await readFile(path.join(dist, 'data', 'alltime', 'top-1000.json'), 'utf8'));
+  if (allTimeIndex.schema_version !== '1.0.0' || allTimeBoard.entry_count !== allTimeBoard.entries.length) {
+    throw new Error('Published all-time board does not satisfy the 1.0.0 public contract');
+  }
+  const allTimeHtml = await readFile(path.join(dist, 'all-time', 'index.html'), 'utf8');
+  const expectedAllTimeIds = allTimeBoard.entries.map((entry) => String(entry.repository_id));
+  if (JSON.stringify(rowIds(allTimeHtml)) !== JSON.stringify(expectedAllTimeIds)) {
+    throw new Error('All-time page rows do not match the published all-time board');
   }
 }
 

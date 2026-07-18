@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import datetime as dt
+import json
 import shutil
 import tempfile
 import unittest
@@ -219,6 +220,117 @@ class EventStarRankTests(unittest.TestCase):
             )
             self.assertEqual(replaced["status"], "updated")
             self.assertEqual(runner.run_count, 3)
+
+    def test_category_pool_extends_enrichment_without_touching_the_top_100(self) -> None:
+        rows = [aggregate(repository_id, 400 - repository_id) for repository_id in range(1, 181)]
+        payloads: dict[int, dict[str, Any] | None] = {
+            repository_id: repository(repository_id) for repository_id in range(1, 181)
+        }
+        payloads[150] = None  # pool candidates may 404 without failing the run
+        payloads[151] = repository(151, fork=True)
+        github = FakeGitHub(payloads)
+        runner = FakeRunner(rows)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            shutil.copytree(
+                Path(__file__).resolve().parents[1] / "site" / "seed-data",
+                root / "public",
+                dirs_exist_ok=True,
+            )
+            result = run_event_update(
+                runner,
+                github,
+                data_dir=root,
+                date=self.date,
+                generated_at=self.now,
+                top_limit=100,
+                category_pool_limit=160,
+            )
+            self.assertEqual(len(result["ranking"]["entries"]), 100)
+            self.assertEqual(result["category_pool_size"], 160)
+            pool_path = root / "public" / "events" / "category" / f"{self.date.isoformat()}.json"
+            pool = validate_data_tree(root)
+            self.assertEqual(pool["event_category_pool"], 1)
+            payload = json.loads(pool_path.read_text(encoding="utf-8"))
+            self.assertEqual(payload["pool_size"], 160)
+            entries = payload["entries"]
+            self.assertEqual([item["rank"] for item in entries[:3]], [1, 2, 3])
+            self.assertEqual(entries[0]["repository_id"], 1)
+            pool_ids = {item["repository_id"] for item in entries}
+            self.assertNotIn(150, pool_ids)
+            self.assertNotIn(151, pool_ids)
+            self.assertEqual(
+                [item["repository_id"] for item in entries[:100]],
+                [item["repository_id"] for item in result["ranking"]["entries"]],
+            )
+
+    def test_category_pool_rate_limit_shrinks_pool_without_failing_the_day(self) -> None:
+        rows = [aggregate(repository_id, 400 - repository_id) for repository_id in range(1, 181)]
+        payloads = {repository_id: repository(repository_id) for repository_id in range(1, 181)}
+        github = FakeGitHub(payloads, fail_at=130)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            shutil.copytree(
+                Path(__file__).resolve().parents[1] / "site" / "seed-data",
+                root / "public",
+                dirs_exist_ok=True,
+            )
+            result = run_event_update(
+                FakeRunner(rows),
+                github,
+                data_dir=root,
+                date=self.date,
+                generated_at=self.now,
+                top_limit=100,
+                category_pool_limit=160,
+            )
+            self.assertEqual(result["status"], "updated")
+            self.assertEqual(len(result["ranking"]["entries"]), 100)
+            self.assertEqual(result["category_pool_size"], 129)
+            counts = validate_data_tree(root)
+            self.assertEqual(counts["event_daily"], 1)
+            self.assertEqual(counts["event_category_pool"], 1)
+
+    def test_category_pool_is_opt_in_and_bounded(self) -> None:
+        rows = [aggregate(repository_id, 400 - repository_id) for repository_id in range(1, 121)]
+        payloads = {repository_id: repository(repository_id) for repository_id in range(1, 121)}
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            shutil.copytree(
+                Path(__file__).resolve().parents[1] / "site" / "seed-data",
+                root / "public",
+                dirs_exist_ok=True,
+            )
+            with self.assertRaises(DataIntegrityError):
+                run_event_update(
+                    FakeRunner(rows),
+                    FakeGitHub(payloads),
+                    data_dir=root,
+                    date=self.date,
+                    generated_at=self.now,
+                    top_limit=100,
+                    category_pool_limit=99,
+                )
+            with self.assertRaises(DataIntegrityError):
+                run_event_update(
+                    FakeRunner(rows),
+                    FakeGitHub(payloads),
+                    data_dir=root,
+                    date=self.date,
+                    generated_at=self.now,
+                    top_limit=100,
+                    category_pool_limit=1001,
+                )
+            result = run_event_update(
+                FakeRunner(rows),
+                FakeGitHub(payloads),
+                data_dir=root,
+                date=self.date,
+                generated_at=self.now,
+                top_limit=100,
+            )
+            self.assertEqual(result["category_pool_size"], 0)
+            self.assertFalse((root / "public" / "events" / "category").exists())
 
     def test_rank_change_and_trend_keep_missing_global_days_as_null(self) -> None:
         enriched = [
