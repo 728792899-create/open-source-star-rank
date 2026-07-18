@@ -1,53 +1,210 @@
-# 开源星榜
+<div align="center">
+
+# ⭐ 开源星榜 · Open Source Star Rank
+
+**用真实、可复现、零费用的方式，观测 GitHub 开源项目的关注度变化**
 
 [![数据采集与发布](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-pages.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-pages.yml)
 [![全站公开事件榜](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-events.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-events.yml)
 [![中文内容与分类](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-localization.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-localization.yml)
+[![全站历史星标榜](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-alltime.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-alltime.yml)
 [![质量校验](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-ci.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-ci.yml)
 
-开源星榜同时发布两种独立信号：扫描 GH Archive 实际归档的全部 GitHub 公开事件生成的每日新增榜，以及用北京时间连续快照生成的候选池净增榜。前者的“全站”严格指 GH Archive 捕获到的 GitHub 公开事件全站，不是 GitHub 官方内部统计；后者是候选池观测榜。
+[🌐 正式站点](https://728792899-create.github.io/open-source-star-rank/) ·
+[🏷️ 分类独立榜](https://728792899-create.github.io/open-source-star-rank/board/) ·
+[🏆 历史 Top 1000](https://728792899-create.github.io/open-source-star-rank/all-time/) ·
+[📊 采样状态](https://728792899-create.github.io/open-source-star-rank/status/) ·
+[📐 数据口径](https://728792899-create.github.io/open-source-star-rank/methodology/)
 
-- 正式站点：https://728792899-create.github.io/open-source-star-rank/
-- 采样状态：https://728792899-create.github.io/open-source-star-rank/status/
-- 公开数据：https://728792899-create.github.io/open-source-star-rank/data/index.json
-- 全站公开事件数据：https://728792899-create.github.io/open-source-star-rank/data/events/index.json
-- 中文项目内容：https://728792899-create.github.io/open-source-star-rank/data/i18n/zh-CN/repositories.json
-- 项目分类：https://728792899-create.github.io/open-source-star-rank/category/
-- 分类独立榜总览：https://728792899-create.github.io/open-source-star-rank/board/
-- 全部历史星标 Top 1000：https://728792899-create.github.io/open-source-star-rank/all-time/
-- 分类数据：https://728792899-create.github.io/open-source-star-rank/data/classification/index.json
-- 历史星标数据：https://728792899-create.github.io/open-source-star-rank/data/alltime/top-1000.json
-- 数据契约：https://728792899-create.github.io/open-source-star-rank/data/schema/index.schema.json
-- 订阅：[RSS](https://728792899-create.github.io/open-source-star-rank/rss.xml) · [Atom](https://728792899-create.github.io/open-source-star-rank/atom.xml) · [JSON Feed](https://728792899-create.github.io/open-source-star-rank/feed.json)
+</div>
 
-## 数据边界
+---
 
-- 全站公开事件新增定义为北京时间自然日内唯一 `(repository_id, actor_id)` 数量；同一用户对同一仓库每天最多计一次。
-- GH Archive 是第三方公共事件归档；事件榜扫描其实际归档的全部公开事件，但不包含私有活动、无法证明 GitHub 官方内部事件无遗漏，也不扣除取消 Star，因此不是全站净增榜。
-- 每次发布必须证明统计窗口 24/24 小时均有源事件，并在全局排序后获得完整 100 个有效公开仓库；任一小时缺失或检查 900 个仓库后仍不足 100 个即整次失败。
-- 候选池最多 2,000 个公开仓库。
-- 有效快照必须在北京时间 00:00–03:00 采集，相邻日期连续且间隔为 21–27 小时。
-- 缺失日期不补采、不补零、不插值。
-- 机器数据保存在独立的 `star-rank-data` 分支；公开日榜永久保留，完整候选快照保留最近 90 日。
-- 事件查询先 dry-run，单次最多扫描 24 GiB；全量仓库精简聚合仅在数据分支保留最近 30 天，公开接口发布 Top 100、汇总指标与最多 1,000 项的扩展分类池（保留最近 14 天）。生产要求使用未绑定结算账号的 BigQuery Sandbox 项目。
-- 项目中文功能名与简介由 GitHub Models 生成并按 repository ID 缓存；页面始终保留原始仓库名，模型不可用时回退 GitHub 原文，不阻塞榜单。
-- GitHub Models 只使用 Actions 自带令牌和免费额度，不启用付费额度；人工修订位于 `data/localization-overrides.zh-CN.json`。
-- 项目方向、产品形态和 1–4 个适用场景从版本化固定词表中选择；每个编程语言、项目方向、产品形态和适用场景都从当日扩展分类池中生成各自独立的前 100 榜（分类内重新排名），同时保留全站总榜可随时切换。
-- 全站历史星标榜通过 GitHub 搜索按累计 Star 降序采集前 1,000 个未 fork、未归档的公开仓库，每周更新一次；它是累计口径的“名人堂”，与每日新增榜相互独立。
-- 分类人工修正位于 `data/classification-overrides.zh-CN.json`；词表位于 `data/classification-taxonomy.zh-CN.json`，调整标签含义必须升级 `taxonomy_version`。
-- 本仓库不包含、依赖或链接任何私有知识库内容；固定种子仅保存公开 GitHub 仓库名。
+## 这是什么
+
+**开源星榜**是一个每天自动运行、完全由 GitHub Actions 驱动的开源项目观测站点。它不做爬虫、不猜测、不补零，只发布可以被独立验证的信号：
+
+- 📈 **每日新增榜** —— 扫描 [GH Archive](https://www.gharchive.org/) 归档的全部 GitHub 公开事件，统计昨天有多少「不同用户」为每个仓库点了 Star。
+- 🔁 **候选池净增榜** —— 用北京时间连续快照追踪一个候选池，计算真实发生的 Star 净增（日 / 7 日 / 30 日）。
+- 🧭 **分类独立榜** —— 编程语言、项目方向、产品形态、适用场景 **四个维度、每个取值都有自己独立的前 100**，名次在分类内重新排序。
+- 🏆 **全站历史星标 Top 1000** —— 累计 Star 最高的 1000 个开源项目「名人堂」。
+- 🀄 **中文项目内容** —— 由 GitHub Models 生成的中文功能名与简介，原文一键切换。
+
+> ⚠️ **关于「全站」二字**：事件榜的「全站」严格指 **GH Archive 实际归档的 GitHub 公开事件范围**，不是 GitHub 官方内部统计，也不扣除取消 Star。这是一张诚实的**观测榜**，而非官方净增榜。
+
+---
+
+## 榜单一览
+
+| 榜单 | 口径 | 排序指标 | 深度 | 更新频率 | 页面 |
+| :-- | :-- | :-- | :-: | :-- | :-- |
+| 全站新增榜 | GH Archive 公开事件 | 当日唯一加星用户数 | Top 100 | 每日 07:30 | [`/`](https://728792899-create.github.io/open-source-star-rank/) |
+| 候选池净增榜 | 连续快照候选池 | 当日 Star 净增 | Top 100 | 每日 00:20 | [`/daily/`](https://728792899-create.github.io/open-source-star-rank/daily/) |
+| 7 日 / 30 日榜 | 连续快照候选池 | 周期 Star 净增 | Top 100 | 每日 | [`/period/7d/`](https://728792899-create.github.io/open-source-star-rank/period/7d/) |
+| 语言净增榜 | 连续快照候选池 | 当日 Star 净增 | Top 50 | 每日 | [`/language/`](https://728792899-create.github.io/open-source-star-rank/language/) |
+| **分类独立榜** ✨ | 事件榜扩展分类池 | 当日新增（分类内重排） | 各 Top 100 | 每日 | [`/board/`](https://728792899-create.github.io/open-source-star-rank/board/) · [`/category/`](https://728792899-create.github.io/open-source-star-rank/category/) |
+| **历史星标榜** ✨ | GitHub 搜索累计 Star | 累计 Star 总数 | **Top 1000** | 每周一 10:00 | [`/all-time/`](https://728792899-create.github.io/open-source-star-rank/all-time/) |
+
+✨ = 本次新增能力。所有榜单都可随时切换回全站总榜，都保留「中文 / 原文」切换与 JSON 下载。
+
+---
+
+## 系统架构
+
+四条相互独立的数据管线各自采集、校验、发布到机器数据分支 `star-rank-data`，Astro 在构建时把它们组合成静态站点，最终部署到 GitHub Pages。任何一条管线失败都不会污染其它管线。
+
+```mermaid
+flowchart LR
+    subgraph 数据源
+        GHA["GH Archive<br/>(BigQuery)"]
+        SNAP["GitHub Search<br/>候选池快照"]
+        STAR["GitHub Search<br/>按 star 降序"]
+        MODELS["GitHub Models<br/>免费额度"]
+    end
+
+    subgraph 采集管线["采集管线 (Python · GitHub Actions)"]
+        E["事件榜采集器<br/>event_star_rank"]
+        C["候选池采集器<br/>star_rank"]
+        A["历史榜采集器<br/>alltime_star_rank"]
+        L["中文 + 分类<br/>localize / classify"]
+    end
+
+    DATA[("star-rank-data 分支<br/>public/ + state/ + schema/")]
+
+    subgraph 发布["发布 (Astro)"]
+        BUILD["静态构建<br/>+ 契约校验"]
+        PAGES["GitHub Pages"]
+    end
+
+    GHA --> E --> DATA
+    SNAP --> C --> DATA
+    STAR --> A --> DATA
+    DATA --> L
+    MODELS --> L --> DATA
+    DATA --> BUILD --> PAGES
+```
+
+---
+
+## 亮点一：分类独立榜（四维度 · 各自前 100）
+
+过去分类页只是「当前总榜 Top 100 的子集」——筛一个冷门语言可能只剩几条。现在每个维度的**每个取值都有自己独立的前 100 榜，名次在分类内重新排序**。
+
+**它从哪来？** 事件榜采集器在验证完严格的全站 Top 100 之后，**沿同一条日增量序列继续向下补全元数据**，生成一个最多 1000 项的「扩展分类池」。站点构建时把这个池按四个维度切分并重排。
+
+```mermaid
+flowchart TD
+    Q["BigQuery 全站日增量<br/>ORDER BY 唯一加星用户数 DESC"] --> T["✅ 验证并发布严格 Top 100"]
+    T --> P["继续补全元数据<br/>→ 扩展分类池（≤ 1000 项）"]
+    P --> SPLIT{"按分类维度切分<br/>+ 分类内重新排名"}
+    SPLIT --> L["🔤 编程语言榜<br/>C · Rust · Go · TypeScript …"]
+    SPLIT --> D["🧭 项目方向榜<br/>13 类"]
+    SPLIT --> F["📦 产品形态榜<br/>8 类"]
+    SPLIT --> S["🎯 适用场景榜<br/>31 类"]
+```
+
+- 池是**尽力而为**的：元数据请求 404、被过滤或 Actions 令牌限流时，池只会缩短，**绝不会导致每日 Top 100 发布失败**。
+- 分类由 GitHub Models 从**版本化固定词表**中选择：一个主方向、一个产品形态、1–4 个适用场景。
+- 固定词表规模：**13 个项目方向 · 8 种产品形态 · 31 个适用场景**（见 [`data/classification-taxonomy.zh-CN.json`](data/classification-taxonomy.zh-CN.json)）。
+
+## 亮点二：全站历史星标 Top 1000
+
+一张跨越时间的「名人堂」，回答「哪些开源项目积累了最多 Star」，与每日新增榜互补。
+
+- 通过 GitHub 搜索按累计 Star **降序**采集前 1000 个公开仓库，剔除 fork、已归档、已禁用与私有项目。
+- GitHub 单次搜索最多返回 1000 条结果，恰好等于发布深度 —— 因此这是搜索口径下**真实的全站累计前 1000**。
+- 每周一北京时间 10:00 自动更新（约 10 次 API 请求，成本极低）；失败时保留上一版并显示更新时间。
+- 页面支持与其它榜单一致的语言 / 方向 / 形态 / 场景筛选与关键词搜索。
+
+---
+
+## 数据口径与边界
+
+严格的契约是这个项目的核心。**不诚实的数字不如没有数字。**
+
+- **唯一加星定义**：全站公开事件新增 = 北京时间自然日内唯一 `(repository_id, actor_id)` 数量；同一用户对同一仓库每天最多计一次。
+- **不是官方净增**：GH Archive 是第三方公共事件归档；事件榜扫描其归档的全部公开事件，但不包含私有活动、无法证明官方内部事件无遗漏，也不扣除取消 Star。
+- **完整性证明**：每次事件榜发布必须证明统计窗口 **24/24 小时**均有源事件，并在全局排序后获得完整 100 个有效公开仓库；任一小时缺失或检查 900 个仓库后仍不足 100 个即整次失败。
+- **费用护栏**：事件查询先 dry-run，单次最多扫描 **24 GiB**；生产要求使用**未绑定结算账号**的 BigQuery Sandbox 项目。
+- **快照纪律**：有效快照必须在北京时间 `00:00–03:00` 采集，相邻日期连续且间隔 21–27 小时；候选池最多 **2,000** 个公开仓库。
+- **不造数据**：缺失日期不补采、不补零、不插值。
+- **数据留存**：机器数据在独立的 `star-rank-data` 分支；公开日榜永久保留，完整候选快照保留 90 日，扩展分类池保留 14 日，全量事件聚合仅在数据分支保留 30 日。
+- **中文与分类**：由 GitHub Models 生成并按 repository ID 缓存，**只使用 Actions 自带令牌与免费额度**；模型不可用时回退 GitHub 原文或「分类待生成」，不阻塞榜单。人工修订见 [`data/localization-overrides.zh-CN.json`](data/localization-overrides.zh-CN.json) 与 [`data/classification-overrides.zh-CN.json`](data/classification-overrides.zh-CN.json)。
+- **隐私**：本仓库不包含、依赖或链接任何私有内容；固定种子仅保存公开 GitHub 仓库名。
+
+---
+
+## 公开数据接口
+
+所有榜单都以静态 JSON 发布，并附带版本化的 [JSON Schema](https://728792899-create.github.io/open-source-star-rank/data/schema/index.schema.json) 契约。
+
+| 数据 | 接口 |
+| :-- | :-- |
+| 候选池索引 | [`/data/index.json`](https://728792899-create.github.io/open-source-star-rank/data/index.json) |
+| 全站公开事件 | [`/data/events/index.json`](https://728792899-create.github.io/open-source-star-rank/data/events/index.json) |
+| 扩展分类池 | `/data/events/category/YYYY-MM-DD.json` |
+| 全站历史星标 | [`/data/alltime/top-1000.json`](https://728792899-create.github.io/open-source-star-rank/data/alltime/top-1000.json) |
+| 中文项目内容 | [`/data/i18n/zh-CN/repositories.json`](https://728792899-create.github.io/open-source-star-rank/data/i18n/zh-CN/repositories.json) |
+| 项目分类 | [`/data/classification/index.json`](https://728792899-create.github.io/open-source-star-rank/data/classification/index.json) |
+| 订阅 | [RSS](https://728792899-create.github.io/open-source-star-rank/rss.xml) · [Atom](https://728792899-create.github.io/open-source-star-rank/atom.xml) · [JSON Feed](https://728792899-create.github.io/open-source-star-rank/feed.json) |
+
+---
+
+## 仓库结构
+
+```text
+open-source-star-rank/
+├── tools/                      # Python 采集与校验管线
+│   ├── event_star_rank.py      #   全站公开事件榜 + 扩展分类池
+│   ├── star_rank.py            #   候选池快照采集与净增榜
+│   ├── alltime_star_rank.py    #   ✨ 全站历史星标 Top 1000 采集
+│   ├── localize_repositories.py#   GitHub Models 中文内容
+│   ├── classify_repositories.py#   固定词表分类
+│   └── validate_star_rank_data.py  # 数据契约校验
+├── schemas/star-rank/          # 所有公开数据的 JSON Schema
+├── data/                       # 固定词表、人工修订、种子仓库
+├── site/                       # Astro 静态站点
+│   ├── src/pages/              #   榜单页面（board/ · all-time/ · category/ …）
+│   ├── src/lib/facet-rankings.ts   # ✨ 分类独立榜生成逻辑
+│   └── scripts/                #   数据准备、构建校验、E2E 夹具
+├── tests/                      # Python 单元测试
+└── .github/workflows/          # 8 个采集、发布、看门狗与校验工作流
+```
+
+---
 
 ## 本地开发
 
 ```bash
+# 1. Python 采集与校验
 python3 -m pip install -r requirements-star-rank.txt
 python3 -m unittest discover -s tests -v
+
+# 2. 站点（默认展示「等待首个基线」的真实初始化态）
 cd site
 npm ci
-npm test
-npm run check
-npm run build
-npm run validate-build
+npm test            # 过滤逻辑单元测试
+npm run check       # Astro 类型检查
+npm run build       # 静态构建
+npm run validate-build   # 校验产物契约
+
+# 3. 用完整测试夹具预览真实榜单
+node scripts/create-e2e-data.mjs
+STAR_RANK_DATA_DIR="$PWD/.e2e-data" npm run build && npm run validate-build
 ```
 
-完整采集、恢复和故障处理流程见 [运行手册](docs/STAR_RANK_RUNBOOK.md)，站点实现说明见 [site/README.md](site/README.md)。
+测试夹具由 `scripts/create-e2e-data.mjs` 在临时目录生成，包含 40 个候选日期、7 个事件日期、**300 项扩展分类池**、**200 项历史星标榜**、2000 个项目页与中文 / 分类，不会进入生产数据。
+
+---
+
+## 更多文档
+
+- 📘 完整采集、恢复与故障处理流程 → [运行手册 `docs/STAR_RANK_RUNBOOK.md`](docs/STAR_RANK_RUNBOOK.md)
+- 🎨 站点实现说明 → [`site/README.md`](site/README.md)
+- 📐 在线数据口径页 → [methodology](https://728792899-create.github.io/open-source-star-rank/methodology/)
+
+<div align="center">
+
+**数据来自 GH Archive 与 GitHub 公共 API · 北京时间每日更新 · 完全零费用运行**
+
+</div>
