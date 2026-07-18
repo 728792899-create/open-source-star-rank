@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://728792899-create.github.io/open-source-star-rank/data/schema/alltime-index.schema.json",
+  "title": "Open Source Star Rank all-time board index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "status", "updated_at", "methodology_version", "entry_count",
+    "top_stars", "freshness_threshold_hours"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "status": { "enum": ["initializing", "ready"] },
+    "updated_at": { "type": ["string", "null"], "format": "date-time" },
+    "methodology_version": { "const": "github-search-most-starred-v1" },
+    "entry_count": { "type": "integer", "minimum": 0, "maximum": 1000 },
+    "top_stars": { "type": ["integer", "null"], "minimum": 0 },
+    "freshness_threshold_hours": { "type": "integer", "minimum": 1 }
+  }
+}
