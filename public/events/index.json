@@ -2,9 +2,10 @@
   "schema_version": "1.1.0",
   "status": "ready",
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-07-17T00:57:15Z",
-  "latest_date": "2026-07-16",
+  "updated_at": "2026-07-18T00:14:18Z",
+  "latest_date": "2026-07-17",
   "available_dates": [
+    "2026-07-17",
     "2026-07-16",
     "2026-07-15",
     "2026-07-14"
@@ -17,24 +18,24 @@
     "scope": "github_public_events_as_archived_by_gh_archive",
     "counting_unit": "unique_actor_repository_pair",
     "table_dates": [
-      "20260715",
-      "20260716"
+      "20260716",
+      "20260717"
     ],
     "expected_hour_count": 24,
     "observed_hour_count": 24,
     "missing_hours": [],
-    "estimated_bytes": 557508094,
-    "bytes_processed": 557508094,
+    "estimated_bytes": 553103529,
+    "bytes_processed": 553103529,
     "maximum_bytes_billed": 25769803776,
-    "unique_star_addition_count": 2018,
-    "observed_watch_event_count": 2018,
-    "observed_repository_count": 1642,
+    "unique_star_addition_count": 2314,
+    "observed_watch_event_count": 2316,
+    "observed_repository_count": 1863,
     "ranking_complete": true,
-    "metadata_attempted_count": 102,
+    "metadata_attempted_count": 100,
     "metadata_success_count": 100,
-    "metadata_not_found_count": 1,
-    "metadata_filtered_count": 1,
-    "api_request_count": 102,
+    "metadata_not_found_count": 0,
+    "metadata_filtered_count": 0,
+    "api_request_count": 100,
     "api_retry_count": 0
   }
 }
