@@ -211,12 +211,13 @@ export interface EventCategoryPoolEntry {
   stars_added: number;
   watch_events: number;
   rank: number;
+  trend_7d?: Array<number | null>;
   html_url: string;
   owner_avatar_url: string | null;
 }
 
 export interface EventCategoryPool {
-  schema_version: '1.0.0';
+  schema_version: '1.0.0' | '1.1.0';
   date: string;
   timezone: 'Asia/Shanghai';
   window_start: string;
@@ -225,6 +226,17 @@ export interface EventCategoryPool {
   methodology_version: 'gharchive-public-watch-events-v1' | 'gharchive-public-watch-events-v2';
   pool_size: number;
   entries: EventCategoryPoolEntry[];
+}
+
+export interface ExplorationPool {
+  schema_version: '1.0.0';
+  board_kind: 'candidate_daily' | 'candidate_period_7d' | 'candidate_period_30d';
+  date: string;
+  timezone: 'Asia/Shanghai';
+  window_start: string;
+  window_end: string;
+  pool_size: number;
+  entries: RankingEntry[];
 }
 
 export interface AllTimeEntry {
@@ -339,4 +351,26 @@ export interface ClassificationRepositoryCatalog {
   taxonomy_version: '1.0.0';
   generated_at: string | null;
   repositories: RepositoryClassification[];
+}
+
+export interface EventHistoryPoint {
+  date: string;
+  stars_added: number;
+  rank: number;
+}
+
+export interface RepositoryProfile {
+  repository_id: number;
+  full_name: string;
+  description: string | null;
+  language: string | null;
+  stars_total: number;
+  html_url: string;
+  owner_avatar_url: string | null;
+  knowledge_url: string | null;
+  first_seen_date: string | null;
+  last_seen_date: string | null;
+  history_30d: RepositoryHistoryPoint[];
+  event_history: EventHistoryPoint[];
+  all_time_rank: number | null;
 }

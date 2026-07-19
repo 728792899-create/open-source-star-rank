@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://728792899-create.github.io/open-source-star-rank/data/schema/exploration-pool.schema.json",
+  "title": "Open Source Star Rank controlled exploration pool",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "board_kind", "date", "timezone", "window_start", "window_end", "pool_size", "entries"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "board_kind": { "enum": ["candidate_daily", "candidate_period_7d", "candidate_period_30d"] },
+    "date": { "type": "string", "format": "date", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "timezone": { "const": "Asia/Shanghai" },
+    "window_start": { "type": "string", "format": "date-time" },
+    "window_end": { "type": "string", "format": "date-time" },
+    "pool_size": { "type": "integer", "minimum": 0, "maximum": 2000 },
+    "entries": {
+      "type": "array",
+      "maxItems": 2000,
+      "items": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository_id", "full_name", "description", "language", "stars_total", "stars_gained",
+        "html_url", "owner_avatar_url", "knowledge_url", "trend_7d", "rank", "rank_change"
+      ],
+      "properties": {
+        "repository_id": { "type": "integer", "minimum": 1 },
+        "full_name": { "type": "string", "pattern": "^[^/]+/[^/]+$" },
+        "description": { "type": ["string", "null"] },
+        "language": { "type": ["string", "null"] },
+        "stars_total": { "type": "integer", "minimum": 0 },
+        "stars_gained": { "type": "integer" },
+        "html_url": { "type": "string", "format": "uri", "pattern": "^https://github\\.com/" },
+        "owner_avatar_url": { "type": ["string", "null"], "format": "uri" },
+        "knowledge_url": { "type": ["string", "null"] },
+        "trend_7d": {
+          "type": "array", "minItems": 7, "maxItems": 7,
+          "items": { "type": ["integer", "null"] }
+        },
+        "rank": { "type": "integer", "minimum": 1, "maximum": 2000 },
+        "rank_change": { "type": ["integer", "null"] }
+      }
+    }
+  }
+}

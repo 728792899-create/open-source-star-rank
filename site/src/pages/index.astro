@@ -3,13 +3,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import EventInitialization from '../components/EventInitialization.astro';
 import RankingView from '../components/RankingView.astro';
 import {
-  readLocalizationCatalog,
+  readEventCategoryPool, readLocalizationCatalog,
 } from '../lib/data';
 import { localizedRepositoryContent } from '../lib/localization';
 import { readDefaultRanking } from '../lib/default-ranking';
 
 const { candidateIndex, eventIndex, ranking } = readDefaultRanking();
 const localization = readLocalizationCatalog();
+const exploration = ranking ? readEventCategoryPool(ranking.date) : null;
+const previousDate = ranking ? new Date(`${ranking.date}T12:00:00Z`) : null;
+if (previousDate) previousDate.setUTCDate(previousDate.getUTCDate() - 1);
+const previousDateValue = previousDate?.toISOString().slice(0, 10) ?? null;
+const previousExploration = previousDateValue ? readEventCategoryPool(previousDateValue) : null;
 const structuredData = ranking ? {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
@@ -39,5 +44,8 @@ const socialImagePath = ranking ? `/social/events-daily-${ranking.date}.png` : '
     dataPrefix="/data/events/daily"
     alternateHref={candidateIndex.latest_date ? `/daily/${candidateIndex.latest_date}/` : '/daily/'}
     alternateLabel="查看候选池净增榜"
+    explorationPath={exploration ? `/data/events/category/${ranking.date}.json` : undefined}
+    previousExplorationPath={previousExploration ? `/data/events/category/${previousDateValue}.json` : undefined}
+    explorationEntries={exploration?.entries ?? []}
   /> : <EventInitialization index={eventIndex} />}
 </BaseLayout>

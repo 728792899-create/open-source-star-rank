@@ -2,7 +2,7 @@
 import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import RankingView from '../../../components/RankingView.astro';
-import { readLocalizationCatalog, readPeriodRanking, readRankingIndex } from '../../../lib/data';
+import { readExplorationPool, readLocalizationCatalog, readPeriodRanking, readRankingIndex } from '../../../lib/data';
 import { localizedRepositoryContent } from '../../../lib/localization';
 
 export const getStaticPaths = (() => {
@@ -17,6 +17,12 @@ export const getStaticPaths = (() => {
 const { days, date } = Astro.props;
 const index = readRankingIndex();
 const ranking = readPeriodRanking(days, date);
+const explorationKind = days === 7 ? 'period_7d' : 'period_30d';
+const exploration = readExplorationPool(explorationKind, date);
+const previousDate = new Date(`${date}T12:00:00Z`);
+previousDate.setUTCDate(previousDate.getUTCDate() - 1);
+const previousDateValue = previousDate.toISOString().slice(0, 10);
+const previousExploration = readExplorationPool(explorationKind, previousDateValue);
 const localization = readLocalizationCatalog();
 const dates = index.periods?.[`${days}d`]?.available_dates ?? [];
 const structuredData = {
@@ -30,5 +36,5 @@ const structuredData = {
 ---
 
 <BaseLayout title={`${date} GitHub 近 ${days} 日 Star 榜｜开源星榜`} structuredData={structuredData} socialImagePath={`/social/period-${days}d-${date}.png`}>
-  <RankingView ranking={ranking} index={index} mode="period" isLatest={date === index.periods?.[`${days}d`]?.latest_date} availableDates={dates} routePrefix={`/period/${days}d`} dataPrefix={`/data/period/${days}d`} />
+  <RankingView ranking={ranking} index={index} mode="period" isLatest={date === index.periods?.[`${days}d`]?.latest_date} availableDates={dates} routePrefix={`/period/${days}d`} dataPrefix={`/data/period/${days}d`} explorationPath={exploration ? `/data/explore/period/${days}d/${date}.json` : undefined} previousExplorationPath={previousExploration ? `/data/explore/period/${days}d/${previousDateValue}.json` : undefined} explorationEntries={exploration?.entries ?? []} />
 </BaseLayout>

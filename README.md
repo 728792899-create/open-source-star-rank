@@ -11,7 +11,7 @@
 [![质量校验](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-ci.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-ci.yml)
 
 [🌐 正式站点](https://728792899-create.github.io/open-source-star-rank/) ·
-[🏷️ 分类独立榜](https://728792899-create.github.io/open-source-star-rank/board/) ·
+[🧭 组合筛选榜](https://728792899-create.github.io/open-source-star-rank/) ·
 [🏆 历史 Top 1000](https://728792899-create.github.io/open-source-star-rank/all-time/) ·
 [📊 采样状态](https://728792899-create.github.io/open-source-star-rank/status/) ·
 [📐 数据口径](https://728792899-create.github.io/open-source-star-rank/methodology/)
@@ -26,7 +26,7 @@
 
 - 📈 **每日新增榜** —— 扫描 [GH Archive](https://www.gharchive.org/) 归档的全部 GitHub 公开事件，统计昨天有多少「不同用户」为每个仓库点了 Star。
 - 🔁 **候选池净增榜** —— 用北京时间连续快照追踪一个候选池，计算真实发生的 Star 净增（日 / 7 日 / 30 日）。
-- 🧭 **分类独立榜** —— 编程语言、项目方向、产品形态、适用场景 **四个维度、每个取值都有自己独立的前 100**，名次在分类内重新排序。
+- 🧭 **组合筛选榜** —— 在当前榜单页面选择语言、项目方向、产品形态和适用场景，直接从受控深度池中重排前 100，并保留总榜名次。
 - 🏆 **全站历史星标 Top 1000** —— 累计 Star 最高的 1000 个开源项目「名人堂」。
 - 🀄 **中文项目内容** —— 由 GitHub Models 生成的中文功能名与简介，原文一键切换。
 
@@ -42,7 +42,7 @@
 | 候选池净增榜 | 连续快照候选池 | 当日 Star 净增 | Top 100 | 每日 00:20 | [`/daily/`](https://728792899-create.github.io/open-source-star-rank/daily/) |
 | 7 日 / 30 日榜 | 连续快照候选池 | 周期 Star 净增 | Top 100 | 每日 | [`/period/7d/`](https://728792899-create.github.io/open-source-star-rank/period/7d/) |
 | 语言净增榜 | 连续快照候选池 | 当日 Star 净增 | Top 50 | 每日 | [`/language/`](https://728792899-create.github.io/open-source-star-rank/language/) |
-| **分类独立榜** ✨ | 事件榜扩展分类池 | 当日新增（分类内重排） | 各 Top 100 | 每日 | [`/board/`](https://728792899-create.github.io/open-source-star-rank/board/) · [`/category/`](https://728792899-create.github.io/open-source-star-rank/category/) |
+| **组合筛选榜** ✨ | 各榜受控深度池 | 沿当前榜口径筛选重排 | 筛选 Top 100 | 随榜更新 | 各榜单页内直接筛选 |
 | **历史星标榜** ✨ | GitHub 搜索累计 Star | 累计 Star 总数 | **Top 1000** | 每周一 10:00 | [`/all-time/`](https://728792899-create.github.io/open-source-star-rank/all-time/) |
 
 ✨ = 本次新增能力。所有榜单都可随时切换回全站总榜，都保留「中文 / 原文」切换与 JSON 下载。
@@ -86,24 +86,23 @@ flowchart LR
 
 ---
 
-## 亮点一：分类独立榜（四维度 · 各自前 100）
+## 亮点一：榜单内组合筛选与实时重排
 
-过去分类页只是「当前总榜 Top 100 的子集」——筛一个冷门语言可能只剩几条。现在每个维度的**每个取值都有自己独立的前 100 榜，名次在分类内重新排序**。
+过去筛选只隐藏当前 Top 100 中不匹配的项目。现在用户可在任意榜单页组合选择语言、方向、形态和场景；系统从该榜的受控深度池中重新筛选并生成前 100，组合结果不足 100 时按实际数量显示。
 
-**它从哪来？** 事件榜采集器在验证完严格的全站 Top 100 之后，**沿同一条日增量序列继续向下补全元数据**，生成一个最多 1000 项的「扩展分类池」。站点构建时把这个池按四个维度切分并重排。
+事件榜使用最多 1000 项扩展池；候选池日榜和 7/30 日榜使用全部可比较候选（最多 2000 项）；历史累计榜使用 Top 1000。深度池永久保留，历史日期也能恢复相同筛选条件并计算筛选榜名次变化。
 
 ```mermaid
 flowchart TD
     Q["BigQuery 全站日增量<br/>ORDER BY 唯一加星用户数 DESC"] --> T["✅ 验证并发布严格 Top 100"]
-    T --> P["继续补全元数据<br/>→ 扩展分类池（≤ 1000 项）"]
-    P --> SPLIT{"按分类维度切分<br/>+ 分类内重新排名"}
-    SPLIT --> L["🔤 编程语言榜<br/>C · Rust · Go · TypeScript …"]
-    SPLIT --> D["🧭 项目方向榜<br/>13 类"]
-    SPLIT --> F["📦 产品形态榜<br/>8 类"]
-    SPLIT --> S["🎯 适用场景榜<br/>31 类"]
+    T --> P["继续补全元数据<br/>→ 受控深度池（≤ 1000 项）"]
+    P --> SPLIT{"语言 + 方向 + 形态 + 场景<br/>维度间取交集"}
+    SPLIT --> L["实时生成筛选 Top 100"]
+    SPLIT --> D["显示筛选名次 + 总榜名次"]
+    SPLIT --> F["前一日同条件计算升降"]
 ```
 
-- 池是**尽力而为**的：元数据请求 404、被过滤或 Actions 令牌限流时，池只会缩短，**绝不会导致每日 Top 100 发布失败**。
+- 事件深度池是**尽力而为**的：元数据请求 404、被过滤或 Actions 令牌限流时，池只会缩短，**绝不会导致每日 Top 100 发布失败**。
 - 分类由 GitHub Models 从**版本化固定词表**中选择：一个主方向、一个产品形态、1–4 个适用场景。
 - 固定词表规模：**13 个项目方向 · 8 种产品形态 · 31 个适用场景**（见 [`data/classification-taxonomy.zh-CN.json`](data/classification-taxonomy.zh-CN.json)）。
 
@@ -142,7 +141,8 @@ flowchart TD
 | :-- | :-- |
 | 候选池索引 | [`/data/index.json`](https://728792899-create.github.io/open-source-star-rank/data/index.json) |
 | 全站公开事件 | [`/data/events/index.json`](https://728792899-create.github.io/open-source-star-rank/data/events/index.json) |
-| 扩展分类池 | `/data/events/category/YYYY-MM-DD.json` |
+| 事件榜筛选深池（永久） | `/data/events/category/YYYY-MM-DD.json` |
+| 候选/周期筛选深池（永久） | `/data/explore/daily/YYYY-MM-DD.json` · `/data/explore/period/{7d\|30d}/YYYY-MM-DD.json` |
 | 全站历史星标 | [`/data/alltime/top-1000.json`](https://728792899-create.github.io/open-source-star-rank/data/alltime/top-1000.json) |
 | 中文项目内容 | [`/data/i18n/zh-CN/repositories.json`](https://728792899-create.github.io/open-source-star-rank/data/i18n/zh-CN/repositories.json) |
 | 项目分类 | [`/data/classification/index.json`](https://728792899-create.github.io/open-source-star-rank/data/classification/index.json) |

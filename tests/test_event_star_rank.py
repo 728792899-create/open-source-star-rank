@@ -15,13 +15,14 @@ from tools.event_star_rank import (
     enrich_aggregates,
     event_window,
     prune_event_states,
+    prune_event_pools,
     rebuild_dependent_rankings,
     run_event_update,
     source_table_dates,
 )
 from tools.star_rank import DataIntegrityError, RateLimitError, StarRankError, atomic_write_json
 from tools.star_rank_schema import validate_payload
-from tools.validate_star_rank_data import validate_data_tree
+from tools.validate_star_rank_data import event_entry_sort_key, validate_data_tree
 
 
 class FakeRunner:
@@ -126,6 +127,28 @@ class EventStarRankTests(unittest.TestCase):
         self.assertIn("ORDER BY stars_added DESC, watch_events DESC, repository_id ASC", query)
         self.assertNotIn("LIMIT 500", query)
         self.assertNotIn("payload", query)
+
+    def test_legacy_event_pool_order_remains_compatible(self) -> None:
+        entries = [
+            {
+                "repository_id": 1,
+                "full_name": "fixture/smaller",
+                "stars_total": 100,
+                "stars_added": 8,
+                "watch_events": 8,
+            },
+            {
+                "repository_id": 2,
+                "full_name": "fixture/larger",
+                "stars_total": 10_000,
+                "stars_added": 8,
+                "watch_events": 8,
+            },
+        ]
+        legacy = sorted(entries, key=lambda item: event_entry_sort_key(item, "1.0.0"))
+        current = sorted(entries, key=lambda item: event_entry_sort_key(item, "1.1.0"))
+        self.assertEqual([item["repository_id"] for item in legacy], [2, 1])
+        self.assertEqual([item["repository_id"] for item in current], [1, 2])
 
     def test_dry_run_budget_failure_never_executes_or_writes(self) -> None:
         runner = FakeRunner([], estimate=DEFAULT_MAXIMUM_BYTES_BILLED + 1)
@@ -586,6 +609,15 @@ class EventStarRankTests(unittest.TestCase):
             removed = prune_event_states(root, current_date=self.date)
             self.assertEqual(removed, [root / f"{old.isoformat()}.json"])
             self.assertTrue((root / f"{retained.isoformat()}.json").exists())
+
+    def test_public_event_exploration_pools_are_permanent(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            old = self.date - dt.timedelta(days=365)
+            path = root / f"{old.isoformat()}.json"
+            atomic_write_json(path, {"entries": []})
+            self.assertEqual(prune_event_pools(root, current_date=self.date), [])
+            self.assertTrue(path.exists())
 
 
 if __name__ == "__main__":

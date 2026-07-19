@@ -24,7 +24,7 @@ test('keeps a stale full-site event ranking visible instead of changing ranking 
   await expect(page.getByRole('link', { name: /查看候选池净增榜/ })).toBeVisible();
 });
 
-test('publishes the public event archive with direct GitHub links and source metrics', async ({ page }) => {
+test('publishes the public event archive with internal project links and source metrics', async ({ page }) => {
   await page.goto(latestEventPath);
   await expect(page.getByRole('heading', { name: '全站公开事件新增 Star 排行' })).toBeVisible();
   await expect(page.locator('[data-ranking-row]')).toHaveCount(100);
@@ -32,7 +32,8 @@ test('publishes the public event archive with direct GitHub links and source met
   await expect(page.getByText('0.88 GiB')).toBeVisible();
   await expect(page.locator('.collection-details').getByText('24 / 24 小时')).toBeVisible();
   await expect(page.locator('.collection-details').getByText('120,000')).toBeVisible();
-  await expect(page.getByRole('link', { name: /测试项目 30001/ })).toHaveAttribute('href', 'https://github.com/public-event-labs/project-001');
+  await expect(page.getByRole('link', { name: /测试项目 30001/ })).toHaveAttribute('href', '/open-source-star-rank/repo/30001/');
+  await expect(page.getByRole('link', { name: '在 GitHub 打开 public-event-labs/project-001' })).toHaveAttribute('href', 'https://github.com/public-event-labs/project-001');
   await expect(page.locator('.project-source-name').filter({ hasText: 'public-event-labs/project-001' })).toBeVisible();
 });
 
@@ -57,10 +58,10 @@ test('restores search and language filters from the URL and shows an empty state
   await search.fill('');
   await page.getByLabel('编程语言').selectOption('Python');
   await expect(page).toHaveURL(/language=Python/);
-  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(25);
+  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(75);
 });
 
-test('combines direction, product type and scenario filters without renumbering ranks', async ({ page }) => {
+test('combines direction, product type and scenario filters and re-ranks the deep pool', async ({ page }) => {
   await page.goto(latestPath);
   const firstRow = page.locator('[data-ranking-row]').first();
   const category = await firstRow.getAttribute('data-category') ?? '';
@@ -73,12 +74,13 @@ test('combines direction, product type and scenario filters without renumbering 
   const visible = page.locator('[data-ranking-row]:visible');
   await expect(visible.first()).toHaveAttribute('data-category', category);
   await expect(visible.first()).toHaveAttribute('data-project-type', projectType);
-  const originalRank = (await visible.first().locator('.rank-cell').textContent())?.trim() ?? '';
+  await expect(visible.first().locator('.rank-number')).toHaveText('01');
+  await expect(visible.first().locator('.source-rank')).toContainText('总榜 #');
   await page.reload();
   await expect(page.getByLabel('项目方向')).toHaveValue(category);
   await expect(page.getByLabel('产品形态')).toHaveValue(projectType);
   await expect(page.getByLabel('适用场景')).toHaveValue(scenario);
-  await expect(page.locator('[data-ranking-row]:visible').first().locator('.rank-cell')).toHaveText(originalRank);
+  await expect(page.locator('[data-ranking-row]:visible').first().locator('.rank-number')).toHaveText('01');
 });
 
 test('navigates historical dates and keeps direct no-JavaScript content readable', async ({ page, browser }) => {
@@ -221,6 +223,10 @@ test('publishes status, period, language and stable repository history routes', 
   await expect(page.getByRole('heading', { name: '真实历史' })).toBeVisible();
   await expect(page.getByRole('heading', { name: '方向与适用场景' })).toBeVisible();
   await expect(page.getByRole('row')).toHaveCount(31);
+
+  await page.goto('repo/30001/');
+  await expect(page.getByRole('heading', { name: /测试项目 30001/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '公开事件新增历史' })).toBeVisible();
 });
 
 test('publishes independent category boards with renumbered ranks and empty noindex policy', async ({ page, browser }) => {
@@ -232,7 +238,7 @@ test('publishes independent category boards with renumbered ranks and empty noin
   const rows = page.locator('[data-ranking-row]');
   expect(await rows.count()).toBeGreaterThan(0);
   for (const row of await rows.all()) await expect(row).toHaveAttribute('data-category', 'ai-machine-learning');
-  const ranks = (await rows.locator('.rank-cell').allTextContents()).map((rank) => Number(rank.trim()));
+  const ranks = (await rows.locator('.rank-number').allTextContents()).map((rank) => Number(rank.trim()));
   expect(ranks).toEqual(ranks.map((_, index) => index + 1));
   const gains = (await rows.locator('.stars-cell').allTextContents())
     .map((text) => Number(text.split('+')[1]?.replaceAll(/[^0-9]/g, '') ?? '0'));
@@ -265,7 +271,7 @@ test('publishes the unified board hub with per-dimension independent boards', as
   const rows = page.locator('[data-ranking-row]');
   expect(await rows.count()).toBeGreaterThan(0);
   for (const row of await rows.all()) await expect(row).toHaveAttribute('data-language', 'TypeScript');
-  const ranks = (await rows.locator('.rank-cell').allTextContents()).map((rank) => Number(rank.trim()));
+  const ranks = (await rows.locator('.rank-number').allTextContents()).map((rank) => Number(rank.trim()));
   expect(ranks).toEqual(ranks.map((_, index) => index + 1));
 
   await page.goto('board/scenario/ai-coding/');
@@ -280,7 +286,7 @@ test('publishes the all-time top 1000 board with cumulative star ordering and fi
   await expect(page.getByRole('heading', { name: '全部历史星标 Top 1000' })).toBeVisible();
   const rows = page.locator('[data-ranking-row]');
   await expect(rows).toHaveCount(200);
-  const ranks = (await rows.locator('.rank-cell').allTextContents()).map((rank) => Number(rank.trim()));
+  const ranks = (await rows.locator('.rank-number').allTextContents()).map((rank) => Number(rank.trim()));
   expect(ranks).toEqual(ranks.map((_, index) => index + 1));
   await page.getByLabel('编程语言').selectOption('Python');
   await expect(page).toHaveURL(/language=Python/);

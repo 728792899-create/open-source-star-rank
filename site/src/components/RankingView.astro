@@ -1,6 +1,6 @@
 ---
 import type {
-  DailyRanking, EventDailyRanking, EventRankingEntry, EventRankingIndex, LanguageRanking,
+  DailyRanking, EventCategoryPoolEntry, EventDailyRanking, EventRankingEntry, EventRankingIndex, LanguageRanking,
   PeriodRanking, RankingEntry, RankingIndex,
 } from '../types';
 import type { FacetRanking } from '../lib/facet-rankings';
@@ -29,6 +29,10 @@ interface Props {
   sectionEyebrowOverride?: string;
   rankingPathOverride?: string;
   showDateTools?: boolean;
+  explorationPath?: string;
+  previousExplorationPath?: string;
+  explorationEntries?: Array<RankingEntry | EventCategoryPoolEntry>;
+  fixedLanguage?: string;
 }
 
 const {
@@ -50,6 +54,10 @@ const {
   sectionEyebrowOverride,
   rankingPathOverride,
   showDateTools = true,
+  explorationPath,
+  previousExplorationPath,
+  explorationEntries = [],
+  fixedLanguage,
 } = Astro.props;
 const isFacet = variant === 'facet';
 const facetRanking = isFacet ? ranking as FacetRanking : null;
@@ -58,8 +66,6 @@ const eventRanking = isEvent ? ranking as EventDailyRanking : null;
 const snapshotRanking = !isEvent && !isFacet ? ranking as DailyRanking | LanguageRanking | PeriodRanking : null;
 const periodDays = !isFacet && 'period_days' in ranking ? ranking.period_days : null;
 const languageName = !isFacet && 'language' in ranking ? (ranking as LanguageRanking).language : null;
-const hasRepositoryPages = !isEvent && !isFacet && index.schema_version === '1.2.0';
-const gainKind = isEvent || isFacet ? '新增' : '净增';
 const defaultHeadline = periodDays
   ? `近 ${periodDays} 日，哪些项目升温最快？`
   : languageName
@@ -71,7 +77,8 @@ const heroCopy = isFacet
   : isEvent
     ? '扫描 GH Archive 归档的全部 GitHub 公开事件，按为仓库加星的唯一用户数排序；不扣除取消 Star。'
     : '按有效连续快照的 Star 净增排序。缺失日期不补零、不插值，只记录真实发生的关注变化。';
-const languages = [...new Set(ranking.entries.map((entry) => entry.language).filter(Boolean) as string[])].sort((a, b) => a.localeCompare(b));
+const filterSourceEntries = explorationEntries.length ? explorationEntries : ranking.entries;
+const languages = [...new Set(filterSourceEntries.map((entry) => entry.language).filter(Boolean) as string[])].sort((a, b) => a.localeCompare(b));
 const dateIndex = availableDates.indexOf(ranking.date);
 const newer = dateIndex > 0 ? availableDates[dateIndex - 1] : null;
 const older = dateIndex >= 0 && dateIndex < availableDates.length - 1 ? availableDates[dateIndex + 1] : null;
@@ -97,7 +104,7 @@ const localization = readLocalizationCatalog();
 const classificationIndex = readClassificationIndex();
 const classifications = classificationMap(readClassificationRepositories());
 const labels = classificationLabels(classificationIndex);
-const usedClassifications = ranking.entries.map((entry) => classifications.get(entry.repository_id)).filter(Boolean);
+const usedClassifications = filterSourceEntries.map((entry) => classifications.get(entry.repository_id)).filter(Boolean);
 const usedCategories = classificationIndex.categories.filter((term) => usedClassifications.some((item) => item?.primary_category === term.id));
 const usedProjectTypes = classificationIndex.project_types.filter((term) => usedClassifications.some((item) => item?.project_type === term.id));
 const usedUseCases = classificationIndex.use_cases.filter((term) => usedClassifications.some((item) => item?.use_cases.includes(term.id)));
@@ -105,9 +112,27 @@ const headline = headlineOverride ?? defaultHeadline;
 const sectionEyebrow = sectionEyebrowOverride ?? (isEvent ? 'Global public events top 100' : `Observed ${languageName ? 'language top 50' : 'top 100'}`);
 const sectionTitle = sectionTitleOverride ?? (isEvent ? '全站公开事件新增 Star 排行' : `${languageName ? `${languageName} ` : ''}${periodDays ? `${periodDays} 日 ` : ''}Star 净增排行`);
 const uniqueAdditionCount = eventRanking?.source_metrics.unique_star_addition_count ?? null;
+const explorationPoolSize = explorationEntries.length || ranking.entries.length;
 ---
 
-<main id="main-content" data-ranking data-ranking-mode={mode} data-daily-path={rankingPath} data-ranking-date={ranking.date} class="shell ranking-page">
+<main
+  id="main-content"
+  data-ranking
+  data-ranking-mode={mode}
+  data-daily-path={rankingPath}
+  data-ranking-date={ranking.date}
+  data-exploration-path={explorationPath ? withBase(explorationPath) : undefined}
+  data-previous-exploration-path={previousExplorationPath ? withBase(previousExplorationPath) : undefined}
+  data-localization-path={withBase('/data/i18n/zh-CN/repositories.json')}
+  data-classification-path={withBase('/data/classification/repositories.json')}
+  data-taxonomy-path={withBase('/data/classification/index.json')}
+  data-repository-base={withBase('/repo/')}
+  data-fixed-language={fixedLanguage}
+  data-gain-field={isEvent || isFacet ? 'stars_added' : 'stars_gained'}
+  data-gain-label={gainLabel}
+  data-exploration-size={explorationPoolSize}
+  class="shell ranking-page"
+>
   <nav class="ranking-mode-switcher" aria-label="榜单口径">
     <strong>{switcherLabelOverride ?? (isEvent ? '全站公开事件新增榜' : '候选池净增榜')}</strong>
     {alternateHref && alternateLabel && <a href={withBase(alternateHref)}>{alternateLabel} →</a>}
@@ -199,7 +224,7 @@ const uniqueAdditionCount = eventRanking?.source_metrics.unique_star_addition_co
         <div class="advanced-filter-grid">
           <label>
             <span>编程语言</span>
-            <select data-language>
+            <select data-language disabled={Boolean(fixedLanguage)}>
               <option value="">全部语言</option>
               {languages.map((language) => <option value={language}>{language}</option>)}
             </select>
@@ -227,7 +252,7 @@ const uniqueAdditionCount = eventRanking?.source_metrics.unique_star_addition_co
           </label>
         </div>
       </details>
-      <p class="filter-count" aria-live="polite"><strong data-visible-count>{ranking.entries.length}</strong> / {ranking.entries.length} 个项目</p>
+      <p class="filter-count" aria-live="polite"><strong data-visible-count>{ranking.entries.length}</strong> / <span data-pool-count>{explorationPoolSize}</span> 个项目</p>
     </div>
     <script is:inline>
       (() => {
@@ -249,7 +274,7 @@ const uniqueAdditionCount = eventRanking?.source_metrics.unique_star_addition_co
         <span role="columnheader">7 日趋势</span>
         <span role="columnheader">总 Star / {gainLabel}</span>
       </div>
-      <div class="table-body">
+      <div class="table-body" data-ranking-body>
         {ranking.entries.map((entry) => {
           const gained = entryGain(entry);
           const trendShape = makeTrendShape(entry.trend_7d);
@@ -272,18 +297,19 @@ const uniqueAdditionCount = eventRanking?.source_metrics.unique_star_addition_co
               data-category={classification?.primary_category ?? ''}
               data-project-type={classification?.project_type ?? ''}
               data-scenarios={classification?.use_cases.join(',') ?? ''}
+              data-source-rank={entry.rank}
             >
               <strong
                 class:list={['rank-cell', movementClass]}
                 role="cell"
                 data-movement={movement}
                 aria-label={isFacet ? `分类内排名 ${entry.rank}` : `排名 ${entry.rank}，变化 ${movement}`}
-              >{String(entry.rank).padStart(2, '0')}</strong>
+              ><span class="rank-number">{String(entry.rank).padStart(2, '0')}</span><small class="source-rank" hidden>总榜 #{entry.rank}</small></strong>
               <div class="project-cell" role="cell">
                 <div class="project-copy">
                   {content.localized ? <>
-                    <a class="project-link" data-content-language="zh" href={hasRepositoryPages ? withBase(`/repo/${entry.repository_id}/`) : entry.html_url} target={hasRepositoryPages ? undefined : '_blank'} rel={hasRepositoryPages ? undefined : 'noreferrer'}>{content.displayName}</a>
-                    <a class="project-link" data-content-language="original" href={hasRepositoryPages ? withBase(`/repo/${entry.repository_id}/`) : entry.html_url} target={hasRepositoryPages ? undefined : '_blank'} rel={hasRepositoryPages ? undefined : 'noreferrer'}>{entry.full_name}</a>
+                    <a class="project-link" data-content-language="zh" href={withBase(`/repo/${entry.repository_id}/`)}>{content.displayName}</a>
+                    <a class="project-link" data-content-language="original" href={withBase(`/repo/${entry.repository_id}/`)}>{entry.full_name}</a>
                     <span class="project-source-row" data-content-language="zh">
                       <span class="project-source-name">{entry.full_name}</span>
                       <span class="translation-badge" title={content.provenance === 'manual' ? '人工校订中文内容' : 'GitHub Models 生成的中文内容'}>{content.provenance === 'manual' ? '人工校订' : 'AI 译'}</span>
@@ -293,17 +319,17 @@ const uniqueAdditionCount = eventRanking?.source_metrics.unique_star_addition_co
                       <span data-content-language="original">{entry.description || 'No description provided.'}</span>
                     </p>
                   </> : <>
-                    <a class="project-link" href={hasRepositoryPages ? withBase(`/repo/${entry.repository_id}/`) : entry.html_url} target={hasRepositoryPages ? undefined : '_blank'} rel={hasRepositoryPages ? undefined : 'noreferrer'}>{entry.full_name}</a>
+                    <a class="project-link" href={withBase(`/repo/${entry.repository_id}/`)}>{entry.full_name}</a>
                     <span class="project-source-row"><span class="translation-pending">中文待生成</span></span>
                     <p>{entry.description || 'No description provided.'}</p>
                   </>}
                   {classification ? <div class="classification-tags" aria-label="项目分类">
-                    <a href={withBase(`/category/${classification.primary_category}/`)}>{categoryLabel}</a>
+                    <span class="primary-category-tag">{categoryLabel}</span>
                     <span>{projectTypeLabel}</span>
                     {useCaseLabels?.slice(0, 2).map((label) => <span>{label}</span>)}
                   </div> : <span class="classification-pending">分类待生成</span>}
                 </div>
-                {hasRepositoryPages && <a class="github-link" href={entry.html_url} target="_blank" rel="noreferrer" aria-label={`在 GitHub 打开 ${entry.full_name}`}>GitHub ↗</a>}
+                <a class="github-link" href={entry.html_url} target="_blank" rel="noreferrer" aria-label={`在 GitHub 打开 ${entry.full_name}`}>GitHub ↗</a>
                 <button
                   class="share-project"
                   type="button"
@@ -333,6 +359,7 @@ const uniqueAdditionCount = eventRanking?.source_metrics.unique_star_addition_co
       <strong>没有匹配的项目</strong>
       <p>试试缩短关键词，或切换到全部语言。</p>
     </div>
+    <p class="filter-status" data-filter-status aria-live="polite" hidden></p>
   </section>
 
   <aside class="method-note" aria-label="榜单口径提示">
@@ -344,150 +371,318 @@ const uniqueAdditionCount = eventRanking?.source_metrics.unique_star_addition_co
 
 <script>
   import { matchesEntry } from '../scripts/filter-utils.mjs';
+  import { filteredRanking, metadataMaps, trendShape } from '../scripts/ranking-explorer.mjs';
 
   const root = document.querySelector('[data-ranking]');
-  if (root) {
+  if (root instanceof HTMLElement) {
     const initializeRanking = () => {
-      if (!(root instanceof HTMLElement) || root.dataset.rankingEnhanced === 'true') return;
+      if (root.dataset.rankingEnhanced === 'true') return;
       root.dataset.rankingEnhanced = 'true';
-    const search = root.querySelector('[data-search]');
-    const language = root.querySelector('[data-language]');
-    const category = root.querySelector('[data-category]');
-    const projectType = root.querySelector('[data-project-type]');
-    const scenario = root.querySelector('[data-scenario]');
-    const advancedFilters = root.querySelector('[data-advanced-filters]');
-    const advancedFilterSummary = root.querySelector('[data-advanced-filter-summary]');
-    const visibleCount = root.querySelector('[data-visible-count]');
-    const emptyState = root.querySelector('[data-empty-state]');
-    const actionStatus = root.querySelector('[data-action-status]');
-    const dailyPath = root.getAttribute('data-daily-path') ?? window.location.pathname;
-    const rankingDate = root.getAttribute('data-ranking-date') ?? '';
-    const params = new URLSearchParams(window.location.search);
-    const initialQuery = params.get('q') ?? '';
-    const initialLanguage = params.get('language') ?? '';
-    const initialCategory = params.get('category') ?? '';
-    const initialProjectType = params.get('type') ?? '';
-    const initialScenario = params.get('scenario') ?? '';
-    if (search instanceof HTMLInputElement && initialQuery) search.value = initialQuery;
-    if (language instanceof HTMLSelectElement && initialLanguage) language.value = initialLanguage;
-    if (category instanceof HTMLSelectElement && initialCategory) category.value = initialCategory;
-    if (projectType instanceof HTMLSelectElement && initialProjectType) projectType.value = initialProjectType;
-    if (scenario instanceof HTMLSelectElement && initialScenario) scenario.value = initialScenario;
-    const initialAdvancedCount = [initialLanguage, initialCategory, initialProjectType, initialScenario].filter(Boolean).length;
-    if (advancedFilters instanceof HTMLDetailsElement && initialAdvancedCount > 0) advancedFilters.open = true;
+      const search = root.querySelector('[data-search]');
+      const language = root.querySelector('[data-language]');
+      const category = root.querySelector('[data-category]');
+      const projectType = root.querySelector('[data-project-type]');
+      const scenario = root.querySelector('[data-scenario]');
+      const advancedFilters = root.querySelector('[data-advanced-filters]');
+      const advancedFilterSummary = root.querySelector('[data-advanced-filter-summary]');
+      const visibleCount = root.querySelector('[data-visible-count]');
+      const poolCount = root.querySelector('[data-pool-count]');
+      const emptyState = root.querySelector('[data-empty-state]');
+      const filterStatus = root.querySelector('[data-filter-status]');
+      const actionStatus = root.querySelector('[data-action-status]');
+      const body = root.querySelector('[data-ranking-body]');
+      const rankingDate = root.dataset.rankingDate ?? '';
+      const fixedLanguage = root.dataset.fixedLanguage ?? '';
+      const staticMarkup = body?.innerHTML ?? '';
+      const staticCount = root.querySelectorAll('[data-ranking-row]').length;
+      const parameters = new URLSearchParams(window.location.search);
+      const restore = (element: Element | null, value: string) => {
+        if (element instanceof HTMLInputElement || element instanceof HTMLSelectElement) element.value = value;
+      };
+      restore(search, parameters.get('q') ?? '');
+      restore(language, fixedLanguage || parameters.get('language') || '');
+      restore(category, parameters.get('category') ?? '');
+      restore(projectType, parameters.get('type') ?? '');
+      restore(scenario, parameters.get('scenario') ?? '');
+      if (advancedFilters instanceof HTMLDetailsElement
+        && [parameters.get('language'), parameters.get('category'), parameters.get('type'), parameters.get('scenario')].some(Boolean)) {
+        advancedFilters.open = true;
+      }
 
-    const apply = () => {
-      const query = search instanceof HTMLInputElement ? search.value : '';
-      const selectedLanguage = language instanceof HTMLSelectElement ? language.value : '';
-      const selectedCategory = category instanceof HTMLSelectElement ? category.value : '';
-      const selectedProjectType = projectType instanceof HTMLSelectElement ? projectType.value : '';
-      const selectedScenario = scenario instanceof HTMLSelectElement ? scenario.value : '';
-      const activeAdvancedCount = [selectedLanguage, selectedCategory, selectedProjectType, selectedScenario].filter(Boolean).length;
-      let count = 0;
-      for (const row of root.querySelectorAll('[data-ranking-row]')) {
-        if (!(row instanceof HTMLElement)) continue;
-        const visible = matchesEntry(
-          {
+      const json = async (url: string | undefined, optional = false) => {
+        if (!url) return null;
+        const response = await fetch(url, { cache: 'force-cache' });
+        if (!response.ok) {
+          if (optional && response.status === 404) return null;
+          throw new Error(`HTTP ${response.status}`);
+        }
+        return response.json();
+      };
+      let resourcesPromise: Promise<any> | null = null;
+      const resources = () => {
+        if (resourcesPromise) return resourcesPromise;
+        resourcesPromise = Promise.all([
+          json(root.dataset.explorationPath),
+          json(root.dataset.previousExplorationPath, true),
+          json(root.dataset.localizationPath),
+          json(root.dataset.classificationPath),
+          json(root.dataset.taxonomyPath),
+        ]).then(([current, previous, localization, classifications, taxonomy]) => ({
+          current: current?.entries ?? [], previous: previous?.entries ?? [],
+          maps: metadataMaps(localization, classifications, taxonomy),
+        }));
+        return resourcesPromise;
+      };
+
+      const filters = () => ({
+        query: search instanceof HTMLInputElement ? search.value.trim() : '',
+        language: fixedLanguage || (language instanceof HTMLSelectElement ? language.value : ''),
+        category: category instanceof HTMLSelectElement ? category.value : '',
+        projectType: projectType instanceof HTMLSelectElement ? projectType.value : '',
+        scenario: scenario instanceof HTMLSelectElement ? scenario.value : '',
+      });
+      const explicitFilterActive = (value: ReturnType<typeof filters>) => Boolean(
+        value.query || (!fixedLanguage && value.language) || value.category || value.projectType || value.scenario,
+      );
+      const syncUrl = (value: ReturnType<typeof filters>) => {
+        const next = new URL(window.location.href);
+        const sync = (key: string, selected: string) => selected ? next.searchParams.set(key, selected) : next.searchParams.delete(key);
+        sync('q', value.query);
+        sync('language', fixedLanguage ? '' : value.language);
+        sync('category', value.category);
+        sync('type', value.projectType);
+        sync('scenario', value.scenario);
+        window.history.replaceState({}, '', next);
+      };
+      const updateSummary = (value: ReturnType<typeof filters>) => {
+        const count = [!fixedLanguage && value.language, value.category, value.projectType, value.scenario].filter(Boolean).length;
+        if (advancedFilterSummary) advancedFilterSummary.textContent = count ? `${count} 项已启用` : '未启用';
+      };
+      const element = (tag: string, className?: string, text?: string) => {
+        const node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text !== undefined) node.textContent = text;
+        return node;
+      };
+      const compact = (value: number) => new Intl.NumberFormat('zh-CN', { notation: 'compact', maximumFractionDigits: 1 }).format(value);
+      const number = (value: number) => new Intl.NumberFormat('zh-CN').format(value);
+      const movement = (value: number | null) => value === null ? ['新入选', 'new'] : value > 0 ? [`↑${value}`, 'up'] : value < 0 ? [`↓${Math.abs(value)}`, 'down'] : ['—', 'flat'];
+      const contentLanguage = () => document.documentElement.dataset.projectLanguage === 'original' ? 'original' : 'zh';
+
+      const renderRow = (entry: any, maps: any) => {
+        const classification = maps.classified.get(Number(entry.repository_id));
+        const localization = maps.localized.get(Number(entry.repository_id));
+        const categoryLabel = classification ? maps.labels.categories.get(classification.primary_category) : null;
+        const typeLabel = classification ? maps.labels.projectTypes.get(classification.project_type) : null;
+        const scenarioLabels = (classification?.use_cases ?? []).map((item: string) => maps.labels.useCases.get(item)).filter(Boolean);
+        const [movementText, movementClass] = movement(entry.filtered_rank_change);
+        const row = element('div', 'ranking-row');
+        row.id = `repo-${entry.repository_id}`;
+        row.setAttribute('role', 'row');
+        row.dataset.rankingRow = '';
+        row.dataset.sourceRank = String(entry.source_rank);
+        row.dataset.language = entry.language ?? '';
+        row.dataset.category = classification?.primary_category ?? '';
+        row.dataset.projectType = classification?.project_type ?? '';
+        row.dataset.scenarios = (classification?.use_cases ?? []).join(',');
+
+        const rank = element('strong', `rank-cell ${movementClass}`);
+        rank.setAttribute('role', 'cell');
+        rank.dataset.movement = movementText;
+        rank.setAttribute('aria-label', `筛选排名 ${entry.filtered_rank}，总榜排名 ${entry.source_rank}，变化 ${movementText}`);
+        rank.append(element('span', 'rank-number', String(entry.filtered_rank).padStart(2, '0')));
+        rank.append(element('small', 'source-rank', `总榜 #${entry.source_rank}`));
+        row.append(rank);
+
+        const project = element('div', 'project-cell');
+        project.setAttribute('role', 'cell');
+        const copy = element('div', 'project-copy');
+        const profileUrl = `${root.dataset.repositoryBase}${entry.repository_id}/`;
+        const link = (label: string, languageName?: string) => {
+          const anchor = element('a', 'project-link', label) as HTMLAnchorElement;
+          anchor.href = profileUrl;
+          if (languageName) anchor.dataset.contentLanguage = languageName;
+          return anchor;
+        };
+        if (localization) {
+          copy.append(link(localization.display_name_zh, 'zh'), link(entry.full_name, 'original'));
+          const source = element('span', 'project-source-row');
+          source.dataset.contentLanguage = 'zh';
+          source.append(element('span', 'project-source-name', entry.full_name));
+          source.append(element('span', 'translation-badge', localization.provenance === 'manual' ? '人工校订' : 'AI 译'));
+          copy.append(source);
+          const description = element('p');
+          const zh = element('span', '', localization.description_zh || 'GitHub 未提供项目描述。');
+          zh.dataset.contentLanguage = 'zh';
+          const original = element('span', '', entry.description || 'No description provided.');
+          original.dataset.contentLanguage = 'original';
+          description.append(zh, original);
+          copy.append(description);
+        } else {
+          copy.append(link(entry.full_name));
+          const pending = element('span', 'project-source-row');
+          pending.append(element('span', 'translation-pending', '中文待生成'));
+          copy.append(pending, element('p', '', entry.description || 'No description provided.'));
+        }
+        if (classification) {
+          const tags = element('div', 'classification-tags');
+          tags.setAttribute('aria-label', '项目分类');
+          tags.append(element('span', 'primary-category-tag', categoryLabel ?? classification.primary_category));
+          tags.append(element('span', '', typeLabel ?? classification.project_type));
+          for (const label of scenarioLabels.slice(0, 2)) tags.append(element('span', '', label));
+          copy.append(tags);
+        } else copy.append(element('span', 'classification-pending', '分类待生成'));
+        project.append(copy);
+        const github = element('a', 'github-link', 'GitHub ↗') as HTMLAnchorElement;
+        github.href = entry.html_url;
+        github.target = '_blank';
+        github.rel = 'noreferrer';
+        github.setAttribute('aria-label', `在 GitHub 打开 ${entry.full_name}`);
+        project.append(github);
+        const share = element('button', 'share-project', '分享') as HTMLButtonElement;
+        share.type = 'button';
+        share.dataset.shareProject = '';
+        share.dataset.shareNameZh = localization?.display_name_zh ?? entry.full_name;
+        share.dataset.shareNameOriginal = entry.full_name;
+        share.dataset.shareRank = String(entry.filtered_rank);
+        share.setAttribute('aria-label', `分享 ${entry.full_name} 的筛选榜第 ${entry.filtered_rank} 名`);
+        project.append(share);
+        row.append(project);
+        const lang = element('div', 'language-cell', entry.language || 'Other');
+        lang.setAttribute('role', 'cell');
+        row.append(lang);
+        const trend = element('div', 'trend-cell');
+        trend.setAttribute('role', 'cell');
+        const trendValues = Array.isArray(entry.trend_7d) ? entry.trend_7d : Array(7).fill(null);
+        trend.setAttribute('aria-label', `最近七日：${trendValues.map((item: number | null) => item ?? '无数据').join('、')}`);
+        trend.style.setProperty('--trend-shape', trendShape(trendValues));
+        row.append(trend);
+        const gain = Number(entry[root.dataset.gainField ?? 'stars_gained'] ?? 0);
+        const stars = element('div', `stars-cell numeric${gain < 0 ? ' negative' : ''}`, `${compact(entry.stars_total)} · ${gain >= 0 ? '+' : ''}${number(gain)}`);
+        stars.setAttribute('role', 'cell');
+        stars.dataset.mobileLabel = `总 Star / ${root.dataset.gainLabel ?? '增量'}`;
+        row.append(stars);
+        return row;
+      };
+
+      let requestId = 0;
+      const applyStaticFallback = (value: ReturnType<typeof filters>) => {
+        let rank = 0;
+        for (const row of root.querySelectorAll('[data-ranking-row]')) {
+          if (!(row instanceof HTMLElement)) continue;
+          const visible = matchesEntry({
             searchText: row.dataset.searchText ?? '', language: row.dataset.language ?? '',
             category: row.dataset.category ?? '', projectType: row.dataset.projectType ?? '',
             scenarios: (row.dataset.scenarios ?? '').split(',').filter(Boolean),
-          },
-          query,
-          selectedLanguage,
-          selectedCategory,
-          selectedProjectType,
-          selectedScenario,
-        );
-        row.hidden = !visible;
-        if (visible) count += 1;
-      }
-      if (visibleCount) visibleCount.textContent = String(count);
-      if (advancedFilterSummary) {
-        advancedFilterSummary.textContent = activeAdvancedCount > 0 ? `${activeAdvancedCount} 项已启用` : '未启用';
-      }
-      if (emptyState instanceof HTMLElement) emptyState.hidden = count !== 0;
-      const next = new URL(window.location.href);
-      query.trim() ? next.searchParams.set('q', query.trim()) : next.searchParams.delete('q');
-      selectedLanguage ? next.searchParams.set('language', selectedLanguage) : next.searchParams.delete('language');
-      selectedCategory ? next.searchParams.set('category', selectedCategory) : next.searchParams.delete('category');
-      selectedProjectType ? next.searchParams.set('type', selectedProjectType) : next.searchParams.delete('type');
-      selectedScenario ? next.searchParams.set('scenario', selectedScenario) : next.searchParams.delete('scenario');
-      window.history.replaceState({}, '', next);
-    };
-    search?.addEventListener('input', apply);
-    language?.addEventListener('change', apply);
-    category?.addEventListener('change', apply);
-    projectType?.addEventListener('change', apply);
-    scenario?.addEventListener('change', apply);
-
-    const copyText = async (value: string) => {
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(value);
-        return;
-      }
-      throw new Error('Clipboard API unavailable');
-    };
-    const setStatus = (message: string) => {
-      if (actionStatus) actionStatus.textContent = message;
-    };
-    const rankingUrl = () => {
-      const url = new URL(dailyPath, window.location.origin);
-      if (document.documentElement.dataset.projectLanguage === 'original') url.searchParams.set('display', 'original');
-      return url.toString();
-    };
-    root.addEventListener('click', async (event) => {
-      if (!(event.target instanceof Element)) return;
-      if (event.target.closest('[data-copy-ranking]')) {
-        try {
-          await copyText(rankingUrl());
-          setStatus('榜单链接已复制');
-        } catch {
-          setStatus('复制失败，请从地址栏复制');
+          }, value.query, value.language, value.category, value.projectType, value.scenario);
+          row.hidden = !visible;
+          if (!visible) continue;
+          rank += 1;
+          const numberNode = row.querySelector('.rank-number');
+          if (numberNode) numberNode.textContent = String(rank).padStart(2, '0');
+          const source = row.querySelector('.source-rank');
+          if (source instanceof HTMLElement) source.hidden = false;
+          if (rank >= 100) break;
         }
-        return;
+        if (visibleCount) visibleCount.textContent = String(rank);
+        if (emptyState instanceof HTMLElement) emptyState.hidden = rank !== 0;
+      };
+      const apply = async () => {
+        const value = filters();
+        syncUrl(value);
+        updateSummary(value);
+        const currentRequest = ++requestId;
+        if (!explicitFilterActive(value)) {
+          if (body) body.innerHTML = staticMarkup;
+          if (visibleCount) visibleCount.textContent = String(staticCount);
+          if (poolCount) poolCount.textContent = root.dataset.explorationSize ?? String(staticCount);
+          if (emptyState instanceof HTMLElement) emptyState.hidden = true;
+          if (filterStatus instanceof HTMLElement) filterStatus.hidden = true;
+          return;
+        }
+        if (!root.dataset.explorationPath) {
+          applyStaticFallback(value);
+          if (filterStatus instanceof HTMLElement) {
+            filterStatus.hidden = false;
+            filterStatus.textContent = '该历史日期尚无深度池，当前仅在已发布榜单内筛选。';
+          }
+          return;
+        }
+        if (filterStatus instanceof HTMLElement) {
+          filterStatus.hidden = false;
+          filterStatus.textContent = '正在从深度池生成筛选榜…';
+        }
+        try {
+          const loaded = await resources();
+          if (currentRequest !== requestId) return;
+          const result = filteredRanking(loaded.current, loaded.previous, loaded.maps, value, 100);
+          if (body) body.replaceChildren(...result.entries.map((entry: any) => renderRow(entry, loaded.maps)));
+          if (visibleCount) visibleCount.textContent = String(result.entries.length);
+          if (poolCount) poolCount.textContent = String(result.total);
+          if (emptyState instanceof HTMLElement) emptyState.hidden = result.total !== 0;
+          if (filterStatus instanceof HTMLElement) {
+            filterStatus.hidden = false;
+            filterStatus.textContent = result.total > 100
+              ? `符合条件 ${result.total} 项，显示重新排名后的前 100。`
+              : `符合条件 ${result.total} 项，已按当前榜单口径重新排名。`;
+          }
+        } catch {
+          if (currentRequest !== requestId) return;
+          if (body) body.innerHTML = staticMarkup;
+          applyStaticFallback(value);
+          if (filterStatus instanceof HTMLElement) {
+            filterStatus.hidden = false;
+            filterStatus.textContent = '深度池暂时不可用，已回退到公开榜单内筛选。';
+          }
+        }
+      };
+      for (const control of [search, language, category, projectType, scenario]) {
+        control?.addEventListener('input', apply);
+        control?.addEventListener('change', apply);
       }
-      const button = event.target.closest('[data-share-project]');
-      if (button instanceof HTMLButtonElement) {
-        const name = document.documentElement.dataset.projectLanguage === 'original'
+
+      const copyText = async (value: string) => {
+        if (!navigator.clipboard?.writeText) throw new Error('Clipboard API unavailable');
+        await navigator.clipboard.writeText(value);
+      };
+      const setStatus = (message: string) => { if (actionStatus) actionStatus.textContent = message; };
+      const rankingUrl = () => {
+        const url = new URL(window.location.href);
+        url.hash = '';
+        return url.toString();
+      };
+      root.addEventListener('click', async (event) => {
+        if (!(event.target instanceof Element)) return;
+        if (event.target.closest('[data-copy-ranking]')) {
+          try { await copyText(rankingUrl()); setStatus('榜单链接已复制'); }
+          catch { setStatus('复制失败，请从地址栏复制'); }
+          return;
+        }
+        const button = event.target.closest('[data-share-project]');
+        if (!(button instanceof HTMLButtonElement)) return;
+        const name = contentLanguage() === 'original'
           ? button.dataset.shareNameOriginal ?? 'GitHub 项目'
           : button.dataset.shareNameZh ?? button.dataset.shareNameOriginal ?? 'GitHub 项目';
         const rank = button.dataset.shareRank ?? '';
         const row = button.closest('[data-ranking-row]');
         const url = `${rankingUrl()}#${row?.id ?? ''}`;
-        const shareData = {
-          title: `${name}｜开源星榜第 ${rank} 名`,
-          text: `${name} 在 ${rankingDate} 开源星榜位列第 ${rank} 名。`,
-          url,
-        };
+        const shareData = { title: `${name}｜开源星榜第 ${rank} 名`, text: `${name} 在 ${rankingDate} 开源星榜位列第 ${rank} 名。`, url };
         try {
-          if (navigator.share) {
-            await navigator.share(shareData);
-            setStatus('分享面板已打开');
-          } else {
-            await copyText(url);
-            setStatus(`${name} 的排名链接已复制`);
-          }
+          if (navigator.share) { await navigator.share(shareData); setStatus('分享面板已打开'); }
+          else { await copyText(url); setStatus(`${name} 的排名链接已复制`); }
         } catch (error) {
           if (error instanceof DOMException && error.name === 'AbortError') return;
-          try {
-            await copyText(url);
-            setStatus(`${name} 的排名链接已复制`);
-          } catch {
-            setStatus('分享失败，请稍后重试');
-          }
+          try { await copyText(url); setStatus(`${name} 的排名链接已复制`); }
+          catch { setStatus('分享失败，请稍后重试'); }
         }
-      }
-    });
-    apply();
+      });
+      apply();
     };
     root.addEventListener('change', (event) => {
       if (event.target instanceof HTMLSelectElement && event.target.matches('[data-date-selector]') && event.target.value) {
         window.location.assign(event.target.value);
       }
     });
-    for (const eventName of ['focusin', 'pointerdown', 'keydown', 'change']) {
-      root.addEventListener(eventName, initializeRanking, { capture: true, once: true });
-    }
-    if (window.location.search) initializeRanking();
+    initializeRanking();
   }
 </script>

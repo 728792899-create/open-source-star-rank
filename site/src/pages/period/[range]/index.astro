@@ -3,7 +3,7 @@ import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ProgressState from '../../../components/ProgressState.astro';
 import RankingView from '../../../components/RankingView.astro';
-import { readLocalizationCatalog, readPeriodRanking, readRankingIndex } from '../../../lib/data';
+import { readExplorationPool, readLocalizationCatalog, readPeriodRanking, readRankingIndex } from '../../../lib/data';
 import { localizedRepositoryContent } from '../../../lib/localization';
 
 export const getStaticPaths = (() => [
@@ -15,6 +15,12 @@ const { days } = Astro.props;
 const index = readRankingIndex();
 const period = index.periods?.[`${days}d`];
 const ranking = period?.latest_date ? readPeriodRanking(days, period.latest_date) : null;
+const explorationKind = days === 7 ? 'period_7d' : 'period_30d';
+const exploration = ranking ? readExplorationPool(explorationKind, ranking.date) : null;
+const previousDate = ranking ? new Date(`${ranking.date}T12:00:00Z`) : null;
+if (previousDate) previousDate.setUTCDate(previousDate.getUTCDate() - 1);
+const previousDateValue = previousDate?.toISOString().slice(0, 10) ?? null;
+const previousExploration = previousDateValue ? readExplorationPool(explorationKind, previousDateValue) : null;
 const localization = readLocalizationCatalog();
 const title = `GitHub 近 ${days} 日 Star 净增榜｜开源星榜`;
 const structuredData = ranking ? {
@@ -29,6 +35,6 @@ const structuredData = ranking ? {
 
 <BaseLayout title={title} description={`GitHub 开源项目候选池近 ${days} 日 Star 真实净增排行。`} structuredData={structuredData} socialImagePath={ranking ? `/social/period-${days}d-${ranking.date}.png` : '/og.png'}>
   {ranking
-    ? <RankingView ranking={ranking} index={index} isLatest mode="period" availableDates={period?.available_dates ?? []} routePrefix={`/period/${days}d`} dataPrefix={`/data/period/${days}d`} />
+    ? <RankingView ranking={ranking} index={index} isLatest mode="period" availableDates={period?.available_dates ?? []} routePrefix={`/period/${days}d`} dataPrefix={`/data/period/${days}d`} explorationPath={exploration ? `/data/explore/period/${days}d/${ranking.date}.json` : undefined} previousExplorationPath={previousExploration ? `/data/explore/period/${days}d/${previousDateValue}.json` : undefined} explorationEntries={exploration?.entries ?? []} />
     : <ProgressState index={index} days={days} />}
 </BaseLayout>

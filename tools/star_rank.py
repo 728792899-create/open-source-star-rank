@@ -638,6 +638,32 @@ def ranked_entries(
     return entries
 
 
+def build_exploration_pool(
+    *,
+    board_kind: str,
+    ranking: Mapping[str, Any],
+    rankable: Sequence[Mapping[str, Any]],
+) -> Dict[str, Any]:
+    """Build the permanent, bounded source pool used by in-page re-ranking.
+
+    The public Top 100 remains the authoritative static ranking.  This pool keeps
+    the same global ordering for every comparable candidate so the browser can
+    apply one or more taxonomy filters and derive a transparent filtered Top 100.
+    """
+
+    entries = ranked_entries(rankable, previous_ranking=None, limit=len(rankable))
+    return {
+        "schema_version": "1.0.0",
+        "board_kind": board_kind,
+        "date": ranking["date"],
+        "timezone": ranking["timezone"],
+        "window_start": ranking["window_start"],
+        "window_end": ranking["window_end"],
+        "pool_size": len(entries),
+        "entries": entries,
+    }
+
+
 def build_daily_ranking(
     *,
     previous_snapshot: Mapping[str, Any],
@@ -737,6 +763,7 @@ def build_period_ranking(
     snapshot_history: Mapping[dt.date, Mapping[str, Any]],
     previous_ranking: Optional[Mapping[str, Any]],
     knowledge_repositories: Mapping[str, str],
+    limit: int = TOP_LIMIT,
 ) -> Dict[str, Any]:
     end_date = dt.date.fromisoformat(str(end_snapshot["snapshot_date"]))
     if not complete_period_window(snapshot_history, end_date=end_date, days=days):
@@ -775,7 +802,7 @@ def build_period_ranking(
         "candidate_count": end_snapshot["candidate_count"],
         "eligible_count": len(rankable),
         "collection": end_snapshot["collection"],
-        "entries": ranked_entries(rankable, previous_ranking=previous_ranking, limit=TOP_LIMIT),
+        "entries": ranked_entries(rankable, previous_ranking=previous_ranking, limit=limit),
     }
 
 
@@ -1183,6 +1210,15 @@ def run_update(
         if ranking is not None
         else []
     )
+    exploration_pools: List[Dict[str, Any]] = []
+    if ranking is not None:
+        exploration_pools.append(
+            build_exploration_pool(
+                board_kind="candidate_daily",
+                ranking=ranking,
+                rankable=all_rankable,
+            )
+        )
     period_rankings: List[Dict[str, Any]] = []
     for days in PERIOD_DAYS:
         start_snapshot = history.get(snapshot_date - dt.timedelta(days=days))
@@ -1191,8 +1227,7 @@ def run_update(
         period_date = (snapshot_date - dt.timedelta(days=1)).isoformat()
         previous_period_date = (dt.date.fromisoformat(period_date) - dt.timedelta(days=1)).isoformat()
         previous_period = load_json(public_dir / "period" / f"{days}d" / f"{previous_period_date}.json")
-        period_rankings.append(
-            build_period_ranking(
+        full_period_ranking = build_period_ranking(
                 days=days,
                 end_snapshot=snapshot,
                 start_snapshot=start_snapshot,
@@ -1200,6 +1235,19 @@ def run_update(
                 snapshot_history=history,
                 previous_ranking=previous_period,
                 knowledge_repositories=knowledge_repositories,
+                limit=len(candidates),
+            )
+        period_rankings.append(
+            {
+                **full_period_ranking,
+                "entries": full_period_ranking["entries"][:TOP_LIMIT],
+            }
+        )
+        exploration_pools.append(
+            build_exploration_pool(
+                board_kind=f"candidate_period_{days}d",
+                ranking=full_period_ranking,
+                rankable=full_period_ranking["entries"],
             )
         )
 
@@ -1248,6 +1296,8 @@ def run_update(
             validate_payload("language", language_ranking)
         for period_ranking in period_rankings:
             validate_payload("period", period_ranking)
+        for exploration_pool in exploration_pools:
+            validate_payload("exploration_pool", exploration_pool)
         validate_payload("repositories", repositories)
         validate_payload("language_index", language_index)
         validate_payload("index", index)
@@ -1269,6 +1319,14 @@ def run_update(
                 public_dir / "period" / f"{period_ranking['period_days']}d" / f"{period_ranking['date']}.json",
                 period_ranking,
             )
+        for exploration_pool in exploration_pools:
+            board_kind = str(exploration_pool["board_kind"])
+            if board_kind == "candidate_daily":
+                destination = public_dir / "explore" / "daily" / f"{exploration_pool['date']}.json"
+            else:
+                period = board_kind.removeprefix("candidate_period_")
+                destination = public_dir / "explore" / "period" / period / f"{exploration_pool['date']}.json"
+            atomic_write_json(destination, exploration_pool)
         atomic_write_json(public_dir / "repositories.json", repositories)
         atomic_write_json(public_dir / "language" / "index.json", language_index)
         atomic_write_json(public_dir / "index.json", index)
@@ -1281,6 +1339,7 @@ def run_update(
         "ranking": ranking,
         "language_rankings": language_rankings,
         "period_rankings": period_rankings,
+        "exploration_pools": exploration_pools,
         "index": index,
         "removed_snapshots": [str(path) for path in removed_snapshots],
     }
