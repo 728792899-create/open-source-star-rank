@@ -19,6 +19,8 @@ const {
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
 const socialImage = new URL(withBase(socialImagePath), Astro.site ?? Astro.url.origin).toString();
+const repositoryUrl = 'https://github.com/728792899-create/open-source-star-rank';
+const reuseStatementUrl = `${repositoryUrl}/blob/main/REUSE.md`;
 ---
 
 <!doctype html>
@@ -64,6 +66,7 @@ const socialImage = new URL(withBase(socialImagePath), Astro.site ?? Astro.url.o
       url: new URL(withBase('/'), Astro.site ?? Astro.url.origin).toString(),
       description,
       inLanguage: 'zh-CN',
+      sameAs: [repositoryUrl],
     })} />
   </head>
   <body>
@@ -82,6 +85,7 @@ const socialImage = new URL(withBase(socialImagePath), Astro.site ?? Astro.url.o
         <a href={withBase('/language/')}>语言</a>
         <a href={withBase('/status/')}>状态</a>
         <a href={withBase('/methodology/')}>数据口径</a>
+        <a href={repositoryUrl} target="_blank" rel="noreferrer">GitHub ↗</a>
       </nav>
       <div class="content-language-switcher" role="group" aria-label="项目内容显示语言">
         <span>项目内容</span>
@@ -91,8 +95,14 @@ const socialImage = new URL(withBase(socialImagePath), Astro.site ?? Astro.url.o
     </header>
     <slot />
     <footer class="site-footer">
-      <p><strong>开源星榜</strong>的“全站”限定为 GH Archive 实际归档的 GitHub 公开事件，不是 GitHub 官方统计。</p>
-      <p>数据来自 GH Archive 与 GitHub 公共 API · 北京时间每日更新</p>
+      <div class="site-footer-copy">
+        <p><strong>开源星榜</strong>的“全站”限定为 GH Archive 实际归档的 GitHub 公开事件，不是 GitHub 官方统计。</p>
+        <p>数据来自 GH Archive 与 GitHub 公共 API · 北京时间每日更新</p>
+      </div>
+      <nav class="site-footer-links" aria-label="项目源码与复用">
+        <a href={repositoryUrl} target="_blank" rel="noreferrer">GitHub 仓库 ↗</a>
+        <a href={reuseStatementUrl} target="_blank" rel="noreferrer">复用声明 ↗</a>
+      </nav>
     </footer>
     <script is:inline>
       (() => {

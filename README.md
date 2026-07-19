@@ -9,12 +9,15 @@
 [![中文内容与分类](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-localization.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-localization.yml)
 [![全站历史星标榜](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-alltime.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-alltime.yml)
 [![质量校验](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-ci.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-c98b18.svg)](LICENSE)
 
 [🌐 正式站点](https://728792899-create.github.io/open-source-star-rank/) ·
 [🧭 组合筛选榜](https://728792899-create.github.io/open-source-star-rank/) ·
 [🏆 历史 Top 1000](https://728792899-create.github.io/open-source-star-rank/all-time/) ·
 [📊 采样状态](https://728792899-create.github.io/open-source-star-rank/status/) ·
-[📐 数据口径](https://728792899-create.github.io/open-source-star-rank/methodology/)
+[📐 数据口径](https://728792899-create.github.io/open-source-star-rank/methodology/) ·
+[💻 GitHub 源码](https://github.com/728792899-create/open-source-star-rank) ·
+[♻️ 复用声明](REUSE.md)
 
 </div>
 
@@ -147,6 +150,15 @@ flowchart TD
 | 中文项目内容 | [`/data/i18n/zh-CN/repositories.json`](https://728792899-create.github.io/open-source-star-rank/data/i18n/zh-CN/repositories.json) |
 | 项目分类 | [`/data/classification/index.json`](https://728792899-create.github.io/open-source-star-rank/data/classification/index.json) |
 | 订阅 | [RSS](https://728792899-create.github.io/open-source-star-rank/rss.xml) · [Atom](https://728792899-create.github.io/open-source-star-rank/atom.xml) · [JSON Feed](https://728792899-create.github.io/open-source-star-rank/feed.json) |
+
+---
+
+## 复用与许可
+
+- 仓库源代码、工作流、Schema 和项目原创文档采用 [MIT License](LICENSE)，允许修改、部署、分发和商业使用，但须保留版权与许可文本。
+- 在本项目拥有相关权利的范围内，公开生成的排行 JSON、派生统计和原创可视化按 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 复用；请注明“开源星榜”、数据日期、榜单口径并链接本站。
+- GitHub 和 GH Archive 的原始数据、各仓库内容及商标仍归相应权利人；复用结果不得描述为 GitHub 官方统计，也不得暗示原项目作者或本站为衍生产品背书。
+- Fork 部署、数据转载和二次排名的完整要求见 [《开源星榜复用声明》](REUSE.md)。
 
 ---
 

@@ -55,6 +55,13 @@ for (const marker of ['lang="zh-CN"', 'rel="canonical"', 'application/ld+json', 
 for (const marker of ['data-project-language="zh"', 'data-project-language="original"', '项目内容']) {
   if (!indexHtml.includes(marker)) throw new Error(`Homepage is missing localization control ${marker}`);
 }
+for (const marker of [
+  'https://github.com/728792899-create/open-source-star-rank',
+  'GitHub 仓库 ↗',
+  '复用声明 ↗',
+]) {
+  if (!indexHtml.includes(marker)) throw new Error(`Homepage is missing repository disclosure ${marker}`);
+}
 
 const dataIndex = JSON.parse(await readFile(path.join(dist, 'data/index.json'), 'utf8'));
 if (!['1.1.0', '1.2.0'].includes(dataIndex.schema_version) || dataIndex.freshness_threshold_hours !== 36) {
