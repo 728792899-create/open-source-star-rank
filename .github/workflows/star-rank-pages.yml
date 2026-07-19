@@ -255,12 +255,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BUILD_RESULT: ${{ needs.build.result }}
           DEPLOY_RESULT: ${{ needs.deploy.result }}
+          RUN_MODE: ${{ needs.build.outputs.run_mode }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         shell: bash
         run: |
           set -euo pipefail
           if [[ "$BUILD_RESULT" == "success" && "$DEPLOY_RESULT" == "success" ]]; then
-            python tools/star_rank_incident.py --status close --details "采集和部署已恢复：$RUN_URL"
+            if [[ "$RUN_MODE" == "deploy_existing" ]]; then
+              echo "deploy_existing 不改变采样新鲜度，保留现有故障 Issue 状态。"
+            else
+              python tools/star_rank_incident.py --status close --details "采集和部署已恢复：$RUN_URL"
+            fi
           else
             python tools/star_rank_incident.py --status open --details "build=$BUILD_RESULT, deploy=$DEPLOY_RESULT；运行记录：$RUN_URL"
           fi
