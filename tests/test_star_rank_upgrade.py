@@ -20,7 +20,7 @@ from tools.star_rank import (
     window_quality,
 )
 from tools.star_rank_schema import SchemaValidationError, validate_payload
-from tools.validate_star_rank_data import validate_data_tree
+from tools.validate_star_rank_data import ranking_uses_current_repository_catalog, validate_data_tree
 
 
 def api_repo(repository_id: int, language: str, stars: int) -> dict:
@@ -51,6 +51,14 @@ class NoCallClient:
 
 
 class StarRankUpgradeTests(unittest.TestCase):
+    def test_historical_rankings_may_outlive_current_candidate_catalog(self) -> None:
+        catalog = {"updated_at": "2026-07-19T00:20:00Z"}
+        historical = {"window_end": "2026-07-18T00:20:00Z"}
+        current = {"window_end": "2026-07-19T00:20:00Z"}
+
+        self.assertFalse(ranking_uses_current_repository_catalog(historical, catalog))
+        self.assertTrue(ranking_uses_current_repository_catalog(current, catalog))
+
     def test_data_validator_accepts_legacy_11_fixture(self) -> None:
         fixture = Path(__file__).resolve().parents[1] / "site" / "tests" / "fixtures" / "ready-data"
         with tempfile.TemporaryDirectory() as temporary:
