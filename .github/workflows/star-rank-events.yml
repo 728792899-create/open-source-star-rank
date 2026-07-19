@@ -221,7 +221,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RESULT: ${{ needs.build.result }}/${{ needs.deploy.result }}
+          RUN_MODE: ${{ needs.build.outputs.run_mode }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          if [[ "$RESULT" == "success/success" ]]; then status=close; else status=open; fi
-          python tools/star_rank_incident.py --status "$status" --title "[开源星榜] 公共事件榜故障" --label "star-rank-events-incident" --details "事件榜工作流：$RESULT；$RUN_URL"
+          set -euo pipefail
+          if [[ "$RESULT" == "success/success" ]]; then
+            if [[ "$RUN_MODE" == "deploy_existing" ]]; then
+              echo "deploy_existing 不改变事件数据新鲜度，保留现有故障 Issue 状态。"
+            else
+              python tools/star_rank_incident.py --status close --title "[开源星榜] 公共事件榜故障" --label "star-rank-events-incident" --details "事件榜工作流已恢复：$RESULT；$RUN_URL"
+            fi
+          else
+            python tools/star_rank_incident.py --status open --title "[开源星榜] 公共事件榜故障" --label "star-rank-events-incident" --details "事件榜工作流：$RESULT；$RUN_URL"
+          fi
