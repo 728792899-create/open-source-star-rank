@@ -35,6 +35,24 @@ def timestamp(value: str) -> dt.datetime:
     return dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
 
 
+def event_entry_sort_key(item: dict[str, Any], schema_version: str) -> tuple[Any, ...]:
+    """Return the historical ordering contract for an event entry.
+
+    Event data 1.0 used repository metadata as a final tie-breaker. Version
+    1.1 intentionally switched to repository ID so the published Top 100 and
+    its deeper exploration pool preserve the pre-enrichment global order.
+    """
+
+    if schema_version == "1.1.0":
+        return (-item["stars_added"], -item["watch_events"], item["repository_id"])
+    return (
+        -item["stars_added"],
+        -item["watch_events"],
+        -item["stars_total"],
+        item["full_name"].casefold(),
+    )
+
+
 def ranking_uses_current_repository_catalog(
     ranking: dict[str, Any], repository_catalog: dict[str, Any]
 ) -> bool:
@@ -88,6 +106,7 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
         "daily": 0,
         "language": 0,
         "period": 0,
+        "exploration_pool": 0,
         "repositories": 0,
         "event_index": 0,
         "event_daily": 0,
@@ -250,6 +269,35 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
             if index["periods"][f"{days}d"]["latest_date"] != (max(actual_period_dates) if actual_period_dates else None):
                 raise SchemaValidationError(f"{days} 日榜 latest_date 不一致")
 
+        explore_roots = (
+            (public_dir / "explore" / "daily", "candidate_daily", public_dir / "daily"),
+            (public_dir / "explore" / "period" / "7d", "candidate_period_7d", public_dir / "period" / "7d"),
+            (public_dir / "explore" / "period" / "30d", "candidate_period_30d", public_dir / "period" / "30d"),
+        )
+        for pool_root, expected_kind, ranking_root in explore_roots:
+            if not pool_root.exists():
+                continue
+            for path in sorted(pool_root.glob("????-??-??.json")):
+                payload = read_json(path)
+                validate_payload("exploration_pool", payload, schema_dir)
+                if payload["date"] != path.stem or payload["board_kind"] != expected_kind:
+                    raise SchemaValidationError(f"探索池路径或榜单类型不一致：{path}")
+                if payload["pool_size"] != len(payload["entries"]):
+                    raise SchemaValidationError(f"探索池 pool_size 与条目数不一致：{path}")
+                entries = payload["entries"]
+                if len({item["repository_id"] for item in entries}) != len(entries):
+                    raise SchemaValidationError(f"探索池包含重复仓库 ID：{path}")
+                if [item["rank"] for item in entries] != list(range(1, len(entries) + 1)):
+                    raise SchemaValidationError(f"探索池名次不连续：{path}")
+                ranking_path = ranking_root / path.name
+                if ranking_path.is_file():
+                    ranking = read_json(ranking_path)
+                    expected_ids = [item["repository_id"] for item in entries[: len(ranking["entries"])]]
+                    actual_ids = [item["repository_id"] for item in ranking["entries"]]
+                    if expected_ids != actual_ids:
+                        raise SchemaValidationError(f"探索池前列与公开榜单不一致：{path}")
+                counts["exploration_pool"] += 1
+
     event_index_path = public_dir / "events" / "index.json"
     if event_index_path.exists():
         event_index = read_json(event_index_path)
@@ -304,18 +352,7 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
                 raise SchemaValidationError(f"事件榜包含重复仓库 ID：{path}")
             if any(item["watch_events"] < item["stars_added"] for item in entries):
                 raise SchemaValidationError(f"事件榜 WatchEvent 数不得小于唯一用户数：{path}")
-            if payload["schema_version"] == "1.1.0":
-                expected = sorted(
-                    entries,
-                    key=lambda item: (-item["stars_added"], -item["watch_events"], item["repository_id"]),
-                )
-            else:
-                expected = sorted(
-                    entries,
-                    key=lambda item: (
-                        -item["stars_added"], -item["watch_events"], -item["stars_total"], item["full_name"].casefold()
-                    ),
-                )
+            expected = sorted(entries, key=lambda item: event_entry_sort_key(item, payload["schema_version"]))
             if entries != expected or [item["rank"] for item in entries] != list(range(1, len(entries) + 1)):
                 raise SchemaValidationError(f"事件榜排序或名次不一致：{path}")
             event_dates.add(path.stem)
@@ -357,12 +394,7 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
                 raise SchemaValidationError(f"分类池包含重复仓库 ID：{path}")
             if any(item["watch_events"] < item["stars_added"] for item in entries):
                 raise SchemaValidationError(f"分类池 WatchEvent 数不得小于唯一用户数：{path}")
-            expected = sorted(
-                entries,
-                key=lambda item: (
-                    -item["stars_added"], -item["watch_events"], -item["stars_total"], item["full_name"].casefold()
-                ),
-            )
+            expected = sorted(entries, key=lambda item: event_entry_sort_key(item, payload["schema_version"]))
             if entries != expected or [item["rank"] for item in entries] != list(range(1, len(entries) + 1)):
                 raise SchemaValidationError(f"分类池排序或名次不一致：{path}")
             counts["event_category_pool"] += 1
@@ -470,6 +502,7 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
         "language.schema.json",
         "language-index.schema.json",
         "period.schema.json",
+        "exploration-pool.schema.json",
         "repositories.schema.json",
         "event-index.schema.json",
         "event-daily.schema.json",

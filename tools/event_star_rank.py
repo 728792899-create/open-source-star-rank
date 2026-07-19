@@ -48,9 +48,8 @@ DEFAULT_METADATA_ATTEMPT_LIMIT = 900
 DEFAULT_CATEGORY_POOL_LIMIT = 0
 MAX_CATEGORY_POOL_LIMIT = 1000
 DEFAULT_CATEGORY_POOL_ATTEMPT_LIMIT = 3000
-CATEGORY_POOL_SCHEMA_VERSION = "1.0.0"
+CATEGORY_POOL_SCHEMA_VERSION = "1.1.0"
 EVENT_STATE_RETENTION_DAYS = 30
-EVENT_POOL_RETENTION_DAYS = 14
 FRESHNESS_THRESHOLD_HOURS = 36
 DATASET = "githubarchive.day"
 EVENT_SCOPE = "github_public_events_as_archived_by_gh_archive"
@@ -277,6 +276,7 @@ def build_category_pool(
     date: dt.date,
     generated_at: dt.datetime,
     enriched: Sequence[Mapping[str, Any]],
+    state_history: Mapping[dt.date, Mapping[str, Any]] | None = None,
 ) -> dict[str, Any]:
     start, end = event_window(date)
     ordered = sorted(
@@ -284,10 +284,14 @@ def build_category_pool(
         key=lambda item: (
             -int(item["stars_added"]),
             -int(item["watch_events"]),
-            -int(item["stars_total"]),
-            str(item["full_name"]).casefold(),
+            int(item["repository_id"]),
         ),
     )
+    history = state_history or {}
+    by_day = {
+        day: {int(item["repository_id"]): int(item["stars_added"]) for item in payload.get("entries", [])}
+        for day, payload in history.items()
+    }
     entries = [
         {
             "repository_id": int(item["repository_id"]),
@@ -298,6 +302,10 @@ def build_category_pool(
             "stars_added": int(item["stars_added"]),
             "watch_events": int(item["watch_events"]),
             "rank": rank,
+            "trend_7d": [
+                by_day.get(date - dt.timedelta(days=offset), {}).get(int(item["repository_id"]))
+                for offset in range(6, -1, -1)
+            ],
             "html_url": str(item["html_url"]),
             "owner_avatar_url": item.get("owner_avatar_url"),
         }
@@ -317,19 +325,10 @@ def build_category_pool(
 
 
 def prune_event_pools(pool_dir: Path, *, current_date: dt.date) -> list[Path]:
-    cutoff = current_date - dt.timedelta(days=EVENT_POOL_RETENTION_DAYS - 1)
-    removed: list[Path] = []
-    if not pool_dir.exists():
-        return removed
-    for path in pool_dir.glob("????-??-??.json"):
-        try:
-            date = dt.date.fromisoformat(path.stem)
-        except ValueError:
-            continue
-        if date < cutoff:
-            path.unlink()
-            removed.append(path)
-    return sorted(removed)
+    """Exploration pools are public history and are intentionally permanent."""
+
+    del pool_dir, current_date
+    return []
 
 
 def validate_event_coverage(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
@@ -687,7 +686,13 @@ def run_event_update(
             pool_limit=category_pool_limit,
             attempt_limit=category_pool_attempt_limit,
         )
-        pool = build_category_pool(date=date, generated_at=generated_at, enriched=pool_enriched)
+        pool_history = {**history, date: raw_state}
+        pool = build_category_pool(
+            date=date,
+            generated_at=generated_at,
+            enriched=pool_enriched,
+            state_history=pool_history,
+        )
         validate_payload("event_category_pool", pool)
         atomic_write_json(public_dir / "events" / "category" / f"{date.isoformat()}.json", pool)
         prune_event_pools(public_dir / "events" / "category", current_date=date)

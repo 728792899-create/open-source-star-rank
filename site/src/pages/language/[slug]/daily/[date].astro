@@ -2,7 +2,7 @@
 import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import RankingView from '../../../../components/RankingView.astro';
-import { readLanguageIndex, readLanguageRanking, readLocalizationCatalog, readRankingIndex } from '../../../../lib/data';
+import { readExplorationPool, readLanguageIndex, readLanguageRanking, readLocalizationCatalog, readRankingIndex } from '../../../../lib/data';
 import { localizedRepositoryContent } from '../../../../lib/localization';
 
 export const getStaticPaths = (() => {
@@ -15,6 +15,11 @@ export const getStaticPaths = (() => {
 const { language, date } = Astro.props;
 const index = readRankingIndex();
 const ranking = readLanguageRanking(language.slug, date);
+const exploration = readExplorationPool('daily', date);
+const previousDate = new Date(`${date}T12:00:00Z`);
+previousDate.setUTCDate(previousDate.getUTCDate() - 1);
+const previousDateValue = previousDate.toISOString().slice(0, 10);
+const previousExploration = readExplorationPool('daily', previousDateValue);
 const localization = readLocalizationCatalog();
 const structuredData = {
   '@context': 'https://schema.org', '@type': 'ItemList', name: `${date} ${language.language} GitHub Star 净增榜`,
@@ -40,5 +45,9 @@ const structuredData = {
     availableDates={language.available_dates}
     routePrefix={`/language/${language.slug}/daily`}
     dataPrefix={`/data/language/${language.slug}/daily`}
+    fixedLanguage={language.language}
+    explorationPath={exploration ? `/data/explore/daily/${date}.json` : undefined}
+    previousExplorationPath={previousExploration ? `/data/explore/daily/${previousDateValue}.json` : undefined}
+    explorationEntries={exploration?.entries ?? []}
   />
 </BaseLayout>

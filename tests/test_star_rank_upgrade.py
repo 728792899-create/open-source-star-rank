@@ -7,6 +7,7 @@ from pathlib import Path
 from tools.star_rank import (
     DataIntegrityError,
     build_daily_ranking,
+    build_exploration_pool,
     build_language_rankings,
     build_period_ranking,
     build_repository_catalog,
@@ -51,6 +52,28 @@ class NoCallClient:
 
 
 class StarRankUpgradeTests(unittest.TestCase):
+    def test_exploration_pool_keeps_the_complete_controlled_order(self) -> None:
+        rankable = [
+            {
+                "repository_id": item, "full_name": f"owner/repo-{item}", "description": None,
+                "language": "Python", "stars_total": 100 - item, "stars_gained": 10 - item,
+                "html_url": f"https://github.com/owner/repo-{item}", "owner_avatar_url": None,
+                "knowledge_url": None, "trend_7d": [None, None, None, None, None, None, 10 - item],
+            }
+            for item in range(1, 4)
+        ]
+        pool = build_exploration_pool(
+            board_kind="candidate_daily",
+            ranking={
+                "date": "2026-07-18", "timezone": "Asia/Shanghai",
+                "window_start": "2026-07-17T16:20:00Z", "window_end": "2026-07-18T16:20:00Z",
+            },
+            rankable=rankable,
+        )
+        validate_payload("exploration_pool", pool)
+        self.assertEqual(pool["pool_size"], 3)
+        self.assertEqual([item["rank"] for item in pool["entries"]], [1, 2, 3])
+
     def test_historical_rankings_may_outlive_current_candidate_catalog(self) -> None:
         catalog = {"updated_at": "2026-07-19T00:20:00Z"}
         historical = {"window_end": "2026-07-18T00:20:00Z"}

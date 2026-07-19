@@ -2,11 +2,11 @@
 import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { classificationLabels, classificationMap } from '../../lib/classification';
-import { readClassificationIndex, readClassificationRepositories, readLocalizationCatalog, readRepositoryCatalog } from '../../lib/data';
+import { readClassificationIndex, readClassificationRepositories, readLocalizationCatalog, readRepositoryProfiles } from '../../lib/data';
 import { localizedRepositoryContent } from '../../lib/localization';
 import { withBase } from '../../lib/paths';
 
-export const getStaticPaths = (() => readRepositoryCatalog().repositories.map((repository) => ({
+export const getStaticPaths = (() => readRepositoryProfiles().map((repository) => ({
   params: { repository_id: String(repository.repository_id) },
   props: { repository },
 }))) satisfies GetStaticPaths;
@@ -22,6 +22,7 @@ const useCaseLabels = classification?.use_cases.map((id) => labels.useCases.get(
 const formatNumber = (value: number) => new Intl.NumberFormat('zh-CN').format(value);
 const values = repository.history_30d.map((item) => item.stars_gained).filter((value): value is number => value !== null);
 const maximum = Math.max(1, ...values.map((value) => Math.abs(value)));
+const eventMaximum = Math.max(1, ...repository.event_history.map((item) => item.stars_added));
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareSourceCode',
@@ -35,7 +36,7 @@ const structuredData = {
 };
 ---
 
-<BaseLayout title={`${content.displayName} Star 历史｜开源星榜`} description={`${content.displayName}（${repository.full_name}）在开源星榜候选池中的排名与近 30 日真实 Star 变化。`} structuredData={structuredData}>
+<BaseLayout title={`${content.displayName} Star 历史｜开源星榜`} description={`${content.displayName}（${repository.full_name}）在开源星榜中的公开事件新增、候选池净增与历史排名记录。`} structuredData={structuredData}>
   <main id="main-content" class="shell repo-page">
     <p class="eyebrow">Repository #{repository.repository_id} · stable identity</p>
     <div class="repo-hero">
@@ -61,19 +62,38 @@ const structuredData = {
       <div><dt>主要语言</dt><dd>{repository.language || 'Other'}</dd></div>
       <div><dt>首次发现</dt><dd>{repository.first_seen_date || '未知'}</dd></div>
       <div><dt>最近追踪</dt><dd>{repository.last_seen_date || '未知'}</dd></div>
+      {repository.all_time_rank && <div><dt>历史星标榜</dt><dd>#{repository.all_time_rank}</dd></div>}
     </dl>
 
     <section class="repo-classification" aria-labelledby="repo-classification-title">
       <div class="section-heading"><div><p class="eyebrow">Project taxonomy</p><h2 id="repo-classification-title">方向与适用场景</h2></div></div>
       {classification ? <dl>
-        <div><dt>项目方向</dt><dd><a href={withBase(`/category/${classification.primary_category}/`)}>{categoryLabel}</a></dd></div>
+        <div><dt>项目方向</dt><dd><a href={`${withBase('/')}?category=${classification.primary_category}`}>{categoryLabel}</a></dd></div>
         <div><dt>产品形态</dt><dd>{projectTypeLabel}</dd></div>
         <div><dt>适用场景</dt><dd>{useCaseLabels?.join('、')}</dd></div>
         <div><dt>分类来源</dt><dd>{classification.provenance === 'manual' ? '人工修正' : 'GitHub Models 生成'} · 词表 {classification.taxonomy_version}</dd></div>
       </dl> : <p class="empty-copy">分类待生成；这不影响项目排名和原始 GitHub 数据。</p>}
     </section>
 
-    <section class="history-section" aria-labelledby="history-title">
+    {repository.event_history.length > 0 && <section class="history-section" aria-labelledby="event-history-title">
+      <div class="section-heading"><div><p class="eyebrow">Public event history</p><h2 id="event-history-title">公开事件新增历史</h2></div></div>
+      <div class="history-chart" aria-label="公开 WatchEvent 唯一新增用户柱状图">
+        {repository.event_history.map((item) => <div title={`${item.date}: +${item.stars_added}`}>
+          <span style={`height:${Math.max(4, Math.round((item.stars_added / eventMaximum) * 100))}%`}></span>
+        </div>)}
+      </div>
+      <div class="history-table" role="table" aria-label="公开事件新增与全站榜排名记录">
+        <div role="row"><strong role="columnheader">日期</strong><strong role="columnheader">唯一新增</strong><strong role="columnheader">全站名次</strong></div>
+        {repository.event_history.toReversed().map((item) => <div role="row">
+          <time role="cell" datetime={item.date}>{item.date}</time>
+          <span role="cell">+{formatNumber(item.stars_added)}</span>
+          <span role="cell">#{item.rank}</span>
+        </div>)}
+      </div>
+      <p class="history-note">来自 GH Archive 归档的公开 WatchEvent，按用户—仓库唯一对计数；不扣除取消 Star。</p>
+    </section>}
+
+    {repository.history_30d.length > 0 && <section class="history-section" aria-labelledby="history-title">
       <div class="section-heading"><div><p class="eyebrow">30 day true history</p><h2 id="history-title">真实历史</h2></div></div>
       <div class="history-chart" aria-label="近 30 日 Star 净增柱状图">
         {repository.history_30d.map((item) => <div title={`${item.date}: ${item.stars_gained ?? '无数据'}`}>
@@ -92,6 +112,11 @@ const structuredData = {
         </div>)}
       </div>
       <p class="history-note">— 表示当日缺少有效连续快照，或项目当日不在可比较候选中；不补零，不插值。</p>
-    </section>
+    </section>}
+
+    {repository.event_history.length === 0 && repository.history_30d.length === 0 && <section class="history-section" aria-labelledby="history-title">
+      <div class="section-heading"><div><p class="eyebrow">Ranking history</p><h2 id="history-title">榜单记录</h2></div></div>
+      <p class="empty-copy">该项目目前仅出现在历史累计榜，日度事件或候选池历史尚未积累。</p>
+    </section>}
   </main>
 </BaseLayout>

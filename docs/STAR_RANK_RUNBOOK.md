@@ -121,9 +121,9 @@ gcloud iam service-accounts keys list \
 
 分类人工修正写入 `data/classification-overrides.zh-CN.json`，每项必须提供 `repository_id`、`primary_category`、`project_type` 和 1–4 个 `use_cases`，且值必须来自 `data/classification-taxonomy.zh-CN.json`。修改词表含义时必须升级 `taxonomy_version`并全量重新分类，不得静默改变旧标签语义。
 
-## 2.6 分类独立榜与全站历史星标榜
+## 2.6 榜单内组合筛选与全站历史星标榜
 
-分类独立榜（编程语言 / 项目方向 / 产品形态 / 适用场景，路径 `/board/` 与 `/category/`）不需要独立采集：事件任务在发布 Top 100 之后，继续向下补全同一日增量序列，生成最多 1,000 项的扩展分类池 `public/events/category/YYYY-MM-DD.json`（保留最近 14 天）。池为尽力而为：补全不足 1,000 项时按实际数量发布，不会让事件榜失败。站点在构建时把最新分类池与分类缓存组合成各维度的独立前 100，分类内重新排名。
+组合筛选不使用独立分类页面。事件任务发布 Top 100 后继续生成最多 1,000 项的永久扩展池 `public/events/category/YYYY-MM-DD.json`；候选池任务同步生成 `public/explore/daily/` 与 `public/explore/period/{7d|30d}/` 深度池（最多 2,000 项）。页面按语言、方向、形态和场景取交集，重新生成前 100，并用前一日同口径深池计算升降。扩展池补全不足上限时按实际数量发布，不影响已验证的公开 Top 100。
 
 全站历史星标榜（`/all-time/`）由 `Collect and publish all-time star board` 工作流生成：
 

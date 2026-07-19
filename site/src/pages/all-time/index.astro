@@ -106,7 +106,7 @@ const structuredData = entries.length ? {
             </label>
           </div>
         </details>
-        <p class="filter-count" aria-live="polite"><strong data-visible-count>{entries.length}</strong> / {entries.length} 个项目</p>
+        <p class="filter-count" aria-live="polite"><strong data-visible-count>{entries.length}</strong> / <span data-matching-count>{entries.length}</span> 个项目</p>
       </div>
 
       <div class="ranking-table" role="table" aria-label="全部历史星标 Top 1000">
@@ -136,13 +136,14 @@ const structuredData = entries.length ? {
                 data-category={classification?.primary_category ?? ''}
                 data-project-type={classification?.project_type ?? ''}
                 data-scenarios={classification?.use_cases.join(',') ?? ''}
+                data-source-rank={entry.rank}
               >
-                <strong class="rank-cell flat" role="cell" aria-label={`历史排名 ${entry.rank}`}>{String(entry.rank).padStart(2, '0')}</strong>
+                <strong class="rank-cell flat" role="cell" aria-label={`历史排名 ${entry.rank}`}><span class="rank-number">{String(entry.rank).padStart(2, '0')}</span><small class="source-rank" hidden>总榜 #{entry.rank}</small></strong>
                 <div class="project-cell" role="cell">
                   <div class="project-copy">
                     {content.localized ? <>
-                      <a class="project-link" data-content-language="zh" href={entry.html_url} target="_blank" rel="noreferrer">{content.displayName}</a>
-                      <a class="project-link" data-content-language="original" href={entry.html_url} target="_blank" rel="noreferrer">{entry.full_name}</a>
+                      <a class="project-link" data-content-language="zh" href={withBase(`/repo/${entry.repository_id}/`)}>{content.displayName}</a>
+                      <a class="project-link" data-content-language="original" href={withBase(`/repo/${entry.repository_id}/`)}>{entry.full_name}</a>
                       <span class="project-source-row" data-content-language="zh">
                         <span class="project-source-name">{entry.full_name}</span>
                         <span class="translation-badge" title={content.provenance === 'manual' ? '人工校订中文内容' : 'GitHub Models 生成的中文内容'}>{content.provenance === 'manual' ? '人工校订' : 'AI 译'}</span>
@@ -152,16 +153,17 @@ const structuredData = entries.length ? {
                         <span data-content-language="original">{entry.description || 'No description provided.'}</span>
                       </p>
                     </> : <>
-                      <a class="project-link" href={entry.html_url} target="_blank" rel="noreferrer">{entry.full_name}</a>
+                      <a class="project-link" href={withBase(`/repo/${entry.repository_id}/`)}>{entry.full_name}</a>
                       <span class="project-source-row"><span class="translation-pending">中文待生成</span></span>
                       <p>{entry.description || 'No description provided.'}</p>
                     </>}
                     {classification ? <div class="classification-tags" aria-label="项目分类">
-                      <a href={withBase(`/category/${classification.primary_category}/`)}>{categoryLabel}</a>
+                      <span class="primary-category-tag">{categoryLabel}</span>
                       <span>{projectTypeLabel}</span>
                       {useCaseLabels?.slice(0, 2).map((label) => <span>{label}</span>)}
                     </div> : <span class="classification-pending">分类待生成</span>}
                   </div>
+                  <a class="github-link" href={entry.html_url} target="_blank" rel="noreferrer" aria-label={`在 GitHub 打开 ${entry.full_name}`}>GitHub ↗</a>
                 </div>
                 <div class="language-cell" role="cell">{entry.language || 'Other'}</div>
                 <div class="trend-cell" role="cell" aria-label={`累计 Star 约为榜首的 ${Math.round((entry.stars_total / Math.max(1, maxStars)) * 100)}%`} style={`--trend-shape:${shareBar(entry.stars_total)}`}></div>
@@ -179,8 +181,8 @@ const structuredData = entries.length ? {
 
     <aside class="method-note" aria-label="榜单口径提示">
       <span aria-hidden="true">i</span>
-      <p><strong>这是一张历史累计榜。</strong>数据来自 GitHub 搜索按 star 数降序的前 1000 个公开仓库，反映长期累计的关注度，不是每日新增；与每日新增榜和分类独立榜互补。</p>
-      <a href={withBase('/board/')}>查看分类独立榜 →</a>
+      <p><strong>这是一张历史累计榜。</strong>数据来自 GitHub 搜索按 star 数降序的前 1000 个公开仓库；选择语言、方向、形态或场景后，会在这 1000 项中实时重排并显示符合条件的前 100。</p>
+      <a href={withBase('/')}>查看每日新增榜 →</a>
     </aside>
   </main> : <main id="main-content" class="shell language-page category-page">
     <p class="eyebrow">All-time most starred</p>
@@ -203,6 +205,7 @@ const structuredData = entries.length ? {
     const advancedFilters = root.querySelector('[data-advanced-filters]');
     const advancedFilterSummary = root.querySelector('[data-advanced-filter-summary]');
     const visibleCount = root.querySelector('[data-visible-count]');
+    const matchingCount = root.querySelector('[data-matching-count]');
     const emptyState = root.querySelector('[data-empty-state]');
     const actionStatus = root.querySelector('[data-action-status]');
     const params = new URLSearchParams(window.location.search);
@@ -224,10 +227,12 @@ const structuredData = entries.length ? {
       const selectedProjectType = projectType instanceof HTMLSelectElement ? projectType.value : '';
       const selectedScenario = scenario instanceof HTMLSelectElement ? scenario.value : '';
       const activeCount = [selectedLanguage, selectedCategory, selectedProjectType, selectedScenario].filter(Boolean).length;
-      let count = 0;
+      const filtering = Boolean(query.trim() || activeCount);
+      let matched = 0;
+      let shown = 0;
       for (const row of root.querySelectorAll('[data-ranking-row]')) {
         if (!(row instanceof HTMLElement)) continue;
-        const visible = matchesEntry(
+        const matches = matchesEntry(
           {
             searchText: row.dataset.searchText ?? '', language: row.dataset.language ?? '',
             category: row.dataset.category ?? '', projectType: row.dataset.projectType ?? '',
@@ -235,12 +240,24 @@ const structuredData = entries.length ? {
           },
           query, selectedLanguage, selectedCategory, selectedProjectType, selectedScenario,
         );
+        if (matches) matched += 1;
+        const visible = matches && (!filtering || shown < 100);
         row.hidden = !visible;
-        if (visible) count += 1;
+        if (visible) {
+          shown += 1;
+          const rank = row.querySelector('.rank-number');
+          if (rank) rank.textContent = String(filtering ? shown : Number(row.dataset.sourceRank)).padStart(2, '0');
+          const sourceRank = row.querySelector('.source-rank');
+          if (sourceRank instanceof HTMLElement) sourceRank.hidden = !filtering;
+          row.querySelector('.rank-cell')?.setAttribute('aria-label', filtering
+            ? `筛选排名 ${shown}，历史总榜排名 ${row.dataset.sourceRank}`
+            : `历史排名 ${row.dataset.sourceRank}`);
+        }
       }
-      if (visibleCount) visibleCount.textContent = String(count);
+      if (visibleCount) visibleCount.textContent = String(shown);
+      if (matchingCount) matchingCount.textContent = String(filtering ? matched : shown);
       if (advancedFilterSummary) advancedFilterSummary.textContent = activeCount > 0 ? `${activeCount} 项已启用` : '未启用';
-      if (emptyState instanceof HTMLElement) emptyState.hidden = count !== 0;
+      if (emptyState instanceof HTMLElement) emptyState.hidden = matched !== 0;
       const next = new URL(window.location.href);
       const sync = (key: string, value: string) => value ? next.searchParams.set(key, value) : next.searchParams.delete(key);
       sync('q', query.trim());

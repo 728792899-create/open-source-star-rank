@@ -2,7 +2,7 @@
 import type { GetStaticPaths } from 'astro';
 import RankingView from '../../components/RankingView.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { readDailyRanking, readEventRankingIndex, readLocalizationCatalog, readRankingIndex } from '../../lib/data';
+import { readDailyRanking, readEventRankingIndex, readExplorationPool, readLocalizationCatalog, readRankingIndex } from '../../lib/data';
 import { localizedRepositoryContent } from '../../lib/localization';
 
 export const getStaticPaths = (() => {
@@ -15,6 +15,11 @@ if (!date) throw new Error('Missing daily ranking date');
 const index = readRankingIndex();
 const eventIndex = readEventRankingIndex();
 const ranking = readDailyRanking(date);
+const exploration = readExplorationPool('daily', ranking.date);
+const previousDate = new Date(`${ranking.date}T12:00:00Z`);
+previousDate.setUTCDate(previousDate.getUTCDate() - 1);
+const previousDateValue = previousDate.toISOString().slice(0, 10);
+const previousExploration = readExplorationPool('daily', previousDateValue);
 const localization = readLocalizationCatalog();
 const title = `${ranking.date} GitHub Star 日榜｜开源星榜`;
 const description = `${ranking.date} GitHub 开源项目 Star 净增 Top ${ranking.entries.length}，覆盖 ${ranking.candidate_count} 个候选仓库。`;
@@ -42,5 +47,8 @@ const alternateLabel = sameDateEventAvailable ? '查看同日全站公开事件�
     isLatest={ranking.date === index.latest_date}
     alternateHref={alternateEventDate ? `/events/daily/${alternateEventDate}/` : undefined}
     alternateLabel={alternateLabel}
+    explorationPath={exploration ? `/data/explore/daily/${ranking.date}.json` : undefined}
+    previousExplorationPath={previousExploration ? `/data/explore/daily/${previousDateValue}.json` : undefined}
+    explorationEntries={exploration?.entries ?? []}
   />
 </BaseLayout>

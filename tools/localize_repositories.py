@@ -115,8 +115,9 @@ def discover_ranked_repositories(public_dir: Path) -> dict[int, dict[str, Any]]:
         (public_dir / "period", 0),
         (public_dir / "language", 1),
         (public_dir / "daily", 2),
-        (public_dir / "events" / "category", 3),
-        (public_dir / "events" / "daily", 4),
+        (public_dir / "explore", 3),
+        (public_dir / "events" / "category", 4),
+        (public_dir / "events" / "daily", 5),
     )
 
     def register(payload: Mapping[str, Any], *, date: str, priority: int, path: Path) -> None:
@@ -147,7 +148,12 @@ def discover_ranked_repositories(public_dir: Path) -> dict[int, dict[str, Any]]:
     if alltime_path.is_file():
         register(read_json(alltime_path), date="", priority=-1, path=alltime_path)
 
-    return {repository_id: source for repository_id, (_, source) in sorted(sources.items())}
+    ordered = sorted(
+        sources.items(),
+        key=lambda item: (item[1][0], -item[0]),
+        reverse=True,
+    )
+    return {repository_id: source for repository_id, (_, source) in ordered}
 
 
 def latest_public_timestamp(public_dir: Path) -> dt.datetime:
@@ -424,7 +430,7 @@ def localize_repositories(
         elif existing is not None and existing.get("source_hash") == repository_source_hash(source):
             valid[repository_id] = dict(existing)
 
-    pending = [sources[item] for item in sorted(sources) if item not in valid]
+    pending = [source for repository_id, source in sources.items() if repository_id not in valid]
     attempted = pending[:max_projects]
     failed_ids: set[int] = set()
     model_client = client or (GitHubModelsClient(token, model=model) if token else None)

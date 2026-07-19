@@ -434,7 +434,7 @@ def classify_repositories(
         ):
             valid[repository_id] = dict(existing)
 
-    pending = [sources[item] for item in sorted(sources) if item not in valid]
+    pending = [source for repository_id, source in sources.items() if repository_id not in valid]
     attempted = pending[:max_projects]
     failed_ids: set[int] = set()
     model_client = client or (

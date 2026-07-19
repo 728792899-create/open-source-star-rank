@@ -79,7 +79,7 @@ function periodRanking(days) {
 }
 
 await rm(outputRoot, { recursive: true, force: true });
-for (const directory of ['daily', 'events/daily', 'events/category', 'alltime', 'language', 'period/7d', 'period/30d']) {
+for (const directory of ['daily', 'events/daily', 'events/category', 'alltime', 'language', 'period/7d', 'period/30d', 'explore/daily', 'explore/period/7d', 'explore/period/30d']) {
   await mkdir(path.join(outputRoot, directory), { recursive: true });
 }
 
@@ -88,6 +88,12 @@ for (let offset = 39; offset >= 0; offset -= 1) {
   const date = shift(latestDate, -offset);
   const ranking = dailyRanking(date, 39 - offset);
   await writeFile(path.join(outputRoot, 'daily', `${ranking.date}.json`), `${JSON.stringify(ranking, null, 2)}\n`);
+  const deepEntries = rankingEntries(39 - offset, 300).map((entry) => ({ ...entry, rank_change: null }));
+  const pool = {
+    schema_version: '1.0.0', board_kind: 'candidate_daily', date: ranking.date, timezone: 'Asia/Shanghai',
+    window_start: ranking.window_start, window_end: ranking.window_end, pool_size: deepEntries.length, entries: deepEntries,
+  };
+  await writeFile(path.join(outputRoot, 'explore', 'daily', `${ranking.date}.json`), `${JSON.stringify(pool, null, 2)}\n`);
 }
 
 for (const language of languages) {
@@ -109,6 +115,12 @@ for (const language of languages) {
 for (const days of [7, 30]) {
   const ranking = periodRanking(days);
   await writeFile(path.join(outputRoot, 'period', `${days}d`, `${ranking.date}.json`), `${JSON.stringify(ranking, null, 2)}\n`);
+  const deepEntries = rankingEntries(39, 300, null, days).map((entry) => ({ ...entry, rank_change: null }));
+  const pool = {
+    schema_version: '1.0.0', board_kind: `candidate_period_${days}d`, date: ranking.date, timezone: 'Asia/Shanghai',
+    window_start: ranking.window_start, window_end: ranking.window_end, pool_size: deepEntries.length, entries: deepEntries,
+  };
+  await writeFile(path.join(outputRoot, 'explore', 'period', `${days}d`, `${ranking.date}.json`), `${JSON.stringify(pool, null, 2)}\n`);
 }
 
 const eventDates = dates.slice(0, 7);
@@ -143,7 +155,9 @@ const eventSourceMetrics = (date) => {
 const eventEntries = (dayOffset) => Array.from({ length: 100 }, (_, offset) => {
   const rank = offset + 1;
   const repositoryId = 30_001 + offset;
-  const starsAdded = 1_500 - offset * 11 + dayOffset;
+  const starsAdded = offset < 100
+    ? 1_500 - offset * 11 + dayOffset
+    : 400 - (offset - 100) + dayOffset;
   return {
     repository_id: repositoryId,
     full_name: `public-event-labs/project-${String(rank).padStart(3, '0')}`,
@@ -156,7 +170,10 @@ const eventEntries = (dayOffset) => Array.from({ length: 100 }, (_, offset) => {
     rank_change: dayOffset === 0 ? null : (rank % 5) - 2,
     trend_7d: Array.from({ length: 7 }, (_, trendOffset) => {
       const observedDay = dayOffset - (6 - trendOffset);
-      return observedDay < 0 ? null : 1_500 - offset * 11 + observedDay;
+      if (observedDay < 0) return null;
+      return offset < 100
+        ? 1_500 - offset * 11 + observedDay
+        : 400 - (offset - 100) + observedDay;
     }),
     html_url: `https://github.com/public-event-labs/project-${String(rank).padStart(3, '0')}`,
     owner_avatar_url: null,
@@ -181,39 +198,48 @@ for (const [reverseOffset, date] of [...eventDates].reverse().entries()) {
   await writeFile(path.join(outputRoot, 'events', 'daily', `${date}.json`), `${JSON.stringify(ranking, null, 2)}\n`);
 }
 
-// Extended daily-gain pool that seeds the independent facet boards.
-const poolDate = eventDates[0];
-const poolLocalStart = new Date(`${poolDate}T00:00:00+08:00`);
-const poolLocalEnd = new Date(poolLocalStart.getTime() + 86_400_000);
-const poolGeneratedAt = new Date(poolLocalEnd.getTime() + 7.75 * 3_600_000).toISOString();
-const poolEntries = Array.from({ length: 300 }, (_, offset) => {
+// Controlled event exploration pools used for in-page filtered Top 100 rankings.
+const poolEntriesForDay = (dayOffset) => Array.from({ length: 300 }, (_, offset) => {
   const rank = offset + 1;
-  const repositoryId = 40_001 + offset;
-  const starsAdded = 3_000 - offset * 7;
+  const repositoryId = 30_001 + offset;
+  const starsAdded = offset < 100
+    ? 1_500 - offset * 11 + dayOffset
+    : 400 - (offset - 100) + dayOffset;
   return {
     repository_id: repositoryId,
-    full_name: `pool-labs/project-${String(rank).padStart(3, '0')}`,
-    description: `Extended pool fixture project ${rank} for independent facet board checks.`,
+    full_name: `public-event-labs/project-${String(rank).padStart(3, '0')}`,
+    description: `Public WatchEvent fixture project ${rank} for event ranking checks.`,
     language: languages[offset % languages.length].name,
-    stars_total: 80_000 - offset * 53,
+    stars_total: 250_000 - offset * 151,
     stars_added: starsAdded,
     watch_events: starsAdded + (offset % 4),
     rank,
-    html_url: `https://github.com/pool-labs/project-${String(rank).padStart(3, '0')}`,
+    trend_7d: Array.from({ length: 7 }, (_, trendOffset) => {
+      const observedDay = dayOffset - (6 - trendOffset);
+      if (observedDay < 0) return null;
+      return offset < 100
+        ? 1_500 - offset * 11 + observedDay
+        : 400 - (offset - 100) + observedDay;
+    }),
+    html_url: `https://github.com/public-event-labs/project-${String(rank).padStart(3, '0')}`,
     owner_avatar_url: null,
   };
 });
-const categoryPool = {
-  schema_version: '1.0.0',
-  date: poolDate,
-  timezone: 'Asia/Shanghai',
-  window_start: poolLocalStart.toISOString(),
-  window_end: poolLocalEnd.toISOString(),
-  generated_at: poolGeneratedAt,
-  methodology_version: 'gharchive-public-watch-events-v2',
-  pool_size: poolEntries.length,
-  entries: poolEntries,
-};
+for (const [reverseOffset, date] of [...eventDates].reverse().entries()) {
+  const poolLocalStart = new Date(`${date}T00:00:00+08:00`);
+  const poolLocalEnd = new Date(poolLocalStart.getTime() + 86_400_000);
+  const entries = poolEntriesForDay(reverseOffset);
+  const categoryPool = {
+    schema_version: '1.1.0', date, timezone: 'Asia/Shanghai', window_start: poolLocalStart.toISOString(),
+    window_end: poolLocalEnd.toISOString(), generated_at: new Date(poolLocalEnd.getTime() + 7.75 * 3_600_000).toISOString(),
+    methodology_version: 'gharchive-public-watch-events-v2', pool_size: entries.length, entries,
+  };
+  await writeFile(path.join(outputRoot, 'events', 'category', `${date}.json`), `${JSON.stringify(categoryPool, null, 2)}\n`);
+}
+const poolDate = eventDates[0];
+const poolLocalEnd = new Date(new Date(`${poolDate}T00:00:00+08:00`).getTime() + 86_400_000);
+const poolGeneratedAt = new Date(poolLocalEnd.getTime() + 7.75 * 3_600_000).toISOString();
+const poolEntries = poolEntriesForDay(6);
 
 // All-time most-starred board.
 const alltimeEntries = Array.from({ length: 200 }, (_, offset) => {
@@ -312,6 +338,7 @@ for (const language of languages) {
 }
 for (const entry of rankingEntries(39)) localizationSources.set(entry.repository_id, entry);
 for (const entry of eventEntries(6)) localizationSources.set(entry.repository_id, entry);
+for (const entry of rankingEntries(39, 300)) localizationSources.set(entry.repository_id, entry);
 for (const entry of poolEntries) localizationSources.set(entry.repository_id, entry);
 for (const entry of alltimeEntries) localizationSources.set(entry.repository_id, entry);
 const localizedRepositories = [...localizationSources.values()]
@@ -402,7 +429,6 @@ const classificationCatalog = {
 
 await writeFile(path.join(outputRoot, 'index.json'), `${JSON.stringify(index, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'events', 'index.json'), `${JSON.stringify(eventIndex, null, 2)}\n`);
-await writeFile(path.join(outputRoot, 'events', 'category', `${latestEventDate}.json`), `${JSON.stringify(categoryPool, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'alltime', 'top-1000.json'), `${JSON.stringify(alltimeBoard, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'alltime', 'index.json'), `${JSON.stringify(alltimeIndex, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'language', 'index.json'), `${JSON.stringify(languageIndex, null, 2)}\n`);

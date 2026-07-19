@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import type {
   DailyRanking,
@@ -9,12 +9,14 @@ import type {
   EventCategoryPool,
   EventDailyRanking,
   EventRankingIndex,
+  ExplorationPool,
   LanguageIndex,
   LanguageRanking,
   LocalizationCatalog,
   PeriodRanking,
   RankingIndex,
   RepositoryCatalog,
+  RepositoryProfile,
 } from '../types';
 
 const dataRoot = path.resolve(process.cwd(), 'generated', 'data');
@@ -79,6 +81,19 @@ export function readEventCategoryPool(date: string): EventCategoryPool | null {
   const file = path.join(dataRoot, 'events', 'category', `${date}.json`);
   if (!existsSync(file)) return null;
   return JSON.parse(readFileSync(file, 'utf8')) as EventCategoryPool;
+}
+
+export function readExplorationPool(
+  kind: 'daily' | 'period_7d' | 'period_30d',
+  date: string,
+): ExplorationPool | null {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error(`Invalid exploration pool date: ${date}`);
+  const relative = kind === 'daily'
+    ? path.join('explore', 'daily', `${date}.json`)
+    : path.join('explore', 'period', kind === 'period_7d' ? '7d' : '30d', `${date}.json`);
+  const file = path.join(dataRoot, relative);
+  if (!existsSync(file)) return null;
+  return JSON.parse(readFileSync(file, 'utf8')) as ExplorationPool;
 }
 
 export function readLatestEventCategoryPool(): EventCategoryPool | null {
@@ -151,4 +166,103 @@ export function readClassificationRepositories(): ClassificationRepositoryCatalo
     schema_version: '1.0.0', taxonomy_version: '1.0.0', generated_at: null, repositories: [],
   };
   return classificationRepositories;
+}
+
+function datedJsonFiles(root: string): string[] {
+  if (!existsSync(root)) return [];
+  const found: string[] = [];
+  const visit = (directory: string) => {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const full = path.join(directory, entry.name);
+      if (entry.isDirectory()) visit(full);
+      else if (/^\d{4}-\d{2}-\d{2}\.json$/.test(entry.name)) found.push(full);
+    }
+  };
+  visit(root);
+  return found.sort();
+}
+
+/** Build one stable project profile for every repository visible anywhere on the site. */
+export function readRepositoryProfiles(): RepositoryProfile[] {
+  type WorkingProfile = { profile: RepositoryProfile; metadataKey: string; eventByDate: Map<string, { stars_added: number; rank: number }> };
+  const working = new Map<number, WorkingProfile>();
+  const ensure = (entry: {
+    repository_id: number; full_name: string; description?: string | null; language?: string | null;
+    stars_total: number; html_url: string; owner_avatar_url?: string | null;
+  }, metadataKey: string) => {
+    let current = working.get(entry.repository_id);
+    if (!current) {
+      current = {
+        metadataKey: '', eventByDate: new Map(),
+        profile: {
+          repository_id: entry.repository_id, full_name: entry.full_name, description: entry.description ?? null,
+          language: entry.language ?? null, stars_total: entry.stars_total, html_url: entry.html_url,
+          owner_avatar_url: entry.owner_avatar_url ?? null, knowledge_url: null,
+          first_seen_date: null, last_seen_date: null, history_30d: [], event_history: [], all_time_rank: null,
+        },
+      };
+      working.set(entry.repository_id, current);
+    }
+    if (metadataKey >= current.metadataKey) {
+      Object.assign(current.profile, {
+        full_name: entry.full_name, description: entry.description ?? null, language: entry.language ?? null,
+        stars_total: entry.stars_total, html_url: entry.html_url, owner_avatar_url: entry.owner_avatar_url ?? null,
+      });
+      current.metadataKey = metadataKey;
+    }
+    return current;
+  };
+
+  for (const repository of readRepositoryCatalog().repositories) {
+    const current = ensure(repository, repository.last_seen_date ?? '');
+    Object.assign(current.profile, repository);
+  }
+
+  const registerRankingFiles = (root: string, sourcePriority: number) => {
+    for (const file of datedJsonFiles(root)) {
+      const payload = JSON.parse(readFileSync(file, 'utf8')) as { date?: string; entries?: Array<Record<string, unknown>> };
+      const date = payload.date ?? path.basename(file, '.json');
+      for (const raw of payload.entries ?? []) {
+        if (typeof raw.repository_id !== 'number' || typeof raw.full_name !== 'string'
+          || typeof raw.stars_total !== 'number' || typeof raw.html_url !== 'string') continue;
+        ensure(raw as never, `${date}:${sourcePriority}`);
+      }
+    }
+  };
+  registerRankingFiles(path.join(dataRoot, 'daily'), 1);
+  registerRankingFiles(path.join(dataRoot, 'period'), 2);
+  registerRankingFiles(path.join(dataRoot, 'language'), 3);
+  registerRankingFiles(path.join(dataRoot, 'explore'), 4);
+
+  const eventFiles = [
+    ...datedJsonFiles(path.join(dataRoot, 'events', 'daily')),
+    ...datedJsonFiles(path.join(dataRoot, 'events', 'category')),
+  ];
+  for (const file of eventFiles) {
+    const payload = JSON.parse(readFileSync(file, 'utf8')) as EventDailyRanking | EventCategoryPool;
+    for (const entry of payload.entries) {
+      const current = ensure(entry, `${payload.date}:5`);
+      const existing = current.eventByDate.get(payload.date);
+      if (!existing || entry.rank < existing.rank) {
+        current.eventByDate.set(payload.date, { stars_added: entry.stars_added, rank: entry.rank });
+      }
+    }
+  }
+
+  const allTime = readAllTimeBoard();
+  if (allTime) {
+    for (const entry of allTime.entries) {
+      const current = ensure(entry, `${allTime.generated_at}:0`);
+      current.profile.all_time_rank = entry.rank;
+    }
+  }
+
+  return [...working.values()]
+    .map((current) => ({
+      ...current.profile,
+      event_history: [...current.eventByDate.entries()]
+        .sort(([left], [right]) => left.localeCompare(right))
+        .map(([date, item]) => ({ date, ...item })),
+    }))
+    .sort((left, right) => left.repository_id - right.repository_id);
 }
