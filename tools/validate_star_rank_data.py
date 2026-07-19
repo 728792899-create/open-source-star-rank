@@ -35,6 +35,22 @@ def timestamp(value: str) -> dt.datetime:
     return dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
 
 
+def ranking_uses_current_repository_catalog(
+    ranking: dict[str, Any], repository_catalog: dict[str, Any]
+) -> bool:
+    """Return whether a ranking was derived from the catalog's snapshot.
+
+    ``repositories.json`` describes the current candidate pool, while public
+    daily, language, and period rankings are retained permanently. A project
+    may therefore remain in a historical ranking after leaving the pool.
+    Cross-file membership is only meaningful for rankings generated from the
+    current catalog snapshot; historical files keep their independent schema,
+    time-window, ordering, and uniqueness checks.
+    """
+
+    return ranking.get("window_end") == repository_catalog.get("updated_at")
+
+
 def validate_ranking_time(payload: dict[str, Any], path: Path) -> None:
     start = timestamp(payload["window_start"])
     end = timestamp(payload["window_end"])
@@ -171,7 +187,10 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
         if len(repository_ids) != len(repositories["repositories"]):
             raise SchemaValidationError("项目目录包含重复 repository_id")
         for path, payload in daily_payloads:
-            if any(item["repository_id"] not in repository_ids for item in payload["entries"]):
+            if (
+                ranking_uses_current_repository_catalog(payload, repositories)
+                and any(item["repository_id"] not in repository_ids for item in payload["entries"])
+            ):
                 raise SchemaValidationError(f"日榜包含项目目录外的仓库：{path}")
         for repository in repositories["repositories"]:
             history_dates = [item["date"] for item in repository["history_30d"]]
@@ -194,7 +213,10 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
             validate_ranking_time(payload, path)
             if payload["slug"] != path.parents[1].name or payload["date"] != path.stem:
                 raise SchemaValidationError(f"语言榜路径与内容不一致：{path}")
-            if any(item["repository_id"] not in repository_ids for item in payload["entries"]):
+            if (
+                ranking_uses_current_repository_catalog(payload, repositories)
+                and any(item["repository_id"] not in repository_ids for item in payload["entries"])
+            ):
                 raise SchemaValidationError(f"语言榜包含项目目录外的仓库：{path}")
             actual_language_dates.setdefault(payload["slug"], set()).add(payload["date"])
             counts["language"] += 1
@@ -216,7 +238,10 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
                 validate_ranking_time(payload, path)
                 if payload["period_days"] != days or payload["date"] != path.stem:
                     raise SchemaValidationError(f"周期榜路径与内容不一致：{path}")
-                if any(item["repository_id"] not in repository_ids for item in payload["entries"]):
+                if (
+                    ranking_uses_current_repository_catalog(payload, repositories)
+                    and any(item["repository_id"] not in repository_ids for item in payload["entries"])
+                ):
                     raise SchemaValidationError(f"周期榜包含项目目录外的仓库：{path}")
                 actual_period_dates.add(path.stem)
                 counts["period"] += 1
