@@ -13,6 +13,10 @@ test('keeps the latest full-site public event ranking as the homepage default', 
   await expect(page.locator('[data-ranking-mode="event"] [data-ranking-row]')).toHaveCount(100);
   await expect(page.getByRole('link', { name: /查看候选池净增榜/ })).toBeVisible();
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /social\/events-daily-2026-07-14\.png$/);
+  await expect(page.locator('.site-header').getByRole('link', { name: 'GitHub ↗' }))
+    .toHaveAttribute('href', 'https://github.com/728792899-create/open-source-star-rank');
+  await expect(page.locator('.site-footer').getByRole('link', { name: '复用声明 ↗' }))
+    .toHaveAttribute('href', 'https://github.com/728792899-create/open-source-star-rank/blob/main/REUSE.md');
 });
 
 test('keeps a stale full-site event ranking visible instead of changing ranking scope', async ({ page }) => {
