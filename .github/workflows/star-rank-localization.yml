@@ -96,7 +96,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LOCALIZATION_MODEL: ${{ vars.LOCALIZATION_MODEL || 'openai/gpt-4.1-mini' }}
-          LOCALIZATION_MAX_PROJECTS: ${{ vars.LOCALIZATION_MAX_PROJECTS || '400' }}
+          LOCALIZATION_MAX_PROJECTS: ${{ vars.LOCALIZATION_MAX_PROJECTS || '500' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -112,7 +112,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CLASSIFICATION_MODEL: ${{ vars.CLASSIFICATION_MODEL || 'openai/gpt-4.1-mini' }}
-          CLASSIFICATION_MAX_PROJECTS: ${{ vars.CLASSIFICATION_MAX_PROJECTS || '400' }}
+          CLASSIFICATION_MAX_PROJECTS: ${{ vars.CLASSIFICATION_MAX_PROJECTS || '500' }}
         shell: bash
         run: |
           set -euo pipefail

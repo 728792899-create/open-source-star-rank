@@ -30,10 +30,10 @@ const collection = {
   snapshot_completeness: 1,
 };
 
-function rankingEntries(dayOffset, limit = 100, language = null, multiplier = 1) {
+function rankingEntries(dayOffset, limit = 500, language = null, multiplier = 1) {
   return Array.from({ length: limit }, (_, offset) => {
     const rank = offset + 1;
-    const repositoryId = language ? 10_000 + languages.findIndex((item) => item.name === language) * 100 + rank : 10_000 + rank;
+    const repositoryId = 10_000 + rank;
     const padded = String(repositoryId - 10_000).padStart(3, '0');
     const gained = Math.round((2_000 - offset * 17 + dayOffset * 3) * multiplier);
     return {
@@ -59,7 +59,7 @@ function rankingEntries(dayOffset, limit = 100, language = null, multiplier = 1)
 
 function dailyRanking(date, dayOffset) {
   return {
-    schema_version: '1.2.0', date: isoDate(date), timezone: 'Asia/Shanghai',
+    schema_version: '1.3.0', ranking_limit: 500, entry_count: 500, date: isoDate(date), timezone: 'Asia/Shanghai',
     window_start: utcCapture(date), window_end: utcCapture(date, true),
     window_quality: { duration_minutes: 1_440, valid_for_ranking: true, reason: 'valid' },
     candidate_count: 2_000, eligible_count: 1_842, collection,
@@ -74,7 +74,7 @@ function periodRanking(days) {
     period_days: days,
     window_start: `${isoDate(shift(date, -days))}T16:20:00Z`,
     window_quality: { duration_minutes: days * 1_440, valid_for_ranking: true, reason: 'valid' },
-    entries: rankingEntries(39, 100, null, days),
+    entries: rankingEntries(39, 500, null, days),
   };
 }
 
@@ -88,7 +88,7 @@ for (let offset = 39; offset >= 0; offset -= 1) {
   const date = shift(latestDate, -offset);
   const ranking = dailyRanking(date, 39 - offset);
   await writeFile(path.join(outputRoot, 'daily', `${ranking.date}.json`), `${JSON.stringify(ranking, null, 2)}\n`);
-  const deepEntries = rankingEntries(39 - offset, 300).map((entry) => ({ ...entry, rank_change: null }));
+  const deepEntries = rankingEntries(39 - offset, 500).map((entry) => ({ ...entry, rank_change: null }));
   const pool = {
     schema_version: '1.0.0', board_kind: 'candidate_daily', date: ranking.date, timezone: 'Asia/Shanghai',
     window_start: ranking.window_start, window_end: ranking.window_end, pool_size: deepEntries.length, entries: deepEntries,
@@ -105,8 +105,8 @@ for (const language of languages) {
       ...base,
       language: language.name,
       slug: language.slug,
-      eligible_count: 400,
-      entries: rankingEntries(39 - offset, 50, language.name),
+      eligible_count: 500,
+      entries: rankingEntries(39 - offset, 500, language.name),
     };
     await writeFile(path.join(outputRoot, 'language', language.slug, 'daily', `${ranking.date}.json`), `${JSON.stringify(ranking, null, 2)}\n`);
   }
@@ -115,7 +115,7 @@ for (const language of languages) {
 for (const days of [7, 30]) {
   const ranking = periodRanking(days);
   await writeFile(path.join(outputRoot, 'period', `${days}d`, `${ranking.date}.json`), `${JSON.stringify(ranking, null, 2)}\n`);
-  const deepEntries = rankingEntries(39, 300, null, days).map((entry) => ({ ...entry, rank_change: null }));
+  const deepEntries = rankingEntries(39, 500, null, days).map((entry) => ({ ...entry, rank_change: null }));
   const pool = {
     schema_version: '1.0.0', board_kind: `candidate_period_${days}d`, date: ranking.date, timezone: 'Asia/Shanghai',
     window_start: ranking.window_start, window_end: ranking.window_end, pool_size: deepEntries.length, entries: deepEntries,
@@ -140,24 +140,28 @@ const eventSourceMetrics = (date) => {
     expected_hour_count: 24,
     observed_hour_count: 24,
     missing_hours: [],
-    unique_star_addition_count: 120_000,
-    observed_watch_event_count: 123_456,
+    unique_star_addition_count: 2_000_000,
+    observed_watch_event_count: 2_100_000,
     observed_repository_count: 7_614,
-    metadata_attempted_count: 105,
-    metadata_success_count: 100,
+    metadata_attempted_count: 505,
+    metadata_success_count: 500,
     metadata_not_found_count: 3,
     metadata_filtered_count: 2,
-    api_request_count: 105,
+    api_request_count: 505,
     api_retry_count: 1,
     ranking_complete: true,
+    quality_baseline_days: 7,
+    watch_event_count_median: 2_100_000,
+    unique_addition_count_median: 2_000_000,
+    watch_event_count_ratio: 1,
+    unique_addition_count_ratio: 1,
+    quality_status: 'passed',
   };
 };
-const eventEntries = (dayOffset) => Array.from({ length: 100 }, (_, offset) => {
+const eventEntries = (dayOffset) => Array.from({ length: 500 }, (_, offset) => {
   const rank = offset + 1;
   const repositoryId = 30_001 + offset;
-  const starsAdded = offset < 100
-    ? 1_500 - offset * 11 + dayOffset
-    : 400 - (offset - 100) + dayOffset;
+  const starsAdded = 1_500 - offset + dayOffset;
   return {
     repository_id: repositoryId,
     full_name: `public-event-labs/project-${String(rank).padStart(3, '0')}`,
@@ -171,9 +175,7 @@ const eventEntries = (dayOffset) => Array.from({ length: 100 }, (_, offset) => {
     trend_7d: Array.from({ length: 7 }, (_, trendOffset) => {
       const observedDay = dayOffset - (6 - trendOffset);
       if (observedDay < 0) return null;
-      return offset < 100
-        ? 1_500 - offset * 11 + observedDay
-        : 400 - (offset - 100) + observedDay;
+      return 1_500 - offset + observedDay;
     }),
     html_url: `https://github.com/public-event-labs/project-${String(rank).padStart(3, '0')}`,
     owner_avatar_url: null,
@@ -184,27 +186,27 @@ for (const [reverseOffset, date] of [...eventDates].reverse().entries()) {
   const localEnd = new Date(localStart.getTime() + 86_400_000);
   const generatedAt = new Date(localEnd.getTime() + 7.75 * 3_600_000).toISOString();
   const ranking = {
-    schema_version: '1.1.0',
+    schema_version: '1.2.0',
+    ranking_limit: 500,
+    entry_count: 500,
     date,
     timezone: 'Asia/Shanghai',
     window_start: localStart.toISOString(),
     window_end: localEnd.toISOString(),
     generated_at: generatedAt,
-    methodology_version: 'gharchive-public-watch-events-v2',
+    methodology_version: 'gharchive-public-watch-events-v3',
     source_metrics: eventSourceMetrics(date),
-    eligible_count: 100,
+    eligible_count: 500,
     entries: eventEntries(reverseOffset),
   };
   await writeFile(path.join(outputRoot, 'events', 'daily', `${date}.json`), `${JSON.stringify(ranking, null, 2)}\n`);
 }
 
-// Controlled event exploration pools used for in-page filtered Top 100 rankings.
-const poolEntriesForDay = (dayOffset) => Array.from({ length: 300 }, (_, offset) => {
+// Controlled event exploration pools used for in-page filtered Top 500 rankings.
+const poolEntriesForDay = (dayOffset) => Array.from({ length: 1_000 }, (_, offset) => {
   const rank = offset + 1;
   const repositoryId = 30_001 + offset;
-  const starsAdded = offset < 100
-    ? 1_500 - offset * 11 + dayOffset
-    : 400 - (offset - 100) + dayOffset;
+  const starsAdded = 1_500 - offset + dayOffset;
   return {
     repository_id: repositoryId,
     full_name: `public-event-labs/project-${String(rank).padStart(3, '0')}`,
@@ -217,9 +219,7 @@ const poolEntriesForDay = (dayOffset) => Array.from({ length: 300 }, (_, offset)
     trend_7d: Array.from({ length: 7 }, (_, trendOffset) => {
       const observedDay = dayOffset - (6 - trendOffset);
       if (observedDay < 0) return null;
-      return offset < 100
-        ? 1_500 - offset * 11 + observedDay
-        : 400 - (offset - 100) + observedDay;
+      return 1_500 - offset + observedDay;
     }),
     html_url: `https://github.com/public-event-labs/project-${String(rank).padStart(3, '0')}`,
     owner_avatar_url: null,
@@ -232,7 +232,7 @@ for (const [reverseOffset, date] of [...eventDates].reverse().entries()) {
   const categoryPool = {
     schema_version: '1.1.0', date, timezone: 'Asia/Shanghai', window_start: poolLocalStart.toISOString(),
     window_end: poolLocalEnd.toISOString(), generated_at: new Date(poolLocalEnd.getTime() + 7.75 * 3_600_000).toISOString(),
-    methodology_version: 'gharchive-public-watch-events-v2', pool_size: entries.length, entries,
+    methodology_version: 'gharchive-public-watch-events-v3', pool_size: entries.length, entries,
   };
   await writeFile(path.join(outputRoot, 'events', 'category', `${date}.json`), `${JSON.stringify(categoryPool, null, 2)}\n`);
 }
@@ -302,10 +302,12 @@ const repositories = Array.from({ length: 2_000 }, (_, offset) => {
 
 const updatedAt = '2026-07-14T16:20:00Z';
 const index = {
-  schema_version: '1.2.0', status: 'ready', timezone: 'Asia/Shanghai', updated_at: updatedAt,
+  schema_version: '1.3.0', status: 'ready', timezone: 'Asia/Shanghai', updated_at: updatedAt,
   latest_date: isoDate(latestDate), available_dates: dates, candidate_count: 2_000,
   methodology_version: 'candidate-pool-snapshot-v1', freshness_threshold_hours: 36,
   latest_collection: collection,
+  ranking_limit: 500,
+  page_size: 100,
   sampling: {
     target_local_time: '00:20', valid_window_start: '00:00', valid_window_end: '03:00',
     latest_snapshot_at: updatedAt, latest_snapshot_valid: true, latest_snapshot_reason: 'within_window',
@@ -326,19 +328,21 @@ const catalog = { schema_version: '1.2.0', updated_at: updatedAt, timezone: 'Asi
 const latestEventDate = eventDates[0];
 const latestEventGeneratedAt = new Date(new Date(`${latestEventDate}T00:00:00+08:00`).getTime() + 31.75 * 3_600_000).toISOString();
 const eventIndex = {
-  schema_version: '1.1.0', status: 'ready', timezone: 'Asia/Shanghai', updated_at: latestEventGeneratedAt,
+  schema_version: '1.2.0', status: 'ready', timezone: 'Asia/Shanghai', updated_at: latestEventGeneratedAt,
   latest_date: latestEventDate, available_dates: eventDates,
-  methodology_version: 'gharchive-public-watch-events-v2', freshness_threshold_hours: 36,
+  methodology_version: 'gharchive-public-watch-events-v3', freshness_threshold_hours: 36,
   latest_source_metrics: eventSourceMetrics(latestEventDate),
+  ranking_limit: 500,
+  page_size: 100,
 };
 
 const localizationSources = new Map();
 for (const language of languages) {
-  for (const entry of rankingEntries(39, 50, language.name)) localizationSources.set(entry.repository_id, entry);
+  for (const entry of rankingEntries(39, 500, language.name)) localizationSources.set(entry.repository_id, entry);
 }
 for (const entry of rankingEntries(39)) localizationSources.set(entry.repository_id, entry);
 for (const entry of eventEntries(6)) localizationSources.set(entry.repository_id, entry);
-for (const entry of rankingEntries(39, 300)) localizationSources.set(entry.repository_id, entry);
+for (const entry of rankingEntries(39, 500)) localizationSources.set(entry.repository_id, entry);
 for (const entry of poolEntries) localizationSources.set(entry.repository_id, entry);
 for (const entry of alltimeEntries) localizationSources.set(entry.repository_id, entry);
 const localizedRepositories = [...localizationSources.values()]

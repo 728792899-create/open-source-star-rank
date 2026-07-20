@@ -64,11 +64,11 @@ for (const marker of [
 }
 
 const dataIndex = JSON.parse(await readFile(path.join(dist, 'data/index.json'), 'utf8'));
-if (!['1.1.0', '1.2.0'].includes(dataIndex.schema_version) || dataIndex.freshness_threshold_hours !== 36) {
+if (!['1.1.0', '1.2.0', '1.3.0'].includes(dataIndex.schema_version) || dataIndex.freshness_threshold_hours !== 36) {
   throw new Error('Published index does not satisfy a supported public contract');
 }
 const eventIndex = JSON.parse(await readFile(path.join(dist, 'data/events/index.json'), 'utf8'));
-if (!['1.0.0', '1.1.0'].includes(eventIndex.schema_version) || eventIndex.freshness_threshold_hours !== 36) {
+if (!['1.0.0', '1.1.0', '1.2.0'].includes(eventIndex.schema_version) || eventIndex.freshness_threshold_hours !== 36) {
   throw new Error('Published event index does not satisfy a supported public contract');
 }
 if (eventIndex.schema_version === '1.1.0' && eventIndex.status === 'ready') {
@@ -80,6 +80,24 @@ if (eventIndex.schema_version === '1.1.0' && eventIndex.status === 'ready') {
     throw new Error('Event index 1.1.0 does not prove complete 24-hour coverage');
   }
   if (metrics?.ranking_complete !== true) throw new Error('Event index 1.1.0 is not a complete Top 100');
+}
+if (eventIndex.schema_version === '1.2.0' && eventIndex.status === 'ready') {
+  if (eventIndex.methodology_version !== 'gharchive-public-watch-events-v3') {
+    throw new Error('Event index 1.2.0 is missing the v3 methodology');
+  }
+  if (eventIndex.ranking_limit !== 500 || eventIndex.page_size !== 100) {
+    throw new Error('Event index 1.2.0 does not declare Top 500 pagination');
+  }
+  const metrics = eventIndex.latest_source_metrics;
+  if (metrics?.expected_hour_count !== 24 || metrics?.observed_hour_count !== 24 || metrics?.missing_hours?.length !== 0) {
+    throw new Error('Event index 1.2.0 does not prove complete WatchEvent hourly coverage');
+  }
+  if (metrics?.ranking_complete !== true || metrics?.metadata_success_count !== 500) {
+    throw new Error('Event index 1.2.0 is not a complete Top 500');
+  }
+  if (!['calibrating', 'passed'].includes(metrics?.quality_status)) {
+    throw new Error('Event index 1.2.0 has no valid historical quality status');
+  }
 }
 const localization = JSON.parse(await readFile(path.join(dist, 'data/i18n/zh-CN/repositories.json'), 'utf8'));
 if (localization.schema_version !== '1.0.0' || localization.locale !== 'zh-CN') {
@@ -109,7 +127,7 @@ const atom = await readFile(path.join(dist, 'atom.xml'), 'utf8');
 if (!atom.includes('xmlns="http://www.w3.org/2005/Atom"') || !atom.includes('开源星榜')) throw new Error('Atom feed is invalid');
 const jsonFeed = JSON.parse(await readFile(path.join(dist, 'feed.json'), 'utf8'));
 if (jsonFeed.version !== 'https://jsonfeed.org/version/1.1' || !Array.isArray(jsonFeed.items)) throw new Error('JSON Feed is invalid');
-if (dataIndex.schema_version === '1.2.0') {
+if (['1.2.0', '1.3.0'].includes(dataIndex.schema_version)) {
   for (const relative of ['data/repositories.json', 'data/language/index.json']) {
     if (!existsSync(path.join(dist, relative))) throw new Error(`1.2 build is missing ${relative}`);
   }
@@ -119,6 +137,9 @@ if (dataIndex.schema_version === '1.2.0') {
   for (const repository of repositories.repositories.slice(0, 3)) {
     if (!existsSync(path.join(dist, 'repo', String(repository.repository_id), 'index.html'))) throw new Error(`Repository page is missing: ${repository.repository_id}`);
   }
+}
+if (dataIndex.schema_version === '1.3.0' && (dataIndex.ranking_limit !== 500 || dataIndex.page_size !== 100)) {
+  throw new Error('Published index 1.3.0 does not declare Top 500 pagination');
 }
 if (dataIndex.status === 'ready') {
   const date = dataIndex.latest_date;
@@ -131,6 +152,25 @@ if (dataIndex.status === 'ready') {
   const dailyHtml = await readFile(dailyPage, 'utf8');
   for (const marker of ['data-ranking-row', 'ItemList', 'data-date-selector', 'data-copy-ranking', 'rel="canonical"']) {
     if (!dailyHtml.includes(marker)) throw new Error(`Daily ranking is missing ${marker}`);
+  }
+  const dailyRanking = JSON.parse(await readFile(dailyJson, 'utf8'));
+  if (dailyRanking.schema_version === '1.3.0') {
+    if (dailyRanking.ranking_limit !== 500 || dailyRanking.entry_count !== dailyRanking.entries.length) {
+      throw new Error('Latest daily ranking does not satisfy the Top 500 contract');
+    }
+    const expectedPages = Math.ceil(dailyRanking.entry_count / 100);
+    for (let page = 1; page <= expectedPages; page += 1) {
+      const pagePath = page === 1
+        ? dailyPage
+        : path.join(dist, 'daily', date, 'page', String(page), 'index.html');
+      if (!existsSync(pagePath)) throw new Error(`Latest daily ranking is missing page ${page}`);
+      const html = await readFile(pagePath, 'utf8');
+      const ranks = [...html.matchAll(/data-rank="(\d+)"/g)].map((match) => Number(match[1]));
+      const expectedStart = (page - 1) * 100 + 1;
+      if (ranks.length !== Math.min(100, dailyRanking.entry_count - expectedStart + 1) || ranks[0] !== expectedStart) {
+        throw new Error(`Latest daily ranking page ${page} has incorrect global ranks`);
+      }
+    }
   }
   const sitemap = await readFile(path.join(dist, 'sitemap-0.xml'), 'utf8');
   if (!sitemap.includes(`<lastmod>${new Date(JSON.parse(await readFile(dailyJson, 'utf8')).window_end).toISOString()}</lastmod>`)) {
@@ -148,6 +188,30 @@ if (eventIndex.status === 'ready') {
     if (!existsSync(path.join(dist, relative))) throw new Error(`Ready event build is missing ${relative}`);
   }
   const eventRanking = JSON.parse(await readFile(path.join(dist, 'data', 'events', 'daily', `${date}.json`), 'utf8'));
+  if (eventRanking.schema_version === '1.2.0') {
+    if (eventRanking.ranking_limit !== 500 || eventRanking.entry_count !== 500 || eventRanking.entries.length !== 500) {
+      throw new Error('Latest event ranking is not a complete Top 500');
+    }
+    const seen = new Set();
+    for (let page = 1; page <= 5; page += 1) {
+      const pagePath = page === 1
+        ? path.join(dist, 'events', 'daily', date, 'index.html')
+        : path.join(dist, 'events', 'daily', date, 'page', String(page), 'index.html');
+      if (!existsSync(pagePath)) throw new Error(`Latest event ranking is missing page ${page}`);
+      const html = await readFile(pagePath, 'utf8');
+      const ranks = [...html.matchAll(/data-rank="(\d+)"/g)].map((match) => Number(match[1]));
+      if (ranks.length !== 100 || ranks[0] !== (page - 1) * 100 + 1 || ranks.at(-1) !== page * 100) {
+        throw new Error(`Latest event ranking page ${page} has incorrect global ranks`);
+      }
+      for (const rank of ranks) {
+        if (seen.has(rank)) throw new Error(`Latest event ranking duplicates global rank ${rank}`);
+        seen.add(rank);
+      }
+      if (page > 1 && (!html.includes('rel="prev"') || (page < 5 && !html.includes('rel="next"')))) {
+        throw new Error(`Latest event ranking page ${page} is missing prev/next relations`);
+      }
+    }
+  }
   const sitemap = await readFile(path.join(dist, 'sitemap-0.xml'), 'utf8');
   if (!sitemap.includes(`<lastmod>${new Date(eventRanking.window_end).toISOString()}</lastmod>`)) {
     throw new Error('Event sitemap entry is missing the ranking window lastmod');

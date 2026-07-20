@@ -47,15 +47,17 @@ await copyPublicSchemas(path.join(publicData, 'schema'));
 const eventIndexPath = path.join(generated, 'events', 'index.json');
 if (!existsSync(eventIndexPath)) {
   const eventIndex = {
-    schema_version: '1.1.0',
+    schema_version: '1.2.0',
     status: 'initializing',
     timezone: 'Asia/Shanghai',
     updated_at: null,
     latest_date: null,
     available_dates: [],
-    methodology_version: 'gharchive-public-watch-events-v2',
+    methodology_version: 'gharchive-public-watch-events-v3',
     freshness_threshold_hours: 36,
     latest_source_metrics: null,
+    ranking_limit: 500,
+    page_size: 100,
   };
   const serialized = `${JSON.stringify(eventIndex, null, 2)}\n`;
   await mkdir(path.dirname(eventIndexPath), { recursive: true });

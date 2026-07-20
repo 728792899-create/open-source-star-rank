@@ -196,7 +196,7 @@ const structuredData = entries.length ? {
 
     <aside class="method-note" aria-label="榜单口径提示">
       <span aria-hidden="true">i</span>
-      <p><strong>这是一张历史累计榜。</strong>数据来自 GitHub 搜索按 star 数降序的前 1000 个公开仓库；选择语言、方向、形态或场景后，会在这 1000 项中实时重排并显示符合条件的前 100。</p>
+      <p><strong>这是一张历史累计榜。</strong>数据来自 GitHub 搜索按 star 数降序的前 1000 个公开仓库；选择语言、方向、形态或场景后，会在这 1000 项中实时重排并显示符合条件的前 500。</p>
       <a href={withBase('/')}>查看每日新增榜 →</a>
     </aside>
   </main> : <main id="main-content" class="shell language-page category-page">
@@ -259,7 +259,7 @@ const structuredData = entries.length ? {
           query, selectedLanguage, selectedCategory, selectedProjectType, selectedScenario,
         );
         if (matches) matched += 1;
-        const visible = matches && (!filtering || shown < 100);
+        const visible = matches && (!filtering || shown < 500);
         row.hidden = !visible;
         if (visible) {
           shown += 1;

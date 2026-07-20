@@ -8,6 +8,7 @@ import datetime as dt
 import json
 import os
 import re
+import statistics
 import sys
 from pathlib import Path
 from typing import Any, Dict, Mapping, Optional, Protocol, Sequence
@@ -39,12 +40,14 @@ except ModuleNotFoundError:  # pragma: no cover - direct script execution fallba
     from star_rank_schema import SchemaValidationError, sync_public_schemas, validate_payload  # type: ignore
 
 
-SCHEMA_VERSION = "1.1.0"
+SCHEMA_VERSION = "1.2.0"
 TIMEZONE = "Asia/Shanghai"
-METHODOLOGY_VERSION = "gharchive-public-watch-events-v2"
+METHODOLOGY_VERSION = "gharchive-public-watch-events-v3"
 DEFAULT_MAXIMUM_BYTES_BILLED = 24 * 1024**3
-DEFAULT_TOP_LIMIT = 100
+DEFAULT_TOP_LIMIT = 500
 DEFAULT_METADATA_ATTEMPT_LIMIT = 900
+DEFAULT_API_REQUEST_BUDGET = 950
+PAGE_SIZE = 100
 DEFAULT_CATEGORY_POOL_LIMIT = 0
 MAX_CATEGORY_POOL_LIMIT = 1000
 DEFAULT_CATEGORY_POOL_ATTEMPT_LIMIT = 3000
@@ -129,7 +132,10 @@ WITH source AS (
 ), observed_hours AS (
   SELECT TIMESTAMP_TRUNC(created_at, HOUR) AS hour, COUNT(*) AS event_count
   FROM source
-  WHERE created_at >= TIMESTAMP('{_sql_timestamp(start)}')
+  WHERE type = 'WatchEvent'
+    AND repository_id IS NOT NULL
+    AND actor_id IS NOT NULL
+    AND created_at >= TIMESTAMP('{_sql_timestamp(start)}')
     AND created_at < TIMESTAMP('{_sql_timestamp(end)}')
   GROUP BY hour
 ), coverage AS (
@@ -191,6 +197,8 @@ def enrich_aggregates(
     metadata_attempt_limit: int,
 ) -> tuple[list[dict[str, Any]], dict[str, int]]:
     enriched: list[dict[str, Any]] = []
+    request_start = int(client.request_count)
+    retry_start = int(client.retry_count)
     not_found = 0
     filtered = 0
     attempted = 0
@@ -221,8 +229,8 @@ def enrich_aggregates(
         "metadata_success_count": len(enriched),
         "metadata_not_found_count": not_found,
         "metadata_filtered_count": filtered,
-        "api_request_count": int(client.request_count),
-        "api_retry_count": int(client.retry_count),
+        "api_request_count": int(client.request_count) - request_start,
+        "api_retry_count": int(client.retry_count) - retry_start,
     }
 
 
@@ -235,12 +243,12 @@ def enrich_category_pool(
     pool_limit: int,
     attempt_limit: int,
 ) -> list[dict[str, Any]]:
-    """Continue metadata enrichment past the strict Top 100 to seed facet boards.
+    """Continue metadata enrichment past the strict Top 500 to seed filtered views.
 
-    The extended pool is best-effort: it reuses the already-enriched Top 100 and
+    The extended pool is best-effort: it reuses the already-enriched Top 500 and
     walks further down the same daily-gain-ordered aggregate until it collects
     ``pool_limit`` valid public repositories or exhausts a bounded attempt budget.
-    Unlike the Top 100 it never fails the run when it comes up short.
+    Unlike the Top 500 it never fails the run when it comes up short.
     """
 
     enriched: list[dict[str, Any]] = list(base_enriched)
@@ -331,7 +339,9 @@ def prune_event_pools(pool_dir: Path, *, current_date: dt.date) -> list[Path]:
     return []
 
 
-def validate_event_coverage(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
+def validate_event_coverage(
+    rows: Sequence[Mapping[str, Any]], *, minimum_count: int = 1
+) -> dict[str, Any]:
     if not rows:
         raise DataIntegrityError("GH Archive 未返回任何 WatchEvent 仓库")
     first = rows[0]
@@ -343,14 +353,72 @@ def validate_event_coverage(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]
         )
     unique_star_addition_count = int(first.get("unique_star_addition_count") or 0)
     observed_watch_event_count = int(first.get("observed_watch_event_count") or 0)
-    if unique_star_addition_count < 1 or unique_star_addition_count > observed_watch_event_count:
+    observed_repository_count = int(first.get("observed_repository_count") or 0)
+    if unique_star_addition_count < minimum_count or unique_star_addition_count > observed_watch_event_count:
         raise DataIntegrityError("GH Archive 唯一新增数与 WatchEvent 总数不一致")
+    if observed_repository_count < minimum_count or len(rows) < minimum_count:
+        raise DataIntegrityError(
+            f"GH Archive 仅有 {observed_repository_count} 个获星仓库，不具备发布 Top {minimum_count} 的条件"
+        )
     return {
         "observed_hour_count": observed_hour_count,
         "missing_hours": missing_hours,
         "unique_star_addition_count": unique_star_addition_count,
         "observed_watch_event_count": observed_watch_event_count,
-        "observed_repository_count": int(first.get("observed_repository_count") or 0),
+        "observed_repository_count": observed_repository_count,
+    }
+
+
+def build_quality_baseline(
+    public_dir: Path,
+    *,
+    date: dt.date,
+    coverage: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Compare a complete day with the latest seven previously successful days."""
+
+    candidates: list[tuple[dt.date, int, int]] = []
+    daily_dir = public_dir / "events" / "daily"
+    if daily_dir.exists():
+        for path in daily_dir.glob("????-??-??.json"):
+            try:
+                item_date = dt.date.fromisoformat(path.stem)
+            except ValueError:
+                continue
+            if item_date >= date:
+                continue
+            payload = load_json(path)
+            metrics = payload.get("source_metrics", {}) if isinstance(payload, dict) else {}
+            watch_count = metrics.get("observed_watch_event_count")
+            unique_count = metrics.get("unique_star_addition_count")
+            if isinstance(watch_count, int) and isinstance(unique_count, int):
+                candidates.append((item_date, watch_count, unique_count))
+    baseline = sorted(candidates, key=lambda item: item[0], reverse=True)[:7]
+    if len(baseline) < 7:
+        return {
+            "quality_baseline_days": len(baseline),
+            "watch_event_count_median": None,
+            "unique_addition_count_median": None,
+            "watch_event_count_ratio": None,
+            "unique_addition_count_ratio": None,
+            "quality_status": "calibrating",
+        }
+    watch_median = float(statistics.median(item[1] for item in baseline))
+    unique_median = float(statistics.median(item[2] for item in baseline))
+    watch_ratio = float(coverage["observed_watch_event_count"]) / watch_median if watch_median else 0.0
+    unique_ratio = float(coverage["unique_star_addition_count"]) / unique_median if unique_median else 0.0
+    if watch_ratio < 0.5 or unique_ratio < 0.5:
+        raise DataIntegrityError(
+            "GH Archive 当日事件量低于历史基线 50%："
+            f"WatchEvent={watch_ratio:.1%}，唯一新增={unique_ratio:.1%}"
+        )
+    return {
+        "quality_baseline_days": 7,
+        "watch_event_count_median": int(watch_median),
+        "unique_addition_count_median": int(unique_median),
+        "watch_event_count_ratio": round(watch_ratio, 6),
+        "unique_addition_count_ratio": round(unique_ratio, 6),
+        "quality_status": "passed",
     }
 
 
@@ -377,6 +445,7 @@ def build_event_outputs(
     state_history: Mapping[dt.date, Mapping[str, Any]],
     previous_ranking: Optional[Mapping[str, Any]],
     top_limit: int,
+    quality: Mapping[str, Any],
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     if len(enriched) != top_limit:
         raise DataIntegrityError(
@@ -417,7 +486,7 @@ def build_event_outputs(
                 "trend_7d": trend,
             }
         )
-    coverage = validate_event_coverage(rows)
+    coverage = validate_event_coverage(rows, minimum_count=top_limit)
     source_metrics = {
         "provider": "gh_archive_bigquery",
         "dataset": DATASET,
@@ -434,11 +503,14 @@ def build_event_outputs(
         "observed_watch_event_count": coverage["observed_watch_event_count"],
         "observed_repository_count": coverage["observed_repository_count"],
         "ranking_complete": True,
+        **dict(quality),
         **dict(metadata_metrics),
     }
     start, end = event_window(date)
     daily = {
         "schema_version": SCHEMA_VERSION,
+        "ranking_limit": top_limit,
+        "entry_count": len(entries),
         "date": date.isoformat(),
         "timezone": TIMEZONE,
         "window_start": isoformat(start),
@@ -475,7 +547,7 @@ def build_event_index(public_dir: Path, *, include: Optional[Mapping[str, Any]] 
     methodology_version = (
         str(latest.get("methodology_version", METHODOLOGY_VERSION)) if latest else METHODOLOGY_VERSION
     )
-    return {
+    result = {
         "schema_version": schema_version,
         "status": "ready" if latest else "initializing",
         "timezone": TIMEZONE,
@@ -486,6 +558,9 @@ def build_event_index(public_dir: Path, *, include: Optional[Mapping[str, Any]] 
         "freshness_threshold_hours": FRESHNESS_THRESHOLD_HOURS,
         "latest_source_metrics": latest["source_metrics"] if latest else None,
     }
+    if schema_version == SCHEMA_VERSION:
+        result.update({"ranking_limit": DEFAULT_TOP_LIMIT, "page_size": PAGE_SIZE})
+    return result
 
 
 def prune_event_states(state_dir: Path, *, current_date: dt.date) -> list[Path]:
@@ -587,6 +662,8 @@ def run_event_update(
     replace_day: bool = False,
 ) -> dict[str, Any]:
     validate_requested_date(date, now=generated_at)
+    request_start = int(github.request_count)
+    retry_start = int(github.retry_count)
     if category_pool_limit and (category_pool_limit < top_limit or category_pool_limit > MAX_CATEGORY_POOL_LIMIT):
         raise DataIntegrityError(
             f"分类池深度必须在 {top_limit} 到 {MAX_CATEGORY_POOL_LIMIT} 之间，或为 0 表示不生成"
@@ -594,7 +671,7 @@ def run_event_update(
     if maximum_bytes_billed < 1 or maximum_bytes_billed > DEFAULT_MAXIMUM_BYTES_BILLED:
         raise DataIntegrityError(f"maximum-bytes-billed 不得超过 {DEFAULT_MAXIMUM_BYTES_BILLED}")
     if top_limit != DEFAULT_TOP_LIMIT:
-        raise DataIntegrityError("事件榜必须完整发布 Top 100")
+        raise DataIntegrityError(f"事件榜必须完整发布 Top {DEFAULT_TOP_LIMIT}")
     if metadata_attempt_limit < top_limit or metadata_attempt_limit > DEFAULT_METADATA_ATTEMPT_LIMIT:
         raise DataIntegrityError(
             f"元数据检查上限必须在 {top_limit} 到 {DEFAULT_METADATA_ATTEMPT_LIMIT} 之间"
@@ -626,9 +703,10 @@ def run_event_update(
     rows, bytes_processed = runner.run(query, maximum_bytes_billed=maximum_bytes_billed)
     if bytes_processed > maximum_bytes_billed:
         raise DataIntegrityError("BigQuery 实际扫描量超过配置上限")
-    coverage = validate_event_coverage(rows)
+    coverage = validate_event_coverage(rows, minimum_count=top_limit)
     if len(rows) < top_limit or coverage["observed_repository_count"] != len(rows):
         raise DataIntegrityError(f"GH Archive 仅返回 {len(rows)} 个仓库，拒绝发布")
+    quality = build_quality_baseline(public_dir, date=date, coverage=coverage)
     if validate_only:
         return {
             "status": "validated",
@@ -637,6 +715,7 @@ def run_event_update(
             "estimated_bytes": estimated_bytes,
             "bytes_processed": bytes_processed,
             "coverage": coverage,
+            "quality": quality,
         }
     enriched, metadata_metrics = enrich_aggregates(
         github,
@@ -658,6 +737,7 @@ def run_event_update(
         state_history=history,
         previous_ranking=previous,
         top_limit=top_limit,
+        quality=quality,
     )
     rebuilt = rebuild_dependent_rankings(
         public_dir,
@@ -666,17 +746,7 @@ def run_event_update(
         ranking=ranking,
         raw_state=raw_state,
     )
-    index = build_event_index(public_dir, include=rebuilt[date])
-    for payload in rebuilt.values():
-        validate_payload("event_daily", payload)
-    validate_payload("event_index", index)
-    sync_public_schemas(public_dir)
-    atomic_write_json(state_path, raw_state)
-    for ranking_date, payload in rebuilt.items():
-        atomic_write_json(public_dir / "events" / "daily" / f"{ranking_date.isoformat()}.json", payload)
-    atomic_write_json(public_dir / "events" / "index.json", index)
-    removed = prune_event_states(state_dir, current_date=date)
-    pool_size = 0
+    pool: Optional[dict[str, Any]] = None
     if category_pool_limit:
         pool_enriched = enrich_category_pool(
             github,
@@ -694,6 +764,24 @@ def run_event_update(
             state_history=pool_history,
         )
         validate_payload("event_category_pool", pool)
+    current_metrics = dict(rebuilt[date]["source_metrics"])
+    current_metrics.update({
+        "api_request_count": int(github.request_count) - request_start,
+        "api_retry_count": int(github.retry_count) - retry_start,
+    })
+    rebuilt[date] = {**rebuilt[date], "source_metrics": current_metrics}
+    index = build_event_index(public_dir, include=rebuilt[date])
+    for payload in rebuilt.values():
+        validate_payload("event_daily", payload)
+    validate_payload("event_index", index)
+    sync_public_schemas(public_dir)
+    atomic_write_json(state_path, raw_state)
+    for ranking_date, payload in rebuilt.items():
+        atomic_write_json(public_dir / "events" / "daily" / f"{ranking_date.isoformat()}.json", payload)
+    atomic_write_json(public_dir / "events" / "index.json", index)
+    removed = prune_event_states(state_dir, current_date=date)
+    pool_size = 0
+    if pool is not None:
         atomic_write_json(public_dir / "events" / "category" / f"{date.isoformat()}.json", pool)
         prune_event_pools(public_dir / "events" / "category", current_date=date)
         pool_size = pool["pool_size"]
@@ -714,17 +802,18 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--maximum-bytes-billed", type=int, default=DEFAULT_MAXIMUM_BYTES_BILLED)
     parser.add_argument("--top-limit", type=int, default=DEFAULT_TOP_LIMIT)
     parser.add_argument("--metadata-attempt-limit", type=int, default=DEFAULT_METADATA_ATTEMPT_LIMIT)
+    parser.add_argument("--api-request-budget", type=int, default=DEFAULT_API_REQUEST_BUDGET)
     parser.add_argument(
         "--category-pool-limit",
         type=int,
         default=DEFAULT_CATEGORY_POOL_LIMIT,
-        help="额外补全的日增量池深度，用于生成独立分类榜；0 表示不生成",
+        help="额外补全的日增量筛选池深度；0 表示不生成",
     )
     parser.add_argument(
         "--category-pool-attempt-limit",
         type=int,
         default=DEFAULT_CATEGORY_POOL_ATTEMPT_LIMIT,
-        help="生成分类池时允许检查的全局候选上限",
+        help="生成筛选池时允许检查的全局候选上限",
     )
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--validate-only", action="store_true")
@@ -739,6 +828,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     yesterday = now.astimezone(ZoneInfo(TIMEZONE)).date() - dt.timedelta(days=1)
     try:
         date = dt.date.fromisoformat(args.date) if args.date else yesterday
+        if args.api_request_budget < DEFAULT_TOP_LIMIT or args.api_request_budget > DEFAULT_API_REQUEST_BUDGET:
+            raise DataIntegrityError(
+                f"GitHub API 请求预算必须在 {DEFAULT_TOP_LIMIT} 到 {DEFAULT_API_REQUEST_BUDGET} 之间"
+            )
         project = os.environ.get("GCP_PROJECT_ID") or os.environ.get("GOOGLE_CLOUD_PROJECT")
         if not project:
             raise DataIntegrityError("必须通过 GCP_PROJECT_ID 提供 BigQuery 作业项目")
@@ -747,7 +840,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             raise DataIntegrityError("正式采集必须通过 GITHUB_TOKEN 提供 GitHub API 令牌")
         result = run_event_update(
             BigQueryRunner(project),
-            GitHubClient(token),
+            GitHubClient(token, max_requests=args.api_request_budget),
             data_dir=args.data_dir.resolve(),
             date=date,
             generated_at=now,

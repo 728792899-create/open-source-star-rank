@@ -42,19 +42,19 @@ await mkdir(outputRoot, { recursive: true });
 const jobs = [];
 for (const file of await jsonFiles(path.join(dataRoot, 'daily'))) {
   const ranking = JSON.parse(await readFile(file, 'utf8'));
-  jobs.push({ ranking: withLocalizedNames(ranking), label: '每日净增 Top 100', name: `daily-${ranking.date}.png` });
+  jobs.push({ ranking: withLocalizedNames(ranking), label: `每日净增 Top ${ranking.ranking_limit ?? 100}`, name: `daily-${ranking.date}.png` });
 }
 for (const file of await jsonFiles(path.join(dataRoot, 'events', 'daily'))) {
   const ranking = JSON.parse(await readFile(file, 'utf8'));
-  jobs.push({ ranking: withLocalizedNames(ranking), label: '全站公开事件新增 Top 100', name: `events-daily-${ranking.date}.png`, eventMode: true });
+  jobs.push({ ranking: withLocalizedNames(ranking), label: `全站公开事件新增 Top ${ranking.ranking_limit ?? 100}`, name: `events-daily-${ranking.date}.png`, eventMode: true });
 }
 for (const file of await jsonFiles(path.join(dataRoot, 'period'))) {
   const ranking = JSON.parse(await readFile(file, 'utf8'));
-  jobs.push({ ranking: withLocalizedNames(ranking), label: `${ranking.period_days} 日净增 Top 100`, name: `period-${ranking.period_days}d-${ranking.date}.png` });
+  jobs.push({ ranking: withLocalizedNames(ranking), label: `${ranking.period_days} 日净增 Top ${ranking.ranking_limit ?? 100}`, name: `period-${ranking.period_days}d-${ranking.date}.png` });
 }
 for (const file of (await jsonFiles(path.join(dataRoot, 'language'))).filter((item) => !item.endsWith('/index.json'))) {
   const ranking = JSON.parse(await readFile(file, 'utf8'));
-  jobs.push({ ranking: withLocalizedNames(ranking), label: `${ranking.language} Top 50`, name: `language-${ranking.slug}-${ranking.date}.png` });
+  jobs.push({ ranking: withLocalizedNames(ranking), label: `${ranking.language} Top ${ranking.ranking_limit ?? 50}`, name: `language-${ranking.slug}-${ranking.date}.png` });
 }
 const queue = [...jobs];
 async function renderQueue() {

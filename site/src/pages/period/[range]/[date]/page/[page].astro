@@ -1,0 +1,61 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import RankingView from '../../../../../components/RankingView.astro';
+import { readExplorationPool, readLocalizationCatalog, readPeriodRanking, readRankingIndex } from '../../../../../lib/data';
+import { localizedRepositoryContent } from '../../../../../lib/localization';
+import { withBase } from '../../../../../lib/paths';
+
+export const getStaticPaths = (() => {
+  const index = readRankingIndex();
+  return ([7, 30] as const).flatMap((days) =>
+    (index.periods?.[`${days}d`]?.available_dates ?? []).flatMap((date) => {
+      const ranking = readPeriodRanking(days, date);
+      const pages = Math.ceil(ranking.entries.length / 100);
+      return Array.from({ length: Math.max(0, pages - 1) }, (_, offset) => ({
+        params: { range: `${days}d`, date, page: String(offset + 2) },
+        props: { days, date, page: offset + 2 },
+      }));
+    }),
+  );
+}) satisfies GetStaticPaths;
+
+const { days, date, page } = Astro.props;
+const index = readRankingIndex();
+const ranking = readPeriodRanking(days, date);
+const kind = days === 7 ? 'period_7d' : 'period_30d';
+const exploration = readExplorationPool(kind, date);
+const previousDate = new Date(`${date}T12:00:00Z`);
+previousDate.setUTCDate(previousDate.getUTCDate() - 1);
+const previousDateValue = previousDate.toISOString().slice(0, 10);
+const previousExploration = readExplorationPool(kind, previousDateValue);
+const localization = readLocalizationCatalog();
+const entries = ranking.entries.slice((page - 1) * 100, page * 100);
+const totalPages = Math.ceil(ranking.entries.length / 100);
+const basePath = `/period/${days}d/${date}/`;
+const href = (target: number) => target === 1 ? basePath : `${basePath}page/${target}/`;
+const structuredData = {
+  '@context': 'https://schema.org', '@type': 'ItemList',
+  name: `${date} GitHub 近 ${days} 日 Star 净增榜第 ${page} 页`, numberOfItems: entries.length,
+  itemListElement: entries.map((entry) => ({
+    '@type': 'ListItem', position: entry.rank,
+    url: new URL(withBase(`/repo/${entry.repository_id}/`), Astro.site ?? Astro.url.origin).toString(),
+    name: localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description).displayName,
+  })),
+};
+---
+
+<BaseLayout
+  title={`${date} GitHub 近 ${days} 日 Star 榜 ${page}/${totalPages}｜开源星榜`}
+  description={`${date} 近 ${days} 日净增 Top 500 第 ${page} 页。`}
+  structuredData={structuredData} socialImagePath={`/social/period-${days}d-${date}.png`}
+  prevPath={href(page - 1)} nextPath={page < totalPages ? href(page + 1) : undefined}
+>
+  <RankingView
+    ranking={ranking} index={index} mode="period" isLatest={date === index.periods?.[`${days}d`]?.latest_date}
+    availableDates={index.periods?.[`${days}d`]?.available_dates ?? []} routePrefix={`/period/${days}d`}
+    dataPrefix={`/data/period/${days}d`} explorationPath={exploration ? `/data/explore/period/${days}d/${date}.json` : undefined}
+    previousExplorationPath={previousExploration ? `/data/explore/period/${days}d/${previousDateValue}.json` : undefined}
+    explorationEntries={exploration?.entries ?? []} page={page} pageBasePath={basePath}
+  />
+</BaseLayout>

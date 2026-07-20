@@ -15,7 +15,7 @@
     "window_start": { "type": "string", "format": "date-time" },
     "window_end": { "type": "string", "format": "date-time" },
     "generated_at": { "type": "string", "format": "date-time" },
-    "methodology_version": { "enum": ["gharchive-public-watch-events-v1", "gharchive-public-watch-events-v2"] },
+    "methodology_version": { "enum": ["gharchive-public-watch-events-v1", "gharchive-public-watch-events-v2", "gharchive-public-watch-events-v3"] },
     "pool_size": { "type": "integer", "minimum": 1, "maximum": 1000 },
     "entries": {
       "type": "array",

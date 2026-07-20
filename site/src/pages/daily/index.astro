@@ -14,7 +14,7 @@ const previousDateValue = previousDate?.toISOString().slice(0, 10) ?? null;
 const previousExploration = previousDateValue ? readExplorationPool('daily', previousDateValue) : null;
 ---
 
-<BaseLayout title="候选池 Star 净增榜｜开源星榜" description="用北京时间连续快照计算 GitHub 候选池 Star 真实净增。" socialImagePath={ranking ? `/social/daily-${ranking.date}.png` : '/og.png'}>
+<BaseLayout title="候选池 Star 净增榜｜开源星榜" description="用北京时间连续快照计算 GitHub 候选池 Star 真实净增。" socialImagePath={ranking ? `/social/daily-${ranking.date}.png` : '/og.png'} nextPath={ranking && ranking.entries.length > 100 ? `/daily/${ranking.date}/page/2/` : undefined}>
   {ranking ? <RankingView
     ranking={ranking}
     index={index}
@@ -24,5 +24,6 @@ const previousExploration = previousDateValue ? readExplorationPool('daily', pre
     explorationPath={exploration ? `/data/explore/daily/${ranking.date}.json` : undefined}
     previousExplorationPath={previousExploration ? `/data/explore/daily/${previousDateValue}.json` : undefined}
     explorationEntries={exploration?.entries ?? []}
+    pageBasePath={`/daily/${ranking.date}/`}
   /> : <Initialization index={index} />}
 </BaseLayout>

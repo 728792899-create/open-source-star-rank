@@ -63,9 +63,9 @@ export function readEventRankingIndex(): EventRankingIndex {
   const file = path.join(dataRoot, 'events', 'index.json');
   if (!existsSync(file)) {
     return {
-      schema_version: '1.1.0', status: 'initializing', timezone: 'Asia/Shanghai', updated_at: null,
-      latest_date: null, available_dates: [], methodology_version: 'gharchive-public-watch-events-v2',
-      freshness_threshold_hours: 36, latest_source_metrics: null,
+      schema_version: '1.2.0', status: 'initializing', timezone: 'Asia/Shanghai', updated_at: null,
+      latest_date: null, available_dates: [], methodology_version: 'gharchive-public-watch-events-v3',
+      freshness_threshold_hours: 36, latest_source_metrics: null, ranking_limit: 500, page_size: 100,
     };
   }
   return JSON.parse(readFileSync(file, 'utf8')) as EventRankingIndex;

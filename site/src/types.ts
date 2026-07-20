@@ -27,6 +27,8 @@ export interface RankingIndex {
   latest_collection: CollectionMetrics | null;
   sampling?: SamplingState;
   periods?: Record<'7d' | '30d', PeriodAvailability>;
+  ranking_limit?: number;
+  page_size?: number;
 }
 
 export interface SamplingState {
@@ -80,6 +82,8 @@ export interface DailyRanking {
   eligible_count: number;
   collection: CollectionMetrics;
   entries: RankingEntry[];
+  ranking_limit?: number;
+  entry_count?: number;
 }
 
 export interface PeriodRanking extends DailyRanking {
@@ -160,18 +164,26 @@ export interface EventSourceMetrics {
   metadata_filtered_count: number;
   api_request_count: number;
   api_retry_count: number;
+  quality_baseline_days?: number;
+  watch_event_count_median?: number | null;
+  unique_addition_count_median?: number | null;
+  watch_event_count_ratio?: number | null;
+  unique_addition_count_ratio?: number | null;
+  quality_status?: 'calibrating' | 'passed';
 }
 
 export interface EventRankingIndex {
-  schema_version: '1.0.0' | '1.1.0';
+  schema_version: '1.0.0' | '1.1.0' | '1.2.0';
   status: 'initializing' | 'ready';
   timezone: 'Asia/Shanghai';
   updated_at: string | null;
   latest_date: string | null;
   available_dates: string[];
-  methodology_version: 'gharchive-public-watch-events-v1' | 'gharchive-public-watch-events-v2';
+  methodology_version: 'gharchive-public-watch-events-v1' | 'gharchive-public-watch-events-v2' | 'gharchive-public-watch-events-v3';
   freshness_threshold_hours: 36;
   latest_source_metrics: EventSourceMetrics | null;
+  ranking_limit?: number;
+  page_size?: number;
 }
 
 export interface EventRankingEntry {
@@ -190,16 +202,18 @@ export interface EventRankingEntry {
 }
 
 export interface EventDailyRanking {
-  schema_version: '1.0.0' | '1.1.0';
+  schema_version: '1.0.0' | '1.1.0' | '1.2.0';
   date: string;
   timezone: 'Asia/Shanghai';
   window_start: string;
   window_end: string;
   generated_at: string;
-  methodology_version: 'gharchive-public-watch-events-v1' | 'gharchive-public-watch-events-v2';
+  methodology_version: 'gharchive-public-watch-events-v1' | 'gharchive-public-watch-events-v2' | 'gharchive-public-watch-events-v3';
   source_metrics: EventSourceMetrics;
   eligible_count: number;
   entries: EventRankingEntry[];
+  ranking_limit?: number;
+  entry_count?: number;
 }
 
 export interface EventCategoryPoolEntry {
@@ -223,7 +237,7 @@ export interface EventCategoryPool {
   window_start: string;
   window_end: string;
   generated_at: string;
-  methodology_version: 'gharchive-public-watch-events-v1' | 'gharchive-public-watch-events-v2';
+  methodology_version: 'gharchive-public-watch-events-v1' | 'gharchive-public-watch-events-v2' | 'gharchive-public-watch-events-v3';
   pool_size: number;
   entries: EventCategoryPoolEntry[];
 }

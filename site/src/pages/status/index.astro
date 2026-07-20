@@ -49,7 +49,10 @@ const structuredData = {
         <div><dt>当日唯一新增</dt><dd>{eventMetrics.unique_star_addition_count?.toLocaleString('zh-CN') ?? '旧版未记录'}</dd></div>
         <div><dt>WatchEvent</dt><dd>{eventMetrics.observed_watch_event_count.toLocaleString('zh-CN')}</dd></div>
         <div><dt>当日获得公开加星的仓库</dt><dd>{eventMetrics.observed_repository_count.toLocaleString('zh-CN')}</dd></div>
-        <div><dt>Top 100 完整性</dt><dd>{eventMetrics.ranking_complete ? '已验证' : '旧版规则'}</dd></div>
+        <div><dt>Top 500 完整性</dt><dd>{eventMetrics.ranking_complete && eventMetrics.metadata_success_count === 500 ? '已验证' : '旧版或未达标'}</dd></div>
+        <div><dt>历史异常基线</dt><dd class:list={{ warning: eventMetrics.quality_status && !['passed', 'calibrating'].includes(eventMetrics.quality_status) }}>{eventMetrics.quality_status === 'passed' ? `已通过（${eventMetrics.quality_baseline_days}/7 日）` : eventMetrics.quality_status === 'calibrating' ? `校准中（${eventMetrics.quality_baseline_days ?? 0}/7 日）` : '旧版未记录'}</dd></div>
+        <div><dt>当日 / WatchEvent 中位数</dt><dd>{eventMetrics.watch_event_count_ratio == null ? '校准中' : `${(eventMetrics.watch_event_count_ratio * 100).toFixed(1)}%`}</dd></div>
+        <div><dt>当日 / 唯一新增中位数</dt><dd>{eventMetrics.unique_addition_count_ratio == null ? '校准中' : `${(eventMetrics.unique_addition_count_ratio * 100).toFixed(1)}%`}</dd></div>
         <div><dt>BigQuery 实际扫描</dt><dd>{(eventMetrics.bytes_processed / 1024 ** 3).toFixed(2)} GiB</dd></div>
         <div><dt>单次硬上限</dt><dd>{(eventMetrics.maximum_bytes_billed / 1024 ** 3).toFixed(2)} GiB</dd></div>
         <div><dt>元数据尝试 / 成功</dt><dd>{eventMetrics.metadata_attempted_count} / {eventMetrics.metadata_success_count}</dd></div>
@@ -92,6 +95,7 @@ const structuredData = {
         <div><dt>7 日榜</dt><dd>{sampling?.period_progress['7d'].completed ?? 0} / 7</dd></div>
         <div><dt>30 日榜</dt><dd>{sampling?.period_progress['30d'].completed ?? 0} / 30</dd></div>
         <div><dt>公共数据版本</dt><dd>{index.schema_version} / events {eventIndex.schema_version}</dd></div>
+        <div><dt>榜单深度 / 每页</dt><dd>{index.ranking_limit ?? 100} / {index.page_size ?? 100}</dd></div>
       </dl>
     </section>
 

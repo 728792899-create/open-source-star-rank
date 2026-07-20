@@ -1,0 +1,133 @@
+name: Audit or migrate retained rankings to Top 500
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: Apply only the safe recomputations listed in the manifest
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: open-source-star-rank-data
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    outputs:
+      should_deploy: ${{ steps.mode.outputs.should_deploy }}
+    env:
+      ASTRO_TELEMETRY_DISABLED: "1"
+      SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+      BASE_PATH: /${{ github.event.repository.name }}
+      PUBLIC_REPOSITORY: ${{ github.repository }}
+    steps:
+      - name: Checkout application
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+        with:
+          fetch-depth: 0
+
+      - name: Resolve migration mode
+        id: mode
+        run: echo "should_deploy=${{ inputs.apply }}" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-star-rank.txt
+
+      - name: Set up Node.js
+        if: inputs.apply
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --requirement requirements-star-rank.txt
+          if [[ "${{ inputs.apply }}" == "true" ]]; then npm ci --prefix site; fi
+
+      - name: Prepare data branch worktree
+        run: |
+          set -euo pipefail
+          git fetch origin refs/heads/star-rank-data:refs/remotes/origin/star-rank-data
+          data_dir="$RUNNER_TEMP/star-rank-data"
+          git worktree add -B star-rank-data "$data_dir" refs/remotes/origin/star-rank-data
+          echo "STAR_RANK_DATA_DIR=$data_dir" >> "$GITHUB_ENV"
+
+      - name: Generate immutable migration audit
+        env:
+          APPLY_MIGRATION: ${{ inputs.apply }}
+        run: |
+          set -euo pipefail
+          args=(
+            --data-dir "$STAR_RANK_DATA_DIR"
+            --manifest "$RUNNER_TEMP/top500-migration.json"
+          )
+          if [[ "$APPLY_MIGRATION" == "true" ]]; then
+            args+=(--apply)
+          fi
+          python -m tools.migrate_star_rank_top500 "${args[@]}"
+
+      - name: Upload migration manifest
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: top500-migration-manifest
+          path: ${{ runner.temp }}/top500-migration.json
+
+      - name: Validate migrated data and application
+        if: inputs.apply
+        run: |
+          python tools/validate_star_rank_data.py --data-dir "$STAR_RANK_DATA_DIR" --sync-schemas
+          npm test --prefix site
+          STAR_RANK_DATA_DIR="$STAR_RANK_DATA_DIR/public" npm run check --prefix site
+          STAR_RANK_DATA_DIR="$STAR_RANK_DATA_DIR/public" npm run build --prefix site
+          npm run validate-build --prefix site
+
+      - name: Commit one validated migration
+        if: inputs.apply
+        run: |
+          set -euo pipefail
+          git -C "$STAR_RANK_DATA_DIR" config user.name "github-actions[bot]"
+          git -C "$STAR_RANK_DATA_DIR" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C "$STAR_RANK_DATA_DIR" add public
+          if ! git -C "$STAR_RANK_DATA_DIR" diff --cached --quiet; then
+            git -C "$STAR_RANK_DATA_DIR" commit -m "Migrate reproducible rankings to Top 500"
+            git -C "$STAR_RANK_DATA_DIR" push origin HEAD:star-rank-data
+          fi
+
+      - name: Upload Pages artifact
+        if: inputs.apply
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: site/dist
+
+  deploy:
+    if: needs.migrate.outputs.should_deploy == 'true'
+    needs: migrate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0

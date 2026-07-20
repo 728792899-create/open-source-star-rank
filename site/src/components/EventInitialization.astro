@@ -12,12 +12,12 @@ const { index } = Astro.props;
   <p class="eyebrow">GitHub public events · 初始化</p>
   <h1>全站公开事件，<br />正在等待首个完整日。</h1>
   <p class="initialization-copy">
-    首榜会汇总北京时间前一完整自然日的 GH Archive 公开 WatchEvent。只有确认 24/24 小时覆盖、全局排序和完整 Top 100 后才会发布。
+    首榜会汇总北京时间前一完整自然日的 GH Archive 公开 WatchEvent。只有确认 24 小时覆盖（24/24 个 WatchEvent 小时）、全局排序和完整 Top 500 后才会发布。
   </p>
   <div class="initialization-grid initialization-grid-wide" aria-label="全站事件榜初始化状态">
     <div><span>数据范围</span><strong class="small-value">GitHub 公开事件</strong></div>
     <div><span>统计窗口</span><strong>24 小时</strong></div>
-    <div><span>发布门槛</span><strong>Top 100</strong></div>
+    <div><span>发布门槛</span><strong>Top 500</strong></div>
     <div><span>每日汇总</span><strong>07:30</strong></div>
   </div>
   <p class="method-note"><strong>口径说明：</strong>只统计 GH Archive 实际归档的公开加星事件，不包含私有活动和取消 Star，不是 GitHub 官方统计。</p>

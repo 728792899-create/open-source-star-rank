@@ -11,6 +11,7 @@ from typing import Any
 from tools.event_star_rank import (
     DEFAULT_MAXIMUM_BYTES_BILLED,
     build_event_outputs,
+    build_quality_baseline,
     build_watch_event_query,
     enrich_aggregates,
     event_window,
@@ -114,6 +115,17 @@ class EventStarRankTests(unittest.TestCase):
         self.date = dt.date(2026, 7, 15)
         self.now = dt.datetime(2026, 7, 16, 0, 0, tzinfo=dt.timezone.utc)
 
+    @staticmethod
+    def quality(*, status: str = "calibrating") -> dict[str, Any]:
+        return {
+            "quality_baseline_days": 0 if status == "calibrating" else 7,
+            "watch_event_count_median": None if status == "calibrating" else 10_000,
+            "unique_addition_count_median": None if status == "calibrating" else 9_000,
+            "watch_event_count_ratio": None if status == "calibrating" else 1.0,
+            "unique_addition_count_ratio": None if status == "calibrating" else 1.0,
+            "quality_status": status,
+        }
+
     def test_beijing_window_maps_to_two_safe_utc_tables(self) -> None:
         start, end = event_window(self.date)
         self.assertEqual(start.isoformat(), "2026-07-14T16:00:00+00:00")
@@ -161,15 +173,15 @@ class EventStarRankTests(unittest.TestCase):
                     data_dir=root,
                     date=self.date,
                     generated_at=self.now,
-                    top_limit=100,
+                    top_limit=500,
                 )
             self.assertEqual(runner.run_count, 0)
             self.assertFalse((root / "public").exists())
 
     def test_collects_filters_sorts_validates_and_reuses_a_day(self) -> None:
         rows = [aggregate(2, 312, 313), aggregate(1, 312), aggregate(3, 310), aggregate(4, 309), aggregate(5, 308)]
-        rows.extend(aggregate(repository_id, 307 - repository_id) for repository_id in range(6, 111))
-        payloads = {repository_id: repository(repository_id) for repository_id in range(1, 111)}
+        rows.extend(aggregate(repository_id, 300 - repository_id // 2) for repository_id in range(6, 511))
+        payloads = {repository_id: repository(repository_id) for repository_id in range(1, 511)}
         payloads.update(
             {
                 1: repository(1, stars_total=500),
@@ -198,7 +210,7 @@ class EventStarRankTests(unittest.TestCase):
                 data_dir=root,
                 date=self.date,
                 generated_at=self.now,
-                top_limit=100,
+                top_limit=500,
             )
             ranking = result["ranking"]
             self.assertEqual([item["repository_id"] for item in ranking["entries"][:3]], [2, 1, 3])
@@ -217,7 +229,7 @@ class EventStarRankTests(unittest.TestCase):
                 data_dir=root,
                 date=self.date,
                 generated_at=self.now,
-                top_limit=100,
+                top_limit=500,
             )
             self.assertEqual(reused["status"], "reused")
             self.assertEqual(runner.run_count, 1)
@@ -227,7 +239,7 @@ class EventStarRankTests(unittest.TestCase):
                 data_dir=root,
                 date=self.date,
                 generated_at=self.now,
-                top_limit=100,
+                top_limit=500,
                 validate_only=True,
             )
             self.assertEqual(validated["status"], "validated")
@@ -238,19 +250,19 @@ class EventStarRankTests(unittest.TestCase):
                 data_dir=root,
                 date=self.date,
                 generated_at=self.now,
-                top_limit=100,
+                top_limit=500,
                 replace_day=True,
             )
             self.assertEqual(replaced["status"], "updated")
             self.assertEqual(runner.run_count, 3)
 
-    def test_category_pool_extends_enrichment_without_touching_the_top_100(self) -> None:
-        rows = [aggregate(repository_id, 400 - repository_id) for repository_id in range(1, 181)]
+    def test_category_pool_extends_enrichment_without_touching_the_top_500(self) -> None:
+        rows = [aggregate(repository_id, 2_000 - repository_id) for repository_id in range(1, 653)]
         payloads: dict[int, dict[str, Any] | None] = {
-            repository_id: repository(repository_id) for repository_id in range(1, 181)
+            repository_id: repository(repository_id) for repository_id in range(1, 653)
         }
-        payloads[150] = None  # pool candidates may 404 without failing the run
-        payloads[151] = repository(151, fork=True)
+        payloads[550] = None  # pool candidates may 404 without failing the run
+        payloads[551] = repository(551, fork=True)
         github = FakeGitHub(payloads)
         runner = FakeRunner(rows)
         with tempfile.TemporaryDirectory() as temporary:
@@ -266,31 +278,31 @@ class EventStarRankTests(unittest.TestCase):
                 data_dir=root,
                 date=self.date,
                 generated_at=self.now,
-                top_limit=100,
-                category_pool_limit=160,
+                top_limit=500,
+                category_pool_limit=600,
             )
-            self.assertEqual(len(result["ranking"]["entries"]), 100)
-            self.assertEqual(result["category_pool_size"], 160)
+            self.assertEqual(len(result["ranking"]["entries"]), 500)
+            self.assertEqual(result["category_pool_size"], 600)
             pool_path = root / "public" / "events" / "category" / f"{self.date.isoformat()}.json"
             pool = validate_data_tree(root)
             self.assertEqual(pool["event_category_pool"], 1)
             payload = json.loads(pool_path.read_text(encoding="utf-8"))
-            self.assertEqual(payload["pool_size"], 160)
+            self.assertEqual(payload["pool_size"], 600)
             entries = payload["entries"]
             self.assertEqual([item["rank"] for item in entries[:3]], [1, 2, 3])
             self.assertEqual(entries[0]["repository_id"], 1)
             pool_ids = {item["repository_id"] for item in entries}
-            self.assertNotIn(150, pool_ids)
-            self.assertNotIn(151, pool_ids)
+            self.assertNotIn(550, pool_ids)
+            self.assertNotIn(551, pool_ids)
             self.assertEqual(
-                [item["repository_id"] for item in entries[:100]],
+                [item["repository_id"] for item in entries[:500]],
                 [item["repository_id"] for item in result["ranking"]["entries"]],
             )
 
     def test_category_pool_rate_limit_shrinks_pool_without_failing_the_day(self) -> None:
-        rows = [aggregate(repository_id, 400 - repository_id) for repository_id in range(1, 181)]
-        payloads = {repository_id: repository(repository_id) for repository_id in range(1, 181)}
-        github = FakeGitHub(payloads, fail_at=130)
+        rows = [aggregate(repository_id, 2_000 - repository_id) for repository_id in range(1, 651)]
+        payloads = {repository_id: repository(repository_id) for repository_id in range(1, 651)}
+        github = FakeGitHub(payloads, fail_at=530)
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             shutil.copytree(
@@ -304,19 +316,19 @@ class EventStarRankTests(unittest.TestCase):
                 data_dir=root,
                 date=self.date,
                 generated_at=self.now,
-                top_limit=100,
-                category_pool_limit=160,
+                top_limit=500,
+                category_pool_limit=600,
             )
             self.assertEqual(result["status"], "updated")
-            self.assertEqual(len(result["ranking"]["entries"]), 100)
-            self.assertEqual(result["category_pool_size"], 129)
+            self.assertEqual(len(result["ranking"]["entries"]), 500)
+            self.assertEqual(result["category_pool_size"], 529)
             counts = validate_data_tree(root)
             self.assertEqual(counts["event_daily"], 1)
             self.assertEqual(counts["event_category_pool"], 1)
 
     def test_category_pool_is_opt_in_and_bounded(self) -> None:
-        rows = [aggregate(repository_id, 400 - repository_id) for repository_id in range(1, 121)]
-        payloads = {repository_id: repository(repository_id) for repository_id in range(1, 121)}
+        rows = [aggregate(repository_id, 2_000 - repository_id) for repository_id in range(1, 501)]
+        payloads = {repository_id: repository(repository_id) for repository_id in range(1, 501)}
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             shutil.copytree(
@@ -331,8 +343,8 @@ class EventStarRankTests(unittest.TestCase):
                     data_dir=root,
                     date=self.date,
                     generated_at=self.now,
-                    top_limit=100,
-                    category_pool_limit=99,
+                    top_limit=500,
+                    category_pool_limit=499,
                 )
             with self.assertRaises(DataIntegrityError):
                 run_event_update(
@@ -341,7 +353,7 @@ class EventStarRankTests(unittest.TestCase):
                     data_dir=root,
                     date=self.date,
                     generated_at=self.now,
-                    top_limit=100,
+                    top_limit=500,
                     category_pool_limit=1001,
                 )
             result = run_event_update(
@@ -350,7 +362,7 @@ class EventStarRankTests(unittest.TestCase):
                 data_dir=root,
                 date=self.date,
                 generated_at=self.now,
-                top_limit=100,
+                top_limit=500,
             )
             self.assertEqual(result["category_pool_size"], 0)
             self.assertFalse((root / "public" / "events" / "category").exists())
@@ -363,12 +375,12 @@ class EventStarRankTests(unittest.TestCase):
                 "description": None,
                 "language": "Python",
                 "stars_total": 10_000 - repository_id,
-                "stars_added": 300 - repository_id,
-                "watch_events": 300 - repository_id,
+                "stars_added": 700 - repository_id,
+                "watch_events": 700 - repository_id,
                 "html_url": f"https://github.com/fixture/repo-{repository_id:03d}",
                 "owner_avatar_url": None,
             }
-            for repository_id in range(1, 101)
+            for repository_id in range(1, 501)
         ]
         previous_date = self.date - dt.timedelta(days=1)
         previous = {"entries": [{"repository_id": 1, "rank": 2}, {"repository_id": 2, "rank": 1}]}
@@ -380,11 +392,11 @@ class EventStarRankTests(unittest.TestCase):
             rows=rows,
             enriched=enriched,
             metadata_metrics={
-                "metadata_attempted_count": 100,
-                "metadata_success_count": 100,
+                "metadata_attempted_count": 500,
+                "metadata_success_count": 500,
                 "metadata_not_found_count": 0,
                 "metadata_filtered_count": 0,
-                "api_request_count": 100,
+                "api_request_count": 500,
                 "api_retry_count": 0,
             },
             estimated_bytes=1,
@@ -392,12 +404,13 @@ class EventStarRankTests(unittest.TestCase):
             maximum_bytes_billed=DEFAULT_MAXIMUM_BYTES_BILLED,
             state_history={previous_date: {"entries": [{"repository_id": 1, "stars_added": 42}]}},
             previous_ranking=previous,
-            top_limit=100,
+            top_limit=500,
+            quality=self.quality(),
         )
         self.assertEqual(ranking["entries"][0]["rank_change"], 1)
         self.assertEqual(ranking["entries"][1]["rank_change"], -1)
-        self.assertEqual(ranking["entries"][0]["trend_7d"][-2:], [42, 299])
-        self.assertEqual(ranking["entries"][1]["trend_7d"][-2:], [None, 298])
+        self.assertEqual(ranking["entries"][0]["trend_7d"][-2:], [42, 699])
+        self.assertEqual(ranking["entries"][1]["trend_7d"][-2:], [None, 698])
 
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -421,7 +434,7 @@ class EventStarRankTests(unittest.TestCase):
                 raw_state={"entries": enriched},
             )
             self.assertEqual(rebuilt[next_date]["entries"][0]["rank_change"], 0)
-            self.assertEqual(rebuilt[next_date]["entries"][0]["trend_7d"][-2:], [299, 99])
+            self.assertEqual(rebuilt[next_date]["entries"][0]["trend_7d"][-2:], [699, 99])
 
     def test_metadata_does_not_change_the_global_event_order(self) -> None:
         rows = [aggregate(1, 100, 101), aggregate(2, 100, 101)]
@@ -444,12 +457,12 @@ class EventStarRankTests(unittest.TestCase):
                 "description": None,
                 "language": "Python",
                 "stars_total": 1_000,
-                "stars_added": 201 - repository_id,
-                "watch_events": 201 - repository_id,
+                "stars_added": 1_001 - repository_id,
+                "watch_events": 1_001 - repository_id,
                 "html_url": f"https://github.com/fixture/repo-{repository_id}",
                 "owner_avatar_url": None,
             }
-            for repository_id in range(1, 101)
+            for repository_id in range(1, 501)
         ]
         rows = [aggregate(item["repository_id"], item["stars_added"]) for item in enriched]
         FakeRunner(rows)
@@ -459,11 +472,11 @@ class EventStarRankTests(unittest.TestCase):
             rows=rows,
             enriched=enriched,
             metadata_metrics={
-                "metadata_attempted_count": 100,
-                "metadata_success_count": 100,
+                "metadata_attempted_count": 500,
+                "metadata_success_count": 500,
                 "metadata_not_found_count": 0,
                 "metadata_filtered_count": 0,
-                "api_request_count": 100,
+                "api_request_count": 500,
                 "api_retry_count": 0,
             },
             estimated_bytes=1,
@@ -471,7 +484,8 @@ class EventStarRankTests(unittest.TestCase):
             maximum_bytes_billed=DEFAULT_MAXIMUM_BYTES_BILLED,
             state_history={},
             previous_ranking=None,
-            top_limit=100,
+            top_limit=500,
+            quality=self.quality(),
         )
         legacy_metrics = {
             key: value
@@ -486,16 +500,20 @@ class EventStarRankTests(unittest.TestCase):
             "schema_version": "1.0.0",
             "methodology_version": "gharchive-public-watch-events-v1",
             "source_metrics": legacy_metrics,
+            "eligible_count": 100,
+            "entries": ranking["entries"][:100],
         }
+        legacy.pop("ranking_limit", None)
+        legacy.pop("entry_count", None)
         validate_payload("event_daily", legacy)
 
     def test_rate_limit_and_network_failure_do_not_publish_partial_event_data(self) -> None:
-        rows = [aggregate(index, 200 - index) for index in range(1, 101)]
+        rows = [aggregate(index, 1_000 - index) for index in range(1, 501)]
         for failure in (RateLimitError("fixture rate limit"), StarRankError("fixture network failure")):
             with self.subTest(type=type(failure).__name__), tempfile.TemporaryDirectory() as temporary:
                 root = Path(temporary)
                 github = FakeGitHub(
-                    {index: repository(index) for index in range(1, 101)},
+                    {index: repository(index) for index in range(1, 501)},
                     fail_at=2,
                     failure=failure,
                 )
@@ -506,7 +524,7 @@ class EventStarRankTests(unittest.TestCase):
                         data_dir=root,
                         date=self.date,
                         generated_at=self.now,
-                        top_limit=100,
+                        top_limit=500,
                     )
                 self.assertFalse((root / "public" / "events").exists())
 
@@ -522,21 +540,21 @@ class EventStarRankTests(unittest.TestCase):
                     dry_run=True,
                 )
 
-    def test_event_ranking_requires_a_complete_top_100(self) -> None:
+    def test_event_ranking_requires_a_complete_top_500(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
-            with self.assertRaisesRegex(DataIntegrityError, "Top 100"):
+            with self.assertRaisesRegex(DataIntegrityError, "Top 500"):
                 run_event_update(
                     FakeRunner([]),
                     FakeGitHub({}),
                     data_dir=Path(temporary),
                     date=self.date,
                     generated_at=self.now,
-                    top_limit=99,
+                    top_limit=499,
                     dry_run=True,
                 )
 
     def test_validate_only_requires_complete_hourly_coverage_without_writes(self) -> None:
-        rows = [aggregate(index, 200 - index) for index in range(1, 101)]
+        rows = [aggregate(index, 1_000 - index) for index in range(1, 501)]
         runner = FakeRunner(rows)
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -566,10 +584,10 @@ class EventStarRankTests(unittest.TestCase):
                 )
 
     def test_metadata_scan_can_pass_five_hundred_filtered_repositories(self) -> None:
-        rows = [aggregate(index, 2_000 - index) for index in range(1, 701)]
+        rows = [aggregate(index, 2_000 - index) for index in range(1, 901)]
         payloads = {
-            index: repository(index, archived=index <= 550)
-            for index in range(1, 701)
+            index: repository(index, archived=index <= 400)
+            for index in range(1, 901)
         }
         with tempfile.TemporaryDirectory() as temporary:
             result = run_event_update(
@@ -580,8 +598,42 @@ class EventStarRankTests(unittest.TestCase):
                 generated_at=self.now,
                 metadata_attempt_limit=900,
             )
-            self.assertEqual(result["ranking"]["entries"][0]["repository_id"], 551)
-            self.assertEqual(result["ranking"]["source_metrics"]["metadata_attempted_count"], 650)
+            self.assertEqual(result["ranking"]["entries"][0]["repository_id"], 401)
+            self.assertEqual(result["ranking"]["source_metrics"]["metadata_attempted_count"], 900)
+
+    def test_quality_baseline_rejects_below_fifty_percent(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            public = Path(temporary)
+            for offset in range(1, 8):
+                day = self.date - dt.timedelta(days=offset)
+                atomic_write_json(
+                    public / "events" / "daily" / f"{day.isoformat()}.json",
+                    {
+                        "source_metrics": {
+                            "observed_watch_event_count": 10_000,
+                            "unique_star_addition_count": 9_000,
+                        }
+                    },
+                )
+            with self.assertRaisesRegex(DataIntegrityError, "低于历史基线 50%"):
+                build_quality_baseline(
+                    public,
+                    date=self.date,
+                    coverage={
+                        "observed_watch_event_count": 4_999,
+                        "unique_star_addition_count": 4_499,
+                    },
+                )
+            passed = build_quality_baseline(
+                public,
+                date=self.date,
+                coverage={
+                    "observed_watch_event_count": 5_000,
+                    "unique_star_addition_count": 4_500,
+                },
+            )
+            self.assertEqual(passed["quality_status"], "passed")
+            self.assertEqual(passed["watch_event_count_ratio"], 0.5)
 
     def test_metadata_attempt_limit_fails_atomically(self) -> None:
         rows = [aggregate(index, 2_000 - index) for index in range(1, 1_001)]

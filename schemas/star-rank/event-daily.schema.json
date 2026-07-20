@@ -9,19 +9,22 @@
     "methodology_version", "source_metrics", "eligible_count", "entries"
   ],
   "properties": {
-    "schema_version": { "enum": ["1.0.0", "1.1.0"] },
+    "schema_version": { "enum": ["1.0.0", "1.1.0", "1.2.0"] },
+    "ranking_limit": { "const": 500 },
+    "entry_count": { "const": 500 },
+    "recomputed_at": { "type": "string", "format": "date-time" },
     "date": { "$ref": "#/$defs/date" },
     "timezone": { "const": "Asia/Shanghai" },
     "window_start": { "type": "string", "format": "date-time" },
     "window_end": { "type": "string", "format": "date-time" },
     "generated_at": { "type": "string", "format": "date-time" },
-    "methodology_version": { "enum": ["gharchive-public-watch-events-v1", "gharchive-public-watch-events-v2"] },
+    "methodology_version": { "enum": ["gharchive-public-watch-events-v1", "gharchive-public-watch-events-v2", "gharchive-public-watch-events-v3"] },
     "source_metrics": { "$ref": "#/$defs/source_metrics" },
     "eligible_count": { "type": "integer", "minimum": 100, "maximum": 900 },
     "entries": {
       "type": "array",
       "minItems": 100,
-      "maxItems": 100,
+      "maxItems": 500,
       "items": { "$ref": "#/$defs/entry" }
     }
   },
@@ -29,11 +32,28 @@
     {
       "if": { "properties": { "schema_version": { "const": "1.0.0" } }, "required": ["schema_version"] },
       "then": { "properties": { "methodology_version": { "const": "gharchive-public-watch-events-v1" } } },
-      "else": {
+      "else": {}
+    },
+    {
+      "if": { "properties": { "schema_version": { "const": "1.1.0" } }, "required": ["schema_version"] },
+      "then": {
         "properties": {
           "methodology_version": { "const": "gharchive-public-watch-events-v2" },
           "source_metrics": { "$ref": "#/$defs/source_metrics_v2" },
-          "eligible_count": { "const": 100 }
+          "eligible_count": { "const": 100 },
+          "entries": { "minItems": 100, "maxItems": 100 }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "schema_version": { "const": "1.2.0" } }, "required": ["schema_version"] },
+      "then": {
+        "required": ["ranking_limit", "entry_count"],
+        "properties": {
+          "methodology_version": { "const": "gharchive-public-watch-events-v3" },
+          "source_metrics": { "$ref": "#/$defs/source_metrics_v3" },
+          "eligible_count": { "const": 500 },
+          "entries": { "minItems": 500, "maxItems": 500 }
         }
       }
     }
@@ -71,11 +91,17 @@
         "observed_watch_event_count": { "type": "integer", "minimum": 0 },
         "observed_repository_count": { "type": "integer", "minimum": 0 },
         "ranking_complete": { "const": true },
+        "quality_baseline_days": { "type": "integer", "minimum": 0, "maximum": 7 },
+        "watch_event_count_median": { "type": ["integer", "null"], "minimum": 1 },
+        "unique_addition_count_median": { "type": ["integer", "null"], "minimum": 1 },
+        "watch_event_count_ratio": { "type": ["number", "null"], "minimum": 0 },
+        "unique_addition_count_ratio": { "type": ["number", "null"], "minimum": 0 },
+        "quality_status": { "enum": ["calibrating", "passed"] },
         "metadata_attempted_count": { "type": "integer", "minimum": 0, "maximum": 900 },
         "metadata_success_count": { "type": "integer", "minimum": 0, "maximum": 900 },
         "metadata_not_found_count": { "type": "integer", "minimum": 0, "maximum": 900 },
         "metadata_filtered_count": { "type": "integer", "minimum": 0, "maximum": 900 },
-        "api_request_count": { "type": "integer", "minimum": 0 },
+        "api_request_count": { "type": "integer", "minimum": 0, "maximum": 950 },
         "api_retry_count": { "type": "integer", "minimum": 0 }
       }
     },
@@ -86,6 +112,17 @@
           "required": [
             "scope", "counting_unit", "expected_hour_count", "observed_hour_count",
             "missing_hours", "unique_star_addition_count", "ranking_complete"
+          ]
+        }
+      ]
+    },
+    "source_metrics_v3": {
+      "allOf": [
+        { "$ref": "#/$defs/source_metrics_v2" },
+        {
+          "required": [
+            "quality_baseline_days", "watch_event_count_median", "unique_addition_count_median",
+            "watch_event_count_ratio", "unique_addition_count_ratio", "quality_status"
           ]
         }
       ]
@@ -105,7 +142,7 @@
         "stars_total": { "type": "integer", "minimum": 0 },
         "stars_added": { "type": "integer", "minimum": 1 },
         "watch_events": { "type": "integer", "minimum": 1 },
-        "rank": { "type": "integer", "minimum": 1, "maximum": 100 },
+        "rank": { "type": "integer", "minimum": 1, "maximum": 500 },
         "rank_change": { "type": ["integer", "null"] },
         "trend_7d": {
           "type": "array", "minItems": 7, "maxItems": 7,
