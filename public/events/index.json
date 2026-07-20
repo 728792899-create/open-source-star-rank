@@ -1,10 +1,11 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "status": "ready",
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-07-20T03:04:43Z",
-  "latest_date": "2026-07-19",
+  "updated_at": "2026-07-20T21:52:45Z",
+  "latest_date": "2026-07-20",
   "available_dates": [
+    "2026-07-20",
     "2026-07-19",
     "2026-07-18",
     "2026-07-17",
@@ -12,7 +13,7 @@
     "2026-07-15",
     "2026-07-14"
   ],
-  "methodology_version": "gharchive-public-watch-events-v2",
+  "methodology_version": "gharchive-public-watch-events-v3",
   "freshness_threshold_hours": 36,
   "latest_source_metrics": {
     "provider": "gh_archive_bigquery",
@@ -20,24 +21,32 @@
     "scope": "github_public_events_as_archived_by_gh_archive",
     "counting_unit": "unique_actor_repository_pair",
     "table_dates": [
-      "20260718",
-      "20260719"
+      "20260719",
+      "20260720"
     ],
     "expected_hour_count": 24,
     "observed_hour_count": 24,
     "missing_hours": [],
-    "estimated_bytes": 571921280,
-    "bytes_processed": 571921280,
+    "estimated_bytes": 528144640,
+    "bytes_processed": 0,
     "maximum_bytes_billed": 25769803776,
-    "unique_star_addition_count": 2383,
-    "observed_watch_event_count": 2384,
-    "observed_repository_count": 2009,
+    "unique_star_addition_count": 983,
+    "observed_watch_event_count": 983,
+    "observed_repository_count": 875,
     "ranking_complete": true,
-    "metadata_attempted_count": 100,
-    "metadata_success_count": 100,
-    "metadata_not_found_count": 0,
-    "metadata_filtered_count": 0,
-    "api_request_count": 100,
+    "quality_baseline_days": 5,
+    "watch_event_count_median": null,
+    "unique_addition_count_median": null,
+    "watch_event_count_ratio": null,
+    "unique_addition_count_ratio": null,
+    "quality_status": "calibrating",
+    "metadata_attempted_count": 520,
+    "metadata_success_count": 500,
+    "metadata_not_found_count": 2,
+    "metadata_filtered_count": 18,
+    "api_request_count": 875,
     "api_retry_count": 0
-  }
+  },
+  "ranking_limit": 500,
+  "page_size": 100
 }

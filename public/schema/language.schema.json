@@ -5,8 +5,17 @@
   "type": "object",
   "additionalProperties": false,
   "required": ["schema_version", "date", "timezone", "language", "slug", "window_start", "window_end", "window_quality", "candidate_count", "eligible_count", "collection", "entries"],
+  "allOf": [
+    {
+      "if": { "properties": { "schema_version": { "const": "1.3.0" } }, "required": ["schema_version"] },
+      "then": { "required": ["ranking_limit", "entry_count"] }
+    }
+  ],
   "properties": {
-    "schema_version": { "const": "1.2.0" },
+    "schema_version": { "enum": ["1.2.0", "1.3.0"] },
+    "ranking_limit": { "const": 500 },
+    "entry_count": { "type": "integer", "minimum": 0, "maximum": 500 },
+    "recomputed_at": { "type": "string", "format": "date-time" },
     "date": { "type": "string", "format": "date" },
     "timezone": { "const": "Asia/Shanghai" },
     "language": { "type": "string", "minLength": 1 },
@@ -17,7 +26,7 @@
     "candidate_count": { "type": "integer", "minimum": 1, "maximum": 2000 },
     "eligible_count": { "type": "integer", "minimum": 5, "maximum": 2000 },
     "collection": { "$ref": "#/$defs/collection" },
-    "entries": { "type": "array", "maxItems": 50, "items": { "$ref": "#/$defs/entry" } }
+    "entries": { "type": "array", "maxItems": 500, "items": { "$ref": "#/$defs/entry" } }
   },
   "$defs": {
     "collection": {
@@ -70,7 +79,7 @@
         "owner_avatar_url": { "type": ["string", "null"], "format": "uri" },
         "knowledge_url": { "type": ["string", "null"] },
         "trend_7d": { "type": "array", "minItems": 7, "maxItems": 7, "items": { "type": ["integer", "null"] } },
-        "rank": { "type": "integer", "minimum": 1, "maximum": 50 },
+        "rank": { "type": "integer", "minimum": 1, "maximum": 500 },
         "rank_change": { "type": ["integer", "null"] }
       }
     }
