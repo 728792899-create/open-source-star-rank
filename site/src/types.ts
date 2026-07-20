@@ -110,6 +110,8 @@ export interface LanguageIndex {
   schema_version: string;
   updated_at: string;
   timezone: string;
+  ranking_limit?: number;
+  page_size?: number;
   languages: LanguageSummary[];
 }
 

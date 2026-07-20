@@ -217,6 +217,12 @@ class StarRankTests(unittest.TestCase):
             self.assertEqual(index["page_size"], 100)
             self.assertEqual(index["freshness_threshold_hours"], 36)
             self.assertEqual(index["latest_collection"]["snapshot_completeness"], 1.0)
+            language_index = json.loads(
+                (root / "rank-data/public/language/index.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(language_index["schema_version"], "1.3.0")
+            self.assertEqual(language_index["ranking_limit"], 500)
+            self.assertEqual(language_index["page_size"], 100)
 
     def test_second_snapshot_creates_real_ranking_and_is_idempotent(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
