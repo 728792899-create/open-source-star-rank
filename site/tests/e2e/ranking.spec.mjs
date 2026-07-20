@@ -36,6 +36,9 @@ test('publishes the public event archive with internal project links and source 
   await expect(page.getByText('0.88 GiB')).toBeVisible();
   await expect(page.locator('.collection-details').getByText('24 / 24 小时')).toBeVisible();
   await expect(page.locator('.collection-details').getByText('120,000')).toBeVisible();
+  await expect(page.getByText('当日获得公开加星的仓库')).toBeVisible();
+  await expect(page.getByText('不是 GitHub 仓库总数')).toBeVisible();
+  await expect(page.getByText('唯一新增加星用户', { exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: /测试项目 30001/ })).toHaveAttribute('href', '/open-source-star-rank/repo/30001/');
   await expect(page.getByRole('link', { name: '在 GitHub 打开 public-event-labs/project-001' })).toHaveAttribute('href', 'https://github.com/public-event-labs/project-001');
   await expect(page.locator('.project-source-name').filter({ hasText: 'public-event-labs/project-001' })).toBeVisible();
@@ -223,6 +226,10 @@ test('publishes status, period, language and stable repository history routes', 
 
   await page.goto('repo/10001/');
   await expect(page.getByRole('heading', { name: /测试项目 10001/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '项目速览' })).toBeVisible();
+  await expect(page.getByText('为什么上榜')).toBeVisible();
+  await expect(page.getByRole('link', { name: '阅读 README ↗' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '相似项目' })).toBeVisible();
   await expect(page.locator('.repo-source-name').filter({ hasText: 'fixture-labs/repo-001' })).toBeVisible();
   await expect(page.getByRole('heading', { name: '真实历史' })).toBeVisible();
   await expect(page.getByRole('heading', { name: '方向与适用场景' })).toBeVisible();
@@ -231,6 +238,23 @@ test('publishes status, period, language and stable repository history routes', 
   await page.goto('repo/30001/');
   await expect(page.getByRole('heading', { name: /测试项目 30001/ })).toBeVisible();
   await expect(page.getByRole('heading', { name: '公开事件新增历史' })).toBeVisible();
+});
+
+test('keeps favorites, comparison and recent projects in a local user workspace', async ({ page }) => {
+  await page.goto('repo/10001/');
+  await page.getByRole('button', { name: '收藏项目' }).click();
+  await page.getByRole('button', { name: '加入对比' }).click();
+  await expect(page.getByRole('button', { name: '已收藏' })).toHaveAttribute('aria-pressed', 'true');
+  await page.goto('repo/10002/');
+  await page.getByRole('button', { name: '加入对比' }).click();
+  await expect(page.locator('[data-compare-tray]')).toBeVisible();
+  await page.locator('[data-user-library] summary').click();
+  await expect(page.locator('[data-recent-list] a')).toHaveCount(2);
+  await page.goto('compare/');
+  await expect(page.getByRole('heading', { name: '项目对比' })).toBeVisible();
+  await expect(page.locator('.compare-card')).toHaveCount(2);
+  await expect(page.locator('.compare-card').getByRole('link', { name: '测试项目 10001｜中文功能名' })).toBeVisible();
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,follow');
 });
 
 test('publishes independent category boards with renumbered ranks and empty noindex policy', async ({ page, browser }) => {

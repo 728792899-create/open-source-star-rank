@@ -71,7 +71,7 @@ const defaultHeadline = periodDays
   : languageName
     ? `${languageName} 项目，昨日谁在升温？`
     : isEvent ? '昨日，全站公开事件中哪些项目获得最多新 Star？' : '昨日，哪些开源项目正在升温？';
-const gainLabel = isEvent || isFacet ? '日新增' : periodDays ? `${periodDays} 日净增` : '日净增';
+const gainLabel = isEvent || isFacet ? '新增用户' : periodDays ? `${periodDays} 日净增` : '日净增';
 const heroCopy = isFacet
   ? '从全站公开事件榜的扩展池中，按当日唯一加星用户数筛出该分类的独立前 100；名次为分类内重新排序，不含取消 Star。'
   : isEvent
@@ -113,6 +113,7 @@ const sectionEyebrow = sectionEyebrowOverride ?? (isEvent ? 'Global public event
 const sectionTitle = sectionTitleOverride ?? (isEvent ? '全站公开事件新增 Star 排行' : `${languageName ? `${languageName} ` : ''}${periodDays ? `${periodDays} 日 ` : ''}Star 净增排行`);
 const uniqueAdditionCount = eventRanking?.source_metrics.unique_star_addition_count ?? null;
 const explorationPoolSize = explorationEntries.length || ranking.entries.length;
+const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口` : isEvent ? '每日更新' : languageName ? '随每日净增榜更新' : '每日零点快照';
 ---
 
 <main
@@ -140,7 +141,7 @@ const explorationPoolSize = explorationEntries.length || ranking.entries.length;
   {fallbackNotice && <p class="pipeline-fallback" role="status">{fallbackNotice}</p>}
   <header class="ranking-summary" aria-labelledby="ranking-title">
     <div>
-      <p class="eyebrow">{sectionEyebrow} · {formatDate(ranking.date)}</p>
+      <p class="eyebrow">{sectionEyebrow} · 统计日 {formatDate(ranking.date)} · {updateFrequency}</p>
       <h1 id="ranking-title">{sectionTitle}</h1>
       <p class="ranking-summary-copy"><strong>{headline}</strong><span>{heroCopy}</span></p>
     </div>
@@ -159,8 +160,8 @@ const explorationPoolSize = explorationEntries.length || ranking.entries.length;
     <div><span>来源池</span><strong>{formatNumber(facetRanking!.pool_size)}</strong><small>全站事件榜扩展候选池</small></div>
     <div><span>采样窗口</span><strong>{formatTime(ranking.window_start)}</strong><small>至 {formatTime(ranking.window_end)}</small></div>
   </section> : <section class="metrics" aria-label="榜单统计">
-    <div><span>{isEvent ? '全站事件仓库' : '候选池'}</span><strong>{formatNumber(eventRanking?.source_metrics.observed_repository_count ?? snapshotRanking?.candidate_count ?? 0)}</strong><small>{isEvent ? '个仓库获得公开 Star 事件' : '个公开仓库'}</small></div>
-    <div><span>{isEvent ? '唯一新增' : '可比较'}</span><strong>{isEvent ? uniqueAdditionCount === null ? '—' : formatNumber(uniqueAdditionCount) : formatNumber(ranking.eligible_count)}</strong><small>{isEvent ? uniqueAdditionCount === null ? '旧版数据未汇总' : '用户—仓库唯一对' : '拥有连续快照'}</small></div>
+    <div><span>{isEvent ? '当日获得公开加星的仓库' : '候选池'}</span><strong>{formatNumber(eventRanking?.source_metrics.observed_repository_count ?? snapshotRanking?.candidate_count ?? 0)}</strong><small>{isEvent ? '不是 GitHub 仓库总数' : '个公开仓库'}</small></div>
+    <div><span>{isEvent ? '唯一新增加星用户' : '可比较'}</span><strong>{isEvent ? uniqueAdditionCount === null ? '—' : formatNumber(uniqueAdditionCount) : formatNumber(ranking.eligible_count)}</strong><small>{isEvent ? uniqueAdditionCount === null ? '旧版数据未汇总' : '用户—仓库唯一对' : '拥有连续快照'}</small></div>
     <div><span>上榜项目</span><strong>{ranking.entries.length}</strong><small>{isEvent ? '按新增排序' : '按净增排序'}</small></div>
     <div><span>采样窗口</span><strong>{formatTime(ranking.window_start)}</strong><small>至 {formatTime(ranking.window_end)}</small></div>
   </section>}
@@ -197,6 +198,7 @@ const explorationPoolSize = explorationEntries.length || ranking.entries.length;
     <div class="ranking-toolbar">
       <div class="ranking-actions" aria-label="榜单操作">
         <button type="button" data-copy-ranking>复制榜单链接</button>
+        <button type="button" data-density-toggle aria-pressed="false">紧凑模式</button>
         {downloadable && <a href={rankingJsonPath} download>下载当日 JSON</a>}
         <span class="action-status" data-action-status aria-live="polite"></span>
       </div>
@@ -254,15 +256,16 @@ const explorationPoolSize = explorationEntries.length || ranking.entries.length;
       </details>
       <p class="filter-count" aria-live="polite"><strong data-visible-count>{ranking.entries.length}</strong> / <span data-pool-count>{explorationPoolSize}</span> 个项目</p>
     </div>
+    <div class="active-filters" data-active-filters hidden aria-live="polite">
+      <span data-active-filter-copy></span>
+      <button type="button" data-clear-filters>清除全部</button>
+    </div>
     <script is:inline>
       (() => {
         if (!window.matchMedia('(max-width: 680px)').matches) return;
         const parameters = new URLSearchParams(window.location.search);
         const hasAdvancedSelection = ['language', 'category', 'type', 'scenario'].some((name) => parameters.has(name));
-        if (hasAdvancedSelection) return;
-        const script = document.currentScript;
-        const filters = script?.previousElementSibling;
-        filters?.querySelector('[data-advanced-filters]')?.removeAttribute('open');
+        if (!hasAdvancedSelection) document.querySelectorAll('[data-advanced-filters]').forEach((details) => details.removeAttribute('open'));
       })();
     </script>
 
@@ -357,7 +360,8 @@ const explorationPoolSize = explorationEntries.length || ranking.entries.length;
     </div>
     <div class="empty-state" data-empty-state hidden>
       <strong>没有匹配的项目</strong>
-      <p>试试缩短关键词，或切换到全部语言。</p>
+        <p>当前组合条件过窄。可以缩短关键词，或清除一部分筛选。</p>
+        <button type="button" data-clear-filters>清除全部筛选</button>
     </div>
     <p class="filter-status" data-filter-status aria-live="polite" hidden></p>
   </section>
@@ -389,6 +393,8 @@ const explorationPoolSize = explorationEntries.length || ranking.entries.length;
       const poolCount = root.querySelector('[data-pool-count]');
       const emptyState = root.querySelector('[data-empty-state]');
       const filterStatus = root.querySelector('[data-filter-status]');
+      const activeFilters = root.querySelector('[data-active-filters]');
+      const activeFilterCopy = root.querySelector('[data-active-filter-copy]');
       const actionStatus = root.querySelector('[data-action-status]');
       const body = root.querySelector('[data-ranking-body]');
       const rankingDate = root.dataset.rankingDate ?? '';
@@ -404,9 +410,9 @@ const explorationPoolSize = explorationEntries.length || ranking.entries.length;
       restore(category, parameters.get('category') ?? '');
       restore(projectType, parameters.get('type') ?? '');
       restore(scenario, parameters.get('scenario') ?? '');
-      if (advancedFilters instanceof HTMLDetailsElement
-        && [parameters.get('language'), parameters.get('category'), parameters.get('type'), parameters.get('scenario')].some(Boolean)) {
-        advancedFilters.open = true;
+      if (advancedFilters instanceof HTMLDetailsElement) {
+        const restoreAdvanced = [parameters.get('language'), parameters.get('category'), parameters.get('type'), parameters.get('scenario')].some(Boolean);
+        advancedFilters.open = restoreAdvanced || !window.matchMedia('(max-width: 680px)').matches;
       }
 
       const json = async (url: string | undefined, optional = false) => {
@@ -457,6 +463,18 @@ const explorationPoolSize = explorationEntries.length || ranking.entries.length;
       const updateSummary = (value: ReturnType<typeof filters>) => {
         const count = [!fixedLanguage && value.language, value.category, value.projectType, value.scenario].filter(Boolean).length;
         if (advancedFilterSummary) advancedFilterSummary.textContent = count ? `${count} 项已启用` : '未启用';
+        const label = (control: Element | null, selected: string) => control instanceof HTMLSelectElement
+          ? control.selectedOptions[0]?.textContent?.trim() || selected
+          : selected;
+        const selected = [
+          value.query ? `搜索：${value.query}` : '',
+          !fixedLanguage && value.language ? label(language, value.language) : '',
+          value.category ? label(category, value.category) : '',
+          value.projectType ? label(projectType, value.projectType) : '',
+          value.scenario ? label(scenario, value.scenario) : '',
+        ].filter(Boolean);
+        if (activeFilters instanceof HTMLElement) activeFilters.hidden = selected.length === 0;
+        if (activeFilterCopy) activeFilterCopy.textContent = selected.length ? `当前条件：${selected.join(' × ')}` : '';
       };
       const element = (tag: string, className?: string, text?: string) => {
         const node = document.createElement(tag);
@@ -640,6 +658,16 @@ const explorationPoolSize = explorationEntries.length || ranking.entries.length;
         control?.addEventListener('input', apply);
         control?.addEventListener('change', apply);
       }
+      root.addEventListener('click', (event) => {
+        if (!(event.target instanceof Element) || !event.target.closest('[data-clear-filters]')) return;
+        if (search instanceof HTMLInputElement) search.value = '';
+        if (language instanceof HTMLSelectElement && !fixedLanguage) language.value = '';
+        if (category instanceof HTMLSelectElement) category.value = '';
+        if (projectType instanceof HTMLSelectElement) projectType.value = '';
+        if (scenario instanceof HTMLSelectElement) scenario.value = '';
+        if (advancedFilters instanceof HTMLDetailsElement && window.matchMedia('(max-width: 680px)').matches) advancedFilters.open = false;
+        apply();
+      });
 
       const copyText = async (value: string) => {
         if (!navigator.clipboard?.writeText) throw new Error('Clipboard API unavailable');

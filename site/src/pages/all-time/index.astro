@@ -55,7 +55,7 @@ const structuredData = entries.length ? {
     </nav>
     <header class="ranking-summary">
       <div>
-        <p class="eyebrow">All-time most starred · Top {formatNumber(entries.length)}</p>
+        <p class="eyebrow">All-time most starred · Top {formatNumber(entries.length)} · 每周一自动更新</p>
         <h1 id="ranking-title">全部历史星标 Top 1000</h1>
         <p class="ranking-summary-copy"><strong>哪些开源项目积累了最多 Star？</strong><span>按 GitHub 搜索的累计 Star 数降序排列，是一张跨越时间的“名人堂”，与每日新增榜互补。</span></p>
       </div>
@@ -69,7 +69,7 @@ const structuredData = entries.length ? {
     <FreshnessStatus updatedAt={index.updated_at} thresholdHours={index.freshness_threshold_hours} compact />
 
     <section class="metrics" aria-label="榜单统计">
-      <div><span>收录项目</span><strong>{formatNumber(entries.length)}</strong><small>累计 Star 最高的公开仓库</small></div>
+      <div><span>收录项目</span><strong>{formatNumber(entries.length)} / 1,000</strong><small>过滤 Fork、归档和不可用仓库后的有效数</small></div>
       <div><span>最高星标</span><strong>{formatCompact(index.top_stars ?? maxStars)}</strong><small>榜首累计 Star</small></div>
       <div><span>数据来源</span><strong>GitHub</strong><small>Search 按 star 降序</small></div>
       <div><span>更新时间</span><strong>{formatDateTime(index.updated_at)}</strong><small>北京时间</small></div>
@@ -79,6 +79,7 @@ const structuredData = entries.length ? {
       <div class="ranking-toolbar">
         <div class="ranking-actions" aria-label="榜单操作">
           <button type="button" data-copy-ranking>复制榜单链接</button>
+          <button type="button" data-density-toggle aria-pressed="false">紧凑模式</button>
           <a href={withBase('/data/alltime/top-1000.json')} download>下载 JSON</a>
           <span class="action-status" data-action-status aria-live="polite"></span>
         </div>
@@ -108,6 +109,18 @@ const structuredData = entries.length ? {
         </details>
         <p class="filter-count" aria-live="polite"><strong data-visible-count>{entries.length}</strong> / <span data-matching-count>{entries.length}</span> 个项目</p>
       </div>
+      <div class="active-filters" data-active-filters hidden aria-live="polite">
+        <span data-active-filter-copy></span>
+        <button type="button" data-clear-filters>清除全部</button>
+      </div>
+      <script is:inline>
+        (() => {
+          if (!window.matchMedia('(max-width: 680px)').matches) return;
+          const parameters = new URLSearchParams(window.location.search);
+          const hasAdvancedSelection = ['language', 'category', 'type', 'scenario'].some((name) => parameters.has(name));
+          if (!hasAdvancedSelection) document.querySelectorAll('[data-advanced-filters]').forEach((details) => details.removeAttribute('open'));
+        })();
+      </script>
 
       <div class="ranking-table" role="table" aria-label="全部历史星标 Top 1000">
         <div class="table-head" role="row">
@@ -175,8 +188,10 @@ const structuredData = entries.length ? {
       </div>
       <div class="empty-state" data-empty-state hidden>
         <strong>没有匹配的项目</strong>
-        <p>试试缩短关键词，或切换到全部语言。</p>
+        <p>当前组合条件过窄，可以缩短关键词或放宽分类。</p>
+        <button type="button" data-clear-filters>清除全部筛选</button>
       </div>
+      <p class="filter-status" data-filter-status aria-live="polite" hidden></p>
     </section>
 
     <aside class="method-note" aria-label="榜单口径提示">
@@ -208,6 +223,9 @@ const structuredData = entries.length ? {
     const matchingCount = root.querySelector('[data-matching-count]');
     const emptyState = root.querySelector('[data-empty-state]');
     const actionStatus = root.querySelector('[data-action-status]');
+    const filterStatus = root.querySelector('[data-filter-status]');
+    const activeFilters = root.querySelector('[data-active-filters]');
+    const activeFilterCopy = root.querySelector('[data-active-filter-copy]');
     const params = new URLSearchParams(window.location.search);
     const restore = (element: Element | null, value: string) => { if (element instanceof HTMLInputElement || element instanceof HTMLSelectElement) element.value = value; };
     restore(search, params.get('q') ?? '');
@@ -215,9 +233,9 @@ const structuredData = entries.length ? {
     restore(category, params.get('category') ?? '');
     restore(projectType, params.get('type') ?? '');
     restore(scenario, params.get('scenario') ?? '');
-    if (advancedFilters instanceof HTMLDetailsElement
-      && [params.get('language'), params.get('category'), params.get('type'), params.get('scenario')].some(Boolean)) {
-      advancedFilters.open = true;
+    if (advancedFilters instanceof HTMLDetailsElement) {
+      const restoreAdvanced = [params.get('language'), params.get('category'), params.get('type'), params.get('scenario')].some(Boolean);
+      advancedFilters.open = restoreAdvanced || !window.matchMedia('(max-width: 680px)').matches;
     }
 
     const apply = () => {
@@ -257,6 +275,24 @@ const structuredData = entries.length ? {
       if (visibleCount) visibleCount.textContent = String(shown);
       if (matchingCount) matchingCount.textContent = String(filtering ? matched : shown);
       if (advancedFilterSummary) advancedFilterSummary.textContent = activeCount > 0 ? `${activeCount} 项已启用` : '未启用';
+      const label = (control: Element | null, selected: string) => control instanceof HTMLSelectElement
+        ? control.selectedOptions[0]?.textContent?.trim() || selected
+        : selected;
+      const selected = [
+        query.trim() ? `搜索：${query.trim()}` : '',
+        selectedLanguage ? label(language, selectedLanguage) : '',
+        selectedCategory ? label(category, selectedCategory) : '',
+        selectedProjectType ? label(projectType, selectedProjectType) : '',
+        selectedScenario ? label(scenario, selectedScenario) : '',
+      ].filter(Boolean);
+      if (activeFilters instanceof HTMLElement) activeFilters.hidden = selected.length === 0;
+      if (activeFilterCopy) activeFilterCopy.textContent = selected.length ? `当前条件：${selected.join(' × ')}` : '';
+      if (filterStatus instanceof HTMLElement) {
+        filterStatus.hidden = !filtering;
+        filterStatus.textContent = filtering
+          ? `当前条件匹配 ${matched} 个项目，显示重新排名后的前 ${shown} 项；同时保留历史总榜名次。`
+          : '';
+      }
       if (emptyState instanceof HTMLElement) emptyState.hidden = matched !== 0;
       const next = new URL(window.location.href);
       const sync = (key: string, value: string) => value ? next.searchParams.set(key, value) : next.searchParams.delete(key);
@@ -271,6 +307,16 @@ const structuredData = entries.length ? {
       control?.addEventListener('input', apply);
       control?.addEventListener('change', apply);
     }
+    root.addEventListener('click', (event) => {
+      if (!(event.target instanceof Element) || !event.target.closest('[data-clear-filters]')) return;
+      if (search instanceof HTMLInputElement) search.value = '';
+      if (language instanceof HTMLSelectElement) language.value = '';
+      if (category instanceof HTMLSelectElement) category.value = '';
+      if (projectType instanceof HTMLSelectElement) projectType.value = '';
+      if (scenario instanceof HTMLSelectElement) scenario.value = '';
+      if (advancedFilters instanceof HTMLDetailsElement && window.matchMedia('(max-width: 680px)').matches) advancedFilters.open = false;
+      apply();
+    });
     root.querySelector('[data-copy-ranking]')?.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(window.location.href);

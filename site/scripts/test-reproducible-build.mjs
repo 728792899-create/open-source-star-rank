@@ -27,6 +27,7 @@ const files = [
   'language/typescript-ed0504f7/daily/2026-07-14/index.html',
   'data/language/typescript-ed0504f7/daily/2026-07-14.json',
   'repo/10001/index.html',
+  'compare/index.html',
   'data/repositories.json',
   'category/index.html',
   'category/ai-machine-learning/index.html',

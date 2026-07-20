@@ -46,9 +46,9 @@ const structuredData = {
       <div class="section-heading"><div><p class="eyebrow">Public event coverage</p><h2 id="events-title">全站公开事件与费用保护</h2></div></div>
       {eventMetrics ? <dl>
         <div><dt>24 小时覆盖</dt><dd class:list={{ warning: eventMetrics.observed_hour_count !== undefined && eventMetrics.observed_hour_count !== 24 }}>{eventMetrics.observed_hour_count === undefined ? '旧版未记录' : `${eventMetrics.observed_hour_count} / ${eventMetrics.expected_hour_count} 小时`}</dd></div>
-        <div><dt>全站唯一新增</dt><dd>{eventMetrics.unique_star_addition_count?.toLocaleString('zh-CN') ?? '旧版未记录'}</dd></div>
+        <div><dt>当日唯一新增</dt><dd>{eventMetrics.unique_star_addition_count?.toLocaleString('zh-CN') ?? '旧版未记录'}</dd></div>
         <div><dt>WatchEvent</dt><dd>{eventMetrics.observed_watch_event_count.toLocaleString('zh-CN')}</dd></div>
-        <div><dt>全站获星仓库</dt><dd>{eventMetrics.observed_repository_count.toLocaleString('zh-CN')}</dd></div>
+        <div><dt>当日获得公开加星的仓库</dt><dd>{eventMetrics.observed_repository_count.toLocaleString('zh-CN')}</dd></div>
         <div><dt>Top 100 完整性</dt><dd>{eventMetrics.ranking_complete ? '已验证' : '旧版规则'}</dd></div>
         <div><dt>BigQuery 实际扫描</dt><dd>{(eventMetrics.bytes_processed / 1024 ** 3).toFixed(2)} GiB</dd></div>
         <div><dt>单次硬上限</dt><dd>{(eventMetrics.maximum_bytes_billed / 1024 ** 3).toFixed(2)} GiB</dd></div>

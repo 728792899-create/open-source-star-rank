@@ -6,23 +6,78 @@ import { readClassificationIndex, readClassificationRepositories, readLocalizati
 import { localizedRepositoryContent } from '../../lib/localization';
 import { withBase } from '../../lib/paths';
 
-export const getStaticPaths = (() => readRepositoryProfiles().map((repository) => ({
-  params: { repository_id: String(repository.repository_id) },
-  props: { repository },
-}))) satisfies GetStaticPaths;
+export const getStaticPaths = (() => {
+  const repositoryProfiles = readRepositoryProfiles();
+  const localizationCatalog = readLocalizationCatalog();
+  const classificationCatalog = readClassificationRepositories();
+  const classificationById = classificationMap(classificationCatalog);
+  const labels = classificationLabels(readClassificationIndex());
+  const repositoryById = new Map(repositoryProfiles.map((item) => [item.repository_id, item]));
+  const recommendationBuckets = new Map<string, typeof repositoryProfiles>();
+  for (const item of classificationCatalog.repositories) {
+    const profile = repositoryById.get(item.repository_id);
+    if (!profile) continue;
+    const keys = [
+      `category:${item.primary_category}`,
+      `type:${item.project_type}`,
+      ...item.use_cases.map((useCase) => `scenario:${useCase}`),
+    ];
+    for (const key of keys) {
+      const bucket = recommendationBuckets.get(key) ?? [];
+      bucket.push(profile);
+      recommendationBuckets.set(key, bucket);
+    }
+  }
+  for (const bucket of recommendationBuckets.values()) {
+    bucket.sort((left, right) => right.stars_total - left.stars_total || left.full_name.localeCompare(right.full_name));
+  }
+  return repositoryProfiles.map((repository) => {
+    const content = localizedRepositoryContent(localizationCatalog, repository.repository_id, repository.full_name, repository.description);
+    const classification = classificationById.get(repository.repository_id);
+    const categoryLabel = classification ? labels.categories.get(classification.primary_category) ?? null : null;
+    const projectTypeLabel = classification ? labels.projectTypes.get(classification.project_type) ?? null : null;
+    const useCaseLabels = classification?.use_cases.map((id) => labels.useCases.get(id)).filter(Boolean) as string[] | undefined;
+    const keys = classification ? [
+      `category:${classification.primary_category}`,
+      `type:${classification.project_type}`,
+      ...classification.use_cases.map((useCase) => `scenario:${useCase}`),
+    ] : [];
+    const seen = new Set<number>([repository.repository_id]);
+    const similarProjects = [] as Array<{ candidate: typeof repository; content: ReturnType<typeof localizedRepositoryContent> }>;
+    for (const key of keys) {
+      for (const candidate of recommendationBuckets.get(key) ?? []) {
+        if (seen.has(candidate.repository_id)) continue;
+        seen.add(candidate.repository_id);
+        similarProjects.push({
+          candidate,
+          content: localizedRepositoryContent(localizationCatalog, candidate.repository_id, candidate.full_name, candidate.description),
+        });
+        if (similarProjects.length >= 4) break;
+      }
+      if (similarProjects.length >= 4) break;
+    }
+    return {
+      params: { repository_id: String(repository.repository_id) },
+      props: { repository, content, classification, categoryLabel, projectTypeLabel, useCaseLabels, similarProjects },
+    };
+  });
+}) satisfies GetStaticPaths;
 
-const { repository } = Astro.props;
-const content = localizedRepositoryContent(readLocalizationCatalog(), repository.repository_id, repository.full_name, repository.description);
-const classificationIndex = readClassificationIndex();
-const classification = classificationMap(readClassificationRepositories()).get(repository.repository_id);
-const labels = classificationLabels(classificationIndex);
-const categoryLabel = classification ? labels.categories.get(classification.primary_category) : null;
-const projectTypeLabel = classification ? labels.projectTypes.get(classification.project_type) : null;
-const useCaseLabels = classification?.use_cases.map((id) => labels.useCases.get(id)).filter(Boolean) as string[] | undefined;
+const { repository, content, classification, categoryLabel, projectTypeLabel, useCaseLabels, similarProjects } = Astro.props;
 const formatNumber = (value: number) => new Intl.NumberFormat('zh-CN').format(value);
 const values = repository.history_30d.map((item) => item.stars_gained).filter((value): value is number => value !== null);
 const maximum = Math.max(1, ...values.map((value) => Math.abs(value)));
 const eventMaximum = Math.max(1, ...repository.event_history.map((item) => item.stars_added));
+const latestEvent = repository.event_history.at(-1) ?? null;
+const latestSnapshot = repository.history_30d.at(-1) ?? null;
+const rankingReason = latestEvent
+  ? `${latestEvent.date} 获得 ${formatNumber(latestEvent.stars_added)} 个公开唯一加星用户，全站公开事件榜第 ${latestEvent.rank} 名。`
+  : latestSnapshot?.stars_gained !== null && latestSnapshot?.stars_gained !== undefined
+    ? `${latestSnapshot.date} 候选池 Star 净增 ${latestSnapshot.stars_gained >= 0 ? '+' : ''}${formatNumber(latestSnapshot.stars_gained)}。`
+    : repository.all_time_rank
+      ? `当前位列全部历史星标榜第 ${repository.all_time_rank} 名。`
+      : '该项目已进入开源星榜追踪范围，日度记录正在积累。';
+const feedbackUrl = `https://github.com/728792899-create/open-source-star-rank/issues/new?title=${encodeURIComponent(`项目内容纠错：${repository.full_name}`)}&body=${encodeURIComponent(`项目：${repository.full_name}\n仓库 ID：${repository.repository_id}\n\n需要修正的内容：\n`)}`;
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareSourceCode',
@@ -37,13 +92,12 @@ const structuredData = {
 ---
 
 <BaseLayout title={`${content.displayName} Star 历史｜开源星榜`} description={`${content.displayName}（${repository.full_name}）在开源星榜中的公开事件新增、候选池净增与历史排名记录。`} structuredData={structuredData}>
-  <main id="main-content" class="shell repo-page">
+  <main id="main-content" class="shell repo-page" data-repository-profile data-repository-id={repository.repository_id} data-repository-name={content.displayName} data-repository-full-name={repository.full_name} data-repository-url={withBase(`/repo/${repository.repository_id}/`)} data-repository-stars={repository.stars_total} data-repository-language={repository.language || 'Other'} data-repository-category={categoryLabel || '未分类'} data-repository-type={projectTypeLabel || '未分类'} data-repository-scenarios={useCaseLabels?.join('、') || '待生成'} data-repository-signal={rankingReason}>
     <p class="eyebrow">Repository #{repository.repository_id} · stable identity</p>
     <div class="repo-hero">
       <div>
         {content.localized ? <>
-          <h1 data-content-language="zh">{content.displayName}</h1>
-          <h1 data-content-language="original">{repository.full_name}</h1>
+          <h1><span data-content-language="zh">{content.displayName}</span><span data-content-language="original">{repository.full_name}</span></h1>
           <div class="repo-source-name" data-content-language="zh">{repository.full_name}<span class="translation-badge">{content.provenance === 'manual' ? '人工校订' : 'AI 译'}</span></div>
           <p>
             <span data-content-language="zh">{content.description || 'GitHub 未提供项目描述。'}</span>
@@ -55,7 +109,11 @@ const structuredData = {
           <p>{repository.description || 'No description provided.'}</p>
         </>}
       </div>
-      <a href={repository.html_url} target="_blank" rel="noreferrer">打开 GitHub ↗</a>
+      <div class="repo-actions">
+        <button type="button" data-library-action="favorite">收藏项目</button>
+        <button type="button" data-library-action="compare">加入对比</button>
+        <a href={repository.html_url} target="_blank" rel="noreferrer">打开 GitHub ↗</a>
+      </div>
     </div>
     <dl class="repo-metrics">
       <div><dt>当前 Star</dt><dd>{formatNumber(repository.stars_total)}</dd></div>
@@ -64,6 +122,22 @@ const structuredData = {
       <div><dt>最近追踪</dt><dd>{repository.last_seen_date || '未知'}</dd></div>
       {repository.all_time_rank && <div><dt>历史星标榜</dt><dd>#{repository.all_time_rank}</dd></div>}
     </dl>
+
+    <section class="repo-overview" aria-labelledby="repo-overview-title">
+      <div class="section-heading"><div><p class="eyebrow">Decision brief</p><h2 id="repo-overview-title">项目速览</h2></div></div>
+      <div class="repo-overview-grid">
+        <article><h3>它解决什么</h3><p>{content.description || repository.description || 'GitHub 尚未提供项目描述。'}</p></article>
+        <article><h3>适合谁</h3><p>{useCaseLabels?.length ? `需要${useCaseLabels.join('、')}能力的开发者或团队。` : categoryLabel ? `关注${categoryLabel}方向的开发者和团队。` : '建议先查看项目 README 确认适用范围。'}</p></article>
+        <article><h3>为什么上榜</h3><p>{rankingReason}</p></article>
+      </div>
+      <nav class="repo-quick-links" aria-label="项目快速链接">
+        <a href={`${repository.html_url}#readme`} target="_blank" rel="noreferrer">阅读 README ↗</a>
+        <a href={`${repository.html_url}/releases`} target="_blank" rel="noreferrer">最新发布 ↗</a>
+        <a href={`${repository.html_url}/issues`} target="_blank" rel="noreferrer">Issues ↗</a>
+        <a href={feedbackUrl} target="_blank" rel="noreferrer">AI 内容纠错 ↗</a>
+      </nav>
+      <p class="ai-disclosure">中文名称、简介和分类属于辅助理解层；GitHub 原始仓库信息始终是权威来源。</p>
+    </section>
 
     <section class="repo-classification" aria-labelledby="repo-classification-title">
       <div class="section-heading"><div><p class="eyebrow">Project taxonomy</p><h2 id="repo-classification-title">方向与适用场景</h2></div></div>
@@ -118,5 +192,72 @@ const structuredData = {
       <div class="section-heading"><div><p class="eyebrow">Ranking history</p><h2 id="history-title">榜单记录</h2></div></div>
       <p class="empty-copy">该项目目前仅出现在历史累计榜，日度事件或候选池历史尚未积累。</p>
     </section>}
+
+    {similarProjects.length > 0 && <section class="similar-projects" aria-labelledby="similar-projects-title">
+      <div class="section-heading"><div><p class="eyebrow">Related repositories</p><h2 id="similar-projects-title">相似项目</h2></div></div>
+      <div class="similar-project-grid">
+        {similarProjects.map(({ candidate, content: candidateContent }) => {
+          return <a href={withBase(`/repo/${candidate.repository_id}/`)}>
+            <strong>{candidateContent.displayName}</strong>
+            <span>{candidate.full_name}</span>
+            <small>{formatNumber(candidate.stars_total)} Star · {candidate.language || 'Other'}</small>
+          </a>;
+        })}
+      </div>
+    </section>}
   </main>
 </BaseLayout>
+
+<script>
+  const profile = document.querySelector('[data-repository-profile]');
+  const libraryApi = (window as any).starRankLibrary;
+  if (profile instanceof HTMLElement && libraryApi) {
+    const project = {
+      id: Number(profile.dataset.repositoryId),
+      name: profile.dataset.repositoryName ?? profile.dataset.repositoryFullName ?? '开源项目',
+      fullName: profile.dataset.repositoryFullName ?? '',
+      url: profile.dataset.repositoryUrl ?? window.location.pathname,
+      stars: Number(profile.dataset.repositoryStars ?? 0),
+      language: profile.dataset.repositoryLanguage ?? 'Other',
+      category: profile.dataset.repositoryCategory ?? '未分类',
+      type: profile.dataset.repositoryType ?? '未分类',
+      scenarios: profile.dataset.repositoryScenarios ?? '待生成',
+      signal: profile.dataset.repositorySignal ?? '',
+    };
+    const contains = (items: Array<{ id: number }>) => items.some((item) => item.id === project.id);
+    const updateButtons = () => {
+      const library = libraryApi.read();
+      const favorite = profile.querySelector('[data-library-action="favorite"]');
+      const compare = profile.querySelector('[data-library-action="compare"]');
+      if (favorite instanceof HTMLButtonElement) {
+        const active = contains(library.favorites);
+        favorite.textContent = active ? '已收藏' : '收藏项目';
+        favorite.setAttribute('aria-pressed', String(active));
+      }
+      if (compare instanceof HTMLButtonElement) {
+        const active = contains(library.compare);
+        compare.textContent = active ? '已加入对比' : '加入对比';
+        compare.setAttribute('aria-pressed', String(active));
+      }
+    };
+    const library = libraryApi.read();
+    library.recent = [project, ...library.recent.filter((item: { id: number }) => item.id !== project.id)].slice(0, 6);
+    libraryApi.write(library);
+    profile.addEventListener('click', (event) => {
+      const button = event.target instanceof Element ? event.target.closest('[data-library-action]') : null;
+      if (!(button instanceof HTMLButtonElement)) return;
+      const current = libraryApi.read();
+      const key = button.dataset.libraryAction === 'favorite' ? 'favorites' : 'compare';
+      const selected = current[key];
+      if (contains(selected)) current[key] = selected.filter((item: { id: number }) => item.id !== project.id);
+      else if (key === 'compare' && selected.length >= 4) {
+        button.textContent = '最多对比 4 个';
+        return;
+      } else current[key] = [project, ...selected];
+      libraryApi.write(current);
+      updateButtons();
+    });
+    window.addEventListener('starranklibrarychange', updateButtons);
+    updateButtons();
+  }
+</script>
