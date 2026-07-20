@@ -208,6 +208,22 @@ def apply_manifest(data_dir: Path, manifest: Mapping[str, Any], *, recomputed_at
                     written += 1
                 previous = current
 
+    language_index_path = language_root / "index.json"
+    language_index = load_json(language_index_path)
+    if isinstance(language_index, dict) and (
+        language_index.get("schema_version") != "1.3.0"
+        or language_index.get("ranking_limit") != RANKING_LIMIT
+        or language_index.get("page_size") != PAGE_SIZE
+    ):
+        language_index.update({
+            "schema_version": "1.3.0",
+            "ranking_limit": RANKING_LIMIT,
+            "page_size": PAGE_SIZE,
+        })
+        validate_payload("language_index", language_index)
+        atomic_write_json(language_index_path, language_index)
+        written += 1
+
     index_path = public / "index.json"
     index = load_json(index_path)
     if isinstance(index, dict) and index.get("latest_date"):

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -77,6 +78,35 @@ class Top500MigrationTests(unittest.TestCase):
             self.assertEqual(first, 1)
             self.assertEqual(second, 0)
             self.assertEqual(first_hash, second_hash)
+
+    def test_apply_upgrades_language_index_contract_once(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            language_index = root / "public" / "language" / "index.json"
+            atomic_write_json(language_index, {
+                "schema_version": "1.2.0",
+                "updated_at": "2026-07-20T16:20:00Z",
+                "timezone": "Asia/Shanghai",
+                "languages": [],
+            })
+
+            with (
+                mock.patch("tools.migrate_star_rank_top500.validate_payload"),
+                mock.patch("tools.migrate_star_rank_top500.validate_data_tree"),
+            ):
+                first = apply_manifest(
+                    root, build_manifest(root), recomputed_at="2026-07-21T00:00:00Z"
+                )
+                second = apply_manifest(
+                    root, build_manifest(root), recomputed_at="2026-07-22T00:00:00Z"
+                )
+
+            upgraded = json.loads(language_index.read_text(encoding="utf-8"))
+            self.assertEqual(first, 1)
+            self.assertEqual(second, 0)
+            self.assertEqual(upgraded["schema_version"], "1.3.0")
+            self.assertEqual(upgraded["ranking_limit"], 500)
+            self.assertEqual(upgraded["page_size"], 100)
 
 
 if __name__ == "__main__":

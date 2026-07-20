@@ -1024,9 +1024,11 @@ def build_language_index(
             }
         )
     return {
-        "schema_version": SCHEMA_VERSION,
+        "schema_version": RANKING_SCHEMA_VERSION,
         "updated_at": updated_at,
         "timezone": TIMEZONE,
+        "ranking_limit": LANGUAGE_TOP_LIMIT,
+        "page_size": PAGE_SIZE,
         "languages": languages,
     }
 
