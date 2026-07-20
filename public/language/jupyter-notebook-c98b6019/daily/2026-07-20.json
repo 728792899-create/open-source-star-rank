@@ -1,0 +1,165 @@
+{
+  "schema_version": "1.2.0",
+  "date": "2026-07-20",
+  "timezone": "Asia/Shanghai",
+  "window_start": "2026-07-19T17:27:11Z",
+  "window_end": "2026-07-20T18:23:21Z",
+  "window_quality": {
+    "duration_minutes": 1496,
+    "valid_for_ranking": true,
+    "reason": "valid"
+  },
+  "candidate_count": 2000,
+  "collection": {
+    "search_result_counts": {
+      "recent_created": 1000,
+      "recent_active": 500,
+      "established_active": 500
+    },
+    "unique_discovered_count": 1898,
+    "candidate_added_count": 992,
+    "candidate_removed_count": 991,
+    "api_request_count": 659,
+    "api_retry_count": 1,
+    "snapshot_expected_count": 2000,
+    "snapshot_complete_count": 2000,
+    "snapshot_completeness": 1.0
+  },
+  "language": "Jupyter Notebook",
+  "slug": "jupyter-notebook-c98b6019",
+  "eligible_count": 6,
+  "entries": [
+    {
+      "repository_id": 895508656,
+      "full_name": "microsoft/ai-agents-for-beginners",
+      "description": "18 Lessons to Get Started Building AI Agents",
+      "language": "Jupyter Notebook",
+      "stars_total": 69937,
+      "stars_gained": 78,
+      "html_url": "https://github.com/microsoft/ai-agents-for-beginners",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/6154722?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        100,
+        null,
+        null,
+        null,
+        78
+      ],
+      "rank": 1,
+      "rank_change": null
+    },
+    {
+      "repository_id": 655806940,
+      "full_name": "microsoft/generative-ai-for-beginners",
+      "description": "21 Lessons, Get Started Building with Generative AI ",
+      "language": "Jupyter Notebook",
+      "stars_total": 113288,
+      "stars_gained": 52,
+      "html_url": "https://github.com/microsoft/generative-ai-for-beginners",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/6154722?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        44,
+        null,
+        null,
+        null,
+        52
+      ],
+      "rank": 2,
+      "rank_change": null
+    },
+    {
+      "repository_id": 636693030,
+      "full_name": "GoogleCloudPlatform/generative-ai",
+      "description": "Sample code and notebooks for Generative AI on Google Cloud, with Gemini Enterprise Agent Platform",
+      "language": "Jupyter Notebook",
+      "stars_total": 17448,
+      "stars_gained": 31,
+      "html_url": "https://github.com/GoogleCloudPlatform/generative-ai",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/2810941?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        29,
+        null,
+        null,
+        null,
+        31
+      ],
+      "rank": 3,
+      "rank_change": null
+    },
+    {
+      "repository_id": 468576060,
+      "full_name": "openai/openai-cookbook",
+      "description": "Examples and guides for using the OpenAI API",
+      "language": "Jupyter Notebook",
+      "stars_total": 74770,
+      "stars_gained": 16,
+      "html_url": "https://github.com/openai/openai-cookbook",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/14957082?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        13,
+        null,
+        null,
+        null,
+        16
+      ],
+      "rank": 4,
+      "rank_change": null
+    },
+    {
+      "repository_id": 151619717,
+      "full_name": "google-research/google-research",
+      "description": "Google Research",
+      "language": "Jupyter Notebook",
+      "stars_total": 38407,
+      "stars_gained": 9,
+      "html_url": "https://github.com/google-research/google-research",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/43830688?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        9
+      ],
+      "rank": 5,
+      "rank_change": null
+    },
+    {
+      "repository_id": 57939112,
+      "full_name": "kubernetes/community",
+      "description": "Kubernetes Community Documentation",
+      "language": "Jupyter Notebook",
+      "stars_total": 12939,
+      "stars_gained": 1,
+      "html_url": "https://github.com/kubernetes/community",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/13629408?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        2,
+        null,
+        null,
+        null,
+        1
+      ],
+      "rank": 6,
+      "rank_change": null
+    }
+  ]
+}

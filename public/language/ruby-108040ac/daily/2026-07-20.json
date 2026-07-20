@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.2.0",
+  "date": "2026-07-20",
+  "timezone": "Asia/Shanghai",
+  "window_start": "2026-07-19T17:27:11Z",
+  "window_end": "2026-07-20T18:23:21Z",
+  "window_quality": {
+    "duration_minutes": 1496,
+    "valid_for_ranking": true,
+    "reason": "valid"
+  },
+  "candidate_count": 2000,
+  "collection": {
+    "search_result_counts": {
+      "recent_created": 1000,
+      "recent_active": 500,
+      "established_active": 500
+    },
+    "unique_discovered_count": 1898,
+    "candidate_added_count": 992,
+    "candidate_removed_count": 991,
+    "api_request_count": 659,
+    "api_retry_count": 1,
+    "snapshot_expected_count": 2000,
+    "snapshot_complete_count": 2000,
+    "snapshot_completeness": 1.0
+  },
+  "language": "Ruby",
+  "slug": "ruby-108040ac",
+  "eligible_count": 11,
+  "entries": [
+    {
+      "repository_id": 202291859,
+      "full_name": "chatwoot/chatwoot",
+      "description": "Open-source live-chat, email support, omni-channel desk. An alternative to Intercom, Zendesk, Salesforce Service Cloud etc. 🔥💬",
+      "language": "Ruby",
+      "stars_total": 34580,
+      "stars_gained": 24,
+      "html_url": "https://github.com/chatwoot/chatwoot",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/23416667?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        36,
+        null,
+        null,
+        null,
+        24
+      ],
+      "rank": 1,
+      "rank_change": null
+    },
+    {
+      "repository_id": 6899875,
+      "full_name": "opf/openproject",
+      "description": "OpenProject is the leading open source project management software for product, project and portfolio management. A powerful Jira alternative with agile planning, issue tracking, roadmaps, Gantt charts, time tracking, collaboration features, and more. Available on premises or in the cloud. ⭐Star us on GitHub",
+      "language": "Ruby",
+      "stars_total": 15611,
+      "stars_gained": 11,
+      "html_url": "https://github.com/opf/openproject",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/1756674?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        6,
+        null,
+        null,
+        null,
+        11
+      ],
+      "rank": 2,
+      "rank_change": null
+    },
+    {
+      "repository_id": 53238813,
+      "full_name": "Homebrew/brew",
+      "description": "🍺 The Package Manager for Everywhere",
+      "language": "Ruby",
+      "stars_total": 48885,
+      "stars_gained": 9,
+      "html_url": "https://github.com/Homebrew/brew",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/1503512?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        10,
+        null,
+        null,
+        null,
+        9
+      ],
+      "rank": 3,
+      "rank_change": null
+    },
+    {
+      "repository_id": 8514,
+      "full_name": "rails/rails",
+      "description": "Ruby on Rails",
+      "language": "Ruby",
+      "stars_total": 58634,
+      "stars_gained": 8,
+      "html_url": "https://github.com/rails/rails",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/4223?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        -75,
+        null,
+        null,
+        null,
+        8
+      ],
+      "rank": 4,
+      "rank_change": null
+    },
+    {
+      "repository_id": 2293158,
+      "full_name": "rapid7/metasploit-framework",
+      "description": "Metasploit Framework",
+      "language": "Ruby",
+      "stars_total": 38616,
+      "stars_gained": 8,
+      "html_url": "https://github.com/rapid7/metasploit-framework",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/1013671?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        8
+      ],
+      "rank": 5,
+      "rank_change": null
+    },
+    {
+      "repository_id": 7569578,
+      "full_name": "discourse/discourse",
+      "description": "A platform for community discussion. Free, open, simple.",
+      "language": "Ruby",
+      "stars_total": 47485,
+      "stars_gained": 3,
+      "html_url": "https://github.com/discourse/discourse",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/3220138?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        0,
+        null,
+        null,
+        null,
+        3
+      ],
+      "rank": 6,
+      "rank_change": null
+    },
+    {
+      "repository_id": 73648678,
+      "full_name": "forem/forem",
+      "description": "For empowering community 🌱",
+      "language": "Ruby",
+      "stars_total": 22754,
+      "stars_gained": 3,
+      "html_url": "https://github.com/forem/forem",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/65030610?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        3,
+        null,
+        null,
+        null,
+        3
+      ],
+      "rank": 7,
+      "rank_change": null
+    },
+    {
+      "repository_id": 3314,
+      "full_name": "spree/spree",
+      "description": "Open Source eCommerce Platform for B2B, Marketplace, and Enterprise. REST API, TypeScript SDK, and production-ready Next.js storefront. Self-host it. Own your stack. No vendor lock-in. Zero platform fees.",
+      "language": "Ruby",
+      "stars_total": 15564,
+      "stars_gained": 3,
+      "html_url": "https://github.com/spree/spree",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/56702?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        3,
+        null,
+        null,
+        null,
+        3
+      ],
+      "rank": 8,
+      "rank_change": null
+    },
+    {
+      "repository_id": 52855516,
+      "full_name": "Homebrew/homebrew-core",
+      "description": "🍻 Default formulae for the missing package manager for macOS (or Linux)",
+      "language": "Ruby",
+      "stars_total": 15461,
+      "stars_gained": 3,
+      "html_url": "https://github.com/Homebrew/homebrew-core",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/1503512?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        2,
+        null,
+        null,
+        null,
+        3
+      ],
+      "rank": 9,
+      "rank_change": null
+    },
+    {
+      "repository_id": 52281283,
+      "full_name": "mastodon/mastodon",
+      "description": "Your self-hosted, globally interconnected microblogging community",
+      "language": "Ruby",
+      "stars_total": 50134,
+      "stars_gained": 2,
+      "html_url": "https://github.com/mastodon/mastodon",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/24979032?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        2
+      ],
+      "rank": 10,
+      "rank_change": null
+    },
+    {
+      "repository_id": 4095287,
+      "full_name": "rubocop/rubocop",
+      "description": "A Ruby static code analyzer and formatter, based on the community Ruby style guide.",
+      "language": "Ruby",
+      "stars_total": 12889,
+      "stars_gained": -1,
+      "html_url": "https://github.com/rubocop/rubocop",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/10871348?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        1,
+        null,
+        null,
+        null,
+        -1
+      ],
+      "rank": 11,
+      "rank_change": null
+    }
+  ]
+}
