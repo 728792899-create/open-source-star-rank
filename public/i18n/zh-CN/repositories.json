@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-07-19T17:30:28.788483Z",
+  "generated_at": "2026-07-20T03:10:47.749812Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
-    "eligible_count": 2292,
-    "localized_count": 1926,
-    "pending_count": 366,
-    "failed_count": 20,
-    "coverage_ratio": 0.840314
+    "eligible_count": 3037,
+    "localized_count": 1943,
+    "pending_count": 1094,
+    "failed_count": 181,
+    "coverage_ratio": 0.639776
   },
   "repositories": [
     {
@@ -5071,6 +5071,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 82125257,
+      "source_full_name": "jetmore/swaks",
+      "source_hash": "c0866e8c63db908051d770288b6f7e0d04a156c90fa86901ced66dedff18206d",
+      "display_name_zh": "swaks｜SMTP 多功能工具",
+      "description_zh": "Swaks 是一个用于 SMTP 的多功能工具。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 82227585,
       "source_full_name": "nilbuild/design-patterns-for-humans",
       "source_hash": "37108bd65cd2f84b1973dedd307873ac252ecfc1509460ec67b38b6c25047b3d",
@@ -5116,6 +5125,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 84352345,
+      "source_full_name": "Torvaney/ggsoccer",
+      "source_hash": "cdcf1ec99c385fe47bbe951c4927b667d9821c18dc0cff6ef62327414d74e845",
+      "display_name_zh": "ggsoccer｜基于 ggplot2 的足球数据绘图",
+      "description_zh": "ggsoccer 用于在 R 语言中基于 ggplot2 绘制足球赛事数据。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 84533158,
       "source_full_name": "yunjey/pytorch-tutorial",
       "source_hash": "e5320f28b92bd72aa0c742f2f342dd0559351e850dc862ae6aa9871d20e0356c",
@@ -5143,6 +5161,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 85241148,
+      "source_full_name": "Azgaar/Fantasy-Map-Generator",
+      "source_hash": "f8362f12b99b80dbf9e726726d0eeceeca891c5d9bb52f71e0e0a87887cf3ef2",
+      "display_name_zh": "Fantasy-Map-Generator｜交互式地图生成器",
+      "description_zh": "Fantasy-Map-Generator 是一个生成交互式且高度可定制地图的网页应用。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 85591067,
       "source_full_name": "wwmm/easyeffects",
       "source_hash": "ddb4d888b32afb0ac909880880e1686b7b829434ccfaa8963a27b8cba1781a38",
@@ -5158,6 +5185,24 @@
       "display_name_zh": "JWebAssembly｜Java 到 WebAssembly 编译器",
       "description_zh": "Java 字节码到 WebAssembly 的编译器",
       "generated_at": "2026-07-19T00:17:52.423389Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 86134528,
+      "source_full_name": "clong/DetectionLab",
+      "source_hash": "f651dfe3500c1230716f51078980a0837c58143e2a7b192fbde5e3fa643ba25d",
+      "display_name_zh": "DetectionLab｜安全实验室环境自动化",
+      "description_zh": "DetectionLab 自动化创建包含安全工具和日志最佳实践的实验室环境。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 87052856,
+      "source_full_name": "AlexanderPro/SmartSystemMenu",
+      "source_hash": "197e885e563d8666d6362c1f77934dbb681195fcc2c87411f0669da04a33f19a",
+      "display_name_zh": "SmartSystemMenu｜系统菜单扩展工具",
+      "description_zh": "SmartSystemMenu 扩展系统中所有窗口的系统菜单功能。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
       "provenance": "github_models"
     },
     {
@@ -5212,6 +5257,15 @@
       "display_name_zh": "xmrig-proxy｜XMR Stratum 协议代理",
       "description_zh": "Monero (XMR) Stratum 协议代理",
       "generated_at": "2026-07-19T04:16:17.702546Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 88603747,
+      "source_full_name": "ChangedenCZD/express_simple",
+      "source_hash": "b7cb737362c110f14a35ee63cff0e4b7a4fb7ef775e1e4d25929631cc7b4af12",
+      "display_name_zh": "express_simple｜Node.js Express 服务器框架",
+      "description_zh": "express_simple 是基于 Node.js 和 expressjs 的服务器端基础框架。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
       "provenance": "github_models"
     },
     {
@@ -5287,12 +5341,39 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 91713426,
+      "source_full_name": "test-prof/test-prof",
+      "source_hash": "a4ed4098f7c88c75527c07ca984b936175ebbefd34886af4fdcd68b81717c547",
+      "display_name_zh": "test-prof｜Ruby 测试性能分析",
+      "description_zh": "test-prof 是一个 Ruby 测试性能分析工具箱。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 91844282,
+      "source_full_name": "tuvtran/TDD_Python",
+      "source_hash": "abb57a1e217af9a35669dfb6a23d6003c7fa1ec14133208e135740e5dc496098",
+      "display_name_zh": "TDD_Python｜基于 TDD 的 Django 待办事项",
+      "description_zh": "TDD_Python 通过 Django 按照《TDD with Python》书籍实现的待办事项列表。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 92111509,
       "source_full_name": "TriliumNext/Trilium",
       "source_hash": "067f30b8d50011a22e7e0061f4a3062346636e8c0896ad04e436230405fed627",
       "display_name_zh": "Trilium｜个人知识库构建工具",
       "description_zh": "使用Trilium Notes构建个人知识库",
       "generated_at": "2026-07-18T05:26:34.961229Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 92297825,
+      "source_full_name": "RikkaApps/Shizuku",
+      "source_hash": "b1065f084da832d689ece1dbc17c447bb8d1a2dc6c0ab674a44c5654c1f11ff3",
+      "display_name_zh": "Shizuku｜基于 Java 的系统 APIs 调用",
+      "description_zh": "Shizuku 通过 Java 进程使用 adb/root 权限让普通应用直接调用系统 APIs。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
       "provenance": "github_models"
     },
     {
@@ -5314,12 +5395,30 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 93324141,
+      "source_full_name": "FouadRaheb/Watusi-for-WhatsApp",
+      "source_hash": "2ba96897b990ad64f68eee1bcc03d1cf4fd7190d86b5eb47c9159c5531ac34c4",
+      "display_name_zh": "Watusi-for-WhatsApp｜WhatsApp 增强插件",
+      "description_zh": "Watusi-for-WhatsApp 是 WhatsApp Messenger 的多功能增强插件。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 93444615,
       "source_full_name": "hashicorp/terraform-provider-aws",
       "source_hash": "787c8b9fde01648e710bb94dd883d15559c93fb6fab945c32f92dbbc7b809921",
       "display_name_zh": "terraform-provider-aws｜Terraform AWS 资源管理提供者",
       "description_zh": "使 Terraform 能够管理 AWS 资源的提供者。",
       "generated_at": "2026-07-17T00:57:38.909807Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 93558276,
+      "source_full_name": "alexpate/awesome-design-systems",
+      "source_hash": "5353cb2dd3e4db2d0a9ce2c4da7eee14d5b98e6e0de5b933a0c0d18c99d2c9de",
+      "display_name_zh": "awesome-design-systems｜设计系统资源合集",
+      "description_zh": "awesome-design-systems 收集了优秀的设计系统资源。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
       "provenance": "github_models"
     },
     {
@@ -5410,6 +5509,24 @@
       "display_name_zh": "CppTrader｜高性能交易平台组件",
       "description_zh": "用于构建交易平台的高性能组件，如超高速撮合引擎和订单簿处理器",
       "generated_at": "2026-07-19T04:16:17.702546Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 97773427,
+      "source_full_name": "architect/architect",
+      "source_hash": "0d8eaaf64a49237148dcb7c351a5998ced349fe670b86372183326883b964f61",
+      "display_name_zh": "architect｜功能性网页应用构建",
+      "description_zh": "architect 是构建功能性网页应用的简洁高效方案。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 97986310,
+      "source_full_name": "rust-lang/simpleinfra",
+      "source_hash": "ee111f60e4dbc411249bb2ee212afbc0aad99dbdbb28f0e6345cc7affd1c37c2",
+      "display_name_zh": "simpleinfra｜Rust 基础设施自动化",
+      "description_zh": "simpleinfra 是用于 Rust 语言的基础设施自动化工具。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
       "provenance": "github_models"
     },
     {
@@ -5530,6 +5647,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 102588436,
+      "source_full_name": "gobackup/gobackup",
+      "source_hash": "cf14582f3cdda75584ae97164203ba03a61fae3e8cc4eeb0e4dc70d2938d2ca9",
+      "display_name_zh": "gobackup｜支持 CLI 的备份工具",
+      "description_zh": "gobackup 是一款支持定时将数据库和文件备份到云存储的 CLI 工具。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 102692863,
       "source_full_name": "onnx/onnx",
       "source_hash": "2763b3bb499246ed6cc85dbafb6036918249849b9e250f2237d72308e5564453",
@@ -5584,6 +5710,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 105190895,
+      "source_full_name": "weikinhuang/rsync-backup",
+      "source_hash": "6e9d656a2b6ed1682d4bc7d30b27c2726770b0e20508d93ea2dbf0fe281faddf",
+      "display_name_zh": "rsync-backup｜基于 rsync 的备份容器",
+      "description_zh": "rsync-backup 是基于 rsync 的日常备份容器。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 105944401,
       "source_full_name": "yugabyte/yugabyte-db",
       "source_hash": "36ccdb3b6bfc591292e608a2a60883ae782d5c12cdec1af2101904de0157e888",
@@ -5608,6 +5743,15 @@
       "display_name_zh": "electerm｜支持 RDP 和 VNC 的多协议客户端",
       "description_zh": "electerm 是支持终端、ssh、sftp、ftp、telnet、串口、RDP 和 VNC 的客户端。",
       "generated_at": "2026-07-17T00:57:38.909807Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 106867604,
+      "source_full_name": "cloudflare/cloudflared",
+      "source_hash": "d9f2d2adcff907cb90d2dc132d3e5b3438e2683eb6e2890493f413fb8fd0c847",
+      "display_name_zh": "cloudflared｜Cloudflare Tunnel 客户端",
+      "description_zh": "cloudflared 是 Cloudflare Tunnel 的客户端工具。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
       "provenance": "github_models"
     },
     {
@@ -5638,12 +5782,39 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 107671080,
+      "source_full_name": "alanwilter/acpype",
+      "source_hash": "8646961c1f9303e215a16b28c893152906c72a8df0d7cf7f2bd8d8e08193227e",
+      "display_name_zh": "acpype｜OFFICIAL PYthon 解析接口",
+      "description_zh": "acpype 是官方的 AnteChamber PYthon 解析接口。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 108595093,
+      "source_full_name": "joeyism/linkedin_scraper",
+      "source_hash": "5bd30f91e3b0eb0cac114d61c5d444af4e24bc1f3ae2380c4846a6f44787bc59",
+      "display_name_zh": "linkedin_scraper｜LinkedIn 用户数据抓取",
+      "description_zh": "linkedin_scraper 是一个用于抓取 LinkedIn 用户数据的库。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 108761645,
       "source_full_name": "nocodb/nocodb",
       "source_hash": "b88ffb25ed271dd2d2aba51d4761063dfc662d0d8a25e5cbfaaf297e96b27cca",
       "display_name_zh": "nocodb｜免费自托管的 Airtable 替代方案",
       "description_zh": "nocodb｜免费且可自托管的 Airtable 替代方案",
       "generated_at": "2026-07-18T05:26:34.961229Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 108836846,
+      "source_full_name": "kinglisky/aidou",
+      "source_hash": "ba280494e907a348d1e9a996a2034a6dfea0390a3f499046434c473f61f98405",
+      "display_name_zh": "aidou｜Chrome 代码评审斗图插件",
+      "description_zh": "aidou 是 Chrome 浏览器的代码评审斗图插件。",
+      "generated_at": "2026-07-20T03:10:47.749812Z",
       "provenance": "github_models"
     },
     {
@@ -15196,15 +15367,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1157102282,
-      "source_full_name": "diegosouzapw/OmniRoute",
-      "source_hash": "655e7f829cb6a7cb661e6fd7682bead52f0740333ca3f4cff60e452ad92585c3",
-      "display_name_zh": "OmniRoute｜免费AI网关（含AI、231、50、FREE、GPT、RTK+Caveman、15、95%、MCP、APIs、PWA）",
-      "description_zh": "免费AI网关，支持231+提供商（含50+免费），连接Claude Code、Codex、Cursor、Cline和Copilot，集成Claude、GPT、Gemini，采用RTK+Caveman压缩节省15-95%令牌，支持智能自动回退、MCP/A2A、多模态API及桌面/PWA。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1157171418,
       "source_full_name": "jundot/omlx",
       "source_hash": "d8717f1bae220aba53f08444a2ece2e34c9ad993ba22f4741f9fd0d7b9980978",
@@ -17334,15 +17496,6 @@
       "source_hash": "ec6edffb8e0363636308ef775e59f235ba5ca0d6c2804b2f15cfa065a22dd040",
       "display_name_zh": "Holo功能库",
       "description_zh": null,
-      "generated_at": "2026-07-19T07:03:48.394229Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1304360266,
-      "source_full_name": "Icex0/wp2shell-poc",
-      "source_hash": "49cf4e133cda4b54abbd666b1a5c10649c1eff3a142b7bc33ab731b0a70ab3ec",
-      "display_name_zh": "wp2shell-poc｜CVE-2026-63030远程代码执行漏洞利用",
-      "description_zh": "wp2shell-poc 漏洞利用工具，针对 CVE-2026-63030，实现完整远程代码执行（RCE）链。",
       "generated_at": "2026-07-19T07:03:48.394229Z",
       "provenance": "github_models"
     }
