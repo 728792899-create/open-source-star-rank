@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../lib/paths';
+---
+
+<BaseLayout title="项目对比｜开源星榜" description="对比收集到本地浏览器的开源项目，查看 Star、语言、方向和适用场景。" robots="noindex,follow">
+  <main id="main-content" class="shell compare-page">
+    <p class="eyebrow">Local project workspace</p>
+    <h1>项目对比</h1>
+    <p class="status-lead">对比列表只保存在当前浏览器，不需要登录，也不会上传使用记录。最多同时对比 4 个项目。</p>
+    <div class="compare-grid" data-compare-grid></div>
+    <div class="compare-empty" data-compare-empty>
+      <strong>还没有待对比项目</strong>
+      <p>打开任意项目介绍页，选择“加入对比”。</p>
+      <a href={withBase('/')}>返回新增榜 →</a>
+    </div>
+    <button class="compare-clear" type="button" data-clear-comparison hidden>清空对比列表</button>
+  </main>
+</BaseLayout>
+
+<script>
+  const grid = document.querySelector('[data-compare-grid]');
+  const empty = document.querySelector('[data-compare-empty]');
+  const clear = document.querySelector('[data-clear-comparison]');
+  const libraryApi = (window as any).starRankLibrary;
+  const formatNumber = (value: number) => new Intl.NumberFormat('zh-CN').format(value);
+  const render = () => {
+    if (!(grid instanceof HTMLElement) || !libraryApi) return;
+    const library = libraryApi.read();
+    grid.replaceChildren();
+    for (const project of library.compare) {
+      const card = document.createElement('article');
+      card.className = 'compare-card';
+      const title = document.createElement('h2');
+      const link = document.createElement('a');
+      link.href = project.url;
+      link.textContent = project.name;
+      title.append(link);
+      const source = document.createElement('p');
+      source.textContent = project.fullName;
+      const metrics = document.createElement('dl');
+      for (const [label, value] of [
+        ['当前 Star', formatNumber(project.stars || 0)], ['主要语言', project.language || 'Other'],
+        ['项目方向', project.category || '未分类'], ['产品形态', project.type || '未分类'],
+        ['适用场景', project.scenarios || '待生成'], ['最近榜单信号', project.signal || '暂无'],
+      ]) {
+        const row = document.createElement('div');
+        const term = document.createElement('dt');
+        const description = document.createElement('dd');
+        term.textContent = label;
+        description.textContent = value;
+        row.append(term, description);
+        metrics.append(row);
+      }
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.textContent = '移出对比';
+      remove.addEventListener('click', () => {
+        const next = libraryApi.read();
+        next.compare = next.compare.filter((item: { id: number }) => item.id !== project.id);
+        libraryApi.write(next);
+        render();
+      });
+      card.append(title, source, metrics, remove);
+      grid.append(card);
+    }
+    if (empty instanceof HTMLElement) empty.hidden = library.compare.length > 0;
+    if (clear instanceof HTMLButtonElement) clear.hidden = library.compare.length === 0;
+  };
+  clear?.addEventListener('click', () => {
+    const library = libraryApi?.read();
+    if (!library) return;
+    library.compare = [];
+    libraryApi.write(library);
+    render();
+  });
+  window.addEventListener('starranklibrarychange', render);
+  render();
+</script>

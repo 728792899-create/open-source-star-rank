@@ -57,6 +57,11 @@ const reuseStatementUrl = `${repositoryUrl}/blob/main/REUSE.md`;
           ? parameter
           : stored === 'original' ? 'original' : 'zh';
         document.documentElement.dataset.projectLanguage = language;
+        let density = null;
+        try { density = window.localStorage.getItem('star-rank-density'); } catch {}
+        document.documentElement.dataset.rankingDensity = density === 'comfortable' || density === 'compact'
+          ? density
+          : window.matchMedia('(max-width: 680px)').matches ? 'compact' : 'comfortable';
       })();
     </script>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData ?? {
@@ -82,11 +87,26 @@ const reuseStatementUrl = `${repositoryUrl}/blob/main/REUSE.md`;
         <a href={withBase('/period/7d/')}>7 日榜</a>
         <a href={withBase('/period/30d/')}>30 日榜</a>
         <a href={withBase('/all-time/')}>历史榜</a>
-        <a href={withBase('/language/')}>语言</a>
-        <a href={withBase('/status/')}>状态</a>
-        <a href={withBase('/methodology/')}>数据口径</a>
+        <details class="nav-data-menu">
+          <summary>数据</summary>
+          <div>
+            <a href={withBase('/status/')}>运行状态</a>
+            <a href={withBase('/methodology/')}>数据口径</a>
+            <a href={withBase('/language/')}>语言索引</a>
+            <a href={withBase('/data/index.json')}>公开 JSON</a>
+            <a href={withBase('/rss.xml')}>订阅 RSS</a>
+          </div>
+        </details>
         <a href={repositoryUrl} target="_blank" rel="noreferrer">GitHub ↗</a>
       </nav>
+      <details class="user-library" data-user-library>
+        <summary>我的项目 <span data-library-count>0</span></summary>
+        <div class="user-library-panel">
+          <section><h2>收藏</h2><div data-favorite-list><p>尚未收藏项目。</p></div></section>
+          <section><h2>对比</h2><div data-compare-list><p>最多选择 4 个项目。</p></div><a class="text-link" href={withBase('/compare/')}>打开对比页 →</a></section>
+          <section><h2>最近查看</h2><div data-recent-list><p>暂无记录。</p></div></section>
+        </div>
+      </details>
       <div class="content-language-switcher" role="group" aria-label="项目内容显示语言">
         <span>项目内容</span>
         <button type="button" data-project-language="zh" aria-pressed="true">中文</button>
@@ -100,10 +120,16 @@ const reuseStatementUrl = `${repositoryUrl}/blob/main/REUSE.md`;
         <p>数据来自 GH Archive 与 GitHub 公共 API · 北京时间每日更新</p>
       </div>
       <nav class="site-footer-links" aria-label="项目源码与复用">
+        <a href={withBase('/rss.xml')}>每日订阅 RSS</a>
         <a href={repositoryUrl} target="_blank" rel="noreferrer">GitHub 仓库 ↗</a>
         <a href={reuseStatementUrl} target="_blank" rel="noreferrer">复用声明 ↗</a>
       </nav>
     </footer>
+    <aside class="compare-tray" data-compare-tray hidden>
+      <strong><span data-compare-count>0</span> / 4 个项目待对比</strong>
+      <a href={withBase('/compare/')}>查看对比 →</a>
+    </aside>
+    <button class="back-to-top" type="button" data-back-to-top hidden aria-label="返回顶部">↑</button>
     <script is:inline>
       (() => {
         const root = document.documentElement;
@@ -130,6 +156,81 @@ const reuseStatementUrl = `${repositoryUrl}/blob/main/REUSE.md`;
           button.addEventListener('click', () => setLanguage(button.getAttribute('data-project-language')));
         }
         updateButtons();
+      })();
+    </script>
+    <script is:inline>
+      (() => {
+        const storageKey = 'star-rank-user-library-v1';
+        const empty = () => ({ favorites: [], compare: [], recent: [] });
+        const read = () => {
+          try {
+            const parsed = JSON.parse(window.localStorage.getItem(storageKey) || 'null');
+            return parsed && Array.isArray(parsed.favorites) && Array.isArray(parsed.compare) && Array.isArray(parsed.recent) ? parsed : empty();
+          } catch { return empty(); }
+        };
+        const write = (library) => {
+          try { window.localStorage.setItem(storageKey, JSON.stringify(library)); } catch {}
+          window.dispatchEvent(new CustomEvent('starranklibrarychange', { detail: library }));
+        };
+        window.starRankLibrary = { read, write };
+        const item = (project) => {
+          const link = document.createElement('a');
+          link.href = project.url;
+          link.textContent = project.name;
+          const row = document.createElement('div');
+          row.append(link);
+          return row;
+        };
+        const renderList = (target, projects, emptyText) => {
+          if (!(target instanceof HTMLElement)) return;
+          target.replaceChildren();
+          if (!projects.length) {
+            const copy = document.createElement('p');
+            copy.textContent = emptyText;
+            target.append(copy);
+            return;
+          }
+          for (const project of projects) target.append(item(project));
+        };
+        const render = () => {
+          const library = read();
+          renderList(document.querySelector('[data-favorite-list]'), library.favorites, '尚未收藏项目。');
+          renderList(document.querySelector('[data-compare-list]'), library.compare, '最多选择 4 个项目。');
+          renderList(document.querySelector('[data-recent-list]'), library.recent, '暂无记录。');
+          const total = new Set([...library.favorites, ...library.compare].map((project) => project.id)).size;
+          const libraryCount = document.querySelector('[data-library-count]');
+          if (libraryCount) libraryCount.textContent = String(total);
+          const compareCount = document.querySelector('[data-compare-count]');
+          if (compareCount) compareCount.textContent = String(library.compare.length);
+          const tray = document.querySelector('[data-compare-tray]');
+          if (tray instanceof HTMLElement) tray.hidden = library.compare.length < 2;
+        };
+        window.addEventListener('starranklibrarychange', render);
+        render();
+
+        const top = document.querySelector('[data-back-to-top]');
+        const updateTop = () => { if (top instanceof HTMLElement) top.hidden = window.scrollY < 900; };
+        top?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        window.addEventListener('scroll', updateTop, { passive: true });
+        updateTop();
+
+        document.addEventListener('click', (event) => {
+          const toggle = event.target instanceof Element ? event.target.closest('[data-density-toggle]') : null;
+          if (!(toggle instanceof HTMLButtonElement)) return;
+          const current = document.documentElement.dataset.rankingDensity === 'compact' ? 'compact' : 'comfortable';
+          const next = current === 'compact' ? 'comfortable' : 'compact';
+          document.documentElement.dataset.rankingDensity = next;
+          try { window.localStorage.setItem('star-rank-density', next); } catch {}
+          document.querySelectorAll('[data-density-toggle]').forEach((button) => {
+            button.textContent = next === 'compact' ? '详细模式' : '紧凑模式';
+            button.setAttribute('aria-pressed', String(next === 'compact'));
+          });
+        });
+        document.querySelectorAll('[data-density-toggle]').forEach((button) => {
+          const compact = document.documentElement.dataset.rankingDensity === 'compact';
+          button.textContent = compact ? '详细模式' : '紧凑模式';
+          button.setAttribute('aria-pressed', String(compact));
+        });
       })();
     </script>
   </body>

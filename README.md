@@ -32,6 +32,8 @@
 - 🧭 **组合筛选榜** —— 在当前榜单页面选择语言、项目方向、产品形态和适用场景，直接从受控深度池中重排前 100，并保留总榜名次。
 - 🏆 **全站历史星标 Top 1000** —— 累计 Star 最高的 1000 个开源项目「名人堂」。
 - 🀄 **中文项目内容** —— 由 GitHub Models 生成的中文功能名与简介，原文一键切换。
+- 🔎 **项目介绍页** —— 汇总项目用途、适合人群、上榜原因、分类、真实历史和相似项目，再由用户决定是否前往 GitHub。
+- ⭐ **本地项目工作区** —— 无需登录即可收藏、最近查看和对比最多 4 个项目；记录只保存在当前浏览器。
 
 > ⚠️ **关于「全站」二字**：事件榜的「全站」严格指 **GH Archive 实际归档的 GitHub 公开事件范围**，不是 GitHub 官方内部统计，也不扣除取消 Star。这是一张诚实的**观测榜**，而非官方净增榜。
 
@@ -132,7 +134,7 @@ flowchart TD
 - **不造数据**：缺失日期不补采、不补零、不插值。
 - **数据留存**：机器数据在独立的 `star-rank-data` 分支；公开日榜永久保留，完整候选快照保留 90 日，扩展分类池保留 14 日，全量事件聚合仅在数据分支保留 30 日。
 - **中文与分类**：由 GitHub Models 生成并按 repository ID 缓存，**只使用 Actions 自带令牌与免费额度**；模型不可用时回退 GitHub 原文或「分类待生成」，不阻塞榜单。人工修订见 [`data/localization-overrides.zh-CN.json`](data/localization-overrides.zh-CN.json) 与 [`data/classification-overrides.zh-CN.json`](data/classification-overrides.zh-CN.json)。
-- **隐私**：本仓库不包含、依赖或链接任何私有内容；固定种子仅保存公开 GitHub 仓库名。
+- **隐私**：本仓库不包含、依赖或链接任何私有内容；固定种子仅保存公开 GitHub 仓库名。收藏、对比和最近查看记录只保存在用户浏览器的 `localStorage`，不会上传。
 
 ---
 
@@ -176,7 +178,7 @@ open-source-star-rank/
 ├── schemas/star-rank/          # 所有公开数据的 JSON Schema
 ├── data/                       # 固定词表、人工修订、种子仓库
 ├── site/                       # Astro 静态站点
-│   ├── src/pages/              #   榜单页面（board/ · all-time/ · category/ …）
+│   ├── src/pages/              #   榜单、项目介绍与本地对比页面
 │   ├── src/lib/facet-rankings.ts   # ✨ 分类独立榜生成逻辑
 │   └── scripts/                #   数据准备、构建校验、E2E 夹具
 ├── tests/                      # Python 单元测试
