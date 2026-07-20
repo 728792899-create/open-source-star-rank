@@ -179,6 +179,12 @@ html[data-project-language="original"] [data-content-language="original"] { disp
 .classification-tags a:hover { border-color: var(--gold); color: var(--ink); }
 .classification-tags .primary-category-tag { border-color: #dbc17a; background: var(--gold-soft); color: #684c0c; }
 .filter-status { margin: 8px 0 0; color: var(--muted); font-size: 11px; }
+.ranking-pagination { margin-top: 14px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px; }
+.ranking-pagination a, .ranking-pagination button, .ranking-pagination strong, .ranking-pagination span { min-width: 36px; min-height: 36px; padding: 8px 10px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line); background: var(--paper); color: var(--ink); font: 750 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace; text-decoration: none; }
+.ranking-pagination strong { border-color: var(--gold); background: var(--gold-soft); }
+.ranking-pagination span { color: var(--muted); }
+.ranking-pagination button { cursor: pointer; }
+.ranking-pagination a:hover, .ranking-pagination button:hover { border-color: var(--gold); color: var(--gold-dark); }
 .classification-pending { width: max-content; margin-top: 3px; color: var(--muted); }
 .project-cell p { margin: 1px 0 0; overflow: hidden; color: var(--muted); font-size: 12px; line-height: 1.4; white-space: nowrap; text-overflow: ellipsis; }
 .language-cell { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 12px; }

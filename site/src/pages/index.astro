@@ -7,6 +7,7 @@ import {
 } from '../lib/data';
 import { localizedRepositoryContent } from '../lib/localization';
 import { readDefaultRanking } from '../lib/default-ranking';
+import { withBase } from '../lib/paths';
 
 const { candidateIndex, eventIndex, ranking } = readDefaultRanking();
 const localization = readLocalizationCatalog();
@@ -15,13 +16,14 @@ const previousDate = ranking ? new Date(`${ranking.date}T12:00:00Z`) : null;
 if (previousDate) previousDate.setUTCDate(previousDate.getUTCDate() - 1);
 const previousDateValue = previousDate?.toISOString().slice(0, 10) ?? null;
 const previousExploration = previousDateValue ? readEventCategoryPool(previousDateValue) : null;
+const firstPageEntries = ranking?.entries.slice(0, 100) ?? [];
 const structuredData = ranking ? {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
   name: `${ranking.date} GitHub 全站公开事件新增 Star 排行`,
-  numberOfItems: ranking.entries.length,
-  itemListElement: ranking.entries.map((entry) => ({
-    '@type': 'ListItem', position: entry.rank, url: entry.html_url,
+  numberOfItems: firstPageEntries.length,
+  itemListElement: firstPageEntries.map((entry) => ({
+    '@type': 'ListItem', position: entry.rank, url: new URL(withBase(`/repo/${entry.repository_id}/`), Astro.site ?? Astro.url.origin).toString(),
     name: localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description).displayName,
   })),
 } : undefined;
@@ -33,6 +35,7 @@ const socialImagePath = ranking ? `/social/events-daily-${ranking.date}.png` : '
   description="按 GH Archive 归档的 GitHub 全站公开 WatchEvent，统计北京时间每日为仓库加星的唯一用户数。"
   structuredData={structuredData}
   socialImagePath={socialImagePath}
+  nextPath={ranking && ranking.entries.length > 100 ? `/events/daily/${ranking.date}/page/2/` : undefined}
 >
   {ranking ? <RankingView
     ranking={ranking}
@@ -47,5 +50,6 @@ const socialImagePath = ranking ? `/social/events-daily-${ranking.date}.png` : '
     explorationPath={exploration ? `/data/events/category/${ranking.date}.json` : undefined}
     previousExplorationPath={previousExploration ? `/data/events/category/${previousDateValue}.json` : undefined}
     explorationEntries={exploration?.entries ?? []}
+    pageBasePath={`/events/daily/${ranking.date}/`}
   /> : <EventInitialization index={eventIndex} />}
 </BaseLayout>

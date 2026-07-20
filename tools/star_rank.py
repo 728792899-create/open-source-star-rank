@@ -38,10 +38,12 @@ except ModuleNotFoundError:  # pragma: no cover - direct script execution fallba
 API_ROOT = "https://api.github.com"
 API_VERSION = "2026-03-10"
 SCHEMA_VERSION = "1.2.0"
+RANKING_SCHEMA_VERSION = "1.3.0"
 TIMEZONE = "Asia/Shanghai"
 DEFAULT_MAX_CANDIDATES = 2_000
-TOP_LIMIT = 100
-LANGUAGE_TOP_LIMIT = 50
+TOP_LIMIT = 500
+LANGUAGE_TOP_LIMIT = 500
+PAGE_SIZE = 100
 LANGUAGE_MIN_ELIGIBLE = 5
 SEARCH_PAGE_SIZE = 100
 SNAPSHOT_RETENTION_DAYS = 90
@@ -219,10 +221,18 @@ def repository_record(
 
 
 class GitHubClient:
-    def __init__(self, token: Optional[str], *, timeout: int = 20, retries: int = 3) -> None:
+    def __init__(
+        self,
+        token: Optional[str],
+        *,
+        timeout: int = 20,
+        retries: int = 3,
+        max_requests: Optional[int] = None,
+    ) -> None:
         self.token = token
         self.timeout = timeout
         self.retries = retries
+        self.max_requests = max_requests
         self.request_count = 0
         self.retry_count = 0
 
@@ -238,6 +248,10 @@ class GitHubClient:
         request = urllib.request.Request(url, headers=headers)
 
         for attempt in range(self.retries):
+            if self.max_requests is not None and self.request_count >= self.max_requests:
+                raise RateLimitError(
+                    f"GitHub API 请求已达任务安全上限 {self.max_requests}；拒绝超额采集"
+                )
             self.request_count += 1
             if attempt:
                 self.retry_count += 1
@@ -646,9 +660,9 @@ def build_exploration_pool(
 ) -> Dict[str, Any]:
     """Build the permanent, bounded source pool used by in-page re-ranking.
 
-    The public Top 100 remains the authoritative static ranking.  This pool keeps
+    The public Top 500 remains the authoritative paginated ranking.  This pool keeps
     the same global ordering for every comparable candidate so the browser can
-    apply one or more taxonomy filters and derive a transparent filtered Top 100.
+    apply one or more taxonomy filters and derive a transparent filtered Top 500.
     """
 
     entries = ranked_entries(rankable, previous_ranking=None, limit=len(rankable))
@@ -683,7 +697,9 @@ def build_daily_ranking(
     )
 
     return {
-        "schema_version": SCHEMA_VERSION,
+        "schema_version": RANKING_SCHEMA_VERSION,
+        "ranking_limit": TOP_LIMIT,
+        "entry_count": min(len(rankable), TOP_LIMIT),
         "date": ranking_date.isoformat(),
         "timezone": TIMEZONE,
         "window_start": previous_snapshot["captured_at"],
@@ -735,6 +751,8 @@ def build_language_rankings(
                 "language": language,
                 "slug": slug,
                 "eligible_count": len(items),
+                "ranking_limit": LANGUAGE_TOP_LIMIT,
+                "entry_count": min(len(items), LANGUAGE_TOP_LIMIT),
                 "entries": ranked_entries(
                     items, previous_ranking=previous_ranking, limit=LANGUAGE_TOP_LIMIT
                 ),
@@ -792,7 +810,9 @@ def build_period_ranking(
         "reason": "valid",
     }
     return {
-        "schema_version": SCHEMA_VERSION,
+        "schema_version": RANKING_SCHEMA_VERSION,
+        "ranking_limit": limit,
+        "entry_count": min(len(rankable), limit),
         "date": (end_date - dt.timedelta(days=1)).isoformat(),
         "period_days": days,
         "timezone": TIMEZONE,
@@ -1045,7 +1065,7 @@ def build_index(
             "available_dates": period_dates,
         }
     return {
-        "schema_version": SCHEMA_VERSION,
+        "schema_version": RANKING_SCHEMA_VERSION,
         "status": "ready" if ready else "initializing",
         "timezone": TIMEZONE,
         "updated_at": updated_at,
@@ -1054,6 +1074,8 @@ def build_index(
         "candidate_count": candidate_count,
         "methodology_version": "candidate-pool-snapshot-v1",
         "freshness_threshold_hours": FRESHNESS_THRESHOLD_HOURS,
+        "ranking_limit": TOP_LIMIT,
+        "page_size": PAGE_SIZE,
         "latest_collection": dict(latest_collection) if latest_collection is not None else None,
         "sampling": build_sampling_state(history, ranking_ready=ready),
         "periods": periods,
@@ -1240,6 +1262,8 @@ def run_update(
         period_rankings.append(
             {
                 **full_period_ranking,
+                "ranking_limit": TOP_LIMIT,
+                "entry_count": min(len(full_period_ranking["entries"]), TOP_LIMIT),
                 "entries": full_period_ranking["entries"][:TOP_LIMIT],
             }
         )

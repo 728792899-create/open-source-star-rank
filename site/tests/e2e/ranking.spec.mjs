@@ -35,7 +35,7 @@ test('publishes the public event archive with internal project links and source 
   await page.getByText(/查看数据详情：GH Archive/).click();
   await expect(page.getByText('0.88 GiB')).toBeVisible();
   await expect(page.locator('.collection-details').getByText('24 / 24 小时')).toBeVisible();
-  await expect(page.locator('.collection-details').getByText('120,000')).toBeVisible();
+  await expect(page.locator('.collection-details').getByText('2,000,000')).toBeVisible();
   await expect(page.getByText('当日获得公开加星的仓库')).toBeVisible();
   await expect(page.getByText('不是 GitHub 仓库总数')).toBeVisible();
   await expect(page.getByText('唯一新增加星用户', { exact: true })).toBeVisible();
@@ -65,7 +65,34 @@ test('restores search and language filters from the URL and shows an empty state
   await search.fill('');
   await page.getByLabel('编程语言').selectOption('Python');
   await expect(page).toHaveURL(/language=Python/);
-  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(75);
+  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(100);
+});
+
+test('publishes Top 500 as five static pages with continuous global ranks', async ({ page }) => {
+  await page.goto(`${latestEventPath}page/2/`);
+  const rows = page.locator('[data-ranking-row]');
+  await expect(rows).toHaveCount(100);
+  await expect(rows.first()).toHaveAttribute('data-rank', '101');
+  await expect(rows.last()).toHaveAttribute('data-rank', '200');
+  await expect(page.locator('link[rel="prev"]')).toHaveAttribute('href', /events\/daily\/2026-07-14\/$/);
+  await expect(page.locator('link[rel="next"]')).toHaveAttribute('href', /events\/daily\/2026-07-14\/page\/3\/$/);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /events\/daily\/2026-07-14\/page\/2\/$/);
+  await page.getByRole('link', { name: '5', exact: true }).click();
+  await expect(page.locator('[data-ranking-row]').first()).toHaveAttribute('data-rank', '401');
+  await expect(page.locator('[data-ranking-row]').last()).toHaveAttribute('data-rank', '500');
+});
+
+test('paginates filtered deep-pool results and restores result_page', async ({ page }) => {
+  await page.goto(latestPath);
+  await page.getByLabel('编程语言').selectOption('Python');
+  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(100);
+  await page.locator('[data-filter-pagination]').getByRole('button', { name: '下一页 →' }).click();
+  await expect(page).toHaveURL(/language=Python.*result_page=2/);
+  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(25);
+  await expect(page.locator('[data-ranking-row]:visible').first().locator('.rank-number')).toHaveText('101');
+  await page.reload();
+  await expect(page.getByLabel('编程语言')).toHaveValue('Python');
+  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(25);
 });
 
 test('combines direction, product type and scenario filters and re-ranks the deep pool', async ({ page }) => {
@@ -222,7 +249,7 @@ test('publishes status, period, language and stable repository history routes', 
   await page.goto('language/');
   await page.getByRole('link', { name: /TypeScript/ }).click();
   await expect(page.getByRole('heading', { name: 'TypeScript Star 净增排行' })).toBeVisible();
-  await expect(page.locator('[data-ranking-row]')).toHaveCount(50);
+  await expect(page.locator('[data-ranking-row]')).toHaveCount(100);
 
   await page.goto('repo/10001/');
   await expect(page.getByRole('heading', { name: /测试项目 10001/ })).toBeVisible();

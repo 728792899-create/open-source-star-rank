@@ -8,6 +8,10 @@
     {
       "if": { "properties": { "schema_version": { "const": "1.2.0" } }, "required": ["schema_version"] },
       "then": { "required": ["sampling", "periods"] }
+    },
+    {
+      "if": { "properties": { "schema_version": { "const": "1.3.0" } }, "required": ["schema_version"] },
+      "then": { "required": ["sampling", "periods", "ranking_limit", "page_size"] }
     }
   ],
   "required": [
@@ -23,7 +27,7 @@
     "latest_collection"
   ],
   "properties": {
-    "schema_version": { "enum": ["1.1.0", "1.2.0"] },
+    "schema_version": { "enum": ["1.1.0", "1.2.0", "1.3.0"] },
     "status": { "enum": ["initializing", "ready"] },
     "timezone": { "const": "Asia/Shanghai" },
     "updated_at": { "type": ["string", "null"], "format": "date-time" },
@@ -36,6 +40,8 @@
     "candidate_count": { "type": "integer", "minimum": 0, "maximum": 2000 },
     "methodology_version": { "const": "candidate-pool-snapshot-v1" },
     "freshness_threshold_hours": { "type": "integer", "const": 36 },
+    "ranking_limit": { "const": 500 },
+    "page_size": { "const": 100 },
     "latest_collection": {
       "oneOf": [{ "$ref": "#/$defs/collection" }, { "type": "null" }]
     },

@@ -75,7 +75,9 @@ class OperationsTests(unittest.TestCase):
 
     def test_event_watchdog_requires_yesterday_beijing_date(self) -> None:
         index = {
-            "schema_version": "1.1.0",
+            "schema_version": "1.2.0",
+            "ranking_limit": 500,
+            "page_size": 100,
             "updated_at": "2026-07-16T23:35:00Z",
             "freshness_threshold_hours": 36,
             "status": "ready",
@@ -87,7 +89,12 @@ class OperationsTests(unittest.TestCase):
                 "observed_hour_count": 24,
                 "missing_hours": [],
                 "ranking_complete": True,
-                "metadata_success_count": 100,
+                "metadata_success_count": 500,
+                "api_request_count": 500,
+                "quality_baseline_days": 7,
+                "quality_status": "passed",
+                "watch_event_count_ratio": 1.0,
+                "unique_addition_count_ratio": 1.0,
             },
         }
         result = check_freshness(
@@ -108,7 +115,9 @@ class OperationsTests(unittest.TestCase):
 
     def test_event_watchdog_rejects_incomplete_hourly_coverage(self) -> None:
         index = {
-            "schema_version": "1.1.0",
+            "schema_version": "1.2.0",
+            "ranking_limit": 500,
+            "page_size": 100,
             "updated_at": "2026-07-16T23:35:00Z",
             "freshness_threshold_hours": 36,
             "status": "ready",
@@ -120,7 +129,12 @@ class OperationsTests(unittest.TestCase):
                 "observed_hour_count": 23,
                 "missing_hours": ["2026-07-16T03:00:00Z"],
                 "ranking_complete": True,
-                "metadata_success_count": 100,
+                "metadata_success_count": 500,
+                "api_request_count": 500,
+                "quality_baseline_days": 7,
+                "quality_status": "passed",
+                "watch_event_count_ratio": 1.0,
+                "unique_addition_count_ratio": 1.0,
             },
         }
         with self.assertRaisesRegex(ValueError, "小时覆盖"):

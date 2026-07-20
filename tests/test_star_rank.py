@@ -16,6 +16,7 @@ from tools.star_rank import (
     build_daily_ranking,
     build_snapshot,
     prune_old_snapshots,
+    ranked_entries,
     repository_record,
     run_update,
     select_candidate_pool,
@@ -105,6 +106,18 @@ def fixture_http_error(name: str, url: str) -> HTTPError:
 
 
 class StarRankTests(unittest.TestCase):
+    def test_public_ranking_caps_at_five_hundred_and_keeps_short_results(self) -> None:
+        sources = [
+            {"repository_id": value, "rank": value, "rank_change": None}
+            for value in range(1, 551)
+        ]
+        capped = ranked_entries(sources, previous_ranking=None, limit=500)
+        self.assertEqual(len(capped), 500)
+        self.assertEqual(capped[-1]["rank"], 500)
+        short = ranked_entries(sources[:37], previous_ranking=None, limit=500)
+        self.assertEqual(len(short), 37)
+        self.assertEqual(short[-1]["rank"], 37)
+
     def test_repository_record_preserves_identity_across_rename(self) -> None:
         old = repository_record(api_repo(1, "owner/old", 10), observed_date="2026-07-14", source="seed")
         renamed = repository_record(
@@ -199,7 +212,9 @@ class StarRankTests(unittest.TestCase):
             index = json.loads((root / "rank-data/public/index.json").read_text(encoding="utf-8"))
             self.assertEqual(index["status"], "initializing")
             self.assertEqual(index["available_dates"], [])
-            self.assertEqual(index["schema_version"], "1.2.0")
+            self.assertEqual(index["schema_version"], "1.3.0")
+            self.assertEqual(index["ranking_limit"], 500)
+            self.assertEqual(index["page_size"], 100)
             self.assertEqual(index["freshness_threshold_hours"], 36)
             self.assertEqual(index["latest_collection"]["snapshot_completeness"], 1.0)
 

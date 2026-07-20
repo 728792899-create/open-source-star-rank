@@ -30,7 +30,7 @@ export function searchableEntry(entry, maps) {
   };
 }
 
-export function filteredRanking(entries, previousEntries, maps, filters, limit = 100) {
+export function filteredRanking(entries, previousEntries, maps, filters, limit = 500) {
   const matches = (entry) => matchesEntry(
     searchableEntry(entry, maps),
     filters.query ?? '',
@@ -45,6 +45,7 @@ export function filteredRanking(entries, previousEntries, maps, filters, limit =
   const matching = entries.filter(matches);
   return {
     total: matching.length,
+    available: Math.min(matching.length, limit),
     entries: matching.slice(0, limit).map((entry, index) => {
       const rank = index + 1;
       const previousRank = previousRanks.get(Number(entry.repository_id));

@@ -100,7 +100,7 @@ gcloud iam service-accounts keys list \
 1. 手动运行 `Update and publish public event star rank`，选择 `validate`。该模式先 dry-run，再执行真实全量聚合并验证 24/24 小时覆盖；不调用 GitHub 元数据 API、不写数据、不部署。
 2. 在日志中确认 `estimated_bytes` 和 `bytes_processed` 均不超过 `25769803776`，`observed_hours` 为 `24`。
 3. 手动选择 `collect_publish` 采集昨日；若昨日已经存在旧版 `1.0.0` 日榜，则改用 `replace_day` 显式替换该日期。检查 `star-rank-data` 中的 `public/events/`、`state/events/`与 `public/schema/`。
-4. 核对 `/data/events/index.json`、`/data/events/daily/YYYY-MM-DD.json`、`/events/daily/YYYY-MM-DD/`、首页、状态页与事件分享图。新版事件契约必须为 `1.1.0`、方法论为 `gharchive-public-watch-events-v2`。
+4. 核对 `/data/events/index.json`、`/data/events/daily/YYYY-MM-DD.json`、`/events/daily/YYYY-MM-DD/`、第 2–5 页、首页、状态页与事件分享图。新版事件契约必须为 `1.2.0`、方法论为 `gharchive-public-watch-events-v3`，且恰好包含 500 项。
 5. 确认 `source_metrics` 的小时覆盖为 24/24、`ranking_complete` 为 `true`、公开条目恰好 100；全量仓库精简聚合只保存于 `state/events/daily/` 并保留最近 30 天。
 6. 保留 07:30 定时任务与 08:15 watchdog，连续观察 7 天的扫描字节、事件延迟、排名变化与趋势空值。
 
@@ -115,7 +115,7 @@ gcloud iam service-accounts keys list \
 5. 运行 `backfill_publish`，核对 `state/localization/zh-CN/repositories.json`、`public/i18n/zh-CN/repositories.json` 和 `/status/` 的覆盖率。
 6. 同一任务会在翻译后运行分类；可选仓库变量为 `CLASSIFICATION_MODEL`（默认 `openai/gpt-4.1-mini`）和 `CLASSIFICATION_MAX_PROJECTS`（采集任务默认 200，补全任务默认 400）。
 7. 核对 `state/classification/repositories.json`、`public/classification/index.json`、`public/classification/repositories.json` 与 `/status/` 的覆盖数字。
-8. 检查最新首页 Top 100 的中文内容、分类标签与“中文 / 原文”切换；中文和分类覆盖率在正式发布前均必须达到 100%。
+8. 检查最新 Top 500 的中文内容、分类标签与“中文 / 原文”切换；缺失内容允许回退 GitHub 原文，补全工作流随后继续处理。
 
 需要人工修正时，在主分支的 `data/localization-overrides.zh-CN.json` 按 repository ID 增加 `display_name_zh` 和 `description_zh`。人工修正优先于模型缓存；合并后运行 `backfill_publish`。不得直接编辑数据分支中的公开译文。
 
@@ -123,7 +123,7 @@ gcloud iam service-accounts keys list \
 
 ## 2.6 榜单内组合筛选与全站历史星标榜
 
-组合筛选不使用独立分类页面。事件任务发布 Top 100 后继续生成最多 1,000 项的永久扩展池 `public/events/category/YYYY-MM-DD.json`；候选池任务同步生成 `public/explore/daily/` 与 `public/explore/period/{7d|30d}/` 深度池（最多 2,000 项）。页面按语言、方向、形态和场景取交集，重新生成前 100，并用前一日同口径深池计算升降。扩展池补全不足上限时按实际数量发布，不影响已验证的公开 Top 100。
+组合筛选不使用独立分类榜入口。事件任务严格发布 Top 500 后继续生成最多 1,000 项的永久扩展池 `public/events/category/YYYY-MM-DD.json`；候选池任务同步生成 `public/explore/daily/` 与 `public/explore/period/{7d|30d}/` 深度池（最多 2,000 项）。页面按语言、方向、形态和场景取交集，最多返回 500 项并用 `result_page` 分页；扩展池 500 项以后的补全不足上限时按实际数量发布，不影响已验证的公开 Top 500。
 
 全站历史星标榜（`/all-time/`）由 `Collect and publish all-time star board` 工作流生成：
 
@@ -207,7 +207,28 @@ gcloud iam service-accounts keys list \
 - 使用 `deploy_existing` 恢复同一数据提交。
 - 使用相同源代码和数据提交连续构建两次，核心 HTML 与 JSON 哈希一致。
 - 连续 14 个北京时间自然日无人工改数；页面、公开 JSON 和数据分支统计一致。
-- 全站公开事件榜连续 7 天在 08:00 前发布；每天 24/24 小时覆盖、公开 Top 100 完整、页面与 JSON 一致；单次实际扫描不超过 24 GiB，服务账号无 JSON 私钥，项目结算仍为禁用。
+- 全站公开事件榜连续 7 天在 08:00 前发布；每天 24/24 个 WatchEvent 小时覆盖、公开 Top 500 完整、历史数量基线正常、五页与 JSON 一致；单次实际扫描不超过 24 GiB，服务账号无 JSON 私钥，项目结算仍为禁用。
+
+## Top 500 历史迁移
+
+迁移必须先生成只读清单，不允许直接覆盖历史：
+
+```bash
+python -m tools.migrate_star_rank_top500 \
+  --data-dir /path/to/star-rank-data \
+  --manifest /tmp/top500-migration.json
+```
+
+人工核对清单后，只有同日深度池足以复现的候选日榜、周期榜和语言榜可执行 `--apply`。旧事件榜即使存在较深元数据池，也必须证明 v3 的 WatchEvent 专属 24 小时覆盖；无法证明时继续保留旧 Top 100，禁止用当前元数据补造历史。
+
+```bash
+python -m tools.migrate_star_rank_top500 \
+  --data-dir /path/to/star-rank-data \
+  --manifest /tmp/top500-migration.json \
+  --apply
+```
+
+迁移后的文件保留原 `window_start`、`window_end` 与采集时间，只增加 `recomputed_at`。新旧 Schema 混合存在是正常状态。
 - 使用测试夹具移除一个源小时，确认任务在元数据 API、数据提交和 Pages 部署前失败，线上仍保留上一版。
 
 GitHub 定时任务属于尽力调度，01:00 是服务目标而非平台保证；01:15 watchdog 是漏跑和延迟的兜底发现机制。

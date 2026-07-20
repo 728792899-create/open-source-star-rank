@@ -126,7 +126,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          args=(--data-dir "$STAR_RANK_DATA_DIR" --maximum-bytes-billed 25769803776 --top-limit 100 --metadata-attempt-limit 900 --category-pool-limit 1000)
+          args=(--data-dir "$STAR_RANK_DATA_DIR" --maximum-bytes-billed 25769803776 --top-limit 500 --metadata-attempt-limit 900 --api-request-budget 950 --category-pool-limit 1000)
           if [[ -n "$RANKING_DATE" ]]; then args+=(--date "$RANKING_DATE"); fi
           if [[ "$RUN_MODE" == "validate" ]]; then args+=(--validate-only); fi
           if [[ "$RUN_MODE" == "replace_day" ]]; then
@@ -140,7 +140,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LOCALIZATION_MODEL: ${{ vars.LOCALIZATION_MODEL || 'openai/gpt-4.1-mini' }}
-          LOCALIZATION_MAX_PROJECTS: ${{ vars.LOCALIZATION_MAX_PROJECTS || '200' }}
+          LOCALIZATION_MAX_PROJECTS: ${{ vars.LOCALIZATION_MAX_PROJECTS || '500' }}
         run: >-
           python -m tools.localize_repositories
           --data-dir "$STAR_RANK_DATA_DIR"
@@ -151,7 +151,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CLASSIFICATION_MODEL: ${{ vars.CLASSIFICATION_MODEL || 'openai/gpt-4.1-mini' }}
-          CLASSIFICATION_MAX_PROJECTS: ${{ vars.CLASSIFICATION_MAX_PROJECTS || '200' }}
+          CLASSIFICATION_MAX_PROJECTS: ${{ vars.CLASSIFICATION_MAX_PROJECTS || '500' }}
         run: >-
           python -m tools.classify_repositories
           --data-dir "$STAR_RANK_DATA_DIR"

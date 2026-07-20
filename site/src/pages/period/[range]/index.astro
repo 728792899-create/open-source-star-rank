@@ -33,8 +33,8 @@ const structuredData = ranking ? {
 } : undefined;
 ---
 
-<BaseLayout title={title} description={`GitHub 开源项目候选池近 ${days} 日 Star 真实净增排行。`} structuredData={structuredData} socialImagePath={ranking ? `/social/period-${days}d-${ranking.date}.png` : '/og.png'}>
+<BaseLayout title={title} description={`GitHub 开源项目候选池近 ${days} 日 Star 真实净增排行。`} structuredData={structuredData} socialImagePath={ranking ? `/social/period-${days}d-${ranking.date}.png` : '/og.png'} nextPath={ranking && ranking.entries.length > 100 ? `/period/${days}d/${ranking.date}/page/2/` : undefined}>
   {ranking
-    ? <RankingView ranking={ranking} index={index} isLatest mode="period" availableDates={period?.available_dates ?? []} routePrefix={`/period/${days}d`} dataPrefix={`/data/period/${days}d`} explorationPath={exploration ? `/data/explore/period/${days}d/${ranking.date}.json` : undefined} previousExplorationPath={previousExploration ? `/data/explore/period/${days}d/${previousDateValue}.json` : undefined} explorationEntries={exploration?.entries ?? []} />
+    ? <RankingView ranking={ranking} index={index} isLatest mode="period" availableDates={period?.available_dates ?? []} routePrefix={`/period/${days}d`} dataPrefix={`/data/period/${days}d`} explorationPath={exploration ? `/data/explore/period/${days}d/${ranking.date}.json` : undefined} previousExplorationPath={previousExploration ? `/data/explore/period/${days}d/${previousDateValue}.json` : undefined} explorationEntries={exploration?.entries ?? []} pageBasePath={`/period/${days}d/${ranking.date}/`} />
     : <ProgressState index={index} days={days} />}
 </BaseLayout>

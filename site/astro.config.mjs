@@ -15,6 +15,12 @@ const rememberLatest = (route, value) => {
   const previous = lastModifiedByPath.get(route);
   if (!Number.isNaN(next.getTime()) && (!previous || next > previous)) lastModifiedByPath.set(route, next);
 };
+const rememberRankingPages = (route, ranking) => {
+  const modified = new Date(ranking.window_end);
+  lastModifiedByPath.set(route, modified);
+  const pages = Math.ceil((ranking.entries?.length ?? 0) / 100);
+  for (let page = 2; page <= pages; page += 1) lastModifiedByPath.set(`${route}page/${page}/`, modified);
+};
 try {
   const index = JSON.parse(readFileSync(path.join(dataRoot, 'index.json'), 'utf8'));
   if (index.updated_at) {
@@ -22,7 +28,7 @@ try {
   }
   for (const date of index.available_dates ?? []) {
     const ranking = JSON.parse(readFileSync(path.join(dataRoot, 'daily', `${date}.json`), 'utf8'));
-    lastModifiedByPath.set(`/daily/${date}/`, new Date(ranking.window_end));
+    rememberRankingPages(`/daily/${date}/`, ranking);
   }
   const eventIndexPath = path.join(dataRoot, 'events', 'index.json');
   if (existsSync(eventIndexPath)) {
@@ -33,13 +39,13 @@ try {
     }
     for (const date of eventIndex.available_dates ?? []) {
       const ranking = JSON.parse(readFileSync(path.join(dataRoot, 'events', 'daily', `${date}.json`), 'utf8'));
-      lastModifiedByPath.set(`/events/daily/${date}/`, new Date(ranking.window_end));
+      rememberRankingPages(`/events/daily/${date}/`, ranking);
     }
   }
   for (const range of ['7d', '30d']) {
     for (const date of index.periods?.[range]?.available_dates ?? []) {
       const ranking = JSON.parse(readFileSync(path.join(dataRoot, 'period', range, `${date}.json`), 'utf8'));
-      lastModifiedByPath.set(`/period/${range}/${date}/`, new Date(ranking.window_end));
+      rememberRankingPages(`/period/${range}/${date}/`, ranking);
       if (date === index.periods?.[range]?.latest_date) lastModifiedByPath.set(`/period/${range}/`, new Date(ranking.window_end));
     }
   }
@@ -48,7 +54,7 @@ try {
   for (const language of languages.languages ?? []) {
     for (const date of language.available_dates ?? []) {
       const ranking = JSON.parse(readFileSync(path.join(dataRoot, 'language', language.slug, 'daily', `${date}.json`), 'utf8'));
-      lastModifiedByPath.set(`/language/${language.slug}/daily/${date}/`, new Date(ranking.window_end));
+      rememberRankingPages(`/language/${language.slug}/daily/${date}/`, ranking);
     }
   }
   const repositories = JSON.parse(readFileSync(path.join(dataRoot, 'repositories.json'), 'utf8'));

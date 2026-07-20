@@ -8,6 +8,8 @@ interface Props {
   structuredData?: Record<string, unknown>;
   socialImagePath?: string;
   robots?: string;
+  prevPath?: string;
+  nextPath?: string;
 }
 
 const {
@@ -16,6 +18,8 @@ const {
   structuredData,
   socialImagePath = '/og.png',
   robots = 'index,follow',
+  prevPath,
+  nextPath,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
 const socialImage = new URL(withBase(socialImagePath), Astro.site ?? Astro.url.origin).toString();
@@ -34,6 +38,8 @@ const reuseStatementUrl = `${repositoryUrl}/blob/main/REUSE.md`;
     <meta name="theme-color" content="#f3efe4" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23171814'/%3E%3Cpath d='m16 5 3.1 6.3 6.9 1-5 4.8 1.2 6.9-6.2-3.2L9.8 24l1.2-6.9-5-4.8 6.9-1z' fill='%23f2dcae'/%3E%3C/svg%3E" />
     <link rel="canonical" href={canonical} />
+    {prevPath && <link rel="prev" href={new URL(withBase(prevPath), Astro.site ?? Astro.url.origin).toString()} />}
+    {nextPath && <link rel="next" href={new URL(withBase(nextPath), Astro.site ?? Astro.url.origin).toString()} />}
     <link rel="alternate" type="application/rss+xml" title="开源星榜每日排行" href={new URL(withBase('/rss.xml'), Astro.site ?? Astro.url.origin).toString()} />
     <link rel="alternate" type="application/atom+xml" title="开源星榜 Atom" href={new URL(withBase('/atom.xml'), Astro.site ?? Astro.url.origin).toString()} />
     <link rel="alternate" type="application/feed+json" title="开源星榜 JSON Feed" href={new URL(withBase('/feed.json'), Astro.site ?? Astro.url.origin).toString()} />

@@ -33,6 +33,9 @@ interface Props {
   previousExplorationPath?: string;
   explorationEntries?: Array<RankingEntry | EventCategoryPoolEntry>;
   fixedLanguage?: string;
+  page?: number;
+  pageSize?: number;
+  pageBasePath?: string;
 }
 
 const {
@@ -58,6 +61,9 @@ const {
   previousExplorationPath,
   explorationEntries = [],
   fixedLanguage,
+  page = 1,
+  pageSize = 100,
+  pageBasePath,
 } = Astro.props;
 const isFacet = variant === 'facet';
 const facetRanking = isFacet ? ranking as FacetRanking : null;
@@ -98,8 +104,16 @@ const makeTrendShape = (values: Array<number | null>) => {
   });
   return `polygon(0 100%, ${points.join(', ')}, 100% 100%)`;
 };
-const rankingPath = withBase(rankingPathOverride ?? `${routePrefix}/${ranking.date}/`);
+const rankingBasePath = pageBasePath ?? `${routePrefix}/${ranking.date}/`;
+const rankingPath = withBase(rankingPathOverride ?? (page === 1 ? rankingBasePath : `${rankingBasePath}page/${page}/`));
 const rankingJsonPath = withBase(`${dataPrefix}/${ranking.date}.json`);
+const totalEntries = 'entry_count' in ranking && typeof ranking.entry_count === 'number'
+  ? ranking.entry_count
+  : ranking.entries.length;
+const totalPages = Math.ceil(totalEntries / pageSize);
+if (page < 1 || page > Math.max(1, totalPages)) throw new Error(`Invalid ranking page ${page}`);
+const pageEntries = ranking.entries.slice((page - 1) * pageSize, page * pageSize);
+const pageHref = (target: number) => withBase(target === 1 ? rankingBasePath : `${rankingBasePath}page/${target}/`);
 const localization = readLocalizationCatalog();
 const classificationIndex = readClassificationIndex();
 const classifications = classificationMap(readClassificationRepositories());
@@ -109,7 +123,7 @@ const usedCategories = classificationIndex.categories.filter((term) => usedClass
 const usedProjectTypes = classificationIndex.project_types.filter((term) => usedClassifications.some((item) => item?.project_type === term.id));
 const usedUseCases = classificationIndex.use_cases.filter((term) => usedClassifications.some((item) => item?.use_cases.includes(term.id)));
 const headline = headlineOverride ?? defaultHeadline;
-const sectionEyebrow = sectionEyebrowOverride ?? (isEvent ? 'Global public events top 100' : `Observed ${languageName ? 'language top 50' : 'top 100'}`);
+const sectionEyebrow = sectionEyebrowOverride ?? (isEvent ? `Global public events top ${totalEntries}` : `Observed ${languageName ? 'language' : ''} top ${totalEntries}`);
 const sectionTitle = sectionTitleOverride ?? (isEvent ? '全站公开事件新增 Star 排行' : `${languageName ? `${languageName} ` : ''}${periodDays ? `${periodDays} 日 ` : ''}Star 净增排行`);
 const uniqueAdditionCount = eventRanking?.source_metrics.unique_star_addition_count ?? null;
 const explorationPoolSize = explorationEntries.length || ranking.entries.length;
@@ -132,6 +146,9 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
   data-gain-field={isEvent || isFacet ? 'stars_added' : 'stars_gained'}
   data-gain-label={gainLabel}
   data-exploration-size={explorationPoolSize}
+  data-page={page}
+  data-page-size={pageSize}
+  data-ranking-limit="500"
   class="shell ranking-page"
 >
   <nav class="ranking-mode-switcher" aria-label="榜单口径">
@@ -162,7 +179,7 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
   </section> : <section class="metrics" aria-label="榜单统计">
     <div><span>{isEvent ? '当日获得公开加星的仓库' : '候选池'}</span><strong>{formatNumber(eventRanking?.source_metrics.observed_repository_count ?? snapshotRanking?.candidate_count ?? 0)}</strong><small>{isEvent ? '不是 GitHub 仓库总数' : '个公开仓库'}</small></div>
     <div><span>{isEvent ? '唯一新增加星用户' : '可比较'}</span><strong>{isEvent ? uniqueAdditionCount === null ? '—' : formatNumber(uniqueAdditionCount) : formatNumber(ranking.eligible_count)}</strong><small>{isEvent ? uniqueAdditionCount === null ? '旧版数据未汇总' : '用户—仓库唯一对' : '拥有连续快照'}</small></div>
-    <div><span>上榜项目</span><strong>{ranking.entries.length}</strong><small>{isEvent ? '按新增排序' : '按净增排序'}</small></div>
+      <div><span>上榜项目</span><strong>{totalEntries}</strong><small>{isEvent ? '按新增排序' : '按净增排序'}</small></div>
     <div><span>采样窗口</span><strong>{formatTime(ranking.window_start)}</strong><small>至 {formatTime(ranking.window_end)}</small></div>
   </section>}
 
@@ -172,7 +189,7 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
       <div><dt>WatchEvent</dt><dd>{formatNumber(eventRanking!.source_metrics.observed_watch_event_count)}</dd></div>
       <div><dt>唯一新增</dt><dd>{uniqueAdditionCount === null ? '旧版未记录' : formatNumber(uniqueAdditionCount)}</dd></div>
       <div><dt>24 小时覆盖</dt><dd>{eventRanking!.source_metrics.observed_hour_count === undefined ? '旧版未记录' : `${eventRanking!.source_metrics.observed_hour_count} / ${eventRanking!.source_metrics.expected_hour_count} 小时`}</dd></div>
-      <div><dt>排行完整性</dt><dd>{eventRanking!.source_metrics.ranking_complete ? '已验证 Top 100' : '旧版规则'}</dd></div>
+      <div><dt>排行完整性</dt><dd>{eventRanking!.source_metrics.ranking_complete ? `已验证 Top ${totalEntries}` : '旧版规则'}</dd></div>
       <div><dt>BigQuery 扫描</dt><dd>{formatBytes(eventRanking!.source_metrics.bytes_processed)}</dd></div>
       <div><dt>扫描硬上限</dt><dd>{formatBytes(eventRanking!.source_metrics.maximum_bytes_billed)}</dd></div>
       <div><dt>源表</dt><dd>{eventRanking!.source_metrics.table_dates.join(' / ')}</dd></div>
@@ -254,7 +271,7 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
           </label>
         </div>
       </details>
-      <p class="filter-count" aria-live="polite"><strong data-visible-count>{ranking.entries.length}</strong> / <span data-pool-count>{explorationPoolSize}</span> 个项目</p>
+      <p class="filter-count" aria-live="polite"><strong data-visible-count>{pageEntries.length}</strong> / <span data-pool-count>{explorationPoolSize}</span> 个项目</p>
     </div>
     <div class="active-filters" data-active-filters hidden aria-live="polite">
       <span data-active-filter-copy></span>
@@ -278,7 +295,7 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
         <span role="columnheader">总 Star / {gainLabel}</span>
       </div>
       <div class="table-body" data-ranking-body>
-        {ranking.entries.map((entry) => {
+        {pageEntries.map((entry) => {
           const gained = entryGain(entry);
           const trendShape = makeTrendShape(entry.trend_7d);
           const content = localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description);
@@ -300,6 +317,7 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
               data-category={classification?.primary_category ?? ''}
               data-project-type={classification?.project_type ?? ''}
               data-scenarios={classification?.use_cases.join(',') ?? ''}
+              data-rank={entry.rank}
               data-source-rank={entry.rank}
             >
               <strong
@@ -358,6 +376,17 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
         })}
       </div>
     </div>
+    {totalPages > 1 && <nav class="ranking-pagination" data-static-pagination aria-label="榜单分页">
+      <a href={pageHref(1)} aria-label="榜单首页">首页</a>
+      {page > 1 ? <a href={pageHref(page - 1)} rel="prev">← 上一页</a> : <span>← 上一页</span>}
+      {Array.from({ length: totalPages }, (_, index) => index + 1).map((target) =>
+        target === page
+          ? <strong aria-current="page">{target}</strong>
+          : <a href={pageHref(target)}>{target}</a>
+      )}
+      {page < totalPages ? <a href={pageHref(page + 1)} rel="next">下一页 →</a> : <span>下一页 →</span>}
+    </nav>}
+    <nav class="ranking-pagination" data-filter-pagination aria-label="筛选结果分页" hidden></nav>
     <div class="empty-state" data-empty-state hidden>
       <strong>没有匹配的项目</strong>
         <p>当前组合条件过窄。可以缩短关键词，或清除一部分筛选。</p>
@@ -397,11 +426,15 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
       const activeFilterCopy = root.querySelector('[data-active-filter-copy]');
       const actionStatus = root.querySelector('[data-action-status]');
       const body = root.querySelector('[data-ranking-body]');
+      const staticPagination = root.querySelector('[data-static-pagination]');
+      const filterPagination = root.querySelector('[data-filter-pagination]');
       const rankingDate = root.dataset.rankingDate ?? '';
       const fixedLanguage = root.dataset.fixedLanguage ?? '';
+      const resultPageSize = Number(root.dataset.pageSize || 100);
       const staticMarkup = body?.innerHTML ?? '';
       const staticCount = root.querySelectorAll('[data-ranking-row]').length;
       const parameters = new URLSearchParams(window.location.search);
+      let resultPage = Math.max(1, Number(parameters.get('result_page') || 1) || 1);
       const restore = (element: Element | null, value: string) => {
         if (element instanceof HTMLInputElement || element instanceof HTMLSelectElement) element.value = value;
       };
@@ -458,6 +491,9 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
         sync('category', value.category);
         sync('type', value.projectType);
         sync('scenario', value.scenario);
+        explicitFilterActive(value) && resultPage > 1
+          ? next.searchParams.set('result_page', String(resultPage))
+          : next.searchParams.delete('result_page');
         window.history.replaceState({}, '', next);
       };
       const updateSummary = (value: ReturnType<typeof filters>) => {
@@ -487,6 +523,31 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
       const movement = (value: number | null) => value === null ? ['新入选', 'new'] : value > 0 ? [`↑${value}`, 'up'] : value < 0 ? [`↓${Math.abs(value)}`, 'down'] : ['—', 'flat'];
       const contentLanguage = () => document.documentElement.dataset.projectLanguage === 'original' ? 'original' : 'zh';
 
+      const renderFilterPagination = (available: number, onSelect: (page: number) => void) => {
+        if (!(filterPagination instanceof HTMLElement)) return;
+        const pages = Math.ceil(available / resultPageSize);
+        resultPage = Math.min(Math.max(1, resultPage), Math.max(1, pages));
+        filterPagination.hidden = pages <= 1;
+        filterPagination.replaceChildren();
+        if (pages <= 1) return;
+        const add = (label: string, target: number, current = false) => {
+          if (current) {
+            const active = element('strong', '', label);
+            active.setAttribute('aria-current', 'page');
+            filterPagination.append(active);
+            return;
+          }
+          const button = element('button', '', label) as HTMLButtonElement;
+          button.type = 'button';
+          button.addEventListener('click', () => onSelect(target));
+          filterPagination.append(button);
+        };
+        add('首页', 1, resultPage === 1);
+        if (resultPage > 1) add('← 上一页', resultPage - 1);
+        for (let target = 1; target <= pages; target += 1) add(String(target), target, target === resultPage);
+        if (resultPage < pages) add('下一页 →', resultPage + 1);
+      };
+
       const renderRow = (entry: any, maps: any) => {
         const classification = maps.classified.get(Number(entry.repository_id));
         const localization = maps.localized.get(Number(entry.repository_id));
@@ -498,6 +559,7 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
         row.id = `repo-${entry.repository_id}`;
         row.setAttribute('role', 'row');
         row.dataset.rankingRow = '';
+        row.dataset.rank = String(entry.filtered_rank);
         row.dataset.sourceRank = String(entry.source_rank);
         row.dataset.language = entry.language ?? '';
         row.dataset.category = classification?.primary_category ?? '';
@@ -604,6 +666,8 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
         }
         if (visibleCount) visibleCount.textContent = String(rank);
         if (emptyState instanceof HTMLElement) emptyState.hidden = rank !== 0;
+        if (staticPagination instanceof HTMLElement) staticPagination.hidden = true;
+        if (filterPagination instanceof HTMLElement) filterPagination.hidden = true;
       };
       const apply = async () => {
         const value = filters();
@@ -616,6 +680,8 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
           if (poolCount) poolCount.textContent = root.dataset.explorationSize ?? String(staticCount);
           if (emptyState instanceof HTMLElement) emptyState.hidden = true;
           if (filterStatus instanceof HTMLElement) filterStatus.hidden = true;
+          if (staticPagination instanceof HTMLElement) staticPagination.hidden = false;
+          if (filterPagination instanceof HTMLElement) filterPagination.hidden = true;
           return;
         }
         if (!root.dataset.explorationPath) {
@@ -633,16 +699,21 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
         try {
           const loaded = await resources();
           if (currentRequest !== requestId) return;
-          const result = filteredRanking(loaded.current, loaded.previous, loaded.maps, value, 100);
-          if (body) body.replaceChildren(...result.entries.map((entry: any) => renderRow(entry, loaded.maps)));
-          if (visibleCount) visibleCount.textContent = String(result.entries.length);
+          const result = filteredRanking(loaded.current, loaded.previous, loaded.maps, value, 500);
+          const first = (resultPage - 1) * resultPageSize;
+          const pageEntries = result.entries.slice(first, first + resultPageSize);
+          if (body) body.replaceChildren(...pageEntries.map((entry: any) => renderRow(entry, loaded.maps)));
+          if (visibleCount) visibleCount.textContent = String(pageEntries.length);
           if (poolCount) poolCount.textContent = String(result.total);
           if (emptyState instanceof HTMLElement) emptyState.hidden = result.total !== 0;
+          if (staticPagination instanceof HTMLElement) staticPagination.hidden = true;
+          renderFilterPagination(result.available, (target) => { resultPage = target; apply(); });
+          syncUrl(value);
           if (filterStatus instanceof HTMLElement) {
             filterStatus.hidden = false;
-            filterStatus.textContent = result.total > 100
-              ? `符合条件 ${result.total} 项，显示重新排名后的前 100。`
-              : `符合条件 ${result.total} 项，已按当前榜单口径重新排名。`;
+            filterStatus.textContent = result.total > 500
+              ? `符合条件 ${result.total} 项，按当前榜单口径展示重新排名后的前 500。`
+              : `符合条件 ${result.total} 项，已全部纳入重新排名。`;
           }
         } catch {
           if (currentRequest !== requestId) return;
@@ -655,8 +726,8 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
         }
       };
       for (const control of [search, language, category, projectType, scenario]) {
-        control?.addEventListener('input', apply);
-        control?.addEventListener('change', apply);
+        control?.addEventListener('input', () => { resultPage = 1; apply(); });
+        control?.addEventListener('change', () => { resultPage = 1; apply(); });
       }
       root.addEventListener('click', (event) => {
         if (!(event.target instanceof Element) || !event.target.closest('[data-clear-filters]')) return;
@@ -665,6 +736,7 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
         if (category instanceof HTMLSelectElement) category.value = '';
         if (projectType instanceof HTMLSelectElement) projectType.value = '';
         if (scenario instanceof HTMLSelectElement) scenario.value = '';
+        resultPage = 1;
         if (advancedFilters instanceof HTMLDetailsElement && window.matchMedia('(max-width: 680px)').matches) advancedFilters.open = false;
         apply();
       });
