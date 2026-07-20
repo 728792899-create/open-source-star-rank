@@ -3,6 +3,7 @@ name: Validate Open Source Star Rank
 on:
   pull_request:
     paths:
+      - "README.md"
       - ".github/workflows/star-rank-*.yml"
       - ".github/dependabot.yml"
       - "schemas/star-rank/**"
@@ -21,6 +22,7 @@ on:
   push:
     branches: [main]
     paths:
+      - "README.md"
       - ".github/workflows/star-rank-*.yml"
       - ".github/dependabot.yml"
       - "schemas/star-rank/**"
