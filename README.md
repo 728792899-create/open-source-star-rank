@@ -2,7 +2,7 @@
 
 # ⭐ 开源星榜 · Open Source Star Rank
 
-**用真实、可复现、零费用的方式，观测 GitHub 开源项目的关注度变化**
+**每天自动更新的 GitHub 开源趋势站：公开事件新增 Star Top 500、候选池净增、7/30 日趋势与历史 Top 1000**
 
 [![数据采集与发布](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-pages.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-pages.yml)
 [![全站公开事件榜](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-events.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-events.yml)
@@ -16,6 +16,7 @@
 [🏆 历史 Top 1000](https://728792899-create.github.io/open-source-star-rank/all-time/) ·
 [📊 采样状态](https://728792899-create.github.io/open-source-star-rank/status/) ·
 [📐 数据口径](https://728792899-create.github.io/open-source-star-rank/methodology/) ·
+[📦 开放 JSON](https://728792899-create.github.io/open-source-star-rank/data/events/index.json) ·
 [💻 GitHub 源码](https://github.com/728792899-create/open-source-star-rank) ·
 [♻️ 复用声明](REUSE.md)
 
@@ -25,7 +26,7 @@
 
 ## 这是什么
 
-**开源星榜**是一个每天自动运行、完全由 GitHub Actions 驱动的开源项目观测站点。它不做爬虫、不猜测、不补零，只发布可以被独立验证的信号：
+**开源星榜**是一个每天自动运行、完全由 GitHub Actions 驱动的中文开源项目趋势站。它把 GH Archive 公开事件、GitHub API 快照和可复现的数据契约组合成静态榜单，不做网页爬虫、不猜测、不补零，只发布可以被独立验证的信号；榜单页面、历史记录和 JSON 数据均可公开访问和复用。
 
 - 📈 **每日新增榜** —— 扫描 [GH Archive](https://www.gharchive.org/) 归档的全部 GitHub 公开事件，统计昨天有多少「不同用户」为每个仓库点了 Star。
 - 🔁 **候选池净增榜** —— 用北京时间连续快照追踪一个候选池，计算真实发生的 Star 净增（日 / 7 日 / 30 日）。
@@ -46,7 +47,7 @@
 | 全站新增榜 | GH Archive 公开事件 | 当日唯一加星用户数 | Top 500（5 页） | 每日 07:30 | [`/`](https://728792899-create.github.io/open-source-star-rank/) |
 | 候选池净增榜 | 连续快照候选池 | 当日 Star 净增 | 最多 Top 500 | 每日 00:20 | [`/daily/`](https://728792899-create.github.io/open-source-star-rank/daily/) |
 | 7 日 / 30 日榜 | 连续快照候选池 | 周期 Star 净增 | 最多 Top 500 | 每日 | [`/period/7d/`](https://728792899-create.github.io/open-source-star-rank/period/7d/) |
-| 语言净增榜 | 连续快照候选池 | 当日 Star 净增 | Top 50 | 每日 | [`/language/`](https://728792899-create.github.io/open-source-star-rank/language/) |
+| 语言净增榜 | 连续快照候选池 | 当日 Star 净增 | 最多 Top 500 | 每日 | [`/language/`](https://728792899-create.github.io/open-source-star-rank/language/) |
 | **组合筛选结果** ✨ | 各榜受控深度池 | 沿当前榜口径筛选重排 | 最多 500 项 | 随榜更新 | 各榜单页内直接筛选 |
 | **历史星标榜** ✨ | GitHub 搜索累计 Star | 累计 Star 总数 | **Top 1000** | 每周一 10:00 | [`/all-time/`](https://728792899-create.github.io/open-source-star-rank/all-time/) |
 
