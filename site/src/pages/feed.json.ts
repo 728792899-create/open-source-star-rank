@@ -16,7 +16,7 @@ export const GET: APIRoute = ({ site }) => {
       const content = localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description);
       return `#${entry.rank} ${content.displayName}（${entry.full_name}，${entry.stars_gained >= 0 ? '+' : ''}${entry.stars_gained}）`;
     }).join('；');
-    return { id: url, url, title: `${date} GitHub Star 净增排行`, content_text: `当日 Top 10：${top}`, date_published: new Date(ranking.window_end).toISOString() };
+    return { id: url, url, title: `${date} GitHub 昨日 Star 净增排行`, content_text: `昨日 Top 10：${top}`, date_published: new Date(ranking.window_end).toISOString() };
   });
   return Response.json({ version: 'https://jsonfeed.org/version/1.1', title: '开源星榜', home_page_url: home, feed_url: feed, language: 'zh-CN', items }, { headers: { 'Content-Type': 'application/feed+json; charset=utf-8' } });
 };

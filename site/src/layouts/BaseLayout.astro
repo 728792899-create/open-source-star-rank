@@ -13,8 +13,8 @@ interface Props {
 }
 
 const {
-  title = '开源星榜｜GitHub 全站公开事件新增与候选池净增排行',
-  description = '每日汇总 GH Archive 归档的 GitHub 全站公开 WatchEvent 新增 Star 信号，并保留候选池连续快照净增榜。',
+  title = '开源星榜｜GitHub 昨日 Star 净增排行',
+  description = '基于 GitHub API 连续零点快照，发布候选池内开源项目的昨日 Star 净增排行、7 日与 30 日趋势。',
   structuredData,
   socialImagePath = '/og.png',
   robots = 'index,follow',
@@ -89,9 +89,7 @@ const authApiUrl = import.meta.env.PUBLIC_AUTH_API_URL?.replace(/\/$/u, '') ?? '
         <span>开源星榜</span>
       </a>
       <nav aria-label="主导航">
-        <a href={withBase('/')}>今日实时</a>
-        <a href={withBase('/events/yesterday/')}>昨日完整</a>
-        <a href={withBase('/daily/') }>净增榜</a>
+        <a href={withBase('/daily/')}>昨日净增榜</a>
         <a href={withBase('/period/7d/')}>7 日榜</a>
         <a href={withBase('/period/30d/')}>30 日榜</a>
         <a href={withBase('/all-time/')}>历史榜</a>
@@ -137,8 +135,8 @@ const authApiUrl = import.meta.env.PUBLIC_AUTH_API_URL?.replace(/\/$/u, '') ?? '
     <slot />
     <footer class="site-footer">
       <div class="site-footer-copy">
-        <p><strong>开源星榜</strong>的“全站”限定为 GH Archive 实际归档的 GitHub 公开事件，不是 GitHub 官方统计。</p>
-        <p>数据来自 GH Archive 与 GitHub 公共 API · 实时榜每小时更新，完整榜每日更新</p>
+        <p><strong>开源星榜</strong>是候选池观测榜，不代表 GitHub 全站绝对完整排行。</p>
+        <p>数据来自 GitHub 公共 API · 昨日净增榜每日零点快照更新</p>
       </div>
       <nav class="site-footer-links" aria-label="项目源码与复用">
         <a href={withBase('/rss.xml')}>每日订阅 RSS</a>

@@ -2,7 +2,7 @@
 import type { GetStaticPaths } from 'astro';
 import RankingView from '../../../../components/RankingView.astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
-import { readDailyRanking, readEventRankingIndex, readExplorationPool, readLocalizationCatalog, readRankingIndex } from '../../../../lib/data';
+import { readDailyRanking, readExplorationPool, readLocalizationCatalog, readRankingIndex } from '../../../../lib/data';
 import { localizedRepositoryContent } from '../../../../lib/localization';
 import { withBase } from '../../../../lib/paths';
 
@@ -19,7 +19,6 @@ export const getStaticPaths = (() => {
 
 const { date, page } = Astro.props;
 const index = readRankingIndex();
-const eventIndex = readEventRankingIndex();
 const ranking = readDailyRanking(date);
 const exploration = readExplorationPool('daily', date);
 const previousDate = new Date(`${date}T12:00:00Z`);
@@ -33,25 +32,24 @@ const basePath = `/daily/${date}/`;
 const href = (target: number) => target === 1 ? basePath : `${basePath}page/${target}/`;
 const structuredData = {
   '@context': 'https://schema.org', '@type': 'ItemList',
-  name: `${date} GitHub Star 净增排行第 ${page} 页`, numberOfItems: entries.length,
+  name: `${date} GitHub 昨日 Star 净增排行第 ${page} 页`, numberOfItems: entries.length,
   itemListElement: entries.map((entry) => ({
     '@type': 'ListItem', position: entry.rank,
     url: new URL(withBase(`/repo/${entry.repository_id}/`), Astro.site ?? Astro.url.origin).toString(),
     name: localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description).displayName,
   })),
 };
-const alternateDate = eventIndex.available_dates.includes(date) ? date : eventIndex.latest_date;
 ---
 
 <BaseLayout
-  title={`${date} GitHub Star 净增榜 ${page}/${totalPages}｜开源星榜`}
-  description={`${date} 候选池 Star 净增 Top 500 第 ${page} 页，展示第 ${entries[0]?.rank ?? 0}–${entries.at(-1)?.rank ?? 0} 名。`}
+  title={`${date} GitHub 昨日 Star 净增榜 ${page}/${totalPages}｜开源星榜`}
+  description={`${date} 昨日 Star 净增 Top 500 第 ${page} 页，展示第 ${entries[0]?.rank ?? 0}–${entries.at(-1)?.rank ?? 0} 名。`}
   structuredData={structuredData} socialImagePath={`/social/daily-${date}.png`}
   prevPath={href(page - 1)} nextPath={page < totalPages ? href(page + 1) : undefined}
 >
   <RankingView
     ranking={ranking} index={index} isLatest={date === index.latest_date}
-    alternateHref={alternateDate ? `/events/daily/${alternateDate}/` : undefined} alternateLabel="查看全站公开事件新增榜"
+    switcherLabelOverride="昨日净增榜"
     explorationPath={exploration ? `/data/explore/daily/${date}.json` : undefined}
     previousExplorationPath={previousExploration ? `/data/explore/daily/${previousDateValue}.json` : undefined}
     explorationEntries={exploration?.entries ?? []} page={page} pageBasePath={basePath}

@@ -2,7 +2,7 @@
 import type { GetStaticPaths } from 'astro';
 import RankingView from '../../components/RankingView.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { readDailyRanking, readEventRankingIndex, readExplorationPool, readLocalizationCatalog, readRankingIndex } from '../../lib/data';
+import { readDailyRanking, readExplorationPool, readLocalizationCatalog, readRankingIndex } from '../../lib/data';
 import { localizedRepositoryContent } from '../../lib/localization';
 import { withBase } from '../../lib/paths';
 
@@ -14,7 +14,6 @@ export const getStaticPaths = (() => {
 const { date } = Astro.params;
 if (!date) throw new Error('Missing daily ranking date');
 const index = readRankingIndex();
-const eventIndex = readEventRankingIndex();
 const ranking = readDailyRanking(date);
 const exploration = readExplorationPool('daily', ranking.date);
 const previousDate = new Date(`${ranking.date}T12:00:00Z`);
@@ -22,13 +21,13 @@ previousDate.setUTCDate(previousDate.getUTCDate() - 1);
 const previousDateValue = previousDate.toISOString().slice(0, 10);
 const previousExploration = readExplorationPool('daily', previousDateValue);
 const localization = readLocalizationCatalog();
-const title = `${ranking.date} GitHub Star 日榜｜开源星榜`;
-const description = `${ranking.date} GitHub 开源项目 Star 净增 Top ${ranking.entries.length}，覆盖 ${ranking.candidate_count} 个候选仓库。`;
+const title = `${ranking.date} GitHub 昨日 Star 净增榜｜开源星榜`;
+const description = `${ranking.date} GitHub 开源项目昨日 Star 净增 Top ${ranking.entries.length}，覆盖 ${ranking.candidate_count} 个候选仓库。`;
 const firstPageEntries = ranking.entries.slice(0, 100);
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: `${ranking.date} GitHub 开源项目 Star 净增排行`,
+  name: `${ranking.date} GitHub 开源项目昨日 Star 净增排行`,
   numberOfItems: firstPageEntries.length,
   itemListElement: firstPageEntries.map((entry) => ({
     '@type': 'ListItem',
@@ -37,9 +36,6 @@ const structuredData = {
     name: localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description).displayName,
   })),
 };
-const sameDateEventAvailable = eventIndex.available_dates.includes(ranking.date);
-const alternateEventDate = sameDateEventAvailable ? ranking.date : eventIndex.latest_date;
-const alternateLabel = sameDateEventAvailable ? '查看同日全站公开事件新增榜' : '查看最新全站公开事件新增榜';
 ---
 
 <BaseLayout title={title} description={description} structuredData={structuredData} socialImagePath={`/social/daily-${ranking.date}.png`} nextPath={ranking.entries.length > 100 ? `/daily/${ranking.date}/page/2/` : undefined}>
@@ -47,8 +43,7 @@ const alternateLabel = sameDateEventAvailable ? '查看同日全站公开事件�
     ranking={ranking}
     index={index}
     isLatest={ranking.date === index.latest_date}
-    alternateHref={alternateEventDate ? `/events/daily/${alternateEventDate}/` : undefined}
-    alternateLabel={alternateLabel}
+    switcherLabelOverride="昨日净增榜"
     explorationPath={exploration ? `/data/explore/daily/${ranking.date}.json` : undefined}
     previousExplorationPath={previousExploration ? `/data/explore/daily/${previousDateValue}.json` : undefined}
     explorationEntries={exploration?.entries ?? []}

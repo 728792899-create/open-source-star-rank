@@ -134,7 +134,7 @@ const usedProjectTypes = classificationIndex.project_types.filter((term) => used
 const usedUseCases = classificationIndex.use_cases.filter((term) => usedClassifications.some((item) => item?.use_cases.includes(term.id)));
 const headline = headlineOverride ?? defaultHeadline;
 const sectionEyebrow = sectionEyebrowOverride ?? (isLive ? `Live public events top ${totalEntries}` : isEvent ? `Complete public events top ${totalEntries}` : `Observed ${languageName ? 'language' : ''} top ${totalEntries}`);
-const sectionTitle = sectionTitleOverride ?? (isLive ? '今日实时新增 Star 排行' : isEvent ? '昨日完整新增 Star 排行' : `${languageName ? `${languageName} ` : ''}${periodDays ? `${periodDays} 日 ` : ''}Star 净增排行`);
+const sectionTitle = sectionTitleOverride ?? (isLive ? '今日实时新增 Star 排行' : isEvent ? '昨日完整新增 Star 排行' : `${languageName ? `${languageName} ` : ''}${periodDays ? `${periodDays} 日 ` : '昨日 '}Star 净增排行`);
 const uniqueAdditionCount = eventRanking?.source_metrics.unique_star_addition_count ?? null;
 const explorationPoolSize = explorationEntries.length || ranking.entries.length;
 const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口` : isLive ? '每小时更新' : isEvent ? '24 小时完整榜' : languageName ? '随每日净增榜更新' : '每日零点快照';
@@ -168,7 +168,7 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
   class="shell ranking-page"
 >
   <nav class="ranking-mode-switcher" aria-label="榜单口径">
-    <strong>{switcherLabelOverride ?? (isLive ? '今日实时新增榜' : isEvent ? '昨日完整新增榜' : '候选池净增榜')}</strong>
+    <strong>{switcherLabelOverride ?? (isLive ? '今日实时新增榜' : isEvent ? '昨日完整新增榜' : periodDays ? `${periodDays} 日净增榜` : '昨日净增榜')}</strong>
     {alternateHref && alternateLabel && <a href={withBase(alternateHref)}>{alternateLabel} →</a>}
   </nav>
   {fallbackNotice && <p class="pipeline-fallback" role="status">{fallbackNotice}</p>}

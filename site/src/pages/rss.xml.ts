@@ -25,7 +25,7 @@ export const GET: APIRoute = ({ site }) => {
     }).join('；');
     return [
       '<item>',
-      `<title>${escapeXml(`${date} GitHub Star 净增排行`)}</title>`,
+      `<title>${escapeXml(`${date} GitHub 昨日 Star 净增排行`)}</title>`,
       `<link>${escapeXml(link)}</link>`,
       `<guid isPermaLink="true">${escapeXml(link)}</guid>`,
       `<pubDate>${new Date(ranking.window_end).toUTCString()}</pubDate>`,
@@ -33,7 +33,7 @@ export const GET: APIRoute = ({ site }) => {
       '</item>',
     ].join('');
   }).join('');
-  const body = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>开源星榜｜GitHub 开源项目每日 Star 净增排行</title><link>${escapeXml(channelUrl)}</link><description>GitHub 开源项目候选池每日 Star 净增观测榜</description><language>zh-CN</language><atom:link xmlns:atom="http://www.w3.org/2005/Atom" href="${escapeXml(feedUrl)}" rel="self" type="application/rss+xml"/>${items}</channel></rss>\n`;
+  const body = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>开源星榜｜GitHub 开源项目昨日 Star 净增排行</title><link>${escapeXml(channelUrl)}</link><description>GitHub 开源项目候选池昨日 Star 净增观测榜</description><language>zh-CN</language><atom:link xmlns:atom="http://www.w3.org/2005/Atom" href="${escapeXml(feedUrl)}" rel="self" type="application/rss+xml"/>${items}</channel></rss>\n`;
   return new Response(body, {
     headers: { 'Content-Type': 'application/rss+xml; charset=utf-8' },
   });
