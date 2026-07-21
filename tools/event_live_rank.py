@@ -62,7 +62,7 @@ except ModuleNotFoundError:  # pragma: no cover - direct script execution fallba
     from star_rank_schema import SchemaValidationError, sync_public_schemas, validate_payload  # type: ignore
 
 
-SCHEMA_VERSION = "1.0.0"
+SCHEMA_VERSION = "1.1.0"
 METHODOLOGY_VERSION = "gharchive-hourly-public-watch-events-live-v1"
 HOURLY_STATE_VERSION = "1.0.0"
 LIVE_LAG_MINUTES = 30
@@ -222,9 +222,18 @@ def aggregate_hour_states(states: Sequence[Mapping[str, Any]]) -> list[dict[str,
 
 def load_metadata_cache(public_dir: Path) -> dict[int, Mapping[str, Any]]:
     cache: dict[int, Mapping[str, Any]] = {}
+    def remember(item: Mapping[str, Any]) -> None:
+        repository_id = int(item["repository_id"])
+        current = cache.get(repository_id)
+        current_has_lifecycle = bool(current and current.get("created_at") and "pushed_at" in current)
+        item_has_lifecycle = bool(item.get("created_at") and "pushed_at" in item)
+        if current is None or (item_has_lifecycle and not current_has_lifecycle):
+            cache[repository_id] = item
+
     live = load_json(public_dir / "events" / "live.json")
     if isinstance(live, dict):
-        cache.update({int(item["repository_id"]): item for item in live.get("entries", [])})
+        for item in live.get("entries", []):
+            remember(item)
     index = load_json(public_dir / "events" / "index.json")
     latest_date = index.get("latest_date") if isinstance(index, dict) else None
     if latest_date:
@@ -232,7 +241,7 @@ def load_metadata_cache(public_dir: Path) -> dict[int, Mapping[str, Any]]:
             payload = load_json(public_dir / relative)
             if isinstance(payload, dict):
                 for item in payload.get("entries", []):
-                    cache.setdefault(int(item["repository_id"]), item)
+                    remember(item)
     return cache
 
 
@@ -252,13 +261,15 @@ def enrich_live_aggregates(
         attempted += 1
         repository_id = int(aggregate["repository_id"])
         cached_item = metadata_cache.get(repository_id)
-        if cached_item is not None:
+        if cached_item is not None and cached_item.get("created_at") and "pushed_at" in cached_item:
             cached_api_shape = {
                 "id": repository_id,
                 "full_name": cached_item["full_name"],
                 "description": cached_item.get("description"),
                 "language": cached_item.get("language"),
                 "stargazers_count": cached_item["stars_total"],
+                "created_at": cached_item.get("created_at"),
+                "pushed_at": cached_item.get("pushed_at"),
                 "html_url": cached_item["html_url"],
                 "owner": {"avatar_url": cached_item.get("owner_avatar_url")},
             }

@@ -12,6 +12,10 @@
     {
       "if": { "properties": { "schema_version": { "const": "1.3.0" } }, "required": ["schema_version"] },
       "then": { "required": ["sampling", "periods", "ranking_limit", "page_size"] }
+    },
+    {
+      "if": { "properties": { "schema_version": { "const": "1.4.0" } }, "required": ["schema_version"] },
+      "then": { "required": ["sampling", "periods", "ranking_limit", "page_size"] }
     }
   ],
   "required": [
@@ -27,7 +31,7 @@
     "latest_collection"
   ],
   "properties": {
-    "schema_version": { "enum": ["1.1.0", "1.2.0", "1.3.0"] },
+    "schema_version": { "enum": ["1.1.0", "1.2.0", "1.3.0", "1.4.0"] },
     "status": { "enum": ["initializing", "ready"] },
     "timezone": { "const": "Asia/Shanghai" },
     "updated_at": { "type": ["string", "null"], "format": "date-time" },

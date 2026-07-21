@@ -102,8 +102,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <span class="section-number">09</span>
       <div>
         <h2>全部历史星标 Top 1000</h2>
-        <p>历史星标榜按 GitHub 搜索的累计 Star 数降序收录前 1,000 个公开仓库，剔除 fork、已归档、已禁用与私有项目。GitHub 单次搜索最多返回 1,000 条结果，恰好覆盖发布深度，因此它是搜索口径下真实的全站累计榜。</p>
+        <p>历史星标榜按 GitHub 搜索的累计 Star 数降序收录前 1,000 个公开仓库，剔除 fork、已归档、已禁用与私有项目。因为 GitHub Search 单条查询只暴露前 1,000 条，采集器会按 Star 区间分段下探，并完整获取截止 Star 并列桶，以回填被过滤项目留下的空位。</p>
+        <p>只有取得恰好 1,000 个经验证项目才发布；任何查询不完整、截止并列桶不可完整访问或数量不足，都保留上一版。</p>
         <p>该榜每周更新一次，反映长期累计的关注度；它不统计每日变化，也不扣除取消 Star。选择分类条件后会在 Top 1000 母集中重新排列并最多显示 500 项。</p>
+      </div>
+    </section>
+
+    <section>
+      <span class="section-number">10</span>
+      <div>
+        <h2>项目日期、倒计时与可选 GitHub 登录</h2>
+        <p>“GitHub 创建”来自仓库 `created_at`，“最近代码推送”来自 `pushed_at`，“已发布”是从仓库创建时间到当前日期的自然日差。它们不代表首个 Release 日期，也不用 GitHub 页面的一般 `updated_at` 冒充代码更新。</p>
+        <p>每个榜单根据对应索引中的调度时间显示更新倒计时。倒计时为 0 不意味数据已经发布；它会转为“等待自动发布”，并定期检查公开索引是否已变更。</p>
+        <p>不登录即可使用本机收藏与对比。选择 GitHub 登录后，收藏会变成用户账号上的真实 Star / Unstar。站点只申请 Metadata 读取与 Starring 读写；GitHub 令牌加密保存于独立授权 Worker 的 D1，浏览器只保留最长 8 小时的不透明站点会话。历史本地收藏不会自动写入 GitHub，必须由用户手动确认。</p>
       </div>
     </section>
   </main>

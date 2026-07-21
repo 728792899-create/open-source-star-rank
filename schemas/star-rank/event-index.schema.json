@@ -9,9 +9,10 @@
     "methodology_version", "freshness_threshold_hours", "latest_source_metrics"
   ],
   "properties": {
-    "schema_version": { "enum": ["1.0.0", "1.1.0", "1.2.0"] },
+    "schema_version": { "enum": ["1.0.0", "1.1.0", "1.2.0", "1.3.0"] },
     "ranking_limit": { "const": 500 },
     "page_size": { "const": 100 },
+    "next_refresh_at": { "type": ["string", "null"], "format": "date-time" },
     "status": { "enum": ["initializing", "ready"] },
     "timezone": { "const": "Asia/Shanghai" },
     "updated_at": { "type": ["string", "null"], "format": "date-time" },
@@ -50,6 +51,21 @@
           "methodology_version": { "const": "gharchive-public-watch-events-v3" },
           "latest_source_metrics": {
             "oneOf": [{ "$ref": "#/$defs/source_metrics_v3" }, { "type": "null" }]
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "schema_version": { "const": "1.3.0" } }, "required": ["schema_version"] },
+      "then": {
+        "required": ["ranking_limit", "page_size", "next_refresh_at"],
+        "properties": {
+          "methodology_version": { "const": "gharchive-public-watch-events-v3" },
+          "latest_source_metrics": {
+            "anyOf": [
+              { "type": "null" },
+              { "$ref": "event-daily.schema.json#/$defs/source_metrics_v3" }
+            ]
           }
         }
       }

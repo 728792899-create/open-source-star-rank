@@ -2,6 +2,7 @@
 import type { RankingIndex } from '../types';
 import { withBase } from '../lib/paths';
 import FreshnessStatus from './FreshnessStatus.astro';
+import UpdateCountdown from './UpdateCountdown.astro';
 
 interface Props {
   index: RankingIndex;
@@ -30,6 +31,12 @@ const expectedAt = (() => {
     updatedAt={index.updated_at}
     thresholdHours={index.freshness_threshold_hours}
     captureValid={index.sampling?.latest_snapshot_valid ?? true}
+  />
+  <UpdateCountdown
+    nextAt={index.sampling?.next_scheduled_at}
+    updatedAt={index.updated_at}
+    indexPath="/data/index.json"
+    label="下次有效窗口采样"
   />
   <p class="eyebrow">{days} day ranking · 每日检查连续窗口</p>
   <h1>近 {days} 日榜正在积累真实窗口。</h1>

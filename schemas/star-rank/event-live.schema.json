@@ -10,7 +10,7 @@
     "eligible_count", "rank_change_basis", "source_metrics", "entries"
   ],
   "properties": {
-    "schema_version": { "const": "1.0.0" },
+    "schema_version": { "enum": ["1.0.0", "1.1.0"] },
     "date": { "type": "string", "format": "date", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
     "timezone": { "const": "Asia/Shanghai" },
     "window_start": { "type": "string", "format": "date-time" },
@@ -81,6 +81,8 @@
         "description": { "type": ["string", "null"] },
         "language": { "type": ["string", "null"] },
         "stars_total": { "type": "integer", "minimum": 0 },
+        "created_at": { "type": ["string", "null"], "format": "date-time" },
+        "pushed_at": { "type": ["string", "null"], "format": "date-time" },
         "stars_added": { "type": "integer", "minimum": 1 },
         "watch_events": { "type": "integer", "minimum": 1 },
         "rank": { "type": "integer", "minimum": 1, "maximum": 500 },

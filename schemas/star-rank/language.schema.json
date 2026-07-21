@@ -9,10 +9,14 @@
     {
       "if": { "properties": { "schema_version": { "const": "1.3.0" } }, "required": ["schema_version"] },
       "then": { "required": ["ranking_limit", "entry_count"] }
+    },
+    {
+      "if": { "properties": { "schema_version": { "const": "1.4.0" } }, "required": ["schema_version"] },
+      "then": { "required": ["ranking_limit", "entry_count"] }
     }
   ],
   "properties": {
-    "schema_version": { "enum": ["1.2.0", "1.3.0"] },
+    "schema_version": { "enum": ["1.2.0", "1.3.0", "1.4.0"] },
     "ranking_limit": { "const": 500 },
     "entry_count": { "type": "integer", "minimum": 0, "maximum": 500 },
     "recomputed_at": { "type": "string", "format": "date-time" },
@@ -74,6 +78,8 @@
         "description": { "type": ["string", "null"] },
         "language": { "type": ["string", "null"] },
         "stars_total": { "type": "integer", "minimum": 0 },
+        "created_at": { "type": ["string", "null"], "format": "date-time" },
+        "pushed_at": { "type": ["string", "null"], "format": "date-time" },
         "stars_gained": { "type": "integer" },
         "html_url": { "type": "string", "format": "uri" },
         "owner_avatar_url": { "type": ["string", "null"], "format": "uri" },

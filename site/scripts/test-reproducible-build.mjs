@@ -14,6 +14,10 @@ const env = {
 };
 const files = [
   'index.html',
+  'auth/callback/index.html',
+  'all-time/index.html',
+  'data/alltime/index.json',
+  'data/alltime/top-1000.json',
   'daily/2026-07-14/index.html',
   'daily/2026-07-13/index.html',
   'data/index.json',

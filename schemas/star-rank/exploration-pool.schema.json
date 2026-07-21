@@ -8,7 +8,7 @@
     "schema_version", "board_kind", "date", "timezone", "window_start", "window_end", "pool_size", "entries"
   ],
   "properties": {
-    "schema_version": { "const": "1.0.0" },
+    "schema_version": { "enum": ["1.0.0", "1.1.0"] },
     "board_kind": { "enum": ["candidate_daily", "candidate_period_7d", "candidate_period_30d"] },
     "date": { "type": "string", "format": "date", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
     "timezone": { "const": "Asia/Shanghai" },
@@ -35,6 +35,8 @@
         "description": { "type": ["string", "null"] },
         "language": { "type": ["string", "null"] },
         "stars_total": { "type": "integer", "minimum": 0 },
+        "created_at": { "type": ["string", "null"], "format": "date-time" },
+        "pushed_at": { "type": ["string", "null"], "format": "date-time" },
         "stars_gained": { "type": "integer" },
         "html_url": { "type": "string", "format": "uri", "pattern": "^https://github\\.com/" },
         "owner_avatar_url": { "type": ["string", "null"], "format": "uri" },

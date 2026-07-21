@@ -1,0 +1,77 @@
+---
+import { withBase } from '../lib/paths';
+
+interface Props {
+  nextAt?: string | null;
+  updatedAt?: string | null;
+  indexPath: string;
+  label?: string;
+}
+
+const { nextAt, updatedAt, indexPath, label = '下次数据更新' } = Astro.props;
+const validNext = nextAt && !Number.isNaN(new Date(nextAt).getTime()) ? nextAt : null;
+const formatted = validNext
+  ? new Intl.DateTimeFormat('zh-CN', {
+      timeZone: 'Asia/Shanghai', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit',
+    }).format(new Date(validNext))
+  : null;
+---
+
+{validNext && <aside
+  class="update-countdown"
+  data-update-countdown
+  data-next-at={validNext}
+  data-updated-at={updatedAt ?? ''}
+  data-index-path={withBase(indexPath)}
+  aria-live="polite"
+>
+  <span class="update-countdown-label">{label}</span>
+  <strong data-countdown-value>计算中…</strong>
+  <time datetime={validNext}>计划 {formatted}（北京时间）</time>
+  <button type="button" data-countdown-refresh hidden>新数据已发布，刷新查看</button>
+</aside>}
+
+<script is:inline>
+  (() => {
+    const units = (milliseconds) => {
+      const seconds = Math.max(0, Math.floor(milliseconds / 1000));
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const remainder = seconds % 60;
+      return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(remainder).padStart(2, '0')}`;
+    };
+    for (const root of document.querySelectorAll('[data-update-countdown]')) {
+      if (!(root instanceof HTMLElement) || root.dataset.enhanced === 'true') continue;
+      root.dataset.enhanced = 'true';
+      const value = root.querySelector('[data-countdown-value]');
+      const refresh = root.querySelector('[data-countdown-refresh]');
+      const target = new Date(root.dataset.nextAt || '').getTime();
+      let polling = false;
+      let lastPoll = 0;
+      const check = async () => {
+        if (polling || Date.now() - lastPoll < 60_000 || !root.dataset.indexPath) return;
+        polling = true;
+        lastPoll = Date.now();
+        try {
+          const response = await fetch(root.dataset.indexPath, { cache: 'no-store' });
+          if (!response.ok) return;
+          const payload = await response.json();
+          const marker = payload.updated_at || payload.generated_at || '';
+          const next = payload.next_refresh_at || payload.sampling?.next_scheduled_at || '';
+          if ((marker && marker !== root.dataset.updatedAt) || (next && next !== root.dataset.nextAt)) {
+            if (value) value.textContent = '新数据已发布';
+            if (refresh instanceof HTMLButtonElement) refresh.hidden = false;
+          }
+        } catch {} finally { polling = false; }
+      };
+      const render = () => {
+        const remaining = target - Date.now();
+        if (value) value.textContent = remaining > 0 ? units(remaining) : '已到计划时间，等待自动发布';
+        if (remaining <= 0) check();
+      };
+      refresh?.addEventListener('click', () => window.location.reload());
+      render();
+      window.setInterval(render, 1000);
+    }
+  })();
+</script>

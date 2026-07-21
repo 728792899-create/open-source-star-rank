@@ -8,7 +8,9 @@ import { withBase } from '../lib/paths';
 import { readClassificationIndex, readClassificationRepositories, readLocalizationCatalog } from '../lib/data';
 import { classificationLabels, classificationMap } from '../lib/classification';
 import { localizedRepositoryContent } from '../lib/localization';
+import { repositoryAgeLabel, repositoryDate, repositoryOwner } from '../lib/repository-lifecycle';
 import FreshnessStatus from './FreshnessStatus.astro';
+import UpdateCountdown from './UpdateCountdown.astro';
 
 interface Props {
   ranking: DailyRanking | LanguageRanking | PeriodRanking | EventDailyRanking | EventLiveRanking | FacetRanking;
@@ -136,6 +138,12 @@ const sectionTitle = sectionTitleOverride ?? (isLive ? '今日实时新增 Star 
 const uniqueAdditionCount = eventRanking?.source_metrics.unique_star_addition_count ?? null;
 const explorationPoolSize = explorationEntries.length || ranking.entries.length;
 const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口` : isLive ? '每小时更新' : isEvent ? '24 小时完整榜' : languageName ? '随每日净增榜更新' : '每日零点快照';
+const nextUpdateAt = isLive
+  ? (eventRanking as EventLiveRanking).next_refresh_at
+  : isEvent || isFacet
+    ? (index as EventRankingIndex).next_refresh_at ?? null
+    : (index as RankingIndex).sampling?.next_scheduled_at ?? null;
+const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ? '/data/events/index.json' : '/data/index.json';
 ---
 
 <main
@@ -177,7 +185,15 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
     </time>
   </header>
 
-  <FreshnessStatus updatedAt={isLive ? eventRanking!.generated_at : index.updated_at} thresholdHours={isLive ? 2 : index.freshness_threshold_hours} compact />
+  <div class="data-update-strip">
+    <FreshnessStatus updatedAt={isLive ? eventRanking!.generated_at : index.updated_at} thresholdHours={isLive ? 2 : index.freshness_threshold_hours} compact />
+    <UpdateCountdown
+      nextAt={nextUpdateAt}
+      updatedAt={isLive ? eventRanking!.generated_at : index.updated_at}
+      indexPath={updateIndexPath}
+      label={isLive ? '下次实时榜刷新' : '下次榜单更新'}
+    />
+  </div>
   {isLive && <script is:inline define:vars={{ liveDate: ranking.date }}>
     (() => {
       const parts = new Intl.DateTimeFormat('en-US', {
@@ -381,6 +397,12 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
                     <span>{projectTypeLabel}</span>
                     {useCaseLabels?.slice(0, 2).map((label) => <span>{label}</span>)}
                   </div> : <span class="classification-pending">分类待生成</span>}
+                  <p class="project-lifecycle">
+                    <span>作者 {repositoryOwner(entry.full_name)}</span>
+                    <span>{entry.created_at ? `创建 ${repositoryDate(entry.created_at)}` : '创建时间待补充'}</span>
+                    <span>{entry.pushed_at ? `最近推送 ${repositoryDate(entry.pushed_at)}` : '更新日期待补充'}</span>
+                    <span>{repositoryAgeLabel(entry.created_at)}</span>
+                  </p>
                 </div>
                 <a class="github-link" href={entry.html_url} target="_blank" rel="noreferrer" aria-label={`在 GitHub 打开 ${entry.full_name}`}>GitHub ↗</a>
                 <button
@@ -554,6 +576,25 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
       const number = (value: number) => new Intl.NumberFormat('zh-CN').format(value);
       const movement = (value: number | null) => value === null ? ['新入选', 'new'] : value > 0 ? [`↑${value}`, 'up'] : value < 0 ? [`↓${Math.abs(value)}`, 'down'] : ['—', 'flat'];
       const contentLanguage = () => document.documentElement.dataset.projectLanguage === 'original' ? 'original' : 'zh';
+      const lifecycleDate = (value: string | null | undefined) => {
+        if (!value) return null;
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return null;
+        return new Intl.DateTimeFormat('zh-CN', {
+          timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit',
+        }).format(date);
+      };
+      const lifecycleAge = (value: string | null | undefined) => {
+        if (!value) return '发布天数待补充';
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return '发布天数待补充';
+        const key = (item: Date) => new Intl.DateTimeFormat('en-CA', {
+          timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit',
+        }).format(item);
+        const days = Math.max(0, Math.floor((new Date(`${key(new Date())}T00:00:00+08:00`).getTime()
+          - new Date(`${key(date)}T00:00:00+08:00`).getTime()) / 86_400_000));
+        return days === 0 ? '今天发布' : `已发布 ${number(days)} 天`;
+      };
 
       const renderFilterPagination = (available: number, onSelect: (page: number) => void) => {
         if (!(filterPagination instanceof HTMLElement)) return;
@@ -644,6 +685,14 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
           for (const label of scenarioLabels.slice(0, 2)) tags.append(element('span', '', label));
           copy.append(tags);
         } else copy.append(element('span', 'classification-pending', '分类待生成'));
+        const lifecycle = element('p', 'project-lifecycle');
+        lifecycle.append(
+          element('span', '', `作者 ${String(entry.full_name).split('/')[0] || entry.full_name}`),
+          element('span', '', entry.created_at ? `创建 ${lifecycleDate(entry.created_at)}` : '创建时间待补充'),
+          element('span', '', entry.pushed_at ? `最近推送 ${lifecycleDate(entry.pushed_at)}` : '更新日期待补充'),
+          element('span', '', lifecycleAge(entry.created_at)),
+        );
+        copy.append(lifecycle);
         project.append(copy);
         const github = element('a', 'github-link', 'GitHub ↗') as HTMLAnchorElement;
         github.href = entry.html_url;

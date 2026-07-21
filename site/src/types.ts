@@ -68,6 +68,8 @@ export interface RankingEntry {
   trend_7d: Array<number | null>;
   html_url: string;
   owner_avatar_url: string | null;
+  created_at?: string | null;
+  pushed_at?: string | null;
   knowledge_url: string | null;
 }
 
@@ -130,6 +132,8 @@ export interface RepositoryDetail {
   stars_total: number;
   html_url: string;
   owner_avatar_url: string | null;
+  created_at?: string | null;
+  pushed_at?: string | null;
   knowledge_url: string | null;
   first_seen_date: string | null;
   last_seen_date: string | null;
@@ -175,7 +179,7 @@ export interface EventSourceMetrics {
 }
 
 export interface EventRankingIndex {
-  schema_version: '1.0.0' | '1.1.0' | '1.2.0';
+  schema_version: '1.0.0' | '1.1.0' | '1.2.0' | '1.3.0';
   status: 'initializing' | 'ready';
   timezone: 'Asia/Shanghai';
   updated_at: string | null;
@@ -186,6 +190,7 @@ export interface EventRankingIndex {
   latest_source_metrics: EventSourceMetrics | null;
   ranking_limit?: number;
   page_size?: number;
+  next_refresh_at?: string | null;
 }
 
 export interface EventRankingEntry {
@@ -201,10 +206,12 @@ export interface EventRankingEntry {
   trend_7d: Array<number | null>;
   html_url: string;
   owner_avatar_url: string | null;
+  created_at?: string | null;
+  pushed_at?: string | null;
 }
 
 export interface EventDailyRanking {
-  schema_version: '1.0.0' | '1.1.0' | '1.2.0';
+  schema_version: '1.0.0' | '1.1.0' | '1.2.0' | '1.3.0';
   date: string;
   timezone: 'Asia/Shanghai';
   window_start: string;
@@ -241,7 +248,7 @@ export interface EventLiveSourceMetrics {
 }
 
 export interface EventLiveRanking {
-  schema_version: '1.0.0';
+  schema_version: '1.0.0' | '1.1.0';
   date: string;
   timezone: 'Asia/Shanghai';
   window_start: string;
@@ -270,10 +277,12 @@ export interface EventCategoryPoolEntry {
   trend_7d?: Array<number | null>;
   html_url: string;
   owner_avatar_url: string | null;
+  created_at?: string | null;
+  pushed_at?: string | null;
 }
 
 export interface EventCategoryPool {
-  schema_version: '1.0.0' | '1.1.0';
+  schema_version: '1.0.0' | '1.1.0' | '1.2.0';
   date: string;
   timezone: 'Asia/Shanghai';
   window_start: string;
@@ -285,7 +294,7 @@ export interface EventCategoryPool {
 }
 
 export interface ExplorationPool {
-  schema_version: '1.0.0';
+  schema_version: '1.0.0' | '1.1.0';
   board_kind: 'candidate_daily' | 'candidate_period_7d' | 'candidate_period_30d';
   date: string;
   timezone: 'Asia/Shanghai';
@@ -304,6 +313,8 @@ export interface AllTimeEntry {
   rank: number;
   html_url: string;
   owner_avatar_url: string | null;
+  created_at?: string | null;
+  pushed_at?: string | null;
 }
 
 export interface AllTimeSourceMetrics {
@@ -311,27 +322,35 @@ export interface AllTimeSourceMetrics {
   sort: 'stars';
   minimum_stars: number;
   search_result_count: number;
+  search_partition_count?: number;
+  rejected_result_count?: number;
+  cutoff_stars?: number;
+  cutoff_bucket_count?: number;
   api_request_count: number;
   api_retry_count: number;
+  ranking_complete?: true;
 }
 
 export interface AllTimeBoard {
-  schema_version: '1.0.0';
+  schema_version: '1.0.0' | '1.1.0';
   generated_at: string;
-  methodology_version: 'github-search-most-starred-v1';
+  methodology_version: 'github-search-most-starred-v1' | 'github-search-most-starred-v2';
   source_metrics: AllTimeSourceMetrics;
+  ranking_limit?: number;
   entry_count: number;
   entries: AllTimeEntry[];
 }
 
 export interface AllTimeIndex {
-  schema_version: '1.0.0';
+  schema_version: '1.0.0' | '1.1.0';
   status: 'initializing' | 'ready';
   updated_at: string | null;
-  methodology_version: 'github-search-most-starred-v1';
+  methodology_version: 'github-search-most-starred-v1' | 'github-search-most-starred-v2';
+  ranking_limit?: number;
   entry_count: number;
   top_stars: number | null;
   freshness_threshold_hours: number;
+  next_refresh_at?: string | null;
 }
 
 export type FacetDimension = 'language' | 'category' | 'type' | 'scenario';
@@ -423,6 +442,8 @@ export interface RepositoryProfile {
   stars_total: number;
   html_url: string;
   owner_avatar_url: string | null;
+  created_at: string | null;
+  pushed_at: string | null;
   knowledge_url: string | null;
   first_seen_date: string | null;
   last_seen_date: string | null;

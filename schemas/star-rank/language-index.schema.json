@@ -9,10 +9,14 @@
     {
       "if": { "properties": { "schema_version": { "const": "1.3.0" } }, "required": ["schema_version"] },
       "then": { "required": ["ranking_limit", "page_size"] }
+    },
+    {
+      "if": { "properties": { "schema_version": { "const": "1.4.0" } }, "required": ["schema_version"] },
+      "then": { "required": ["ranking_limit", "page_size"] }
     }
   ],
   "properties": {
-    "schema_version": { "enum": ["1.2.0", "1.3.0"] },
+    "schema_version": { "enum": ["1.2.0", "1.3.0", "1.4.0"] },
     "updated_at": { "type": "string", "format": "date-time" },
     "timezone": { "const": "Asia/Shanghai" },
     "ranking_limit": { "const": 500 },

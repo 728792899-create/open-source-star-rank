@@ -19,3 +19,13 @@ updates:
       timezone: Asia/Shanghai
     open-pull-requests-limit: 5
     labels: [dependencies, star-rank]
+
+  - package-ecosystem: npm
+    directory: /auth-worker
+    schedule:
+      interval: weekly
+      day: monday
+      time: "01:40"
+      timezone: Asia/Shanghai
+    open-pull-requests-limit: 5
+    labels: [dependencies, star-rank, auth]

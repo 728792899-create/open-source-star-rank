@@ -37,6 +37,7 @@ jobs:
       SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
       BASE_PATH: /${{ github.event.repository.name }}
       PUBLIC_REPOSITORY: ${{ github.repository }}
+      PUBLIC_AUTH_API_URL: ${{ vars.PUBLIC_AUTH_API_URL }}
     steps:
       - name: Checkout star rank
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6

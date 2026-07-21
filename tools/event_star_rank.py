@@ -40,7 +40,7 @@ except ModuleNotFoundError:  # pragma: no cover - direct script execution fallba
     from star_rank_schema import SchemaValidationError, sync_public_schemas, validate_payload  # type: ignore
 
 
-SCHEMA_VERSION = "1.2.0"
+SCHEMA_VERSION = "1.3.0"
 TIMEZONE = "Asia/Shanghai"
 METHODOLOGY_VERSION = "gharchive-public-watch-events-v3"
 DEFAULT_MAXIMUM_BYTES_BILLED = 24 * 1024**3
@@ -51,7 +51,7 @@ PAGE_SIZE = 100
 DEFAULT_CATEGORY_POOL_LIMIT = 0
 MAX_CATEGORY_POOL_LIMIT = 1000
 DEFAULT_CATEGORY_POOL_ATTEMPT_LIMIT = 3000
-CATEGORY_POOL_SCHEMA_VERSION = "1.1.0"
+CATEGORY_POOL_SCHEMA_VERSION = "1.2.0"
 EVENT_STATE_RETENTION_DAYS = 30
 FRESHNESS_THRESHOLD_HOURS = 36
 DATASET = "githubarchive.day"
@@ -182,6 +182,8 @@ def _metadata_record(api_item: Mapping[str, Any], aggregate: Mapping[str, Any]) 
         "description": api_item.get("description"),
         "language": api_item.get("language"),
         "stars_total": int(api_item["stargazers_count"]),
+        "created_at": api_item.get("created_at"),
+        "pushed_at": api_item.get("pushed_at"),
         "stars_added": int(aggregate["stars_added"]),
         "watch_events": int(aggregate["watch_events"]),
         "html_url": str(api_item["html_url"]),
@@ -307,6 +309,8 @@ def build_category_pool(
             "description": item.get("description"),
             "language": item.get("language"),
             "stars_total": int(item["stars_total"]),
+            "created_at": item.get("created_at"),
+            "pushed_at": item.get("pushed_at"),
             "stars_added": int(item["stars_added"]),
             "watch_events": int(item["watch_events"]),
             "rank": rank,
@@ -559,7 +563,17 @@ def build_event_index(public_dir: Path, *, include: Optional[Mapping[str, Any]] 
         "latest_source_metrics": latest["source_metrics"] if latest else None,
     }
     if schema_version == SCHEMA_VERSION:
-        result.update({"ranking_limit": DEFAULT_TOP_LIMIT, "page_size": PAGE_SIZE})
+        next_refresh_at = None
+        if latest:
+            next_refresh_date = dt.date.fromisoformat(str(latest["date"])) + dt.timedelta(days=2)
+            next_refresh_at = isoformat(
+                dt.datetime.combine(next_refresh_date, dt.time(7, 30), ZoneInfo(TIMEZONE))
+            )
+        result.update({
+            "ranking_limit": DEFAULT_TOP_LIMIT,
+            "page_size": PAGE_SIZE,
+            "next_refresh_at": next_refresh_at,
+        })
     return result
 
 

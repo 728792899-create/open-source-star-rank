@@ -196,6 +196,7 @@ export function readRepositoryProfiles(): RepositoryProfile[] {
   const ensure = (entry: {
     repository_id: number; full_name: string; description?: string | null; language?: string | null;
     stars_total: number; html_url: string; owner_avatar_url?: string | null;
+    created_at?: string | null; pushed_at?: string | null;
   }, metadataKey: string) => {
     let current = working.get(entry.repository_id);
     if (!current) {
@@ -204,7 +205,8 @@ export function readRepositoryProfiles(): RepositoryProfile[] {
         profile: {
           repository_id: entry.repository_id, full_name: entry.full_name, description: entry.description ?? null,
           language: entry.language ?? null, stars_total: entry.stars_total, html_url: entry.html_url,
-          owner_avatar_url: entry.owner_avatar_url ?? null, knowledge_url: null,
+          owner_avatar_url: entry.owner_avatar_url ?? null,
+          created_at: entry.created_at ?? null, pushed_at: entry.pushed_at ?? null, knowledge_url: null,
           first_seen_date: null, last_seen_date: null, history_30d: [], event_history: [], all_time_rank: null,
         },
       };
@@ -214,6 +216,8 @@ export function readRepositoryProfiles(): RepositoryProfile[] {
       Object.assign(current.profile, {
         full_name: entry.full_name, description: entry.description ?? null, language: entry.language ?? null,
         stars_total: entry.stars_total, html_url: entry.html_url, owner_avatar_url: entry.owner_avatar_url ?? null,
+        created_at: entry.created_at ?? current.profile.created_at,
+        pushed_at: entry.pushed_at ?? current.profile.pushed_at,
       });
       current.metadataKey = metadataKey;
     }
