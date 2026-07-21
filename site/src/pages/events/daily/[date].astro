@@ -56,5 +56,6 @@ const alternateLabel = sameDateCandidateAvailable ? '查看同日候选池净增
     previousExplorationPath={previousExploration ? `/data/events/category/${previousDateValue}.json` : undefined}
     explorationEntries={exploration?.entries ?? []}
     pageBasePath={`/events/daily/${ranking.date}/`}
+    sectionTitleOverride="完整新增 Star 排行"
   />
 </BaseLayout>

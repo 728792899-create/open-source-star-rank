@@ -335,6 +335,39 @@ const eventIndex = {
   ranking_limit: 500,
   page_size: 100,
 };
+const liveDate = isoDate(shift(latestDate, 1));
+const liveStart = new Date(`${liveDate}T00:00:00+08:00`);
+const liveEnd = new Date(liveStart.getTime() + 12 * 3_600_000);
+const liveEntries = eventEntries(7).map((entry, offset) => ({
+  ...entry,
+  stars_added: entry.stars_added + 30,
+  watch_events: entry.watch_events + 30,
+  rank_change: offset % 9 === 0 ? 1 : 0,
+}));
+const liveRanking = {
+  schema_version: '1.0.0', date: liveDate, timezone: 'Asia/Shanghai',
+  window_start: liveStart.toISOString(), window_end: liveEnd.toISOString(),
+  generated_at: new Date(liveEnd.getTime() + 35 * 60_000).toISOString(),
+  next_refresh_at: new Date(liveEnd.getTime() + 95 * 60_000).toISOString(),
+  provisional: true, methodology_version: 'gharchive-hourly-public-watch-events-live-v1',
+  ranking_limit: 500, entry_count: 500, eligible_count: 500,
+  rank_change_basis: 'previous_live_refresh',
+  source_metrics: {
+    provider: 'gh_archive_hourly_files',
+    scope: 'github_public_events_as_archived_by_gh_archive',
+    counting_unit: 'unique_actor_repository_pair', expected_hour_count: 24,
+    observed_hour_count: 12, remaining_hour_count: 12, missing_completed_hours: [],
+    source_files: Array.from({ length: 12 }, (_, offset) => {
+      const hour = new Date(liveStart.getTime() + offset * 3_600_000);
+      return `https://data.gharchive.org/${hour.toISOString().slice(0, 10)}-${hour.getUTCHours()}.json.gz`;
+    }),
+    unique_star_addition_count: 2_100_000, observed_watch_event_count: 2_200_000,
+    observed_repository_count: 8_100, ranking_complete: true,
+    metadata_attempted_count: 500, metadata_success_count: 500, metadata_cached_count: 480,
+    metadata_not_found_count: 0, metadata_filtered_count: 0, api_request_count: 20, api_retry_count: 0,
+  },
+  entries: liveEntries,
+};
 
 const localizationSources = new Map();
 for (const language of languages) {
@@ -433,6 +466,7 @@ const classificationCatalog = {
 
 await writeFile(path.join(outputRoot, 'index.json'), `${JSON.stringify(index, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'events', 'index.json'), `${JSON.stringify(eventIndex, null, 2)}\n`);
+await writeFile(path.join(outputRoot, 'events', 'live.json'), `${JSON.stringify(liveRanking, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'alltime', 'top-1000.json'), `${JSON.stringify(alltimeBoard, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'alltime', 'index.json'), `${JSON.stringify(alltimeIndex, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'language', 'index.json'), `${JSON.stringify(languageIndex, null, 2)}\n`);

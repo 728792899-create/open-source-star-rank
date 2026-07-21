@@ -218,6 +218,46 @@ export interface EventDailyRanking {
   entry_count?: number;
 }
 
+export interface EventLiveSourceMetrics {
+  provider: 'gh_archive_hourly_files';
+  scope: 'github_public_events_as_archived_by_gh_archive';
+  counting_unit: 'unique_actor_repository_pair';
+  expected_hour_count: 24;
+  observed_hour_count: number;
+  remaining_hour_count: number;
+  missing_completed_hours: string[];
+  source_files: string[];
+  unique_star_addition_count: number;
+  observed_watch_event_count: number;
+  observed_repository_count: number;
+  ranking_complete: boolean;
+  metadata_attempted_count: number;
+  metadata_success_count: number;
+  metadata_cached_count: number;
+  metadata_not_found_count: number;
+  metadata_filtered_count: number;
+  api_request_count: number;
+  api_retry_count: number;
+}
+
+export interface EventLiveRanking {
+  schema_version: '1.0.0';
+  date: string;
+  timezone: 'Asia/Shanghai';
+  window_start: string;
+  window_end: string;
+  generated_at: string;
+  next_refresh_at: string;
+  provisional: true;
+  methodology_version: 'gharchive-hourly-public-watch-events-live-v1';
+  ranking_limit: 500;
+  entry_count: number;
+  eligible_count: number;
+  rank_change_basis: 'previous_live_refresh' | 'new_live_day';
+  source_metrics: EventLiveSourceMetrics;
+  entries: EventRankingEntry[];
+}
+
 export interface EventCategoryPoolEntry {
   repository_id: number;
   full_name: string;

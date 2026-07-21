@@ -23,6 +23,7 @@ SCHEMA_FILES = {
     "repositories": "repositories.schema.json",
     "event_index": "event-index.schema.json",
     "event_daily": "event-daily.schema.json",
+    "event_live": "event-live.schema.json",
     "event_category_pool": "event-category-pool.schema.json",
     "alltime": "alltime.schema.json",
     "alltime_index": "alltime-index.schema.json",

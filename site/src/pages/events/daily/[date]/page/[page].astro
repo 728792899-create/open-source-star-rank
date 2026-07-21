@@ -60,5 +60,6 @@ const alternateDate = candidateIndex.available_dates.includes(date) ? date : can
     explorationPath={exploration ? `/data/events/category/${date}.json` : undefined}
     previousExplorationPath={previousExploration ? `/data/events/category/${previousDateValue}.json` : undefined}
     explorationEntries={exploration?.entries ?? []} page={page} pageBasePath={basePath}
+    sectionTitleOverride="完整新增 Star 排行"
   />
 </BaseLayout>

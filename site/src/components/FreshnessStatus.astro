@@ -66,11 +66,11 @@ const formatted = updatedAt
       const message = element.querySelector('[data-freshness-message]');
       if (message) {
         if (warning && !stale) continue;
-        message.textContent = stale
+        message.textContent = element.dataset.customStaleMessage || (stale
           ? `数据已超过 ${threshold} 小时未更新；当前仍展示最后一次成功发布（${formatter.format(new Date(updatedAt))}）。`
           : compact
             ? `数据正常 · 最近采样 ${formatter.format(new Date(updatedAt))}（北京时间）`
-            : `最近采样：${formatter.format(new Date(updatedAt))}（北京时间），数据正常。`;
+            : `最近采样：${formatter.format(new Date(updatedAt))}（北京时间），数据正常。`);
       }
     }
   };

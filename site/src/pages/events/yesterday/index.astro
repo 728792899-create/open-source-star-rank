@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import EventInitialization from '../../../components/EventInitialization.astro';
+import RankingView from '../../../components/RankingView.astro';
+import {
+  readEventCategoryPool, readEventDailyRanking, readEventRankingIndex,
+} from '../../../lib/data';
+
+const index = readEventRankingIndex();
+const ranking = index.latest_date ? readEventDailyRanking(index.latest_date) : null;
+const exploration = ranking ? readEventCategoryPool(ranking.date) : null;
+---
+
+<BaseLayout
+  title="GitHub 昨日完整新增 Star 榜｜开源星榜"
+  description="经过 24/24 小时覆盖校验的 GitHub 公开 WatchEvent 昨日完整新增 Star 排行。"
+  nextPath={ranking && ranking.entries.length > 100 ? `/events/daily/${ranking.date}/page/2/` : undefined}
+>
+  {ranking ? <RankingView
+    ranking={ranking} index={index} isLatest mode="event"
+    availableDates={index.available_dates} routePrefix="/events/daily" dataPrefix="/data/events/daily"
+    alternateHref="/events/live/" alternateLabel="查看今日实时榜"
+    switcherLabelOverride="昨日完整新增榜"
+    explorationPath={exploration ? `/data/events/category/${ranking.date}.json` : undefined}
+    explorationEntries={exploration?.entries ?? []}
+    pageBasePath={`/events/daily/${ranking.date}/`}
+  /> : <EventInitialization index={index} />}
+</BaseLayout>

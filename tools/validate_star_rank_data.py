@@ -110,6 +110,7 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
         "repositories": 0,
         "event_index": 0,
         "event_daily": 0,
+        "event_live": 0,
         "event_category_pool": 0,
         "alltime": 0,
         "localization": 0,
@@ -423,6 +424,57 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
             ):
                 raise SchemaValidationError("事件榜索引 Top 500 分页声明不一致")
 
+    event_live_path = public_dir / "events" / "live.json"
+    if event_live_path.exists():
+        payload = read_json(event_live_path)
+        validate_payload("event_live", payload, schema_dir)
+        start = timestamp(payload["window_start"])
+        end = timestamp(payload["window_end"])
+        generated = timestamp(payload["generated_at"])
+        next_refresh = timestamp(payload["next_refresh_at"])
+        duration_hours = int((end - start).total_seconds() // 3600)
+        source = payload["source_metrics"]
+        if payload["date"] != start.astimezone(ZoneInfo("Asia/Shanghai")).date().isoformat():
+            raise SchemaValidationError("今日实时榜日期与北京时间窗口不一致")
+        local_start = start.astimezone(ZoneInfo("Asia/Shanghai"))
+        if local_start.time() != dt.time.min or end - start != dt.timedelta(hours=duration_hours):
+            raise SchemaValidationError("今日实时榜必须从北京时间零点按完整小时累计")
+        if generated < end or duration_hours != source["observed_hour_count"]:
+            raise SchemaValidationError("今日实时榜截止时间或小时覆盖不一致")
+        if next_refresh != generated + dt.timedelta(hours=1):
+            raise SchemaValidationError("今日实时榜下次刷新时间不一致")
+        if source["remaining_hour_count"] != 24 - duration_hours or source["missing_completed_hours"]:
+            raise SchemaValidationError("今日实时榜剩余小时或已完成小时缺口不一致")
+        expected_source_files = []
+        for offset in range(duration_hours):
+            hour = (start + dt.timedelta(hours=offset)).astimezone(dt.timezone.utc)
+            expected_source_files.append(f"https://data.gharchive.org/{hour:%Y-%m-%d}-{hour.hour}.json.gz")
+        if source["source_files"] != expected_source_files:
+            raise SchemaValidationError("今日实时榜源文件与完整小时窗口不一致")
+        if source["observed_watch_event_count"] < source["unique_star_addition_count"]:
+            raise SchemaValidationError("今日实时榜 WatchEvent 总数小于唯一新增数")
+        if source["metadata_attempted_count"] != (
+            source["metadata_success_count"]
+            + source["metadata_not_found_count"]
+            + source["metadata_filtered_count"]
+        ):
+            raise SchemaValidationError("今日实时榜元数据计数不守恒")
+        entries = payload["entries"]
+        if payload["entry_count"] != len(entries) or payload["eligible_count"] != len(entries):
+            raise SchemaValidationError("今日实时榜条目计数不一致")
+        if len({item["repository_id"] for item in entries}) != len(entries):
+            raise SchemaValidationError("今日实时榜包含重复仓库 ID")
+        if any(item["watch_events"] < item["stars_added"] for item in entries):
+            raise SchemaValidationError("今日实时榜 WatchEvent 数不得小于唯一用户数")
+        expected = sorted(entries, key=lambda item: event_entry_sort_key(item, "1.2.0"))
+        if entries != expected or [item["rank"] for item in entries] != list(range(1, len(entries) + 1)):
+            raise SchemaValidationError("今日实时榜排序或名次不一致")
+        if source["unique_star_addition_count"] < sum(item["stars_added"] for item in entries):
+            raise SchemaValidationError("今日实时榜全站唯一新增数小于公开榜单之和")
+        if source["ranking_complete"] != (len(entries) == 500):
+            raise SchemaValidationError("今日实时榜 Top 500 完整性声明不一致")
+        counts["event_live"] = 1
+
     pool_dir = public_dir / "events" / "category"
     if pool_dir.exists():
         for path in sorted(pool_dir.glob("????-??-??.json")):
@@ -555,6 +607,7 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
         "repositories.schema.json",
         "event-index.schema.json",
         "event-daily.schema.json",
+        "event-live.schema.json",
     ]
     if pool_dir.exists():
         required_schema_files.append("event-category-pool.schema.json")
