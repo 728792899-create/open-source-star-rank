@@ -43,7 +43,7 @@ def event_entry_sort_key(item: dict[str, Any], schema_version: str) -> tuple[Any
     its deeper exploration pool preserve the pre-enrichment global order.
     """
 
-    if schema_version in {"1.1.0", "1.2.0"}:
+    if schema_version in {"1.1.0", "1.2.0", "1.3.0"}:
         return (-item["stars_added"], -item["watch_events"], item["repository_id"])
     return (
         -item["stars_added"],
@@ -51,6 +51,21 @@ def event_entry_sort_key(item: dict[str, Any], schema_version: str) -> tuple[Any
         -item["stars_total"],
         item["full_name"].casefold(),
     )
+
+
+def validate_lifecycle_metadata(entries: list[dict[str, Any]], path: Path) -> None:
+    """Require auditable repository lifecycle fields in current contracts."""
+
+    for item in entries:
+        for key in ("created_at", "pushed_at"):
+            if key not in item:
+                raise SchemaValidationError(f"当前版本条目缺少 {key}：{path}")
+            value = item[key]
+            if value is not None:
+                try:
+                    timestamp(value)
+                except (TypeError, ValueError) as exc:
+                    raise SchemaValidationError(f"条目 {key} 不是有效时间：{path}") from exc
 
 
 def ranking_uses_current_repository_catalog(
@@ -83,7 +98,7 @@ def validate_ranking_time(payload: dict[str, Any], path: Path) -> None:
     # Version 1.1 used a legacy date label that predates the strict Beijing
     # sampling-window contract. Keep those public files readable without
     # reinterpreting or rewriting their historical labels.
-    if payload.get("schema_version") in {"1.2.0", "1.3.0"}:
+    if payload.get("schema_version") in {"1.2.0", "1.3.0", "1.4.0"}:
         if "period_days" in payload:
             expected_date = (end.astimezone(ZoneInfo("Asia/Shanghai")).date() - dt.timedelta(days=1)).isoformat()
         else:
@@ -168,9 +183,11 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
                 raise SchemaValidationError(f"日榜日期与文件名不一致：{path}")
             actual_dates.add(path.stem)
             daily_payloads.append((path, payload))
-            if payload.get("schema_version") == "1.3.0":
+            if payload.get("schema_version") in {"1.3.0", "1.4.0"}:
                 if payload["ranking_limit"] != 500 or payload["entry_count"] != len(payload["entries"]):
                     raise SchemaValidationError(f"日榜 Top 500 声明与条目数不一致：{path}")
+                if payload.get("schema_version") == "1.4.0":
+                    validate_lifecycle_metadata(payload["entries"], path)
             elif len(payload["entries"]) > 100:
                 raise SchemaValidationError(f"历史日榜不得超过原版本上限 100：{path}")
             counts["daily"] += 1
@@ -187,8 +204,8 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
     if latest_snapshot is not None and index["latest_collection"] != latest_snapshot["collection"]:
         raise SchemaValidationError("index.latest_collection 与最近快照不一致")
 
-    if index.get("schema_version") in {"1.2.0", "1.3.0"}:
-        if index.get("schema_version") == "1.3.0" and (
+    if index.get("schema_version") in {"1.2.0", "1.3.0", "1.4.0"}:
+        if index.get("schema_version") in {"1.3.0", "1.4.0"} and (
             index.get("ranking_limit") != 500 or index.get("page_size") != 100
         ):
             raise SchemaValidationError("公开索引 Top 500 分页声明不一致")
@@ -225,6 +242,8 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
             history_dates = [item["date"] for item in repository["history_30d"]]
             if history_dates != sorted(set(history_dates)):
                 raise SchemaValidationError(f"项目历史日期必须唯一且升序：{repository['repository_id']}")
+        if repositories.get("schema_version") == "1.3.0":
+            validate_lifecycle_metadata(repositories["repositories"], repositories_path)
         counts["repositories"] = 1
         language_index = read_json(language_index_path)
         validate_payload("language_index", language_index, schema_dir)
@@ -240,9 +259,11 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
             payload = read_json(path)
             validate_payload("language", payload, schema_dir)
             validate_ranking_time(payload, path)
-            if payload.get("schema_version") == "1.3.0":
+            if payload.get("schema_version") in {"1.3.0", "1.4.0"}:
                 if payload["ranking_limit"] != 500 or payload["entry_count"] != len(payload["entries"]):
                     raise SchemaValidationError(f"语言榜 Top 500 声明与条目数不一致：{path}")
+                if payload.get("schema_version") == "1.4.0":
+                    validate_lifecycle_metadata(payload["entries"], path)
             elif len(payload["entries"]) > 50:
                 raise SchemaValidationError(f"历史语言榜不得超过原版本上限 50：{path}")
             if payload["slug"] != path.parents[1].name or payload["date"] != path.stem:
@@ -270,9 +291,11 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
                 payload = read_json(path)
                 validate_payload("period", payload, schema_dir)
                 validate_ranking_time(payload, path)
-                if payload.get("schema_version") == "1.3.0":
+                if payload.get("schema_version") in {"1.3.0", "1.4.0"}:
                     if payload["ranking_limit"] != 500 or payload["entry_count"] != len(payload["entries"]):
                         raise SchemaValidationError(f"周期榜 Top 500 声明与条目数不一致：{path}")
+                    if payload.get("schema_version") == "1.4.0":
+                        validate_lifecycle_metadata(payload["entries"], path)
                 elif len(payload["entries"]) > 100:
                     raise SchemaValidationError(f"历史周期榜不得超过原版本上限 100：{path}")
                 if payload["period_days"] != days or payload["date"] != path.stem:
@@ -309,6 +332,8 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
                     raise SchemaValidationError(f"探索池包含重复仓库 ID：{path}")
                 if [item["rank"] for item in entries] != list(range(1, len(entries) + 1)):
                     raise SchemaValidationError(f"探索池名次不连续：{path}")
+                if payload.get("schema_version") == "1.1.0":
+                    validate_lifecycle_metadata(entries, path)
                 ranking_path = ranking_root / path.name
                 if ranking_path.is_file():
                     ranking = read_json(ranking_path)
@@ -356,17 +381,17 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
                 raise SchemaValidationError(f"事件榜观察仓库数小于元数据尝试数：{path}")
             if source["metadata_attempted_count"] != source["metadata_success_count"] + source["metadata_not_found_count"] + source["metadata_filtered_count"]:
                 raise SchemaValidationError(f"事件榜元数据采集计数不守恒：{path}")
-            if payload["schema_version"] in {"1.1.0", "1.2.0"}:
+            if payload["schema_version"] in {"1.1.0", "1.2.0", "1.3.0"}:
                 if source["expected_hour_count"] != 24 or source["observed_hour_count"] != 24 or source["missing_hours"]:
                     raise SchemaValidationError(f"事件榜 GH Archive 小时覆盖不是 24/24：{path}")
                 if source["unique_star_addition_count"] > source["observed_watch_event_count"]:
                     raise SchemaValidationError(f"事件榜唯一新增数超过 WatchEvent 总数：{path}")
                 if source["unique_star_addition_count"] < sum(item["stars_added"] for item in payload["entries"]):
                     raise SchemaValidationError(f"事件榜全站唯一新增数小于公开榜单之和：{path}")
-                expected_limit = 500 if payload["schema_version"] == "1.2.0" else 100
+                expected_limit = 500 if payload["schema_version"] in {"1.2.0", "1.3.0"} else 100
                 if not source["ranking_complete"] or source["metadata_success_count"] != expected_limit:
                     raise SchemaValidationError(f"事件榜未证明完整 Top {expected_limit}：{path}")
-                if payload["schema_version"] == "1.2.0":
+                if payload["schema_version"] in {"1.2.0", "1.3.0"}:
                     if payload["ranking_limit"] != 500 or payload["entry_count"] != 500:
                         raise SchemaValidationError(f"事件榜 Top 500 声明不一致：{path}")
                     if source["api_request_count"] > 950:
@@ -391,7 +416,7 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
                     ):
                         raise SchemaValidationError(f"事件榜校准状态不一致：{path}")
             entries = payload["entries"]
-            expected_limit = 500 if payload["schema_version"] == "1.2.0" else 100
+            expected_limit = 500 if payload["schema_version"] in {"1.2.0", "1.3.0"} else 100
             if len(entries) != expected_limit:
                 raise SchemaValidationError(f"事件榜必须完整发布 Top {expected_limit}：{path}")
             if len({item["repository_id"] for item in entries}) != len(entries):
@@ -401,6 +426,8 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
             expected = sorted(entries, key=lambda item: event_entry_sort_key(item, payload["schema_version"]))
             if entries != expected or [item["rank"] for item in entries] != list(range(1, len(entries) + 1)):
                 raise SchemaValidationError(f"事件榜排序或名次不一致：{path}")
+            if payload["schema_version"] == "1.3.0":
+                validate_lifecycle_metadata(entries, path)
             event_dates.add(path.stem)
             event_payloads[path.stem] = payload
             counts["event_daily"] += 1
@@ -419,10 +446,18 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
                 raise SchemaValidationError("事件榜索引与最新日榜不一致")
             if event_index["schema_version"] != latest_event["schema_version"] or event_index["methodology_version"] != latest_event["methodology_version"]:
                 raise SchemaValidationError("事件榜索引版本与最新日榜不一致")
-            if latest_event["schema_version"] == "1.2.0" and (
+            if latest_event["schema_version"] in {"1.2.0", "1.3.0"} and (
                 event_index.get("ranking_limit") != 500 or event_index.get("page_size") != 100
             ):
                 raise SchemaValidationError("事件榜索引 Top 500 分页声明不一致")
+            if latest_event["schema_version"] == "1.3.0":
+                expected_next = dt.datetime.combine(
+                    dt.date.fromisoformat(latest_event_date) + dt.timedelta(days=2),
+                    dt.time(7, 30),
+                    ZoneInfo("Asia/Shanghai"),
+                )
+                if event_index.get("next_refresh_at") is None or timestamp(event_index["next_refresh_at"]) != expected_next:
+                    raise SchemaValidationError("事件榜索引下次计划更新时间不一致")
 
     event_live_path = public_dir / "events" / "live.json"
     if event_live_path.exists():
@@ -473,6 +508,8 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
             raise SchemaValidationError("今日实时榜全站唯一新增数小于公开榜单之和")
         if source["ranking_complete"] != (len(entries) == 500):
             raise SchemaValidationError("今日实时榜 Top 500 完整性声明不一致")
+        if payload.get("schema_version") == "1.1.0":
+            validate_lifecycle_metadata(entries, event_live_path)
         counts["event_live"] = 1
 
     pool_dir = public_dir / "events" / "category"
@@ -498,6 +535,8 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
             expected = sorted(entries, key=lambda item: event_entry_sort_key(item, payload["schema_version"]))
             if entries != expected or [item["rank"] for item in entries] != list(range(1, len(entries) + 1)):
                 raise SchemaValidationError(f"分类池排序或名次不一致：{path}")
+            if payload.get("schema_version") == "1.2.0":
+                validate_lifecycle_metadata(entries, path)
             counts["event_category_pool"] += 1
 
     alltime_index_path = public_dir / "alltime" / "index.json"
@@ -525,6 +564,17 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
             raise SchemaValidationError("全站历史榜索引 updated_at 与榜单不一致")
         if (alltime_index["status"] == "ready") != bool(entries):
             raise SchemaValidationError("全站历史榜索引 status 与榜单不一致")
+        if alltime_board.get("schema_version") == "1.1.0":
+            if (
+                alltime_board.get("ranking_limit") != 1000
+                or len(entries) != 1000
+                or alltime_index.get("ranking_limit") != 1000
+                or alltime_board["source_metrics"].get("ranking_complete") is not True
+            ):
+                raise SchemaValidationError("新版全站历史榜必须完整发布 Top 1000")
+            if alltime_index.get("schema_version") != "1.1.0" or alltime_index.get("methodology_version") != alltime_board.get("methodology_version"):
+                raise SchemaValidationError("全站历史榜索引版本与榜单不一致")
+            validate_lifecycle_metadata(entries, alltime_board_path)
         counts["alltime"] += 1
 
     localization_path = public_dir / "i18n" / "zh-CN" / "repositories.json"

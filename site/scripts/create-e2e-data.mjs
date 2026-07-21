@@ -11,6 +11,10 @@ const taxonomy = JSON.parse(await readFile(path.join(repositoryRoot, 'data', 'cl
 const latestDate = new Date('2026-07-14T12:00:00Z');
 const isoDate = (value) => value.toISOString().slice(0, 10);
 const shift = (value, days) => new Date(value.getTime() + days * 86_400_000);
+const lifecycle = (repositoryId) => ({
+  created_at: `${2012 + (repositoryId % 12)}-${String((repositoryId % 12) + 1).padStart(2, '0')}-01T00:00:00Z`,
+  pushed_at: '2026-07-14T09:30:00Z',
+});
 const utcCapture = (rankingDate, end = false) => `${isoDate(shift(rankingDate, end ? 0 : -1))}T16:20:00Z`;
 const languages = [
   { name: 'TypeScript', slug: 'typescript-ed0504f7' },
@@ -52,6 +56,7 @@ function rankingEntries(dayOffset, limit = 500, language = null, multiplier = 1)
       trend_7d: [gained - 6, gained - 5, null, gained - 3, gained - 2, gained - 1, gained],
       html_url: `https://github.com/fixture-labs/repo-${padded}`,
       owner_avatar_url: null,
+      ...lifecycle(repositoryId),
       knowledge_url: null,
     };
   });
@@ -59,7 +64,7 @@ function rankingEntries(dayOffset, limit = 500, language = null, multiplier = 1)
 
 function dailyRanking(date, dayOffset) {
   return {
-    schema_version: '1.3.0', ranking_limit: 500, entry_count: 500, date: isoDate(date), timezone: 'Asia/Shanghai',
+    schema_version: '1.4.0', ranking_limit: 500, entry_count: 500, date: isoDate(date), timezone: 'Asia/Shanghai',
     window_start: utcCapture(date), window_end: utcCapture(date, true),
     window_quality: { duration_minutes: 1_440, valid_for_ranking: true, reason: 'valid' },
     candidate_count: 2_000, eligible_count: 1_842, collection,
@@ -90,7 +95,7 @@ for (let offset = 39; offset >= 0; offset -= 1) {
   await writeFile(path.join(outputRoot, 'daily', `${ranking.date}.json`), `${JSON.stringify(ranking, null, 2)}\n`);
   const deepEntries = rankingEntries(39 - offset, 500).map((entry) => ({ ...entry, rank_change: null }));
   const pool = {
-    schema_version: '1.0.0', board_kind: 'candidate_daily', date: ranking.date, timezone: 'Asia/Shanghai',
+    schema_version: '1.1.0', board_kind: 'candidate_daily', date: ranking.date, timezone: 'Asia/Shanghai',
     window_start: ranking.window_start, window_end: ranking.window_end, pool_size: deepEntries.length, entries: deepEntries,
   };
   await writeFile(path.join(outputRoot, 'explore', 'daily', `${ranking.date}.json`), `${JSON.stringify(pool, null, 2)}\n`);
@@ -117,7 +122,7 @@ for (const days of [7, 30]) {
   await writeFile(path.join(outputRoot, 'period', `${days}d`, `${ranking.date}.json`), `${JSON.stringify(ranking, null, 2)}\n`);
   const deepEntries = rankingEntries(39, 500, null, days).map((entry) => ({ ...entry, rank_change: null }));
   const pool = {
-    schema_version: '1.0.0', board_kind: `candidate_period_${days}d`, date: ranking.date, timezone: 'Asia/Shanghai',
+    schema_version: '1.1.0', board_kind: `candidate_period_${days}d`, date: ranking.date, timezone: 'Asia/Shanghai',
     window_start: ranking.window_start, window_end: ranking.window_end, pool_size: deepEntries.length, entries: deepEntries,
   };
   await writeFile(path.join(outputRoot, 'explore', 'period', `${days}d`, `${ranking.date}.json`), `${JSON.stringify(pool, null, 2)}\n`);
@@ -179,6 +184,7 @@ const eventEntries = (dayOffset) => Array.from({ length: 500 }, (_, offset) => {
     }),
     html_url: `https://github.com/public-event-labs/project-${String(rank).padStart(3, '0')}`,
     owner_avatar_url: null,
+    ...lifecycle(repositoryId),
   };
 });
 for (const [reverseOffset, date] of [...eventDates].reverse().entries()) {
@@ -186,7 +192,7 @@ for (const [reverseOffset, date] of [...eventDates].reverse().entries()) {
   const localEnd = new Date(localStart.getTime() + 86_400_000);
   const generatedAt = new Date(localEnd.getTime() + 7.75 * 3_600_000).toISOString();
   const ranking = {
-    schema_version: '1.2.0',
+    schema_version: '1.3.0',
     ranking_limit: 500,
     entry_count: 500,
     date,
@@ -223,6 +229,7 @@ const poolEntriesForDay = (dayOffset) => Array.from({ length: 1_000 }, (_, offse
     }),
     html_url: `https://github.com/public-event-labs/project-${String(rank).padStart(3, '0')}`,
     owner_avatar_url: null,
+    ...lifecycle(repositoryId),
   };
 });
 for (const [reverseOffset, date] of [...eventDates].reverse().entries()) {
@@ -230,7 +237,7 @@ for (const [reverseOffset, date] of [...eventDates].reverse().entries()) {
   const poolLocalEnd = new Date(poolLocalStart.getTime() + 86_400_000);
   const entries = poolEntriesForDay(reverseOffset);
   const categoryPool = {
-    schema_version: '1.1.0', date, timezone: 'Asia/Shanghai', window_start: poolLocalStart.toISOString(),
+    schema_version: '1.2.0', date, timezone: 'Asia/Shanghai', window_start: poolLocalStart.toISOString(),
     window_end: poolLocalEnd.toISOString(), generated_at: new Date(poolLocalEnd.getTime() + 7.75 * 3_600_000).toISOString(),
     methodology_version: 'gharchive-public-watch-events-v3', pool_size: entries.length, entries,
   };
@@ -242,7 +249,7 @@ const poolGeneratedAt = new Date(poolLocalEnd.getTime() + 7.75 * 3_600_000).toIS
 const poolEntries = poolEntriesForDay(6);
 
 // All-time most-starred board.
-const alltimeEntries = Array.from({ length: 200 }, (_, offset) => {
+const alltimeEntries = Array.from({ length: 1_000 }, (_, offset) => {
   const rank = offset + 1;
   const repositoryId = 50_001 + offset;
   return {
@@ -254,23 +261,28 @@ const alltimeEntries = Array.from({ length: 200 }, (_, offset) => {
     rank,
     html_url: `https://github.com/hall-of-fame/project-${String(rank).padStart(3, '0')}`,
     owner_avatar_url: null,
+    ...lifecycle(repositoryId),
   };
 });
 const alltimeBoard = {
-  schema_version: '1.0.0',
+  schema_version: '1.1.0',
   generated_at: poolGeneratedAt,
-  methodology_version: 'github-search-most-starred-v1',
+  methodology_version: 'github-search-most-starred-v2',
   source_metrics: {
     provider: 'github_search', sort: 'stars', minimum_stars: 10_000,
-    search_result_count: alltimeEntries.length, api_request_count: 2, api_retry_count: 0,
+    search_result_count: 1_026, search_partition_count: 4, rejected_result_count: 26,
+    cutoff_stars: alltimeEntries.at(-1).stars_total, cutoff_bucket_count: 1,
+    api_request_count: 13, api_retry_count: 0, ranking_complete: true,
   },
+  ranking_limit: 1_000,
   entry_count: alltimeEntries.length,
   entries: alltimeEntries,
 };
 const alltimeIndex = {
-  schema_version: '1.0.0', status: 'ready', updated_at: poolGeneratedAt,
-  methodology_version: 'github-search-most-starred-v1', entry_count: alltimeEntries.length,
+  schema_version: '1.1.0', status: 'ready', updated_at: poolGeneratedAt,
+  methodology_version: 'github-search-most-starred-v2', ranking_limit: 1_000, entry_count: alltimeEntries.length,
   top_stars: alltimeEntries[0].stars_total, freshness_threshold_hours: 192,
+  next_refresh_at: '2026-07-20T10:00:00+08:00',
 };
 
 const historyDates = Array.from({ length: 30 }, (_, offset) => isoDate(shift(latestDate, offset - 29)));
@@ -288,6 +300,7 @@ const repositories = Array.from({ length: 2_000 }, (_, offset) => {
     stars_total: 200_000 - offset * 31,
     html_url: `https://github.com/${fullName}`,
     owner_avatar_url: null,
+    ...lifecycle(repositoryId),
     knowledge_url: null,
     first_seen_date: '2026-06-01',
     last_seen_date: '2026-07-15',
@@ -302,7 +315,7 @@ const repositories = Array.from({ length: 2_000 }, (_, offset) => {
 
 const updatedAt = '2026-07-14T16:20:00Z';
 const index = {
-  schema_version: '1.3.0', status: 'ready', timezone: 'Asia/Shanghai', updated_at: updatedAt,
+  schema_version: '1.4.0', status: 'ready', timezone: 'Asia/Shanghai', updated_at: updatedAt,
   latest_date: isoDate(latestDate), available_dates: dates, candidate_count: 2_000,
   methodology_version: 'candidate-pool-snapshot-v1', freshness_threshold_hours: 36,
   latest_collection: collection,
@@ -321,19 +334,20 @@ const index = {
   },
 };
 const languageIndex = {
-  schema_version: '1.2.0', updated_at: updatedAt, timezone: 'Asia/Shanghai',
+  schema_version: '1.4.0', updated_at: updatedAt, timezone: 'Asia/Shanghai', ranking_limit: 500, page_size: 100,
   languages: languages.map((language) => ({ ...language, language: language.name, candidate_count: 500, latest_date: isoDate(latestDate), available_dates: dates, status: 'ready' })).map(({ name, ...item }) => item),
 };
-const catalog = { schema_version: '1.2.0', updated_at: updatedAt, timezone: 'Asia/Shanghai', candidate_count: 2_000, repositories };
+const catalog = { schema_version: '1.3.0', updated_at: updatedAt, timezone: 'Asia/Shanghai', candidate_count: 2_000, repositories };
 const latestEventDate = eventDates[0];
 const latestEventGeneratedAt = new Date(new Date(`${latestEventDate}T00:00:00+08:00`).getTime() + 31.75 * 3_600_000).toISOString();
 const eventIndex = {
-  schema_version: '1.2.0', status: 'ready', timezone: 'Asia/Shanghai', updated_at: latestEventGeneratedAt,
+  schema_version: '1.3.0', status: 'ready', timezone: 'Asia/Shanghai', updated_at: latestEventGeneratedAt,
   latest_date: latestEventDate, available_dates: eventDates,
   methodology_version: 'gharchive-public-watch-events-v3', freshness_threshold_hours: 36,
   latest_source_metrics: eventSourceMetrics(latestEventDate),
   ranking_limit: 500,
   page_size: 100,
+  next_refresh_at: '2026-07-16T07:30:00+08:00',
 };
 const liveDate = isoDate(shift(latestDate, 1));
 const liveStart = new Date(`${liveDate}T00:00:00+08:00`);
@@ -345,7 +359,7 @@ const liveEntries = eventEntries(7).map((entry, offset) => ({
   rank_change: offset % 9 === 0 ? 1 : 0,
 }));
 const liveRanking = {
-  schema_version: '1.0.0', date: liveDate, timezone: 'Asia/Shanghai',
+  schema_version: '1.1.0', date: liveDate, timezone: 'Asia/Shanghai',
   window_start: liveStart.toISOString(), window_end: liveEnd.toISOString(),
   generated_at: new Date(liveEnd.getTime() + 35 * 60_000).toISOString(),
   next_refresh_at: new Date(liveEnd.getTime() + 95 * 60_000).toISOString(),

@@ -286,8 +286,11 @@ test('publishes status, period, language and stable repository history routes', 
 test('keeps favorites, comparison and recent projects in a local user workspace', async ({ page }) => {
   await page.goto('repo/10001/');
   await page.getByRole('button', { name: '收藏项目' }).click();
+  await expect(page.getByRole('dialog', { name: '收藏这个项目' })).toBeVisible();
+  await page.getByRole('button', { name: '仅保存在本机' }).click();
   await page.getByRole('button', { name: '加入对比' }).click();
-  await expect(page.getByRole('button', { name: '已收藏' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: '已收藏到本机' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('[data-repo-action-status]')).toContainText('登录后可手动同步到 GitHub');
   await page.goto('repo/10002/');
   await page.getByRole('button', { name: '加入对比' }).click();
   await expect(page.locator('[data-compare-tray]')).toBeVisible();
@@ -356,16 +359,35 @@ test('publishes the all-time top 1000 board with cumulative star ordering and fi
   await page.goto('all-time/');
   await expect(page.getByRole('heading', { name: '全部历史星标 Top 1000' })).toBeVisible();
   const rows = page.locator('[data-ranking-row]');
-  await expect(rows).toHaveCount(200);
+  await expect(rows).toHaveCount(1_000);
   const ranks = (await rows.locator('.rank-number').allTextContents()).map((rank) => Number(rank.trim()));
   expect(ranks).toEqual(ranks.map((_, index) => index + 1));
   await page.getByLabel('编程语言').selectOption('Python');
   await expect(page).toHaveURL(/language=Python/);
-  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(50);
+  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(250);
   await page.getByLabel('编程语言').selectOption('');
   const search = page.getByRole('searchbox', { name: '搜索项目' });
   await search.fill('project-001');
   await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(1);
+});
+
+test('shows repository lifecycle metadata and the next refresh countdown', async ({ page }) => {
+  await page.clock.setFixedTime(new Date('2026-07-14T12:00:00Z'));
+  await page.goto(latestEventPath);
+  await expect(page.locator('[data-update-countdown]')).toBeVisible();
+  await expect(page.locator('[data-countdown-value]')).toHaveText(/\d{2}:\d{2}:\d{2}|等待自动发布/);
+  const firstRow = page.locator('[data-ranking-row]').first();
+  await expect(firstRow).toContainText('作者 public-event-labs');
+  await expect(firstRow).toContainText('创建');
+  await expect(firstRow).toContainText('最近推送');
+  await expect(firstRow).toContainText('已发布');
+
+  await page.goto('repo/10001/');
+  await expect(page.locator('.repo-metrics')).toContainText('作者 / 所有者');
+  await expect(page.locator('.repo-metrics')).toContainText('fixture-labs');
+  await expect(page.locator('.repo-metrics')).toContainText('GitHub 创建');
+  await expect(page.locator('.repo-metrics')).toContainText('最近代码推送');
+  await expect(page.locator('.repo-metrics')).toContainText('已发布');
 });
 
 test('publishes canonical ranking pages and three feed formats', async ({ page, request }) => {

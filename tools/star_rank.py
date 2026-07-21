@@ -38,7 +38,8 @@ except ModuleNotFoundError:  # pragma: no cover - direct script execution fallba
 API_ROOT = "https://api.github.com"
 API_VERSION = "2026-03-10"
 SCHEMA_VERSION = "1.2.0"
-RANKING_SCHEMA_VERSION = "1.3.0"
+REPOSITORY_SCHEMA_VERSION = "1.3.0"
+RANKING_SCHEMA_VERSION = "1.4.0"
 TIMEZONE = "Asia/Shanghai"
 DEFAULT_MAX_CANDIDATES = 2_000
 TOP_LIMIT = 500
@@ -279,26 +280,41 @@ class GitHubClient:
                 raise StarRankError(f"GitHub API 网络或响应错误：{url}: {exc}") from exc
         raise AssertionError("unreachable")
 
+    def search_repository_page(
+        self,
+        query: str,
+        *,
+        sort: str,
+        page: int,
+        per_page: int = SEARCH_PAGE_SIZE,
+    ) -> Mapping[str, Any]:
+        params = urllib.parse.urlencode(
+            {
+                "q": query,
+                "sort": sort,
+                "order": "desc",
+                "per_page": per_page,
+                "page": page,
+            }
+        )
+        payload = self._request_json(f"/search/repositories?{params}")
+        if (
+            not isinstance(payload, dict)
+            or not isinstance(payload.get("items"), list)
+            or not isinstance(payload.get("total_count"), int)
+        ):
+            raise DataIntegrityError("GitHub 搜索响应结构不完整")
+        if payload.get("incomplete_results") is True:
+            raise DataIntegrityError("GitHub 搜索标记为 incomplete_results，拒绝生成不完整榜单")
+        for item in payload["items"]:
+            require_repository_shape(item)
+        return payload
+
     def search_repositories(self, query: str, *, sort: str, pages: int) -> List[Mapping[str, Any]]:
         results: List[Mapping[str, Any]] = []
         for page in range(1, pages + 1):
-            params = urllib.parse.urlencode(
-                {
-                    "q": query,
-                    "sort": sort,
-                    "order": "desc",
-                    "per_page": SEARCH_PAGE_SIZE,
-                    "page": page,
-                }
-            )
-            payload = self._request_json(f"/search/repositories?{params}")
-            if not isinstance(payload, dict) or not isinstance(payload.get("items"), list):
-                raise DataIntegrityError("GitHub 搜索响应结构不完整")
-            if payload.get("incomplete_results") is True:
-                raise DataIntegrityError("GitHub 搜索标记为 incomplete_results，拒绝生成不完整榜单")
+            payload = self.search_repository_page(query, sort=sort, page=page)
             items = payload["items"]
-            for item in items:
-                require_repository_shape(item)
             results.extend(items)
             if len(items) < SEARCH_PAGE_SIZE:
                 break
@@ -611,6 +627,8 @@ def rankable_entries(
                 "description": candidate.get("description"),
                 "language": candidate.get("language"),
                 "stars_total": int(current_item["stars_total"]),
+                "created_at": candidate.get("created_at"),
+                "pushed_at": candidate.get("pushed_at"),
                 "stars_gained": gained,
                 "html_url": candidate["html_url"],
                 "owner_avatar_url": candidate.get("owner_avatar_url"),
@@ -667,7 +685,7 @@ def build_exploration_pool(
 
     entries = ranked_entries(rankable, previous_ranking=None, limit=len(rankable))
     return {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0",
         "board_kind": board_kind,
         "date": ranking["date"],
         "timezone": ranking["timezone"],
@@ -979,6 +997,8 @@ def build_repository_catalog(
                 "stars_total": int(candidate["stars_total"]),
                 "html_url": candidate["html_url"],
                 "owner_avatar_url": candidate.get("owner_avatar_url"),
+                "created_at": candidate.get("created_at"),
+                "pushed_at": candidate.get("pushed_at"),
                 "knowledge_url": knowledge_repositories.get(str(candidate["full_name"]).lower()),
                 "first_seen_date": candidate.get("first_seen_date"),
                 "last_seen_date": candidate.get("last_seen_date"),
@@ -986,7 +1006,7 @@ def build_repository_catalog(
             }
         )
     return {
-        "schema_version": SCHEMA_VERSION,
+        "schema_version": REPOSITORY_SCHEMA_VERSION,
         "updated_at": updated_at,
         "timezone": TIMEZONE,
         "candidate_count": len(repositories),

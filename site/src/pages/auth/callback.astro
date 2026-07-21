@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="正在完成 GitHub 登录｜开源星榜" description="完成开源星榜 GitHub 登录授权。" robots="noindex,nofollow">
+  <main id="main-content" class="shell auth-callback" data-auth-callback>
+    <p class="eyebrow">GitHub authorization</p>
+    <h1>正在完成登录…</h1>
+    <p data-auth-callback-status aria-live="polite">正在验证一次性回传信息，GitHub Token 不会写入浏览器。</p>
+    <a href="../..">返回开源星榜</a>
+  </main>
+</BaseLayout>
+
+<script>
+  const status = document.querySelector('[data-auth-callback-status]');
+  const run = async () => {
+    const handoff = new URLSearchParams(window.location.search).get('handoff');
+    if (!handoff) throw new Error('缺少一次性登录回传，请重新发起登录。');
+    const auth = (window as any).starRankAuth;
+    if (!auth) throw new Error('登录模块加载失败，请刷新后重试。');
+    const returnTo = await auth.exchangeHandoff(handoff);
+    if (status) status.textContent = '登录成功，正在返回原页面…';
+    window.location.replace(returnTo);
+  };
+  const start = () => run().catch((error) => {
+    if (status) status.textContent = error instanceof Error ? error.message : '登录失败，请重新发起登录。';
+  });
+  if ((window as any).starRankAuth) start();
+  else window.addEventListener('starrankauthready', start, { once: true });
+</script>

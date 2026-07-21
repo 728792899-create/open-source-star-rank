@@ -22,6 +22,6 @@ export default defineConfig({
     command: `node scripts/create-e2e-data.mjs && STAR_RANK_DATA_DIR=$PWD/.e2e-data SITE_URL=http://127.0.0.1:4322 BASE_PATH=${basePath} npm run build && PORT=4322 BASE_PATH=${basePath} node scripts/serve-static.mjs`,
     url: `http://127.0.0.1:4322${basePath}/`,
     reuseExistingServer: !process.env.CI,
-    timeout: 180_000,
+    timeout: 300_000,
   },
 });

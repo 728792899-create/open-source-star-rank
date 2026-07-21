@@ -67,17 +67,17 @@ for (const marker of [
 }
 
 const dataIndex = JSON.parse(await readFile(path.join(dist, 'data/index.json'), 'utf8'));
-if (!['1.1.0', '1.2.0', '1.3.0'].includes(dataIndex.schema_version) || dataIndex.freshness_threshold_hours !== 36) {
+if (!['1.1.0', '1.2.0', '1.3.0', '1.4.0'].includes(dataIndex.schema_version) || dataIndex.freshness_threshold_hours !== 36) {
   throw new Error('Published index does not satisfy a supported public contract');
 }
 const eventIndex = JSON.parse(await readFile(path.join(dist, 'data/events/index.json'), 'utf8'));
-if (!['1.0.0', '1.1.0', '1.2.0'].includes(eventIndex.schema_version) || eventIndex.freshness_threshold_hours !== 36) {
+if (!['1.0.0', '1.1.0', '1.2.0', '1.3.0'].includes(eventIndex.schema_version) || eventIndex.freshness_threshold_hours !== 36) {
   throw new Error('Published event index does not satisfy a supported public contract');
 }
 const eventLivePath = path.join(dist, 'data/events/live.json');
 const eventLive = existsSync(eventLivePath) ? JSON.parse(await readFile(eventLivePath, 'utf8')) : null;
 if (eventLive) {
-  if (eventLive.schema_version !== '1.0.0' || eventLive.provisional !== true
+  if (!['1.0.0', '1.1.0'].includes(eventLive.schema_version) || eventLive.provisional !== true
     || eventLive.methodology_version !== 'gharchive-hourly-public-watch-events-live-v1') {
     throw new Error('Published live event ranking does not satisfy the 1.0.0 contract');
   }
@@ -109,22 +109,22 @@ if (eventIndex.schema_version === '1.1.0' && eventIndex.status === 'ready') {
   }
   if (metrics?.ranking_complete !== true) throw new Error('Event index 1.1.0 is not a complete Top 100');
 }
-if (eventIndex.schema_version === '1.2.0' && eventIndex.status === 'ready') {
+if (['1.2.0', '1.3.0'].includes(eventIndex.schema_version) && eventIndex.status === 'ready') {
   if (eventIndex.methodology_version !== 'gharchive-public-watch-events-v3') {
-    throw new Error('Event index 1.2.0 is missing the v3 methodology');
+    throw new Error('Event index is missing the v3 methodology');
   }
   if (eventIndex.ranking_limit !== 500 || eventIndex.page_size !== 100) {
-    throw new Error('Event index 1.2.0 does not declare Top 500 pagination');
+    throw new Error('Event index does not declare Top 500 pagination');
   }
   const metrics = eventIndex.latest_source_metrics;
   if (metrics?.expected_hour_count !== 24 || metrics?.observed_hour_count !== 24 || metrics?.missing_hours?.length !== 0) {
-    throw new Error('Event index 1.2.0 does not prove complete WatchEvent hourly coverage');
+    throw new Error('Event index does not prove complete WatchEvent hourly coverage');
   }
   if (metrics?.ranking_complete !== true || metrics?.metadata_success_count !== 500) {
-    throw new Error('Event index 1.2.0 is not a complete Top 500');
+    throw new Error('Event index is not a complete Top 500');
   }
   if (!['calibrating', 'passed'].includes(metrics?.quality_status)) {
-    throw new Error('Event index 1.2.0 has no valid historical quality status');
+    throw new Error('Event index has no valid historical quality status');
   }
 }
 const localization = JSON.parse(await readFile(path.join(dist, 'data/i18n/zh-CN/repositories.json'), 'utf8'));
@@ -155,7 +155,7 @@ const atom = await readFile(path.join(dist, 'atom.xml'), 'utf8');
 if (!atom.includes('xmlns="http://www.w3.org/2005/Atom"') || !atom.includes('开源星榜')) throw new Error('Atom feed is invalid');
 const jsonFeed = JSON.parse(await readFile(path.join(dist, 'feed.json'), 'utf8'));
 if (jsonFeed.version !== 'https://jsonfeed.org/version/1.1' || !Array.isArray(jsonFeed.items)) throw new Error('JSON Feed is invalid');
-if (['1.2.0', '1.3.0'].includes(dataIndex.schema_version)) {
+if (['1.2.0', '1.3.0', '1.4.0'].includes(dataIndex.schema_version)) {
   for (const relative of ['data/repositories.json', 'data/language/index.json']) {
     if (!existsSync(path.join(dist, relative))) throw new Error(`1.2 build is missing ${relative}`);
   }
@@ -166,8 +166,9 @@ if (['1.2.0', '1.3.0'].includes(dataIndex.schema_version)) {
     if (!existsSync(path.join(dist, 'repo', String(repository.repository_id), 'index.html'))) throw new Error(`Repository page is missing: ${repository.repository_id}`);
   }
 }
-if (dataIndex.schema_version === '1.3.0' && (dataIndex.ranking_limit !== 500 || dataIndex.page_size !== 100)) {
-  throw new Error('Published index 1.3.0 does not declare Top 500 pagination');
+if (['1.3.0', '1.4.0'].includes(dataIndex.schema_version)
+  && (dataIndex.ranking_limit !== 500 || dataIndex.page_size !== 100)) {
+  throw new Error('Published index does not declare Top 500 pagination');
 }
 if (dataIndex.status === 'ready') {
   const date = dataIndex.latest_date;
@@ -182,7 +183,7 @@ if (dataIndex.status === 'ready') {
     if (!dailyHtml.includes(marker)) throw new Error(`Daily ranking is missing ${marker}`);
   }
   const dailyRanking = JSON.parse(await readFile(dailyJson, 'utf8'));
-  if (dailyRanking.schema_version === '1.3.0') {
+  if (['1.3.0', '1.4.0'].includes(dailyRanking.schema_version)) {
     if (dailyRanking.ranking_limit !== 500 || dailyRanking.entry_count !== dailyRanking.entries.length) {
       throw new Error('Latest daily ranking does not satisfy the Top 500 contract');
     }
@@ -205,6 +206,14 @@ if (dataIndex.status === 'ready') {
     throw new Error('Historical sitemap entry is missing the ranking window lastmod');
   }
 }
+if (dataIndex.status === 'initializing' && dataIndex.sampling?.next_scheduled_at) {
+  for (const relative of ['daily/index.html', 'period/7d/index.html', 'period/30d/index.html']) {
+    const html = await readFile(path.join(dist, relative), 'utf8');
+    if (!html.includes('data-update-countdown') || !html.includes(dataIndex.sampling.next_scheduled_at)) {
+      throw new Error(`Initializing ranking page is missing its next-update countdown: ${relative}`);
+    }
+  }
+}
 
 if (eventIndex.status === 'ready') {
   const date = eventIndex.latest_date;
@@ -216,7 +225,7 @@ if (eventIndex.status === 'ready') {
     if (!existsSync(path.join(dist, relative))) throw new Error(`Ready event build is missing ${relative}`);
   }
   const eventRanking = JSON.parse(await readFile(path.join(dist, 'data', 'events', 'daily', `${date}.json`), 'utf8'));
-  if (eventRanking.schema_version === '1.2.0') {
+  if (['1.2.0', '1.3.0'].includes(eventRanking.schema_version)) {
     if (eventRanking.ranking_limit !== 500 || eventRanking.entry_count !== 500 || eventRanking.entries.length !== 500) {
       throw new Error('Latest event ranking is not a complete Top 500');
     }
@@ -293,8 +302,14 @@ const allTimeIndexPath = path.join(dist, 'data', 'alltime', 'index.json');
 if (existsSync(allTimeIndexPath)) {
   const allTimeIndex = JSON.parse(await readFile(allTimeIndexPath, 'utf8'));
   const allTimeBoard = JSON.parse(await readFile(path.join(dist, 'data', 'alltime', 'top-1000.json'), 'utf8'));
-  if (allTimeIndex.schema_version !== '1.0.0' || allTimeBoard.entry_count !== allTimeBoard.entries.length) {
-    throw new Error('Published all-time board does not satisfy the 1.0.0 public contract');
+  if (!['1.0.0', '1.1.0'].includes(allTimeIndex.schema_version)
+    || !['1.0.0', '1.1.0'].includes(allTimeBoard.schema_version)
+    || allTimeBoard.entry_count !== allTimeBoard.entries.length) {
+    throw new Error('Published all-time board does not satisfy a supported public contract');
+  }
+  if (allTimeBoard.schema_version === '1.1.0'
+    && (allTimeBoard.ranking_limit !== 1000 || allTimeBoard.entry_count !== 1000 || allTimeBoard.entries.length !== 1000)) {
+    throw new Error('Published all-time board 1.1.0 is not a complete Top 1000');
   }
   const allTimeHtml = await readFile(path.join(dist, 'all-time', 'index.html'), 'utf8');
   const expectedAllTimeIds = allTimeBoard.entries.map((entry) => String(entry.repository_id));

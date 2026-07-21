@@ -4,14 +4,26 @@
   "title": "Open Source Star Rank all-time most-starred public repository board",
   "type": "object",
   "additionalProperties": false,
-  "required": [
-    "schema_version", "generated_at", "methodology_version", "source_metrics", "entry_count", "entries"
+  "required": ["schema_version", "generated_at", "methodology_version", "source_metrics", "entry_count", "entries"],
+  "allOf": [
+    {
+      "if": { "properties": { "schema_version": { "const": "1.1.0" } }, "required": ["schema_version"] },
+      "then": {
+        "required": ["ranking_limit"],
+        "properties": {
+          "methodology_version": { "const": "github-search-most-starred-v2" },
+          "entry_count": { "const": 1000 },
+          "entries": { "minItems": 1000, "maxItems": 1000 }
+        }
+      }
+    }
   ],
   "properties": {
-    "schema_version": { "const": "1.0.0" },
+    "schema_version": { "enum": ["1.0.0", "1.1.0"] },
     "generated_at": { "type": "string", "format": "date-time" },
-    "methodology_version": { "const": "github-search-most-starred-v1" },
+    "methodology_version": { "enum": ["github-search-most-starred-v1", "github-search-most-starred-v2"] },
     "source_metrics": { "$ref": "#/$defs/source_metrics" },
+    "ranking_limit": { "const": 1000 },
     "entry_count": { "type": "integer", "minimum": 1, "maximum": 1000 },
     "entries": {
       "type": "array",
@@ -32,6 +44,11 @@
         "sort": { "const": "stars" },
         "minimum_stars": { "type": "integer", "minimum": 0 },
         "search_result_count": { "type": "integer", "minimum": 0 },
+        "search_partition_count": { "type": "integer", "minimum": 1 },
+        "rejected_result_count": { "type": "integer", "minimum": 0 },
+        "cutoff_stars": { "type": "integer", "minimum": 0 },
+        "cutoff_bucket_count": { "type": "integer", "minimum": 0, "maximum": 1000 },
+        "ranking_complete": { "const": true },
         "api_request_count": { "type": "integer", "minimum": 0 },
         "api_retry_count": { "type": "integer", "minimum": 0 }
       }
@@ -48,6 +65,8 @@
         "description": { "type": ["string", "null"] },
         "language": { "type": ["string", "null"] },
         "stars_total": { "type": "integer", "minimum": 0 },
+        "created_at": { "type": ["string", "null"], "format": "date-time" },
+        "pushed_at": { "type": ["string", "null"], "format": "date-time" },
         "rank": { "type": "integer", "minimum": 1, "maximum": 1000 },
         "html_url": { "type": "string", "format": "uri", "pattern": "^https://github\\.com/" },
         "owner_avatar_url": { "type": ["string", "null"], "format": "uri" }

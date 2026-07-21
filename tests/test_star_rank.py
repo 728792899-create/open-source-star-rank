@@ -212,7 +212,7 @@ class StarRankTests(unittest.TestCase):
             index = json.loads((root / "rank-data/public/index.json").read_text(encoding="utf-8"))
             self.assertEqual(index["status"], "initializing")
             self.assertEqual(index["available_dates"], [])
-            self.assertEqual(index["schema_version"], "1.3.0")
+            self.assertEqual(index["schema_version"], "1.4.0")
             self.assertEqual(index["ranking_limit"], 500)
             self.assertEqual(index["page_size"], 100)
             self.assertEqual(index["freshness_threshold_hours"], 36)
@@ -220,7 +220,7 @@ class StarRankTests(unittest.TestCase):
             language_index = json.loads(
                 (root / "rank-data/public/language/index.json").read_text(encoding="utf-8")
             )
-            self.assertEqual(language_index["schema_version"], "1.3.0")
+            self.assertEqual(language_index["schema_version"], "1.4.0")
             self.assertEqual(language_index["ranking_limit"], 500)
             self.assertEqual(language_index["page_size"], 100)
 

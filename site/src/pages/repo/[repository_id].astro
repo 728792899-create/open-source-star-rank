@@ -5,6 +5,7 @@ import { classificationLabels, classificationMap } from '../../lib/classificatio
 import { readClassificationIndex, readClassificationRepositories, readLocalizationCatalog, readRepositoryProfiles } from '../../lib/data';
 import { localizedRepositoryContent } from '../../lib/localization';
 import { withBase } from '../../lib/paths';
+import { repositoryAgeLabel, repositoryDate, repositoryOwner } from '../../lib/repository-lifecycle';
 
 export const getStaticPaths = (() => {
   const repositoryProfiles = readRepositoryProfiles();
@@ -88,6 +89,8 @@ const structuredData = {
   programmingLanguage: repository.language,
   applicationCategory: categoryLabel,
   keywords: [projectTypeLabel, ...(useCaseLabels ?? [])].filter(Boolean),
+  dateCreated: repository.created_at ?? undefined,
+  dateModified: repository.pushed_at ?? undefined,
 };
 ---
 
@@ -113,11 +116,16 @@ const structuredData = {
         <button type="button" data-library-action="favorite">收藏项目</button>
         <button type="button" data-library-action="compare">加入对比</button>
         <a href={repository.html_url} target="_blank" rel="noreferrer">打开 GitHub ↗</a>
+        <span class="repo-action-status" data-repo-action-status aria-live="polite"></span>
       </div>
     </div>
     <dl class="repo-metrics">
       <div><dt>当前 Star</dt><dd>{formatNumber(repository.stars_total)}</dd></div>
+      <div><dt>作者 / 所有者</dt><dd>{repositoryOwner(repository.full_name)}</dd></div>
       <div><dt>主要语言</dt><dd>{repository.language || 'Other'}</dd></div>
+      <div><dt>GitHub 创建</dt><dd>{repositoryDate(repository.created_at) || '待补充'}</dd></div>
+      <div><dt>最近代码推送</dt><dd>{repositoryDate(repository.pushed_at) || '待补充'}</dd></div>
+      <div><dt>已发布</dt><dd>{repositoryAgeLabel(repository.created_at)}</dd></div>
       <div><dt>首次发现</dt><dd>{repository.first_seen_date || '未知'}</dd></div>
       <div><dt>最近追踪</dt><dd>{repository.last_seen_date || '未知'}</dd></div>
       {repository.all_time_rank && <div><dt>历史星标榜</dt><dd>#{repository.all_time_rank}</dd></div>}
@@ -225,14 +233,26 @@ const structuredData = {
       signal: profile.dataset.repositorySignal ?? '',
     };
     const contains = (items: Array<{ id: number }>) => items.some((item) => item.id === project.id);
+    const status = profile.querySelector('[data-repo-action-status]');
+    const setStatus = (message: string) => { if (status) status.textContent = message; };
+    let githubStarred: boolean | null = null;
+    let githubLoading = false;
+    const authApi = () => (window as any).starRankAuth;
     const updateButtons = () => {
       const library = libraryApi.read();
       const favorite = profile.querySelector('[data-library-action="favorite"]');
       const compare = profile.querySelector('[data-library-action="compare"]');
       if (favorite instanceof HTMLButtonElement) {
-        const active = contains(library.favorites);
-        favorite.textContent = active ? '已收藏' : '收藏项目';
+        const auth = authApi();
+        const githubMode = Boolean(auth?.state?.authenticated);
+        const active = githubMode && githubStarred !== null ? githubStarred : contains(library.favorites);
+        favorite.textContent = githubLoading
+          ? '正在同步…'
+          : githubMode
+            ? active ? 'GitHub 已加星' : '加星到 GitHub'
+            : active ? '已收藏到本机' : '收藏项目';
         favorite.setAttribute('aria-pressed', String(active));
+        favorite.disabled = githubLoading;
       }
       if (compare instanceof HTMLButtonElement) {
         const active = contains(library.compare);
@@ -240,14 +260,73 @@ const structuredData = {
         compare.setAttribute('aria-pressed', String(active));
       }
     };
+    const mirrorLocalFavorite = (active: boolean) => {
+      const current = libraryApi.read();
+      current.favorites = active
+        ? [project, ...current.favorites.filter((item: { id: number }) => item.id !== project.id)]
+        : current.favorites.filter((item: { id: number }) => item.id !== project.id);
+      libraryApi.write(current);
+    };
+    const loadGithubStar = async () => {
+      if (githubLoading) return;
+      const auth = authApi();
+      await auth?.initialize;
+      if (!auth?.state?.authenticated) {
+        githubStarred = null;
+        updateButtons();
+        return;
+      }
+      githubLoading = true;
+      updateButtons();
+      try {
+        githubStarred = await auth.starStatus(project.fullName);
+        setStatus(githubStarred ? '已与 GitHub Star 状态同步。' : '当前尚未在 GitHub 加星。');
+      } catch (error) {
+        githubStarred = null;
+        setStatus(error instanceof Error ? error.message : '无法读取 GitHub Star 状态。');
+      } finally {
+        githubLoading = false;
+        updateButtons();
+      }
+    };
     const library = libraryApi.read();
     library.recent = [project, ...library.recent.filter((item: { id: number }) => item.id !== project.id)].slice(0, 6);
     libraryApi.write(library);
-    profile.addEventListener('click', (event) => {
+    profile.addEventListener('click', async (event) => {
       const button = event.target instanceof Element ? event.target.closest('[data-library-action]') : null;
       if (!(button instanceof HTMLButtonElement)) return;
+      if (button.dataset.libraryAction === 'favorite') {
+        const auth = authApi();
+        await auth?.initialize;
+        if (!auth?.state?.authenticated) {
+          const choice = auth ? await auth.chooseFavoriteMode() : 'local';
+          if (choice === 'cancel') return;
+          if (choice === 'github') {
+            try { auth.login(); }
+            catch (error) { setStatus(error instanceof Error ? error.message : 'GitHub 登录暂不可用。'); }
+            return;
+          }
+          mirrorLocalFavorite(!contains(libraryApi.read().favorites));
+          setStatus('已保存到当前浏览器；登录后可手动同步到 GitHub。');
+          updateButtons();
+          return;
+        }
+        githubLoading = true;
+        updateButtons();
+        try {
+          githubStarred = await auth.setStar(project.fullName, !githubStarred);
+          mirrorLocalFavorite(Boolean(githubStarred));
+          setStatus(githubStarred ? '已同步为你的 GitHub Star。' : '已从你的 GitHub Star 中移除。');
+        } catch (error) {
+          setStatus(error instanceof Error ? error.message : 'GitHub Star 同步失败。');
+        } finally {
+          githubLoading = false;
+          updateButtons();
+        }
+        return;
+      }
       const current = libraryApi.read();
-      const key = button.dataset.libraryAction === 'favorite' ? 'favorites' : 'compare';
+      const key = 'compare';
       const selected = current[key];
       if (contains(selected)) current[key] = selected.filter((item: { id: number }) => item.id !== project.id);
       else if (key === 'compare' && selected.length >= 4) {
@@ -258,6 +337,9 @@ const structuredData = {
       updateButtons();
     });
     window.addEventListener('starranklibrarychange', updateButtons);
+    window.addEventListener('starrankauthchange', loadGithubStar);
     updateButtons();
+    if (authApi()) loadGithubStar();
+    else window.addEventListener('starrankauthready', loadGithubStar, { once: true });
   }
 </script>

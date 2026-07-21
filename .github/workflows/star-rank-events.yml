@@ -44,6 +44,7 @@ jobs:
       SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
       BASE_PATH: /${{ github.event.repository.name }}
       PUBLIC_REPOSITORY: ${{ github.repository }}
+      PUBLIC_AUTH_API_URL: ${{ vars.PUBLIC_AUTH_API_URL }}
       GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
     steps:
       - name: Checkout star rank

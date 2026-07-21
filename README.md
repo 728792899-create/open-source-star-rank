@@ -35,8 +35,9 @@
 - 🧭 **组合筛选结果** —— 在当前榜单页面选择语言、项目方向、产品形态和适用场景，直接从受控深度池中重排最多 500 项，并保留总榜名次。
 - 🏆 **全站历史星标 Top 1000** —— 累计 Star 最高的 1000 个开源项目「名人堂」。
 - 🀄 **中文项目内容** —— 由 GitHub Models 生成的中文功能名与简介，原文一键切换。
-- 🔎 **项目介绍页** —— 汇总项目用途、适合人群、上榜原因、分类、真实历史和相似项目，再由用户决定是否前往 GitHub。
-- ⭐ **本地项目工作区** —— 无需登录即可收藏、最近查看和对比最多 4 个项目；记录只保存在当前浏览器。
+- 🔎 **项目介绍页** —— 汇总用途、作者 / 所有者、GitHub 创建日期、最近代码推送、已公开天数、上榜原因、真实历史和相似项目。
+- ⭐ **可选 GitHub 收藏同步** —— 不登录仍可使用本机收藏、最近查看和对比；登录后收藏会调用 GitHub Star / Unstar，旧的本地收藏只在用户明确确认后手动批量同步。
+- ⏱️ **更新倒计时** —— 每个榜单显示下次计划更新时间和实时倒计时；到点后转为等待自动发布状态。
 
 > ⚠️ **关于「全站」二字**：事件榜的「全站」严格指 **GH Archive 实际归档的 GitHub 公开事件范围**，不是 GitHub 官方内部统计，也不扣除取消 Star。这是一张诚实的**观测榜**，而非官方净增榜。
 
@@ -122,8 +123,8 @@ flowchart TD
 一张跨越时间的「名人堂」，回答「哪些开源项目积累了最多 Star」，与每日新增榜互补。
 
 - 通过 GitHub 搜索按累计 Star **降序**采集前 1000 个公开仓库，剔除 fork、已归档、已禁用与私有项目。
-- GitHub 单次搜索最多返回 1000 条结果，恰好等于发布深度 —— 因此这是搜索口径下**真实的全站累计前 1000**。
-- 每周一北京时间 10:00 自动更新（约 10 次 API 请求，成本极低）；失败时保留上一版并显示更新时间。
+- GitHub Search 单条查询只暴露前 1000 条，而其中可能含有之后被过滤的项目。采集器因此按 Star 区间从高到低分段查询，并完整获取截止 Star 并列桶，回填至恰好 1000 个有效公开仓库才发布。
+- 每周一北京时间 10:00 自动更新；查询次数取决于过滤量和 Star 并列情况。任何分段不完整或有效数不足 1000 时保留上一版。
 - 页面支持与其它榜单一致的语言 / 方向 / 形态 / 场景筛选与关键词搜索。
 
 ---
@@ -140,7 +141,7 @@ flowchart TD
 - **不造数据**：缺失日期不补采、不补零、不插值。
 - **数据留存**：机器数据在独立的 `star-rank-data` 分支；公开日榜永久保留，完整候选快照保留 90 日，扩展分类池保留 14 日，全量事件聚合仅在数据分支保留 30 日。
 - **中文与分类**：由 GitHub Models 生成并按 repository ID 缓存，**只使用 Actions 自带令牌与免费额度**；模型不可用时回退 GitHub 原文或「分类待生成」，不阻塞榜单。人工修订见 [`data/localization-overrides.zh-CN.json`](data/localization-overrides.zh-CN.json) 与 [`data/classification-overrides.zh-CN.json`](data/classification-overrides.zh-CN.json)。
-- **隐私**：本仓库不包含、依赖或链接任何私有内容；固定种子仅保存公开 GitHub 仓库名。收藏、对比和最近查看记录只保存在用户浏览器的 `localStorage`，不会上传。
+- **隐私与授权**：不登录时，收藏、对比和最近查看只保存在浏览器 `localStorage`。可选 GitHub App 登录只申请 Metadata 读取与 Starring 读写；GitHub 访问 / 刷新令牌经 AES-GCM 加密存在 Cloudflare D1，浏览器只在 `sessionStorage` 保留最长 8 小时的不透明站点会话。退出会删除服务端会话。
 
 ---
 
@@ -185,12 +186,13 @@ open-source-star-rank/
 │   └── validate_star_rank_data.py  # 数据契约校验
 ├── schemas/star-rank/          # 所有公开数据的 JSON Schema
 ├── data/                       # 固定词表、人工修订、种子仓库
+├── auth-worker/                # 可选 GitHub App OAuth、D1 会话与 Star 同步
 ├── site/                       # Astro 静态站点
 │   ├── src/pages/              #   榜单、项目介绍与本地对比页面
 │   ├── src/lib/facet-rankings.ts   # ✨ 分类独立榜生成逻辑
 │   └── scripts/                #   数据准备、构建校验、E2E 夹具
 ├── tests/                      # Python 单元测试
-└── .github/workflows/          # 8 个采集、发布、看门狗与校验工作流
+└── .github/workflows/          # 采集、发布、鉴权、看门狗与校验工作流
 ```
 
 ---
@@ -215,7 +217,7 @@ node scripts/create-e2e-data.mjs
 STAR_RANK_DATA_DIR="$PWD/.e2e-data" npm run build && npm run validate-build
 ```
 
-测试夹具由 `scripts/create-e2e-data.mjs` 在临时目录生成，包含 40 个候选日期、7 个事件日期、**300 项扩展分类池**、**200 项历史星标榜**、2000 个项目页与中文 / 分类，不会进入生产数据。
+测试夹具由 `scripts/create-e2e-data.mjs` 在临时目录生成，包含 40 个候选日期、7 个事件日期、**1000 项事件筛选池**、**1000 项历史星标榜**、2000 个候选项目页与中文 / 分类，不会进入生产数据。
 
 ---
 
@@ -227,6 +229,6 @@ STAR_RANK_DATA_DIR="$PWD/.e2e-data" npm run build && npm run validate-build
 
 <div align="center">
 
-**数据来自 GH Archive 与 GitHub 公共 API · 实时榜每小时更新 · 完全零费用运行**
+**数据来自 GH Archive 与 GitHub 公共 API · 实时榜每小时更新 · 可在现有免费额度内运行**
 
 </div>

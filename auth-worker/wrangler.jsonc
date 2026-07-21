@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "open-source-star-rank-auth",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-20",
+  "workers_dev": true,
+  "vars": {
+    "SITE_ORIGIN": "https://728792899-create.github.io",
+    "SITE_BASE_PATH": "/open-source-star-rank",
+    "GITHUB_CLIENT_ID": "SET_IN_CLOUDFLARE"
+  },
+  "d1_databases": [
+    {
+      "binding": "AUTH_DB",
+      "database_name": "open-source-star-rank-auth",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

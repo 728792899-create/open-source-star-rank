@@ -2,6 +2,7 @@
 import type { EventRankingIndex } from '../types';
 import { withBase } from '../lib/paths';
 import FreshnessStatus from './FreshnessStatus.astro';
+import UpdateCountdown from './UpdateCountdown.astro';
 
 interface Props { index: EventRankingIndex; mode?: 'complete' | 'live' }
 const { index, mode = 'complete' } = Astro.props;
@@ -10,6 +11,12 @@ const live = mode === 'live';
 
 <main id="main-content" class="initialization shell">
   <FreshnessStatus updatedAt={index.updated_at} thresholdHours={index.freshness_threshold_hours} initializingMessage={live ? '正在等待今日首个完整归档小时。' : '正在等待首个完整的全站公开事件日。'} />
+  <UpdateCountdown
+    nextAt={index.next_refresh_at}
+    updatedAt={index.updated_at}
+    indexPath="/data/events/index.json"
+    label={live ? '下次实时榜检查' : '下次完整榜采集'}
+  />
   <p class="eyebrow">GitHub public events · {live ? '实时榜初始化' : '完整榜初始化'}</p>
   <h1>{live ? <>今日实时榜，<br />正在等待首个完整小时。</> : <>全站公开事件，<br />正在等待首个完整日。</>}</h1>
   <p class="initialization-copy">

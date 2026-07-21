@@ -9,6 +9,7 @@ from typing import Any, Iterable, Mapping
 from tools.event_live_rank import (
     aggregate_hour_states,
     build_hour_state,
+    enrich_live_aggregates,
     expected_hours,
     live_window,
     run_live_update,
@@ -50,6 +51,8 @@ def repository(repository_id: int) -> dict[str, Any]:
         "description": f"Repository {repository_id}",
         "language": "Python",
         "stargazers_count": 1000 + repository_id,
+        "created_at": "2016-01-01T00:00:00Z",
+        "pushed_at": "2026-07-16T00:00:00Z",
         "html_url": f"https://github.com/fixture/repo-{repository_id}",
         "owner": {"avatar_url": f"https://avatars.githubusercontent.com/u/{repository_id}"},
         "private": False,
@@ -159,6 +162,26 @@ class EventLiveRankTests(unittest.TestCase):
                 run_live_update(source, github, data_dir=root, generated_at=self.now)
             self.assertFalse((root / "public" / "events" / "live.json").exists())
             self.assertFalse((root / "state" / "events" / "live-hours").exists())
+
+    def test_legacy_cached_metadata_is_refreshed_for_lifecycle_fields(self) -> None:
+        github = FakeGitHub({1: repository(1)})
+        rows = [{"repository_id": 1, "stars_added": 4, "watch_events": 4}]
+        legacy_cache = {
+            1: {
+                "repository_id": 1,
+                "full_name": "fixture/repo-1",
+                "description": "legacy",
+                "language": "Python",
+                "stars_total": 1001,
+                "html_url": "https://github.com/fixture/repo-1",
+                "owner_avatar_url": None,
+            }
+        }
+        entries, metrics = enrich_live_aggregates(github, rows, metadata_cache=legacy_cache)
+        self.assertEqual(github.request_count, 1)
+        self.assertEqual(metrics["metadata_cached_count"], 0)
+        self.assertEqual(entries[0]["created_at"], "2016-01-01T00:00:00Z")
+        self.assertEqual(entries[0]["pushed_at"], "2026-07-16T00:00:00Z")
 
     def test_out_of_window_event_rejects_the_entire_refresh(self) -> None:
         records = self.records()

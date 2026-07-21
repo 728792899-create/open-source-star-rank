@@ -1,6 +1,6 @@
 # 开源星榜站点
 
-这是全站公开事件新增榜与候选池净增榜共存的静态站点。Astro 在构建时读取机器生成的 JSON，把事件日榜、净增日榜、7/30 日榜、独立语言榜、分类兼容页、全站历史星标 Top 1000（`/all-time/`）、项目介绍与真实历史、中文项目内容、固定词表分类和公开数据接口一起静态发布。榜单页支持深度池组合筛选、紧凑模式与明确的数据口径；项目页提供收藏、最近查看和最多四项本地对比，用户记录只存于浏览器。
+这是全站公开事件新增榜与候选池净增榜共存的静态站点。Astro 在构建时读取机器生成的 JSON，生成榜单、全站历史星标 Top 1000、项目介绍、中文内容、分类和公开数据接口。榜单页支持深度池组合筛选、更新倒计时和紧凑模式；项目页展示作者、GitHub 创建日期、最近代码推送与公开天数。不登录时收藏、最近查看和对比只存于浏览器；可选 GitHub App 登录通过独立 Worker 把收藏同步为用户的 GitHub Star。
 
 ## 本地验证
 
@@ -14,7 +14,7 @@ npm run build
 npm run validate-build
 ```
 
-默认数据是“等待首个基线”的真实初始化状态。完整测试夹具由 `scripts/create-e2e-data.mjs` 在临时目录生成，包含 40 个连续候选日期、7 个事件日期、300 项扩展分类池、200 项历史星标榜、2,000 个项目页、中文内容、分类、语言榜和周期榜，不会进入生产数据。验证旧 `1.1.0` 兼容页时仍可使用小型夹具：
+默认数据是“等待首个基线”的真实初始化状态。完整测试夹具由 `scripts/create-e2e-data.mjs` 在临时目录生成，包含 40 个连续候选日期、7 个事件日期、1,000 项事件筛选池、1,000 项历史星标榜、2,000 个候选项目页、中文内容、分类、语言榜和周期榜，不会进入生产数据。验证旧版本兼容页时仍可使用小型夹具：
 
 ```bash
 STAR_RANK_DATA_DIR="$PWD/tests/fixtures/ready-data" npm run build
@@ -34,7 +34,7 @@ Lighthouse CI 使用 desktop 预设并强制 Performance ≥ 90、Accessibility 
 
 ## 生产数据
 
-`tools/star_rank.py` 维护候选池快照与净增数据；`tools/event_star_rank.py` 扫描 GH Archive BigQuery 日表中的全部公开事件，按 repository ID 汇总全部 `WatchEvent`，再按全局顺序补齐元数据直至获得 100 个有效项目；`tools/localize_repositories.py` 生成中文项目内容；`tools/classify_repositories.py` 再从版本化固定词表中生成项目方向、产品形态和适用场景。两种展示数据都按 repository ID 缓存。三个生产工作流共享同一并发组和 `star-rank-data` 分支，站点只读取该分支中的 `public/`。
+`tools/star_rank.py` 维护候选池快照与净增数据；`tools/event_star_rank.py` 扫描 GH Archive BigQuery 日表中的全部公开 `WatchEvent`，再按全局顺序补齐元数据直至获得严格 Top 500；`tools/alltime_star_rank.py` 按 Star 区间分段查询并发布恰好 1,000 个有效历史榜项目。中文与分类是可降级展示层。机器数据工作流共享同一并发组和 `star-rank-data` 分支，站点只读取该分支中的 `public/`。
 
 GitHub Pages 使用 GitHub Actions 发布。手动工作流支持四种模式：
 
@@ -43,4 +43,4 @@ GitHub Pages 使用 GitHub Actions 发布。手动工作流支持四种模式：
 - `deploy_existing`：不调用 GitHub API，直接使用数据分支恢复部署。
 - `replace_snapshot`：仅替换当天快照，必须同时填写当天北京时间日期，且只能在 00:00–03:00 有效窗口执行。
 
-候选池接口保持 `1.2.0` 契约不变，同时兼容历史 `1.1.0`。事件榜使用 `1.1.0` 契约并兼容历史 `1.0.0`；中文目录和分类目录继续使用独立 `1.0.0` 契约；扩展分类池与全站历史星标榜各自使用独立 `1.0.0` 契约。入口分别为 `/data/events/index.json`、`/data/events/category/YYYY-MM-DD.json`、`/data/alltime/top-1000.json`、`/data/i18n/zh-CN/repositories.json` 和 `/data/classification/index.json`。没有有效译文或分类时构建仍继续成功，分别回退 GitHub 原文或“分类待生成”。完整初始化、恢复和故障处理流程见 [运行手册](../docs/STAR_RANK_RUNBOOK.md)。
+当前候选池榜单契约为 `1.4.0`，仓库目录为 `1.3.0`，事件日榜为 `1.3.0`，实时榜和历史 Top 1000 为 `1.1.0`；校验器继续兼容已发布的旧版文件。新版排名条目增加 `created_at` 与 `pushed_at`，用于展示 GitHub 创建日期和最近代码推送。没有有效译文或分类时构建仍继续成功。完整初始化、授权、恢复和故障处理流程见 [运行手册](../docs/STAR_RANK_RUNBOOK.md)。

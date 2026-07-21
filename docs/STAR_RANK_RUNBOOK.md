@@ -100,8 +100,8 @@ gcloud iam service-accounts keys list \
 1. 手动运行 `Update and publish public event star rank`，选择 `validate`。该模式先 dry-run，再执行真实全量聚合并验证 24/24 小时覆盖；不调用 GitHub 元数据 API、不写数据、不部署。
 2. 在日志中确认 `estimated_bytes` 和 `bytes_processed` 均不超过 `25769803776`，`observed_hours` 为 `24`。
 3. 手动选择 `collect_publish` 采集昨日；若昨日已经存在旧版 `1.0.0` 日榜，则改用 `replace_day` 显式替换该日期。检查 `star-rank-data` 中的 `public/events/`、`state/events/`与 `public/schema/`。
-4. 核对 `/data/events/index.json`、`/data/events/daily/YYYY-MM-DD.json`、`/events/daily/YYYY-MM-DD/`、第 2–5 页、首页、状态页与事件分享图。新版事件契约必须为 `1.2.0`、方法论为 `gharchive-public-watch-events-v3`，且恰好包含 500 项。
-5. 确认 `source_metrics` 的小时覆盖为 24/24、`ranking_complete` 为 `true`、公开条目恰好 100；全量仓库精简聚合只保存于 `state/events/daily/` 并保留最近 30 天。
+4. 核对 `/data/events/index.json`、`/data/events/daily/YYYY-MM-DD.json`、`/events/daily/YYYY-MM-DD/`、第 2–5 页、首页、状态页与事件分享图。新版事件契约必须为 `1.3.0`、方法论为 `gharchive-public-watch-events-v3`，且恰好包含 500 项。
+5. 确认 `source_metrics` 的小时覆盖为 24/24、`ranking_complete` 为 `true`、公开条目恰好 500；全量仓库精简聚合只保存于 `state/events/daily/` 并保留最近 30 天。
 6. 保留 07:30 定时任务与 08:15 watchdog，连续观察 7 天的扫描字节、事件延迟、排名变化与趋势空值。
 
 ## 2.5 中文项目内容与分类初始化
@@ -129,7 +129,59 @@ gcloud iam service-accounts keys list \
 
 1. 手动运行 `validate`，确认 GitHub 搜索采集、Schema 与站点构建通过；此模式不提交、不部署。
 2. 运行 `collect_publish`，核对 `public/alltime/top-1000.json` 与 `public/alltime/index.json`，并确认 `/all-time/` 页面条目与 JSON 一致。
-3. 该任务默认每周一北京时间 10:00 运行；数据来自 GitHub Search 按 star 降序的前 1,000 个未 fork、未归档公开仓库（约 10 次 API 请求），采集后会触发中文内容与分类补全，使新入榜项目获得中文与分类标签。
+3. 该任务默认每周一北京时间 10:00 运行。采集器不再依赖单次搜索的前 1,000 条：它按 Star 区间降序分段，完整获取截止 Star 并列桶，并在过滤 fork、归档、私有、禁用项目后继续回填。只有恰好 1,000 个有效公开仓库时才会发布。
+4. 确认 `source_metrics.ranking_complete=true`、`entry_count=1000`，并记录分段数、过滤数、截止 Star 与并列桶大小。任何分段出现 `incomplete_results`、并列桶超过 Search 可访问上限或有效数不足，都必须失败并保留上一版。
+5. 采集后会触发中文内容与分类补全，使新入榜项目获得中文与分类标签。
+
+## 2.7 GitHub 登录与 Star 同步
+
+静态站仍托管在 GitHub Pages；用户授权和 GitHub Star 写入由 `auth-worker/` 中的 Cloudflare Worker + D1 处理。GitHub 访问令牌不得进入 Pages HTML、前端 JavaScript、Actions 产物或浏览器存储。GitHub 建议 Web App 使用授权码 + PKCE，并在后端加密令牌；本实现遵循该边界。
+
+### 创建 GitHub App
+
+1. 在 GitHub Developer settings 注册一个 GitHub App，Homepage URL 设为 `https://728792899-create.github.io/open-source-star-rank/`。
+2. Callback URL 设为 `https://<worker-name>.<account-subdomain>.workers.dev/auth/callback`；这是 Worker 回调，不是 Pages 的 `/auth/callback/`。
+3. 仅申请最小权限：Repository permissions 的 **Metadata: Read-only**，Account permissions 的 **Starring: Read and write**。不需要 webhook、仓库内容、Issues 或 Actions 权限。使用者需为自己授权，但不需要把 App 安装到某个仓库才能管理自己的公开 Star。
+4. 启用“Expire user authorization tokens”，保留 Client ID 和 Client secret；不生成 GitHub App private key，因为本功能不使用 installation token。
+
+GitHub 的 Starring REST 端点明确支持 GitHub App user access token；检查 Star 需 Metadata 读 + Starring 读，Star / Unstar 需 Starring 写 + Metadata 读。
+
+### 创建 Worker 与 D1
+
+```bash
+cd auth-worker
+npm ci
+npx wrangler login
+npx wrangler d1 create open-source-star-rank-auth
+```
+
+1. 把命令返回的 `database_id` 填入 `auth-worker/wrangler.jsonc`，不得保留全零占位值。
+2. 把 `GITHUB_CLIENT_ID` 替换为 GitHub App Client ID；`SITE_ORIGIN` 保持 `https://728792899-create.github.io`，`SITE_BASE_PATH` 保持 `/open-source-star-rank`。
+3. 生成 32 字节 base64url 密钥，并以 Worker secret 形式保存：
+
+```bash
+openssl rand -base64 32 | tr '+/' '-_' | tr -d '='
+npx wrangler secret put GITHUB_CLIENT_SECRET
+npx wrangler secret put TOKEN_ENCRYPTION_KEY
+npx wrangler d1 migrations apply open-source-star-rank-auth --remote
+npm run check
+npm test
+npx wrangler deploy
+```
+
+4. 在仓库 Actions 中创建 Variable `PUBLIC_AUTH_API_URL=https://<worker-name>.<account-subdomain>.workers.dev`。
+5. 如需从 Actions 手动发布 Worker，创建 Secret `CLOUDFLARE_API_TOKEN` 和 Variable `CLOUDFLARE_ACCOUNT_ID`，再运行 `Validate or deploy GitHub auth worker` 并选择 `deploy=true`。Cloudflare token 只授予该 Worker 与 D1 发布所需权限。
+6. 重新运行任一 Pages 发布工作流，确认页头不再显示“登录待配置”。
+
+Cloudflare Workers Free 目前包含每日 100,000 请求；D1 Free 包含每日 500 万行读、10 万行写和账户总计 5 GB 存储。超过免费日限时请求会失败，未升级 Paid 方案不会自动转为超额计费。继续监控 Cloudflare 控制台的 Worker 请求数和 D1 rows read / written。
+
+### 会话、隐私与恢复验收
+
+- OAuth state 有效 10 分钟，一次性 handoff 有效 5 分钟，站点会话最长 8 小时。Worker 仅向精确的 Pages Origin 开放 CORS。
+- GitHub access / refresh token 用 AES-GCM 加密后存入 D1；D1 只保存站点会话令牌的 SHA-256 摘要。浏览器只在当前标签页的 `sessionStorage` 保留不透明会话，最长 8 小时。
+- 第一次登录不会自动把历史本地收藏变成 GitHub Star。只有用户在“我的项目”中点击“同步到 GitHub”并二次确认，才会分批写入；该操作不会取消用户其他 Star。
+- 验收：不登录收藏→选择“仅保存在本机”；登录后收藏 / 取消收藏→在 GitHub 项目页核对 Star 状态；退出→D1 会话删除；过期→要求重新登录。
+- Worker 故障或未配置时，静态榜单、项目页、本地收藏和对比仍完整可用，GitHub 同步功能明确降级。
 
 ## 3. 日常运行与告警
 

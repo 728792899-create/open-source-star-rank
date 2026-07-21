@@ -1,12 +1,14 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FreshnessStatus from '../../components/FreshnessStatus.astro';
+import UpdateCountdown from '../../components/UpdateCountdown.astro';
 import { classificationLabels, classificationMap } from '../../lib/classification';
 import {
   readAllTimeBoard, readAllTimeIndex, readClassificationIndex, readClassificationRepositories, readLocalizationCatalog,
 } from '../../lib/data';
 import { localizedRepositoryContent } from '../../lib/localization';
 import { withBase } from '../../lib/paths';
+import { repositoryAgeLabel, repositoryDate, repositoryOwner } from '../../lib/repository-lifecycle';
 
 const board = readAllTimeBoard();
 const index = readAllTimeIndex();
@@ -36,8 +38,10 @@ const structuredData = entries.length ? {
   name: 'GitHub 全站历史最高星开源项目 Top 1000',
   numberOfItems: entries.length,
   itemListElement: entries.slice(0, 100).map((entry) => ({
-    '@type': 'ListItem', position: entry.rank, url: entry.html_url,
+    '@type': 'ListItem', position: entry.rank, url: new URL(withBase(`/repo/${entry.repository_id}/`), Astro.site ?? Astro.url.origin).toString(),
     name: localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description).displayName,
+    dateCreated: entry.created_at ?? undefined,
+    dateModified: entry.pushed_at ?? undefined,
   })),
 } : undefined;
 ---
@@ -66,7 +70,10 @@ const structuredData = entries.length ? {
       </time>
     </header>
 
-    <FreshnessStatus updatedAt={index.updated_at} thresholdHours={index.freshness_threshold_hours} compact />
+    <div class="data-update-strip">
+      <FreshnessStatus updatedAt={index.updated_at} thresholdHours={index.freshness_threshold_hours} compact />
+      <UpdateCountdown nextAt={index.next_refresh_at} updatedAt={index.updated_at} indexPath="/data/alltime/index.json" label="下次历史榜更新" />
+    </div>
 
     <section class="metrics" aria-label="榜单统计">
       <div><span>收录项目</span><strong>{formatNumber(entries.length)} / 1,000</strong><small>过滤 Fork、归档和不可用仓库后的有效数</small></div>
@@ -175,6 +182,12 @@ const structuredData = entries.length ? {
                       <span>{projectTypeLabel}</span>
                       {useCaseLabels?.slice(0, 2).map((label) => <span>{label}</span>)}
                     </div> : <span class="classification-pending">分类待生成</span>}
+                    <p class="project-lifecycle">
+                      <span>作者 {repositoryOwner(entry.full_name)}</span>
+                      <span>{entry.created_at ? `创建 ${repositoryDate(entry.created_at)}` : '创建时间待补充'}</span>
+                      <span>{entry.pushed_at ? `最近推送 ${repositoryDate(entry.pushed_at)}` : '更新日期待补充'}</span>
+                      <span>{repositoryAgeLabel(entry.created_at)}</span>
+                    </p>
                   </div>
                   <a class="github-link" href={entry.html_url} target="_blank" rel="noreferrer" aria-label={`在 GitHub 打开 ${entry.full_name}`}>GitHub ↗</a>
                 </div>
@@ -196,7 +209,7 @@ const structuredData = entries.length ? {
 
     <aside class="method-note" aria-label="榜单口径提示">
       <span aria-hidden="true">i</span>
-      <p><strong>这是一张历史累计榜。</strong>数据来自 GitHub 搜索按 star 数降序的前 1000 个公开仓库；选择语言、方向、形态或场景后，会在这 1000 项中实时重排并显示符合条件的前 500。</p>
+      <p><strong>这是一张历史累计榜。</strong>采集器按 Star 区间分段查询并回填被过滤的 Fork、归档与不可用仓库，只有取得 1000 个有效公开仓库才发布；筛选会在这 1000 项中实时重排并显示符合条件的前 500。</p>
       <a href={withBase('/')}>查看每日新增榜 →</a>
     </aside>
   </main> : <main id="main-content" class="shell language-page category-page">
