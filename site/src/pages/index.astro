@@ -9,33 +9,33 @@ import { localizedRepositoryContent } from '../lib/localization';
 import { readDefaultRanking } from '../lib/default-ranking';
 import { withBase } from '../lib/paths';
 
-const { candidateIndex, eventIndex, ranking } = readDefaultRanking();
+const { eventIndex, ranking, isLive, fallbackNotice } = readDefaultRanking();
 const localization = readLocalizationCatalog();
-const exploration = ranking ? readEventCategoryPool(ranking.date) : null;
+const exploration = ranking && !isLive ? readEventCategoryPool(ranking.date) : null;
 const previousDate = ranking ? new Date(`${ranking.date}T12:00:00Z`) : null;
 if (previousDate) previousDate.setUTCDate(previousDate.getUTCDate() - 1);
 const previousDateValue = previousDate?.toISOString().slice(0, 10) ?? null;
-const previousExploration = previousDateValue ? readEventCategoryPool(previousDateValue) : null;
+const previousExploration = !isLive && previousDateValue ? readEventCategoryPool(previousDateValue) : null;
 const firstPageEntries = ranking?.entries.slice(0, 100) ?? [];
 const structuredData = ranking ? {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: `${ranking.date} GitHub 全站公开事件新增 Star 排行`,
+  name: `${ranking.date} GitHub ${isLive ? '今日实时' : '昨日完整'}新增 Star 排行`,
   numberOfItems: firstPageEntries.length,
   itemListElement: firstPageEntries.map((entry) => ({
     '@type': 'ListItem', position: entry.rank, url: new URL(withBase(`/repo/${entry.repository_id}/`), Astro.site ?? Astro.url.origin).toString(),
     name: localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description).displayName,
   })),
 } : undefined;
-const socialImagePath = ranking ? `/social/events-daily-${ranking.date}.png` : '/og.png';
+const socialImagePath = ranking && !isLive ? `/social/events-daily-${ranking.date}.png` : '/og.png';
 ---
 
 <BaseLayout
-  title="开源星榜｜GitHub 全站公开事件新增 Star 排行"
-  description="按 GH Archive 归档的 GitHub 全站公开 WatchEvent，统计北京时间每日为仓库加星的唯一用户数。"
+  title="开源星榜｜GitHub 今日实时新增 Star 排行"
+  description="按 GH Archive 已归档的 GitHub 公开 WatchEvent 完整小时滚动累计，展示今日实时新增 Star 排名。"
   structuredData={structuredData}
   socialImagePath={socialImagePath}
-  nextPath={ranking && ranking.entries.length > 100 ? `/events/daily/${ranking.date}/page/2/` : undefined}
+  nextPath={ranking && ranking.entries.length > 100 ? isLive ? '/events/live/page/2/' : `/events/daily/${ranking.date}/page/2/` : undefined}
 >
   {ranking ? <RankingView
     ranking={ranking}
@@ -43,13 +43,18 @@ const socialImagePath = ranking ? `/social/events-daily-${ranking.date}.png` : '
     isLatest
     mode="event"
     availableDates={eventIndex.available_dates}
-    routePrefix="/events/daily"
+    routePrefix={isLive ? "/events/live" : "/events/daily"}
     dataPrefix="/data/events/daily"
-    alternateHref={candidateIndex.latest_date ? `/daily/${candidateIndex.latest_date}/` : '/daily/'}
-    alternateLabel="查看候选池净增榜"
+    alternateHref="/events/yesterday/"
+    alternateLabel="查看昨日完整榜"
+    switcherLabelOverride={isLive ? '今日实时新增榜' : '昨日完整新增榜'}
+    fallbackNotice={fallbackNotice}
     explorationPath={exploration ? `/data/events/category/${ranking.date}.json` : undefined}
     previousExplorationPath={previousExploration ? `/data/events/category/${previousDateValue}.json` : undefined}
     explorationEntries={exploration?.entries ?? []}
-    pageBasePath={`/events/daily/${ranking.date}/`}
+    pageBasePath={isLive ? '/events/live/' : `/events/daily/${ranking.date}/`}
+    live={isLive}
+    showDateTools={!isLive}
+    rankingJsonPathOverride={isLive ? '/data/events/live.json' : undefined}
   /> : <EventInitialization index={eventIndex} />}
 </BaseLayout>

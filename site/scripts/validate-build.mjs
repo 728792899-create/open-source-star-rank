@@ -27,6 +27,7 @@ const required = [
   'data/schema/repositories.schema.json',
   'data/schema/event-index.schema.json',
   'data/schema/event-daily.schema.json',
+  'data/schema/event-live.schema.json',
   'data/schema/event-category-pool.schema.json',
   'data/schema/alltime.schema.json',
   'data/schema/alltime-index.schema.json',
@@ -34,6 +35,8 @@ const required = [
   'data/schema/classification-index.schema.json',
   'data/schema/classification-repositories.schema.json',
   'data/events/index.json',
+  'events/live/index.html',
+  'events/yesterday/index.html',
   'data/i18n/zh-CN/repositories.json',
   'data/classification/index.json',
   'data/classification/repositories.json',
@@ -70,6 +73,31 @@ if (!['1.1.0', '1.2.0', '1.3.0'].includes(dataIndex.schema_version) || dataIndex
 const eventIndex = JSON.parse(await readFile(path.join(dist, 'data/events/index.json'), 'utf8'));
 if (!['1.0.0', '1.1.0', '1.2.0'].includes(eventIndex.schema_version) || eventIndex.freshness_threshold_hours !== 36) {
   throw new Error('Published event index does not satisfy a supported public contract');
+}
+const eventLivePath = path.join(dist, 'data/events/live.json');
+const eventLive = existsSync(eventLivePath) ? JSON.parse(await readFile(eventLivePath, 'utf8')) : null;
+if (eventLive) {
+  if (eventLive.schema_version !== '1.0.0' || eventLive.provisional !== true
+    || eventLive.methodology_version !== 'gharchive-hourly-public-watch-events-live-v1') {
+    throw new Error('Published live event ranking does not satisfy the 1.0.0 contract');
+  }
+  if (eventLive.source_metrics.observed_hour_count < 1 || eventLive.source_metrics.observed_hour_count >= 24
+    || eventLive.source_metrics.source_files.length !== eventLive.source_metrics.observed_hour_count
+    || eventLive.source_metrics.missing_completed_hours.length !== 0) {
+    throw new Error('Published live event ranking has invalid completed-hour coverage');
+  }
+  if (eventLive.entry_count !== eventLive.entries.length || eventLive.entries.length > eventLive.ranking_limit) {
+    throw new Error('Published live event ranking has inconsistent entry counts');
+  }
+  for (const [offset, entry] of eventLive.entries.entries()) {
+    if (entry.rank !== offset + 1) throw new Error('Published live event ranking has non-contiguous ranks');
+  }
+  const expectedLivePages = Math.ceil(eventLive.entries.length / 100);
+  for (let page = 2; page <= expectedLivePages; page += 1) {
+    if (!existsSync(path.join(dist, 'events', 'live', 'page', String(page), 'index.html'))) {
+      throw new Error(`Published live event ranking is missing page ${page}`);
+    }
+  }
 }
 if (eventIndex.schema_version === '1.1.0' && eventIndex.status === 'ready') {
   if (eventIndex.methodology_version !== 'gharchive-public-watch-events-v2') {
@@ -218,10 +246,14 @@ if (eventIndex.status === 'ready') {
   }
 }
 
-const eventIsDefault = eventIndex.status === 'ready' && Boolean(eventIndex.latest_date);
-if (eventIsDefault) {
-  for (const marker of ['data-ranking-mode="event"', '全站公开事件新增榜', 'GH Archive']) {
-    if (!indexHtml.includes(marker)) throw new Error(`Event-first homepage is missing ${marker}`);
+const eventIsDefault = Boolean(eventLive?.entries.length) || (eventIndex.status === 'ready' && Boolean(eventIndex.latest_date));
+if (eventLive?.entries.length) {
+  for (const marker of ['data-ranking-mode="event"', '今日实时新增 Star 排行', '每小时更新', 'GH Archive']) {
+    if (!indexHtml.includes(marker)) throw new Error(`Live-event homepage is missing ${marker}`);
+  }
+} else if (eventIsDefault) {
+  for (const marker of ['data-ranking-mode="event"', '昨日完整新增 Star 排行', 'GH Archive']) {
+    if (!indexHtml.includes(marker)) throw new Error(`Complete-event homepage is missing ${marker}`);
   }
 } else {
   for (const marker of ['全站公开事件', '24 小时覆盖', '候选池净增榜']) {

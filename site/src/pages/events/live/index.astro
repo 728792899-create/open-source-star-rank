@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import EventInitialization from '../../../components/EventInitialization.astro';
+import RankingView from '../../../components/RankingView.astro';
+import { readEventLiveRanking, readEventRankingIndex, readLocalizationCatalog } from '../../../lib/data';
+import { localizedRepositoryContent } from '../../../lib/localization';
+import { withBase } from '../../../lib/paths';
+
+const index = readEventRankingIndex();
+const ranking = readEventLiveRanking();
+const localization = readLocalizationCatalog();
+const firstPageEntries = ranking?.entries.slice(0, 100) ?? [];
+const structuredData = ranking ? {
+  '@context': 'https://schema.org', '@type': 'ItemList',
+  name: `${ranking.date} GitHub 今日实时新增 Star 排行`, numberOfItems: firstPageEntries.length,
+  itemListElement: firstPageEntries.map((entry) => ({
+    '@type': 'ListItem', position: entry.rank,
+    url: new URL(withBase(`/repo/${entry.repository_id}/`), Astro.site ?? Astro.url.origin).toString(),
+    name: localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description).displayName,
+  })),
+} : undefined;
+---
+
+<BaseLayout
+  title="GitHub 今日实时新增 Star 榜｜开源星榜"
+  description="按 GH Archive 已归档的公开 WatchEvent 完整小时滚动累计，排名每小时更新。"
+  structuredData={structuredData}
+  nextPath={ranking && ranking.entries.length > 100 ? '/events/live/page/2/' : undefined}
+>
+  {ranking ? <RankingView
+    ranking={ranking} index={index} isLatest mode="event" live
+    availableDates={[]} routePrefix="/events/live" dataPrefix="/data/events"
+    alternateHref="/events/yesterday/" alternateLabel="查看昨日完整榜"
+    switcherLabelOverride="今日实时新增榜"
+    showDateTools={false} pageBasePath="/events/live/"
+    rankingJsonPathOverride="/data/events/live.json"
+  /> : <EventInitialization index={index} mode="live" />}
+</BaseLayout>

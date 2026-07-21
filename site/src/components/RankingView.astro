@@ -1,6 +1,6 @@
 ---
 import type {
-  DailyRanking, EventCategoryPoolEntry, EventDailyRanking, EventRankingEntry, EventRankingIndex, LanguageRanking,
+  DailyRanking, EventCategoryPoolEntry, EventDailyRanking, EventLiveRanking, EventRankingEntry, EventRankingIndex, LanguageRanking,
   PeriodRanking, RankingEntry, RankingIndex,
 } from '../types';
 import type { FacetRanking } from '../lib/facet-rankings';
@@ -11,7 +11,7 @@ import { localizedRepositoryContent } from '../lib/localization';
 import FreshnessStatus from './FreshnessStatus.astro';
 
 interface Props {
-  ranking: DailyRanking | LanguageRanking | PeriodRanking | EventDailyRanking | FacetRanking;
+  ranking: DailyRanking | LanguageRanking | PeriodRanking | EventDailyRanking | EventLiveRanking | FacetRanking;
   index: RankingIndex | EventRankingIndex;
   isLatest?: boolean;
   mode?: 'daily' | 'language' | 'period' | 'event';
@@ -36,6 +36,8 @@ interface Props {
   page?: number;
   pageSize?: number;
   pageBasePath?: string;
+  live?: boolean;
+  rankingJsonPathOverride?: string;
 }
 
 const {
@@ -64,11 +66,14 @@ const {
   page = 1,
   pageSize = 100,
   pageBasePath,
+  live = false,
+  rankingJsonPathOverride,
 } = Astro.props;
 const isFacet = variant === 'facet';
 const facetRanking = isFacet ? ranking as FacetRanking : null;
 const isEvent = !isFacet && mode === 'event' && 'source_metrics' in ranking;
-const eventRanking = isEvent ? ranking as EventDailyRanking : null;
+const isLive = isEvent && live && 'provisional' in ranking;
+const eventRanking = isEvent ? ranking as EventDailyRanking | EventLiveRanking : null;
 const snapshotRanking = !isEvent && !isFacet ? ranking as DailyRanking | LanguageRanking | PeriodRanking : null;
 const periodDays = !isFacet && 'period_days' in ranking ? ranking.period_days : null;
 const languageName = !isFacet && 'language' in ranking ? (ranking as LanguageRanking).language : null;
@@ -76,12 +81,15 @@ const defaultHeadline = periodDays
   ? `近 ${periodDays} 日，哪些项目升温最快？`
   : languageName
     ? `${languageName} 项目，昨日谁在升温？`
-    : isEvent ? '昨日，全站公开事件中哪些项目获得最多新 Star？' : '昨日，哪些开源项目正在升温？';
+    : isLive ? '今日截至目前，全站公开事件中哪些项目正在获得最多新 Star？'
+      : isEvent ? '昨日，全站公开事件中哪些项目获得最多新 Star？' : '昨日，哪些开源项目正在升温？';
 const gainLabel = isEvent || isFacet ? '新增用户' : periodDays ? `${periodDays} 日净增` : '日净增';
 const heroCopy = isFacet
   ? '从全站公开事件榜的扩展池中，按当日唯一加星用户数筛出该分类的独立前 100；名次为分类内重新排序，不含取消 Star。'
   : isEvent
-    ? '扫描 GH Archive 归档的全部 GitHub 公开事件，按为仓库加星的唯一用户数排序；不扣除取消 Star。'
+    ? isLive
+      ? '按 GH Archive 已归档的今日完整小时滚动累计；排名会随新小时数据继续变动，不扣除取消 Star。'
+      : '扫描 GH Archive 归档的全部 GitHub 公开事件，按为仓库加星的唯一用户数排序；不扣除取消 Star。'
     : '按有效连续快照的 Star 净增排序。缺失日期不补零、不插值，只记录真实发生的关注变化。';
 const filterSourceEntries = explorationEntries.length ? explorationEntries : ranking.entries;
 const languages = [...new Set(filterSourceEntries.map((entry) => entry.language).filter(Boolean) as string[])].sort((a, b) => a.localeCompare(b));
@@ -106,7 +114,7 @@ const makeTrendShape = (values: Array<number | null>) => {
 };
 const rankingBasePath = pageBasePath ?? `${routePrefix}/${ranking.date}/`;
 const rankingPath = withBase(rankingPathOverride ?? (page === 1 ? rankingBasePath : `${rankingBasePath}page/${page}/`));
-const rankingJsonPath = withBase(`${dataPrefix}/${ranking.date}.json`);
+const rankingJsonPath = withBase(rankingJsonPathOverride ?? `${dataPrefix}/${ranking.date}.json`);
 const totalEntries = 'entry_count' in ranking && typeof ranking.entry_count === 'number'
   ? ranking.entry_count
   : ranking.entries.length;
@@ -123,11 +131,11 @@ const usedCategories = classificationIndex.categories.filter((term) => usedClass
 const usedProjectTypes = classificationIndex.project_types.filter((term) => usedClassifications.some((item) => item?.project_type === term.id));
 const usedUseCases = classificationIndex.use_cases.filter((term) => usedClassifications.some((item) => item?.use_cases.includes(term.id)));
 const headline = headlineOverride ?? defaultHeadline;
-const sectionEyebrow = sectionEyebrowOverride ?? (isEvent ? `Global public events top ${totalEntries}` : `Observed ${languageName ? 'language' : ''} top ${totalEntries}`);
-const sectionTitle = sectionTitleOverride ?? (isEvent ? '全站公开事件新增 Star 排行' : `${languageName ? `${languageName} ` : ''}${periodDays ? `${periodDays} 日 ` : ''}Star 净增排行`);
+const sectionEyebrow = sectionEyebrowOverride ?? (isLive ? `Live public events top ${totalEntries}` : isEvent ? `Complete public events top ${totalEntries}` : `Observed ${languageName ? 'language' : ''} top ${totalEntries}`);
+const sectionTitle = sectionTitleOverride ?? (isLive ? '今日实时新增 Star 排行' : isEvent ? '昨日完整新增 Star 排行' : `${languageName ? `${languageName} ` : ''}${periodDays ? `${periodDays} 日 ` : ''}Star 净增排行`);
 const uniqueAdditionCount = eventRanking?.source_metrics.unique_star_addition_count ?? null;
 const explorationPoolSize = explorationEntries.length || ranking.entries.length;
-const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口` : isEvent ? '每日更新' : languageName ? '随每日净增榜更新' : '每日零点快照';
+const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口` : isLive ? '每小时更新' : isEvent ? '24 小时完整榜' : languageName ? '随每日净增榜更新' : '每日零点快照';
 ---
 
 <main
@@ -152,7 +160,7 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
   class="shell ranking-page"
 >
   <nav class="ranking-mode-switcher" aria-label="榜单口径">
-    <strong>{switcherLabelOverride ?? (isEvent ? '全站公开事件新增榜' : '候选池净增榜')}</strong>
+    <strong>{switcherLabelOverride ?? (isLive ? '今日实时新增榜' : isEvent ? '昨日完整新增榜' : '候选池净增榜')}</strong>
     {alternateHref && alternateLabel && <a href={withBase(alternateHref)}>{alternateLabel} →</a>}
   </nav>
   {fallbackNotice && <p class="pipeline-fallback" role="status">{fallbackNotice}</p>}
@@ -163,19 +171,37 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
       <p class="ranking-summary-copy"><strong>{headline}</strong><span>{heroCopy}</span></p>
     </div>
     <time class="ranking-date-chip" datetime={ranking.date} aria-label={`榜单日期 ${ranking.date}`}>
-      <span>{isLatest ? 'LATEST' : 'ARCHIVE'}</span>
+      <span>{isLive ? 'LIVE' : isLatest ? 'LATEST' : 'ARCHIVE'}</span>
       <strong>{ranking.date}</strong>
       <small>UTC+8</small>
     </time>
   </header>
 
-  <FreshnessStatus updatedAt={index.updated_at} thresholdHours={index.freshness_threshold_hours} compact />
+  <FreshnessStatus updatedAt={isLive ? eventRanking!.generated_at : index.updated_at} thresholdHours={isLive ? 2 : index.freshness_threshold_hours} compact />
+  {isLive && <script is:inline define:vars={{ liveDate: ranking.date }}>
+    (() => {
+      const parts = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit',
+      }).formatToParts(new Date());
+      const part = (type) => parts.find((item) => item.type === type)?.value ?? '';
+      const today = `${part('year')}-${part('month')}-${part('day')}`;
+      if (liveDate === today) return;
+      const freshness = document.querySelector('[data-freshness]');
+      const message = freshness?.querySelector('[data-freshness-message]');
+      if (!(freshness instanceof HTMLElement) || !message) return;
+      const rolloverMessage = `今日首个完整小时尚未发布；当前保留 ${liveDate} 的最后一次实时状态，请以“昨日完整榜”为已校验结果。`;
+      freshness.dataset.liveRollover = '';
+      freshness.dataset.customStaleMessage = rolloverMessage;
+      freshness.classList.add('stale');
+      message.textContent = rolloverMessage;
+    })();
+  </script>}
 
   {isFacet ? <section class="metrics" aria-label="榜单统计">
     <div><span>上榜项目</span><strong>{facetRanking!.entries.length}</strong><small>本分类进入前 100</small></div>
     <div><span>本类新增合计</span><strong>{formatNumber(facetRanking!.total_gain)}</strong><small>当日唯一加星用户合计</small></div>
     <div><span>来源池</span><strong>{formatNumber(facetRanking!.pool_size)}</strong><small>全站事件榜扩展候选池</small></div>
-    <div><span>采样窗口</span><strong>{formatTime(ranking.window_start)}</strong><small>至 {formatTime(ranking.window_end)}</small></div>
+    <div><span>{isLive ? '实时截止' : '采样窗口'}</span><strong>{isLive ? formatTime(ranking.window_end) : formatTime(ranking.window_start)}</strong><small>{isLive ? `已覆盖 ${eventRanking!.source_metrics.observed_hour_count} / 24 小时` : `至 ${formatTime(ranking.window_end)}`}</small></div>
   </section> : <section class="metrics" aria-label="榜单统计">
     <div><span>{isEvent ? '当日获得公开加星的仓库' : '候选池'}</span><strong>{formatNumber(eventRanking?.source_metrics.observed_repository_count ?? snapshotRanking?.candidate_count ?? 0)}</strong><small>{isEvent ? '不是 GitHub 仓库总数' : '个公开仓库'}</small></div>
     <div><span>{isEvent ? '唯一新增加星用户' : '可比较'}</span><strong>{isEvent ? uniqueAdditionCount === null ? '—' : formatNumber(uniqueAdditionCount) : formatNumber(ranking.eligible_count)}</strong><small>{isEvent ? uniqueAdditionCount === null ? '旧版数据未汇总' : '用户—仓库唯一对' : '拥有连续快照'}</small></div>
@@ -184,15 +210,21 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
   </section>}
 
   {isFacet ? null : isEvent ? <details class="collection-details">
-    <summary>查看数据详情：GH Archive、覆盖与费用保护</summary>
+    <summary>{isLive ? '查看实时数据详情：小时覆盖与下次刷新' : '查看数据详情：GH Archive、覆盖与费用保护'}</summary>
     <dl>
       <div><dt>WatchEvent</dt><dd>{formatNumber(eventRanking!.source_metrics.observed_watch_event_count)}</dd></div>
       <div><dt>唯一新增</dt><dd>{uniqueAdditionCount === null ? '旧版未记录' : formatNumber(uniqueAdditionCount)}</dd></div>
-      <div><dt>24 小时覆盖</dt><dd>{eventRanking!.source_metrics.observed_hour_count === undefined ? '旧版未记录' : `${eventRanking!.source_metrics.observed_hour_count} / ${eventRanking!.source_metrics.expected_hour_count} 小时`}</dd></div>
-      <div><dt>排行完整性</dt><dd>{eventRanking!.source_metrics.ranking_complete ? `已验证 Top ${totalEntries}` : '旧版规则'}</dd></div>
-      <div><dt>BigQuery 扫描</dt><dd>{formatBytes(eventRanking!.source_metrics.bytes_processed)}</dd></div>
-      <div><dt>扫描硬上限</dt><dd>{formatBytes(eventRanking!.source_metrics.maximum_bytes_billed)}</dd></div>
-      <div><dt>源表</dt><dd>{eventRanking!.source_metrics.table_dates.join(' / ')}</dd></div>
+      <div><dt>{isLive ? '今日小时覆盖' : '24 小时覆盖'}</dt><dd>{eventRanking!.source_metrics.observed_hour_count === undefined ? '旧版未记录' : `${eventRanking!.source_metrics.observed_hour_count} / ${eventRanking!.source_metrics.expected_hour_count} 小时`}</dd></div>
+      <div><dt>排行完整性</dt><dd>{eventRanking!.source_metrics.ranking_complete ? `已展示 Top ${totalEntries}` : `当前可用 ${totalEntries} 项`}</dd></div>
+      {isLive ? <>
+        <div><dt>下次刷新</dt><dd>{formatTime((eventRanking as EventLiveRanking).next_refresh_at)}</dd></div>
+        <div><dt>小时源文件</dt><dd>{(eventRanking as EventLiveRanking).source_metrics.source_files.length}</dd></div>
+        <div><dt>元数据缓存</dt><dd>{formatNumber((eventRanking as EventLiveRanking).source_metrics.metadata_cached_count)}</dd></div>
+      </> : <>
+        <div><dt>BigQuery 扫描</dt><dd>{formatBytes((eventRanking as EventDailyRanking).source_metrics.bytes_processed)}</dd></div>
+        <div><dt>扫描硬上限</dt><dd>{formatBytes((eventRanking as EventDailyRanking).source_metrics.maximum_bytes_billed)}</dd></div>
+        <div><dt>源表</dt><dd>{(eventRanking as EventDailyRanking).source_metrics.table_dates.join(' / ')}</dd></div>
+      </>}
       <div><dt>元数据成功</dt><dd>{formatNumber(eventRanking!.source_metrics.metadata_success_count)}</dd></div>
       <div><dt>404 / 过滤</dt><dd>{eventRanking!.source_metrics.metadata_not_found_count} / {eventRanking!.source_metrics.metadata_filtered_count}</dd></div>
       <div><dt>API 请求 / 重试</dt><dd>{eventRanking!.source_metrics.api_request_count} / {eventRanking!.source_metrics.api_retry_count}</dd></div>
@@ -397,7 +429,7 @@ const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口
 
   <aside class="method-note" aria-label="榜单口径提示">
     <span aria-hidden="true">i</span>
-    <p><strong>这是一张观测榜。</strong>{isFacet ? '分类独立榜从全站公开事件榜的扩展候选池中，按当日唯一新增加星用户数筛出该分类前 100，并在分类内重新排名；覆盖范围与延迟同全站事件榜，不含私有活动或取消 Star。' : isEvent ? '“全站”限定为 GH Archive 实际归档的 GitHub 公开事件范围；数字表示每个仓库的唯一新增加星用户，不包含私有活动或取消 Star，不是 GitHub 官方统计。' : 'GitHub 搜索不支持按每日增量检索全站项目，因此净增榜来自持续追踪的候选池；新项目获得两个快照后才参与排名。'}</p>
+    <p><strong>这是一张观测榜。</strong>{isFacet ? '分类独立榜从全站公开事件榜的扩展候选池中，按当日唯一新增加星用户数筛出该分类前 100，并在分类内重新排名；覆盖范围与延迟同全站事件榜，不含私有活动或取消 Star。' : isLive ? '今日榜只累计截止时间前已完整归档的小时，排名会变动；次日发布通过 24/24 小时校验的昨日完整榜。“全站”仅限 GH Archive 归档的 GitHub 公开事件。' : isEvent ? '“全站”限定为 GH Archive 实际归档的 GitHub 公开事件范围；数字表示每个仓库的唯一新增加星用户，不包含私有活动或取消 Star，不是 GitHub 官方统计。' : 'GitHub 搜索不支持按每日增量检索全站项目，因此净增榜来自持续追踪的候选池；新项目获得两个快照后才参与排名。'}</p>
     <a href={withBase('/methodology/')}>完整口径 →</a>
   </aside>
 </main>

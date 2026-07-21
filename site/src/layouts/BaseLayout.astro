@@ -88,7 +88,8 @@ const reuseStatementUrl = `${repositoryUrl}/blob/main/REUSE.md`;
         <span>开源星榜</span>
       </a>
       <nav aria-label="主导航">
-        <a href={withBase('/')}>新增榜</a>
+        <a href={withBase('/')}>今日实时</a>
+        <a href={withBase('/events/yesterday/')}>昨日完整</a>
         <a href={withBase('/daily/') }>净增榜</a>
         <a href={withBase('/period/7d/')}>7 日榜</a>
         <a href={withBase('/period/30d/')}>30 日榜</a>
@@ -123,7 +124,7 @@ const reuseStatementUrl = `${repositoryUrl}/blob/main/REUSE.md`;
     <footer class="site-footer">
       <div class="site-footer-copy">
         <p><strong>开源星榜</strong>的“全站”限定为 GH Archive 实际归档的 GitHub 公开事件，不是 GitHub 官方统计。</p>
-        <p>数据来自 GH Archive 与 GitHub 公共 API · 北京时间每日更新</p>
+        <p>数据来自 GH Archive 与 GitHub 公共 API · 实时榜每小时更新，完整榜每日更新</p>
       </div>
       <nav class="site-footer-links" aria-label="项目源码与复用">
         <a href={withBase('/rss.xml')}>每日订阅 RSS</a>

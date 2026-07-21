@@ -8,6 +8,7 @@ import type {
   ClassificationRepositoryCatalog,
   EventCategoryPool,
   EventDailyRanking,
+  EventLiveRanking,
   EventRankingIndex,
   ExplorationPool,
   LanguageIndex,
@@ -74,6 +75,12 @@ export function readEventRankingIndex(): EventRankingIndex {
 export function readEventDailyRanking(date: string): EventDailyRanking {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error(`Invalid event ranking date: ${date}`);
   return JSON.parse(readFileSync(path.join(dataRoot, 'events', 'daily', `${date}.json`), 'utf8')) as EventDailyRanking;
+}
+
+export function readEventLiveRanking(): EventLiveRanking | null {
+  const file = path.join(dataRoot, 'events', 'live.json');
+  if (!existsSync(file)) return null;
+  return JSON.parse(readFileSync(file, 'utf8')) as EventLiveRanking;
 }
 
 export function readEventCategoryPool(date: string): EventCategoryPool | null {
@@ -238,8 +245,10 @@ export function readRepositoryProfiles(): RepositoryProfile[] {
     ...datedJsonFiles(path.join(dataRoot, 'events', 'daily')),
     ...datedJsonFiles(path.join(dataRoot, 'events', 'category')),
   ];
+  const liveEventFile = path.join(dataRoot, 'events', 'live.json');
+  if (existsSync(liveEventFile)) eventFiles.push(liveEventFile);
   for (const file of eventFiles) {
-    const payload = JSON.parse(readFileSync(file, 'utf8')) as EventDailyRanking | EventCategoryPool;
+    const payload = JSON.parse(readFileSync(file, 'utf8')) as EventDailyRanking | EventLiveRanking | EventCategoryPool;
     for (const entry of payload.entries) {
       const current = ensure(entry, `${payload.date}:5`);
       const existing = current.eventByDate.get(payload.date);

@@ -1,0 +1,173 @@
+name: Update today's live public event star rank
+
+on:
+  schedule:
+    # Every hour from 01:45 through 23:45 Asia/Shanghai. The 30-minute
+    # archive lag leaves only completed GH Archive hourly files in scope.
+    - cron: "45 17-23,0-15 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Collect the live board, validate sources, or redeploy cached data
+        type: choice
+        options:
+          - collect_publish
+          - validate
+          - deploy_existing
+        default: validate
+
+permissions:
+  contents: read
+
+concurrency:
+  group: open-source-star-rank-data
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    permissions:
+      contents: write
+    outputs:
+      should_deploy: ${{ steps.mode.outputs.should_deploy }}
+      run_mode: ${{ steps.mode.outputs.run_mode }}
+    env:
+      PYTHONUNBUFFERED: "1"
+      ASTRO_TELEMETRY_DISABLED: "1"
+      SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+      BASE_PATH: /${{ github.event.repository.name }}
+      PUBLIC_REPOSITORY: ${{ github.repository }}
+    steps:
+      - name: Checkout star rank
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+        with:
+          fetch-depth: 0
+
+      - name: Resolve run mode
+        id: mode
+        shell: bash
+        env:
+          REQUESTED_MODE: ${{ inputs.mode }}
+        run: |
+          set -euo pipefail
+          mode="$REQUESTED_MODE"
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then mode="collect_publish"; fi
+          case "$mode" in
+            validate) should_deploy=false ;;
+            collect_publish|deploy_existing) should_deploy=true ;;
+            *) echo "Unsupported mode: $mode" >&2; exit 2 ;;
+          esac
+          echo "run_mode=$mode" >> "$GITHUB_OUTPUT"
+          echo "should_deploy=$should_deploy" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-star-rank.txt
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --requirement requirements-star-rank.txt
+          npm ci --prefix site
+
+      - name: Prepare isolated data branch worktree
+        shell: bash
+        run: |
+          set -euo pipefail
+          data_dir="$RUNNER_TEMP/star-rank-data"
+          git fetch origin refs/heads/star-rank-data:refs/remotes/origin/star-rank-data
+          git worktree add -B star-rank-data "$data_dir" refs/remotes/origin/star-rank-data
+          echo "STAR_RANK_DATA_DIR=$data_dir" >> "$GITHUB_ENV"
+
+      - name: Test live collector
+        run: python -m unittest tests.test_event_live_rank -v
+
+      - name: Collect completed hours for today's live board
+        if: steps.mode.outputs.run_mode != 'deploy_existing'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_MODE: ${{ steps.mode.outputs.run_mode }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(--data-dir "$STAR_RANK_DATA_DIR" --api-request-budget 950)
+          if [[ "$RUN_MODE" == "validate" ]]; then args+=(--validate-only); fi
+          python -m tools.event_live_rank "${args[@]}"
+
+      - name: Validate staged data contracts
+        run: python tools/validate_star_rank_data.py --data-dir "$STAR_RANK_DATA_DIR" --sync-schemas
+
+      - name: Test and build site
+        working-directory: site
+        run: |
+          npm test
+          STAR_RANK_DATA_DIR="$STAR_RANK_DATA_DIR/public" npm run check
+          STAR_RANK_DATA_DIR="$STAR_RANK_DATA_DIR/public" npm run build
+          npm run validate-build
+
+      - name: Commit validated live data
+        if: steps.mode.outputs.run_mode == 'collect_publish'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git -C "$STAR_RANK_DATA_DIR" config user.name "github-actions[bot]"
+          git -C "$STAR_RANK_DATA_DIR" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C "$STAR_RANK_DATA_DIR" add state/events/live-hours public/events/live.json public/schema
+          if ! git -C "$STAR_RANK_DATA_DIR" diff --cached --quiet; then
+            git -C "$STAR_RANK_DATA_DIR" commit -m "Update today's live public event star rank"
+            git -C "$STAR_RANK_DATA_DIR" push origin HEAD:star-rank-data
+          fi
+
+      - name: Upload GitHub Pages artifact
+        if: steps.mode.outputs.should_deploy == 'true'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: site/dist
+
+  deploy:
+    if: needs.build.outputs.should_deploy == 'true'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
+
+  incident:
+    if: always() && (github.event_name == 'schedule' || inputs.mode == 'collect_publish')
+    needs: [build, deploy]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - name: Open or close live ranking incident
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RESULT: ${{ needs.build.result }}/${{ needs.deploy.result }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [[ "$RESULT" == "success/success" ]]; then status=close; else status=open; fi
+          python tools/star_rank_incident.py --status "$status" --title "[开源星榜] 今日实时榜故障" --label "star-rank-events-live-incident" --details "实时榜工作流：$RESULT；$RUN_URL"
