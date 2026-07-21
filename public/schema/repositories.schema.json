@@ -6,7 +6,7 @@
   "additionalProperties": false,
   "required": ["schema_version", "updated_at", "timezone", "candidate_count", "repositories"],
   "properties": {
-    "schema_version": { "const": "1.2.0" },
+    "schema_version": { "enum": ["1.2.0", "1.3.0"] },
     "updated_at": { "type": "string", "format": "date-time" },
     "timezone": { "const": "Asia/Shanghai" },
     "candidate_count": { "type": "integer", "minimum": 0, "maximum": 2000 },
@@ -41,6 +41,8 @@
         "stars_total": { "type": "integer", "minimum": 0 },
         "html_url": { "type": "string", "format": "uri" },
         "owner_avatar_url": { "type": ["string", "null"], "format": "uri" },
+        "created_at": { "type": ["string", "null"], "format": "date-time" },
+        "pushed_at": { "type": ["string", "null"], "format": "date-time" },
         "knowledge_url": { "type": ["string", "null"] },
         "first_seen_date": { "type": ["string", "null"], "format": "date" },
         "last_seen_date": { "type": ["string", "null"], "format": "date" },

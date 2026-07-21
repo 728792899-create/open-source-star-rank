@@ -8,11 +8,25 @@
     "schema_version", "status", "updated_at", "methodology_version", "entry_count",
     "top_stars", "freshness_threshold_hours"
   ],
+  "allOf": [
+    {
+      "if": { "properties": { "schema_version": { "const": "1.1.0" } }, "required": ["schema_version"] },
+      "then": {
+        "required": ["ranking_limit", "next_refresh_at"],
+        "properties": {
+          "methodology_version": { "const": "github-search-most-starred-v2" },
+          "entry_count": { "const": 1000 }
+        }
+      }
+    }
+  ],
   "properties": {
-    "schema_version": { "const": "1.0.0" },
+    "schema_version": { "enum": ["1.0.0", "1.1.0"] },
     "status": { "enum": ["initializing", "ready"] },
     "updated_at": { "type": ["string", "null"], "format": "date-time" },
-    "methodology_version": { "const": "github-search-most-starred-v1" },
+    "methodology_version": { "enum": ["github-search-most-starred-v1", "github-search-most-starred-v2"] },
+    "ranking_limit": { "const": 1000 },
+    "next_refresh_at": { "type": "string", "format": "date-time" },
     "entry_count": { "type": "integer", "minimum": 0, "maximum": 1000 },
     "top_stars": { "type": ["integer", "null"], "minimum": 0 },
     "freshness_threshold_hours": { "type": "integer", "minimum": 1 }
