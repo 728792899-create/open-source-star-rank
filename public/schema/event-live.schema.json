@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://728792899-create.github.io/open-source-star-rank/data/schema/event-live.schema.json",
+  "title": "Open Source Star Rank provisional live public WatchEvent ranking",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "date", "timezone", "window_start", "window_end", "generated_at",
+    "next_refresh_at", "provisional", "methodology_version", "ranking_limit", "entry_count",
+    "eligible_count", "rank_change_basis", "source_metrics", "entries"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "date": { "type": "string", "format": "date", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "timezone": { "const": "Asia/Shanghai" },
+    "window_start": { "type": "string", "format": "date-time" },
+    "window_end": { "type": "string", "format": "date-time" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "next_refresh_at": { "type": "string", "format": "date-time" },
+    "provisional": { "const": true },
+    "methodology_version": { "const": "gharchive-hourly-public-watch-events-live-v1" },
+    "ranking_limit": { "const": 500 },
+    "entry_count": { "type": "integer", "minimum": 1, "maximum": 500 },
+    "eligible_count": { "type": "integer", "minimum": 1, "maximum": 500 },
+    "rank_change_basis": { "enum": ["previous_live_refresh", "new_live_day"] },
+    "source_metrics": { "$ref": "#/$defs/source_metrics" },
+    "entries": {
+      "type": "array", "minItems": 1, "maxItems": 500,
+      "items": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "$defs": {
+    "source_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider", "scope", "counting_unit", "expected_hour_count", "observed_hour_count",
+        "remaining_hour_count", "missing_completed_hours", "source_files", "unique_star_addition_count",
+        "observed_watch_event_count", "observed_repository_count", "ranking_complete",
+        "metadata_attempted_count", "metadata_success_count", "metadata_cached_count",
+        "metadata_not_found_count", "metadata_filtered_count", "api_request_count", "api_retry_count"
+      ],
+      "properties": {
+        "provider": { "const": "gh_archive_hourly_files" },
+        "scope": { "const": "github_public_events_as_archived_by_gh_archive" },
+        "counting_unit": { "const": "unique_actor_repository_pair" },
+        "expected_hour_count": { "const": 24 },
+        "observed_hour_count": { "type": "integer", "minimum": 1, "maximum": 23 },
+        "remaining_hour_count": { "type": "integer", "minimum": 1, "maximum": 23 },
+        "missing_completed_hours": {
+          "type": "array", "maxItems": 23, "uniqueItems": true,
+          "items": { "type": "string", "format": "date-time" }
+        },
+        "source_files": {
+          "type": "array", "minItems": 1, "maxItems": 23, "uniqueItems": true,
+          "items": { "type": "string", "format": "uri", "pattern": "^https://data\\.gharchive\\.org/" }
+        },
+        "unique_star_addition_count": { "type": "integer", "minimum": 1 },
+        "observed_watch_event_count": { "type": "integer", "minimum": 1 },
+        "observed_repository_count": { "type": "integer", "minimum": 1 },
+        "ranking_complete": { "type": "boolean" },
+        "metadata_attempted_count": { "type": "integer", "minimum": 0, "maximum": 900 },
+        "metadata_success_count": { "type": "integer", "minimum": 1, "maximum": 500 },
+        "metadata_cached_count": { "type": "integer", "minimum": 0, "maximum": 500 },
+        "metadata_not_found_count": { "type": "integer", "minimum": 0, "maximum": 900 },
+        "metadata_filtered_count": { "type": "integer", "minimum": 0, "maximum": 900 },
+        "api_request_count": { "type": "integer", "minimum": 0, "maximum": 950 },
+        "api_retry_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository_id", "full_name", "description", "language", "stars_total", "stars_added",
+        "watch_events", "rank", "rank_change", "trend_7d", "html_url", "owner_avatar_url"
+      ],
+      "properties": {
+        "repository_id": { "type": "integer", "minimum": 1 },
+        "full_name": { "type": "string", "minLength": 3, "pattern": "^[^/]+/[^/]+$" },
+        "description": { "type": ["string", "null"] },
+        "language": { "type": ["string", "null"] },
+        "stars_total": { "type": "integer", "minimum": 0 },
+        "stars_added": { "type": "integer", "minimum": 1 },
+        "watch_events": { "type": "integer", "minimum": 1 },
+        "rank": { "type": "integer", "minimum": 1, "maximum": 500 },
+        "rank_change": { "type": ["integer", "null"] },
+        "trend_7d": {
+          "type": "array", "minItems": 7, "maxItems": 7,
+          "items": { "type": ["integer", "null"], "minimum": 0 }
+        },
+        "html_url": { "type": "string", "format": "uri", "pattern": "^https://github\\.com/" },
+        "owner_avatar_url": { "type": ["string", "null"], "format": "uri" }
+      }
+    }
+  }
+}
