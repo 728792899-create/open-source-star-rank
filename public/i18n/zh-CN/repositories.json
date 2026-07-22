@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-07-21T19:32:19.354346Z",
+  "generated_at": "2026-07-22T04:10:29.437713Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3969,
-    "localized_count": 3894,
-    "pending_count": 75,
-    "failed_count": 67,
-    "coverage_ratio": 0.981104
+    "localized_count": 3943,
+    "pending_count": 26,
+    "failed_count": 26,
+    "coverage_ratio": 0.993449
   },
   "repositories": [
     {
@@ -12100,6 +12100,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 264818686,
+      "source_full_name": "ultralytics/yolov5",
+      "source_hash": "1441d959291a4ed64e9f461cf4ed9158fa7e02c47c5b49c89e4724bb66829dad",
+      "display_name_zh": "yolov5｜Ultralytics YOLOv5目标检测",
+      "description_zh": "基于PyTorch实现的Ultralytics YOLOv5，支持目标检测、实例分割、分类、训练及模型导出。",
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 265122478,
       "source_full_name": "ManimCommunity/manim",
       "source_hash": "4bd3cde011c95a4b35215f8002fb13f41070591b993ce8b7e9be006a04aa275e",
@@ -18382,6 +18391,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 669081010,
+      "source_full_name": "Pilgrimeuas/AristoisV4.5",
+      "source_hash": "dc0058e271d519b4a9d9094a7bfd5acde31c5a0fee9de33d4056ee8cbac58db8",
+      "display_name_zh": "AristoisV4.5｜SB项目",
+      "description_zh": "SB项目。",
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 669879380,
       "source_full_name": "rasbt/LLMs-from-scratch",
       "source_hash": "8fd8ab3b590f05758cb50d5d1fd84715693230080b8abdb8d0e6d5ce4e276ed2",
@@ -21133,6 +21151,15 @@
       "display_name_zh": "dan1471｜FREE-openai-api-keys 免费OpenAI API密钥集合",
       "description_zh": "免费OpenAI API密钥集合，供项目使用。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 833814635,
+      "source_full_name": "m1kkyqqq/repozitorr",
+      "source_hash": "f51f65060c1f6f801422c0b4c88d528e3f0343caf851fbfadc2fcbeafa7f7553",
+      "display_name_zh": "repozitorr｜repozitorr项目",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -24682,6 +24709,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1025856648,
+      "source_full_name": "wshobson/agents",
+      "source_hash": "bcb55c19beb709f79911674964adab7a8a91cc506716f3030752c2f0b294997f",
+      "display_name_zh": "agents｜多平台代理插件市场",
+      "description_zh": "多平台代理插件市场，支持Claude Code、Codex CLI、Cursor、OpenCode、GitHub Copilot及Gemini CLI。",
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1026309415,
       "source_full_name": "jeffcaldwellca/mkcertWeb",
       "source_hash": "b6f348f0856729128c1f4375690f55307e8f4d0cb51ab83e6fcc8141c175e256",
@@ -24727,6 +24763,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1028008548,
+      "source_full_name": "compiler-explorer/ce-stresstest",
+      "source_hash": "28bf06ca9e04c7ff65c6f9a83c5919238904606c241e8f8505d5f98bfb8d9ad8",
+      "display_name_zh": "ce-stresstest｜ce压力测试工具",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1028069336,
       "source_full_name": "interviewstreet/hiring-agent",
       "source_hash": "c9275324a25ce5d23fca2202f704c893f33818ab145f7b8ca5e5c81f281922b1",
@@ -24754,6 +24799,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1028432181,
+      "source_full_name": "awslabs/cli-agent-orchestrator",
+      "source_hash": "2fd837ce8891e454d6035b2bf72d193b630b8bcf8f1bba7b82ba13b587f640a0",
+      "display_name_zh": "cli-agent-orchestrator｜命令行代理协调器",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1028596386,
       "source_full_name": "openflocon/Flocon",
       "source_hash": "0a8a5c713e42d81c7293e858b26a18f8afedcaab3baa7a62c1856e57ac94a5fa",
@@ -24778,6 +24832,15 @@
       "display_name_zh": "color_converter_wplace｜颜色转换工具",
       "description_zh": "一个简单的颜色转换工具，可将像素艺术或图像中的颜色转换为wplace.live支持的颜色。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1029826039,
+      "source_full_name": "yashodip0104/demo-Repo",
+      "source_hash": "c9b70bbc52a62b6120e13d4902e5d895246e329d54c781ff40acf894b85b72f2",
+      "display_name_zh": "demo-Repo｜演示仓库",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -24841,6 +24904,15 @@
       "display_name_zh": "xpzouying｜xiaohongshu-mcp MCP模块",
       "description_zh": "小红书网站的MCP模块。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1031340774,
+      "source_full_name": "PiGrieco/mcp-memory-server",
+      "source_hash": "e5fecefdbd06592def8ab8f58a52bf812819b87aa56fa604e45de221daeacf7d",
+      "display_name_zh": "mcp-memory-server｜mcp-memory-server项目",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -25024,6 +25096,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1041092850,
+      "source_full_name": "TabbyML/pochi",
+      "source_hash": "74220298579451cbeb41efc8da1ed5c672a81d55facab17fe1c65c06c2aa7daf",
+      "display_name_zh": "pochi｜pochi项目",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1042367133,
       "source_full_name": "github/spec-kit",
       "source_hash": "cf992689a8a92498bbb4ecfa08de5a722b0a73907c60e6ec7537acf0279c48bf",
@@ -25048,6 +25129,15 @@
       "display_name_zh": "iPolloWork｜本地优先的 AI 工作空间",
       "description_zh": "iPolloWork 是一款源代码可用、本地优先的 AI 工作空间，支持代码、文件、文档、网站、演示、设计和视频的编辑与管理，提供用户可控工具。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1044296738,
+      "source_full_name": "microsoft/VibeVoice",
+      "source_hash": "37567908923fd67dfc27171354b354dd486cd1e539ce44f4e3db692117ff9880",
+      "display_name_zh": "VibeVoice｜开源语音AI",
+      "description_zh": "开源前沿语音AI项目。",
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -25237,6 +25327,15 @@
       "display_name_zh": "vllm-omni｜多模态模型推理框架",
       "description_zh": "高效支持多模态模型推理的框架。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1054793726,
+      "source_full_name": "ChromeDevTools/chrome-devtools-mcp",
+      "source_hash": "de5b85feca14ba675c0e64712c27801324debca4f72f4d9c5dc2c421c62ae03a",
+      "display_name_zh": "chrome-devtools-mcp｜Chrome开发者工具",
+      "description_zh": "Chrome DevTools工具，支持编码代理开发。",
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -25570,6 +25669,15 @@
       "display_name_zh": "editor｜三维建筑项目编辑器",
       "description_zh": "创建和分享三维建筑项目的编辑器。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1078079172,
+      "source_full_name": "ComposioHQ/awesome-claude-skills",
+      "source_hash": "706433a840368caa52a4f1593be3df70974b777da5396e8941e49b175050a0b7",
+      "display_name_zh": "awesome-claude-skills｜Claude技能资源合集",
+      "description_zh": "精选Claude技能、资源及定制Claude AI工作流的工具合集。",
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -25924,6 +26032,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1100230687,
+      "source_full_name": "yulin-kk/OpenPangu",
+      "source_hash": "22414ed67ac21ee72699748a1111c141746473e3bf44f545a7c85960ab06c751",
+      "display_name_zh": "OpenPangu｜OpenPangu模型",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1100401786,
       "source_full_name": "kem-a/AppManager",
       "source_hash": "00fde7a630cfebc107a574d700258b17b1875041976090171d642caef529541d",
@@ -26038,6 +26155,15 @@
       "display_name_zh": "PHP-Unit-MyWeeklyAllowance｜TDD零花钱管理模块",
       "description_zh": "面向青少年的零花钱管理模块，采用TDD方法，代码覆盖率目标至少85%。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1104332987,
+      "source_full_name": "666ghj/MiroFish",
+      "source_hash": "ae0fb7aaa1abfe23405ec5dddab023eaa6e121369ac26249a796d78a0389c67f",
+      "display_name_zh": "MiroFish｜通用群体智能引擎",
+      "description_zh": "简洁通用的群体智能引擎，支持多种预测任务。",
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -26464,6 +26590,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1123625561,
+      "source_full_name": "mxkfemkkk/FemcelPicture",
+      "source_hash": "468dd1f3d899e7bcddf65b93ee64b81ae1feacaa5bafa99b3aac4c6d0ce2efaf",
+      "display_name_zh": "FemcelPicture｜FemcelPicture项目",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1123987988,
       "source_full_name": "envcheck/envcheck",
       "source_hash": "e7da891cf6e67cc0176f4cb1b014c1fd6a740df65acc5b750aabd363d2bed98f",
@@ -26842,6 +26977,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1133207146,
+      "source_full_name": "JimLiu/baoyu-skills",
+      "source_hash": "332baf01e5264260d0676179aa282a9cdcc0e638522cdf2edffe2fc4c3a1850c",
+      "display_name_zh": "baoyu-skills｜宝玉技能集",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1133707766,
       "source_full_name": "multica-ai/multica",
       "source_hash": "7bd6e6e93dcf7d3ccbf499177c891a4f24643aec634e0c39e8d6acc6a8415b6f",
@@ -26875,6 +27019,15 @@
       "display_name_zh": "RunCatNeo｜macOS 菜单栏跑步猫动画",
       "description_zh": "macOS 菜单栏上的可爱跑步猫动画。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1134297248,
+      "source_full_name": "facebookresearch/ShapeR",
+      "source_hash": "d22821d4c749f3e3726e16693b766ebdbe0a0d93a65b9a435d5cab1476aa7512",
+      "display_name_zh": "ShapeR｜ShapeR研究代码",
+      "description_zh": "ShapeR研究论文相关代码。",
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -27091,6 +27244,15 @@
       "display_name_zh": "amber-express｜支持 HAEO 的 Amber Electric Home Assistant 集成",
       "description_zh": "amber-express 是 Amber Electric 的 Home Assistant 集成，支持自适应轮询、WebSocket 和 HAEO 兼容。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1141704318,
+      "source_full_name": "VoltAgent/awesome-openclaw-skills",
+      "source_hash": "94fdb5fd91c3d3f6226a50b52d5b7d6d8f5c0842bf04ee191d80cf2bfefaf960",
+      "display_name_zh": "awesome-openclaw-skills｜OpenClaw技能合集",
+      "description_zh": "收录5400+官方OpenClaw技能，经过筛选和分类的技能合集。",
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -27712,6 +27874,15 @@
       "display_name_zh": "tolaria｜Markdown 知识库管理桌面应用",
       "description_zh": "桌面应用，用于管理 Markdown 知识库。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1158181433,
+      "source_full_name": "unicity-sphere/sphere-sdk-connect-example",
+      "source_hash": "144d4329f784089352860bd34d0139a86eb550dfbad85bb71f51b8246d8e4e5d",
+      "display_name_zh": "sphere-sdk-connect-example｜Sphere SDK连接示例",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -28372,6 +28543,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1174443350,
+      "source_full_name": "zhameersheraz/HackTheFlag-Writeups",
+      "source_hash": "cca080a3d08f06ff0291a99289530b6115748e6708792d73a102f7e0dd566ffd",
+      "display_name_zh": "HackTheFlag-Writeups｜CTF解题报告",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1174490192,
       "source_full_name": "Luo-Yihong/TDM-R1",
       "source_hash": "023f38778e5f5d34964127459d6968f4c9511373f96c1a7eb12ea926a1d50aa4",
@@ -28441,6 +28621,15 @@
       "display_name_zh": "OpenBiliClaw｜本地私有跨平台AI内容发现代理",
       "description_zh": "本地私有跨平台AI内容发现代理，先深度理解用户，再主动在B站、小红书、抖音、YouTube、X、知乎、Reddit等平台寻找用户喜爱内容。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1175538883,
+      "source_full_name": "chenglou/pretext",
+      "source_hash": "b0fc15c9194e253d52f8b1e6055ad7de1a195b4415700b0fb68f998212e0ceab",
+      "display_name_zh": "pretext｜文本测量与布局工具",
+      "description_zh": "快速、准确且全面的文本测量与布局工具。",
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -28768,6 +28957,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1183179747,
+      "source_full_name": "kolega-ai/clawfinder-skill",
+      "source_hash": "478982e1e3fcb8aaf7376349c3dece0e54e9b94d66444f52ea1ab6e860b98b18",
+      "display_name_zh": "clawfinder-skill｜clawfinder-skill项目",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1183206048,
       "source_full_name": "unicity-aos/capsule-identity",
       "source_hash": "26edfbe6cf265aa1be1911a05be51564e0b2f872afee994dc2c13e6d04e96ef9",
@@ -28795,6 +28993,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1183252733,
+      "source_full_name": "piriya-dharshini/FYP",
+      "source_hash": "ebb222fa0c71581be6898eb681f30f40a0f98d1aa348caf2b59ca6e1aeb7db63",
+      "display_name_zh": "FYP｜FYP项目",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1183325896,
       "source_full_name": "emilkowalski/skills",
       "source_hash": "578100b22eede10bda2aaf3be11575f9c7e0e2f186d3ebaa2c5db06e0c47b9dd",
@@ -28810,6 +29017,15 @@
       "display_name_zh": "CODEX_GodMode_ON｜GPT 5.6本地Codex编排",
       "description_zh": "支持GPT 5.6版本的本地Codex编排，包含14个代理、10个核心技能，可选本地优先的Paperwork插件，安全安装程序，受限子代理和明确的质量门控。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1183867489,
+      "source_full_name": "SHITIANYU-hue/amai_ocl",
+      "source_hash": "ebfb4cd03996fb95176c2a98bcf16d3b350b31a6d1a9d6f901e78b381847ea7a",
+      "display_name_zh": "amai_ocl｜amai_ocl项目",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -28867,6 +29083,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1185505842,
+      "source_full_name": "abadcafe/superteam",
+      "source_hash": "dadd6e9c93f6f8ae9d058e41e8b2658382a276fcac23a243c26de5d5a47f5f63",
+      "display_name_zh": "superteam｜superteam项目",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1185590488,
       "source_full_name": "rohitg00/ai-engineering-from-scratch",
       "source_hash": "72421bb75a1803d3ef76b1a34ee76980ee10368af0bb9e327db762bb4c0077a3",
@@ -28882,6 +29107,15 @@
       "display_name_zh": "solfoundry｜Solana AI 软件工厂",
       "description_zh": "基于 Solana 的自主 AI 软件工厂，支持赏金协调、多 LLM 审核和信誉系统。",
       "generated_at": "2026-07-20T22:06:55.994311Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1185955602,
+      "source_full_name": "apkclaw-team/ApkClaw",
+      "source_hash": "639cd957c42073b62e6244a82f5918823cd9f7aa71316e23429f0558a8348973",
+      "display_name_zh": "ApkClaw｜ApkClaw项目",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -31243,6 +31477,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1257111076,
+      "source_full_name": "bitflicker64/Termstory",
+      "source_hash": "703ac1fc8c6867a77f26a5002e17c2f13d4a5b1c283e19e10f0aff0d0df9bd05",
+      "display_name_zh": "Termstory｜Termstory项目",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1257138790,
       "source_full_name": "MakerClassCZ/circuitpython-filesystem",
       "source_hash": "0a32af83102a279e4fae849c353e6ea844152d08fcf948ebc327df6de0f66e74",
@@ -31285,6 +31528,15 @@
       "display_name_zh": "headroom｜人机交互防火墙管理AI监督",
       "description_zh": "headroom 是一个用于编码代理的人机交互防火墙，评估何时信任人类监督，将监督视为资源分配而非单纯分类。该项目关注 AI 代理的安全性。",
       "generated_at": "2026-07-20T22:06:55.994311Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1258862322,
+      "source_full_name": "ufy2024/AuC",
+      "source_hash": "993f095256ecc1bf349195bbad36ba47639db7060d01998ad3e6078b61b236d4",
+      "display_name_zh": "AuC｜Agents-ufy-Core核心组件",
+      "description_zh": "Agents-ufy-Core核心组件。",
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -31342,6 +31594,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1260134299,
+      "source_full_name": "leaperone/smctl",
+      "source_hash": "4b32449a9fce02a407aab757d6db7480544f6df4b2c7cbbbdb50c3e1e8e62800",
+      "display_name_zh": "smctl｜Mac SMC控制工具，支持风扇曲线、电池限制和电源策略，CLI优先",
+      "description_zh": "本项目为Mac的SMC（系统管理控制器）提供缺失的控制功能，包括风扇曲线、电池充电限制和电源策略，采用开源和命令行界面（CLI）优先设计。",
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1260354681,
       "source_full_name": "janineziachen/mobile-md-html",
       "source_hash": "f143b19aa268716e7449c050192d8deb0df12573e9917a602fb3f2661a9da2a3",
@@ -31360,12 +31621,30 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1260631081,
+      "source_full_name": "oivessel/oivessel",
+      "source_hash": "5d509f5a501ec4d70247b4887c322339ae6645a7848925aec70be873fe7a4510",
+      "display_name_zh": "oivessel｜oivessel项目",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1260652867,
       "source_full_name": "laoma2053/awesome-zhuiju-free",
       "source_hash": "4558ff6deffbaa46de84393394ecf6c6b7b1190a8134e6c672edfdee53d141f7",
       "display_name_zh": "awesome-zhuiju-free｜免费追剧资源指南（含APP、BT、TVBox、IPTV）",
       "description_zh": "awesome-zhuiju-free 提供免费无广告的追剧资源指南，包含人工精选资源和每日有效性检测，涵盖在线影视、影视APP、网盘搜索、磁力BT、字幕、TVBox、IPTV直播源及相关开源项目。",
       "generated_at": "2026-07-19T07:03:48.394229Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1260999168,
+      "source_full_name": "luna-matrix/searoute",
+      "source_hash": "516005d6fb2beb141974cef80142bf21ada702ed1e22240f3d9e2180c5cb3469",
+      "display_name_zh": "searoute｜searoute项目",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -32692,6 +32971,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1285694798,
+      "source_full_name": "entireio/forgemark",
+      "source_hash": "e200527133bab10020ce1322b07fff2054953bec96f7dd7ab6494e9c11781679",
+      "display_name_zh": "forgemark｜forgemark项目",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1285705904,
       "source_full_name": "isjiamu/gzh-design-skill",
       "source_hash": "1cd7fd2d5ae2d0391203a7ef5e448f7cd40571e796e7929e1b3d84f35a7d99fd",
@@ -32770,6 +33058,15 @@
       "display_name_zh": "AI-World-Models-Study｜世界模型学习",
       "description_zh": "AI-World-Models-Study专注于世界模型的学习研究。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1287329826,
+      "source_full_name": "eisenjimmy/Quant",
+      "source_hash": "9fd00bc93ec88ef9c87327bb12072c5eb9f8d56f3da941e6c0e4e0dcd3d7bdfd",
+      "display_name_zh": "Quant｜Quant功能",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -33349,6 +33646,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1293521126,
+      "source_full_name": "3443176848/chenyida",
+      "source_hash": "bc55c04f262aac4f3c77f4774b96b173049056127dfded9904dae834b68376fd",
+      "display_name_zh": "chenyida｜chenyida功能",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1293551266,
       "source_full_name": "haker23378-netizen/free-vpn-telegram",
       "source_hash": "3038cea517509e0cf9b167cf583fa1801d9abc274026ed6707476923fa629e7a",
@@ -33391,6 +33697,15 @@
       "display_name_zh": "paxm｜持久记忆管理（含MCP支持）",
       "description_zh": "为Codex、Claude Code、OpenCode、Pi及MCP编码代理提供持久且供应商中立的记忆支持。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1295312801,
+      "source_full_name": "harshvardhan-makwana/JournalX-mern-project",
+      "source_hash": "abe2db196fcdaf62a121cce66e7b34d1c52bec10c9733d025183afb4cc00fdb8",
+      "display_name_zh": "JournalX-mern-project｜JournalX-mern-project功能",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -33511,6 +33826,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1296391700,
+      "source_full_name": "quvonch-dev/yangi-uyin",
+      "source_hash": "680bbeda310b56d67dcce2f49082d8eab3c5b49401796384e2e596294105af36",
+      "display_name_zh": "yangi-uyin｜yangi-uyin功能",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1296464755,
       "source_full_name": "NInagusev47/Silent-Crypto-Miner",
       "source_hash": "e6f63c2705c5ffd8a9ccf59ca915c54e30e2080be8535596853ad137a9cad9e5",
@@ -33538,6 +33862,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1296688714,
+      "source_full_name": "turbo-llm/t-search-harness",
+      "source_hash": "d2b3f2c36a98966133a2df5bdb87005978189631836c4aa2415040f426254824",
+      "display_name_zh": "t-search-harness｜t-search-harness功能",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1296745137,
       "source_full_name": "Sarthak-2085/Meridian-Intelligence",
       "source_hash": "5ae06de6e2440e8a0206653404f85d0a6ac96a3cb0d488bd74e8828b6ced8162",
@@ -33553,6 +33886,24 @@
       "display_name_zh": "TRC-Enderchest｜末影箱快捷访问插件",
       "description_zh": "TRC-Enderchest PaperMC 插件，添加 /ec 和 /enderchest 命令，方便玩家快速访问末影箱，管理员可管理他人末影箱。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1296808521,
+      "source_full_name": "MurasameCyan/GrokRegisterAgent",
+      "source_hash": "5a94fa43b5a819f9330730fee15463de2a79b49ec1f611428ebbfd086e48b2cf",
+      "display_name_zh": "GrokRegisterAgent｜GrokRegisterAgent功能",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1296819548,
+      "source_full_name": "AkramZerarka/vocalizer",
+      "source_hash": "6e69e50fbde6019f2c634868348f49308524a70bca06565063dcd0540d72d2d8",
+      "display_name_zh": "vocalizer｜vocalizer功能",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -34051,6 +34402,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1301096447,
+      "source_full_name": "AngelRubio9/CursoSaas2Cloud",
+      "source_hash": "efd095e6e210ab8a690b5198bdab66d93a77155c8a4044737d1b9dc131d022be",
+      "display_name_zh": "CursoSaas2Cloud｜CursoSaas2Cloud功能",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1301135370,
       "source_full_name": "0xsline/OpenChatCut",
       "source_hash": "fc074211282a0a3b7a606e8045f0bef7375ad5925b6ab872dfd7a5fa87353822",
@@ -34177,6 +34537,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1302025672,
+      "source_full_name": "Jabo86/pianoalimentare",
+      "source_hash": "50e8e089062b3cd3249b803e7fe14bf56e4cbe9279432f49ccb8abd3974eeec8",
+      "display_name_zh": "pianoalimentare｜pianoalimentare功能",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1302077273,
       "source_full_name": "Blueturboguy07/cue",
       "source_hash": "29a9a8be75528c6851c2b5207f81939e1d54533c5ee76ad223acb0b443a04d83",
@@ -34213,6 +34582,24 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1302367972,
+      "source_full_name": "lingbopro/win12-desktop",
+      "source_hash": "7bb53745f08c398121ce19a7d6901db22137e0b9ce85ec32cda51b6ae26171c4",
+      "display_name_zh": "win12-desktop｜win12-desktop功能",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1302382878,
+      "source_full_name": "t-head/hggc-samples",
+      "source_hash": "eb08aba88446f2fb7f5bacb3fbe9e25a2f8e92355f3b04db99f5c0214e98f0a3",
+      "display_name_zh": "hggc-samples｜hggc-samples功能",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1302398032,
       "source_full_name": "tandpfun/wardrobe",
       "source_hash": "e682f3ca2231bd5489d6856d0b705d942bdf44106b7ed7ad582655c317e5f056",
@@ -34246,6 +34633,15 @@
       "display_name_zh": "appless｜无应用手机概念",
       "description_zh": "appless｜无应用手机概念项目",
       "generated_at": "2026-07-21T19:32:19.354346Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1302477517,
+      "source_full_name": "x4gKing/Telegram-Proxy",
+      "source_hash": "8d14cbefb9fc48266f852f7f9e1fc3c413922f336b85c134f54decf3f793967e",
+      "display_name_zh": "Telegram-Proxy｜Telegram-Proxy功能",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -34321,12 +34717,30 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1303026408,
+      "source_full_name": "Tom-Lanese/ai-resercher",
+      "source_hash": "3728b0682b43df5b794f3c6b3fc7515329f559c626921abb7ee71cdacc808ed4",
+      "display_name_zh": "ai-resercher｜ai-resercher功能",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1303075610,
       "source_full_name": "kmilner/tamarin-rs",
       "source_hash": "f089c72c23ed7d7211fc036ebc7e7d417f6e48bb8b451964b5b01e2699b429b4",
       "display_name_zh": "tamarin-rs｜Tamarin Prover Rust移植",
       "description_zh": "tamarin-rs是Tamarin Prover的Rust语言移植版本。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1303076608,
+      "source_full_name": "INotJose/JosePinzon-Portfolio",
+      "source_hash": "19b74d927161845358f300cc7a1c6890672d7ee97ccde2fe07f1620da45100c8",
+      "display_name_zh": "JosePinzon-Portfolio｜JosePinzon-Portfolio功能",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
@@ -34384,6 +34798,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1303505396,
+      "source_full_name": "Fir-taka/qris_berbasis_IOT",
+      "source_hash": "8cd396dae9f832c00ba125a9a3965d175ddcf29b7299a4900d07d0c7858e23c6",
+      "display_name_zh": "qris_berbasis_IOT｜qris_berbasis_IOT功能",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1303518791,
       "source_full_name": "pangerlkr/VPN-Extension",
       "source_hash": "2870635015c2954b89e5f2b58f7bff01a6d6320120e29ea085ced421177cc1a1",
@@ -34402,12 +34825,30 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1303563430,
+      "source_full_name": "Ganeshp000/prochame",
+      "source_hash": "ab5972897d5ccabd920cb21abd1777b15535102a36f47d24aa1c5aeb9c8734aa",
+      "display_name_zh": "prochame｜prochame功能",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1303576851,
       "source_full_name": "nethical6/conversation-steganography",
       "source_hash": "7e0cb6f02b5b58e96c610a0485b5497994e74929fb55122504d5452d78ac6d4a",
       "display_name_zh": "conversation-steganography｜基于LLMs的对话隐写",
       "description_zh": "利用 LLMs 在看似正常的对话中隐藏信息。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1303630768,
+      "source_full_name": "farman1998G/ai-telegram-trading-bot",
+      "source_hash": "568f0b247748658d6b5e2666895ece04e4fe57e3bfaf246c12ff3302e972f92a",
+      "display_name_zh": "ai-telegram-trading-bot｜ai-telegram-trading-bot功能",
+      "description_zh": null,
+      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
