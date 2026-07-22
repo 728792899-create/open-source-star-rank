@@ -2,11 +2,9 @@
 
 # ⭐ 开源星榜 · Open Source Star Rank
 
-**每天自动更新的 GitHub 开源趋势站：公开事件新增 Star Top 500、候选池净增、7/30 日趋势与历史 Top 1000**
+**每天自动更新的 GitHub 开源趋势站：昨日净增 Top 500、7/30 日趋势与历史 Top 1000**
 
 [![数据采集与发布](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-pages.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-pages.yml)
-[![全站公开事件榜](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-events.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-events.yml)
-[![今日实时榜](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-events-live.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-events-live.yml)
 [![中文内容与分类](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-localization.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-localization.yml)
 [![全站历史星标榜](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-alltime.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-alltime.yml)
 [![质量校验](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-ci.yml/badge.svg)](https://github.com/728792899-create/open-source-star-rank/actions/workflows/star-rank-ci.yml)
@@ -17,7 +15,7 @@
 [🏆 历史 Top 1000](https://728792899-create.github.io/open-source-star-rank/all-time/) ·
 [📊 采样状态](https://728792899-create.github.io/open-source-star-rank/status/) ·
 [📐 数据口径](https://728792899-create.github.io/open-source-star-rank/methodology/) ·
-[📦 开放 JSON](https://728792899-create.github.io/open-source-star-rank/data/events/index.json) ·
+[📦 开放 JSON](https://728792899-create.github.io/open-source-star-rank/data/index.json) ·
 [💻 GitHub 源码](https://github.com/728792899-create/open-source-star-rank) ·
 [♻️ 复用声明](REUSE.md)
 
@@ -27,11 +25,10 @@
 
 ## 这是什么
 
-**开源星榜**是一个每天自动运行、完全由 GitHub Actions 驱动的中文开源项目趋势站。它把 GH Archive 公开事件、GitHub API 快照和可复现的数据契约组合成静态榜单，不做网页爬虫、不猜测、不补零，只发布可以被独立验证的信号；榜单页面、历史记录和 JSON 数据均可公开访问和复用。
+**开源星榜**是一个每天自动运行、完全由 GitHub Actions 驱动的中文开源项目趋势站。它把 GitHub API 连续快照和可复现的数据契约组合成静态榜单，不做网页爬虫、不猜测、不补零，只发布可以被独立验证的净增信号；榜单页面、历史记录和 JSON 数据均可公开访问和复用。
 
-- ⚡ **今日实时新增榜** —— 每小时累计 [GH Archive](https://www.gharchive.org/) 已完整归档的今日公开 WatchEvent，排名会随当日数据变动。
-- 📈 **昨日完整新增榜** —— 只在 24/24 小时全部通过校验后发布，作为可固定访问的历史日榜。
-- 🔁 **候选池净增榜** —— 用北京时间连续快照追踪一个候选池，计算真实发生的 Star 净增（日 / 7 日 / 30 日）。
+- 🔁 **昨日净增榜** —— 用北京时间连续零点快照追踪候选池，计算上一完整自然日真实发生的 Star 净增。
+- 📈 **7 日 / 30 日净增榜** —— 只使用连续有效快照窗口，不用缺失日期凑数。
 - 🧭 **组合筛选结果** —— 在当前榜单页面选择语言、项目方向、产品形态和适用场景，直接从受控深度池中重排最多 500 项，并保留总榜名次。
 - 🏆 **全站历史星标 Top 1000** —— 累计 Star 最高的 1000 个开源项目「名人堂」。
 - 🀄 **中文项目内容** —— 由 GitHub Models 生成的中文功能名与简介，原文一键切换。
@@ -39,7 +36,7 @@
 - ⭐ **可选 GitHub 收藏同步** —— 不登录仍可使用本机收藏、最近查看和对比；登录后收藏会调用 GitHub Star / Unstar，旧的本地收藏只在用户明确确认后手动批量同步。
 - ⏱️ **更新倒计时** —— 每个榜单显示下次计划更新时间和实时倒计时；到点后转为等待自动发布状态。
 
-> ⚠️ **关于「全站」二字**：事件榜的「全站」严格指 **GH Archive 实际归档的 GitHub 公开事件范围**，不是 GitHub 官方内部统计，也不扣除取消 Star。这是一张诚实的**观测榜**，而非官方净增榜。
+> ⚠️ **关于覆盖范围**：昨日净增榜来自最多 2,000 个持续跟踪的公开候选仓库，是一张诚实的**候选池观测榜**，不是 GitHub 全站绝对完整排行。
 
 ---
 
@@ -47,9 +44,7 @@
 
 | 榜单 | 口径 | 排序指标 | 深度 | 更新频率 | 页面 |
 | :-- | :-- | :-- | :-: | :-- | :-- |
-| 今日实时新增榜 | GH Archive 小时归档 | 截止时间内唯一加星用户数 | 最多 Top 500（5 页） | 01:45–23:45 每小时 | [`/`](https://728792899-create.github.io/open-source-star-rank/) |
-| 昨日完整新增榜 | GH Archive 24/24 小时 | 北京时间自然日唯一加星用户数 | Top 500（5 页） | 每日 07:30 | [`/events/yesterday/`](https://728792899-create.github.io/open-source-star-rank/events/yesterday/) |
-| 候选池净增榜 | 连续快照候选池 | 当日 Star 净增 | 最多 Top 500 | 每日 00:20 | [`/daily/`](https://728792899-create.github.io/open-source-star-rank/daily/) |
+| 昨日净增榜 | 连续快照候选池 | 上一自然日 Star 净增 | 最多 Top 500 | 每日 00:20 | [`/`](https://728792899-create.github.io/open-source-star-rank/) |
 | 7 日 / 30 日榜 | 连续快照候选池 | 周期 Star 净增 | 最多 Top 500 | 每日 | [`/period/7d/`](https://728792899-create.github.io/open-source-star-rank/period/7d/) |
 | 语言净增榜 | 连续快照候选池 | 当日 Star 净增 | 最多 Top 500 | 每日 | [`/language/`](https://728792899-create.github.io/open-source-star-rank/language/) |
 | **组合筛选结果** ✨ | 各榜受控深度池 | 沿当前榜口径筛选重排 | 最多 500 项 | 随榜更新 | 各榜单页内直接筛选 |
@@ -61,20 +56,17 @@
 
 ## 系统架构
 
-四条相互独立的数据管线各自采集、校验、发布到机器数据分支 `star-rank-data`，Astro 在构建时把它们组合成静态站点，最终部署到 GitHub Pages。任何一条管线失败都不会污染其它管线。
+三条相互独立的数据管线各自采集、校验、发布到机器数据分支 `star-rank-data`，Astro 在构建时把它们组合成静态站点，最终部署到 GitHub Pages。任何一条管线失败都不会污染其它管线。
 
 ```mermaid
 flowchart LR
     subgraph 数据源
-        GHA["GH Archive<br/>(小时文件 + BigQuery)"]
         SNAP["GitHub Search<br/>候选池快照"]
         STAR["GitHub Search<br/>按 star 降序"]
         MODELS["GitHub Models<br/>免费额度"]
     end
 
     subgraph 采集管线["采集管线 (Python · GitHub Actions)"]
-        E["完整事件榜<br/>event_star_rank"]
-        LIVE["今日实时榜<br/>event_live_rank"]
         C["候选池采集器<br/>star_rank"]
         A["历史榜采集器<br/>alltime_star_rank"]
         L["中文 + 分类<br/>localize / classify"]
@@ -87,8 +79,6 @@ flowchart LR
         PAGES["GitHub Pages"]
     end
 
-    GHA --> E --> DATA
-    GHA --> LIVE --> DATA
     SNAP --> C --> DATA
     STAR --> A --> DATA
     DATA --> L
@@ -102,19 +92,18 @@ flowchart LR
 
 过去筛选只隐藏当前页面中不匹配的项目。现在用户可在任意榜单页组合选择语言、方向、形态和场景；系统从该榜的受控深度池中重新排序并最多返回 500 项，使用 `result_page` 每页展示 100 项，不足时展示全部匹配结果。
 
-事件榜使用最多 1000 项扩展池；候选池日榜和 7/30 日榜使用全部可比较候选（最多 2000 项）；历史累计榜使用 Top 1000。深度池永久保留，历史日期也能恢复相同筛选条件并计算筛选榜名次变化。
+昨日净增榜和 7/30 日榜使用全部可比较候选（最多 2000 项）；历史累计榜使用 Top 1000。深度池永久保留，历史日期也能恢复相同筛选条件并计算筛选榜名次变化。
 
 ```mermaid
 flowchart TD
-    Q["BigQuery 全站日增量<br/>ORDER BY 唯一加星用户数 DESC"] --> T["✅ 验证并发布严格 Top 500"]
-    T --> P["继续补全元数据<br/>→ 受控深度池（≤ 1000 项）"]
+    Q["连续零点快照<br/>计算候选池净增"] --> P["受控深度池（≤ 2000 项）"]
     P --> SPLIT{"语言 + 方向 + 形态 + 场景<br/>维度间取交集"}
     SPLIT --> L["实时生成筛选 Top 500"]
     SPLIT --> D["显示筛选名次 + 总榜名次"]
     SPLIT --> F["前一日同条件计算升降"]
 ```
 
-- 事件榜前 500 项是**严格门槛**：在 900 个候选和 950 次 API 请求预算内不足 500 个有效公开仓库时，整次发布失败并保留旧榜；500–1,000 项扩展筛选池才是尽力而为。
+- 日榜最多发布 500 项；可比较项目不足时发布实际数量，并明确展示候选池和可比较数量。
 - 分类由 GitHub Models 从**版本化固定词表**中选择：一个主方向、一个产品形态、1–4 个适用场景。
 - 固定词表规模：**13 个项目方向 · 8 种产品形态 · 31 个适用场景**（见 [`data/classification-taxonomy.zh-CN.json`](data/classification-taxonomy.zh-CN.json)）。
 
@@ -133,13 +122,10 @@ flowchart TD
 
 严格的契约是这个项目的核心。**不诚实的数字不如没有数字。**
 
-- **唯一加星定义**：全站公开事件新增 = 北京时间自然日内唯一 `(repository_id, actor_id)` 数量；同一用户对同一仓库每天最多计一次。
-- **不是官方净增**：GH Archive 是第三方公共事件归档；事件榜扫描其归档的全部公开事件，但不包含私有活动、无法证明官方内部事件无遗漏，也不扣除取消 Star。
-- **完整性证明**：实时榜仅累计已完整归档的小时；昨日完整榜必须证明统计窗口 **24/24 小时**均有源事件，并在全局排序后获得完整 500 个有效公开仓库。
-- **费用护栏**：事件查询先 dry-run，单次最多扫描 **24 GiB**；生产要求使用**未绑定结算账号**的 BigQuery Sandbox 项目。
+- **昨日净增定义**：相邻两次有效零点快照中的 `stargazers_count` 差值，包含取消 Star 的影响。
 - **快照纪律**：有效快照必须在北京时间 `00:00–03:00` 采集，相邻日期连续且间隔 21–27 小时；候选池最多 **2,000** 个公开仓库。
 - **不造数据**：缺失日期不补采、不补零、不插值。
-- **数据留存**：机器数据在独立的 `star-rank-data` 分支；公开日榜永久保留，完整候选快照保留 90 日，扩展分类池保留 14 日，全量事件聚合仅在数据分支保留 30 日。
+- **数据留存**：机器数据在独立的 `star-rank-data` 分支；公开日榜永久保留，完整候选快照保留 90 日。
 - **中文与分类**：由 GitHub Models 生成并按 repository ID 缓存，**只使用 Actions 自带令牌与免费额度**；模型不可用时回退 GitHub 原文或「分类待生成」，不阻塞榜单。人工修订见 [`data/localization-overrides.zh-CN.json`](data/localization-overrides.zh-CN.json) 与 [`data/classification-overrides.zh-CN.json`](data/classification-overrides.zh-CN.json)。
 - **隐私与授权**：不登录时，收藏、对比和最近查看只保存在浏览器 `localStorage`。可选 GitHub App 登录只申请 Metadata 读取与 Starring 读写；GitHub 访问 / 刷新令牌经 AES-GCM 加密存在 Cloudflare D1，浏览器只在 `sessionStorage` 保留最长 8 小时的不透明站点会话。退出会删除服务端会话。
 
@@ -152,10 +138,7 @@ flowchart TD
 | 数据 | 接口 |
 | :-- | :-- |
 | 候选池索引 | [`/data/index.json`](https://728792899-create.github.io/open-source-star-rank/data/index.json) |
-| 全站公开事件 | [`/data/events/index.json`](https://728792899-create.github.io/open-source-star-rank/data/events/index.json) |
-| 今日实时榜 | [`/data/events/live.json`](https://728792899-create.github.io/open-source-star-rank/data/events/live.json) |
-| 事件榜筛选深池（永久） | `/data/events/category/YYYY-MM-DD.json` |
-| 候选/周期筛选深池（永久） | `/data/explore/daily/YYYY-MM-DD.json` · `/data/explore/period/{7d\|30d}/YYYY-MM-DD.json` |
+| 日榜与周期筛选深池 | `/data/explore/daily/YYYY-MM-DD.json` · `/data/explore/period/{7d\|30d}/YYYY-MM-DD.json` |
 | 全站历史星标 | [`/data/alltime/top-1000.json`](https://728792899-create.github.io/open-source-star-rank/data/alltime/top-1000.json) |
 | 中文项目内容 | [`/data/i18n/zh-CN/repositories.json`](https://728792899-create.github.io/open-source-star-rank/data/i18n/zh-CN/repositories.json) |
 | 项目分类 | [`/data/classification/index.json`](https://728792899-create.github.io/open-source-star-rank/data/classification/index.json) |
@@ -177,9 +160,7 @@ flowchart TD
 ```text
 open-source-star-rank/
 ├── tools/                      # Python 采集与校验管线
-│   ├── event_star_rank.py      #   全站公开事件榜 + 扩展分类池
-│   ├── event_live_rank.py      #   今日小时级实时新增榜
-│   ├── star_rank.py            #   候选池快照采集与净增榜
+│   ├── star_rank.py            #   候选池快照采集与昨日净增榜
 │   ├── alltime_star_rank.py    #   ✨ 全站历史星标 Top 1000 采集
 │   ├── localize_repositories.py#   GitHub Models 中文内容
 │   ├── classify_repositories.py#   固定词表分类
@@ -217,7 +198,7 @@ node scripts/create-e2e-data.mjs
 STAR_RANK_DATA_DIR="$PWD/.e2e-data" npm run build && npm run validate-build
 ```
 
-测试夹具由 `scripts/create-e2e-data.mjs` 在临时目录生成，包含 40 个候选日期、7 个事件日期、**1000 项事件筛选池**、**1000 项历史星标榜**、2000 个候选项目页与中文 / 分类，不会进入生产数据。
+测试夹具由 `scripts/create-e2e-data.mjs` 在临时目录生成，包含 40 个候选日期、**1000 项历史星标榜**、2000 个候选项目页与中文 / 分类，不会进入生产数据。
 
 ---
 
@@ -229,6 +210,6 @@ STAR_RANK_DATA_DIR="$PWD/.e2e-data" npm run build && npm run validate-build
 
 <div align="center">
 
-**数据来自 GH Archive 与 GitHub 公共 API · 实时榜每小时更新 · 可在现有免费额度内运行**
+**数据来自 GitHub 公共 API · 昨日净增榜每日更新 · 可在现有免费额度内运行**
 
 </div>

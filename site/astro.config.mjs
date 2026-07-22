@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import { existsSync, readFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -30,18 +30,7 @@ try {
     const ranking = JSON.parse(readFileSync(path.join(dataRoot, 'daily', `${date}.json`), 'utf8'));
     rememberRankingPages(`/daily/${date}/`, ranking);
   }
-  const eventIndexPath = path.join(dataRoot, 'events', 'index.json');
-  if (existsSync(eventIndexPath)) {
-    const eventIndex = JSON.parse(readFileSync(eventIndexPath, 'utf8'));
-    if (eventIndex.updated_at) {
-      rememberLatest('/', eventIndex.updated_at);
-      rememberLatest('/status/', eventIndex.updated_at);
-    }
-    for (const date of eventIndex.available_dates ?? []) {
-      const ranking = JSON.parse(readFileSync(path.join(dataRoot, 'events', 'daily', `${date}.json`), 'utf8'));
-      rememberRankingPages(`/events/daily/${date}/`, ranking);
-    }
-  }
+  if (index.updated_at) rememberLatest('/', index.updated_at);
   for (const range of ['7d', '30d']) {
     for (const date of index.periods?.[range]?.available_dates ?? []) {
       const ranking = JSON.parse(readFileSync(path.join(dataRoot, 'period', range, `${date}.json`), 'utf8'));

@@ -18,7 +18,7 @@ export const GET: APIRoute = ({ site }) => {
       const content = localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description);
       return `#${entry.rank} ${content.displayName}（${entry.full_name}，${entry.stars_gained >= 0 ? '+' : ''}${entry.stars_gained}）`;
     }).join('；');
-    return `<entry><id>${xml(link)}</id><title>${date} GitHub Star 净增排行</title><link href="${xml(link)}"/><updated>${new Date(ranking.window_end).toISOString()}</updated><summary>${xml(`当日 Top 10：${top}`)}</summary></entry>`;
+    return `<entry><id>${xml(link)}</id><title>${date} GitHub 昨日 Star 净增排行</title><link href="${xml(link)}"/><updated>${new Date(ranking.window_end).toISOString()}</updated><summary>${xml(`昨日 Top 10：${top}`)}</summary></entry>`;
   }).join('');
   const updated = index.updated_at ? new Date(index.updated_at).toISOString() : new Date(0).toISOString();
   return new Response(`<?xml version="1.0" encoding="UTF-8"?>\n<feed xmlns="http://www.w3.org/2005/Atom"><id>${xml(home)}</id><title>开源星榜</title><link href="${xml(home)}"/><link rel="self" href="${xml(self)}"/><updated>${updated}</updated>${entries}</feed>\n`, { headers: { 'Content-Type': 'application/atom+xml; charset=utf-8' } });

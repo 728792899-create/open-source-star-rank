@@ -1,60 +1,49 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import EventInitialization from '../components/EventInitialization.astro';
+import Initialization from '../components/Initialization.astro';
 import RankingView from '../components/RankingView.astro';
-import {
-  readEventCategoryPool, readLocalizationCatalog,
-} from '../lib/data';
+import { readDailyRanking, readExplorationPool, readLocalizationCatalog, readRankingIndex } from '../lib/data';
 import { localizedRepositoryContent } from '../lib/localization';
-import { readDefaultRanking } from '../lib/default-ranking';
 import { withBase } from '../lib/paths';
 
-const { eventIndex, ranking, isLive, fallbackNotice } = readDefaultRanking();
-const localization = readLocalizationCatalog();
-const exploration = ranking && !isLive ? readEventCategoryPool(ranking.date) : null;
+const index = readRankingIndex();
+const ranking = index.latest_date ? readDailyRanking(index.latest_date) : null;
+const exploration = ranking ? readExplorationPool('daily', ranking.date) : null;
 const previousDate = ranking ? new Date(`${ranking.date}T12:00:00Z`) : null;
 if (previousDate) previousDate.setUTCDate(previousDate.getUTCDate() - 1);
 const previousDateValue = previousDate?.toISOString().slice(0, 10) ?? null;
-const previousExploration = !isLive && previousDateValue ? readEventCategoryPool(previousDateValue) : null;
+const previousExploration = previousDateValue ? readExplorationPool('daily', previousDateValue) : null;
+const localization = readLocalizationCatalog();
 const firstPageEntries = ranking?.entries.slice(0, 100) ?? [];
 const structuredData = ranking ? {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: `${ranking.date} GitHub ${isLive ? '今日实时' : '昨日完整'}新增 Star 排行`,
+  name: `${ranking.date} GitHub 昨日 Star 净增排行`,
   numberOfItems: firstPageEntries.length,
   itemListElement: firstPageEntries.map((entry) => ({
-    '@type': 'ListItem', position: entry.rank, url: new URL(withBase(`/repo/${entry.repository_id}/`), Astro.site ?? Astro.url.origin).toString(),
+    '@type': 'ListItem',
+    position: entry.rank,
+    url: new URL(withBase(`/repo/${entry.repository_id}/`), Astro.site ?? Astro.url.origin).toString(),
     name: localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description).displayName,
   })),
 } : undefined;
-const socialImagePath = ranking && !isLive ? `/social/events-daily-${ranking.date}.png` : '/og.png';
 ---
 
 <BaseLayout
-  title="开源星榜｜GitHub 今日实时新增 Star 排行"
-  description="按 GH Archive 已归档的 GitHub 公开 WatchEvent 完整小时滚动累计，展示今日实时新增 Star 排名。"
+  title="开源星榜｜GitHub 昨日 Star 净增排行"
+  description="按北京时间连续零点快照计算候选池项目昨日 Star 净增，展示真实增加与取消关注后的变化。"
   structuredData={structuredData}
-  socialImagePath={socialImagePath}
-  nextPath={ranking && ranking.entries.length > 100 ? isLive ? '/events/live/page/2/' : `/events/daily/${ranking.date}/page/2/` : undefined}
+  socialImagePath={ranking ? `/social/daily-${ranking.date}.png` : '/og.png'}
+  nextPath={ranking && ranking.entries.length > 100 ? `/daily/${ranking.date}/page/2/` : undefined}
 >
   {ranking ? <RankingView
     ranking={ranking}
-    index={eventIndex}
+    index={index}
     isLatest
-    mode="event"
-    availableDates={eventIndex.available_dates}
-    routePrefix={isLive ? "/events/live" : "/events/daily"}
-    dataPrefix="/data/events/daily"
-    alternateHref="/events/yesterday/"
-    alternateLabel="查看昨日完整榜"
-    switcherLabelOverride={isLive ? '今日实时新增榜' : '昨日完整新增榜'}
-    fallbackNotice={fallbackNotice}
-    explorationPath={exploration ? `/data/events/category/${ranking.date}.json` : undefined}
-    previousExplorationPath={previousExploration ? `/data/events/category/${previousDateValue}.json` : undefined}
+    switcherLabelOverride="昨日净增榜"
+    explorationPath={exploration ? `/data/explore/daily/${ranking.date}.json` : undefined}
+    previousExplorationPath={previousExploration ? `/data/explore/daily/${previousDateValue}.json` : undefined}
     explorationEntries={exploration?.entries ?? []}
-    pageBasePath={isLive ? '/events/live/' : `/events/daily/${ranking.date}/`}
-    live={isLive}
-    showDateTools={!isLive}
-    rankingJsonPathOverride={isLive ? '/data/events/live.json' : undefined}
-  /> : <EventInitialization index={eventIndex} />}
+    pageBasePath={`/daily/${ranking.date}/`}
+  /> : <Initialization index={index} />}
 </BaseLayout>

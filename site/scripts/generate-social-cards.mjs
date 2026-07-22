@@ -42,11 +42,7 @@ await mkdir(outputRoot, { recursive: true });
 const jobs = [];
 for (const file of await jsonFiles(path.join(dataRoot, 'daily'))) {
   const ranking = JSON.parse(await readFile(file, 'utf8'));
-  jobs.push({ ranking: withLocalizedNames(ranking), label: `每日净增 Top ${ranking.ranking_limit ?? 100}`, name: `daily-${ranking.date}.png` });
-}
-for (const file of await jsonFiles(path.join(dataRoot, 'events', 'daily'))) {
-  const ranking = JSON.parse(await readFile(file, 'utf8'));
-  jobs.push({ ranking: withLocalizedNames(ranking), label: `全站公开事件新增 Top ${ranking.ranking_limit ?? 100}`, name: `events-daily-${ranking.date}.png`, eventMode: true });
+  jobs.push({ ranking: withLocalizedNames(ranking), label: `昨日净增 Top ${ranking.ranking_limit ?? 100}`, name: `daily-${ranking.date}.png` });
 }
 for (const file of await jsonFiles(path.join(dataRoot, 'period'))) {
   const ranking = JSON.parse(await readFile(file, 'utf8'));

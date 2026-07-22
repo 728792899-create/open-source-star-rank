@@ -2,61 +2,29 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 const latestPath = 'daily/2026-07-14/';
-const latestEventPath = 'events/daily/2026-07-14/';
 
-test('keeps the live public event ranking as the homepage default', async ({ page }) => {
+test('keeps the latest yesterday net ranking as the homepage default', async ({ page }) => {
   await page.clock.setFixedTime(new Date('2026-07-15T04:45:00Z'));
   await page.goto('');
-  await expect(page.getByRole('heading', { name: '今日实时新增 Star 排行' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '昨日 Star 净增排行' })).toBeVisible();
   await expect(page.locator('main h1')).toHaveCount(1);
   await expect(page.locator('main h2')).toHaveCount(0);
   await expect(page.locator('.freshness-status.compact')).toContainText('数据正常');
-  await expect(page.locator('[data-ranking-mode="event"] [data-ranking-row]')).toHaveCount(100);
-  await expect(page.getByRole('link', { name: /查看昨日完整榜/ })).toBeVisible();
-  await expect(page.getByRole('link', { name: /查看昨日完整榜/ })).toHaveAttribute('href', '/open-source-star-rank/events/yesterday/');
-  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /og\.png$/);
+  await expect(page.locator('[data-ranking-mode="daily"] [data-ranking-row]')).toHaveCount(100);
+  await expect(page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '昨日净增榜' })).toBeVisible();
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /social\/daily-2026-07-14\.png$/);
   await expect(page.locator('.site-header').getByRole('link', { name: 'GitHub ↗' }))
     .toHaveAttribute('href', 'https://github.com/728792899-create/open-source-star-rank');
   await expect(page.locator('.site-footer').getByRole('link', { name: '复用声明 ↗' }))
     .toHaveAttribute('href', 'https://github.com/728792899-create/open-source-star-rank/blob/main/REUSE.md');
 });
 
-test('keeps a stale live event ranking visible instead of changing ranking scope', async ({ page }) => {
+test('keeps the latest published net ranking visible when collection is stale', async ({ page }) => {
   await page.clock.setFixedTime(new Date('2026-07-18T00:00:00Z'));
   await page.goto('');
   await page.waitForTimeout(2_100);
-  await expect(page.locator('[data-ranking-mode="event"] [data-ranking-row]')).toHaveCount(100);
-  await expect(page.locator('.freshness-status.stale')).toContainText('当前保留 2026-07-15 的最后一次实时状态');
-  await expect(page.locator('[data-live-rollover]')).toBeVisible();
-  await expect(page.getByRole('link', { name: /查看昨日完整榜/ })).toBeVisible();
-});
-
-test('publishes the complete public event archive with internal project links and source metrics', async ({ page }) => {
-  await page.goto(latestEventPath);
-  await expect(page.getByRole('heading', { name: '完整新增 Star 排行' })).toBeVisible();
-  await expect(page.locator('[data-ranking-row]')).toHaveCount(100);
-  await page.getByText(/查看数据详情：GH Archive/).click();
-  await expect(page.getByText('0.88 GiB')).toBeVisible();
-  await expect(page.locator('.collection-details').getByText('24 / 24 小时')).toBeVisible();
-  await expect(page.locator('.collection-details').getByText('2,000,000')).toBeVisible();
-  await expect(page.getByText('当日获得公开加星的仓库')).toBeVisible();
-  await expect(page.getByText('不是 GitHub 仓库总数')).toBeVisible();
-  await expect(page.getByText('唯一新增加星用户', { exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: /测试项目 30001/ })).toHaveAttribute('href', '/open-source-star-rank/repo/30001/');
-  await expect(page.getByRole('link', { name: '在 GitHub 打开 public-event-labs/project-001' })).toHaveAttribute('href', 'https://github.com/public-event-labs/project-001');
-  await expect(page.locator('.project-source-name').filter({ hasText: 'public-event-labs/project-001' })).toBeVisible();
-});
-
-test('separates the live ranking from the verified yesterday ranking', async ({ page }) => {
-  await page.goto('events/live/');
-  await expect(page.getByRole('heading', { name: '今日实时新增 Star 排行' })).toBeVisible();
-  await page.getByText(/查看实时数据详情/).click();
-  await expect(page.getByText('12 / 24 小时')).toBeVisible();
-  await expect(page.getByRole('link', { name: /查看昨日完整榜/ })).toBeVisible();
-  await page.goto('events/yesterday/');
-  await expect(page.getByRole('heading', { name: '昨日完整新增 Star 排行' })).toBeVisible();
-  await expect(page.getByText('24 小时完整榜')).toBeVisible();
-  await expect(page.getByRole('link', { name: /查看今日实时榜/ })).toBeVisible();
+  await expect(page.locator('[data-ranking-mode="daily"] [data-ranking-row]')).toHaveCount(100);
+  await expect(page.locator('.freshness-status.stale')).toBeVisible();
 });
 
 test('renders 100 static rows and passes automated accessibility checks', async ({ page }) => {
@@ -84,14 +52,14 @@ test('restores search and language filters from the URL and shows an empty state
 });
 
 test('publishes Top 500 as five static pages with continuous global ranks', async ({ page }) => {
-  await page.goto(`${latestEventPath}page/2/`);
+  await page.goto(`${latestPath}page/2/`);
   const rows = page.locator('[data-ranking-row]');
   await expect(rows).toHaveCount(100);
   await expect(rows.first()).toHaveAttribute('data-rank', '101');
   await expect(rows.last()).toHaveAttribute('data-rank', '200');
-  await expect(page.locator('link[rel="prev"]')).toHaveAttribute('href', /events\/daily\/2026-07-14\/$/);
-  await expect(page.locator('link[rel="next"]')).toHaveAttribute('href', /events\/daily\/2026-07-14\/page\/3\/$/);
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /events\/daily\/2026-07-14\/page\/2\/$/);
+  await expect(page.locator('link[rel="prev"]')).toHaveAttribute('href', /daily\/2026-07-14\/$/);
+  await expect(page.locator('link[rel="next"]')).toHaveAttribute('href', /daily\/2026-07-14\/page\/3\/$/);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /daily\/2026-07-14\/page\/2\/$/);
   await page.getByRole('link', { name: '5', exact: true }).click();
   await expect(page.locator('[data-ranking-row]').first()).toHaveAttribute('data-rank', '401');
   await expect(page.locator('[data-ranking-row]').last()).toHaveAttribute('data-rank', '500');
@@ -136,11 +104,7 @@ test('navigates historical dates and keeps direct no-JavaScript content readable
   await page.goto(latestPath);
   await page.getByLabel('选择历史榜单日期').selectOption('/open-source-star-rank/daily/2026-07-13/');
   await expect(page).toHaveURL(/daily\/2026-07-13\/$/);
-  await expect(page.getByRole('link', { name: '查看同日全站公开事件新增榜 →' }))
-    .toHaveAttribute('href', '/open-source-star-rank/events/daily/2026-07-13/');
-  await page.goto('events/daily/2026-07-13/');
-  await expect(page.getByRole('link', { name: '查看同日候选池净增榜 →' }))
-    .toHaveAttribute('href', '/open-source-star-rank/daily/2026-07-13/');
+  await expect(page.getByRole('heading', { name: '昨日 Star 净增排行' })).toBeVisible();
   const context = await browser.newContext({ javaScriptEnabled: false });
   const noScriptPage = await context.newPage();
   await noScriptPage.goto(latestPath);
@@ -245,6 +209,10 @@ test('collapses advanced filters on mobile and reopens them for restored URL sta
 test('provides a useful 404 page and keyboard focus', async ({ page }) => {
   await page.goto('/not-a-real-page/');
   await expect(page.getByRole('heading', { name: '404' })).toBeVisible();
+  for (const removedRoute of ['events/live/', 'events/yesterday/', 'events/daily/2026-07-14/']) {
+    await page.goto(removedRoute);
+    await expect(page.getByRole('heading', { name: '404' })).toBeVisible();
+  }
   await page.goto(latestPath);
   const copyButton = page.getByRole('button', { name: '复制榜单链接' });
   await copyButton.focus();
@@ -254,7 +222,7 @@ test('provides a useful 404 page and keyboard focus', async ({ page }) => {
 test('publishes status, period, language and stable repository history routes', async ({ page }) => {
   await page.goto('status/');
   await expect(page.getByRole('heading', { name: '候选池采样质量' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: '全站公开事件与费用保护' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '榜单状态' })).toBeVisible();
   await expect(page.getByText('零点窗口内，可用于排行')).toBeVisible();
   await expect(page.getByRole('heading', { name: '项目分类覆盖' })).toBeVisible();
 
@@ -264,7 +232,7 @@ test('publishes status, period, language and stable repository history routes', 
 
   await page.goto('language/');
   await page.getByRole('link', { name: /TypeScript/ }).click();
-  await expect(page.getByRole('heading', { name: 'TypeScript Star 净增排行' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'TypeScript 昨日 Star 净增排行' })).toBeVisible();
   await expect(page.locator('[data-ranking-row]')).toHaveCount(100);
 
   await page.goto('repo/10001/');
@@ -373,11 +341,11 @@ test('publishes the all-time top 1000 board with cumulative star ordering and fi
 
 test('shows repository lifecycle metadata and the next refresh countdown', async ({ page }) => {
   await page.clock.setFixedTime(new Date('2026-07-14T12:00:00Z'));
-  await page.goto(latestEventPath);
+  await page.goto(latestPath);
   await expect(page.locator('[data-update-countdown]')).toBeVisible();
   await expect(page.locator('[data-countdown-value]')).toHaveText(/\d{2}:\d{2}:\d{2}|等待自动发布/);
   const firstRow = page.locator('[data-ranking-row]').first();
-  await expect(firstRow).toContainText('作者 public-event-labs');
+  await expect(firstRow).toContainText('作者 fixture-labs');
   await expect(firstRow).toContainText('创建');
   await expect(firstRow).toContainText('最近推送');
   await expect(firstRow).toContainText('已发布');
