@@ -2,7 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Initialization from '../components/Initialization.astro';
 import RankingView from '../components/RankingView.astro';
-import { readDailyRanking, readExplorationPool, readLocalizationCatalog, readRankingIndex } from '../lib/data';
+import {
+  readDailyRanking, readExplorationPool, readLocalizationCatalog, readRankingIndex,
+} from '../lib/data';
 import { localizedRepositoryContent } from '../lib/localization';
 import { withBase } from '../lib/paths';
 
@@ -18,32 +20,34 @@ const firstPageEntries = ranking?.entries.slice(0, 100) ?? [];
 const structuredData = ranking ? {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: `${ranking.date} GitHub 昨日 Star 净增排行`,
+  name: `${ranking.date} GitHub 昨日净增榜`,
   numberOfItems: firstPageEntries.length,
   itemListElement: firstPageEntries.map((entry) => ({
-    '@type': 'ListItem',
-    position: entry.rank,
-    url: new URL(withBase(`/repo/${entry.repository_id}/`), Astro.site ?? Astro.url.origin).toString(),
+    '@type': 'ListItem', position: entry.rank, url: new URL(withBase(`/repo/${entry.repository_id}/`), Astro.site ?? Astro.url.origin).toString(),
     name: localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description).displayName,
   })),
 } : undefined;
+const socialImagePath = ranking ? `/social/daily-${ranking.date}.png` : '/og.png';
 ---
 
 <BaseLayout
-  title="开源星榜｜GitHub 昨日 Star 净增排行"
-  description="按北京时间连续零点快照计算候选池项目昨日 Star 净增，展示真实增加与取消关注后的变化。"
+  title="开源星榜｜昨日净增榜"
+  description="按 GitHub 候选池连续快照计算昨日净增排行。"
   structuredData={structuredData}
-  socialImagePath={ranking ? `/social/daily-${ranking.date}.png` : '/og.png'}
+  socialImagePath={socialImagePath}
   nextPath={ranking && ranking.entries.length > 100 ? `/daily/${ranking.date}/page/2/` : undefined}
 >
   {ranking ? <RankingView
     ranking={ranking}
     index={index}
     isLatest
-    switcherLabelOverride="昨日净增榜"
+    availableDates={index.available_dates}
+    routePrefix="/daily"
+    dataPrefix="/data/daily"
     explorationPath={exploration ? `/data/explore/daily/${ranking.date}.json` : undefined}
     previousExplorationPath={previousExploration ? `/data/explore/daily/${previousDateValue}.json` : undefined}
     explorationEntries={exploration?.entries ?? []}
     pageBasePath={`/daily/${ranking.date}/`}
+    showDateTools
   /> : <Initialization index={index} />}
 </BaseLayout>

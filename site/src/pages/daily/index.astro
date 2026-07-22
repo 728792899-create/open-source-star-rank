@@ -13,12 +13,11 @@ const previousDateValue = previousDate?.toISOString().slice(0, 10) ?? null;
 const previousExploration = previousDateValue ? readExplorationPool('daily', previousDateValue) : null;
 ---
 
-<BaseLayout title="昨日 Star 净增榜｜开源星榜" description="用北京时间连续快照计算 GitHub 候选池昨日 Star 真实净增。" socialImagePath={ranking ? `/social/daily-${ranking.date}.png` : '/og.png'} nextPath={ranking && ranking.entries.length > 100 ? `/daily/${ranking.date}/page/2/` : undefined}>
+<BaseLayout title="昨日净增榜｜开源星榜" description="用北京时间连续快照计算 GitHub 候选池的昨日真实净增。" socialImagePath={ranking ? `/social/daily-${ranking.date}.png` : '/og.png'} nextPath={ranking && ranking.entries.length > 100 ? `/daily/${ranking.date}/page/2/` : undefined}>
   {ranking ? <RankingView
     ranking={ranking}
     index={index}
     isLatest
-    switcherLabelOverride="昨日净增榜"
     explorationPath={exploration ? `/data/explore/daily/${ranking.date}.json` : undefined}
     previousExplorationPath={previousExploration ? `/data/explore/daily/${previousDateValue}.json` : undefined}
     explorationEntries={exploration?.entries ?? []}

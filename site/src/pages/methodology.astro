@@ -4,79 +4,117 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout
   title="数据口径｜开源星榜"
-  description="了解昨日 Star 净增榜的候选池范围、零点快照、连续窗口和公开数据边界。"
+  description="了解 GitHub 全站公开事件新增 Star 与候选池快照净增 Star 的差异、GH Archive 覆盖边界和费用保护。"
 >
   <main id="main-content" class="methodology shell">
-    <p class="eyebrow">Methodology · observed net growth</p>
-    <h1>昨日净增，<br /><em>每个窗口都说清。</em></h1>
-    <p class="methodology-lead">开源星榜以“昨日净增榜”为每日主榜，并提供 7 日、30 日、语言和全部历史星标榜。日榜来自持续追踪的候选池，不宣称覆盖 GitHub 全站。</p>
+    <p class="eyebrow">Methodology · dual ranking</p>
+    <h1>新增与净增，<br /><em>分开说清。</em></h1>
+    <p class="methodology-lead">开源星榜默认展示“昨日净增榜”，同时提供“全站事件新增榜”用于横向对比。“全站”限定为 GH Archive 实际归档的 GitHub 公开事件范围，不代表 GitHub 内部或官方统计。</p>
 
     <section>
       <span class="section-number">01</span>
       <div>
-        <h2>昨日净增榜如何计算</h2>
-        <div class="formula"><span>昨日净增</span><strong>=</strong><span>本次 Star 总数</span><strong>−</strong><span>上次 Star 总数</span></div>
-        <p>采集任务在北京时间每日 00:20 调度，通过相邻两次零点快照计算上一完整自然日的 Star 总数变化。净增包含用户取消 Star 的影响，因此数字可以为负。</p>
-        <p>有效快照必须位于北京时间 00:00–03:00，相邻日期连续且实际间隔为 21–27 小时。新发现项目必须拥有两个有效快照后才能参与比较。</p>
-        <p>缺失、无效日期不补采、不补零、不插值。排序依次为净增 Star、当前总 Star、仓库全名。</p>
+        <h2>全站事件榜如何计算</h2>
+        <div class="formula"><span>当日新增</span><strong>=</strong><span>北京时间当日对该仓库产生 WatchEvent 的唯一用户数</span></div>
+        <p>每个用户对同一仓库每天最多计一次，重复事件按事件 ID 去重。实时榜每小时读取 GH Archive 已完整发布的小时文件，从北京时间 00:00 累计至页面标明的截止时间；因为当日尚未结束，数字与排名都可能继续变动。</p>
+        <p>次日完整榜使用 BigQuery 重新扫描北京时间 00:00 至次日 00:00 的完整窗口，只在 24/24 个 WatchEvent 小时全部通过校验后发布。两张榜都按唯一用户数降序、WatchEvent 数降序、仓库 ID 升序排序。</p>
+        <p>它是“新增”信号，不扣除用户同日或之后取消 Star 的数量，因此不等于 Star 总数的净变化。</p>
       </div>
     </section>
 
     <section>
       <span class="section-number">02</span>
       <div>
-        <h2>候选池覆盖范围</h2>
-        <p>每天通过 GitHub Repository Search 合并最近创建、近期活跃和成熟活跃项目，最多保留 2,000 个非 Fork、未归档、未禁用的公开仓库。</p>
-        <p>GitHub Search API 每条搜索最多返回 1,000 个结果，也不能按每日 Star 增量排序，因此昨日净增榜是候选池观测榜，不是 GitHub 全站绝对完整排行。</p>
-        <p>语言榜在当日全部可比较候选项目中独立排名，最多发布 500 项；7 日和 30 日榜只使用完整的连续有效窗口。</p>
-        <a class="text-link" href="https://docs.github.com/en/rest/search/search" target="_blank" rel="noreferrer">查看 GitHub Search API 限制 →</a>
+        <h2>候选池净增榜如何计算</h2>
+        <div class="formula"><span>当日净增</span><strong>=</strong><span>本次 Star 总数</span><strong>−</strong><span>上次 Star 总数</span></div>
+        <p>每天通过 GitHub Repository Search 合并最近创建、近期活跃和成熟活跃项目，候选池最多保留 2,000 个非 Fork、未归档、未禁用的公开仓库。</p>
+        <p>采集任务在北京时间每日 00:20 调度，并保存实际执行时间。有效快照必须位于 00:00–03:00，相邻快照日期连续且实际间隔为 21–27 小时。只有同时满足这些条件的快照对才可生成榜单。</p>
+        <p>新发现项目必须拥有两个有效快照才可比较。缺失、无效日期不补采、不补零、不插值；7 日和 30 日榜需要完整的连续窗口，不会用部分日期凑数。</p>
+        <p>“净增”已经包含取消 Star 的影响，所以数字可能为负数。出现同分时依次比较当前总 Star，并以仓库全名稳定排序。</p>
       </div>
     </section>
 
     <section>
       <span class="section-number">03</span>
       <div>
-        <h2>失败时如何保护数据</h2>
-        <p>API 限流、响应不完整、快照无效、JSON Schema 不兼容或站点构建失败时，任务不会提交半成品，也不会替换上一版网站。</p>
-        <p>同一自然日普通重跑复用已有有效快照，不改变统计窗口。历史日榜永久保留，完整候选快照按保留策略维护。</p>
-        <p>项目按 repository ID 跟踪，仓库重命名不会产生新项目；删除、转私有、Fork、归档或禁用仓库不会继续进入新榜。</p>
+        <h2>GH Archive 覆盖边界与延迟</h2>
+        <p>GH Archive 是第三方的 GitHub 公开事件归档。事件榜扫描目标时间窗口内它实际归档的全部公开事件，但不覆盖私有活动，也不保证等同 GitHub 内部的完整记录。</p>
+        <p>实时榜在北京时间 01:45–23:45 每小时运行，只纳入已发布并能完整解析的小时文件；任何已完成小时不可用时保留上一次成功版。完整榜在北京时间 07:30 汇总前一自然日，并严格校验 24 个 UTC 小时。</p>
+        <div class="inline-links">
+          <a class="text-link" href="https://www.gharchive.org/" target="_blank" rel="noreferrer">了解 GH Archive →</a>
+          <a class="text-link" href="https://docs.github.com/en/rest/activity/events" target="_blank" rel="noreferrer">查看 GitHub Events 延迟说明 →</a>
+        </div>
       </div>
     </section>
 
     <section>
       <span class="section-number">04</span>
       <div>
-        <h2>中文项目名称与简介</h2>
-        <p>中文功能名和简介用于帮助中文用户快速理解项目，由 GitHub Models 根据公开仓库名称和原始描述生成，并经过结构、长度和关键标识校验。</p>
-        <p>页面始终保留 GitHub 的 owner/repository 原名和跳转链接。用户可以切换“中文 / 原文”；译文不可用时直接显示 GitHub 原文，不阻塞榜单发布。</p>
+        <h2>BigQuery 费用保护</h2>
+        <p>每次正式查询前必须执行 dry-run，且只读取目标北京时间窗口涉及的两张日表与必需字段，不读取体积较大的 payload。dry-run 估算或实际扫描超过 24 GiB 时立即失败，不发布任何部分结果。</p>
+        <p>采集项目必须使用未绑定结算账号的 BigQuery Sandbox，不创建自有表、不流式写入。免费额度不足时任务失败，而不是产生费用；扫描字节与硬上限会随榜单公开。</p>
+        <a class="text-link" href="https://cloud.google.com/bigquery/pricing" target="_blank" rel="noreferrer">查看 BigQuery 价格与免费额度 →</a>
       </div>
     </section>
 
     <section>
       <span class="section-number">05</span>
       <div>
-        <h2>项目方向、产品形态与适用场景</h2>
-        <p>分类是辅助理解层。模型从版本化固定词表中选择一个主方向、一个产品形态和 1–4 个适用场景，人工修正优先于模型结果。</p>
-        <p>语言、方向、形态和场景可组合筛选。筛选结果从榜单深度池中重新排列，最多显示 500 项，并同时保留原总榜名次。</p>
+        <h2>为什么仍保留候选池榜</h2>
+        <p>GitHub Search API 每条搜索最多返回 1,000 个结果，也不能按每日 Star 增量排序；因此候选池净增榜不是全站完整榜。但它能观察负增长、语言榜、7/30 日完整窗口与稳定项目历史，这些不能从 WatchEvent 新增信号直接推导。</p>
+        <p>语言榜在当日全部可比较候选项目中排名，不是从全局前 100 项中二次筛选，最多发布 500 项。项目历史按 repository ID 跟踪；空值保留为缺失，不解释为零增长。</p>
+        <a class="text-link" href="https://docs.github.com/en/rest/search/search" target="_blank" rel="noreferrer">查看 GitHub Search API 限制 →</a>
       </div>
     </section>
 
     <section>
       <span class="section-number">06</span>
       <div>
-        <h2>全部历史星标 Top 1000</h2>
-        <p>历史星标榜按 GitHub 搜索的累计 Star 数降序收录前 1,000 个有效公开仓库，并通过 Star 区间分段回填被过滤项目留下的空位。</p>
-        <p>该榜每周更新一次，反映长期累计关注度，不统计每日变化，也不扣除取消 Star。</p>
+        <h2>失败时如何保护数据</h2>
+        <p>实时、完整日榜和候选池三条流水线独立校验与发布。小时文件不可用、BigQuery 身份、dry-run、24 小时覆盖、GitHub 元数据或 JSON Schema 任一校验失败时，任务不会提交残缺文件、不会覆盖 Pages；线上保留上一份成功版。</p>
+        <p>事件榜先按 repository ID 汇总，再从 GitHub 补充当前名称与状态；重命名不会拆成两个项目。404、转私有、Fork、归档、禁用项目会被过滤；限流或连续网络失败则整个任务失败。</p>
+        <p>公开 Top 500 永久保留，并按每页 100 项生成五页静态 HTML；当日全部获星仓库的精简聚合状态保留 30 日，用于计算真实 7 日趋势。该状态不形成公开 JSON 接口；某仓库当日没有可用公开加星事件时，趋势保留为空值，不解释为 0。</p>
       </div>
     </section>
 
     <section>
       <span class="section-number">07</span>
       <div>
+        <h2>中文项目名称与简介</h2>
+        <p>中文功能名和简介用于帮助中文用户快速理解项目，由 GitHub Models 根据公开仓库名称和原始描述生成，并经过结构、长度和关键标识校验。中文内容不是仓库作者提供的官方译名，也不改变项目真实身份。</p>
+        <p>页面始终保留 GitHub 的 owner/repository 原名和跳转链接。用户可以在页头切换“中文 / 原文”；模型限流、免费额度耗尽或译文失效时直接显示 GitHub 原文，不阻塞榜单采集与发布。</p>
+        <p>译文按 repository ID 缓存；原名称或描述变化后旧译文自动失效。人工校订优先于模型结果，公开状态页会披露覆盖率、待处理数量、模型与提示词版本。</p>
+        <a class="text-link" href="https://docs.github.com/en/github-models" target="_blank" rel="noreferrer">了解 GitHub Models →</a>
+      </div>
+    </section>
+
+    <section>
+      <span class="section-number">08</span>
+      <div>
+        <h2>项目方向、产品形态与适用场景</h2>
+        <p>项目分类是帮助理解用途的展示层。GitHub Models 只使用公开仓库名、原始描述、编程语言及已验证的中文内容，从版本化的固定词表中选择一个主方向、一个产品形态和 1–4 个适用场景。不读取 README，也不增加 GitHub API 请求。</p>
+        <p>结果按 repository ID 缓存；来源描述、语言、中文内容或词表版本变化时自动失效。人工修正始终优先于模型结果；模型不可用时保留旧缓存或显示“分类待生成”，不阻断日榜。</p>
+        <p>分类直接服务于各榜单页面的实时筛选：语言、方向、形态和场景各维度单选，维度之间取交集。事件榜从最多 1,000 项扩展池中重排，候选池日榜和周期榜从最多 2,000 项可比较候选中重排；筛选结果最多显示 500 项，同时标明筛选名次与原总榜名次。</p>
+      </div>
+    </section>
+
+    <section>
+      <span class="section-number">09</span>
+      <div>
+        <h2>全部历史星标 Top 1000</h2>
+        <p>历史星标榜按 GitHub 搜索的累计 Star 数降序收录前 1,000 个公开仓库，剔除 fork、已归档、已禁用与私有项目。因为 GitHub Search 单条查询只暴露前 1,000 条，采集器会按 Star 区间分段下探，并完整获取截止 Star 并列桶，以回填被过滤项目留下的空位。</p>
+        <p>只有取得恰好 1,000 个经验证项目才发布；任何查询不完整、截止并列桶不可完整访问或数量不足，都保留上一版。</p>
+        <p>该榜每周更新一次，反映长期累计的关注度；它不统计每日变化，也不扣除取消 Star。选择分类条件后会在 Top 1000 母集中重新排列并最多显示 500 项。</p>
+      </div>
+    </section>
+
+    <section>
+      <span class="section-number">10</span>
+      <div>
         <h2>项目日期、倒计时与可选 GitHub 登录</h2>
-        <p>“GitHub 创建”来自仓库 created_at，“最近代码推送”来自 pushed_at，“已发布”是从仓库创建时间到当前日期的自然日差。</p>
-        <p>每个榜单根据对应索引中的调度时间显示更新倒计时。倒计时归零后会显示“等待自动发布”，直到公开索引实际更新。</p>
-        <p>不登录即可使用本机收藏与对比。选择 GitHub 登录后，收藏会同步为用户账号上的真实 Star / Unstar；站点只申请 Metadata 读取与 Starring 读写权限。</p>
+        <p>“GitHub 创建”来自仓库 `created_at`，“最近代码推送”来自 `pushed_at`，“已发布”是从仓库创建时间到当前日期的自然日差。它们不代表首个 Release 日期，也不用 GitHub 页面的一般 `updated_at` 冒充代码更新。</p>
+        <p>每个榜单根据对应索引中的调度时间显示更新倒计时。倒计时为 0 不意味数据已经发布；它会转为“等待自动发布”，并定期检查公开索引是否已变更。</p>
+        <p>不登录即可使用本机收藏与对比。选择 GitHub 登录后，收藏会变成用户账号上的真实 Star / Unstar。站点只申请 Metadata 读取与 Starring 读写；GitHub 令牌加密保存于独立授权 Worker 的 D1，浏览器只保留最长 8 小时的不透明站点会话。历史本地收藏不会自动写入 GitHub，必须由用户手动确认。</p>
       </div>
     </section>
   </main>

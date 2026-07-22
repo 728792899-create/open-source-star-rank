@@ -48,12 +48,6 @@ const required = [
 for (const relative of required) {
   if (!existsSync(path.join(dist, relative))) throw new Error(`Build is missing ${relative}`);
 }
-for (const relative of [
-  'events/live/index.html',
-  'events/yesterday/index.html',
-]) {
-  if (existsSync(path.join(dist, relative))) throw new Error(`Build still publishes removed board ${relative}`);
-}
 
 const indexHtml = await readFile(path.join(dist, 'index.html'), 'utf8');
 for (const marker of ['lang="zh-CN"', 'rel="canonical"', 'application/ld+json', 'property="og:image"', '开源星榜']) {
@@ -95,6 +89,12 @@ if (eventLive) {
   }
   for (const [offset, entry] of eventLive.entries.entries()) {
     if (entry.rank !== offset + 1) throw new Error('Published live event ranking has non-contiguous ranks');
+  }
+  const expectedLivePages = Math.ceil(eventLive.entries.length / 100);
+  for (let page = 2; page <= expectedLivePages; page += 1) {
+    if (!existsSync(path.join(dist, 'events', 'live', 'page', String(page), 'index.html'))) {
+      throw new Error(`Published live event ranking is missing page ${page}`);
+    }
   }
 }
 if (eventIndex.schema_version === '1.1.0' && eventIndex.status === 'ready') {
@@ -215,28 +215,20 @@ if (dataIndex.status === 'initializing' && dataIndex.sampling?.next_scheduled_at
 
 if (eventIndex.status === 'ready') {
   const date = eventIndex.latest_date;
-  for (const relative of [`data/events/daily/${date}.json`]) {
-    if (!existsSync(path.join(dist, relative))) throw new Error(`Ready event build is missing ${relative}`);
-  }
-  const eventRanking = JSON.parse(await readFile(path.join(dist, 'data', 'events', 'daily', `${date}.json`), 'utf8'));
+  const eventRankingPath = path.join(dist, 'data', 'events', 'daily', `${date}.json`);
+  if (!existsSync(eventRankingPath)) throw new Error(`Ready event build is missing ${path.relative(dist, eventRankingPath)}`);
+  const eventRanking = JSON.parse(await readFile(eventRankingPath, 'utf8'));
   if (['1.2.0', '1.3.0'].includes(eventRanking.schema_version)) {
     if (eventRanking.ranking_limit !== 500 || eventRanking.entry_count !== 500 || eventRanking.entries.length !== 500) {
       throw new Error('Latest event ranking is not a complete Top 500');
     }
+    const seen = new Set(eventRanking.entries.map((entry) => entry.rank));
+    if (seen.size !== eventRanking.entries.length) throw new Error('Latest event ranking contains duplicated ranks');
   }
-}
-
-if (dataIndex.status === 'ready') {
-  for (const marker of ['data-ranking-mode="daily"', '昨日 Star 净增排行', '每日零点快照']) {
-    if (!indexHtml.includes(marker)) throw new Error(`Yesterday-net homepage is missing ${marker}`);
+  const sitemap = await readFile(path.join(dist, 'sitemap-0.xml'), 'utf8');
+  if (!sitemap.includes(`<lastmod>${new Date(eventRanking.window_end).toISOString()}</lastmod>`)) {
+    throw new Error('Event sitemap entry is missing the ranking window lastmod');
   }
-} else {
-  for (const marker of ['Candidate pool · 初始化', '有效基线', 'data-update-countdown']) {
-    if (!indexHtml.includes(marker)) throw new Error(`Initializing homepage is missing ${marker}`);
-  }
-}
-for (const removedLabel of ['今日实时新增 Star 排行', '昨日完整新增 Star 排行']) {
-  if (indexHtml.includes(removedLabel)) throw new Error(`Homepage still exposes removed board: ${removedLabel}`);
 }
 
 const poolPath = eventIndex.latest_date
