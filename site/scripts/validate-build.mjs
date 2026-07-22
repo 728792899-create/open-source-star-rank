@@ -226,8 +226,14 @@ if (eventIndex.status === 'ready') {
   }
 }
 
-for (const marker of ['data-ranking-mode="daily"', '昨日 Star 净增排行', '每日零点快照']) {
-  if (!indexHtml.includes(marker)) throw new Error(`Yesterday-net homepage is missing ${marker}`);
+if (dataIndex.status === 'ready') {
+  for (const marker of ['data-ranking-mode="daily"', '昨日 Star 净增排行', '每日零点快照']) {
+    if (!indexHtml.includes(marker)) throw new Error(`Yesterday-net homepage is missing ${marker}`);
+  }
+} else {
+  for (const marker of ['Candidate pool · 初始化', '有效基线', 'data-update-countdown']) {
+    if (!indexHtml.includes(marker)) throw new Error(`Initializing homepage is missing ${marker}`);
+  }
 }
 for (const removedLabel of ['今日实时新增 Star 排行', '昨日完整新增 Star 排行']) {
   if (indexHtml.includes(removedLabel)) throw new Error(`Homepage still exposes removed board: ${removedLabel}`);
