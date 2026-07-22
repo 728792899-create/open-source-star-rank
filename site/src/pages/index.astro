@@ -3,13 +3,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Initialization from '../components/Initialization.astro';
 import RankingView from '../components/RankingView.astro';
 import {
-  readDailyRanking, readEventRankingIndex, readExplorationPool, readLocalizationCatalog, readRankingIndex,
+  readDailyRanking, readExplorationPool, readLocalizationCatalog, readRankingIndex,
 } from '../lib/data';
 import { localizedRepositoryContent } from '../lib/localization';
 import { withBase } from '../lib/paths';
 
 const index = readRankingIndex();
-const eventIndex = readEventRankingIndex();
 const ranking = index.latest_date ? readDailyRanking(index.latest_date) : null;
 const exploration = ranking ? readExplorationPool('daily', ranking.date) : null;
 const previousDate = ranking ? new Date(`${ranking.date}T12:00:00Z`) : null;
@@ -45,8 +44,6 @@ const socialImagePath = ranking ? `/social/daily-${ranking.date}.png` : '/og.png
     availableDates={index.available_dates}
     routePrefix="/daily"
     dataPrefix="/data/daily"
-    alternateHref={eventIndex.latest_date ? `/events/daily/${eventIndex.latest_date}/` : '/events/daily/'}
-    alternateLabel="查看全站事件新增榜"
     explorationPath={exploration ? `/data/explore/daily/${ranking.date}.json` : undefined}
     previousExplorationPath={previousExploration ? `/data/explore/daily/${previousDateValue}.json` : undefined}
     explorationEntries={exploration?.entries ?? []}

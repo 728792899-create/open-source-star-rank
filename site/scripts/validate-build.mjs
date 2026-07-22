@@ -35,8 +35,6 @@ const required = [
   'data/schema/classification-index.schema.json',
   'data/schema/classification-repositories.schema.json',
   'data/events/index.json',
-  'events/live/index.html',
-  'events/yesterday/index.html',
   'data/i18n/zh-CN/repositories.json',
   'data/classification/index.json',
   'data/classification/repositories.json',
@@ -217,58 +215,19 @@ if (dataIndex.status === 'initializing' && dataIndex.sampling?.next_scheduled_at
 
 if (eventIndex.status === 'ready') {
   const date = eventIndex.latest_date;
-  for (const relative of [
-    `events/daily/${date}/index.html`,
-    `data/events/daily/${date}.json`,
-    `social/events-daily-${date}.png`,
-  ]) {
-    if (!existsSync(path.join(dist, relative))) throw new Error(`Ready event build is missing ${relative}`);
-  }
-  const eventRanking = JSON.parse(await readFile(path.join(dist, 'data', 'events', 'daily', `${date}.json`), 'utf8'));
+  const eventRankingPath = path.join(dist, 'data', 'events', 'daily', `${date}.json`);
+  if (!existsSync(eventRankingPath)) throw new Error(`Ready event build is missing ${path.relative(dist, eventRankingPath)}`);
+  const eventRanking = JSON.parse(await readFile(eventRankingPath, 'utf8'));
   if (['1.2.0', '1.3.0'].includes(eventRanking.schema_version)) {
     if (eventRanking.ranking_limit !== 500 || eventRanking.entry_count !== 500 || eventRanking.entries.length !== 500) {
       throw new Error('Latest event ranking is not a complete Top 500');
     }
-    const seen = new Set();
-    for (let page = 1; page <= 5; page += 1) {
-      const pagePath = page === 1
-        ? path.join(dist, 'events', 'daily', date, 'index.html')
-        : path.join(dist, 'events', 'daily', date, 'page', String(page), 'index.html');
-      if (!existsSync(pagePath)) throw new Error(`Latest event ranking is missing page ${page}`);
-      const html = await readFile(pagePath, 'utf8');
-      const ranks = [...html.matchAll(/data-rank="(\d+)"/g)].map((match) => Number(match[1]));
-      if (ranks.length !== 100 || ranks[0] !== (page - 1) * 100 + 1 || ranks.at(-1) !== page * 100) {
-        throw new Error(`Latest event ranking page ${page} has incorrect global ranks`);
-      }
-      for (const rank of ranks) {
-        if (seen.has(rank)) throw new Error(`Latest event ranking duplicates global rank ${rank}`);
-        seen.add(rank);
-      }
-      if (page > 1 && (!html.includes('rel="prev"') || (page < 5 && !html.includes('rel="next"')))) {
-        throw new Error(`Latest event ranking page ${page} is missing prev/next relations`);
-      }
-    }
+    const seen = new Set(eventRanking.entries.map((entry) => entry.rank));
+    if (seen.size !== eventRanking.entries.length) throw new Error('Latest event ranking contains duplicated ranks');
   }
   const sitemap = await readFile(path.join(dist, 'sitemap-0.xml'), 'utf8');
   if (!sitemap.includes(`<lastmod>${new Date(eventRanking.window_end).toISOString()}</lastmod>`)) {
     throw new Error('Event sitemap entry is missing the ranking window lastmod');
-  }
-}
-
-const eventIsDefault = Boolean(eventLive?.entries.length) || (eventIndex.status === 'ready' && Boolean(eventIndex.latest_date));
-const eventYesterdayHtml = await readFile(path.join(dist, 'events', 'yesterday', 'index.html'), 'utf8');
-if (eventLive?.entries.length) {
-  const eventLiveHtml = await readFile(path.join(dist, 'events', 'live', 'index.html'), 'utf8');
-  for (const marker of ['data-ranking-mode="event"', '今日实时新增 Star 排行', '每小时更新', 'GH Archive']) {
-    if (!eventLiveHtml.includes(marker)) throw new Error(`Live-event page is missing ${marker}`);
-  }
-} else if (eventIsDefault) {
-  for (const marker of ['data-ranking-mode="event"', '昨日完整新增 Star 排行', 'GH Archive']) {
-    if (!eventYesterdayHtml.includes(marker)) throw new Error(`Complete-event page is missing ${marker}`);
-  }
-} else {
-  for (const marker of ['GitHub public events · 完整榜初始化', '全站公开事件', '24 小时覆盖']) {
-    if (!eventYesterdayHtml.includes(marker)) throw new Error(`Event initialization page is missing ${marker}`);
   }
 }
 
