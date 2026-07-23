@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-07-22T04:10:29.437713Z",
+  "generated_at": "2026-07-23T04:01:02.290183Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3969,
-    "localized_count": 3943,
-    "pending_count": 26,
-    "failed_count": 26,
-    "coverage_ratio": 0.993449
+    "localized_count": 3948,
+    "pending_count": 21,
+    "failed_count": 21,
+    "coverage_ratio": 0.994709
   },
   "repositories": [
     {
@@ -28993,6 +28993,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1183244122,
+      "source_full_name": "zhouhengamerica/XLens",
+      "source_hash": "37c7a6e9d05dca94c96e2d7a5f2b422168d49aefdce453daadf172623c67a193",
+      "display_name_zh": "XLens｜XLens项目",
+      "description_zh": "XLens项目。",
+      "generated_at": "2026-07-23T04:01:02.290183Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1183252733,
       "source_full_name": "piriya-dharshini/FYP",
       "source_hash": "ebb222fa0c71581be6898eb681f30f40a0f98d1aa348caf2b59ca6e1aeb7db63",
@@ -29251,6 +29260,15 @@
       "display_name_zh": "ministack｜免费开源AWS模拟器（55+服务，MIT许可）",
       "description_zh": "免费开源的本地AWS模拟器，支持55+服务，兼容Terraform，含真实数据库，MIT许可。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1191383681,
+      "source_full_name": "matz/spinel",
+      "source_hash": "4101d9600077bc092bc1a04b05bd45786dbbaa7ee1c5afd67c8a8121e096c3f9",
+      "display_name_zh": "spinel｜spinel项目",
+      "description_zh": null,
+      "generated_at": "2026-07-23T04:01:02.290183Z",
       "provenance": "github_models"
     },
     {
@@ -31357,6 +31375,15 @@
       "display_name_zh": "selfloop｜视觉 AI 自动应用测试工具",
       "description_zh": "selfloop 是一款视觉 AI 工具，自动测试应用核心流程并发现缺陷，减少手动测试负担。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1252583707,
+      "source_full_name": "MatinSenPai/SenPaiScanner",
+      "source_hash": "8043f24241ae8e9c89a088f01de9f2c9bae3b6a37d7d31fa7f71b4ffc9d41116",
+      "display_name_zh": "SenPaiScanner｜Cloudflare IPs轻量级扫描器",
+      "description_zh": "用Go语言编写的轻量级Cloudflare IP扫描器。",
+      "generated_at": "2026-07-23T04:01:02.290183Z",
       "provenance": "github_models"
     },
     {
@@ -34384,6 +34411,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1300862612,
+      "source_full_name": "SAGAR-TAMANG/ultron-by-sagar-builds",
+      "source_hash": "a10fbeb7d2365d24e93414288e4a384aa5bd628503af945a0f120ae388543492",
+      "display_name_zh": "ultron-by-sagar-builds｜Ultron项目",
+      "description_zh": "Ultron项目。",
+      "generated_at": "2026-07-23T04:01:02.290183Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1300902838,
       "source_full_name": "xai-org/grok-build",
       "source_hash": "d94b9be0f234454757858a7099a2b2a8aa08082765998cfe0d380acf0b2bbd9f",
@@ -34498,6 +34534,15 @@
       "display_name_zh": "ai-ad-agent｜自主多租户AI广告管理平台",
       "description_zh": "ai-ad-agent｜自主多租户AI平台，用于付费媒体广告活动管理",
       "generated_at": "2026-07-21T19:32:19.354346Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1301724953,
+      "source_full_name": "geisonhg/TheLastShabti",
+      "source_hash": "979d77919f6a8eecd03345a84e4e5c24aa7bf6eec1fc741b9e44f60ed193b9fe",
+      "display_name_zh": "TheLastShabti｜基于Unity 6的埃及金字塔3D平台游戏（学期1作业）",
+      "description_zh": "基于Unity 6和Blender 4.5开发的埃及金字塔主题3D第三人称平台游戏，作为游戏设计第一学期作业。",
+      "generated_at": "2026-07-23T04:01:02.290183Z",
       "provenance": "github_models"
     },
     {
