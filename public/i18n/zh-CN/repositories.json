@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-07-23T04:01:02.290183Z",
+  "generated_at": "2026-07-24T03:59:38.818095Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3969,
-    "localized_count": 3948,
-    "pending_count": 21,
-    "failed_count": 21,
-    "coverage_ratio": 0.994709
+    "localized_count": 3952,
+    "pending_count": 17,
+    "failed_count": 17,
+    "coverage_ratio": 0.995717
   },
   "repositories": [
     {
@@ -406,6 +406,15 @@
       "display_name_zh": "walk｜Windows GUI工具包",
       "description_zh": "用于Go语言的Windows图形用户界面（GUI）工具包。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 924551,
+      "source_full_name": "rabbitmq/rabbitmq-server",
+      "source_hash": "1e20da65c0ce1a6cf57d1283c63c404db673d8f138e8d9996b4609e0c5fb0b7f",
+      "display_name_zh": "rabbitmq-server｜开源RabbitMQ服务器及内置插件（1级）",
+      "description_zh": "开源RabbitMQ核心服务器及一级内置插件。",
+      "generated_at": "2026-07-24T03:59:38.818095Z",
       "provenance": "github_models"
     },
     {
@@ -22342,6 +22351,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 908531752,
+      "source_full_name": "deepseek-ai/DeepSeek-V3",
+      "source_hash": "1b2998ebafabdf6a0f3a00faa76e85e2f1ae269131a941d17601ea6a8944d9f8",
+      "display_name_zh": "DeepSeek-V3｜DeepSeek版本3",
+      "description_zh": null,
+      "generated_at": "2026-07-24T03:59:38.818095Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 908589694,
       "source_full_name": "Zackriya-Solutions/meetily",
       "source_hash": "9a45f8efd861638efeec394df7959e987247d4043acab6135c5dcf0243e0f7d3",
@@ -22591,6 +22609,15 @@
       "display_name_zh": "DE｜DE项目",
       "description_zh": "该项目涉及对名称使用的限制，禁止在文件和材料中使用该名称进行未经授权的操作或注册。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 919443098,
+      "source_full_name": "deepseek-ai/DeepSeek-R1",
+      "source_hash": "d4e97dba1779c94905b59d69b9c8ec505e1a88ab6d8c167715949f2561b93e01",
+      "display_name_zh": "DeepSeek-R1｜DeepSeek版本R1",
+      "description_zh": null,
+      "generated_at": "2026-07-24T03:59:38.818095Z",
       "provenance": "github_models"
     },
     {
@@ -28144,6 +28171,15 @@
       "display_name_zh": "VaultS3｜轻量级S3兼容对象存储服务器",
       "description_zh": "轻量级兼容S3的对象存储服务器，内置网页仪表盘，单文件二进制，低内存占用，支持静态加密。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1165056385,
+      "source_full_name": "anthropics/financial-services",
+      "source_hash": "ab4c9a5ec7e4412ae741a419b5b1e9c99f1c1c203c7d307b0d3d8ce60bb47126",
+      "display_name_zh": "financial-services｜金融服务",
+      "description_zh": null,
+      "generated_at": "2026-07-24T03:59:38.818095Z",
       "provenance": "github_models"
     },
     {
