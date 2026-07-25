@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "taxonomy_version": "1.0.0",
-  "generated_at": "2026-07-24T04:00:32.535148Z",
+  "generated_at": "2026-07-25T03:56:53.240576Z",
   "repositories": [
     {
       "repository_id": 3314,
@@ -599,6 +599,21 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 924551,
+      "source_full_name": "rabbitmq/rabbitmq-server",
+      "source_hash": "6377075764d57af5d24d223dc857ed5714ace3c47aa05fa7766014a52436fa78",
+      "primary_category": "data-infrastructure",
+      "project_type": "platform-service",
+      "use_cases": [
+        "database-storage",
+        "api-backend",
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 927442,
       "source_full_name": "postgres/postgres",
       "source_hash": "581286ec1954d291e37d779d6d2a4c713863b9c2cd3db8d167be8b063b443ea6",
@@ -1049,6 +1064,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T01:04:06.946438Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 2056312,
+      "source_full_name": "niklasvh/html2canvas",
+      "source_hash": "bda94aad4f58becfc5562a56a470fecbf6ccc489fd2527e5bfc873fb2f000f73",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "web-frontend",
+        "content-generation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -2401,6 +2430,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 6934395,
+      "source_full_name": "facebook/rocksdb",
+      "source_hash": "6ddc385b68e85fdc242c544c11f7354a7f85404420fe74e1c8621a0a9ba0c0ed",
+      "primary_category": "data-infrastructure",
+      "project_type": "library-framework",
+      "use_cases": [
+        "database-storage"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 6988020,
       "source_full_name": "SheetJS/sheetjs",
       "source_hash": "22a09614cb4df62090fee9a3596a307072dad3b26dafcceebf8b7f6aa172789f",
@@ -2996,6 +3038,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T04:20:56.637414Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 10567197,
+      "source_full_name": "dokku/dokku",
+      "source_hash": "511fc5c528a8cff5e13856c7b6c8159aa10c3a25ab83d023aec234b2c24710f8",
+      "primary_category": "devops-observability",
+      "project_type": "platform-service",
+      "use_cases": [
+        "devops-deployment",
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -3930,6 +3986,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T01:04:06.946438Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 15653276,
+      "source_full_name": "Trinea/android-open-project",
+      "source_hash": "de204b9cef6bdd389f9f1a7bcf260630e41bb859d215590aa0b74180e3435876",
+      "primary_category": "education-resources",
+      "project_type": "other",
+      "use_cases": [
+        "learning-tutorial",
+        "resource-discovery"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -5336,6 +5406,21 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 24976755,
+      "source_full_name": "hankcs/HanLP",
+      "source_hash": "35c96ace4a982f9f2ab05ee1f4c85a0ce8b8485e790a4a0a2e3ee9ed9c9d8e29",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "ai-coding",
+        "rag-knowledge",
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 24993138,
       "source_full_name": "google/brotli",
       "source_hash": "51ec2b89213fbbb8efa7810e82ee3667fa227d34e682e8ea2a6abbea3991fe90",
@@ -5904,6 +5989,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 29268051,
+      "source_full_name": "google/material-design-lite",
+      "source_hash": "86d5c03d05be68da067b6fec11ee4c362943414caed6fdcd5611dac429c304cf",
+      "primary_category": "creative-media",
+      "project_type": "library-framework",
+      "use_cases": [
+        "web-frontend",
+        "design-ui-ux"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 29290473,
       "source_full_name": "XX-net/XX-Net",
       "source_hash": "bd9ceab0c0962abfd5605f39f747514050ee2c3d6940223248baf11dc9e93229",
@@ -6021,6 +6120,21 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-16T17:49:06.870328Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 31085130,
+      "source_full_name": "airbnb/lottie-web",
+      "source_hash": "3776de1d76f5331d2dc21463ddd235af515045579edadd728dc84461b8853e6a",
+      "primary_category": "creative-media",
+      "project_type": "library-framework",
+      "use_cases": [
+        "web-frontend",
+        "mobile-cross-platform",
+        "image-video-audio"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -7647,6 +7761,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T03:58:39.338555Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 47039255,
+      "source_full_name": "codex-team/editor.js",
+      "source_hash": "791ae62793768e2249c49d6bca62f271c37a58f93b5b5f41a725afab7558f4a1",
+      "primary_category": "productivity-collaboration",
+      "project_type": "library-framework",
+      "use_cases": [
+        "documents-office",
+        "team-collaboration"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -10330,6 +10458,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-18T05:32:12.135995Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 80990461,
+      "source_full_name": "eriklindernoren/ML-From-Scratch",
+      "source_hash": "160f1e6276d4a823e5303c246db7d7eedf7f3774d662cf252b72e36ce1ca6b9e",
+      "primary_category": "ai-machine-learning",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "model-training-inference",
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -13401,6 +13543,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 137724480,
+      "source_full_name": "hasura/graphql-engine",
+      "source_hash": "0d556312dcc2927d7b416b681a25fb8f3c045e573d02eab094172c4103df352e",
+      "primary_category": "data-infrastructure",
+      "project_type": "platform-service",
+      "use_cases": [
+        "database-storage",
+        "api-backend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 138219808,
       "source_full_name": "PD0DIB/Nextion_HAM-radio-screens",
       "source_hash": "51053a2fffbd2a78bdf777ed42cdd4702308e738f1bc0d82113457cde8f73845",
@@ -16465,6 +16621,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 212619489,
+      "source_full_name": "XIU2/TrackersListCollection",
+      "source_hash": "cc02950725bb33570fb02c3043b6f78c06bde598d8d4a6c11e7aefb530087f0a",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "resource-discovery"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 212639071,
       "source_full_name": "bregman-arie/devops-exercises",
       "source_hash": "e25f54ea6abbd584e7012d6a1ce4b41eea778f4445fde95f515b254be22525d3",
@@ -16682,6 +16851,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 218115303,
+      "source_full_name": "vercel/swr",
+      "source_hash": "18213126afb02c3a6f24caadfebba187aa8806397e6a61f66758d1b244d99825",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "web-frontend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 218952803,
       "source_full_name": "doocs/md",
       "source_hash": "d96395ba0e5203433eae2de3a6ade1557381c0516955a4115fb2500ad9bc7962",
@@ -16734,6 +16916,32 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T07:06:22.118650Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 220809393,
+      "source_full_name": "Textualize/rich",
+      "source_hash": "0d162365375ba66cd7e2688c299fab6f2e9cb6899d5d0e5f1e2a8e36707a0c9f",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 221129519,
+      "source_full_name": "AobingJava/JavaFamily",
+      "source_hash": "74e24656dd68d5d23fb74511805d1f557780066f448556d00b56f66ad6858994",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -16904,6 +17112,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 228016443,
+      "source_full_name": "youngyangyang04/leetcode-master",
+      "source_hash": "82975d3a1d7d35a8a5cad8a942f3bb64b71435fd8ad00e5fe4bdacc5c3e5e836",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 228469307,
       "source_full_name": "matheusfelipeog/matheusfelipeog.github.io",
       "source_hash": "f59a2d0dbc54cf9d1b0a74df90585fc7d992eb63ed2d6e1cb6a26916d9b4b768",
@@ -16941,6 +17162,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T18:30:55.656026Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 229764465,
+      "source_full_name": "Asabeneh/30-Days-Of-JavaScript",
+      "source_hash": "3f7e81a8dfc904f9b40f1d533ec476e630f58d45987945c0dce72a98cb98b8f2",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -16997,6 +17231,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 231283452,
+      "source_full_name": "excalidraw/excalidraw",
+      "source_hash": "732ec4020dbf61dcfd9db369cdb6afa093e6e22bc2c434d0777f5bfe4a8e70ed",
+      "primary_category": "creative-media",
+      "project_type": "application",
+      "use_cases": [
+        "content-generation",
+        "design-ui-ux"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 231865705,
       "source_full_name": "TapXWorld/ChinaTextbook",
       "source_hash": "56d32f4da1dd00124cc44aca217b0c479e811a2e993fb44e3efba71b2c82b959",
@@ -17007,6 +17255,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T04:33:26.833539Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 233130089,
+      "source_full_name": "charmbracelet/bubbletea",
+      "source_hash": "2b47f5259eb389b1a04d211de60e4f9c1fc10fc0cdab30fdcf6c8fb5d9a4a66f",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -17119,6 +17380,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 236095576,
+      "source_full_name": "backstage/backstage",
+      "source_hash": "e3d10d63cf0f20c73eb1fa2128c41af93bb0391edf452acbc5cc1a677ef10294",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 236252930,
       "source_full_name": "spacenation/swiftui-charts",
       "source_hash": "a0e479cbdef8e3339603063f1b78d0cd15498264f87b272b7c45a10a142292d5",
@@ -17145,6 +17419,45 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T03:58:39.338555Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 237791077,
+      "source_full_name": "mingrammer/diagrams",
+      "source_hash": "12b7f1e6b6f27830dc99022e2dacd872aeb5c2003c2f2db10822966babb581b4",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "design-ui-ux"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 240215314,
+      "source_full_name": "docker/awesome-compose",
+      "source_hash": "c0f601239adffd44db06054360223cd270e6651420afa8668d6cf00d13cdffba",
+      "primary_category": "developer-tools",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 241576270,
+      "source_full_name": "labuladong/fucking-algorithm",
+      "source_hash": "bb6449d01984f85566a8a5f3c257d43e1c10bf35d41103f5dc5510e9cabd1bdc",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -17188,6 +17501,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 243950408,
+      "source_full_name": "Anduin2017/HowToCook",
+      "source_hash": "a946b20860e3515a6c38ace7e907c61f72900b2c35eadfa6a211c3a9f658c4b1",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 244514240,
       "source_full_name": "cwida/fsst",
       "source_hash": "4231ee186d2787c533458f86a78bf9cd54d248ee064b493554a3e577d40af2df",
@@ -17216,6 +17542,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 245166720,
+      "source_full_name": "ajeetdsouza/zoxide",
+      "source_hash": "c699fc99af66e463e4ab40e0e527e6bcfea61715c2cecfa8dd42abd953c56987",
+      "primary_category": "developer-tools",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "system-admin-optimization"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 245391245,
       "source_full_name": "Fate-Grand-Automata/FGA",
       "source_hash": "dba86e8f20c97c790cae014e212241a3316265b99ae8f1d4d16647894c2b8e5d",
@@ -17227,6 +17566,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T07:06:22.118650Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 245704608,
+      "source_full_name": "colinhacks/zod",
+      "source_hash": "022d96e5581340472b276599f97c10758533dce661f0a8c12f065adf084c502f",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -17483,6 +17835,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 253222599,
+      "source_full_name": "CorentinTh/it-tools",
+      "source_hash": "4572a5aa66b53499428adae6fd4fb3c366eae80c3a6dd3c07adceaa758c05637",
+      "primary_category": "developer-tools",
+      "project_type": "application",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 253849484,
       "source_full_name": "argosopentech/argos-translate",
       "source_hash": "7271d7adae6197a827c1b4eae2adb1a04f6c01bd1a7582c340e4d8f542538985",
@@ -17522,6 +17887,32 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T04:33:26.833539Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 254832799,
+      "source_full_name": "Z4nzu/hackingtool",
+      "source_hash": "5c85957f29b4a934e7291c5d4f01c21f25608220d95a5521cc02fd610a8f3638",
+      "primary_category": "security-privacy",
+      "project_type": "application",
+      "use_cases": [
+        "security-defense"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 255378816,
+      "source_full_name": "bigskysoftware/htmx",
+      "source_hash": "17a4e47cb1ea283d2e8f201849f60ad3acb8371a06c324bd21a33a754309387f",
+      "primary_category": "web-app-development",
+      "project_type": "library-framework",
+      "use_cases": [
+        "web-frontend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -17684,6 +18075,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 261787758,
+      "source_full_name": "bradtraversy/design-resources-for-developers",
+      "source_hash": "dab9264e0a76bba998ae6277ae9cbfafdf923fe4a464de013a271c804b8c5d8a",
+      "primary_category": "creative-media",
+      "project_type": "other",
+      "use_cases": [
+        "resource-discovery"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 261938369,
       "source_full_name": "nolanlawson/emoji-picker-element",
       "source_hash": "2020f5e1d45f7f0f13badd79b7c3a1d926bc4e70e00172aea385f1e3bc629fe9",
@@ -17783,6 +18187,34 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 264818686,
+      "source_full_name": "ultralytics/yolov5",
+      "source_hash": "61ddff0d81f419c7b13ec733ef81920381bb2c70e4b498ab5133daf38c0eeaa7",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "model-training-inference",
+        "image-video-audio"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 265122478,
+      "source_full_name": "ManimCommunity/manim",
+      "source_hash": "0f9939f00ff7a7ac9924f03ac2607f8ad6521412948afc2e499496e5ccb7459f",
+      "primary_category": "creative-media",
+      "project_type": "library-framework",
+      "use_cases": [
+        "content-generation",
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 265612440,
       "source_full_name": "coqui-ai/TTS",
       "source_hash": "739bb7229acac7dc6cf64a6ac590229bba749172adfbdda62bba95e0f3784560",
@@ -17865,6 +18297,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 267775629,
+      "source_full_name": "geekxh/hello-algorithm",
+      "source_hash": "3bd6c468fa14cba7d0774c57a61f4e85ebfee529789d330fee98d6ee75bd4e61",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 268163609,
       "source_full_name": "qdrant/qdrant",
       "source_hash": "fd8f375dee078ac5a52c2c4489a2e7dc3ed629930f122268a55b852743536d19",
@@ -17903,6 +18348,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T03:58:39.338555Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 269336148,
+      "source_full_name": "sickcodes/Docker-OSX",
+      "source_hash": "e43f94dea5c94ce048dad77920618f2b222b75ffd5634ffc3bbfbabae00461f9",
+      "primary_category": "systems-network-hardware",
+      "project_type": "application",
+      "use_cases": [
+        "system-admin-optimization",
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -18081,6 +18540,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 275386910,
+      "source_full_name": "soxoj/maigret",
+      "source_hash": "9ed66b07505e85cf207d156e3b105859a3821c0df371a79bc0910f36ab291bc9",
+      "primary_category": "security-privacy",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "search-scraping",
+        "security-defense"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 275993885,
       "source_full_name": "appsmithorg/appsmith",
       "source_hash": "b33bf55fbbb319aeed7f72093b86e38a838ec4e3f6b9ba76be330d652f5e8fea",
@@ -18124,6 +18597,33 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 278335273,
+      "source_full_name": "anuraghazra/github-readme-stats",
+      "source_hash": "b41c41324f481475b28e18ec62506d9abd581c85ffa2b08c51ca66e51d33fba6",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "personal-productivity"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 278772719,
+      "source_full_name": "vbenjs/vue-vben-admin",
+      "source_hash": "c02702fb81bffc8734ae68a84016ea9eb92821bec6b2372aabc2d9eae37356de",
+      "primary_category": "web-app-development",
+      "project_type": "application",
+      "use_cases": [
+        "web-frontend",
+        "team-collaboration"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 279908689,
       "source_full_name": "HackTricks-wiki/hacktricks",
       "source_hash": "12d84c3212d6daa113cb50e1fa2aed548bca8cab578995dbaf0db552f2de2148",
@@ -18148,6 +18648,47 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T04:33:26.833539Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 280363952,
+      "source_full_name": "umami-software/umami",
+      "source_hash": "6b784ba2216fc4c1fb286ec19b1d1826ff26c1085b07b41c7b9135d113b43906",
+      "primary_category": "security-privacy",
+      "project_type": "platform-service",
+      "use_cases": [
+        "data-analysis-visualization",
+        "privacy-local"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 280557054,
+      "source_full_name": "trpc/trpc",
+      "source_hash": "2cc8b04ad4b14885d0a0bf21e828ad54e799cb7ec52e540773649bd09557f6cc",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "api-backend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 280567579,
+      "source_full_name": "NaiboWang/EasySpider",
+      "source_hash": "f27daa2c6def5335b381c4826426482d703a89b280c8010540b833b452a6a76f",
+      "primary_category": "developer-tools",
+      "project_type": "application",
+      "use_cases": [
+        "agents-automation",
+        "search-scraping"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -18189,6 +18730,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T03:58:39.338555Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 281975310,
+      "source_full_name": "type-challenges/type-challenges",
+      "source_hash": "b8f157c64486f4a47541b5a1f28309716f61b949a4401c341da19be4c93b140c",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -18331,6 +18885,22 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 287463830,
+      "source_full_name": "microsoft/qlib",
+      "source_hash": "60dcc93b2c1eb2dcca65642e9d1ce8bb12232980057ad9d08d6db2428e1c3231",
+      "primary_category": "industry-solutions",
+      "project_type": "platform-service",
+      "use_cases": [
+        "ai-coding",
+        "agents-automation",
+        "model-training-inference",
+        "finance-trading"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 288428676,
       "source_full_name": "MudBlazor/MudBlazor",
       "source_hash": "8d66a3ef5eb28ad642e9851c4f26d279c0f2611b2c62ba410abef089d412c98d",
@@ -18356,6 +18926,33 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T22:09:46.833094Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 290091948,
+      "source_full_name": "labmlai/annotated_deep_learning_paper_implementations",
+      "source_hash": "c50d7018be86c7a40b11d85a2c2b8aa3d03219c96e189da18c6215f52df7fcfb",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "model-training-inference",
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 290882787,
+      "source_full_name": "FuelLabs/fuel-core",
+      "source_hash": "3e95b5171c116c018e83049db5b9a87092c85313f68a5172617916d09d4310a2",
+      "primary_category": "systems-network-hardware",
+      "project_type": "application",
+      "use_cases": [
+        "network-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -18385,6 +18982,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T22:09:46.833094Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 292014229,
+      "source_full_name": "zellij-org/zellij",
+      "source_hash": "877a2d148349fa8109c603cf3328576005891fe2e61b1f730b4f47ee1d653920",
+      "primary_category": "developer-tools",
+      "project_type": "application",
+      "use_cases": [
+        "personal-productivity"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -18642,6 +19252,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 302603001,
+      "source_full_name": "qier222/YesPlayMusic",
+      "source_hash": "01e32b168051552ed23cf3807b1dbe651f8df58a68307cceaba0474ff042bfce",
+      "primary_category": "creative-media",
+      "project_type": "application",
+      "use_cases": [
+        "image-video-audio"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 303766501,
       "source_full_name": "tolgee/tolgee-platform",
       "source_hash": "c1928b57d51d0e20f2d0d0b07173f0f10abebb0f1541b48be618e196ad38be10",
@@ -18849,6 +19472,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 311315731,
+      "source_full_name": "XTLS/Xray-core",
+      "source_hash": "60729ffd61754537148f6997e8796093c923ca64584cc96f6eb5afd48ddb4975",
+      "primary_category": "systems-network-hardware",
+      "project_type": "platform-service",
+      "use_cases": [
+        "security-defense",
+        "network-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 311525798,
       "source_full_name": "microsoft/Web-Dev-For-Beginners",
       "source_hash": "f63aafb545fe1ffbc8386929fa2053f6b6cf09cd8c24d7864c6e2f6539f9de2a",
@@ -18876,6 +19513,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 311683390,
+      "source_full_name": "WerWolv/ImHex",
+      "source_hash": "f6f01468948fd7abe06ff00e53327cdd4bae3378a28c4003103b725db6a5e4d7",
+      "primary_category": "developer-tools",
+      "project_type": "application",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 313282739,
       "source_full_name": "Ascend/samples",
       "source_hash": "e76da7b2c309f93fcc88d8279401f6c9dbecbb254eaf227c63da9a5230a9b554",
@@ -18886,6 +19536,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T07:06:22.118650Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 313330998,
+      "source_full_name": "bradtraversy/50projects50days",
+      "source_hash": "9b279590d0fe204b0b279aef94366efb428711322169b8ef137720faed87ef40",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "web-frontend",
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -18984,6 +19648,32 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 316836816,
+      "source_full_name": "saadeghi/daisyui",
+      "source_hash": "b2c6e480e4b97bd16e739982db5e2ff2d1807638840598d1055c5209bc4d594b",
+      "primary_category": "creative-media",
+      "project_type": "library-framework",
+      "use_cases": [
+        "design-ui-ux"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 317836248,
+      "source_full_name": "GorvGoyl/Clone-Wars",
+      "source_hash": "afde7af64c32f31a43ad1b984705efb3074be2d0f8b59b94cff1ca2c3d55734e",
+      "primary_category": "web-app-development",
+      "project_type": "other",
+      "use_cases": [
+        "resource-discovery"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 317972370,
       "source_full_name": "excalidraw/excalidraw-libraries",
       "source_hash": "926c55d7e20da68e4fb373e66171953e67e0c8fb42c0ec55754fda371c5f1cd8",
@@ -19066,6 +19756,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 321960447,
+      "source_full_name": "openai/CLIP",
+      "source_hash": "ec7d9534310f7e42684594354a172a22e74647ee863044527fc6da18c221197e",
+      "primary_category": "ai-machine-learning",
+      "project_type": "model-dataset",
+      "use_cases": [
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 322484700,
       "source_full_name": "jj-vcs/jj",
       "source_hash": "26c62382f0aba292289235409ba57b0c5a7a5e1f0898a7b9fa9e93c7ce6ffa64",
@@ -19091,6 +19794,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T03:58:39.338555Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 323965659,
+      "source_full_name": "AlistGo/alist",
+      "source_hash": "fdb8eb8229203793ca5f12cd37ee3709660c3bdee442f23376ae99234f063cd0",
+      "primary_category": "data-infrastructure",
+      "project_type": "application",
+      "use_cases": [
+        "database-storage",
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -19230,6 +19947,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 328831244,
+      "source_full_name": "ibraheemdev/modern-unix",
+      "source_hash": "f92f2a30e42cc47af236417a3290fe3b1f5527ab90b3f880d5bc1532985226a6",
+      "primary_category": "developer-tools",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "system-admin-optimization"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 329126613,
       "source_full_name": "temporalio/sdk-rust",
       "source_hash": "ca929923e4456185ac41934a1c2e18a96b7365f8d0cfffd0f976e8ea0ec324ba",
@@ -19285,6 +20015,33 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 331107018,
+      "source_full_name": "FuelLabs/sway",
+      "source_hash": "9979b957fe8b67930a5e0a8625fbe52f4471b3825dbe3e6787a387e49e4904dc",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "api-backend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 331293626,
+      "source_full_name": "refinedev/refine",
+      "source_hash": "c88bbfa56bdbe14d5047198074d12eed8094edc2dd88eef335a64bf1bdcae99d",
+      "primary_category": "web-app-development",
+      "project_type": "library-framework",
+      "use_cases": [
+        "api-backend",
+        "web-frontend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 331380723,
       "source_full_name": "raspberrypi/pico-sdk",
       "source_hash": "03436e7362e8b4ba69a68762323cb7e03ac00b12c139fc488fbf01d8db3a4bfc",
@@ -19295,6 +20052,21 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T07:06:22.118650Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 332357698,
+      "source_full_name": "YunaiV/ruoyi-vue-pro",
+      "source_hash": "a92594ba234e94edf8bafbf8192a50dff27b552816bc9f3432ffa1607a2a5e64",
+      "primary_category": "industry-solutions",
+      "project_type": "application",
+      "use_cases": [
+        "api-backend",
+        "team-collaboration",
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -19366,6 +20138,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 333483116,
+      "source_full_name": "dgtlmoon/changedetection.io",
+      "source_hash": "854f65e3530ad71fc22c933968c81e80666d959733eca900d68f3d912b469184",
+      "primary_category": "developer-tools",
+      "project_type": "application",
+      "use_cases": [
+        "observability",
+        "search-scraping"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 335164964,
       "source_full_name": "dataease/dataease",
       "source_hash": "a5d6e9b985bdf89506409a51016e8bb1b1cddca4eccf9db86b42e21d58cb4aa3",
@@ -19376,6 +20162,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T03:58:39.338555Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 335243209,
+      "source_full_name": "anoma/anoma",
+      "source_hash": "8c903fb4d89af7f259360babe76fee70c9a1513dfacc86e23ab20659cdfa3500",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -19596,6 +20395,32 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 343965132,
+      "source_full_name": "microsoft/ML-For-Beginners",
+      "source_hash": "1ed46627c68cbc108a8b8696bd4e53a991cbeee8a2fa7200c0cab51a5855f36e",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 344190478,
+      "source_full_name": "microsoft/AI-For-Beginners",
+      "source_hash": "9789032b45a4c2e2f80a909fba478003429f3b71831a7d670174b6ad23a7aa46",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 344191198,
       "source_full_name": "microsoft/Data-Science-For-Beginners",
       "source_hash": "f2654832596f36bf814310c4fcbdf9e5fa9346ade7b172fbe0187dd451a71f33",
@@ -19729,6 +20554,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 349321229,
+      "source_full_name": "TencentARC/GFPGAN",
+      "source_hash": "2cd0f703c0b068c0c28c7d8a403bb3641b5d286eef09b36057b2dc76f45791dd",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "model-training-inference",
+        "image-video-audio"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 349553695,
       "source_full_name": "bee-san/pyWhat",
       "source_hash": "f18e599693640779b6128b82e7d50c2402e7b42f38d1d6d4f9f1fc8dfc3bc66e",
@@ -19771,6 +20610,21 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 352933140,
+      "source_full_name": "ToolJet/ToolJet",
+      "source_hash": "644897fc54db55f7b48ab5d59f1b1a34e6ddd9b8f0327a9e8fc8f96a98576c05",
+      "primary_category": "web-app-development",
+      "project_type": "platform-service",
+      "use_cases": [
+        "agents-automation",
+        "api-backend",
+        "team-collaboration"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 353854676,
       "source_full_name": "tamaskis/derivative-MATLAB",
       "source_hash": "1277ef684b96e35c15b35ec69c7285a956d557165d5f7fb8d165aaf7e88e1202",
@@ -19794,6 +20648,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-22T04:12:02.172495Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 355959597,
+      "source_full_name": "Textualize/textual",
+      "source_hash": "977960b669a041415e17d7751257550d8af5376206589e5390d5482904bd74a4",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -19921,6 +20788,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 361044034,
+      "source_full_name": "slidevjs/slidev",
+      "source_hash": "fcfdf1237ed04a64429785a853a5858114cc9cf1e528be472c75480b8b273ec3",
+      "primary_category": "productivity-collaboration",
+      "project_type": "application",
+      "use_cases": [
+        "personal-productivity"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 361568869,
       "source_full_name": "Nixtla/neuralforecast",
       "source_hash": "01cb0b9d71d886f9c2c71653f5eaf286d93e402dfe97ed4a6921369a853b144d",
@@ -19959,6 +20839,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T18:30:55.656026Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 364474335,
+      "source_full_name": "google/zx",
+      "source_hash": "b8f4335450a12e1fdccb2dd34978685643112ab0e1776221f357c0172082361a",
+      "primary_category": "developer-tools",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -20092,6 +20985,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-22T04:12:02.172495Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 372240402,
+      "source_full_name": "alan2207/bulletproof-react",
+      "source_hash": "acbded79ba8776771a3ff5eade17cd5e0d7eadbaf55a8c8231276000498dfd72",
+      "primary_category": "web-app-development",
+      "project_type": "library-framework",
+      "use_cases": [
+        "web-frontend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -20256,6 +21162,33 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 379865325,
+      "source_full_name": "drizzle-team/drizzle-orm",
+      "source_hash": "72c2e8622116fab8d9fe73769925d6cc04c547f2adb239c714ad25de5d2c2eed",
+      "primary_category": "data-infrastructure",
+      "project_type": "library-framework",
+      "use_cases": [
+        "database-storage"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 382496361,
+      "source_full_name": "louislam/uptime-kuma",
+      "source_hash": "dc3ef3b8676c1bdea4fbaff4a64d15546353cddb1b804f713a01d51965f75ee1",
+      "primary_category": "devops-observability",
+      "project_type": "application",
+      "use_cases": [
+        "observability",
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 384150382,
       "source_full_name": "YuiHuang/CPP-Basics",
       "source_hash": "b5f8ff8c3f037c93c5166254470f83b4194228fa44b51fca0f993e6fec211b73",
@@ -20376,6 +21309,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 393571599,
+      "source_full_name": "babysor/MockingBird",
+      "source_hash": "2ff1b4831d3e4650297be529a12fc1bdbdc656aaf01f57273f7be632becd1c60",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding",
+        "content-generation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 393635960,
       "source_full_name": "C0MPL3XDEV/E4GL30S1NT",
       "source_hash": "ac12e7d660d2f6fa0b4df064a16d6e8893bbfa3ccac2353c0a6a810e2e757841",
@@ -20401,6 +21348,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T22:09:46.833094Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 394318710,
+      "source_full_name": "valinet/ExplorerPatcher",
+      "source_hash": "ddc3e11510a47e755b747bdb494dcc7f0f9dc5d0adf2463804cede4955b29478",
+      "primary_category": "systems-network-hardware",
+      "project_type": "application",
+      "use_cases": [
+        "system-admin-optimization"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -20555,6 +21515,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 402860175,
+      "source_full_name": "FuelLabs/fuels-ts",
+      "source_hash": "bba59c8165dfcfd1f47857dc35a91e01f8b2a5ebfac3e40e03e5dfa62807d782",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "api-backend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 402945349,
       "source_full_name": "StarRocks/starrocks",
       "source_hash": "ac2f0a58f0ad1598975d421a211f66b8715553e843aaf939008ec5c780fe460e",
@@ -20646,6 +21619,33 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T04:33:26.833539Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 410430370,
+      "source_full_name": "IceWhaleTech/CasaOS",
+      "source_hash": "d9739ab79b162d8e97113df4fda6e2ec7cbc0140d9eb2267b4377df846c52a92",
+      "primary_category": "systems-network-hardware",
+      "project_type": "application",
+      "use_cases": [
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 410749029,
+      "source_full_name": "spacedriveapp/spacedrive",
+      "source_hash": "5ace20b39a9ea86ac7fcb3af08c3f6b7a6e37c3bb7e0ea6a7a53ff969f302c03",
+      "primary_category": "systems-network-hardware",
+      "project_type": "application",
+      "use_cases": [
+        "system-admin-optimization",
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -20757,6 +21757,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 419661684,
+      "source_full_name": "DataTalksClub/data-engineering-zoomcamp",
+      "source_hash": "6f01f0150b1d8f20bf8a204b76d2463d5fdde482d69fac2d8d3503b5c6e44213",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 419800251,
       "source_full_name": "wasi-master/charinfo",
       "source_hash": "b60308fa08661ecf46ab53c62a75e3022ecfe920fce233f56775672da8acc2d0",
@@ -20767,6 +21780,46 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T04:33:26.833539Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 419991646,
+      "source_full_name": "mli/paper-reading",
+      "source_hash": "66a6a247856c362ba89c869f84781007b105d25f0a94b90c425f6a4d1d4eb1a4",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "ai-coding",
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 420503947,
+      "source_full_name": "binwiederhier/ntfy",
+      "source_hash": "221ddca338720f6e2873a08ca53bc6cd45bd71d6c0bb2fb9468466eebcb30f01",
+      "primary_category": "developer-tools",
+      "project_type": "application",
+      "use_cases": [
+        "personal-productivity"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 420628737,
+      "source_full_name": "waydabber/BetterDisplay",
+      "source_hash": "92eb03c63281032cb9d5a336d11a69e8b1eb1d55a0e7f1ee6ff3cac17de5632d",
+      "primary_category": "systems-network-hardware",
+      "project_type": "application",
+      "use_cases": [
+        "system-admin-optimization"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -20794,6 +21847,32 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T04:33:26.833539Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 422274596,
+      "source_full_name": "hpcaitech/ColossalAI",
+      "source_hash": "74216cd9864de78d2d871fb24123c332e8931271f2eea330c83567a720461c4c",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 423275200,
+      "source_full_name": "FuelLabs/fuels-rs",
+      "source_hash": "28c2a96c68cfec53cfe4696ec1b51ce33879b0045164c3a72a215ec2b4d63e35",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "api-backend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -20986,6 +22065,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T18:30:55.656026Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 436658287,
+      "source_full_name": "surrealdb/surrealdb",
+      "source_hash": "57e74c9c16c67842c515ce40e5624f2db1034f6073560a5250c7c72476ac7831",
+      "primary_category": "data-infrastructure",
+      "project_type": "platform-service",
+      "use_cases": [
+        "database-storage"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -21299,6 +22391,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 453717720,
+      "source_full_name": "AykutSarac/jsoncrack.com",
+      "source_hash": "97f294454622295bccf08d64072ca55cf3157641b28511b81a0220ea52365ec2",
+      "primary_category": "data-infrastructure",
+      "project_type": "application",
+      "use_cases": [
+        "data-analysis-visualization"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 454014827,
       "source_full_name": "kshitijk4poor/durdle-website",
       "source_hash": "d13890447a7e13d7a36f3a19a644864d1589d3b53dba304a171146ef656b9b01",
@@ -21591,6 +22696,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 474839179,
+      "source_full_name": "hiroi-sora/Umi-OCR",
+      "source_hash": "88335d126184ac9f644d80f8967b6e4b11b4a979de5a2d6c57526d3ddfd9638c",
+      "primary_category": "developer-tools",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding",
+        "content-generation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 475553026,
       "source_full_name": "ghostty-org/ghostty",
       "source_hash": "ea705e2309604c625116487fdb01598839b193b1c0685eb76c43e8f0419ac045",
@@ -21698,6 +22817,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 479924503,
+      "source_full_name": "The-Run-Philosophy-Organization/run",
+      "source_hash": "a00542a2d04173c848127619f4ed3d6e808a9bc14d55d224bec3ca8452bf875b",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "resource-discovery"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 480217156,
       "source_full_name": "GreptimeTeam/greptimedb",
       "source_hash": "575afb7c791ea968a503a10cae271ab34c8e6e87b699aade011d8b4c1092b109",
@@ -21763,6 +22895,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-22T04:12:02.172495Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 482152820,
+      "source_full_name": "geekan/HowToLiveLonger",
+      "source_hash": "577bd909ac9d5ae567de2e4aafb5fd894c094a60f07c79e2a3881226a2e183db",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial",
+        "health-fitness"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -22374,6 +23520,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 511987144,
+      "source_full_name": "imputnet/cobalt",
+      "source_hash": "74ba61d644ca5be491f1373be7205a1ad5ea110af8f1f079055d76fd8d0ed0e0",
+      "primary_category": "productivity-collaboration",
+      "project_type": "application",
+      "use_cases": [
+        "personal-productivity"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 512416707,
       "source_full_name": "Anri-Lombard/Machine-Learning-A-Z",
       "source_hash": "4efa43aac651eacf27ed6e731fb9622bf55844ac1daa0775ae277153db0aaf8b",
@@ -22452,6 +23611,21 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T04:33:26.833539Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 515647260,
+      "source_full_name": "1Panel-dev/1Panel",
+      "source_hash": "c014f44d6209464fdaf2ab15f75dd111fafde37192dccb27cee22e9c07517a52",
+      "primary_category": "devops-observability",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding",
+        "agents-automation",
+        "devops-deployment"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -22566,6 +23740,34 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 519895363,
+      "source_full_name": "GyulyVGC/sniffnet",
+      "source_hash": "47195215b194c3d9cfdc5d3c4acbe60a59b3e839385d801106cdaed33af5f2ca",
+      "primary_category": "systems-network-hardware",
+      "project_type": "application",
+      "use_cases": [
+        "observability",
+        "network-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 520969009,
+      "source_full_name": "mouredev/Hello-Python",
+      "source_hash": "e9599d2e4b57c1e62fa612dbf2eccb78d0e007aba0b93ebb7c40dfd177bc5c87",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "ai-coding",
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 521655652,
       "source_full_name": "Infisical/infisical",
       "source_hash": "9f8848c91600b649626e86dc1b12018d834ab640b60ed612233b3d83a1cbcd09",
@@ -22648,6 +23850,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 523379232,
+      "source_full_name": "CompVis/stable-diffusion",
+      "source_hash": "7bf1195b823a2a27e2708994996228f021e12aeabfff57a31bca87ba506558c2",
+      "primary_category": "ai-machine-learning",
+      "project_type": "model-dataset",
+      "use_cases": [
+        "model-training-inference",
+        "content-generation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 523534328,
       "source_full_name": "ImranR98/Obtainium",
       "source_hash": "a1e2f00255627e169ad8e666b6e33afce1c0294154e2b316a18c96decb34b13b",
@@ -22685,6 +23901,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T22:09:46.833094Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 525105056,
+      "source_full_name": "karanpratapsingh/system-design",
+      "source_hash": "28c042b341475a84584ed905823214b1f90918049249672c53886536e3ef2c44",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -22727,6 +23956,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-22T04:12:02.172495Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 527591471,
+      "source_full_name": "AUTOMATIC1111/stable-diffusion-webui",
+      "source_hash": "fd959d1892d716ada583f25e4dc14915a0da21d9c72d0074ea0d27dfa731f4ab",
+      "primary_category": "creative-media",
+      "project_type": "application",
+      "use_cases": [
+        "web-frontend",
+        "image-video-audio"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -23271,6 +24514,33 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 560704231,
+      "source_full_name": "run-llama/llama_index",
+      "source_hash": "d8e98ed0ccc25d9c4f9817411133462a42ed6db0d8509adba98b1d0e29789dc6",
+      "primary_category": "ai-machine-learning",
+      "project_type": "platform-service",
+      "use_cases": [
+        "rag-knowledge",
+        "api-backend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 561730219,
+      "source_full_name": "krahets/hello-algo",
+      "source_hash": "9a607aff167d5be37fb5e23bbfd339634d5cc5fd025b71b0ee3cbfa6bc5e1c94",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 563600239,
       "source_full_name": "Moli-X/Resources",
       "source_hash": "1689bc469313e25d947b77373982e1f8b7e68c7c53dcdd280b97db6975d3374a",
@@ -23448,6 +24718,21 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 571186647,
+      "source_full_name": "pathwaycom/pathway",
+      "source_hash": "b5f60d097290c6a80e57848427138128948df4e4dab4366a70bab0478dcfba6f",
+      "primary_category": "data-infrastructure",
+      "project_type": "library-framework",
+      "use_cases": [
+        "rag-knowledge",
+        "model-training-inference",
+        "data-analysis-visualization"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 571613891,
       "source_full_name": "roboflow/supervision",
       "source_hash": "6f34c57938b5c8079893d077eec10981ae599f1d0bdeeb6a6df4065f6b9324cb",
@@ -23560,6 +24845,21 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 575340621,
+      "source_full_name": "lencx/ChatGPT",
+      "source_hash": "2d040aa370643fbe5cffc0c04ef6c06f041eefba072a52b16f7cfa1c075f5fa3",
+      "primary_category": "productivity-collaboration",
+      "project_type": "application",
+      "use_cases": [
+        "mobile-cross-platform",
+        "personal-productivity",
+        "team-collaboration"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 575445105,
       "source_full_name": "raycast/ray-so",
       "source_hash": "ebc543f629e199e8c3d86e3bfbd3cb63e27e8c8ea2c8f9598c6465f34d3543a6",
@@ -23617,6 +24917,34 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 577116112,
+      "source_full_name": "PlexPt/awesome-chatgpt-prompts-zh",
+      "source_hash": "9d9a2471583684774ccec415daf7588664fa4024bec3f5496164cfeb17be6b9c",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 577603990,
+      "source_full_name": "LAION-AI/Open-Assistant",
+      "source_hash": "f69e10d8cbfa1679d3dc0546d295a2a298a0570c27822d699bdc9202f637ebb7",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "agents-automation",
+        "rag-knowledge",
+        "api-backend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 578177787,
       "source_full_name": "OLIMEX/AgonLight2",
       "source_hash": "a88da6f9393a4fd2dcfdab6c3221ab44edb0e2c9f2bf12b1cccfd492b63d8250",
@@ -23654,6 +24982,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-22T04:12:02.172495Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 578822531,
+      "source_full_name": "localsend/localsend",
+      "source_hash": "1c08a73fa252b12e8872e44eeaf7a473cf296dee03547eecf8934f8b62138225",
+      "primary_category": "systems-network-hardware",
+      "project_type": "application",
+      "use_cases": [
+        "network-tools",
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -23712,6 +25054,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 580836813,
+      "source_full_name": "google/comprehensive-rust",
+      "source_hash": "5e40fbef970c997dd624ad1bb341d1fd1bd3fbf3b4dc3777332c1a12e5aba6e2",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 582242477,
       "source_full_name": "SHUR1K-N/Flipper-Zero-Sub-GHz-Jamming-Files",
       "source_hash": "b488d8833d962a0da01214cba9d82439504a9ffab6a306e0c7f6b2e9bde8b799",
@@ -23735,6 +25090,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T07:06:22.118650Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 582822129,
+      "source_full_name": "karpathy/nanoGPT",
+      "source_hash": "9819a27f589becb1028f8fbd8338c008257b51d72327aa8c606fbc31258d7a80",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -24111,6 +25479,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 595893961,
+      "source_full_name": "lllyasviel/ControlNet",
+      "source_hash": "4f2fe98668a83d4771dfce7f63f320f938dc1da54d820768393c82a103e40768",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "model-training-inference",
+        "content-generation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 595973037,
       "source_full_name": "mdc-ng/mdc-ng",
       "source_hash": "a931387e18fd6712cade671c114300177ba0585ef5c46aec8c39328374084f6c",
@@ -24121,6 +25503,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-22T04:12:02.172495Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 596115135,
+      "source_full_name": "base/node",
+      "source_hash": "160de3a565a0aeecbeefa7ad91e870bd88e5ade8fd3d5d1e2bd33fcd85e50aa7",
+      "primary_category": "systems-network-hardware",
+      "project_type": "application",
+      "use_cases": [
+        "network-tools",
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -24319,6 +25715,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 601538369,
+      "source_full_name": "meta-llama/llama",
+      "source_hash": "368bb6c5b467b0b0272556eebb591cb4982758e5492d0d27340ae03358d837e2",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 602943934,
       "source_full_name": "orbstack/orbstack",
       "source_hash": "78eca3832f8f1e9e57301743ea42bf3a92f86229acb5b8c5d18cd88e75bcca3b",
@@ -24467,6 +25876,34 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 608555244,
+      "source_full_name": "chenfei-wu/TaskMatrix",
+      "source_hash": "b316f0ca4a04a43294f70d9fdefac677be9c7d668f637213067fe1d5e3b94a64",
+      "primary_category": "productivity-collaboration",
+      "project_type": "application",
+      "use_cases": [
+        "personal-productivity",
+        "team-collaboration"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 610260322,
+      "source_full_name": "chatboxai/chatbox",
+      "source_hash": "d5b3735da5eec7f53e6a3ea65ee5606a45250250d9973c874a79dac02b547288",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding",
+        "agents-automation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 610912294,
       "source_full_name": "Neo-Hao/grokking-relational-database-design",
       "source_hash": "6c452fece9826bf762e629e89b8bcc3a8264ab713270092233a31ba965656cdd",
@@ -24550,6 +25987,21 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 612344730,
+      "source_full_name": "ChatGPTNextWeb/NextChat",
+      "source_hash": "5c77d4d3c318d9cf921895c52bdaa3beab6f45c6bd9221a5b5ecf73f83036308",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding",
+        "agents-automation",
+        "personal-productivity"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 612354784,
       "source_full_name": "ggml-org/llama.cpp",
       "source_hash": "cab6b73da474e33356028e8da4a402bd8dc639b3088ef92edca16befdfe98e68",
@@ -24560,6 +26012,33 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T03:58:39.338555Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 612640604,
+      "source_full_name": "mckaywrigley/chatbot-ui",
+      "source_hash": "642033040086a6f1e427f3e312b9b8c3ad644b1094a88f3516bcb9478d100f9e",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding",
+        "agents-automation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 612781022,
+      "source_full_name": "cursor/cursor",
+      "source_hash": "6feb2faf4afe31eab5fe7c2e130ebec3094d76ebbf0ec694e20d60fbb5d74978",
+      "primary_category": "developer-tools",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -24574,6 +26053,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T07:06:22.118650Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 613349035,
+      "source_full_name": "zai-org/ChatGLM-6B",
+      "source_hash": "01bec1d9b0be2d7372cbbaf44ed5ca82e8673d6a362b06eb71a84a3fecaa0eb7",
+      "primary_category": "ai-machine-learning",
+      "project_type": "model-dataset",
+      "use_cases": [
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -24646,6 +26138,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 615882673,
+      "source_full_name": "lm-sys/FastChat",
+      "source_hash": "5952b83ca48eab575c72df405c188be19c086252eea4b1987668e91ab299e0f5",
+      "primary_category": "ai-machine-learning",
+      "project_type": "platform-service",
+      "use_cases": [
+        "agents-automation",
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 616009477,
       "source_full_name": "gilzoide/lua-gdextension",
       "source_hash": "14b59316a50ff3c0d377e2518c6763ecadc7f12cb8159cb03f3aeac45566c761",
@@ -24656,6 +26162,21 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-22T04:12:02.172495Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 616372661,
+      "source_full_name": "binary-husky/gpt_academic",
+      "source_hash": "1537a7e3754171f3a04fdcbe10f0bdc1577a9a413db781f95eceff277cbc9325",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "rag-knowledge",
+        "content-generation",
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -24670,6 +26191,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-22T04:12:02.172495Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 618058471,
+      "source_full_name": "facebookresearch/segment-anything",
+      "source_hash": "1813d35a4ddcab37a25fe3570d7ffd7ac36b468671269e9d98619f1db5e2a47f",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "image-video-audio"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -24739,6 +26273,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 619859161,
+      "source_full_name": "twitter/the-algorithm",
+      "source_hash": "c054d8ce6da4976266eca8095aead486dcfa6680fc879511528884a2bda42457",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "data-analysis-visualization",
+        "api-backend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 619959033,
       "source_full_name": "nomic-ai/gpt4all",
       "source_hash": "41e660256882a12d47053b34eaef2681ecf41e992b7a6f2acb7c64e05f83c002",
@@ -24764,6 +26312,33 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T19:37:54.117571Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 620936652,
+      "source_full_name": "xtekky/gpt4free",
+      "source_hash": "7a4b946e95019ce1454e84f2a0618f54b0246995a43aef570c4f988d4fa65f4f",
+      "primary_category": "ai-machine-learning",
+      "project_type": "platform-service",
+      "use_cases": [
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 621799276,
+      "source_full_name": "chatchat-space/Langchain-Chatchat",
+      "source_hash": "6e3416565d9d93b75d72809a20b22880913332bb57229a596eda3df26e4a06d2",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "agents-automation",
+        "rag-knowledge"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -24948,6 +26523,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 631254164,
+      "source_full_name": "songquanpeng/one-api",
+      "source_hash": "01c35234795fd1c05ba8786bb8d736eb60d3de679ff3a6a82062e3d9c9765bae",
+      "primary_category": "ai-machine-learning",
+      "project_type": "platform-service",
+      "use_cases": [
+        "api-backend",
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 631285104,
       "source_full_name": "gosom/google-maps-scraper",
       "source_hash": "26e4c4e7c318f271a66241d8bed3d171e31cf4fa54dfa50a9ca22bc50f5332c4",
@@ -24985,6 +26574,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T22:09:46.833094Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 631567741,
+      "source_full_name": "chatanywhere/GPT_API_free",
+      "source_hash": "0db2b0dba157a5aa9a4861ffe2b71484362b2ac80edcc8638a63f4b2e7b239e1",
+      "primary_category": "ai-machine-learning",
+      "project_type": "platform-service",
+      "use_cases": [
+        "api-backend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -25057,6 +26659,21 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 635240594,
+      "source_full_name": "zylon-ai/private-gpt",
+      "source_hash": "6fee850eb82ed4931a5eebdad786ad2ad8b8ec25a92d53f0e80ee9fd9fde5fe5",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "agents-automation",
+        "rag-knowledge",
+        "api-backend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 636589108,
       "source_full_name": "sbccas/sbccas",
       "source_hash": "baac689e27d29cd0afaa39cfc2b851550bdacf955148004ff9f3ab6d52308679",
@@ -25125,6 +26742,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 638629097,
+      "source_full_name": "Aider-AI/aider",
+      "source_hash": "01f0f8e6c5a001901067cf33db40ebe40676e7dd35f1055f0e04cd7002e10fca",
+      "primary_category": "developer-tools",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "ai-coding"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 638951438,
       "source_full_name": "comet-ml/opik",
       "source_hash": "2d6447058a787757278802e2685c00c4e5828da01333438935375a29f0237512",
@@ -25137,6 +26767,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T07:06:22.118650Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 640079149,
+      "source_full_name": "QuivrHQ/quivr",
+      "source_hash": "a719be16f469db24d9dc0a58766311e96eecb9ef4d23addb166dbe9a66cea853",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "rag-knowledge",
+        "api-backend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -25205,6 +26849,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T01:04:20.264126Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 642323624,
+      "source_full_name": "XingangPan/DragGAN",
+      "source_hash": "259b11a7e21dc05f1fccccb4737242cb7dbb2a12421ce25f0dc01a47d0fb8606",
+      "primary_category": "creative-media",
+      "project_type": "application",
+      "use_cases": [
+        "image-video-audio",
+        "design-ui-ux"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -25307,6 +26965,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 644686905,
+      "source_full_name": "continuedev/continue",
+      "source_hash": "1a4809e9f6a4e1b7621abeeaced86c80af4efec51e72d284ec15992fb29e8a38",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding",
+        "agents-automation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 645381450,
       "source_full_name": "SamurAIGPT/Generative-Media-Skills",
       "source_hash": "4943188934d3dcd5c911f5f771dd0058d9187fdcc34f62f90d97de4b21daf47a",
@@ -25360,6 +27032,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T01:04:20.264126Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 646410686,
+      "source_full_name": "hiyouga/LlamaFactory",
+      "source_hash": "4fec7b7fa8cc5b1640cbff6f3d5a9cabdd97f5dcd12dbf5945a01aded5312299",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -25592,6 +27277,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 655099582,
+      "source_full_name": "mlabonne/llm-course",
+      "source_hash": "5f9fe69457d0d2126fcae728bafa8a7dd5936b5f94443c7433e126fc38bb56fe",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 655515393,
       "source_full_name": "CopilotKit/CopilotKit",
       "source_hash": "9eca291ee917202a1073e35000ebce2f2cb2578346a26de25a25521e4c44254b",
@@ -25632,6 +27330,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T03:58:39.338555Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 656099147,
+      "source_full_name": "mem0ai/mem0",
+      "source_hash": "6bdea8f2671db5e198a5b19acc1bb1d7987c1ef78d776e0e156a1bd9cf3266db",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "agents-automation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -25689,6 +27400,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T07:06:22.118650Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 658364446,
+      "source_full_name": "lissy93/web-check",
+      "source_hash": "e1a3c4f67bb12923cad1ba06a02dbf49ea8b2644901521fdfe329847c35abc55",
+      "primary_category": "security-privacy",
+      "project_type": "application",
+      "use_cases": [
+        "search-scraping",
+        "security-defense"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -25874,6 +27599,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 664013991,
+      "source_full_name": "gitroomhq/postiz-app",
+      "source_hash": "3cc5898a9fde2e339162233720a6f3d3ffd7d8e8f201c854088e9966658af593",
+      "primary_category": "productivity-collaboration",
+      "project_type": "application",
+      "use_cases": [
+        "personal-productivity",
+        "team-collaboration"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 664226598,
       "source_full_name": "pinokiocomputer/pinokio",
       "source_hash": "148b0adb354dfd28648dc7febf0f2a6f8b0238a46a2f2a5892a0ec1b7ff1c057",
@@ -25979,6 +27718,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T19:37:54.117571Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 668195240,
+      "source_full_name": "pathwaycom/llm-app",
+      "source_hash": "52bc34d1a4e507788a7eaef3235900121b86064682eb181524e36255f2d744d8",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "rag-knowledge",
+        "api-backend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -26157,6 +27910,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 676676006,
+      "source_full_name": "lllyasviel/Fooocus",
+      "source_hash": "13ba59ef1e8864e6dd2e021439b5c8530c1240010004a8046c7c6e8fa8582bdf",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "content-generation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 676953251,
       "source_full_name": "kleiverun/Beekeeping-management",
       "source_hash": "91eb92a235f4e2880d3b5db832d90287ae5c8e64f595170486a7baf5c08f667f",
@@ -26267,6 +28033,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 679237742,
+      "source_full_name": "Pythagora-io/gpt-pilot",
+      "source_hash": "bf6bd41942d3ac683502f685666f046f67eda7bb0ef4d890cf8fc4cbfd3fc7a4",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding",
+        "agents-automation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 679280065,
       "source_full_name": "scalar/scalar",
       "source_hash": "cce60ebd12c433e74a800fc56ce1b9cc2621a112acceb312f35ab2d921e64079",
@@ -26336,6 +28116,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-22T04:12:02.172495Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 680120071,
+      "source_full_name": "microsoft/autogen",
+      "source_hash": "35b87b5ac7898a1dadb372c2cdd1ff1cfe8775f7ed6136a17e357cb8f4e78423",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "ai-coding",
+        "agents-automation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -26472,6 +28266,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T03:58:39.338555Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 683892956,
+      "source_full_name": "OpenBMB/ChatDev",
+      "source_hash": "89812782b7e2ce574c04413f8e335eaa217e97f25b821385beb23a0b30444b44",
+      "primary_category": "ai-machine-learning",
+      "project_type": "platform-service",
+      "use_cases": [
+        "agents-automation",
+        "team-collaboration"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -26651,6 +28459,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-22T04:12:02.172495Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 695864515,
+      "source_full_name": "hacksider/Deep-Live-Cam",
+      "source_hash": "992a2787eb10384570de278be5bff79fac411f75b1de6f4505a52f4695ffea80",
+      "primary_category": "creative-media",
+      "project_type": "application",
+      "use_cases": [
+        "content-generation",
+        "image-video-audio"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -26953,6 +28775,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 709589487,
+      "source_full_name": "ashishps1/awesome-system-design-resources",
+      "source_hash": "65485d8ce7e3df1ec66d4ba6dc30738e00eac7ce8b3903546dc4287e15f3b7c1",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 709603902,
       "source_full_name": "YaoFANGUK/video-subtitle-remover",
       "source_hash": "3a82923fdd918f478d11a5fd8c9f31284e5553f63d5a17ac29c07394e0110ae1",
@@ -27167,6 +29002,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 717297418,
+      "source_full_name": "linexjlin/GPTs",
+      "source_hash": "6f1b27ce8edd1ffe9d3086a867c15c674671438209e9efdfa3ca8195f89a2902",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "resource-discovery"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 717520331,
       "source_full_name": "ning-y/ning-y",
       "source_hash": "adc890d88908725844c5ebb2922a1a977ec890de90dd78211f01ee3a26a6a49d",
@@ -27255,6 +29103,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T01:04:20.264126Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 720853375,
+      "source_full_name": "DataExpert-io/data-engineer-handbook",
+      "source_hash": "b84ec2d5243b2122554af6334c61f234a33cb5c5411dfd9891faf17b297d7bfc",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -27419,6 +29280,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 725089041,
+      "source_full_name": "myshell-ai/OpenVoice",
+      "source_hash": "61924dbb0eeba5ce78f4861d7b064f6821ab098bff190b8d9fca5f9388822d60",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "model-training-inference",
+        "image-video-audio"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 725205304,
       "source_full_name": "unslothai/unsloth",
       "source_hash": "44e243f956bf02a695cfa08143ef38ddc5e2fcd0a9c6ac47aef29c339198aa9d",
@@ -27468,6 +29343,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-22T04:12:02.172495Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 727213319,
+      "source_full_name": "lizongying/my-tv",
+      "source_hash": "f19e31472d3a3aa9c70e65229c9ec86a33b25e5e482619fd1ad19ed1cd84a98d",
+      "primary_category": "industry-solutions",
+      "project_type": "application",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -27847,6 +29735,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 743230067,
+      "source_full_name": "RVC-Boss/GPT-SoVITS",
+      "source_hash": "57dcc111269d9dcf2436332aa1c40ac18dd14e82a400af1f63f10606cd5aa0e6",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "ai-coding",
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 743359402,
       "source_full_name": "agiresearch/AIOS",
       "source_hash": "710331090110d8deb58f317f3d64d730de651fb4bc5c5d7329d436eb6d4b681f",
@@ -28033,6 +29935,21 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-22T04:12:02.172495Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 753490180,
+      "source_full_name": "daytonaio/daytona",
+      "source_hash": "38f1706d1360942c2ee30f2d39e58cb0294a8cb6e81547dca98c393d395fbe5c",
+      "primary_category": "data-infrastructure",
+      "project_type": "platform-service",
+      "use_cases": [
+        "api-backend",
+        "security-defense",
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -28747,6 +30664,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 784181462,
+      "source_full_name": "ItzCrazyKns/Vane",
+      "source_hash": "a36b5a521da603f5b9644599e10ffd098e437aa9973702cfd8dd08442b66346b",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding",
+        "rag-knowledge"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 784546140,
       "source_full_name": "jina-ai/reader",
       "source_hash": "0055f70c68c114cf368cd0f8e9da58581b63b1ab080e210231d4e2c4f203e85c",
@@ -28812,6 +30743,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T17:32:43.053270Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 788847937,
+      "source_full_name": "Dokploy/dokploy",
+      "source_hash": "9d52b495c4eeacc1bfc37ff2e313ae2d4c47fd2a11748d0b1d1ad5e482d68b90",
+      "primary_category": "devops-observability",
+      "project_type": "platform-service",
+      "use_cases": [
+        "devops-deployment",
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -29073,6 +31018,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 797345627,
+      "source_full_name": "inkonchain/docs",
+      "source_hash": "1acf4b654749fce8e8f243608e7c7a2c84b57cc6de594a941a11c912de94e184",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 798201435,
       "source_full_name": "unclecode/crawl4ai",
       "source_hash": "35f842f3d6d08f63763deb907772fac55c4f8b6a6ab95f1b93d1daa9f8064efd",
@@ -29157,6 +31115,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 800217484,
+      "source_full_name": "inkonchain/node",
+      "source_hash": "5a291cca7059d8fc842c9bc5024b56202d1aa2f58dc7ef0855be5cc2f878b933",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 802514845,
       "source_full_name": "bauripalash/mewlisp",
       "source_hash": "0fb3648f4c94936623dc4675b5c1cb7f8c7ea842619805b08c7c54489cb8d294",
@@ -29223,6 +31194,34 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-22T04:12:02.172495Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 806709826,
+      "source_full_name": "2noise/ChatTTS",
+      "source_hash": "bff4574e0fbaffcbcfd802cb71dde1f070e36fc5b04994060a3f7046d5fe2da7",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "ai-coding",
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 806854629,
+      "source_full_name": "datawhalechina/happy-llm",
+      "source_hash": "db6b9dbd8f75f6afd3635db0cd0f34ba0fc7cd8d4555ec626396399116d8f1ca",
+      "primary_category": "ai-machine-learning",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "model-training-inference",
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -29649,6 +31648,21 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 822604462,
+      "source_full_name": "666ghj/BettaFish",
+      "source_hash": "68828d764b073411e8f0c6a4cc09fbac7254d9f3e02c43c1dfd2e32c23b7e4f1",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "agents-automation",
+        "rag-knowledge",
+        "data-analysis-visualization"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 822943755,
       "source_full_name": "andevbonilla/Andev-webpage",
       "source_hash": "f039e0648b6128babb729187314066665fdc224b841e3c7a90d11051d4a9a291",
@@ -29954,6 +31968,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 834369920,
+      "source_full_name": "jingyaogong/minimind",
+      "source_hash": "a8edffd23f8c965741d87318480582cfbbfe6da4d869a651491fff7811295d2b",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 835510315,
       "source_full_name": "mozilla-firefox/firefox",
       "source_hash": "cd071309ba5561bbcfc354a3c31af275f379bc595ff37ccf263e1a55e3772bba",
@@ -30003,6 +32030,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T01:04:20.264126Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 838253246,
+      "source_full_name": "microsoft/BitNet",
+      "source_hash": "d3cf55d42d50739f54fb83e58a9304c7005002da5ad322a106926cd5eae4a1f8",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -30303,6 +32343,21 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 853189791,
+      "source_full_name": "PDFMathTranslate/PDFMathTranslate",
+      "source_hash": "14c56642a2b05537589e939e22de12a72e9d4eccb9e6fdd7efd8edff8b61d8f7",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "rag-knowledge",
+        "documents-office",
+        "content-generation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 853719248,
       "source_full_name": "mimicrii/ctis-scraper",
       "source_hash": "3e341b713cf9100b9e335c6f113d6478dec790b49ca9282a8972f975bfb2dcda",
@@ -30406,6 +32461,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-24T04:00:32.535148Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 858262444,
+      "source_full_name": "PatrickJS/awesome-cursorrules",
+      "source_hash": "c1a89d5ce924b3d46f30af3387923e9cf3867184daec13572e159976fbe00e79",
+      "primary_category": "developer-tools",
+      "project_type": "other",
+      "use_cases": [
+        "ai-coding"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -30808,6 +32876,21 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T17:32:43.053270Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 876064934,
+      "source_full_name": "patchy631/ai-engineering-hub",
+      "source_hash": "e7b6fbadc9f0ac7dae875c44831936851cc6b36aace107e6f3f0e9d397d86e2a",
+      "primary_category": "education-resources",
+      "project_type": "tutorial-resource",
+      "use_cases": [
+        "agents-automation",
+        "rag-knowledge",
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -31269,6 +33352,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 896335270,
+      "source_full_name": "punkpeye/awesome-mcp-servers",
+      "source_hash": "dfa5b0c7bc9fdc5e087b8f47c8282469ba9faea2e1504e1743ea2b1c201e67e8",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 896924279,
       "source_full_name": "moeru-ai/airi",
       "source_hash": "52b4be71ac0ef283bbcee6dec5cf849cddc4616593b01fa6d663b842a7feecee",
@@ -31582,6 +33678,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 906251482,
+      "source_full_name": "ashishpatel26/500-AI-Agents-Projects",
+      "source_hash": "7cb5f678388b35ad2c4fa54e61744ffebe7879cf64ac86c15052007684b74dd5",
+      "primary_category": "ai-machine-learning",
+      "project_type": "other",
+      "use_cases": [
+        "agents-automation",
+        "resource-discovery"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 906798420,
       "source_full_name": "chr1snv/camCarSecurity",
       "source_hash": "6b7f79c801daa4f332d7528073ff925d3bea9297b646f3aa8a710c07b6e89e88",
@@ -31606,6 +33716,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-24T04:00:32.535148Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 908531752,
+      "source_full_name": "deepseek-ai/DeepSeek-V3",
+      "source_hash": "64cb363a48763c10ac8351deb771e507ce3cab1f3d2759d3fba503e1fc02bc66",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -31958,6 +34081,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 918932603,
+      "source_full_name": "bytedance/UI-TARS-desktop",
+      "source_hash": "3e6dac206305610aad953550b7160c71b903d8820fffb927c6f1772414e5e7ef",
+      "primary_category": "ai-machine-learning",
+      "project_type": "platform-service",
+      "use_cases": [
+        "agents-automation",
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 919033493,
       "source_full_name": "dhedev26/DE",
       "source_hash": "653a44ca0451bf37866fc54ce2500bbe5845753126a365cd63152e9a74bea9ad",
@@ -31968,6 +34105,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-24T04:00:32.535148Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 919443098,
+      "source_full_name": "deepseek-ai/DeepSeek-R1",
+      "source_hash": "8a85a2a9ebc66096a5f236162aa0b9b8c3ca7b7e9f425f3b4c9a9d762409efc6",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -32302,6 +34452,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-24T04:00:32.535148Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 931352845,
+      "source_full_name": "linshenkx/prompt-optimizer",
+      "source_hash": "25c4736db5ac8d756312d6d5d4bb1eab58271c18e90efe08f7f06834d436a51f",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding",
+        "agents-automation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -32662,6 +34826,21 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 943398999,
+      "source_full_name": "x1xhlol/system-prompts-and-models-of-ai-tools",
+      "source_hash": "b6e109f2fc03f25229fb59338a768b38ad97e9b848d19d5fffbf90724a42ef04",
+      "primary_category": "ai-machine-learning",
+      "project_type": "other",
+      "use_cases": [
+        "ai-coding",
+        "agents-automation",
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 943901988,
       "source_full_name": "voidzero-dev/vite-plus",
       "source_hash": "8d3508cdd50d7f5e9a95b51dd7f4bfc9d4733ee796441998eefe826503022367",
@@ -32674,6 +34853,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-22T04:12:02.172495Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 943934999,
+      "source_full_name": "FoundationAgents/OpenManus",
+      "source_hash": "e2485ca28fa7f2475d2511d61fea61ca42965e7403eee68e551b5577d75f92bf",
+      "primary_category": "other",
+      "project_type": "platform-service",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -33249,6 +35441,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 958531089,
+      "source_full_name": "VectifyAI/PageIndex",
+      "source_hash": "13a47935a2ee6c75e267b87a249c627e7d43df65b7ca78a90d42625309cd044a",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "rag-knowledge"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 958715620,
       "source_full_name": "rmarescu/gumroad-mcp",
       "source_hash": "08ec2bf774972bd547e3b42b67e9ecceb5eeb72a284847ad509596da0be3f047",
@@ -33672,6 +35877,22 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 974186260,
+      "source_full_name": "sansan0/TrendRadar",
+      "source_hash": "f4ecb956a6d583c839c44d7b9b32ae2c6c33413131c533e07d0246703e297375",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "agents-automation",
+        "data-analysis-visualization",
+        "content-generation",
+        "team-collaboration"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 974197583,
       "source_full_name": "Kotlin/kotlin-lsp",
       "source_hash": "f193439429e9a90974c4413e416d130c327adfac28fc942be3ef79269696a5be",
@@ -33970,6 +36191,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T01:04:20.264126Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 983345476,
+      "source_full_name": "Zie619/n8n-workflows",
+      "source_hash": "3781abcb85a229ebf642cc2c0a69de83778f163a135729c566cf1ea96b1b0fba",
+      "primary_category": "developer-tools",
+      "project_type": "other",
+      "use_cases": [
+        "agents-automation",
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -34714,6 +36949,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1011567289,
+      "source_full_name": "shiyu-coder/Kronos",
+      "source_hash": "f3088dac9297acabd61541ba0a60ec0acde85ed6e4ad9517d2b069e6b455c1b8",
+      "primary_category": "ai-machine-learning",
+      "project_type": "model-dataset",
+      "use_cases": [
+        "model-training-inference",
+        "finance-trading"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1012087571,
       "source_full_name": "router-for-me/CLIProxyAPI",
       "source_hash": "f89bfe6e8f78e49b912a8a2e9eb51807fd661ce82a72771d746986d281ec5ef4",
@@ -35127,6 +37376,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-24T04:00:32.535148Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1025856648,
+      "source_full_name": "wshobson/agents",
+      "source_hash": "d552fe6237f60a7c18c732ad854fe12d324cfabe8aaa2074cef14899271f0ff5",
+      "primary_category": "developer-tools",
+      "project_type": "platform-service",
+      "use_cases": [
+        "ai-coding",
+        "agents-automation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -35758,6 +38021,21 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1044296738,
+      "source_full_name": "microsoft/VibeVoice",
+      "source_hash": "e695f2dc42288cfbca3354ade326674ceda0fb513b165ee4858cdb25a48d9ad2",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "ai-coding",
+        "content-generation",
+        "image-video-audio"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1044487808,
       "source_full_name": "Zqysl/TypeFX.js",
       "source_hash": "9fddd2e2c47cfcb5e4bb95d7978821106d11dbd0f8a80a42deacf7eb3c9d15ee",
@@ -36038,6 +38316,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-24T04:00:32.535148Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1054793726,
+      "source_full_name": "ChromeDevTools/chrome-devtools-mcp",
+      "source_hash": "9086b865507df0e14ef22e2af6b1523e25a67d0d9eae1a3d7526275eae157276",
+      "primary_category": "developer-tools",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "ai-coding",
+        "agents-automation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -36560,6 +38852,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T19:37:54.117571Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1078079172,
+      "source_full_name": "ComposioHQ/awesome-claude-skills",
+      "source_hash": "3b1f2004316a8e5c5cafd67d83d171bdea648528da7b35ab7d50e0b18d9cd03c",
+      "primary_category": "ai-machine-learning",
+      "project_type": "other",
+      "use_cases": [
+        "agents-automation",
+        "resource-discovery"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -37278,6 +39584,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-24T04:00:32.535148Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1104332987,
+      "source_full_name": "666ghj/MiroFish",
+      "source_hash": "7c03714d5a475040070af07821c0e715aa4be79681a2304a295f38bd5372ca0c",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "model-training-inference",
+        "data-analysis-visualization"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -38950,6 +41270,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1141704318,
+      "source_full_name": "VoltAgent/awesome-openclaw-skills",
+      "source_hash": "84415260063d96f1f0053d26f7bec321dd0c24d06517b1e38a42a85ff6384134",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "agents-automation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1141782198,
       "source_full_name": "jamiepine/voicebox",
       "source_hash": "d91c4f0e53e6d8e986efc903b08a184fa0c4f28d07c895a3fdcd62e802ab5766",
@@ -40309,6 +42642,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1165056385,
+      "source_full_name": "anthropics/financial-services",
+      "source_hash": "0953e72759944ab3d1e70d8ff92454334dab330f6fb8b1ab54addc653ea3428b",
+      "primary_category": "industry-solutions",
+      "project_type": "application",
+      "use_cases": [
+        "finance-trading"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1165277268,
       "source_full_name": "Panniantong/Agent-Reach",
       "source_hash": "1931911e3f783b12b5790df2131e8c1a1965c29500b1aceaff4917bdc5892b22",
@@ -41034,6 +43380,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T03:58:39.338555Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1175538883,
+      "source_full_name": "chenglou/pretext",
+      "source_hash": "4505255ad8a6fec5ef05c148117b36e07e8807b6be8a6feff747955cb7a63491",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "design-ui-ux"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -42000,6 +44359,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T01:04:20.264126Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1191383681,
+      "source_full_name": "matz/spinel",
+      "source_hash": "db8d040375d23e164ae461934b8dc4ddc69b08e1523fdf99835ac110d5a102cc",
+      "primary_category": "systems-network-hardware",
+      "project_type": "library-framework",
+      "use_cases": [
+        "network-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -48147,6 +50519,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1289741977,
+      "source_full_name": "supunkaru/supunkarunarathna",
+      "source_hash": "4792d5b023cbf45c55d5d138209f3edc87194f733ac8650f1c082d172074a9e3",
+      "primary_category": "security-privacy",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "security-defense"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1289755707,
       "source_full_name": "buchidonggua/dg-ai-notes",
       "source_hash": "c5e71446fa18cbb77efddcfb2c408acc9e5028d03aff8080a7583feacbeeb73b",
@@ -48157,6 +50542,46 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T01:04:20.264126Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1289834653,
+      "source_full_name": "TensorHub-ORG/Storydex",
+      "source_hash": "0753cce8330fa21bc43e09819eb5e63b695500c7da5c32bede9fdfec7950e346",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "content-generation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1289986096,
+      "source_full_name": "Sac-Y/identity-skill",
+      "source_hash": "eed2143e78389b5e3010ffee9b2456d5064b0d1ceac47c2ba4fb905ca42524b5",
+      "primary_category": "web-app-development",
+      "project_type": "application",
+      "use_cases": [
+        "web-frontend",
+        "personal-productivity"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1290044183,
+      "source_full_name": "netwaif/loadout",
+      "source_hash": "312b2c901e859fba9bc909638ab8756cd778b0e5489c4ab3312b473dfee620a1",
+      "primary_category": "ai-machine-learning",
+      "project_type": "plugin-extension",
+      "use_cases": [
+        "agents-automation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -48174,6 +50599,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1290518601,
+      "source_full_name": "hicccc77/electron-liquid-glass",
+      "source_hash": "ead1975bcafd788f97ebc237d9a40211a874385a693cb2955fd3ad5068cd6256",
+      "primary_category": "developer-tools",
+      "project_type": "other",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1290565606,
       "source_full_name": "inclusionAI/Avernet",
       "source_hash": "b5d90728a78f56d5087fcd0b1a96a084ea556c2f2690cd55f93b5d24752789a6",
@@ -48184,6 +50622,32 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T01:04:20.264126Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1290703740,
+      "source_full_name": "x4gKing/PasarGuard-Node",
+      "source_hash": "dcd8d300b554ab085e6b79d814f340adce59d5fbbeb4b558c1042e9e5eb26350",
+      "primary_category": "security-privacy",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "security-defense"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1290873619,
+      "source_full_name": "AudarAI/Audar-ASR-V1",
+      "source_hash": "724d6a1309a3acaeefa6db3e2ae410d9c112af28898ba62e661f7844b1c57262",
+      "primary_category": "ai-machine-learning",
+      "project_type": "model-dataset",
+      "use_cases": [
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -48203,6 +50667,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1291159942,
+      "source_full_name": "chamiya70/vehicle-sales-system",
+      "source_hash": "07883955eccb5581bcf0e50640fa39cfb19f1138ce7c1ab904950aa75a3a6d4a",
+      "primary_category": "industry-solutions",
+      "project_type": "application",
+      "use_cases": [
+        "database-storage",
+        "api-backend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1291168761,
       "source_full_name": "Shpigford/knockoff",
       "source_hash": "7db53aad719af78c42c60a0ad49510c13c2ebb2a136fec41a378f8944d3c1e96",
@@ -48213,6 +50691,33 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T03:58:39.338555Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1291174313,
+      "source_full_name": "ChechiDev/SportCrawl",
+      "source_hash": "118e910e4bd50d7a6c5539ceec7003175b68fd4e8de93433c2e987b15e9345ec",
+      "primary_category": "data-infrastructure",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "database-storage",
+        "search-scraping"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1291281266,
+      "source_full_name": "SmtimesIWndr/GDID-Disabler",
+      "source_hash": "dbbc91a497223347819e9f84c76ef1971dbba6c8b71ad749eff83ee97ce7f2eb",
+      "primary_category": "developer-tools",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "system-admin-optimization"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -48240,6 +50745,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T03:58:39.338555Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1291464946,
+      "source_full_name": "hikarioyama/qwen36-a6b",
+      "source_hash": "ebebec7048d478b9faaa79c55f33e7f57eac205c4bd76e1aeaff06f658fc52ba",
+      "primary_category": "ai-machine-learning",
+      "project_type": "other",
+      "use_cases": [
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -48283,6 +50801,20 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-24T04:00:32.535148Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1291524061,
+      "source_full_name": "ImMrShervin/store-ai-chatbot",
+      "source_hash": "26c233a39e397f9b61d41cf4fdad46e6383aac6c21b05413359c86b1e2366e5e",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "agents-automation",
+        "api-backend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -48341,6 +50873,46 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1292322120,
+      "source_full_name": "NikhilVerma/writinglint",
+      "source_hash": "6fcd182b678dcaf665bab102c0217cc01208c87d74e80377a08e1c98ba9c0b0b",
+      "primary_category": "developer-tools",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "ai-coding"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1292428263,
+      "source_full_name": "pinebasedev/svelteflare",
+      "source_hash": "9c7ece78fc57aa5acd7ef306854cf0911cff88e7884e033cdf61ef8dd482303a",
+      "primary_category": "web-app-development",
+      "project_type": "application",
+      "use_cases": [
+        "api-backend",
+        "web-frontend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1292489444,
+      "source_full_name": "EnjoySR/ArkDO",
+      "source_hash": "4f66ee20e9b3bb2c2ee182dc66f39bfd3454e11e65b445cf61679bbc84a496ba",
+      "primary_category": "web-app-development",
+      "project_type": "application",
+      "use_cases": [
+        "mobile-cross-platform"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1292544026,
       "source_full_name": "Skyvern-AI/rustwright",
       "source_hash": "ff7357acc5c0351c2a24acde4d4e6efbf8cdfa73d6a58d22e2325510974b0ee7",
@@ -48353,6 +50925,33 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-18T00:15:46.311660Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1292756053,
+      "source_full_name": "capitalone/VulnHunter",
+      "source_hash": "ca95da4ae09fcdebb113357d85ebf2dd548da3f13bfa4aed110f68ea9a4fdb0f",
+      "primary_category": "security-privacy",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding",
+        "security-defense"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1292766824,
+      "source_full_name": "ebowman/domestique",
+      "source_hash": "6b3383493f2294c936b035a724db3ce015a212399b17859c2c0a5384dff09638",
+      "primary_category": "developer-tools",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -48369,6 +50968,34 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1293082777,
+      "source_full_name": "mrdainami/omni-video-director",
+      "source_hash": "66b41311e1177b15488a8e1374a66baef4b762111e3a38f6caec19496fce40e3",
+      "primary_category": "creative-media",
+      "project_type": "application",
+      "use_cases": [
+        "content-generation",
+        "image-video-audio"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1293119311,
+      "source_full_name": "Saberr-app/Saberr",
+      "source_hash": "74b9c273640838f65693fa01245c942b228389bd660b0c9813e7eb2b416da730",
+      "primary_category": "industry-solutions",
+      "project_type": "application",
+      "use_cases": [
+        "resource-discovery",
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1293134522,
       "source_full_name": "x4gKing/3x-ui-Upgrade",
       "source_hash": "f9270243b013a5fec0fd1d85cddc4671f128ee34143570110c58cc4e44c418da",
@@ -48382,6 +51009,33 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1293250153,
+      "source_full_name": "LEE-HH588/lee-s-library",
+      "source_hash": "2a10ce8f6c0732d1735c5dc40f5ecf8a9e0c008a7863d33515774962df5b5b55",
+      "primary_category": "productivity-collaboration",
+      "project_type": "library-framework",
+      "use_cases": [
+        "documents-office"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1293251335,
+      "source_full_name": "yuwoniu03/cesium-clouds-atmosphere",
+      "source_hash": "0c34593dc1f6f31514940b4e4b321385bc345862affccf7c6bd87f3970943063",
+      "primary_category": "creative-media",
+      "project_type": "library-framework",
+      "use_cases": [
+        "image-video-audio",
+        "design-ui-ux"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1293375068,
       "source_full_name": "withmarbleapp/os-taxonomy",
       "source_hash": "c36b27d44acefe033a8dca5e80e61c223673b4053ae87811b2b30b1fda437c84",
@@ -48392,6 +51046,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T03:58:39.338555Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1293521126,
+      "source_full_name": "3443176848/chenyida",
+      "source_hash": "24cbc617e2bd4901a9e40fd483aa35d161a35d31233a6d29d989b628f11d106a",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -48436,6 +51103,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1294088406,
+      "source_full_name": "Komalalf1986/Flash-USDT-Sender",
+      "source_hash": "1e5b63642d5cb7cb59d58817e31ea54dbe5a7b74fb03262b0ff7ba112f66864f",
+      "primary_category": "industry-solutions",
+      "project_type": "application",
+      "use_cases": [
+        "finance-trading"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1294562764,
       "source_full_name": "pax-beehive/paxm",
       "source_hash": "39a686a9a1296aed113b3f98db3eb1cd4d352fdbd0e7e34b0af6852dd095914e",
@@ -48447,6 +51127,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T01:04:20.264126Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1295312801,
+      "source_full_name": "harshvardhan-makwana/JournalX-mern-project",
+      "source_hash": "dd6d954264072a3c0907696272d165e363f0103fc5eb05925bb1b187199edf99",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -48490,6 +51183,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1295648738,
+      "source_full_name": "katipally/openlive",
+      "source_hash": "d0bfd4d03ebad276f56a5d75f8ac3b769705f35a47976bbb3ece2b7347c2e734",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding",
+        "agents-automation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1295795644,
       "source_full_name": "millerjordan29/pls-donate-tb12-script",
       "source_hash": "7b8337333b1bbb7195877216acc8a88290c8bc7243c4924da7206760d74d0073",
@@ -48513,6 +51220,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T01:04:20.264126Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1295870613,
+      "source_full_name": "jhosein58/learning-burn",
+      "source_hash": "c1da1be030b1aed8f11511cbdcbd594e17dd70c385b30564a4f0ac327bc3e66c",
+      "primary_category": "education-resources",
+      "project_type": "other",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -48571,6 +51291,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1296344930,
+      "source_full_name": "w3cj/how-llms-work",
+      "source_hash": "00f721601a5f4beefa053918b0dec31c15fcf9209b641b05310b9a80d03170a6",
+      "primary_category": "education-resources",
+      "project_type": "application",
+      "use_cases": [
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1296349582,
       "source_full_name": "aws-samples/sample-specship",
       "source_hash": "02e2a097ef5fab9185487568354b00d0489730af2fa6e722539f3c0ad08757d4",
@@ -48582,6 +51315,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-16T06:51:50.292861Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1296391700,
+      "source_full_name": "quvonch-dev/yangi-uyin",
+      "source_hash": "6ef1aca45c4124d7ed03c7a9d26802e0ce0a7a1168e6f8d7f58ad7b014d511db",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -48627,6 +51373,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1296688714,
+      "source_full_name": "turbo-llm/t-search-harness",
+      "source_hash": "b3527f125680eb346940cd5cd07bf7a785cc5e9edf9750dc7d1093960aee4bdf",
+      "primary_category": "ai-machine-learning",
+      "project_type": "library-framework",
+      "use_cases": [
+        "rag-knowledge"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1296745137,
       "source_full_name": "Sarthak-2085/Meridian-Intelligence",
       "source_hash": "b7feb37bd373fff9e82114bfd2eef4c38d358305c817fa0fd2c4a44892ad56f6",
@@ -48637,6 +51396,58 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T01:04:20.264126Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1296781596,
+      "source_full_name": "theredcraft0803/TRC-Enderchest",
+      "source_hash": "6ce7ba8c679c69ffea72146c7e994f55c005a410648d8c833d4320ba62c7e2e9",
+      "primary_category": "creative-media",
+      "project_type": "plugin-extension",
+      "use_cases": [
+        "games-emulation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1296808521,
+      "source_full_name": "MurasameCyan/GrokRegisterAgent",
+      "source_hash": "6998d772fa9efacc2ac20354024bb18366dddb0bca1707fa05b1052c7dd54af5",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1296819548,
+      "source_full_name": "AkramZerarka/vocalizer",
+      "source_hash": "1a558eb4c64305700d5813647bb58a60091434dc084b50906c54735fe8057f6b",
+      "primary_category": "other",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1296906411,
+      "source_full_name": "KOLSI-bit/Jessi-M-Digital-Solutions",
+      "source_hash": "d87376bb3ca38e239aeab1126bb52b908c384f69196b94b920392f9f08d0c4f7",
+      "primary_category": "industry-solutions",
+      "project_type": "application",
+      "use_cases": [
+        "resource-discovery"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -48651,6 +51462,33 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T07:06:22.118650Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1297115272,
+      "source_full_name": "VKirill/claude-lane-stack",
+      "source_hash": "4c8b844100874afebcd84e04cbb23e208d76e8830369b5ea276eaba9e305e938",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding",
+        "agents-automation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1297243234,
+      "source_full_name": "ramah202/smart-kitchen-assistant",
+      "source_hash": "6ac4a80496a443baf098dc6f0fceea94d7a869821d74973761cc82f447052706",
+      "primary_category": "web-app-development",
+      "project_type": "application",
+      "use_cases": [
+        "mobile-cross-platform"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -48682,6 +51520,87 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1297730489,
+      "source_full_name": "luisazmouz/world-boundaries-geojson",
+      "source_hash": "f89286420ffa750c1a6a90a7deba44b60a29764919611f7a84e0b1cdacad6fcf",
+      "primary_category": "data-infrastructure",
+      "project_type": "model-dataset",
+      "use_cases": [
+        "dataset-benchmark"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1297756386,
+      "source_full_name": "Dunterbabochka/zapret2-next",
+      "source_hash": "a4b463e6d648c87b2c63e967220a9db303ddfea21b521d60784f6218714c5a7a",
+      "primary_category": "systems-network-hardware",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "system-admin-optimization"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1297763164,
+      "source_full_name": "andlo/ha-duplicati-monitor",
+      "source_hash": "0126cec056bddc9e0aa2ac5599ed0df14edecdd7e8916bfd6b28c6bfd4c2d974",
+      "primary_category": "devops-observability",
+      "project_type": "plugin-extension",
+      "use_cases": [
+        "observability",
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1297780347,
+      "source_full_name": "Nexis-AI/NexBench",
+      "source_hash": "80f72e1ab78a855bf80ea5ea060b989590942b3b03acbdfedacf018a61b023dc",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "agents-automation",
+        "model-training-inference"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1297806843,
+      "source_full_name": "onceLabs/nRF54L15-Tag-Demo",
+      "source_hash": "8491c19427e6330cde8501552de2d1534479f3ce7ed628fc4783627b0b996465",
+      "primary_category": "systems-network-hardware",
+      "project_type": "application",
+      "use_cases": [
+        "system-admin-optimization"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1298007247,
+      "source_full_name": "NextWeb4/offline-utility-suite",
+      "source_hash": "654c3a52f408f503efd8b8f0076e2a3fae91c256fb52348d37ba45a41a5b4bb5",
+      "primary_category": "productivity-collaboration",
+      "project_type": "application",
+      "use_cases": [
+        "privacy-local",
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1298007302,
       "source_full_name": "rudi193-cmd/willow-data-vault",
       "source_hash": "e9e4f3a2a731f73ad47d47150b72daa06cb742a3ca6a0125ed8b5790bdd0a765",
@@ -48705,6 +51624,33 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T01:04:20.264126Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1298164130,
+      "source_full_name": "LiamGvchi/gc-minimal-zine-poster",
+      "source_hash": "6974bc00c504294444e5714c27cd5266df58b44af0f62103b43d340c34ab22e1",
+      "primary_category": "creative-media",
+      "project_type": "application",
+      "use_cases": [
+        "content-generation",
+        "image-video-audio"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1298183526,
+      "source_full_name": "ayush-that/ornn-rider",
+      "source_hash": "76e6425b594c10d178d814b404bb1d4aa1847b736962a1cb59ff27500cc7d361",
+      "primary_category": "creative-media",
+      "project_type": "application",
+      "use_cases": [
+        "games-emulation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -48761,6 +51707,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1298646271,
+      "source_full_name": "Lyle-xub/PiPanel",
+      "source_hash": "976c322889cb6e1256de80c719f42cc56991c475ad43ff254293256897cc1621",
+      "primary_category": "productivity-collaboration",
+      "project_type": "application",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1298660286,
       "source_full_name": "x4gKing/Marzban-Panel",
       "source_hash": "852a35d80ff9577649eefe6f816d7f48813cd03c3cdd72b93740e8d524d99054",
@@ -48799,6 +51758,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-16T06:51:50.292861Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1298928488,
+      "source_full_name": "yusufwardana/cosmiclibrary",
+      "source_hash": "d4c04df512dfee47f80bb7a2b4574c41253de1729d967be0282347c4404918f1",
+      "primary_category": "industry-solutions",
+      "project_type": "application",
+      "use_cases": [
+        "resource-discovery"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -48885,6 +51857,72 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1299523978,
+      "source_full_name": "pauleveritt/satyrn-ai",
+      "source_hash": "00beddf84d4d75ca1265fb6aa12ed44cfa2f9d460190e0bb1b743c3b2c0e736f",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1299582959,
+      "source_full_name": "P0gDog/PogOS",
+      "source_hash": "165d413b106d734366e7704600b2a57aaa730f8e5af1f9cf6b982a888cf32a9a",
+      "primary_category": "systems-network-hardware",
+      "project_type": "other",
+      "use_cases": [
+        "system-admin-optimization"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1299601724,
+      "source_full_name": "retrobridgeapp/retrobridge",
+      "source_hash": "032bc9d0d4a564f10be2dbdd7f6a258dfcf967124e15e78d1f2e3239aa69a7ed",
+      "primary_category": "productivity-collaboration",
+      "project_type": "application",
+      "use_cases": [
+        "personal-productivity",
+        "self-hosting"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1299742069,
+      "source_full_name": "snipem/DS4Dongle",
+      "source_hash": "54aaf75076ad7a7c4521e1c48fbf96fcbca47ff373d19bc3cfdf66cd6db5e779",
+      "primary_category": "systems-network-hardware",
+      "project_type": "other",
+      "use_cases": [
+        "network-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1299780127,
+      "source_full_name": "karank2512/RelayIQ",
+      "source_hash": "9c264d141392739c3baf3bf6411cd206eddeeb57b1e64ee99648fb0f41e2ae3e",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1299820860,
       "source_full_name": "KubeezMedia/kubeez-scroll-world-video",
       "source_hash": "f7bac06a189de858afdbe9d53835fcbe88a57306b538e0d86caa06815659e090",
@@ -48941,6 +51979,34 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1300123581,
+      "source_full_name": "HSJ-BanFan/grok-register-web",
+      "source_hash": "7d60aaf577284cc4dcb38f74a4d09bdc3afcb3f30f672a7c5cb4e8ffc3331852",
+      "primary_category": "web-app-development",
+      "project_type": "platform-service",
+      "use_cases": [
+        "api-backend",
+        "web-frontend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1300155176,
+      "source_full_name": "GaryElmes/manager.io-inv-history-rpt",
+      "source_hash": "3809acc2616c79f7e2ecfb82ccb32a2b8581f4091badcd0fb50ac33ea022de0e",
+      "primary_category": "industry-solutions",
+      "project_type": "plugin-extension",
+      "use_cases": [
+        "documents-office",
+        "finance-trading"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1300204002,
       "source_full_name": "contatomegasign/finance-account-tool",
       "source_hash": "645dcabc64d0a31da236f985d17f478098d471f9e043897ad57b03de39925b92",
@@ -48981,6 +52047,60 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1300531941,
+      "source_full_name": "mohadesehesmaeilzadeh/stm32-digital-clock",
+      "source_hash": "9365a1ef8af5c3bf109312625aaf88643f438386840a5e6b0757126591dc9701",
+      "primary_category": "systems-network-hardware",
+      "project_type": "other",
+      "use_cases": [
+        "system-admin-optimization"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1300536844,
+      "source_full_name": "Zygimantass/klack",
+      "source_hash": "30a082793e327427c6772c648d594d0c6416aeb4253d3661519f394c4ee2a43b",
+      "primary_category": "developer-tools",
+      "project_type": "plugin-extension",
+      "use_cases": [
+        "team-collaboration"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1300584797,
+      "source_full_name": "CluvexStudio/Aether",
+      "source_hash": "2a0f856de87b2307c2e1451a635637cd11b51323d3c5b14cfed313ad101753cd",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1300585571,
+      "source_full_name": "Linuxoid-cn/CVE-2026-43499-Poc-Analysis",
+      "source_hash": "e952d8cbccaa7d1bf51d8b8f15d109aa5a92496c1e477fab4200088ba079b88b",
+      "primary_category": "security-privacy",
+      "project_type": "other",
+      "use_cases": [
+        "security-defense",
+        "learning-tutorial",
+        "scientific-research"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1300612704,
       "source_full_name": "erickong/penecho",
       "source_hash": "a349fc1c51f457f80bdabe3d3020274ec4789f3f90d517d18204a2e1fb27a3bc",
@@ -49009,6 +52129,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1300781672,
+      "source_full_name": "Kirakun0328/text-to-vrma",
+      "source_hash": "d444df1d556210de7fa8ba326d5a3898b055c206e97fd2d41c085312a14bd8f3",
+      "primary_category": "creative-media",
+      "project_type": "application",
+      "use_cases": [
+        "content-generation",
+        "image-video-audio"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1300825775,
       "source_full_name": "stackblitz/bolt-slides",
       "source_hash": "5a2cc8607e56d8a16a67acb379503e21c984d85e078257b02e20a01fac06d8fd",
@@ -49020,6 +52154,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-18T00:15:46.311660Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1300862612,
+      "source_full_name": "SAGAR-TAMANG/ultron-by-sagar-builds",
+      "source_hash": "485eb353aca4e5e88318d4e59f969f60b37719e14e8b74f92beac6b7df67546c",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -49047,6 +52194,19 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T01:04:20.264126Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1301096447,
+      "source_full_name": "AngelRubio9/CursoSaas2Cloud",
+      "source_hash": "bf2dba83f25b766ccb0e7d4f70e318ec9f88cca45edf651c853b1c671c992712",
+      "primary_category": "industry-solutions",
+      "project_type": "application",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -49161,6 +52321,60 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1301672719,
+      "source_full_name": "yuwen-cool/yuwen-publish-precheck",
+      "source_hash": "3affdfb3f89875615c5efc7e8b4b9c8dd6a7888d21150e462041646c075608ac",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding",
+        "content-generation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1301677130,
+      "source_full_name": "KashafSajjad15/ai-ad-agent",
+      "source_hash": "4c12f7a4da313eaa9f3c8409807fe56825852bb8270cad715f95cb4675f41b25",
+      "primary_category": "ai-machine-learning",
+      "project_type": "platform-service",
+      "use_cases": [
+        "agents-automation",
+        "api-backend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1301724953,
+      "source_full_name": "geisonhg/TheLastShabti",
+      "source_hash": "6c450f426499e7eacc341f5609d985bbff6112dbfee06e35ea96561053ba6c1b",
+      "primary_category": "creative-media",
+      "project_type": "application",
+      "use_cases": [
+        "games-emulation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1301803915,
+      "source_full_name": "kitlangton/skills",
+      "source_hash": "de6f12f6952361d460deec37f0b97883180f8085ab00882499ac0712ce08489e",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1301970209,
       "source_full_name": "RockinChaos/Shiru-App",
       "source_hash": "3f83134b707dd981f59c6130937aa112fa995e7bd004b047ab6ed52b76f04154",
@@ -49172,6 +52386,46 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T19:37:54.117571Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1302010381,
+      "source_full_name": "JiXiner/flinkAgentMonitoring",
+      "source_hash": "da25b4ec864344a382bf71d8810ec5c37cde636f8b3705cc141339e790533662",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding",
+        "agents-automation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1302019326,
+      "source_full_name": "CodeDrobe/desktop",
+      "source_hash": "cc0339851553c971023ec9f8d65e9ab14a51bb1fb7465327e6d1df14533c0454",
+      "primary_category": "developer-tools",
+      "project_type": "application",
+      "use_cases": [
+        "design-ui-ux"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1302025672,
+      "source_full_name": "Jabo86/pianoalimentare",
+      "source_hash": "b17da65bd7c3d85fdb52ff6da37079551a24868c0bd1bed005762a3178fe2346",
+      "primary_category": "web-app-development",
+      "project_type": "application",
+      "use_cases": [
+        "web-frontend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -49189,6 +52443,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1302120422,
+      "source_full_name": "anes-laieb/codex-bar",
+      "source_hash": "178829f0433c62e5881053146c2ca44b9674d8aefa6a1decdf065aafa0537f6a",
+      "primary_category": "developer-tools",
+      "project_type": "application",
+      "use_cases": [
+        "personal-productivity"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1302262750,
       "source_full_name": "stephenleo/OpenMicro",
       "source_hash": "4e89bddb86e2a1027face6c1e8cd412149bb36257f60e5cbe2498280c8a25ba5",
@@ -49200,6 +52467,46 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T19:37:54.117571Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1302336101,
+      "source_full_name": "slmple-spec/Stock-Trading-Systems",
+      "source_hash": "ce21557d3b2cf8c3004829b39688dee76180335b04aed57eda60ae5caa24767c",
+      "primary_category": "industry-solutions",
+      "project_type": "application",
+      "use_cases": [
+        "model-training-inference",
+        "finance-trading"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1302367972,
+      "source_full_name": "lingbopro/win12-desktop",
+      "source_hash": "746aeea219d32810e10ddbed49780f1bd26295b8846805844ff0c928bcaefd47",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1302382878,
+      "source_full_name": "t-head/hggc-samples",
+      "source_hash": "1a084944ab84158eb24d1ef583cdd4d9419c809e2a3a3c8996d6b43d898c4d94",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -49245,6 +52552,98 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1302448737,
+      "source_full_name": "thesysdev/appless",
+      "source_hash": "01332746e9a363984bba1f7b91312c675bfbf8e8c0598e3e315c99958d1a3223",
+      "primary_category": "web-app-development",
+      "project_type": "application",
+      "use_cases": [
+        "mobile-cross-platform"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1302477517,
+      "source_full_name": "x4gKing/Telegram-Proxy",
+      "source_hash": "ac3f4a3ee794ab22774c9379c01b250625497992b08ae2cda9c1b60608d832ed",
+      "primary_category": "systems-network-hardware",
+      "project_type": "application",
+      "use_cases": [
+        "network-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1302496224,
+      "source_full_name": "MemTensor/memmy-agent",
+      "source_hash": "7e4334075ced87bb5fca75aeed8fe182a0f1d83b617b9389f6e3b4792874c681",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "agents-automation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1302557102,
+      "source_full_name": "Licoy/StrokeMouse",
+      "source_hash": "c07a1e80db904776795b43541a8115200ba2fa65d122d8a090945ed64b8d0e4b",
+      "primary_category": "developer-tools",
+      "project_type": "application",
+      "use_cases": [
+        "personal-productivity"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1302652152,
+      "source_full_name": "zhiyual/gbfr_auto",
+      "source_hash": "47867af23574d36b48eaa950a5c5291ef9ef0c51325b194e5334b845d6571de1",
+      "primary_category": "industry-solutions",
+      "project_type": "application",
+      "use_cases": [
+        "agents-automation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1302690624,
+      "source_full_name": "piyuq11/logveil",
+      "source_hash": "6cbb5942776a2f9cb7bf3b94bcfcf5f9daf6feedf9fdb87e3d6012fb40b968ae",
+      "primary_category": "security-privacy",
+      "project_type": "application",
+      "use_cases": [
+        "privacy-local"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1302692944,
+      "source_full_name": "blueberriely/ai-social-browser",
+      "source_hash": "a9797426cb30e183a9ae28c97111504c9ce97666f5ac60360c301c07e270b7ab",
+      "primary_category": "developer-tools",
+      "project_type": "application",
+      "use_cases": [
+        "agents-automation",
+        "search-scraping"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1302708629,
       "source_full_name": "gabeio30/adobe-commerce-ai-sdk-2026",
       "source_hash": "4c0032656c97f3ce42c57496fba0fde24bdfbe43759d000b37f22954e98886da",
@@ -49287,6 +52686,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1303026408,
+      "source_full_name": "Tom-Lanese/ai-resercher",
+      "source_hash": "42a73d9de20131bb43ac5f9b5f3418ecc5ca5ac1dd47c0bd926a34df2ca0c354",
+      "primary_category": "other",
+      "project_type": "other",
+      "use_cases": [
+        "general-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1303075610,
       "source_full_name": "kmilner/tamarin-rs",
       "source_hash": "3f4c7a7cefc5ccdf53dda3f29461b010dc36c8f0b6d27ce0cf53f08a480b65b0",
@@ -49297,6 +52709,33 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T19:37:54.117571Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1303076608,
+      "source_full_name": "INotJose/JosePinzon-Portfolio",
+      "source_hash": "37602c7d8cfbdf2309385653a863e19235883b617a639f70cf9f5d93bee90c09",
+      "primary_category": "web-app-development",
+      "project_type": "application",
+      "use_cases": [
+        "web-frontend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1303094645,
+      "source_full_name": "claude5fable/Claude-fable-5-free-desktop",
+      "source_hash": "2af853a8e0b431f906305d2260a5780c31fc87f40cde6406938a128f39a7e1f8",
+      "primary_category": "ai-machine-learning",
+      "project_type": "application",
+      "use_cases": [
+        "ai-coding",
+        "agents-automation"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -49313,6 +52752,20 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1303269183,
+      "source_full_name": "alikamer/Data-Analytics",
+      "source_hash": "93b2cd95eb9f1c6ba1ab9770663bb86b43d484649459aa955a0863dc8205d1ee",
+      "primary_category": "education-resources",
+      "project_type": "other",
+      "use_cases": [
+        "data-analysis-visualization",
+        "learning-tutorial"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1303295168,
       "source_full_name": "henryjames79/aimbot-script-panel-v26",
       "source_hash": "3a14b8f65266b8364b3586770709735e1624f4f08f9ba1e023d7a96f208eb32d",
@@ -49324,6 +52777,48 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T19:37:54.117571Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1303323911,
+      "source_full_name": "MegaTroll222/VOX-COLLAGE-BROLL",
+      "source_hash": "016bad18265316b5ffce7ac5cf22f4057e8a8ebb96bcd60864e9963186d732e1",
+      "primary_category": "creative-media",
+      "project_type": "application",
+      "use_cases": [
+        "content-generation",
+        "image-video-audio"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1303430371,
+      "source_full_name": "sc-tina/appium-mobile-test-starter",
+      "source_hash": "ac4eb4ebbdba65b7c85b51a69368eac2a42e2b791df310e85f717c830a5b2965",
+      "primary_category": "developer-tools",
+      "project_type": "application",
+      "use_cases": [
+        "agents-automation",
+        "mobile-cross-platform"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1303505396,
+      "source_full_name": "Fir-taka/qris_berbasis_IOT",
+      "source_hash": "871b9e0a656a62a97dbf722f9e1b61cb385619656a0d258ac309ea9ee73cdf2d",
+      "primary_category": "systems-network-hardware",
+      "project_type": "application",
+      "use_cases": [
+        "system-admin-optimization",
+        "network-tools"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -49354,6 +52849,19 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1303563430,
+      "source_full_name": "Ganeshp000/prochame",
+      "source_hash": "07aac92ea810d8dfd0c977107e6d367dcd550cbd76f210cc55357f8d90b567d3",
+      "primary_category": "web-app-development",
+      "project_type": "application",
+      "use_cases": [
+        "web-frontend"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1303576851,
       "source_full_name": "nethical6/conversation-steganography",
       "source_hash": "d5f13ce1fd110f281386e7dd35db91814c992efc00304966a15a8ba6c70cf06e",
@@ -49368,6 +52876,34 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1303630768,
+      "source_full_name": "farman1998G/ai-telegram-trading-bot",
+      "source_hash": "a2706868a2fc35d9443c86395963ae913ced5015867a7279e4e6760137072411",
+      "primary_category": "industry-solutions",
+      "project_type": "application",
+      "use_cases": [
+        "agents-automation",
+        "finance-trading"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1303651547,
+      "source_full_name": "luohui1/cockpit-tools",
+      "source_hash": "05795f7bb5123689fe144346de3b96fb8a0030ad92a66d2da7ddaa509ff91c76",
+      "primary_category": "developer-tools",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "ai-coding",
+        "personal-productivity"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 1303771560,
       "source_full_name": "konnga/codex-hud",
       "source_hash": "260328bd53ad0a2e927bf865a6df274a6d7a8db0164fa342862b3d4696527e33",
@@ -49378,6 +52914,33 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T19:37:54.117571Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1303805230,
+      "source_full_name": "yoosuf/laravel-scale",
+      "source_hash": "ff1c8f99aa4fcdc298e6db605f856c331c69c797d38b16e9e3ae73934ecc8328",
+      "primary_category": "developer-tools",
+      "project_type": "library-framework",
+      "use_cases": [
+        "devops-deployment",
+        "system-admin-optimization"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1303817447,
+      "source_full_name": "ZacharyZhang-NY/Kigi-CLI",
+      "source_hash": "92b89d50b2c54ed1da0b36095d3c161d756cfea11c4919a2015245d8b5549d42",
+      "primary_category": "developer-tools",
+      "project_type": "cli-developer-tool",
+      "use_cases": [
+        "ai-coding"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
