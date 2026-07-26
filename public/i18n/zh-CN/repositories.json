@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-07-24T03:59:38.818095Z",
+  "generated_at": "2026-07-26T04:19:47.755665Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3969,
-    "localized_count": 3952,
-    "pending_count": 17,
-    "failed_count": 17,
-    "coverage_ratio": 0.995717
+    "localized_count": 3954,
+    "pending_count": 15,
+    "failed_count": 15,
+    "coverage_ratio": 0.996221
   },
   "repositories": [
     {
@@ -18382,6 +18382,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 668195240,
+      "source_full_name": "pathwaycom/llm-app",
+      "source_hash": "41f0fba41a8b6fd5d96f24befaf3a870d9086354d3d0ef30d372718596523b60",
+      "display_name_zh": "llm-app｜支持RAG和AI的实时数据云模板，兼容S3和多种APIs",
+      "description_zh": "支持RAG、AI流水线和企业搜索的即用型云模板，兼容Docker，实时同步Sharepoint、Google Drive、S3、Kafka、PostgreSQL及多种实时数据API。",
+      "generated_at": "2026-07-26T04:19:47.755665Z",
+      "provenance": "github_models"
+    },
+    {
       "repository_id": 668225190,
       "source_full_name": "aiktb/furiganamaker",
       "source_hash": "dadfd3282505695ddaa3ad8fc0999a5c646feb8c4d221e5656a4153b2a0cf869",
@@ -26425,6 +26434,15 @@
       "display_name_zh": "DeshiPlate-AI｜孟加拉食品识别与营养助手",
       "description_zh": "DeshiPlate-AI 是一款针对孟加拉食品识别与营养辅助的应用。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1115037853,
+      "source_full_name": "kawsarlog/Ultimate-API-List",
+      "source_hash": "109bdf8c00b85369515bba9c92f1856f867c885356e7b58e88a9a39438998e26",
+      "display_name_zh": "Ultimate-API-List｜包含50,000个APIs的AI公共API大全",
+      "description_zh": "包含超过50,000个公共API的自动更新目录，涵盖AI、数据、认证、金融、地图、天气、分析等领域。",
+      "generated_at": "2026-07-26T04:19:47.755665Z",
       "provenance": "github_models"
     },
     {

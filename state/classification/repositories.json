@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "taxonomy_version": "1.0.0",
-  "generated_at": "2026-07-25T03:56:53.240576Z",
+  "generated_at": "2026-07-26T04:20:24.183882Z",
   "repositories": [
     {
       "repository_id": 3314,
@@ -27723,15 +27723,16 @@
     {
       "repository_id": 668195240,
       "source_full_name": "pathwaycom/llm-app",
-      "source_hash": "52bc34d1a4e507788a7eaef3235900121b86064682eb181524e36255f2d744d8",
+      "source_hash": "b58a54f64fd040a2787d06c4f3f08396b994921c5d31d03e24cee75d6f42ee05",
       "primary_category": "ai-machine-learning",
       "project_type": "application",
       "use_cases": [
         "rag-knowledge",
+        "model-training-inference",
         "api-backend"
       ],
       "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "generated_at": "2026-07-26T04:20:24.183882Z",
       "provenance": "github_models"
     },
     {
@@ -39971,14 +39972,16 @@
     {
       "repository_id": 1115037853,
       "source_full_name": "kawsarlog/Ultimate-API-List",
-      "source_hash": "e3c6d12947d1425ce7486832f099bcefa9f437508dc5bda65037433a1e04910e",
+      "source_hash": "58337206c954a8e09cd8c2a423a3a6c5f86116998dc45691904a99a0d2ef23b9",
       "primary_category": "developer-tools",
       "project_type": "platform-service",
       "use_cases": [
-        "resource-discovery"
+        "api-backend",
+        "resource-discovery",
+        "general-tools"
       ],
       "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-21T01:04:20.264126Z",
+      "generated_at": "2026-07-26T04:20:24.183882Z",
       "provenance": "github_models"
     },
     {
