@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-07-26T04:19:47.755665Z",
+  "generated_at": "2026-07-27T05:43:53.312983Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
-    "eligible_count": 3969,
-    "localized_count": 3954,
-    "pending_count": 15,
-    "failed_count": 15,
-    "coverage_ratio": 0.996221
+    "eligible_count": 3968,
+    "localized_count": 3952,
+    "pending_count": 16,
+    "failed_count": 16,
+    "coverage_ratio": 0.995968
   },
   "repositories": [
     {
@@ -2668,15 +2668,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 15653276,
-      "source_full_name": "Trinea/android-open-project",
-      "source_hash": "cffb3cc8e6cb6db07160cdded9956df29a91f4d51fc8abc9e59db870ef51e38d",
-      "display_name_zh": "Trinea｜android-open-project安卓开源项目合集",
-      "description_zh": "分类整理的Android开源项目合集，提供更强大的网页版。",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 15720445,
       "source_full_name": "marko-js/marko",
       "source_hash": "1d35df8b450d6582826550b10151817b050ac3197a75119191a38c267c6e9338",
@@ -3606,10 +3597,10 @@
     {
       "repository_id": 24976755,
       "source_full_name": "hankcs/HanLP",
-      "source_hash": "b85662241b28e53f8a786afadf88088f19a3f2071e94fd396634ebcb674a6f0e",
-      "display_name_zh": "HanLP｜自然语言处理工具包（分词、词性标注、命名实体识别等）",
-      "description_zh": "HanLP 是一个面向未来十年的自然语言处理工具包，支持分词、词性标注、命名实体识别、句法和语义依存分析以及文档分类。",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
+      "source_hash": "4ebca2693f86c3124a2f52f79d48a0007951b93aeb00d5ae434993360d0b6af2",
+      "display_name_zh": "HanLP｜中文自然语言处理工具包",
+      "description_zh": "HanLP提供中文分词、词性标注、命名实体识别、句法分析、语义分析、文本分类等多种自然语言处理功能。",
+      "generated_at": "2026-07-27T05:43:53.312983Z",
       "provenance": "github_models"
     },
     {
@@ -9690,10 +9681,10 @@
     {
       "repository_id": 159152904,
       "source_full_name": "jeecgboot/JeecgBoot",
-      "source_hash": "b37141bbe73ee67576e37e1fe0b665f9bd5e0519bb4d313872187ded8c594867",
-      "display_name_zh": "JeecgBoot｜V2.0 AI 低代码平台，支持 MCP 插件",
-      "description_zh": "JeecgBoot 是一款 V2.0 版本的 AI 低代码平台，支持 AI Skills 一句话生成系统，内置 AI 应用平台，涵盖 AI 聊天、知识库、流程编排、MCP 插件等，兼容主流大模型，提升 Java 项目开发效率，解决 90% 重复工作。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
+      "source_hash": "bf304e84f0cac678c7ec6bdcbf492e85392bd1f5b3fcd60540b03a500f3ddf11",
+      "display_name_zh": "JeecgBoot｜v2.0企业级AI低代码平台",
+      "description_zh": "JeecgBoot是企业级AI低代码平台，支持v2.0版本，一句话生成系统，内置MCP插件，提升Java项目开发效率90%。",
+      "generated_at": "2026-07-27T05:43:53.312983Z",
       "provenance": "github_models"
     },
     {
@@ -11080,15 +11071,6 @@
       "display_name_zh": "cli｜GitHub命令行工具",
       "description_zh": "GitHub官方命令行工具。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 212619489,
-      "source_full_name": "XIU2/TrackersListCollection",
-      "source_hash": "4a5e912ce3bbaa9f47b1b48051bb053c01799d71334aaefe92ca7262b60f367b",
-      "display_name_zh": "TrackersListCollection｜每日更新的BT Tracker列表",
-      "description_zh": "TrackersListCollection 是一个每日更新的热门 BT Tracker 列表。",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
     },
     {
@@ -16503,10 +16485,10 @@
     {
       "repository_id": 575340621,
       "source_full_name": "lencx/ChatGPT",
-      "source_hash": "205ef13e906124db1b54345ce1a018a23f0bd77d75b6bc3618acbbef5daca1ba",
+      "source_hash": "177f39a109050cd5901bffda8cefd4fdd085c7055e2ed690f8451f62750b6846",
       "display_name_zh": "ChatGPT｜跨平台桌面应用",
-      "description_zh": "跨平台的 ChatGPT 桌面应用，支持 Mac、Windows 和 Linux。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
+      "description_zh": "跨平台ChatGPT桌面应用，支持Mac、Windows和Linux。",
+      "generated_at": "2026-07-27T05:43:53.312983Z",
       "provenance": "github_models"
     },
     {

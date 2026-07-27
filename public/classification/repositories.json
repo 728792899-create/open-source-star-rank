@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "taxonomy_version": "1.0.0",
-  "generated_at": "2026-07-26T04:20:24.183882Z",
+  "generated_at": "2026-07-27T05:44:45.211027Z",
   "repositories": [
     {
       "repository_id": 3314,
@@ -3989,20 +3989,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 15653276,
-      "source_full_name": "Trinea/android-open-project",
-      "source_hash": "de204b9cef6bdd389f9f1a7bcf260630e41bb859d215590aa0b74180e3435876",
-      "primary_category": "education-resources",
-      "project_type": "other",
-      "use_cases": [
-        "learning-tutorial",
-        "resource-discovery"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-25T03:56:53.240576Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 15720445,
       "source_full_name": "marko-js/marko",
       "source_hash": "015ee424bde4699e4a3202ce3a4dbbd2dad1b5388b0bd43be404a1398991c1f0",
@@ -5408,16 +5394,16 @@
     {
       "repository_id": 24976755,
       "source_full_name": "hankcs/HanLP",
-      "source_hash": "35c96ace4a982f9f2ab05ee1f4c85a0ce8b8485e790a4a0a2e3ee9ed9c9d8e29",
+      "source_hash": "5fef65b98c114d87463ead59a3622f7d4ebcc876eccb73e649aa55c0b7f997b7",
       "primary_category": "ai-machine-learning",
       "project_type": "library-framework",
       "use_cases": [
-        "ai-coding",
         "rag-knowledge",
-        "model-training-inference"
+        "data-analysis-visualization",
+        "content-generation"
       ],
       "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "generated_at": "2026-07-27T05:44:45.211027Z",
       "provenance": "github_models"
     },
     {
@@ -14527,17 +14513,17 @@
     {
       "repository_id": 159152904,
       "source_full_name": "jeecgboot/JeecgBoot",
-      "source_hash": "b5ef4764ae6dfce658930e78e78f1c566aa2043e999bec02d9e6929ac1587d35",
+      "source_hash": "42fe895c2c9a03b87ef92b4c7ec0adca3fefafd3968aca4dd999cd64dd938401",
       "primary_category": "industry-solutions",
       "project_type": "platform-service",
       "use_cases": [
-        "ai-coding",
-        "agents-automation",
-        "rag-knowledge",
+        "api-backend",
+        "web-frontend",
+        "personal-productivity",
         "team-collaboration"
       ],
       "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-19T04:20:56.637414Z",
+      "generated_at": "2026-07-27T05:44:45.211027Z",
       "provenance": "github_models"
     },
     {
@@ -16618,19 +16604,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T04:20:56.637414Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 212619489,
-      "source_full_name": "XIU2/TrackersListCollection",
-      "source_hash": "cc02950725bb33570fb02c3043b6f78c06bde598d8d4a6c11e7aefb530087f0a",
-      "primary_category": "other",
-      "project_type": "other",
-      "use_cases": [
-        "resource-discovery"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -24847,16 +24820,15 @@
     {
       "repository_id": 575340621,
       "source_full_name": "lencx/ChatGPT",
-      "source_hash": "2d040aa370643fbe5cffc0c04ef6c06f041eefba072a52b16f7cfa1c075f5fa3",
-      "primary_category": "productivity-collaboration",
+      "source_hash": "f3056b0a59117e39fd7023cb603c095c77b724067cd7c07ac6890065abf21c81",
+      "primary_category": "ai-machine-learning",
       "project_type": "application",
       "use_cases": [
-        "mobile-cross-platform",
-        "personal-productivity",
-        "team-collaboration"
+        "ai-coding",
+        "personal-productivity"
       ],
       "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-25T03:56:53.240576Z",
+      "generated_at": "2026-07-27T05:44:45.211027Z",
       "provenance": "github_models"
     },
     {
@@ -38908,6 +38880,21 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-24T04:00:32.535148Z",
+      "provenance": "github_models"
+    },
+    {
+      "repository_id": 1079456184,
+      "source_full_name": "K-Dense-AI/scientific-agent-skills",
+      "source_hash": "1fe79a7a19edb9925e8f56666be38d4bd4f1f6890b0f95086a5958c9a811e5eb",
+      "primary_category": "science-research",
+      "project_type": "library-framework",
+      "use_cases": [
+        "agents-automation",
+        "rag-knowledge",
+        "scientific-research"
+      ],
+      "taxonomy_version": "1.0.0",
+      "generated_at": "2026-07-27T05:44:45.211027Z",
       "provenance": "github_models"
     },
     {
