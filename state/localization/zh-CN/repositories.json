@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-07-27T05:43:53.312983Z",
+  "generated_at": "2026-08-03T05:36:41.067278Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
-    "eligible_count": 3968,
-    "localized_count": 3952,
-    "pending_count": 16,
-    "failed_count": 16,
-    "coverage_ratio": 0.995968
+    "eligible_count": 3964,
+    "localized_count": 3944,
+    "pending_count": 20,
+    "failed_count": 20,
+    "coverage_ratio": 0.994955
   },
   "repositories": [
     {
@@ -721,15 +721,6 @@
       "display_name_zh": "FreeRDP｜免费远程桌面协议库和客户端",
       "description_zh": "FreeRDP 是一个免费的远程桌面协议库和客户端。",
       "generated_at": "2026-07-16T17:46:53.472669Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 2056312,
-      "source_full_name": "niklasvh/html2canvas",
-      "source_hash": "bfa451bcf5c94235962b825d8ae23fa56fd39408dec0e02ed6c35e90c4e922de",
-      "display_name_zh": "niklasvh｜html2canvas网页截图工具",
-      "description_zh": "使用JavaScript实现网页截图功能。",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
     },
     {
@@ -1630,15 +1621,6 @@
       "display_name_zh": "watchman｜文件变化监视工具",
       "description_zh": "监视文件变化并记录或触发相应操作的工具。",
       "generated_at": "2026-07-20T18:28:18.246753Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 6934395,
-      "source_full_name": "facebook/rocksdb",
-      "source_hash": "d7b6c61a226fde791a3a5c71184fbf8e75e43e3323942a197d6f66c02f17c8b3",
-      "display_name_zh": "facebook｜rocksdb键值存储库",
-      "description_zh": "提供嵌入式持久化键值存储的高性能库。",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
     },
     {
@@ -4072,15 +4054,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 31085130,
-      "source_full_name": "airbnb/lottie-web",
-      "source_hash": "02144c5cc0642ff7cc5981da3f21ddfb2095ea4ae2a67f7f774dce0413ac8c99",
-      "display_name_zh": "lottie-web｜跨平台原生动画渲染库",
-      "description_zh": "lottie-web 支持在 Web、Android、iOS 及 React Native 上原生渲染 After Effects 动画。",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 31267860,
       "source_full_name": "therebelrobot/awesome-workshopper",
       "source_hash": "e129bfcbec4e311183c9ccf2c7341d7fe098ad9f2ba52b9804231227097416ba",
@@ -4873,15 +4846,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 42332863,
-      "source_full_name": "filebrowser/filebrowser",
-      "source_hash": "108d8b5f698a5559b39cb1dbf176df27e23ee2c4e64c21af713a0184afbf8d64",
-      "display_name_zh": "filebrowser｜网页文件浏览器",
-      "description_zh": "filebrowser 是一个基于网页的文件浏览器。",
-      "generated_at": "2026-07-19T00:17:52.423389Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 42408804,
       "source_full_name": "traefik/traefik",
       "source_hash": "5a5013b32dfc380b0a9b8840b58f11640dd65b3094f3140186316a3ea057f5e8",
@@ -5158,15 +5122,6 @@
       "display_name_zh": "showdoc｜IT 团队在线文档工具（支持API）",
       "description_zh": "showdoc 是一款适合 IT 团队在线共享文档的工具，支持 API 文档和技术文档管理。",
       "generated_at": "2026-07-16T17:46:53.472669Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 47039255,
-      "source_full_name": "codex-team/editor.js",
-      "source_hash": "66c2a551f5cd6b8e2a94017ed1d33368d0b3315dc8a1b7f1dba06c9e7e3b1bce",
-      "display_name_zh": "editor.js｜块状编辑器（JSON输出）",
-      "description_zh": "editor.js 是一个块状编辑器，输出格式为简洁的 JSON。",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
     },
     {
@@ -8731,15 +8686,6 @@
       "display_name_zh": "esphome｜支持 ESP32、ESP8266、BK72xx、RP2040 的智能家居控制系统",
       "description_zh": "ESPHome 通过简单配置文件控制 ESP32、ESP8266、BK72xx、RP2040，并支持远程智能家居系统控制。",
       "generated_at": "2026-07-17T00:57:38.909807Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 128624453,
-      "source_full_name": "NervJS/taro",
-      "source_hash": "0ed8c50c1d013ba00bd74998d2d439f2442e32e8017e4ba9279c60653f0512c6",
-      "display_name_zh": "taro｜跨端跨框架开发解决方案",
-      "description_zh": "taro 是一个开放式跨端跨框架解决方案，支持使用 React、Vue 等框架开发微信、京东、百度、支付宝、字节跳动、QQ 小程序、H5、React Native 等应用。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
     },
     {
@@ -19210,15 +19156,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 717297418,
-      "source_full_name": "linexjlin/GPTs",
-      "source_hash": "0f838dfb375f3cf501e36ab05d12a9dc659fa30dfa20344c38b731f05bc7169a",
-      "display_name_zh": "GPTs｜泄露提示词合集",
-      "description_zh": "GPTs的泄露提示词集合",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 717520331,
       "source_full_name": "ning-y/ning-y",
       "source_hash": "1bd1b444ff0f8343aa8b83d9fda4c71d277c0e5aad0625220e91f680a46087ef",
@@ -19441,15 +19378,6 @@
       "display_name_zh": "ChinaIPTV｜中国电视直播源",
       "description_zh": "ChinaIPTV 提供中国电视直播源 cnTV m3u，实时更新且长期有效。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 727213319,
-      "source_full_name": "lizongying/my-tv",
-      "source_hash": "8fad7f58ae66da58f424d06eaa38df87e89f25c88ecdaef1ce99e4599139116c",
-      "display_name_zh": "my-tv｜电视直播软件",
-      "description_zh": "电视直播软件，安装即可使用",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
     },
     {

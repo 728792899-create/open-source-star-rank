@@ -2,15 +2,15 @@
   "schema_version": "1.0.0",
   "taxonomy_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-07-27T05:44:45.211027Z",
+  "generated_at": "2026-08-03T05:36:42.500499Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-classification-v1",
   "coverage": {
-    "eligible_count": 3968,
-    "classified_count": 3968,
-    "pending_count": 0,
-    "failed_count": 0,
-    "coverage_ratio": 1.0
+    "eligible_count": 3964,
+    "classified_count": 3956,
+    "pending_count": 8,
+    "failed_count": 8,
+    "coverage_ratio": 0.997982
   },
   "categories": [
     {
