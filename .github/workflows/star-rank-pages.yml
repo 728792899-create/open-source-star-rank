@@ -2,8 +2,10 @@ name: Update and publish Open Source Star Rank
 
 on:
   schedule:
-    # 00:20 Asia/Shanghai. Scheduled workflows may start later under GitHub load.
-    - cron: "20 16 * * *"
+    # 00:20, 00:50 and 01:20 Asia/Shanghai. The early retries leave room for
+    # GitHub scheduler delays before the 03:00 valid-capture boundary.
+    - cron: "20,50 16 * * *"
+    - cron: "20 17 * * *"
   workflow_dispatch:
     inputs:
       mode:
@@ -41,6 +43,9 @@ jobs:
     outputs:
       should_deploy: ${{ steps.mode.outputs.should_deploy }}
       run_mode: ${{ steps.mode.outputs.run_mode }}
+      failure_component: ${{ steps.pipeline_status.outputs.failure_component }}
+      failure_fingerprint: ${{ steps.pipeline_status.outputs.failure_fingerprint }}
+      failure_stage: ${{ steps.pipeline_status.outputs.failure_stage }}
     env:
       PYTHONUNBUFFERED: "1"
       ASTRO_TELEMETRY_DISABLED: "1"
@@ -131,6 +136,7 @@ jobs:
         run: python -m unittest discover -s tests -v
 
       - name: Collect daily snapshot
+        id: collect
         if: steps.mode.outputs.run_mode != 'deploy_existing'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -154,10 +160,16 @@ jobs:
           if [[ "$RUN_MODE" != "validate" ]]; then
             args+=(--require-valid-capture)
           fi
-          python -m tools.star_rank "${args[@]}"
+          collector_output="$RUNNER_TEMP/star-rank-collector.json"
+          python -m tools.star_rank "${args[@]}" | tee "$collector_output"
+          collector_status="$(python -c 'import json, sys; print(json.load(open(sys.argv[1], encoding="utf-8"))["status"])' "$collector_output")"
+          echo "status=$collector_status" >> "$GITHUB_OUTPUT"
 
       - name: Localize newly ranked repositories
-        if: steps.mode.outputs.run_mode == 'collect_publish' || steps.mode.outputs.run_mode == 'replace_snapshot'
+        id: localize
+        if: >-
+          (steps.mode.outputs.run_mode == 'collect_publish' || steps.mode.outputs.run_mode == 'replace_snapshot') &&
+          steps.collect.outputs.status != 'reused'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LOCALIZATION_MODEL: ${{ vars.LOCALIZATION_MODEL || 'openai/gpt-4.1-mini' }}
@@ -168,7 +180,10 @@ jobs:
           --overrides-file data/localization-overrides.zh-CN.json
 
       - name: Classify newly ranked repositories
-        if: steps.mode.outputs.run_mode == 'collect_publish' || steps.mode.outputs.run_mode == 'replace_snapshot'
+        id: classify
+        if: >-
+          (steps.mode.outputs.run_mode == 'collect_publish' || steps.mode.outputs.run_mode == 'replace_snapshot') &&
+          steps.collect.outputs.status != 'reused'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CLASSIFICATION_MODEL: ${{ vars.CLASSIFICATION_MODEL || 'openai/gpt-4.1-mini' }}
@@ -180,6 +195,7 @@ jobs:
           --overrides-file data/classification-overrides.zh-CN.json
 
       - name: Validate staged data contracts
+        id: validate_data
         run: python tools/validate_star_rank_data.py --data-dir "$STAR_RANK_DATA_DIR" --sync-schemas
 
       - name: Install site dependencies
@@ -187,18 +203,21 @@ jobs:
         run: npm ci
 
       - name: Test and type-check site
+        id: test_site
         working-directory: site
         run: |
           npm test
           STAR_RANK_DATA_DIR="$STAR_RANK_DATA_DIR/public" npm run check
 
       - name: Build and validate static site
+        id: build_site
         working-directory: site
         run: |
           STAR_RANK_DATA_DIR="$STAR_RANK_DATA_DIR/public" npm run build
           npm run validate-build
 
       - name: Commit validated data branch
+        id: publish_data
         if: steps.mode.outputs.run_mode == 'collect_publish' || steps.mode.outputs.run_mode == 'replace_snapshot'
         shell: bash
         run: |
@@ -212,10 +231,57 @@ jobs:
           fi
 
       - name: Upload GitHub Pages artifact
+        id: upload_pages
         if: steps.mode.outputs.should_deploy == 'true'
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: site/dist
+
+      - name: Classify a failed pipeline stage
+        id: pipeline_status
+        if: always()
+        shell: bash
+        env:
+          JOB_STATUS: ${{ job.status }}
+          COLLECT: ${{ steps.collect.outcome }}
+          LOCALIZE: ${{ steps.localize.outcome }}
+          CLASSIFY: ${{ steps.classify.outcome }}
+          VALIDATE_DATA: ${{ steps.validate_data.outcome }}
+          TEST_SITE: ${{ steps.test_site.outcome }}
+          BUILD_SITE: ${{ steps.build_site.outcome }}
+          PUBLISH_DATA: ${{ steps.publish_data.outcome }}
+          UPLOAD_PAGES: ${{ steps.upload_pages.outcome }}
+        run: |
+          set -euo pipefail
+          component="pipeline"
+          stage="setup"
+          fingerprint="pipeline:setup"
+          for candidate in \
+            "collector:collect:$COLLECT" \
+            "data_pipeline:localize:$LOCALIZE" \
+            "data_pipeline:classify:$CLASSIFY" \
+            "data_pipeline:validate-data:$VALIDATE_DATA" \
+            "pages_publish:test-site:$TEST_SITE" \
+            "pages_publish:build-site:$BUILD_SITE" \
+            "data_pipeline:publish-data:$PUBLISH_DATA" \
+            "pages_publish:upload-pages:$UPLOAD_PAGES"
+          do
+            IFS=: read -r candidate_component candidate_stage candidate_outcome <<< "$candidate"
+            if [[ "$candidate_outcome" == "failure" ]]; then
+              component="$candidate_component"
+              stage="$candidate_stage"
+              fingerprint="$candidate_component:$candidate_stage"
+              break
+            fi
+          done
+          if [[ "$JOB_STATUS" == "success" ]]; then
+            component="none"
+            stage="none"
+            fingerprint="none"
+          fi
+          echo "failure_component=$component" >> "$GITHUB_OUTPUT"
+          echo "failure_stage=$stage" >> "$GITHUB_OUTPUT"
+          echo "failure_fingerprint=$fingerprint" >> "$GITHUB_OUTPUT"
 
   deploy:
     if: needs.build.outputs.should_deploy == 'true'
@@ -257,6 +323,9 @@ jobs:
           BUILD_RESULT: ${{ needs.build.result }}
           DEPLOY_RESULT: ${{ needs.deploy.result }}
           RUN_MODE: ${{ needs.build.outputs.run_mode }}
+          FAILURE_COMPONENT: ${{ needs.build.outputs.failure_component }}
+          FAILURE_FINGERPRINT: ${{ needs.build.outputs.failure_fingerprint }}
+          FAILURE_STAGE: ${{ needs.build.outputs.failure_stage }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         shell: bash
         run: |
@@ -265,8 +334,27 @@ jobs:
             if [[ "$RUN_MODE" == "deploy_existing" ]]; then
               echo "deploy_existing 不改变采样新鲜度，保留现有故障 Issue 状态。"
             else
-              python tools/star_rank_incident.py --status close --details "采集和部署已恢复：$RUN_URL"
+              python tools/star_rank_incident.py \
+                --status success \
+                --component pipeline \
+                --details "采集与 Pages 部署成功，等待看门狗核对数据分支与公开站点：$RUN_URL"
             fi
           else
-            python tools/star_rank_incident.py --status open --details "build=$BUILD_RESULT, deploy=$DEPLOY_RESULT；运行记录：$RUN_URL"
+            component="$FAILURE_COMPONENT"
+            fingerprint="$FAILURE_FINGERPRINT"
+            stage="$FAILURE_STAGE"
+            if [[ "$BUILD_RESULT" == "success" ]]; then
+              component="pages_publish"
+              fingerprint="pages_publish:deploy"
+              stage="deploy-pages"
+            elif [[ -z "$component" || "$component" == "none" ]]; then
+              component="pipeline"
+              fingerprint="pipeline:unknown"
+              stage="unknown"
+            fi
+            python tools/star_rank_incident.py \
+              --status open \
+              --component "$component" \
+              --fingerprint "$fingerprint" \
+              --details "阶段 $stage 失败（build=$BUILD_RESULT, deploy=$DEPLOY_RESULT）；运行记录：$RUN_URL"
           fi

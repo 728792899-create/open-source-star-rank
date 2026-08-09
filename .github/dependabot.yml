@@ -9,6 +9,26 @@ updates:
       timezone: Asia/Shanghai
     open-pull-requests-limit: 5
     labels: [dependencies, star-rank]
+    groups:
+      astro-stack:
+        patterns:
+          - astro
+          - "@astrojs/*"
+      browser-quality:
+        patterns:
+          - "@axe-core/playwright"
+          - "@lhci/cli"
+          - "@playwright/test"
+        update-types:
+          - minor
+          - patch
+      site-tooling:
+        patterns:
+          - "@resvg/resvg-js"
+          - typescript
+        update-types:
+          - minor
+          - patch
 
   - package-ecosystem: github-actions
     directory: /
@@ -19,6 +39,10 @@ updates:
       timezone: Asia/Shanghai
     open-pull-requests-limit: 5
     labels: [dependencies, star-rank]
+    groups:
+      github-actions:
+        patterns:
+          - "*"
 
   - package-ecosystem: npm
     directory: /auth-worker
@@ -29,3 +53,15 @@ updates:
       timezone: Asia/Shanghai
     open-pull-requests-limit: 5
     labels: [dependencies, star-rank, auth]
+    groups:
+      cloudflare-worker:
+        patterns:
+          - "@cloudflare/*"
+          - wrangler
+      worker-tooling:
+        patterns:
+          - typescript
+          - vitest
+        update-types:
+          - minor
+          - patch

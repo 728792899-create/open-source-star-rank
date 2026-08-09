@@ -11,6 +11,7 @@ on:
       - "auth-worker/**"
       - "tests/**"
       - "tools/star_rank*.py"
+      - "tools/rehearse_star_rank_next_cycle.py"
       - "tools/event_star_rank.py"
       - "tools/localize_repositories.py"
       - "tools/classify_repositories.py"
@@ -31,6 +32,7 @@ on:
       - "auth-worker/**"
       - "tests/**"
       - "tools/star_rank*.py"
+      - "tools/rehearse_star_rank_next_cycle.py"
       - "tools/event_star_rank.py"
       - "tools/localize_repositories.py"
       - "tools/classify_repositories.py"
@@ -83,6 +85,9 @@ jobs:
       - name: Validate collector and repository
         run: |
           python -m unittest discover -s tests -v
+
+      - name: Rehearse two valid collection cycles
+        run: python tools/rehearse_star_rank_next_cycle.py
 
       - name: Validate static site
         working-directory: site
