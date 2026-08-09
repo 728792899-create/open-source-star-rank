@@ -1,4 +1,5 @@
 import datetime as dt
+import http.client
 import io
 import json
 import tempfile
@@ -306,6 +307,19 @@ class StarRankTests(unittest.TestCase):
         with patch("urllib.request.urlopen", side_effect=TimeoutError("timed out")), patch("time.sleep"):
             with self.assertRaisesRegex(Exception, "网络或响应错误"):
                 client.search_repositories("stars:>=1", sort="stars", pages=1)
+        self.assertEqual(client.request_count, 2)
+        self.assertEqual(client.retry_count, 1)
+
+    def test_remote_disconnect_retries_and_recovers(self) -> None:
+        client = GitHubClient("token", retries=2)
+        responses = [
+            http.client.RemoteDisconnected("remote closed the connection"),
+            StubResponse(fixture("repository-detail.json")),
+        ]
+        with patch("urllib.request.urlopen", side_effect=responses), patch("time.sleep"):
+            repository = client.get_repository_by_id(101)
+        self.assertIsNotNone(repository)
+        self.assertEqual(repository["full_name"], "fixture/alpha-renamed")
         self.assertEqual(client.request_count, 2)
         self.assertEqual(client.retry_count, 1)
 

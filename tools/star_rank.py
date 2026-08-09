@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import hashlib
+import http.client
 import json
 import os
 import re
@@ -273,7 +274,13 @@ class GitHubClient:
                 except OSError:
                     detail = ""
                 raise StarRankError(f"GitHub API 请求失败 ({exc.code})：{detail or url}") from exc
-            except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+            except (
+                urllib.error.URLError,
+                TimeoutError,
+                ConnectionError,
+                http.client.HTTPException,
+                json.JSONDecodeError,
+            ) as exc:
                 if attempt + 1 < self.retries:
                     time.sleep(2**attempt)
                     continue
