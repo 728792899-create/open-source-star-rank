@@ -11,7 +11,17 @@ const source = path.resolve(process.env.STAR_RANK_DATA_DIR ?? path.join(siteRoot
 const generated = path.join(siteRoot, 'generated', 'data');
 const publicData = path.join(siteRoot, 'public', 'data');
 const schemaSource = path.join(repositoryRoot, 'schemas', 'star-rank');
+const pythonEnv = { ...process.env, PYTHONPATH: repositoryRoot };
 const run = promisify(execFile);
+
+const venvPython = process.platform === 'win32'
+  ? path.join(repositoryRoot, '.venv', 'Scripts', 'python.exe')
+  : path.join(repositoryRoot, '.venv', 'bin', 'python');
+const pythonCommand = process.env.PYTHON
+  ? process.env.PYTHON
+  : existsSync(venvPython)
+    ? venvPython
+    : 'python3';
 
 async function copyPublicSchemas(destination) {
   await mkdir(destination, { recursive: true });
@@ -66,7 +76,7 @@ if (!existsSync(eventIndexPath)) {
   await writeFile(path.join(publicData, 'events', 'index.json'), serialized);
 }
 
-await run(process.env.PYTHON ?? 'python3', [
+await run(pythonCommand, [
   path.join(repositoryRoot, 'tools', 'localize_repositories.py'),
   '--data-dir',
   generated,
@@ -75,11 +85,11 @@ await run(process.env.PYTHON ?? 'python3', [
   '--offline',
   '--public-only',
   '--deterministic',
-]);
+], { env: pythonEnv });
 await rm(path.join(publicData, 'i18n'), { recursive: true, force: true });
 await cp(path.join(generated, 'i18n'), path.join(publicData, 'i18n'), { recursive: true });
 
-await run(process.env.PYTHON ?? 'python3', [
+await run(pythonCommand, [
   path.join(repositoryRoot, 'tools', 'classify_repositories.py'),
   '--data-dir',
   generated,
@@ -90,14 +100,14 @@ await run(process.env.PYTHON ?? 'python3', [
   '--offline',
   '--public-only',
   '--deterministic',
-]);
+], { env: pythonEnv });
 await rm(path.join(publicData, 'classification'), { recursive: true, force: true });
 await cp(path.join(generated, 'classification'), path.join(publicData, 'classification'), { recursive: true });
 
-await run(process.env.PYTHON ?? 'python3', [
+await run(pythonCommand, [
   path.join(repositoryRoot, 'tools', 'validate_star_rank_data.py'),
   '--data-dir',
   generated,
-]);
+], { env: pythonEnv });
 
 console.log(`Prepared ${index.available_dates.length} ranking day(s) from ${source}`);
