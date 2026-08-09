@@ -1,0 +1,89 @@
+name: Security
+
+on:
+  pull_request:
+    paths:
+      - ".github/dependabot.yml"
+      - ".github/workflows/codeql.yml"
+      - "auth-worker/**"
+      - "requirements-star-rank.txt"
+      - "site/**"
+      - "tests/**"
+      - "tools/**"
+  push:
+    branches: [main]
+    paths:
+      - ".github/dependabot.yml"
+      - ".github/workflows/codeql.yml"
+      - "auth-worker/**"
+      - "requirements-star-rank.txt"
+      - "site/**"
+      - "tests/**"
+      - "tools/**"
+  schedule:
+    - cron: "17 18 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  dependency-audit:
+    name: Dependency audit (${{ matrix.directory }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        directory: [site, auth-worker]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: ${{ matrix.directory }}/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.directory }}
+        run: npm ci
+
+      - name: Audit production and development dependencies
+        working-directory: ${{ matrix.directory }}
+        run: npm audit --include=dev --audit-level=high
+
+  codeql:
+    name: CodeQL (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      actions: read
+      contents: read
+      packages: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [javascript-typescript, python]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@5595ccaf912efad79be6eef63a5619ff05969be3 # v4.37.6
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: none
+          queries: security-extended
+
+      - name: Analyze
+        uses: github/codeql-action/analyze@5595ccaf912efad79be6eef63a5619ff05969be3 # v4.37.6
+        with:
+          category: "/language:${{ matrix.language }}"

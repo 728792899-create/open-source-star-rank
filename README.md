@@ -44,7 +44,7 @@
 
 | 榜单 | 口径 | 排序指标 | 深度 | 更新频率 | 页面 |
 | :-- | :-- | :-- | :-: | :-- | :-- |
-| 昨日净增榜 | 连续快照候选池 | 上一自然日 Star 净增 | 最多 Top 500 | 每日 00:20 | [`/`](https://728792899-create.github.io/open-source-star-rank/) |
+| 昨日净增榜 | 连续快照候选池 | 上一自然日 Star 净增 | 最多 Top 500 | 每日 00:20 首次尝试 | [`/`](https://728792899-create.github.io/open-source-star-rank/) |
 | 7 日 / 30 日榜 | 连续快照候选池 | 周期 Star 净增 | 最多 Top 500 | 每日 | [`/period/7d/`](https://728792899-create.github.io/open-source-star-rank/period/7d/) |
 | 语言净增榜 | 连续快照候选池 | 当日 Star 净增 | 最多 Top 500 | 每日 | [`/language/`](https://728792899-create.github.io/open-source-star-rank/language/) |
 | **组合筛选结果** ✨ | 各榜受控深度池 | 沿当前榜口径筛选重排 | 最多 500 项 | 随榜更新 | 各榜单页内直接筛选 |
