@@ -6,6 +6,7 @@ from pathlib import Path
 
 from tools.star_rank import (
     DataIntegrityError,
+    TOP_LIMIT,
     build_daily_ranking,
     build_exploration_pool,
     build_language_rankings,
@@ -100,6 +101,37 @@ class StarRankUpgradeTests(unittest.TestCase):
         validate_payload("index", legacy)
         with self.assertRaises(SchemaValidationError):
             validate_payload("index", {**legacy, "schema_version": "1.2.0"})
+
+    def test_repository_history_accepts_top_five_hundred_ranks(self) -> None:
+        candidate = repository_record(api_repo(1, "Python", 10), observed_date="2026-07-19", source="test")
+        previous = build_snapshot(
+            [candidate], captured_at=dt.datetime(2026, 7, 17, 16, 20, tzinfo=dt.timezone.utc)
+        )
+        current = build_snapshot(
+            [candidate], captured_at=dt.datetime(2026, 7, 18, 16, 20, tzinfo=dt.timezone.utc)
+        )
+        history = {
+            dt.date.fromisoformat(previous["snapshot_date"]): previous,
+            dt.date.fromisoformat(current["snapshot_date"]): current,
+        }
+
+        with tempfile.TemporaryDirectory() as temporary:
+            public = Path(temporary)
+            daily_dir = public / "daily"
+            daily_dir.mkdir()
+            (daily_dir / "2026-07-18.json").write_text(
+                f'{{"entries":[{{"repository_id":1,"rank":{TOP_LIMIT}}}]}}\n', encoding="utf-8"
+            )
+            catalog = build_repository_catalog(
+                candidates=[candidate], snapshot_history=history, public_dir=public,
+                knowledge_repositories={}, updated_at=current["captured_at"],
+            )
+
+        self.assertEqual(catalog["repositories"][0]["history_30d"][-1]["rank"], TOP_LIMIT)
+        validate_payload("repositories", catalog)
+        catalog["repositories"][0]["history_30d"][-1]["rank"] = TOP_LIMIT + 1
+        with self.assertRaises(SchemaValidationError):
+            validate_payload("repositories", catalog)
 
     def test_capture_window_boundaries(self) -> None:
         zone = dt.timezone(dt.timedelta(hours=8))
