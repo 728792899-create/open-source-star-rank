@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-08-03T05:36:41.067278Z",
+  "generated_at": "2026-08-10T03:47:44.765620Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
-    "eligible_count": 3964,
-    "localized_count": 3944,
-    "pending_count": 20,
-    "failed_count": 20,
-    "coverage_ratio": 0.994955
+    "eligible_count": 3962,
+    "localized_count": 3938,
+    "pending_count": 24,
+    "failed_count": 24,
+    "coverage_ratio": 0.993942
   },
   "repositories": [
     {
@@ -2017,15 +2017,6 @@
       "display_name_zh": "ijkplayer｜基于 FFmpeg n3.4 的视频播放器",
       "description_zh": "基于 FFmpeg n3.4，支持 MediaCodec 和 VideoToolbox 的 Android/iOS 视频播放器。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 10567197,
-      "source_full_name": "dokku/dokku",
-      "source_hash": "f260e5764830455e9cc01ec92911a2cedd3e382d2dbd0ef7fc5883f0ae58770b",
-      "display_name_zh": "dokku｜dokku应用生命周期管理平台",
-      "description_zh": "基于Docker的PaaS平台，帮助构建和管理应用生命周期。",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
     },
     {
@@ -8977,15 +8968,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 137724480,
-      "source_full_name": "hasura/graphql-engine",
-      "source_hash": "d16fb4017ca73b0b8b44be254764d6a833ce028bc1f680dc919efb2e640fd7b6",
-      "display_name_zh": "graphql-engine｜实时 GraphQL APIs 服务（含访问控制与数据库事件触发）",
-      "description_zh": "graphql-engine 提供极速的实时 GraphQL APIs，支持细粒度访问控制，并能在数据库事件触发时调用 Webhook。",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 138219808,
       "source_full_name": "PD0DIB/Nextion_HAM-radio-screens",
       "source_hash": "ba98d6071ca494a482c6fa3c6c5cd45301b6206221a29506a2abdb6a712374c9",
@@ -12343,15 +12325,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 280363952,
-      "source_full_name": "umami-software/umami",
-      "source_hash": "393ba6a82217065048b77c3235a2d38a47bd6e82f86af081b3f29a805a73c089",
-      "display_name_zh": "umami｜现代隐私分析平台",
-      "description_zh": "umami 是一个现代化、注重隐私的分析平台，是 Google Analytics、Mixpanel 和 Amplitude 的开源替代方案。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 280557054,
       "source_full_name": "trpc/trpc",
       "source_hash": "2463b3c70357bdcf4ff7151a7defa3fa012b9028fa2ebcc053691a10e9f0b3b6",
@@ -15097,15 +15070,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 479924503,
-      "source_full_name": "The-Run-Philosophy-Organization/run",
-      "source_hash": "d8ded3e7dd9d8e5eafe3c34d9888a1e0b194d23e55527f619504b31a945c8722",
-      "display_name_zh": "run｜润学全球官方指定 GITHUB 仓库",
-      "description_zh": "run 是润学全球官方指定的 GITHUB 仓库，整理润学宗旨、纲领、理论及各类润之实例，解答润学的核心问题。",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 480217156,
       "source_full_name": "GreptimeTeam/greptimedb",
       "source_hash": "98f50fd2fea6a340285bd46dc7df5f08a882d85822566be4812cb9c9940026a7",
@@ -15616,15 +15580,6 @@
       "display_name_zh": "investment_data｜投资数据脚本与文档",
       "description_zh": "包含投资数据相关脚本和文档。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 515647260,
-      "source_full_name": "1Panel-dev/1Panel",
-      "source_hash": "494d653e08168be60e0f3377299269be55ff66bc00d337c6c90fbff9ea5c07b4",
-      "display_name_zh": "1Panel｜支持 AI 的 VPS 控制面板",
-      "description_zh": "现代开源 VPS 控制面板，支持原生 AI 代理，管理服务器和运行 Ollama 模型。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
     {
@@ -17560,15 +17515,6 @@
       "display_name_zh": "nix-config｜Nix配置",
       "description_zh": "适用于桌面和家庭服务器的Nix配置文件。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 631567741,
-      "source_full_name": "chatanywhere/GPT_API_free",
-      "source_hash": "28c6bb2594a478436193e614820409008a6a88012613b91540f82934315abb65",
-      "display_name_zh": "GPT_API_free｜免费 GPT4 API 接入",
-      "description_zh": "GPT_API_free 提供免费 ChatGPT 和 DeepSeek API Key，支持 gpt、deepseek、claude、gemini、grok 等主流大模型。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
     {
