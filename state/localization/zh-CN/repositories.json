@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-08-10T17:17:29.115786Z",
+  "generated_at": "2026-08-11T17:20:30.241874Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3962,
-    "localized_count": 3891,
-    "pending_count": 71,
-    "failed_count": 71,
-    "coverage_ratio": 0.98208
+    "localized_count": 3889,
+    "pending_count": 73,
+    "failed_count": 73,
+    "coverage_ratio": 0.981575
   },
   "repositories": [
     {
@@ -22126,15 +22126,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 912559512,
-      "source_full_name": "simstudioai/sim",
-      "source_hash": "1f67dd8cdf0d3bd10ed5ba55a6afb155e733e8b6501ba98553dad77a504f40de",
-      "display_name_zh": "sim｜AI 代理构建与编排平台",
-      "description_zh": "构建、部署和编排 AI 代理，Sim 是 AI 劳动力的核心智能层。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 913030762,
       "source_full_name": "vxcontrol/pentagi",
       "source_hash": "1e1d4dff06c7c1d1a2aa9f75933c7d2e56dec1f691bfebe6d8ba5d8bb4b52ccc",
@@ -25381,15 +25372,6 @@
       "display_name_zh": "QmBlurView｜Android UI 高斯模糊组件库",
       "description_zh": "Android UI 组件库，提供实时动态高斯模糊效果，采用原生 C++ 实现高效模糊处理。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1080370450,
-      "source_full_name": "superset-sh/superset",
-      "source_hash": "10596a3c8c06416d85fbef6c0962d5d0de52729af5fd8b22e4119fe97ef6c7c6",
-      "display_name_zh": "superset｜AI 代理代码编辑器",
-      "description_zh": "面向 AI 代理时代的代码编辑器，可在本地运行 Claude Code、Codex 等代理。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
     },
     {
