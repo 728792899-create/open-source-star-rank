@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-08-11T17:20:30.241874Z",
+  "generated_at": "2026-08-13T17:21:49.270057Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3962,
-    "localized_count": 3889,
-    "pending_count": 73,
-    "failed_count": 73,
-    "coverage_ratio": 0.981575
+    "localized_count": 3888,
+    "pending_count": 74,
+    "failed_count": 74,
+    "coverage_ratio": 0.981323
   },
   "repositories": [
     {
@@ -19989,15 +19989,6 @@
       "source_hash": "8ab01bd7ee6b2d4d7e565c7de537b7d5eb85c3f00963667cb996cb6cfaf4afff",
       "display_name_zh": "node｜PasarGuard 去中心化访问节点",
       "description_zh": "PasarGuard 节点，去中心化的抗审查访问层。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 781524183,
-      "source_full_name": "WecoAI/aideml",
-      "source_hash": "4e49be23c64fe08c32c970c7312485d47fa545b1568c4f2b43d6a496d9f71e96",
-      "display_name_zh": "aideml｜AIDE AI驱动代码探索工具",
-      "description_zh": "AIDE：基于AI的代码空间探索，自动化AI研发的机器学习工程代理。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
     },
