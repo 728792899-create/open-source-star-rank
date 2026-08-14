@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-08-13T17:21:49.270057Z",
+  "generated_at": "2026-08-14T17:18:00.471406Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
-    "eligible_count": 3962,
-    "localized_count": 3888,
-    "pending_count": 74,
-    "failed_count": 74,
-    "coverage_ratio": 0.981323
+    "eligible_count": 3963,
+    "localized_count": 3885,
+    "pending_count": 78,
+    "failed_count": 78,
+    "coverage_ratio": 0.980318
   },
   "repositories": [
     {
@@ -14953,15 +14953,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 480217156,
-      "source_full_name": "GreptimeTeam/greptimedb",
-      "source_hash": "98f50fd2fea6a340285bd46dc7df5f08a882d85822566be4812cb9c9940026a7",
-      "display_name_zh": "greptimedb｜Observability 2.0数据库",
-      "description_zh": "开源的Observability 2.0数据库，整合指标、日志和追踪，替代Prometheus、Loki和ES。",
-      "generated_at": "2026-07-20T18:28:18.246753Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 481153226,
       "source_full_name": "FireDragonGameStudio/ARIndoorNavigation",
       "source_hash": "9eaba356d29be4a39cecc602e429e3ab22bfc43333bde543f412fc763dcaa45f",
@@ -21298,15 +21289,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 866513204,
-      "source_full_name": "HKUDS/LightRAG",
-      "source_hash": "33f14ed8fd852d26f3d5ac729dbd22e6fe53c3f3dbe4175ac1fd2c20d3c92af1",
-      "display_name_zh": "LightRAG｜EMNLP2025检索增强生成",
-      "description_zh": "[EMNLP2025] LightRAG：简单快速的检索增强生成方法。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 867337374,
       "source_full_name": "modelcontextprotocol/inspector",
       "source_hash": "cbe900557c552e5b553523d3339fdf17bfc9a6fc88eacd736d35bdc25caee9b4",
@@ -25858,15 +25840,6 @@
       "display_name_zh": "banana-slides｜AI PPT 生成器基于 nano banana pro🍌的应用",
       "description_zh": "基于 nano banana pro🍌 的原生 AI PPT 生成应用，支持上传任意模板图片和素材，自动解析并通过一句话、大纲或页面描述生成 PPT，支持口头修改和一键导出可编辑 PPT。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1106996539,
-      "source_full_name": "nextlevelbuilder/ui-ux-pro-max-skill",
-      "source_hash": "f03e7050dc0a14b776c6484ce49f6e92c68d8e34ab0d0ab37b1f85e9f0f535a8",
-      "display_name_zh": "ui-ux-pro-max-skill｜AI SKILL UI UX设计智能",
-      "description_zh": "一个提供设计智能的AI技能，支持构建专业的多平台UI/UX界面。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
     },
     {
