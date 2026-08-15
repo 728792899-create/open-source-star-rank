@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-08-14T17:18:00.471406Z",
+  "generated_at": "2026-08-15T16:47:08.943304Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3963,
-    "localized_count": 3885,
-    "pending_count": 78,
-    "failed_count": 78,
-    "coverage_ratio": 0.980318
+    "localized_count": 3883,
+    "pending_count": 80,
+    "failed_count": 80,
+    "coverage_ratio": 0.979813
   },
   "repositories": [
     {
@@ -20605,15 +20605,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 818331198,
-      "source_full_name": "pydantic/pydantic-ai",
-      "source_hash": "38d9658508eae04d0513f4991d731ea64a7c2b2ab0aff51da40ec511e65beef8",
-      "display_name_zh": "pydantic-ai｜Pydantic AI代理框架",
-      "description_zh": "基于Pydantic的AI代理框架。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 819531180,
       "source_full_name": "Adexxxx/virusi",
       "source_hash": "f1e535d39d367503e3f0e53f9c35410cdce32b4c5d05eb401b4f37eff2cd084e",
@@ -29925,15 +29916,6 @@
       "source_hash": "9c6481b3a21a7bfae88e206de4bcef2cbbfbc3b0da41f011189bd51cd8b7f1fd",
       "display_name_zh": "hallmark｜反 AI 低质设计技能",
       "description_zh": "针对 Claude Code、Cursor 和 Codex 的反 AI 低质设计技能。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1223170290,
-      "source_full_name": "nexu-io/open-design",
-      "source_hash": "4931449094b291361393c5c9116e5a320f1aed3f0647199e3cfe5bcf77a41558",
-      "display_name_zh": "open-design｜开源设计工具 支持HTML/PDF/PPTX/MP4导出及20+CLIs BYOK",
-      "description_zh": "开源 Claude Design 替代方案。支持本地优先桌面应用。您的编码代理成为设计引擎：原型、登陆页、仪表盘、幻灯片、图像和视频，支持 HTML、PDF、PPTX、MP4 导出。支持 Claude Code、Codex、Cursor、Gemini、OpenCode、Qwen 及 20 多个 CLI，通过 BYOK 使用。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
     },
