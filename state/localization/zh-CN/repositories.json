@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-08-15T16:47:08.943304Z",
+  "generated_at": "2026-08-16T16:47:55.201027Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3963,
-    "localized_count": 3883,
-    "pending_count": 80,
-    "failed_count": 80,
-    "coverage_ratio": 0.979813
+    "localized_count": 3881,
+    "pending_count": 82,
+    "failed_count": 82,
+    "coverage_ratio": 0.979309
   },
   "repositories": [
     {
@@ -25060,15 +25060,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1062356571,
-      "source_full_name": "tw93/Mole",
-      "source_hash": "c8aa17e93c4d2a0c9b2257255a520ec5b0e4173dc3ab36d5c6df05a22d69144d",
-      "display_name_zh": "Mole｜Mac终端管理工具",
-      "description_zh": "通过终端清理、卸载、分析、优化和监控Mac系统。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1062458369,
       "source_full_name": "alibaba/page-agent",
       "source_hash": "ba54997c71949f7d6cc060397b1114a02a44ed7275a6541563ad20e1ce4461b7",
@@ -27442,15 +27433,6 @@
       "display_name_zh": "Music-that-moves-with-your-animation-video｜动画视频配乐",
       "description_zh": null,
       "generated_at": "2026-07-20T21:57:48.387086Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1158472225,
-      "source_full_name": "edison7009/EchoBird",
-      "source_hash": "424efbea43609bb116fe09d182e06c3264f3bae9b482f78c6a5549ab5e7c7432",
-      "display_name_zh": "EchoBird｜支持多模型切换的 AI CLI 工具，含 ZCode",
-      "description_zh": "一键安装及模型切换工具，支持 Claude Code、Codex CLI（OpenAI）、Grok Build（xAI）、Kimi Code（Moonshot）、Qwen Code、Aider、OpenCode、MiMo Code（小米）、ZCode（Z.AI）、OpenClaw、Pi、OpenScience、Vibe-Trading、Claude Desktop（3P 配置）、ChatGPT 桌面版、OpenCode 桌面版及腾讯 WorkBuddy。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
     },
     {
