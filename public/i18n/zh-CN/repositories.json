@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-08-17T02:54:45.800571Z",
+  "generated_at": "2026-08-17T16:54:03.619260Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3963,
-    "localized_count": 3879,
-    "pending_count": 84,
-    "failed_count": 84,
-    "coverage_ratio": 0.978804
+    "localized_count": 3878,
+    "pending_count": 85,
+    "failed_count": 85,
+    "coverage_ratio": 0.978552
   },
   "repositories": [
     {
@@ -6157,15 +6157,6 @@
       "display_name_zh": "Student-resources｜学生优惠资源",
       "description_zh": "介绍学生和教职工可享受的优惠权益及相关注意事项",
       "generated_at": "2026-07-19T00:17:52.423389Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 66474729,
-      "source_full_name": "prowler-cloud/prowler",
-      "source_hash": "9cc7e52277bcadb8722b4f5db4f770fa2aa0cf7a1e18fd8be79a92763215df63",
-      "display_name_zh": "prowler｜云安全自动化平台",
-      "description_zh": "自动化云环境安全和合规检查的开源云安全平台。",
-      "generated_at": "2026-07-20T04:28:39.695110Z",
       "provenance": "github_models"
     },
     {

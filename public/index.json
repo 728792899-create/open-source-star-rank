@@ -2,9 +2,10 @@
   "schema_version": "1.4.0",
   "status": "ready",
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-08-16T16:44:49Z",
-  "latest_date": "2026-08-16",
+  "updated_at": "2026-08-17T16:49:23Z",
+  "latest_date": "2026-08-17",
   "available_dates": [
+    "2026-08-17",
     "2026-08-16",
     "2026-08-15",
     "2026-08-14",
@@ -26,10 +27,10 @@
       "recent_active": 500,
       "established_active": 500
     },
-    "unique_discovered_count": 1921,
+    "unique_discovered_count": 1901,
     "candidate_added_count": 981,
     "candidate_removed_count": 981,
-    "api_request_count": 721,
+    "api_request_count": 703,
     "api_retry_count": 0,
     "snapshot_expected_count": 2000,
     "snapshot_complete_count": 2000,
@@ -39,12 +40,12 @@
     "target_local_time": "00:20",
     "valid_window_start": "00:00",
     "valid_window_end": "03:00",
-    "latest_snapshot_at": "2026-08-16T16:44:49Z",
+    "latest_snapshot_at": "2026-08-17T16:49:23Z",
     "latest_snapshot_valid": true,
     "latest_snapshot_reason": "within_window",
-    "latest_valid_snapshot_at": "2026-08-16T16:44:49Z",
+    "latest_valid_snapshot_at": "2026-08-17T16:49:23Z",
     "consecutive_valid_snapshots": 2,
-    "next_scheduled_at": "2026-08-18T00:20:00+08:00",
+    "next_scheduled_at": "2026-08-19T00:20:00+08:00",
     "expected_first_ranking_at": null,
     "period_progress": {
       "7d": {
@@ -52,15 +53,16 @@
         "required": 7
       },
       "30d": {
-        "completed": 7,
+        "completed": 8,
         "required": 30
       }
     }
   },
   "periods": {
     "7d": {
-      "latest_date": "2026-08-16",
+      "latest_date": "2026-08-17",
       "available_dates": [
+        "2026-08-17",
         "2026-08-16"
       ]
     },
