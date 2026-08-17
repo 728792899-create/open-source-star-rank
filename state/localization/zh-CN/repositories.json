@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-08-16T16:47:55.201027Z",
+  "generated_at": "2026-08-17T02:54:45.800571Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3963,
-    "localized_count": 3881,
-    "pending_count": 82,
-    "failed_count": 82,
-    "coverage_ratio": 0.979309
+    "localized_count": 3879,
+    "pending_count": 84,
+    "failed_count": 84,
+    "coverage_ratio": 0.978804
   },
   "repositories": [
     {
@@ -3934,15 +3934,6 @@
       "display_name_zh": "fanqiang｜翻墙科学上网工具",
       "description_zh": "翻墙科学上网工具。",
       "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 29268051,
-      "source_full_name": "google/material-design-lite",
-      "source_hash": "71ef604bc5384975f48eb42b7b728e165fc49e77d0f3856248cff3b1e231216a",
-      "display_name_zh": "material-design-lite｜基于HTML、CSS和JS的Material Design组件",
-      "description_zh": "material-design-lite 提供基于 HTML、CSS 和 JS 的 Material Design 组件。",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
     },
     {
@@ -15526,15 +15517,6 @@
       "display_name_zh": "AFFiNE｜下一代开源知识库 AFFiNE",
       "description_zh": "下一代知识库，集规划、整理与创作于一体，注重隐私，开源且可定制，易于使用",
       "generated_at": "2026-07-17T00:57:38.909807Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 519895363,
-      "source_full_name": "GyulyVGC/sniffnet",
-      "source_hash": "9ee4f64aefceb5e2571838cea111dc4aa28a4614e16e464fa247f3160fc4038b",
-      "display_name_zh": "sniffnet｜互联网流量监控工具",
-      "description_zh": "舒适地监控你的互联网流量。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
     {
