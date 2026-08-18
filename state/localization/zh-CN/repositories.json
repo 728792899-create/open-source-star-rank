@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-08-17T16:54:03.619260Z",
+  "generated_at": "2026-08-18T16:55:39.681055Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3963,
-    "localized_count": 3878,
-    "pending_count": 85,
-    "failed_count": 85,
-    "coverage_ratio": 0.978552
+    "localized_count": 3876,
+    "pending_count": 87,
+    "failed_count": 87,
+    "coverage_ratio": 0.978047
   },
   "repositories": [
     {
@@ -15772,15 +15772,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 537340460,
-      "source_full_name": "SilentDemonSD/WZML-X",
-      "source_hash": "f1fe33a0e26f2687d91385b736e09781b1dc5512d7181f3ff7ef18d3667eee61",
-      "display_name_zh": "WZML-X｜Telegram下载上传机器人",
-      "description_zh": "WZML-X 功能丰富的Telegram机器人，支持多种下载和上传服务，基于Pyrogram开发",
-      "generated_at": "2026-07-20T18:28:18.246753Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 537459518,
       "source_full_name": "MIC-DKFZ/dynamic-network-architectures",
       "source_hash": "837a25b77426bc37aada0a8e8f84e4ee262f7b5de7e25e1a0b76c505bc7d4bbb",
@@ -20781,15 +20772,6 @@
       "source_hash": "2fc51f2048f50f9501fa14e5cc05a6da077183103367b25f54b101f6ec12875e",
       "display_name_zh": "legendsayantan｜Extendroid 安卓多任务管理器",
       "description_zh": "安卓多任务管理器，支持桌面式多窗口和远程访问。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 832452447,
-      "source_full_name": "web-infra-dev/midscene",
-      "source_hash": "9f4cf868fbb8d86caff00fc01e3c67a154efa400d9d58d41b2893ce11448436c",
-      "display_name_zh": "midscene｜AI视觉驱动UI自动化",
-      "description_zh": "基于AI的视觉驱动UI自动化工具，支持多平台。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
     },
