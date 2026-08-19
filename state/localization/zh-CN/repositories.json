@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-08-18T16:55:39.681055Z",
+  "generated_at": "2026-08-19T16:55:59.044144Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3963,
-    "localized_count": 3876,
-    "pending_count": 87,
-    "failed_count": 87,
-    "coverage_ratio": 0.978047
+    "localized_count": 3874,
+    "pending_count": 89,
+    "failed_count": 89,
+    "coverage_ratio": 0.977542
   },
   "repositories": [
     {
@@ -16627,15 +16627,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 595526110,
-      "source_full_name": "akto-api-security/akto",
-      "source_hash": "567618fcee819e8cef6ff50d0a53763fa73566776e27df5a55b6bd28533a63e8",
-      "display_name_zh": "akto｜开源API安全与CI/CD测试工具",
-      "description_zh": "akto，开源API安全工具，支持API发现、安全态势、CI/CD测试，内置1000+测试用例。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 595662105,
       "source_full_name": "gitbutlerapp/gitbutler",
       "source_hash": "edd67e2cd120fccdf71e633b96b1a0cfbf532d33cff675f71b380989e7d66564",
@@ -20530,15 +20521,6 @@
       "display_name_zh": "awesome-ui-agents｜精选UI与OS代理资源列表",
       "description_zh": "awesome-ui-agents：精选UI代理资源列表，涵盖Web、App、OS等领域，持续更新。",
       "generated_at": "2026-07-19T07:03:48.394229Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 817326197,
-      "source_full_name": "screenpipe/screenpipe",
-      "source_hash": "56a02f62aa7ccb5ffd09642480df668618fe766fb42335a55e786ad12f64d530",
-      "display_name_zh": "screenpipe｜YC S26 24/7 屏幕录制及多应用连接",
-      "description_zh": "screenpipe 是 YC S26 孵化项目，支持全天候（24/7）屏幕录制，并可连接 OpenClaw、Hermes 代理及 100 多款应用，保障本地、私密和安全。",
-      "generated_at": "2026-07-18T00:14:53.937273Z",
       "provenance": "github_models"
     },
     {

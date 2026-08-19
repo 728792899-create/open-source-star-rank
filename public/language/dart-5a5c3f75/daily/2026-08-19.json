@@ -1,0 +1,203 @@
+{
+  "schema_version": "1.4.0",
+  "date": "2026-08-19",
+  "timezone": "Asia/Shanghai",
+  "window_start": "2026-08-18T16:52:19Z",
+  "window_end": "2026-08-19T16:50:45Z",
+  "window_quality": {
+    "duration_minutes": 1438,
+    "valid_for_ranking": true,
+    "reason": "valid"
+  },
+  "candidate_count": 2000,
+  "collection": {
+    "search_result_counts": {
+      "recent_created": 1000,
+      "recent_active": 500,
+      "established_active": 500
+    },
+    "unique_discovered_count": 1898,
+    "candidate_added_count": 984,
+    "candidate_removed_count": 984,
+    "api_request_count": 693,
+    "api_retry_count": 0,
+    "snapshot_expected_count": 2000,
+    "snapshot_complete_count": 2000,
+    "snapshot_completeness": 1.0
+  },
+  "language": "Dart",
+  "slug": "dart-5a5c3f75",
+  "eligible_count": 7,
+  "ranking_limit": 500,
+  "entry_count": 7,
+  "entries": [
+    {
+      "repository_id": 578822531,
+      "full_name": "localsend/localsend",
+      "description": "An open-source cross-platform alternative to AirDrop",
+      "language": "Dart",
+      "stars_total": 88728,
+      "created_at": "2022-12-16T00:46:07Z",
+      "pushed_at": "2026-08-19T01:45:43Z",
+      "stars_gained": 80,
+      "html_url": "https://github.com/localsend/localsend",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/120677616?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        539,
+        91,
+        111,
+        88,
+        69,
+        104,
+        80
+      ],
+      "rank": 1,
+      "rank_change": 0
+    },
+    {
+      "repository_id": 31792824,
+      "full_name": "flutter/flutter",
+      "description": "Flutter makes it easy and fast to build beautiful apps for mobile and beyond",
+      "language": "Dart",
+      "stars_total": 178497,
+      "created_at": "2015-03-06T22:54:58Z",
+      "pushed_at": "2026-08-19T16:49:20Z",
+      "stars_gained": 33,
+      "html_url": "https://github.com/flutter/flutter",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/14101776?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        20,
+        25,
+        -14,
+        25,
+        -23,
+        70,
+        33
+      ],
+      "rank": 2,
+      "rank_change": 0
+    },
+    {
+      "repository_id": 338719962,
+      "full_name": "KRTirtho/spotube",
+      "description": "🎧 Open source music streaming app! Available for both desktop & mobile!",
+      "language": "Dart",
+      "stars_total": 48500,
+      "created_at": "2021-02-14T03:17:58Z",
+      "pushed_at": "2026-08-16T09:07:33Z",
+      "stars_gained": 23,
+      "html_url": "https://github.com/KRTirtho/spotube",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/61944859?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        11,
+        18,
+        26,
+        33,
+        32,
+        37,
+        23
+      ],
+      "rank": 3,
+      "rank_change": 1
+    },
+    {
+      "repository_id": 523534328,
+      "full_name": "ImranR98/Obtainium",
+      "description": "Get Android app updates straight from the source.",
+      "language": "Dart",
+      "stars_total": 19070,
+      "created_at": "2022-08-11T00:16:36Z",
+      "pushed_at": "2026-08-10T02:55:19Z",
+      "stars_gained": 19,
+      "html_url": "https://github.com/ImranR98/Obtainium",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/30463115?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        22,
+        19,
+        18,
+        20,
+        16,
+        39,
+        19
+      ],
+      "rank": 4,
+      "rank_change": -1
+    },
+    {
+      "repository_id": 560284721,
+      "full_name": "ente/ente",
+      "description": "💚 End-to-end encrypted cloud for everything.",
+      "language": "Dart",
+      "stars_total": 28416,
+      "created_at": "2022-11-01T06:10:25Z",
+      "pushed_at": "2026-08-19T15:10:09Z",
+      "stars_gained": 17,
+      "html_url": "https://github.com/ente/ente",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/64603161?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        40,
+        22,
+        23,
+        4,
+        17,
+        16,
+        17
+      ],
+      "rank": 5,
+      "rank_change": 0
+    },
+    {
+      "repository_id": 649662864,
+      "full_name": "wanghongenpin/proxypin",
+      "description": "Open source free capture HTTP(S) traffic  software ProxyPin, supporting full platform systems",
+      "language": "Dart",
+      "stars_total": 13768,
+      "created_at": "2023-06-05T11:16:00Z",
+      "pushed_at": "2026-08-15T03:30:29Z",
+      "stars_gained": 6,
+      "html_url": "https://github.com/wanghongenpin/proxypin",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/24794200?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        4,
+        9,
+        12,
+        5,
+        3,
+        7,
+        6
+      ],
+      "rank": 6,
+      "rank_change": 0
+    },
+    {
+      "repository_id": 35726310,
+      "full_name": "dart-lang/sdk",
+      "description": "The Dart SDK, including the VM, JS and Wasm compilers, analysis, core libraries, and more.",
+      "language": "Dart",
+      "stars_total": 11254,
+      "created_at": "2015-05-16T14:14:58Z",
+      "pushed_at": "2026-08-19T16:50:39Z",
+      "stars_gained": 2,
+      "html_url": "https://github.com/dart-lang/sdk",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/1609975?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        2,
+        0,
+        2,
+        4,
+        -2,
+        1,
+        2
+      ],
+      "rank": 7,
+      "rank_change": 0
+    }
+  ]
+}
