@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-08-19T16:55:59.044144Z",
+  "generated_at": "2026-08-20T16:59:49.917776Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
-    "eligible_count": 3963,
-    "localized_count": 3874,
-    "pending_count": 89,
-    "failed_count": 89,
-    "coverage_ratio": 0.977542
+    "eligible_count": 3976,
+    "localized_count": 3872,
+    "pending_count": 104,
+    "failed_count": 104,
+    "coverage_ratio": 0.973843
   },
   "repositories": [
     {
@@ -23944,15 +23944,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1007827531,
-      "source_full_name": "Crosstalk-Solutions/project-nomad",
-      "source_hash": "8f3468bdf630721139512aeaa48535d373c3dd5d11581c26a8e7aca729168cf6",
-      "display_name_zh": "project-nomad｜集成AI的离线生存计算机",
-      "description_zh": "集成关键工具、知识和AI的离线生存计算机，随时随地提供支持。",
-      "generated_at": "2026-07-19T07:03:48.394229Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1008277677,
       "source_full_name": "FSoft-AI4Code/CodeWiki",
       "source_hash": "677836530254ab6383aaa6f8d4aa1aef7f7de7f83366e411cf51a549d8ebe91a",
@@ -26668,15 +26659,6 @@
       "display_name_zh": "codegraph｜100% 本地预索引代码知识图谱",
       "description_zh": "codegraph 是预索引的代码知识图谱，自动同步代码变更，支持多种代码助手，100% 本地运行，减少令牌和工具调用。",
       "generated_at": "2026-07-18T00:14:53.937273Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1137711311,
-      "source_full_name": "Hmbown/CodeWhale",
-      "source_hash": "a5970fc6e319d112bde3b8f529640566b01d24bb5045e7b22c86ad4923236619",
-      "display_name_zh": "CodeWhale｜代理管理工具",
-      "description_zh": "开源社区驱动的代理管理工具。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
     },
     {
