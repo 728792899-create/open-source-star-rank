@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-08-20T16:59:49.917776Z",
+  "generated_at": "2026-08-23T16:49:07.531351Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3976,
-    "localized_count": 3872,
-    "pending_count": 104,
-    "failed_count": 104,
-    "coverage_ratio": 0.973843
+    "localized_count": 3868,
+    "pending_count": 108,
+    "failed_count": 108,
+    "coverage_ratio": 0.972837
   },
   "repositories": [
     {
@@ -1108,15 +1108,6 @@
       "display_name_zh": "beego｜Go 语言 Web 框架",
       "description_zh": "beego 是 Go 语言的高性能开源 Web 框架。",
       "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 3618133,
-      "source_full_name": "web-platform-tests/wpt",
-      "source_hash": "0f8de119ae33b8bcc892bada673847557037063c4a2a242d4dd8faa80d5d971c",
-      "display_name_zh": "web-platform-tests｜WHATWG Web 平台测试套件",
-      "description_zh": "Web 平台规范的测试套件，涵盖 WHATWG、W3C 等标准。",
-      "generated_at": "2026-07-16T17:46:53.472669Z",
       "provenance": "github_models"
     },
     {
@@ -24574,15 +24565,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1036441713,
-      "source_full_name": "kubernetes-sigs/agent-sandbox",
-      "source_hash": "ca3efee0bb7a9ca75bbcfa610614982ce8103bfb8c868d89966d2206b23362a0",
-      "display_name_zh": "agent-sandbox｜AI代理运行时管理",
-      "description_zh": "支持AI代理运行时的隔离、有状态、单例工作负载管理工具。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1036727887,
       "source_full_name": "mlm-games/flicky",
       "source_hash": "3c2ab6792e2ef00741d5ec791817074913fd9d97fa22ba3340c810c1d4641c46",
@@ -26182,15 +26164,6 @@
       "display_name_zh": "k8s｜k8s功能",
       "description_zh": null,
       "generated_at": "2026-07-20T22:06:55.994311Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1125856365,
-      "source_full_name": "can1357/oh-my-pi",
-      "source_hash": "d4d17d14a9142c231a8c09ecea0c19c8811ec0c972932c549d2eed1f344abaed",
-      "display_name_zh": "oh-my-pi｜支持LSP的终端AI编码代理",
-      "description_zh": "oh-my-pi 是终端的 AI 编码代理，支持哈希锚定编辑、LSP、Python、浏览器和子代理。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
     },
     {
@@ -31573,15 +31546,6 @@
       "display_name_zh": "yaoshu-token｜爻枢 Token 智能网关与聚合",
       "description_zh": "爻枢 Token 提供智能网关、智能聚合、大模型评测和排名等功能。",
       "generated_at": "2026-07-20T22:06:55.994311Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1273015953,
-      "source_full_name": "shy3130/tickflow-stock-panel",
-      "source_hash": "0525cea6237303e53aa8403d6d528bf60df9fd7cded85bd7d6ab848ab4037b79",
-      "display_name_zh": "tickflow-stock-panel｜TSP自托管A股量化工作台",
-      "description_zh": "tickflow-stock-panel：基于TickFlow数据源的自托管零运维A股量化工作台，集选股、监控、回测功能，支持LLM能力驱动的策略定制和个股分析。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
     },
     {
