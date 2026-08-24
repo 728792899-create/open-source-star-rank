@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-08-23T16:49:07.531351Z",
+  "generated_at": "2026-08-24T02:57:53.159207Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
-    "eligible_count": 3976,
-    "localized_count": 3868,
-    "pending_count": 108,
-    "failed_count": 108,
-    "coverage_ratio": 0.972837
+    "eligible_count": 3973,
+    "localized_count": 3862,
+    "pending_count": 111,
+    "failed_count": 111,
+    "coverage_ratio": 0.972061
   },
   "repositories": [
     {
@@ -271,15 +271,6 @@
       "display_name_zh": "mongoose｜MongoDB对象建模",
       "description_zh": "为异步环境设计的MongoDB对象建模工具。",
       "generated_at": "2026-07-20T18:28:18.246753Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 612230,
-      "source_full_name": "nvm-sh/nvm",
-      "source_hash": "e07cbf7d474b3536d5b80a0124b484281845174b7f5fbbcd2f5f68cf471408d5",
-      "display_name_zh": "nvm｜POSIX 兼容的 Node.js 版本管理器",
-      "description_zh": "nvm 是一个 POSIX 兼容的 bash 脚本，用于管理多个活跃的 Node.js 版本。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
     },
     {
@@ -1099,15 +1090,6 @@
       "display_name_zh": "firmware｜Raspberry Pi内核及GPU固件",
       "description_zh": "包含Raspberry Pi内核、模块、用户空间库及启动加载程序/GPU固件的预编译二进制文件。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 3577919,
-      "source_full_name": "beego/beego",
-      "source_hash": "b6ce8f98b60f35162564ff9f2db1b3b215d3d486d3e54e630d2e097da37cf3e6",
-      "display_name_zh": "beego｜Go 语言 Web 框架",
-      "description_zh": "beego 是 Go 语言的高性能开源 Web 框架。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
     },
     {
@@ -6250,15 +6232,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 68957920,
-      "source_full_name": "justjavac/wechat-miniapp-radar",
-      "source_hash": "b2d4f0f97cb32379b152f038b8f24c18e1b77f0b401cd49ba2b5eba2e95a89e9",
-      "display_name_zh": "wechat-miniapp-radar｜AI 驱动的小程序技术工具",
-      "description_zh": "小程序雷达是一个 AI 驱动的小程序技术选型、趋势追踪和迁移诊断工具。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 69495170,
       "source_full_name": "fastify/fastify",
       "source_hash": "ef925e49c7f79c706cb39736d4c823ae8f9522dc4c37a54040af62704cb20e27",
@@ -7003,15 +6976,6 @@
       "display_name_zh": "ggsoccer｜基于 ggplot2 的足球数据绘图",
       "description_zh": "ggsoccer 用于在 R 语言中基于 ggplot2 绘制足球赛事数据。",
       "generated_at": "2026-07-20T03:10:47.749812Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 84533158,
-      "source_full_name": "yunjey/pytorch-tutorial",
-      "source_hash": "e5320f28b92bd72aa0c742f2f342dd0559351e850dc862ae6aa9871d20e0356c",
-      "display_name_zh": "pytorch-tutorial｜PyTorch教程",
-      "description_zh": "面向深度学习研究者的PyTorch教程",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
     },
     {
@@ -20785,15 +20749,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 834369920,
-      "source_full_name": "jingyaogong/minimind",
-      "source_hash": "55b6331244a9db1456b5dd1e31488d2f9c92cef7258fa597515d5add2e370688",
-      "display_name_zh": "minimind｜64M参数LLM训练",
-      "description_zh": "minimind 是一个可在2小时内从零训练64M参数小型LLM的大模型项目。",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 835510315,
       "source_full_name": "mozilla-firefox/firefox",
       "source_hash": "9812f96535ef96b33d4bec7e07c7356b663f5ca79790c3b5f29502502cc516ec",
@@ -24256,15 +24211,6 @@
       "display_name_zh": "sure｜个人理财应用",
       "description_zh": "面向所有人的个人理财应用。",
       "generated_at": "2026-07-19T07:03:48.394229Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1025856648,
-      "source_full_name": "wshobson/agents",
-      "source_hash": "bcb55c19beb709f79911674964adab7a8a91cc506716f3030752c2f0b294997f",
-      "display_name_zh": "agents｜多平台代理插件市场",
-      "description_zh": "多平台代理插件市场，支持Claude Code、Codex CLI、Cursor、OpenCode、GitHub Copilot及Gemini CLI。",
-      "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
     },
     {
