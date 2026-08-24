@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-08-24T02:57:53.159207Z",
+  "generated_at": "2026-08-24T17:04:25.315241Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3973,
-    "localized_count": 3862,
-    "pending_count": 111,
-    "failed_count": 111,
-    "coverage_ratio": 0.972061
+    "localized_count": 3859,
+    "pending_count": 114,
+    "failed_count": 114,
+    "coverage_ratio": 0.971306
   },
   "repositories": [
     {
@@ -18868,15 +18868,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 717197250,
-      "source_full_name": "QuantumNous/new-api",
-      "source_hash": "ec3cf9590fd526620e1cc8d5880b04c6b4e89a2f551be9eb4b5bf0261381d775",
-      "display_name_zh": "new-api｜支持AI和LLMs的统一模型中心",
-      "description_zh": "统一的AI模型中心，支持将多种LLMs转换为OpenAI、Claude或Gemini兼容格式，便于模型管理。",
-      "generated_at": "2026-07-18T00:14:53.937273Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 717520331,
       "source_full_name": "ning-y/ning-y",
       "source_hash": "1bd1b444ff0f8343aa8b83d9fda4c71d277c0e5aad0625220e91f680a46087ef",
@@ -26473,15 +26464,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1134819911,
-      "source_full_name": "nyldn/claude-octopus",
-      "source_hash": "d4bb676d0a2602d813bcc91d6a71b13820a796194c07ae6843ce9aadb990cd62",
-      "display_name_zh": "claude-octopus｜支持8个AI模型的盲点检测",
-      "description_zh": "claude-octopus 可在每个研究、设计或编码任务中同时使用最多 8 个 AI 模型，发现 AI 盲点。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1135212071,
       "source_full_name": "coreyhaines31/marketingskills",
       "source_hash": "7022c023edd67dad9570cf504a4ebe8a686c07e78ec106cb149f173476eecc48",
@@ -31294,15 +31276,6 @@
       "display_name_zh": "nahida-mini-codex-pet｜Nahida像素宠物定制",
       "description_zh": "Q风格像素Nahida定制宠物，适用于Codex。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1267485499,
-      "source_full_name": "vorssaint/vorssaint-utils",
-      "source_hash": "984febfc9c177959c1da3e42f10023872a2e1dede38b6caea913800dbf7cc87c",
-      "display_name_zh": "vorssaint-utils｜macOS 菜单栏工具包",
-      "description_zh": "免费开源的 macOS 菜单栏工具包。",
-      "generated_at": "2026-07-16T05:25:33.987831Z",
       "provenance": "github_models"
     },
     {
