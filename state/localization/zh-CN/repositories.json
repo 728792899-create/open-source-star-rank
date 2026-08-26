@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-08-24T17:04:25.315241Z",
+  "generated_at": "2026-08-26T18:10:06.229556Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3973,
-    "localized_count": 3859,
-    "pending_count": 114,
-    "failed_count": 114,
-    "coverage_ratio": 0.971306
+    "localized_count": 3855,
+    "pending_count": 118,
+    "failed_count": 118,
+    "coverage_ratio": 0.9703
   },
   "repositories": [
     {
@@ -2620,15 +2620,6 @@
       "display_name_zh": "Lyrebird｜Grasshopper 与 Revit 互操作性",
       "description_zh": "Grasshopper 与 Revit 之间的互操作性工具。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 16089035,
-      "source_full_name": "wekan/wekan",
-      "source_hash": "1038cbca13d02a09f133d0467fa6130abf58ed2656a1b1aaa48a966653c77207",
-      "display_name_zh": "wekan｜开源看板工具（FLOSS）",
-      "description_zh": "wekan 是基于 Meteor 的开源看板工具，适合 FLOSS 开发者使用，PRs 仅限开发。",
-      "generated_at": "2026-07-16T17:46:53.472669Z",
       "provenance": "github_models"
     },
     {
@@ -10417,15 +10408,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 192925833,
-      "source_full_name": "prisma/prisma",
-      "source_hash": "d9971d40d35c755eb7e9635c8668128bf7f3d7b532c3c1dab647719f8761650d",
-      "display_name_zh": "prisma｜ORM 支持 SQL 和 SQLite",
-      "description_zh": "prisma 是面向 Node.js 和 TypeScript 的下一代 ORM，支持 PostgreSQL、MySQL、MariaDB、SQL Server、SQLite、MongoDB 和 CockroachDB。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 193215554,
       "source_full_name": "n8n-io/n8n",
       "source_hash": "e110bbcda475ca78892aca0fa76092dcadde3abf2705dd07599f3adccda15c02",
@@ -13690,15 +13672,6 @@
       "display_name_zh": "bulletproof-react｜生产级React架构",
       "description_zh": "bulletproof-react提供简单、可扩展且强大的架构，用于构建生产级React应用。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 372536760,
-      "source_full_name": "oceanbase/oceanbase",
-      "source_hash": "d5708ffda773ba4336829fe00217982a99f6214600c3db43fcc3628ff6463345",
-      "display_name_zh": "oceanbase｜分布式数据库AI支持",
-      "description_zh": "支持事务、分析和 AI 工作负载的最快分布式数据库。",
-      "generated_at": "2026-07-17T00:57:38.909807Z",
       "provenance": "github_models"
     },
     {
@@ -18379,15 +18352,6 @@
       "display_name_zh": "turso｜Rust实现的SQLite兼容SQL数据库",
       "description_zh": "用Rust实现的SQL数据库，兼容SQLite，实验性支持Postgres，被称为数据库领域的LLVM。",
       "generated_at": "2026-07-20T18:28:18.246753Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 683560668,
-      "source_full_name": "babalae/better-genshin-impact",
-      "source_hash": "772db1a407408f7ec3f99faa7af777f7f07a88d46a08c92fc67db0ce715b1b6a",
-      "display_name_zh": "better-genshin-impact｜原神 AI 辅助与 UI 自动化工具",
-      "description_zh": "better-genshin-impact 是原神的 UI 自动化测试工具，支持自动拾取、剧情、钓鱼（AI）、七圣召唤、伐木、刷本、采集、挖矿、锄地、烹饪等功能。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
     },
     {
