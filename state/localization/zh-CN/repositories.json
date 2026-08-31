@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-08-26T18:10:06.229556Z",
+  "generated_at": "2026-08-31T07:59:25.872867Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
-    "eligible_count": 3973,
-    "localized_count": 3855,
-    "pending_count": 118,
-    "failed_count": 118,
-    "coverage_ratio": 0.9703
+    "eligible_count": 3971,
+    "localized_count": 3849,
+    "pending_count": 122,
+    "failed_count": 122,
+    "coverage_ratio": 0.969277
   },
   "repositories": [
     {
@@ -2470,15 +2470,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 14705691,
-      "source_full_name": "ziadoz/awesome-php",
-      "source_hash": "6f6d77266f5dc06a5c8c043e5e7a48069783b2a6d4fb69e18e2f8c7fce8e1d7d",
-      "display_name_zh": "awesome-php｜优秀 PHP 库和资源合集",
-      "description_zh": "精选优秀的 PHP 库、资源和工具列表。",
-      "generated_at": "2026-07-19T00:17:52.423389Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 14712850,
       "source_full_name": "syncthing/syncthing",
       "source_hash": "6ac679aa47432cf2887d7e95dbbcadb3c1aa22cc19bffe4fa26cbb3bb28efe07",
@@ -3447,15 +3438,6 @@
       "source_hash": "b66484b832a5f77e49d6db504c9f74ed2b2e46c6971b155fa8098e3878a45cc6",
       "display_name_zh": "angular｜Web 应用框架",
       "description_zh": "angular 是一个用于构建 Web 应用的框架。",
-      "generated_at": "2026-07-19T00:17:52.423389Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 24268127,
-      "source_full_name": "coreybutler/nvm-windows",
-      "source_hash": "3a69fbb34ff167f1335dafb202b13dd2400ccf0101b72bfd2614091c9157bb6c",
-      "display_name_zh": "nvm-windows｜Windows 平台 Node.js 版本管理工具",
-      "description_zh": "nvm-windows 是 Windows 平台上的 Node.js 版本管理工具，使用 Go 语言编写。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
     },
@@ -6826,15 +6808,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 80990461,
-      "source_full_name": "eriklindernoren/ML-From-Scratch",
-      "source_hash": "0237c90d3462074c62973472e5ecb75bd2092c3c620d908f28e2b1fff1b87673",
-      "display_name_zh": "ML-From-Scratch｜基于NumPy的机器学习模型实现",
-      "description_zh": "ML-From-Scratch 提供基于 NumPy 的机器学习模型和算法实现，涵盖从线性回归到深度学习。",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 81227005,
       "source_full_name": "facebookresearch/faiss",
       "source_hash": "2b4f567ce001b14e2b13f08b3e6230f6cd2f0153c0576944d5515ba9d55b6824",
@@ -9490,15 +9463,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 159152904,
-      "source_full_name": "jeecgboot/JeecgBoot",
-      "source_hash": "bf304e84f0cac678c7ec6bdcbf492e85392bd1f5b3fcd60540b03a500f3ddf11",
-      "display_name_zh": "JeecgBoot｜v2.0企业级AI低代码平台",
-      "description_zh": "JeecgBoot是企业级AI低代码平台，支持v2.0版本，一句话生成系统，内置MCP插件，提升Java项目开发效率90%。",
-      "generated_at": "2026-07-27T05:43:53.312983Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 159271175,
       "source_full_name": "sqlalchemy/sqlalchemy",
       "source_hash": "3a57324b3fa0ae41fc537be592581b77f5ea270c074c55fa2e98bf643e8bf7d6",
@@ -11017,15 +10981,6 @@
       "display_name_zh": "staging.crates.io-index｜注册表索引",
       "description_zh": "staging.crates.io的注册表索引",
       "generated_at": "2026-07-20T04:28:39.695110Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 218115303,
-      "source_full_name": "vercel/swr",
-      "source_hash": "a44b57e1c61d138585d8f0efec513c06f777384caeac9f5382c9d1316f397a0c",
-      "display_name_zh": "swr｜React数据获取Hooks",
-      "description_zh": "用于React的数据获取Hooks库。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
     {
@@ -14148,15 +14103,6 @@
       "source_hash": "b33ebb90ad80184931656a337689c6f4c5d17b1db790d86a65006bf5f5b26808",
       "display_name_zh": "cs-self-learning｜计算机自学指南",
       "description_zh": "计算机自学指南。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 419661684,
-      "source_full_name": "DataTalksClub/data-engineering-zoomcamp",
-      "source_hash": "6b0727e2429da349605a97f1184ce65da5832a34e5d5f638ca6a445d01c6bfe2",
-      "display_name_zh": "data-engineering-zoomcamp｜9周数据工程课程",
-      "description_zh": "为期9周的免费数据工程课程，教授构建生产级数据管道。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
