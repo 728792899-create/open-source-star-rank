@@ -1,6 +1,6 @@
 {
   "schema_version": "1.4.0",
-  "updated_at": "2026-09-05T18:22:50Z",
+  "updated_at": "2026-09-06T18:23:28Z",
   "timezone": "Asia/Shanghai",
   "ranking_limit": 500,
   "page_size": 100,
@@ -8,7 +8,7 @@
     {
       "language": "Adblock Filter List",
       "slug": "adblock-filter-list-a5d417a5",
-      "candidate_count": 1,
+      "candidate_count": 2,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -24,7 +24,15 @@
     {
       "language": "Astro",
       "slug": "astro-c490cce1",
-      "candidate_count": 2,
+      "candidate_count": 1,
+      "latest_date": null,
+      "available_dates": [],
+      "status": "accumulating"
+    },
+    {
+      "language": "ATS",
+      "slug": "ats-592162ab",
+      "candidate_count": 1,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -40,9 +48,10 @@
     {
       "language": "C",
       "slug": "c-6b23c0d5",
-      "candidate_count": 58,
-      "latest_date": "2026-08-26",
+      "candidate_count": 63,
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -66,9 +75,10 @@
     {
       "language": "C#",
       "slug": "c-sharp",
-      "candidate_count": 38,
-      "latest_date": "2026-08-26",
+      "candidate_count": 40,
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -92,9 +102,10 @@
     {
       "language": "C++",
       "slug": "c-plus-plus",
-      "candidate_count": 132,
-      "latest_date": "2026-08-26",
+      "candidate_count": 133,
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -118,7 +129,23 @@
     {
       "language": "Clojure",
       "slug": "clojure-39ccce95",
-      "candidate_count": 3,
+      "candidate_count": 4,
+      "latest_date": null,
+      "available_dates": [],
+      "status": "accumulating"
+    },
+    {
+      "language": "CMake",
+      "slug": "cmake-e7efda82",
+      "candidate_count": 1,
+      "latest_date": null,
+      "available_dates": [],
+      "status": "accumulating"
+    },
+    {
+      "language": "Common Lisp",
+      "slug": "common-lisp-fedf9ff7",
+      "candidate_count": 1,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -126,7 +153,7 @@
     {
       "language": "CSS",
       "slug": "css-b581e460",
-      "candidate_count": 4,
+      "candidate_count": 8,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -142,9 +169,10 @@
     {
       "language": "Dart",
       "slug": "dart-5a5c3f75",
-      "candidate_count": 14,
-      "latest_date": "2026-08-26",
+      "candidate_count": 12,
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -166,9 +194,17 @@
       "status": "ready"
     },
     {
+      "language": "DM",
+      "slug": "dm-6a3aea19",
+      "candidate_count": 1,
+      "latest_date": null,
+      "available_dates": [],
+      "status": "accumulating"
+    },
+    {
       "language": "Dockerfile",
       "slug": "dockerfile-dd2c0eb6",
-      "candidate_count": 2,
+      "candidate_count": 3,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -176,7 +212,7 @@
     {
       "language": "Elixir",
       "slug": "elixir-3315715a",
-      "candidate_count": 4,
+      "candidate_count": 3,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -184,7 +220,7 @@
     {
       "language": "Emacs Lisp",
       "slug": "emacs-lisp-8dbcb023",
-      "candidate_count": 1,
+      "candidate_count": 2,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -198,8 +234,24 @@
       "status": "accumulating"
     },
     {
-      "language": "Fortran",
-      "slug": "fortran-92df3768",
+      "language": "F#",
+      "slug": "f-sharp",
+      "candidate_count": 1,
+      "latest_date": null,
+      "available_dates": [],
+      "status": "accumulating"
+    },
+    {
+      "language": "GDScript",
+      "slug": "gdscript-768df667",
+      "candidate_count": 1,
+      "latest_date": null,
+      "available_dates": [],
+      "status": "accumulating"
+    },
+    {
+      "language": "Gleam",
+      "slug": "gleam-b93ece7e",
       "candidate_count": 1,
       "latest_date": null,
       "available_dates": [],
@@ -208,9 +260,10 @@
     {
       "language": "Go",
       "slug": "go-6cc8519b",
-      "candidate_count": 160,
-      "latest_date": "2026-08-26",
+      "candidate_count": 150,
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -234,7 +287,7 @@
     {
       "language": "Haskell",
       "slug": "haskell-540d2c45",
-      "candidate_count": 2,
+      "candidate_count": 4,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -242,7 +295,7 @@
     {
       "language": "HLSL",
       "slug": "hlsl-3b2f71f9",
-      "candidate_count": 2,
+      "candidate_count": 1,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -251,8 +304,9 @@
       "language": "HTML",
       "slug": "html-07239dbd",
       "candidate_count": 40,
-      "latest_date": "2026-08-26",
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -276,9 +330,10 @@
     {
       "language": "Java",
       "slug": "java-c1ba60ce",
-      "candidate_count": 53,
-      "latest_date": "2026-08-26",
+      "candidate_count": 57,
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -302,9 +357,10 @@
     {
       "language": "JavaScript",
       "slug": "javascript-b27ad06d",
-      "candidate_count": 157,
-      "latest_date": "2026-08-26",
+      "candidate_count": 163,
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -336,7 +392,7 @@
     {
       "language": "Julia",
       "slug": "julia-e89fe62e",
-      "candidate_count": 2,
+      "candidate_count": 1,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -344,9 +400,10 @@
     {
       "language": "Jupyter Notebook",
       "slug": "jupyter-notebook-c98b6019",
-      "candidate_count": 12,
-      "latest_date": "2026-08-26",
+      "candidate_count": 9,
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -368,19 +425,12 @@
       "status": "ready"
     },
     {
-      "language": "Just",
-      "slug": "just-c79cae2b",
-      "candidate_count": 1,
-      "latest_date": null,
-      "available_dates": [],
-      "status": "accumulating"
-    },
-    {
       "language": "Kotlin",
       "slug": "kotlin-c78f6c97",
-      "candidate_count": 29,
-      "latest_date": "2026-08-26",
+      "candidate_count": 37,
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -420,7 +470,7 @@
     {
       "language": "LLVM",
       "slug": "llvm-6c02a321",
-      "candidate_count": 2,
+      "candidate_count": 1,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -428,9 +478,10 @@
     {
       "language": "Lua",
       "slug": "lua-b897ce72",
-      "candidate_count": 9,
-      "latest_date": "2026-08-26",
+      "candidate_count": 11,
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -454,7 +505,7 @@
     {
       "language": "Makefile",
       "slug": "makefile-76ed074a",
-      "candidate_count": 2,
+      "candidate_count": 1,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -462,9 +513,10 @@
     {
       "language": "Markdown",
       "slug": "markdown-0e52f6b9",
-      "candidate_count": 8,
-      "latest_date": "2026-08-26",
+      "candidate_count": 10,
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -502,9 +554,9 @@
       "status": "accumulating"
     },
     {
-      "language": "Modelica",
-      "slug": "modelica-97c49b02",
-      "candidate_count": 1,
+      "language": "Nim",
+      "slug": "nim-e69a02cd",
+      "candidate_count": 2,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -512,7 +564,7 @@
     {
       "language": "Nix",
       "slug": "nix-0f5d0b67",
-      "candidate_count": 3,
+      "candidate_count": 2,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -526,16 +578,8 @@
       "status": "accumulating"
     },
     {
-      "language": "Objective-C++",
-      "slug": "objective-c-74f273c8",
-      "candidate_count": 1,
-      "latest_date": null,
-      "available_dates": [],
-      "status": "accumulating"
-    },
-    {
-      "language": "OpenSCAD",
-      "slug": "openscad-01405369",
+      "language": "Odin",
+      "slug": "odin-0b625886",
       "candidate_count": 1,
       "latest_date": null,
       "available_dates": [],
@@ -552,7 +596,7 @@
     {
       "language": "Perl",
       "slug": "perl-eca37636",
-      "candidate_count": 1,
+      "candidate_count": 5,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -560,9 +604,10 @@
     {
       "language": "PHP",
       "slug": "php-0a6a1534",
-      "candidate_count": 17,
-      "latest_date": "2026-08-26",
+      "candidate_count": 23,
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -586,7 +631,7 @@
     {
       "language": "PowerShell",
       "slug": "powershell-55947b6c",
-      "candidate_count": 9,
+      "candidate_count": 5,
       "latest_date": "2026-07-16",
       "available_dates": [
         "2026-07-16"
@@ -596,9 +641,10 @@
     {
       "language": "Python",
       "slug": "python-18885f27",
-      "candidate_count": 426,
-      "latest_date": "2026-08-26",
+      "candidate_count": 413,
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -622,7 +668,7 @@
     {
       "language": "QML",
       "slug": "qml-62cf139e",
-      "candidate_count": 1,
+      "candidate_count": 2,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -630,22 +676,14 @@
     {
       "language": "R",
       "slug": "r-8c257489",
-      "candidate_count": 1,
+      "candidate_count": 2,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
     },
     {
-      "language": "ReScript",
-      "slug": "rescript-03178c40",
-      "candidate_count": 1,
-      "latest_date": null,
-      "available_dates": [],
-      "status": "accumulating"
-    },
-    {
-      "language": "Rocq Prover",
-      "slug": "rocq-prover-cae316b7",
+      "language": "Raku",
+      "slug": "raku-a4089196",
       "candidate_count": 1,
       "latest_date": null,
       "available_dates": [],
@@ -654,9 +692,10 @@
     {
       "language": "Ruby",
       "slug": "ruby-108040ac",
-      "candidate_count": 17,
-      "latest_date": "2026-08-26",
+      "candidate_count": 15,
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -680,9 +719,10 @@
     {
       "language": "Rust",
       "slug": "rust-d9aa89fd",
-      "candidate_count": 166,
-      "latest_date": "2026-08-26",
+      "candidate_count": 153,
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -706,7 +746,15 @@
     {
       "language": "Scala",
       "slug": "scala-8fcd1836",
-      "candidate_count": 3,
+      "candidate_count": 2,
+      "latest_date": null,
+      "available_dates": [],
+      "status": "accumulating"
+    },
+    {
+      "language": "Scheme",
+      "slug": "scheme-dca65687",
+      "candidate_count": 1,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -722,9 +770,10 @@
     {
       "language": "Shell",
       "slug": "shell-a7332854",
-      "candidate_count": 43,
-      "latest_date": "2026-08-26",
+      "candidate_count": 38,
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -744,6 +793,14 @@
         "2026-07-16"
       ],
       "status": "ready"
+    },
+    {
+      "language": "Smalltalk",
+      "slug": "smalltalk-94a41811",
+      "candidate_count": 1,
+      "latest_date": null,
+      "available_dates": [],
+      "status": "accumulating"
     },
     {
       "language": "Solidity",
@@ -780,9 +837,10 @@
     {
       "language": "Swift",
       "slug": "swift-ae8ed274",
-      "candidate_count": 32,
-      "latest_date": "2026-08-26",
+      "candidate_count": 31,
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -804,8 +862,8 @@
       "status": "ready"
     },
     {
-      "language": "Tcl",
-      "slug": "tcl-c4ca517f",
+      "language": "Tree-sitter Query",
+      "slug": "tree-sitter-query-abb08578",
       "candidate_count": 1,
       "latest_date": null,
       "available_dates": [],
@@ -814,9 +872,10 @@
     {
       "language": "TypeScript",
       "slug": "typescript-ed0504f7",
-      "candidate_count": 413,
-      "latest_date": "2026-08-26",
+      "candidate_count": 419,
+      "latest_date": "2026-09-06",
       "available_dates": [
+        "2026-09-06",
         "2026-08-26",
         "2026-08-25",
         "2026-08-24",
@@ -846,9 +905,17 @@
       "status": "accumulating"
     },
     {
+      "language": "Verilog",
+      "slug": "verilog-25d9678d",
+      "candidate_count": 1,
+      "latest_date": null,
+      "available_dates": [],
+      "status": "accumulating"
+    },
+    {
       "language": "Vim Script",
       "slug": "vim-script-5835fcb0",
-      "candidate_count": 2,
+      "candidate_count": 3,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -856,7 +923,15 @@
     {
       "language": "Vue",
       "slug": "vue-b111a2a2",
-      "candidate_count": 7,
+      "candidate_count": 4,
+      "latest_date": null,
+      "available_dates": [],
+      "status": "accumulating"
+    },
+    {
+      "language": "YAML",
+      "slug": "yaml-9b6e8abe",
+      "candidate_count": 1,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"
@@ -864,7 +939,7 @@
     {
       "language": "YARA",
       "slug": "yara-ac4e1b16",
-      "candidate_count": 1,
+      "candidate_count": 2,
       "latest_date": null,
       "available_dates": [],
       "status": "accumulating"

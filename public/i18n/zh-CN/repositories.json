@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-08-31T07:59:25.872867Z",
+  "generated_at": "2026-09-06T18:27:33.441239Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3971,
-    "localized_count": 3849,
-    "pending_count": 122,
-    "failed_count": 122,
-    "coverage_ratio": 0.969277
+    "localized_count": 3826,
+    "pending_count": 145,
+    "failed_count": 145,
+    "coverage_ratio": 0.963485
   },
   "repositories": [
     {
@@ -2683,15 +2683,6 @@
       "display_name_zh": "spark｜大数据分析引擎",
       "description_zh": "spark 是一个统一的大规模数据处理分析引擎。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 17420614,
-      "source_full_name": "seleniumbase/SeleniumBase",
-      "source_hash": "11bb9ae9fe3d0b0ca103e7e22e3f2e150e810aa7aad8d0a8f131f1ec22a9b660",
-      "display_name_zh": "SeleniumBase｜网页自动化测试APIs",
-      "description_zh": "提供网页自动化、测试及绕过机器人检测的APIs",
-      "generated_at": "2026-07-20T18:28:18.246753Z",
       "provenance": "github_models"
     },
     {
@@ -5503,15 +5494,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 54614238,
-      "source_full_name": "stdlib-js/stdlib",
-      "source_hash": "02212dcb5dc689b3d8ff185887cd340c3964034b01b924214d0620fe149cc9cf",
-      "display_name_zh": "stdlib｜JavaScript/TypeScript 数值库",
-      "description_zh": "JavaScript 和 TypeScript 的基础数值计算库",
-      "generated_at": "2026-07-17T00:57:38.909807Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 54994103,
       "source_full_name": "floating-ui/floating-ui",
       "source_hash": "92bbddd9759004a52755edf5250368a77d1451dcfc440170820fdbc2a2b130e1",
@@ -6556,15 +6538,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 75785240,
-      "source_full_name": "authelia/authelia",
-      "source_hash": "2975ac194c93fb5adc581031e735f532b1e04f57db7fb7210863b8c693835f30",
-      "display_name_zh": "authelia｜单点登录多因素认证门户",
-      "description_zh": "authelia 是面向 Web 应用的单点登录多因素认证门户，已获得 OpenID 认证。",
-      "generated_at": "2026-07-20T18:28:18.246753Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 75821432,
       "source_full_name": "llvm/llvm-project",
       "source_hash": "3b3cff059f19b6ee08940f7f9fc0302a0517931f61a21b25ecb2c02a32344617",
@@ -7156,15 +7129,6 @@
       "display_name_zh": "puppeteer｜浏览器自动化JavaScript API",
       "description_zh": "用于Chrome和Firefox的JavaScript API",
       "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 91253698,
-      "source_full_name": "ccxt/ccxt",
-      "source_hash": "ac3eca10c17c2d1d2f88c7113f8cd8c322c2068d36223aa54685faf0a4ec59cc",
-      "display_name_zh": "ccxt｜统一交易 API（支持 100+ 交易所，含 PHP）",
-      "description_zh": "ccxt 提供统一的交易 API，支持超过 100 个加密货币交易所和预测市场，支持多种编程语言包括 PHP。",
-      "generated_at": "2026-07-20T18:28:18.246753Z",
       "provenance": "github_models"
     },
     {
@@ -12595,15 +12559,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 307489284,
-      "source_full_name": "remix-run/remix",
-      "source_hash": "4c233d829c1ff958809d90c54aefee71d4ea9f51716aa6377dce7fae9a669b28",
-      "display_name_zh": "remix｜现代Web开发框架",
-      "description_zh": "基于Web基础构建现代且稳定的用户体验，助力更优网站开发。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 307843105,
       "source_full_name": "Raphire/Win11Debloat",
       "source_hash": "8e859d6a22ec471bb01846a3ef18f8832ee6329447886150cf1389cea79f9beb",
@@ -13365,15 +13320,6 @@
       "source_hash": "f576918b8f8931af6fe419741a0809a9f7ffced5ac3879579b3952ec02be20c5",
       "display_name_zh": "emqx-operator｜EMQX的Kubernetes Operator",
       "description_zh": "用于EMQX的Kubernetes Operator。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 352933140,
-      "source_full_name": "ToolJet/ToolJet",
-      "source_hash": "c7600f4ae347c86af45cb2152552ad91155bb4c34c611c626d0c861aad0ec931",
-      "display_name_zh": "ToolJet｜AI企业应用生成平台",
-      "description_zh": "ToolJet是开源的企业级应用生成平台，支持内部工具、仪表盘、业务应用、工作流及AI代理的构建。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
@@ -16546,15 +16492,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 596377730,
-      "source_full_name": "openobserve/openobserve",
-      "source_hash": "60db8c87da217515b8529d1d7d86d9cdf33ca766ad9a62c734d405287950cf27",
-      "display_name_zh": "openobserve｜支持 LLM 的开源可观测平台",
-      "description_zh": "openobserve 是一个开源的可观测性平台，支持日志、指标、追踪、前端监控、数据管道和大语言模型（LLM）监控，性能优异且部署简便。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 598342280,
       "source_full_name": "langchain-ai/langchainjs",
       "source_hash": "f8ea547c8f624eb3c1a31812d9526bfcb5bc65086d83ae530590c236ad1c2314",
@@ -16597,15 +16534,6 @@
       "display_name_zh": "vllm｜高效LLMs推理与服务引擎",
       "description_zh": "vllm，高吞吐量且内存高效的LLMs推理与服务引擎。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 599735720,
-      "source_full_name": "MHSanaei/3x-ui",
-      "source_hash": "27d4edaebfe88c015f491906e737838b08266547f1d80cd52cfb7e907468439e",
-      "display_name_zh": "3x-ui｜支持 IP、HTTP 和 MTProto 的多协议 Xray 面板",
-      "description_zh": "支持多协议、多用户的 Xray 面板，具备过期天数、流量和 IP 限制，支持 Vmess、Vless、Trojan、ShadowSocks、Wireguard、Hysteria、Tunnel、Mixed、HTTP、Tun、MTProto 等协议。",
-      "generated_at": "2026-07-18T00:14:53.937273Z",
       "provenance": "github_models"
     },
     {
@@ -17707,15 +17635,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 656099147,
-      "source_full_name": "mem0ai/mem0",
-      "source_hash": "29231e6c3e74141e98ad5b75cc88633e1b5f7be85614b77a67c0e335ec9d8e29",
-      "display_name_zh": "mem0｜AI通用内存层",
-      "description_zh": "适用于AI代理的通用内存层",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 657147811,
       "source_full_name": "autox-community/autox-super-kit",
       "source_hash": "7876aa0a930fb17af83e55a4d582e3aa2cc957dc8e05f7e38dc1f1b4d98d9ad8",
@@ -17893,15 +17812,6 @@
       "display_name_zh": "biu｜Bilibili音乐播放器",
       "description_zh": "Bilibili音乐播放器",
       "generated_at": "2026-07-19T07:03:48.394229Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 666299222,
-      "source_full_name": "openinterpreter/openinterpreter",
-      "source_hash": "528c620f89f92b712b72f09cc759ee7b408a7df7e7d2328b3d45c4befa5112e8",
-      "display_name_zh": "openinterpreter｜支持 K3 的编程智能代理",
-      "description_zh": "openinterpreter 是支持 Kimi K3 等开源模型的编程智能代理。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
     },
     {
@@ -20317,15 +20227,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 814684486,
-      "source_full_name": "longbridge/gpui-component",
-      "source_hash": "78e358b2dd74dd9d6d7d16a048d64015941bf2ceedbc3593e381bfd4506ca235",
-      "display_name_zh": "gpui-component｜GPUI GUI组件库",
-      "description_zh": "基于GPUI的Rust GUI组件库，用于构建跨平台桌面应用。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 815588503,
       "source_full_name": "PerformanC/ReZygisk",
       "source_hash": "1025624906ed26e69fc9d675381ebdbccb8289b8da70553d0254a6f1c5031bfd",
@@ -20704,15 +20605,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 838849799,
-      "source_full_name": "amzxyz/rime-wanxiang",
-      "source_hash": "464f13ed4cdafc89ce865558b402d976080cc63909a0fc4ffabf869a4bee1d55",
-      "display_name_zh": "rime-wanxiang｜万象拼音输入法（QQ群：11033572 / 11631066）",
-      "description_zh": "「万象拼音」是一款基于优质数据的拼音输入法，QQ群：11033572 / 11631066。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 839037098,
       "source_full_name": "mastra-ai/mastra",
       "source_hash": "4784483986c7221cde787cf77e8b2a87f825e5d25e3e3745d7dbe2825b662d9d",
@@ -21042,15 +20934,6 @@
       "source_hash": "e0fbb27aadaa5daa9af483a52faa92519650c31f99173b4d9347824806d32a8e",
       "display_name_zh": "librepods｜AirPods生态解放工具",
       "description_zh": "librepods旨在让AirPods摆脱苹果生态系统的限制。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 863835427,
-      "source_full_name": "fosrl/pangolin",
-      "source_hash": "5a624069a50cefaa7f1f88c4afc7e540f55750f9b165084849b35c37bd69be9f",
-      "display_name_zh": "pangolin｜身份感知VPN工具",
-      "description_zh": "基于WireGuard®的身份感知VPN和反向代理隧道工具。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
     },
@@ -23305,15 +23188,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 979560403,
-      "source_full_name": "superplanehq/superplane",
-      "source_hash": "5b6bc7c6580787a2434263f7a496ec4ecceda7da5f2972819d5bc054245dbf56",
-      "display_name_zh": "superplane｜智能工程控制平台",
-      "description_zh": "superplane 是一个开源的智能工程控制平台。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 980205160,
       "source_full_name": "enescingoz/awesome-n8n-templates",
       "source_hash": "b486cf2f105e503fe4efcc71448e3f077fcd236df07aeb1a22ca1f192b99b53f",
@@ -25150,15 +25024,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1086419061,
-      "source_full_name": "vectorize-io/hindsight",
-      "source_hash": "fc0aa343c1deab9670aa167f2dfc08d0526c1f0d49916fc6e74db80c7aa8649b",
-      "display_name_zh": "hindsight｜智能代理记忆",
-      "description_zh": "智能代理记忆系统。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1086502772,
       "source_full_name": "cloudflare/kumo",
       "source_hash": "21ac0364fbf0c5725511b5fe433c74efb395563c1dfd40934705c81d1b279278",
@@ -25483,15 +25348,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1103012935,
-      "source_full_name": "openclaw/openclaw",
-      "source_hash": "3695e83622f9f57672f45259d5e6dd35b9c0666825aad8e6cc0960cae411372a",
-      "display_name_zh": "openclaw｜个人 AI 助手（支持多 OS）",
-      "description_zh": "openclaw 是一款支持多操作系统和平台的个人 AI 助手。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1103475517,
       "source_full_name": "jindds/BT25049-DECODE",
       "source_hash": "e00e32e66016bb0f8695b844894e89bb0f52776cc1064839be3a9c08ffa07b81",
@@ -25573,15 +25429,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1106663535,
-      "source_full_name": "Anionex/banana-slides",
-      "source_hash": "8f0f3286b79b3b204d07dcb4c170a0800ac5d0f75947d8719d0945c7152a64f5",
-      "display_name_zh": "banana-slides｜AI PPT 生成器基于 nano banana pro🍌的应用",
-      "description_zh": "基于 nano banana pro🍌 的原生 AI PPT 生成应用，支持上传任意模板图片和素材，自动解析并通过一句话、大纲或页面描述生成 PPT，支持口头修改和一键导出可编辑 PPT。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1107097669,
       "source_full_name": "kachetong1314/ninja",
       "source_hash": "578cd7b28e8c442f8425e942edc1655d39b9ab87e27c536ee1876e8b00880d62",
@@ -25606,15 +25453,6 @@
       "display_name_zh": "SawyerHood｜dev-browser 浏览器技能",
       "description_zh": "为Claude智能体提供使用网页浏览器能力的技能。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1108837393,
-      "source_full_name": "code-yeongyu/oh-my-openagent",
-      "source_hash": "5b591bc82ccddd46f929cb2f32af669027d42942d5f8a9318650c8123a037ef5",
-      "display_name_zh": "oh-my-openagent｜复杂代码库编码代理",
-      "description_zh": "oh-my-openagent 是面向复杂代码库的编码代理工具，支持 Codex 和 OpenCode。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
     },
     {
@@ -26464,15 +26302,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1137078255,
-      "source_full_name": "colbymchenry/codegraph",
-      "source_hash": "83c384483458934722bd84abcad87473e36eec2b300742d9b3b4dac985b1bb83",
-      "display_name_zh": "codegraph｜100% 本地预索引代码知识图谱",
-      "description_zh": "codegraph 是预索引的代码知识图谱，自动同步代码变更，支持多种代码助手，100% 本地运行，减少令牌和工具调用。",
-      "generated_at": "2026-07-18T00:14:53.937273Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1137837751,
       "source_full_name": "66HEX/frame",
       "source_hash": "3dfdc06c09e72d0cb12dbb756e2172465154d0538b741b01e34a110ee900e0b6",
@@ -27301,15 +27130,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1161163182,
-      "source_full_name": "tinyhumansai/openhuman",
-      "source_hash": "220f9178fa758c4bfc3b38133ac9fc09e24ffe3f8d6f3c8d6230da0fd0bd8f59",
-      "display_name_zh": "openhuman｜个人AI超级智能",
-      "description_zh": "个人AI超级智能，构建本地优先的生活记忆，协调代理舰队和工作流，支持深度研究。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1161521332,
       "source_full_name": "0xtresser/OpenCode-Book",
       "source_hash": "070d821f7bc258cec0da68ee9bfb62251cd72f4b4c18cbff12c3ef0bcf40d7c7",
@@ -27568,15 +27388,6 @@
       "display_name_zh": "Wondereye｜Even Reality G2智能眼镜地标探索应用",
       "description_zh": "针对Even Reality G2智能眼镜的地标探索应用。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1168900408,
-      "source_full_name": "Gentleman-Programming/gentle-ai",
-      "source_hash": "90d08596a7558abd5c5bfe00bfc48dd2178beca57251cdd8cc8805d41b83d4b3",
-      "display_name_zh": "gentle-ai｜AI相关工具",
-      "description_zh": null,
-      "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
     },
     {
@@ -32017,15 +31828,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1283907968,
-      "source_full_name": "oomol-lab/open-connector",
-      "source_hash": "f5e37d8cb98f346c93be9bdaa6520e5cc2fdb892a155e4efcd55b130e6b292b0",
-      "display_name_zh": "open-connector｜连接 1000+ SaaS 的开源认证网关",
-      "description_zh": "开源认证网关，通过 SDK、CLI、MCP、HTTP 和 OpenAPI 连接 1000+ SaaS 提供商与 AI 代理。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1284051274,
       "source_full_name": "kennss/SpectArk",
       "source_hash": "e6e8ae5160dfba5e2de8ed8d72f2bfb6c67639a263591b41c0d299180c406cc9",
@@ -32266,15 +32068,6 @@
       "display_name_zh": "jacobian-lens｜论文配套代码",
       "description_zh": "全球工作空间可解释性论文的配套代码。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1287845516,
-      "source_full_name": "xuchonglang/investing-for-beginners",
-      "source_hash": "59ac739e0c37b8a40085b9e0cbfc2a76cfedeae92477498b2b1e6ce954e099d8",
-      "display_name_zh": "investing-for-beginners｜投资入门知识框架",
-      "description_zh": "investing-for-beginners是小隐寺投资百科的公开索引，涵盖美股、期权和加密货币知识框架。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
     },
     {

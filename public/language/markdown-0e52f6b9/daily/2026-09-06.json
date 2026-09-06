@@ -1,0 +1,155 @@
+{
+  "schema_version": "1.4.0",
+  "date": "2026-09-06",
+  "timezone": "Asia/Shanghai",
+  "window_start": "2026-09-05T18:22:50Z",
+  "window_end": "2026-09-06T18:23:28Z",
+  "window_quality": {
+    "duration_minutes": 1440,
+    "valid_for_ranking": true,
+    "reason": "valid"
+  },
+  "candidate_count": 2000,
+  "collection": {
+    "search_result_counts": {
+      "recent_created": 1000,
+      "recent_active": 500,
+      "established_active": 500
+    },
+    "unique_discovered_count": 1918,
+    "candidate_added_count": 960,
+    "candidate_removed_count": 959,
+    "api_request_count": 743,
+    "api_retry_count": 0,
+    "snapshot_expected_count": 2000,
+    "snapshot_complete_count": 2000,
+    "snapshot_completeness": 1.0
+  },
+  "language": "Markdown",
+  "slug": "markdown-0e52f6b9",
+  "eligible_count": 5,
+  "ranking_limit": 500,
+  "entry_count": 5,
+  "entries": [
+    {
+      "repository_id": 15019962,
+      "full_name": "tldr-pages/tldr",
+      "description": "Collaborative cheatsheets for console commands 📚.",
+      "language": "Markdown",
+      "stars_total": 63604,
+      "created_at": "2013-12-08T07:34:43Z",
+      "pushed_at": "2026-09-06T18:06:20Z",
+      "stars_gained": 11,
+      "html_url": "https://github.com/tldr-pages/tldr",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/7366472?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        11
+      ],
+      "rank": 1,
+      "rank_change": null
+    },
+    {
+      "repository_id": 295774370,
+      "full_name": "mdn/content",
+      "description": "The official source for MDN Web Docs content. Home to over 14,000 pages of documentation about HTML, CSS, JS, HTTP, Web APIs, and more.",
+      "language": "Markdown",
+      "stars_total": 10973,
+      "created_at": "2020-09-15T15:42:29Z",
+      "pushed_at": "2026-09-06T16:43:45Z",
+      "stars_gained": 3,
+      "html_url": "https://github.com/mdn/content",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/7565578?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        3
+      ],
+      "rank": 2,
+      "rank_change": null
+    },
+    {
+      "repository_id": 45497910,
+      "full_name": "swiftlang/swift-evolution",
+      "description": "This maintains proposals for changes and user-visible enhancements to the Swift Programming Language.",
+      "language": "Markdown",
+      "stars_total": 15870,
+      "created_at": "2015-11-03T21:49:37Z",
+      "pushed_at": "2026-09-04T01:15:07Z",
+      "stars_gained": 1,
+      "html_url": "https://github.com/swiftlang/swift-evolution",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/42816656?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1
+      ],
+      "rank": 3,
+      "rank_change": null
+    },
+    {
+      "repository_id": 286080143,
+      "full_name": "upptime/upptime",
+      "description": "⬆️ GitHub Actions uptime monitor & status page by @AnandChowdhary",
+      "language": "Markdown",
+      "stars_total": 17152,
+      "created_at": "2020-08-08T16:34:41Z",
+      "pushed_at": "2026-09-06T03:52:30Z",
+      "stars_gained": 0,
+      "html_url": "https://github.com/upptime/upptime",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/72692977?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0
+      ],
+      "rank": 4,
+      "rank_change": null
+    },
+    {
+      "repository_id": 72685026,
+      "full_name": "MicrosoftDocs/azure-docs",
+      "description": "Open source documentation of Microsoft Azure",
+      "language": "Markdown",
+      "stars_total": 10969,
+      "created_at": "2016-11-02T22:00:37Z",
+      "pushed_at": "2026-09-05T05:09:11Z",
+      "stars_gained": -1,
+      "html_url": "https://github.com/MicrosoftDocs/azure-docs",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/22479449?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        -1
+      ],
+      "rank": 5,
+      "rank_change": null
+    }
+  ]
+}
