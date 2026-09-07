@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-06T18:27:33.441239Z",
+  "generated_at": "2026-09-07T06:53:47.994922Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3971,
-    "localized_count": 3826,
-    "pending_count": 145,
-    "failed_count": 145,
-    "coverage_ratio": 0.963485
+    "localized_count": 3821,
+    "pending_count": 150,
+    "failed_count": 150,
+    "coverage_ratio": 0.962226
   },
   "repositories": [
     {
@@ -1936,15 +1936,6 @@
       "display_name_zh": "openvpn-install｜OpenVPN 安装脚本",
       "description_zh": "OpenVPN 的安装脚本，支持 Ubuntu、Debian、AlmaLinux、Rocky Linux、CentOS 和 Fedora。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 10187082,
-      "source_full_name": "Unitech/pm2",
-      "source_hash": "284bec6abb07942a0a1e701513744f649677cb58dfd7f3d680dd8544a902dd90",
-      "display_name_zh": "pm2｜Node.js/Bun 进程管理器",
-      "description_zh": "Node.js/Bun 生产环境进程管理器，内置负载均衡功能。",
-      "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
     },
     {
@@ -5494,15 +5485,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 54994103,
-      "source_full_name": "floating-ui/floating-ui",
-      "source_hash": "92bbddd9759004a52755edf5250368a77d1451dcfc440170820fdbc2a2b130e1",
-      "display_name_zh": "floating-ui｜浮动元素定位库",
-      "description_zh": "JavaScript 库，用于定位浮动元素并创建交互效果。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 55076063,
       "source_full_name": "Hack-with-Github/Awesome-Hacking",
       "source_hash": "1dc83685e916359aa998712510182a5462f7e75f8edebba1ca50ae2ae8aeedc3",
@@ -7921,15 +7903,6 @@
       "display_name_zh": "Algorithms-HackerRank｜算法题解",
       "description_zh": "HackerRank 平台算法题目解决方案",
       "generated_at": "2026-07-20T04:28:39.695110Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 114466145,
-      "source_full_name": "yewstack/yew",
-      "source_hash": "4fa1a8e55c0780edb38e4f92502b14747dd121ee950acf45b5399f429c8afcfc",
-      "display_name_zh": "yew｜Rust/Wasm Web框架",
-      "description_zh": "基于Rust和Wasm的框架，用于创建可靠高效的Web应用",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
     },
     {
@@ -16771,15 +16744,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 612344730,
-      "source_full_name": "ChatGPTNextWeb/NextChat",
-      "source_hash": "b1985aedc44c16772344894f47da1bd85a56f9d8924862ebce9ffd67f3e45f70",
-      "display_name_zh": "NextChat｜轻量 AI 助手",
-      "description_zh": "NextChat 是轻量快速的 AI 助手，支持 Web、iOS、MacOS、Android、Linux 和 Windows 平台。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 612354784,
       "source_full_name": "ggml-org/llama.cpp",
       "source_hash": "c8a97945031e151d0ab94fed2ac9acb99a15a7615325f64d56325bfb6a962e3b",
@@ -17263,15 +17227,6 @@
       "display_name_zh": "opik｜LLM 与 RAG 监控工具",
       "description_zh": "opik 提供调试、评估和监控 LLM 应用、RAG 系统及代理工作流的工具，包含全面追踪、自动评估和生产级仪表盘。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 640079149,
-      "source_full_name": "QuivrHQ/quivr",
-      "source_hash": "09f758e196d7873d9d3cc8854b3134664a859662dac90ec42076c346c866f52e",
-      "display_name_zh": "quivr｜支持GPT4和PGVector的RAG集成框架",
-      "description_zh": "quivr 是一个面向应用集成的 RAG 框架，支持 GPT4、Groq、Llama 等 LLM，兼容 PGVector、Faiss 等向量存储。",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
     },
     {
