@@ -2,7 +2,7 @@
   "schema_version": "1.4.0",
   "status": "ready",
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-09-06T18:23:28Z",
+  "updated_at": "2026-09-12T18:28:07Z",
   "latest_date": "2026-09-06",
   "available_dates": [
     "2026-09-06",
@@ -24,7 +24,7 @@
     "2026-07-20",
     "2026-07-16"
   ],
-  "candidate_count": 2000,
+  "candidate_count": 1998,
   "methodology_version": "candidate-pool-snapshot-v1",
   "freshness_threshold_hours": 36,
   "ranking_limit": 500,
@@ -35,33 +35,33 @@
       "recent_active": 500,
       "established_active": 500
     },
-    "unique_discovered_count": 1918,
-    "candidate_added_count": 960,
-    "candidate_removed_count": 959,
-    "api_request_count": 743,
+    "unique_discovered_count": 1920,
+    "candidate_added_count": 962,
+    "candidate_removed_count": 964,
+    "api_request_count": 740,
     "api_retry_count": 0,
-    "snapshot_expected_count": 2000,
-    "snapshot_complete_count": 2000,
+    "snapshot_expected_count": 1998,
+    "snapshot_complete_count": 1998,
     "snapshot_completeness": 1.0
   },
   "sampling": {
     "target_local_time": "00:20",
     "valid_window_start": "00:00",
     "valid_window_end": "03:00",
-    "latest_snapshot_at": "2026-09-06T18:23:28Z",
+    "latest_snapshot_at": "2026-09-12T18:28:07Z",
     "latest_snapshot_valid": true,
     "latest_snapshot_reason": "within_window",
-    "latest_valid_snapshot_at": "2026-09-06T18:23:28Z",
-    "consecutive_valid_snapshots": 2,
-    "next_scheduled_at": "2026-09-08T00:20:00+08:00",
+    "latest_valid_snapshot_at": "2026-09-12T18:28:07Z",
+    "consecutive_valid_snapshots": 1,
+    "next_scheduled_at": "2026-09-14T00:20:00+08:00",
     "expected_first_ranking_at": null,
     "period_progress": {
       "7d": {
-        "completed": 1,
+        "completed": 0,
         "required": 7
       },
       "30d": {
-        "completed": 1,
+        "completed": 0,
         "required": 30
       }
     }
