@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "taxonomy_version": "1.0.0",
-  "generated_at": "2026-09-07T06:53:50.006187Z",
+  "generated_at": "2026-09-13T18:54:07.479512Z",
   "repositories": [
     {
       "repository_id": 3314,
@@ -2856,21 +2856,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T04:20:56.637414Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 9852918,
-      "source_full_name": "TryGhost/Ghost",
-      "source_hash": "284431664ff4e905fb55463f2a97d6b8088c2b9a77d31a6e9144bd8aae80072d",
-      "primary_category": "web-app-development",
-      "project_type": "platform-service",
-      "use_cases": [
-        "web-frontend",
-        "content-generation",
-        "team-collaboration"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-17T01:04:06.946438Z",
       "provenance": "github_models"
     },
     {
@@ -8118,19 +8103,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 53548867,
-      "source_full_name": "dbt-labs/dbt-core",
-      "source_hash": "c9c6b5bf6ea94974aa7d836377c3b35c212370786bbdf91c49f27ea2fb772840",
-      "primary_category": "data-infrastructure",
-      "project_type": "library-framework",
-      "use_cases": [
-        "data-analysis-visualization"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-20T18:30:55.656026Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 53631945,
       "source_full_name": "BurntSushi/ripgrep",
       "source_hash": "f2d3ef20297d75900c96ab262592f7c13e3e4e6b6373286614b4b9972539b754",
@@ -9462,20 +9434,6 @@
       "use_cases": [
         "ai-coding",
         "model-training-inference"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-18T05:32:12.135995Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 71995937,
-      "source_full_name": "nuxt/nuxt",
-      "source_hash": "855e1b9e7b488479fa2969d4db69f9b677bd3cdbd49bc04602ba4d443f188c54",
-      "primary_category": "web-app-development",
-      "project_type": "library-framework",
-      "use_cases": [
-        "api-backend",
-        "web-frontend"
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-18T05:32:12.135995Z",
@@ -11264,19 +11222,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T04:20:56.637414Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 104337773,
-      "source_full_name": "1c7/chinese-independent-developer",
-      "source_hash": "ff6dca25fce62ce5bd92b574b256484319b920249e55cf31f8c3dca4f3b3876d",
-      "primary_category": "education-resources",
-      "project_type": "other",
-      "use_cases": [
-        "resource-discovery"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-16T06:51:50.292861Z",
       "provenance": "github_models"
     },
     {
@@ -24260,20 +24205,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 585146387,
-      "source_full_name": "shadcn-ui/ui",
-      "source_hash": "37650f95488ba8d9b5638cc10ee308a534e6800172ee3e640263ddd6c237b552",
-      "primary_category": "creative-media",
-      "project_type": "library-framework",
-      "use_cases": [
-        "web-frontend",
-        "design-ui-ux"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-22T04:12:02.172495Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 585196214,
       "source_full_name": "restatedev/restate",
       "source_hash": "071339899f32e0659924be3bc3b7fd5c8ebc0ea3c5ee5c661383fd90193e860a",
@@ -25877,21 +25808,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-25T03:56:53.240576Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 642497346,
-      "source_full_name": "langfuse/langfuse",
-      "source_hash": "c5874756d5768cc494975746805045dcebc1d8f866fbd35603e46ee087aeced2",
-      "primary_category": "ai-machine-learning",
-      "project_type": "platform-service",
-      "use_cases": [
-        "rag-knowledge",
-        "model-training-inference",
-        "observability"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-17T03:58:39.338555Z",
       "provenance": "github_models"
     },
     {
@@ -28090,20 +28006,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 721767116,
-      "source_full_name": "clash-verge-rev/clash-verge-rev",
-      "source_hash": "061293b0f1949826f32de16443c33bebd9fcada5f6fe2e49773c437e21d8fc6f",
-      "primary_category": "systems-network-hardware",
-      "project_type": "application",
-      "use_cases": [
-        "network-tools",
-        "self-hosting"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-18T00:15:46.311660Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 722152303,
       "source_full_name": "jason5ng32/MyIP",
       "source_hash": "fca2d052057d6e2d2de419f071aed51edafe9327e9adb1bf584ff1345d5d122e",
@@ -28115,20 +28017,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-18T00:15:46.311660Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 722184017,
-      "source_full_name": "assistant-ui/assistant-ui",
-      "source_hash": "1c4ef7ae38a59350f925b4ba3ec82121dfa917efc401cf9095edfd6a78a852c6",
-      "primary_category": "ai-machine-learning",
-      "project_type": "library-framework",
-      "use_cases": [
-        "ai-coding",
-        "web-frontend"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-21T19:37:54.117571Z",
       "provenance": "github_models"
     },
     {
@@ -31697,20 +31585,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-22T04:12:02.172495Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 881458615,
-      "source_full_name": "browser-use/browser-use",
-      "source_hash": "a6549c319976526bd3557c0ce424021d4ab7b067b459c5b63d87790d878e3c1c",
-      "primary_category": "ai-machine-learning",
-      "project_type": "application",
-      "use_cases": [
-        "agents-automation",
-        "web-frontend"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-19T07:06:22.118650Z",
       "provenance": "github_models"
     },
     {
@@ -36173,20 +36047,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1031059905,
-      "source_full_name": "abhigyanpatwari/GitNexus",
-      "source_hash": "37fc1679b79c2d84a12f8fe0076e8363191c01ddf86d207f3d78cc239379e7fb",
-      "primary_category": "ai-machine-learning",
-      "project_type": "application",
-      "use_cases": [
-        "agents-automation",
-        "rag-knowledge"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-17T03:58:39.338555Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1031180012,
       "source_full_name": "YanjieZe/GMR",
       "source_hash": "4f2bb255003e826014162fc10218c2e0c2e878df30d3f99169abb386e909ed06",
@@ -36606,19 +36466,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T01:04:20.264126Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1048065319,
-      "source_full_name": "thedotmack/claude-mem",
-      "source_hash": "9d69f2072360a26d5236f69a0af824ae9f817d7b823e4d75847b76b2dff63339",
-      "primary_category": "ai-machine-learning",
-      "project_type": "library-framework",
-      "use_cases": [
-        "agents-automation"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-17T03:58:39.338555Z",
       "provenance": "github_models"
     },
     {
@@ -37330,20 +37177,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T04:33:26.833539Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1077819522,
-      "source_full_name": "pascalorg/editor",
-      "source_hash": "94638e94c51b5f6ed0b87ac8bdc4da499f77a0818c3b29b993e659b67848a510",
-      "primary_category": "creative-media",
-      "project_type": "application",
-      "use_cases": [
-        "content-generation",
-        "design-ui-ux"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-21T19:37:54.117571Z",
       "provenance": "github_models"
     },
     {
@@ -39484,20 +39317,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-24T04:00:32.535148Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1139883371,
-      "source_full_name": "Xeron2000/openOii",
-      "source_hash": "156ccc1ef64fd8bda2ea156ed91fa232ca6ae704902c438f79cd57c2f61fec72",
-      "primary_category": "creative-media",
-      "project_type": "platform-service",
-      "use_cases": [
-        "content-generation",
-        "team-collaboration"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-22T04:12:02.172495Z",
       "provenance": "github_models"
     },
     {
@@ -45349,19 +45168,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T19:37:54.117571Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1248769131,
-      "source_full_name": "luolangaga/tubatools",
-      "source_hash": "8182a700bbb89a3fcd624187723289281f75767bc57921416b0d034e2532cb00",
-      "primary_category": "developer-tools",
-      "project_type": "application",
-      "use_cases": [
-        "general-tools"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-17T03:58:39.338555Z",
       "provenance": "github_models"
     },
     {

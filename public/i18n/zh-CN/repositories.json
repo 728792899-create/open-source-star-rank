@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-07T06:53:47.994922Z",
+  "generated_at": "2026-09-13T18:54:05.545536Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3971,
-    "localized_count": 3821,
-    "pending_count": 150,
-    "failed_count": 150,
-    "coverage_ratio": 0.962226
+    "localized_count": 3811,
+    "pending_count": 160,
+    "failed_count": 160,
+    "coverage_ratio": 0.959708
   },
   "repositories": [
     {
@@ -5431,15 +5431,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 53548867,
-      "source_full_name": "dbt-labs/dbt-core",
-      "source_hash": "3271e7b329e47343865078d666fe0929e685c985252c0cbf4b2b374b8d1c8e1d",
-      "display_name_zh": "dbt-core｜数据转换框架",
-      "description_zh": "dbt-core 使数据分析师和工程师能够使用类似软件工程师构建应用的实践来转换数据。",
-      "generated_at": "2026-07-20T18:28:18.246753Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 53631945,
       "source_full_name": "BurntSushi/ripgrep",
       "source_hash": "759136a22fb5cbc1c5ba4c483f4dbcc31bf3613b5bf1cd25f999c771fcb3366e",
@@ -6336,15 +6327,6 @@
       "source_hash": "cabfc46146e94d756dbc6f9e27ccb31ebcd437c524a86959358917a7e3ad47d0",
       "display_name_zh": "ray｜AI 计算引擎与 ML 加速库",
       "description_zh": "ray 是一个 AI 计算引擎，包含核心分布式运行时和加速机器学习工作负载的 AI 库。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 71995937,
-      "source_full_name": "nuxt/nuxt",
-      "source_hash": "6aee6d6de9715843f3635faf562b1dd368bf1d4958f50053b8883e298aafabee",
-      "display_name_zh": "nuxt｜全栈 Vue 框架",
-      "description_zh": "nuxt 是一个全栈 Vue 框架。",
       "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
     },
@@ -16213,15 +16195,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 585146387,
-      "source_full_name": "shadcn-ui/ui",
-      "source_hash": "59a358fbadf0ae2af5451d474a018499e91ab3da466289bce27c8d9733a57302",
-      "display_name_zh": "ui｜无障碍组件集与代码分发平台",
-      "description_zh": "设计精美且无障碍的组件集及代码分发平台，支持多种前端框架。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 585196214,
       "source_full_name": "restatedev/restate",
       "source_hash": "5db15b1231d27d517bcffe5f154a894d7f6d4802cbe428bb11aba8727f81ed1c",
@@ -17281,15 +17254,6 @@
       "display_name_zh": "DragGAN｜SIGGRAPH 2023官方图像编辑代码",
       "description_zh": "DragGAN 是 SIGGRAPH 2023 官方发布的图像编辑代码。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 642497346,
-      "source_full_name": "langfuse/langfuse",
-      "source_hash": "0ca2050fb0772dd15ac460ab4ec5283b75d1a4d6cc73314db95f6f3e827a8e21",
-      "display_name_zh": "langfuse｜开源 AI 工程平台",
-      "description_zh": "langfuse 是开源的 AI 工程平台，支持 LLM 评估、监控、指标、提示管理、数据集，集成 OpenTelemetry、LangChain、OpenAI SDK 等，YC W23 项目。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
     },
     {
@@ -18757,15 +18721,6 @@
       "display_name_zh": "MyIP｜IP地址及DNS和MTR测试工具",
       "description_zh": "功能丰富的IP工具箱，支持IP地址和地理位置查询，WebRTC和DNS泄漏测试，IP质量检测，浏览器指纹检测，网站可用性检测，网络速度和延迟测试，MTR测试，Whois查询等。",
       "generated_at": "2026-07-18T00:14:53.937273Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 722184017,
-      "source_full_name": "assistant-ui/assistant-ui",
-      "source_hash": "99df94332e5883acc572d706864b389ea02f66a683e224555e9b7b832984bdd3",
-      "display_name_zh": "assistant-ui｜AI聊天界面库",
-      "description_zh": "基于Typescript和React的AI聊天界面库。",
-      "generated_at": "2026-07-20T05:34:33.694685Z",
       "provenance": "github_models"
     },
     {
@@ -21160,15 +21115,6 @@
       "display_name_zh": "ZeroLaunch-rs｜极速隐私Windows智能启动器",
       "description_zh": "一款极速、隐私优先的 Windows 智能启动器，支持拼音和模糊匹配，容错率高，响应迅速。基于 Rust、Tauri 和 Vue 构建。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 881458615,
-      "source_full_name": "browser-use/browser-use",
-      "source_hash": "b241381f77f73f51c8b159ca0381e44159d491000df3b5688360628c4be84228",
-      "display_name_zh": "browser-use｜AI网站自动化工具",
-      "description_zh": "使网站对AI代理可访问，轻松实现在线任务自动化。",
-      "generated_at": "2026-07-19T07:03:48.394229Z",
       "provenance": "github_models"
     },
     {
@@ -24106,15 +24052,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1031059905,
-      "source_full_name": "abhigyanpatwari/GitNexus",
-      "source_hash": "4850e7d2252fdf09ef4a12a06fc959309a1cf4864c5980f088917c0337324862",
-      "display_name_zh": "GitNexus｜零服务器代码智能引擎",
-      "description_zh": "零服务器代码智能引擎，支持ZIP文件导入和内置Graph RAG代理，便于代码探索。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1031180012,
       "source_full_name": "YanjieZe/GMR",
       "source_hash": "f4721d6b199fa0286ee65362fcc905bf31a001690b61fe7969eb66d4fdadd32d",
@@ -24859,15 +24796,6 @@
       "display_name_zh": "kimi-cli｜CLI 代理工具",
       "description_zh": "kimi-cli 是一款命令行界面代理工具。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1077819522,
-      "source_full_name": "pascalorg/editor",
-      "source_hash": "63401d5cdbb675f5c3585ef4c18ba38fb776d2dda301a72940272f8028a1172e",
-      "display_name_zh": "editor｜三维建筑项目编辑器",
-      "description_zh": "创建和分享三维建筑项目的编辑器。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
     },
     {
@@ -26281,15 +26209,6 @@
       "display_name_zh": "manim_skill｜Manim 3Blue1Brown 风格动画技能",
       "description_zh": "manim_skill 是 Manim 的代理技能集，用于创建 3Blue1Brown 风格动画。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1139883371,
-      "source_full_name": "Xeron2000/openOii",
-      "source_hash": "42e76772fe30ef438424ca44be045dc936c497d6ebf510c3ebddf362465b0cf4",
-      "display_name_zh": "openOii｜基于 LangGraph 的 AI 漫剧生成平台",
-      "description_zh": "基于 LangGraph 的 AI 漫剧生成平台，实现故事想法到多智能体协作再到漫剧成片的流程。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
     },
     {
@@ -30178,15 +30097,6 @@
       "display_name_zh": "Android-TV-Desktop-Toolkit｜Android TV设备管理工具（支持ADB和APKs）",
       "description_zh": "适用于Windows和MacOS的Android TV设备管理工具，支持ADB连接、网络扫描、APK安装、性能调节、屏幕镜像等功能。",
       "generated_at": "2026-07-21T04:09:00.150793Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1248769131,
-      "source_full_name": "luolangaga/tubatools",
-      "source_hash": "4e9eb057786bd04644859720c10a77a497be89bf6a0fe8753de30bbddc156298",
-      "display_name_zh": "tubatools｜winUI3 图吧工具箱",
-      "description_zh": "tubatools 的 winUI3 版本图吧工具箱。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
     },
     {
