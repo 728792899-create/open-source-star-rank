@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-13T18:54:05.545536Z",
+  "generated_at": "2026-09-14T07:27:01.173048Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
-    "eligible_count": 3971,
-    "localized_count": 3811,
-    "pending_count": 160,
-    "failed_count": 160,
-    "coverage_ratio": 0.959708
+    "eligible_count": 3970,
+    "localized_count": 3807,
+    "pending_count": 163,
+    "failed_count": 163,
+    "coverage_ratio": 0.958942
   },
   "repositories": [
     {
@@ -2845,15 +2845,6 @@
       "display_name_zh": "monero｜隐私保护加密货币",
       "description_zh": "Monero：安全、私密且不可追踪的加密货币",
       "generated_at": "2026-07-20T18:28:18.246753Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 19374812,
-      "source_full_name": "telegramdesktop/tdesktop",
-      "source_hash": "0b45c1f1b91dbec042537770245c4f7af8bba8a48e5f0f906ddaad7272e0b17f",
-      "display_name_zh": "tdesktop｜Telegram 桌面端客户端",
-      "description_zh": "Telegram 桌面端消息应用",
-      "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
     },
     {
@@ -5742,15 +5733,6 @@
       "source_hash": "10437571762e08d676ad9d8ca6a0c2d9844deb55aa84d58e92376d4d70b81a06",
       "display_name_zh": "monaco-editor｜浏览器代码编辑器",
       "description_zh": "基于浏览器的代码编辑器。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 60844036,
-      "source_full_name": "shadowsocks/ShadowsocksX-NG",
-      "source_hash": "38b59f547713b56122fa9a8359604f3d045ff370bf185b3686de1e0e9067b4f5",
-      "display_name_zh": "ShadowsocksX-NG｜代理工具",
-      "description_zh": "ShadowsocksX 的下一代版本。",
       "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
     },
@@ -15781,15 +15763,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 560704231,
-      "source_full_name": "run-llama/llama_index",
-      "source_hash": "38eb8cb249115965762949f368ad0e6076aca14f09ade83ad78671fecd6c2875",
-      "display_name_zh": "llama_index｜文档代理与 OCR 平台",
-      "description_zh": "LlamaIndex 是领先的文档代理和 OCR 平台。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 561730219,
       "source_full_name": "krahets/hello-algo",
       "source_hash": "137e73311b20f3fccbe5d109d6ef5271649041f5eeb83ffdb861f01fe2a87441",
@@ -16417,15 +16390,6 @@
       "display_name_zh": "mdc-ng｜MDC 下一代",
       "description_zh": "mdc-ng 是 MDC 的下一代版本。",
       "generated_at": "2026-07-20T05:34:33.694685Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 596115135,
-      "source_full_name": "base/node",
-      "source_hash": "154201a0fa7885ca4dff7a46cbb795fad3d5332af6853cfeaeb6c36ae207c121",
-      "display_name_zh": "node｜Base 节点运行环境",
-      "description_zh": "node 提供运行自建 Base 节点所需的全部组件。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
     {
