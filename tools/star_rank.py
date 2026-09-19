@@ -190,6 +190,11 @@ def require_repository_shape(item: Mapping[str, Any]) -> None:
         raise DataIntegrityError("GitHub 仓库响应中的 id 或 stargazers_count 类型错误")
 
 
+def is_public_repository(item: Mapping[str, Any]) -> bool:
+    """Reject private/internal API results, including seed and tracked lookups."""
+    return item.get("private") is not True and item.get("visibility") in (None, "public")
+
+
 def repository_record(
     item: Mapping[str, Any],
     *,
@@ -199,6 +204,8 @@ def repository_record(
     pinned: bool = False,
 ) -> Dict[str, Any]:
     require_repository_shape(item)
+    if not is_public_repository(item):
+        raise DataIntegrityError("拒绝采集非公开仓库")
     sources = set(existing.get("discovery_sources", []) if existing else [])
     sources.add(source)
     return {
@@ -434,19 +441,19 @@ def discover_candidates(
     start_active = observed_date - dt.timedelta(days=7)
     queries = (
         (
-            f"created:>={start_recent.isoformat()} fork:false archived:false",
+            f"created:>={start_recent.isoformat()} fork:false archived:false is:public",
             "stars",
             10,
             "recent-created",
         ),
         (
-            f"pushed:>={start_active.isoformat()} stars:>=100 fork:false archived:false",
+            f"pushed:>={start_active.isoformat()} stars:>=100 fork:false archived:false is:public",
             "updated",
             5,
             "recent-active",
         ),
         (
-            f"pushed:>={start_active.isoformat()} stars:>=10000 fork:false archived:false",
+            f"pushed:>={start_active.isoformat()} stars:>=10000 fork:false archived:false is:public",
             "updated",
             5,
             "established-active",
@@ -463,6 +470,8 @@ def discover_candidates(
         results = client.search_repositories(query, sort=sort, pages=pages)
         search_result_counts[source.replace("-", "_")] = len(results)
         for item in results:
+            if not is_public_repository(item):
+                continue
             repository_id = int(item["id"])
             prior = discovered.get(repository_id) or existing.get(repository_id)
             discovered[repository_id] = repository_record(
@@ -485,6 +494,7 @@ def merge_and_refresh_candidates(
     max_candidates: int,
 ) -> List[Dict[str, Any]]:
     date_text = observed_date.isoformat()
+    refreshed_ids = set(discovered)
     merged: Dict[int, Dict[str, Any]] = {int(item["repository_id"]): dict(item) for item in previous}
     for repository_id, item in discovered.items():
         prior = merged.get(repository_id)
@@ -502,7 +512,7 @@ def merge_and_refresh_candidates(
         if full_name.lower() in known_pinned_names:
             continue
         payload = client.get_repository(full_name)
-        if payload is None:
+        if payload is None or not is_public_repository(payload):
             continue
         item = repository_record(
             payload,
@@ -511,6 +521,7 @@ def merge_and_refresh_candidates(
             pinned=True,
         )
         merged[int(item["repository_id"])] = item
+        refreshed_ids.add(int(item["repository_id"]))
 
     growth = recent_growth_by_repository(snapshot_dir, before=observed_date)
     selected = select_candidate_pool(
@@ -522,11 +533,11 @@ def merge_and_refresh_candidates(
 
     refreshed: List[Dict[str, Any]] = []
     for candidate in selected:
-        if candidate.get("last_refreshed_date") == date_text:
+        if int(candidate["repository_id"]) in refreshed_ids:
             current = candidate
         else:
             payload = client.get_repository_by_id(int(candidate["repository_id"]))
-            if payload is None:
+            if payload is None or not is_public_repository(payload):
                 continue
             current = repository_record(
                 payload,
@@ -957,13 +968,15 @@ def build_repository_catalog(
     knowledge_repositories: Mapping[str, str],
     updated_at: str,
     additional_ranking: Optional[Mapping[str, Any]] = None,
+    excluded_paths: frozenset[Path] = frozenset(),
 ) -> Dict[str, Any]:
     latest_snapshot_date = max(snapshot_history) if snapshot_history else local_date(parse_timestamp(updated_at))
     final_day = latest_snapshot_date - dt.timedelta(days=1)
     ranking_by_date: Dict[dt.date, Dict[int, int]] = {}
     for offset in range(30):
         day = final_day - dt.timedelta(days=offset)
-        ranking = load_json(public_dir / "daily" / f"{day.isoformat()}.json")
+        path = public_dir / "daily" / f"{day.isoformat()}.json"
+        ranking = None if path in excluded_paths else load_json(path)
         if additional_ranking is not None and additional_ranking.get("date") == day.isoformat():
             ranking = additional_ranking
         ranking_by_date[day] = {
@@ -1027,17 +1040,26 @@ def build_language_index(
     public_dir: Path,
     updated_at: str,
     additional_rankings: Sequence[Mapping[str, Any]] = (),
+    excluded_paths: frozenset[Path] = frozenset(),
 ) -> Dict[str, Any]:
     counts: Dict[str, int] = {}
     for candidate in candidates:
         language = candidate.get("language")
         if isinstance(language, str) and language.strip():
             counts[language] = counts.get(language, 0) + 1
+    # Historical language pages remain public after the last candidate exits.
+    for path in sorted((public_dir / "language").glob("*/daily/????-??-??.json")):
+        if path in excluded_paths:
+            continue
+        payload = load_json(path)
+        language = payload.get("language") if isinstance(payload, dict) else None
+        if isinstance(language, str) and language.strip():
+            counts.setdefault(language, 0)
     languages: List[Dict[str, Any]] = []
     for language in sorted(counts, key=str.casefold):
         slug = language_slug(language)
         daily_dir = public_dir / "language" / slug / "daily"
-        dates = set(path.stem for path in daily_dir.glob("????-??-??.json")) if daily_dir.exists() else set()
+        dates = set(path.stem for path in daily_dir.glob("????-??-??.json") if path not in excluded_paths) if daily_dir.exists() else set()
         dates.update(str(item["date"]) for item in additional_rankings if item.get("slug") == slug)
         sorted_dates = sorted(dates, reverse=True)
         languages.append(
@@ -1070,6 +1092,7 @@ def build_index(
     additional_dates: Sequence[str] = (),
     additional_period_dates: Optional[Mapping[int, Sequence[str]]] = None,
     include_snapshot: Optional[Mapping[str, Any]] = None,
+    excluded_paths: frozenset[Path] = frozenset(),
 ) -> Dict[str, Any]:
     dates = set(additional_dates)
     daily_dir = public_dir / "daily"
@@ -1079,14 +1102,15 @@ def build_index(
                 dt.date.fromisoformat(path.stem)
             except ValueError:
                 continue
-            dates.add(path.stem)
+            if path not in excluded_paths:
+                dates.add(path.stem)
     sorted_dates = sorted(dates, reverse=True)
     history = load_snapshot_history(snapshot_dir, include=include_snapshot)
     ready = bool(sorted_dates)
     periods: Dict[str, Any] = {}
     for days in PERIOD_DAYS:
         period_dir = public_dir / "period" / f"{days}d"
-        found_period_dates = set(path.stem for path in period_dir.glob("????-??-??.json")) if period_dir.exists() else set()
+        found_period_dates = set(path.stem for path in period_dir.glob("????-??-??.json") if path not in excluded_paths) if period_dir.exists() else set()
         found_period_dates.update((additional_period_dates or {}).get(days, ()))
         period_dates = sorted(found_period_dates, reverse=True)
         periods[f"{days}d"] = {
@@ -1153,48 +1177,34 @@ def run_update(
     # external analysis material.
     knowledge_repositories: Dict[str, str] = {}
 
+    pending_path = data_dir / "state" / "pending-update.json"
+    pending = load_json(pending_path)
+    if pending is not None:
+        pending_date = dt.date.fromisoformat(pending["snapshot"]["snapshot_date"])
+        if pending_date > snapshot_date:
+            raise DataIntegrityError("存在较新日期的待完成发布，拒绝回写旧日期")
+        recovered = publish_snapshot(
+            data_dir=data_dir, snapshot=pending["snapshot"], candidates=pending["candidates"],
+            dry_run=dry_run, status="reused",
+        )
+        if pending_date == snapshot_date and not replace_snapshot:
+            return recovered
+        if dry_run:
+            raise DataIntegrityError("请先恢复待完成发布，再预览新的采集")
+
     existing_snapshot = load_json(snapshot_path)
     if existing_snapshot is not None and not replace_snapshot:
-        state = load_json(state_path, {"candidates": []})
-        candidates = state.get("candidates", []) if isinstance(state, dict) else []
-        if not isinstance(candidates, list):
-            raise DataIntegrityError("候选池状态文件中的 candidates 必须是数组")
-        history = load_snapshot_history(snapshot_dir)
-        index = build_index(
-            public_dir,
-            snapshot_dir=snapshot_dir,
-            candidate_count=int(existing_snapshot["candidate_count"]),
-            updated_at=existing_snapshot["captured_at"],
-            latest_collection=existing_snapshot.get("collection"),
+        state = load_json(state_path, {})
+        candidates = state.get("candidates", [])
+        if state.get("updated_at") != existing_snapshot.get("captured_at") or {
+            str(item["repository_id"]): {"full_name": item["full_name"], "stars_total": item["stars_total"]}
+            for item in candidates
+        } != existing_snapshot.get("repositories"):
+            raise DataIntegrityError("候选状态与已有快照不一致，拒绝使用不同批次的元数据重建")
+        return publish_snapshot(
+            data_dir=data_dir, snapshot=existing_snapshot, candidates=candidates,
+            dry_run=dry_run, status="reused",
         )
-        repositories = build_repository_catalog(
-            candidates=candidates,
-            snapshot_history=history,
-            public_dir=public_dir,
-            knowledge_repositories=knowledge_repositories,
-            updated_at=str(existing_snapshot["captured_at"]),
-        )
-        language_index = build_language_index(
-            candidates=candidates,
-            public_dir=public_dir,
-            updated_at=str(existing_snapshot["captured_at"]),
-        )
-        if not dry_run:
-            validate_payload("index", index)
-            validate_payload("repositories", repositories)
-            validate_payload("language_index", language_index)
-            sync_public_schemas(public_dir)
-            atomic_write_json(public_dir / "index.json", index)
-            atomic_write_json(public_dir / "repositories.json", repositories)
-            atomic_write_json(public_dir / "language" / "index.json", language_index)
-        return {
-            "status": "reused",
-            "snapshot": existing_snapshot,
-            "index": index,
-            "ranking": None,
-            "language_rankings": [],
-            "period_rankings": [],
-        }
 
     if require_valid_capture and not capture_quality(captured_at)["valid_for_ranking"]:
         raise DataIntegrityError("正式快照只能在北京时间 00:00（含）至 03:00（不含）采集")
@@ -1233,6 +1243,22 @@ def run_update(
     }
     snapshot = build_snapshot(candidates, captured_at=captured_at, collection=collection)
 
+    return publish_snapshot(data_dir=data_dir, snapshot=snapshot, candidates=candidates, dry_run=dry_run)
+
+
+def publish_snapshot(
+    *, data_dir: Path, snapshot: Mapping[str, Any], candidates: Sequence[Mapping[str, Any]],
+    dry_run: bool = False, status: str = "updated",
+) -> Dict[str, Any]:
+    """Replay a validated observation into all derived files without querying GitHub."""
+    snapshot_date = dt.date.fromisoformat(snapshot["snapshot_date"])
+    snapshot_dir = data_dir / "snapshots"
+    snapshot_path = snapshot_dir / f"{snapshot_date.isoformat()}.json"
+    state_path = data_dir / "state" / "candidates.json"
+    pending_path = data_dir / "state" / "pending-update.json"
+    public_dir = data_dir / "public"
+    collection = snapshot.get("collection") or empty_collection_metrics(len(candidates))
+    knowledge_repositories: Dict[str, str] = {}
     previous_date = snapshot_date - dt.timedelta(days=1)
     previous_snapshot = load_json(snapshot_dir / f"{previous_date.isoformat()}.json")
     history = load_snapshot_history(snapshot_dir, include=snapshot)
@@ -1304,6 +1330,25 @@ def run_update(
             )
         )
 
+    # Reconcile only this observation's derived paths. Earlier history remains intact.
+    date_text = (snapshot_date - dt.timedelta(days=1)).isoformat()
+    derived: dict[Path, Mapping[str, Any]] = {}
+    if ranking is not None:
+        derived[public_dir / "daily" / f"{date_text}.json"] = ranking
+    for item in language_rankings:
+        derived[public_dir / "language" / item["slug"] / "daily" / f"{date_text}.json"] = item
+    for item in period_rankings:
+        derived[public_dir / "period" / f"{item['period_days']}d" / f"{date_text}.json"] = item
+    for item in exploration_pools:
+        suffix = item["board_kind"].removeprefix("candidate_period_")
+        folder = public_dir / "explore" / "daily" if item["board_kind"] == "candidate_daily" else public_dir / "explore" / "period" / suffix
+        derived[folder / f"{date_text}.json"] = item
+    old_paths = {public_dir / "daily" / f"{date_text}.json", public_dir / "explore" / "daily" / f"{date_text}.json"}
+    old_paths.update((public_dir / "language").glob(f"*/daily/{date_text}.json"))
+    old_paths.update((public_dir / "period").glob(f"*/{date_text}.json"))
+    old_paths.update((public_dir / "explore" / "period").glob(f"*/{date_text}.json"))
+    obsolete = frozenset(old_paths - derived.keys())
+
     updated_at = snapshot["captured_at"]
     state_payload = {
         "schema_version": SCHEMA_VERSION,
@@ -1325,6 +1370,7 @@ def run_update(
         additional_dates=additional_dates,
         additional_period_dates=additional_period_dates,
         include_snapshot=snapshot,
+        excluded_paths=obsolete,
     )
     repositories = build_repository_catalog(
         candidates=candidates,
@@ -1333,12 +1379,14 @@ def run_update(
         knowledge_repositories=knowledge_repositories,
         updated_at=updated_at,
         additional_ranking=ranking,
+        excluded_paths=obsolete,
     )
     language_index = build_language_index(
         candidates=candidates,
         public_dir=public_dir,
         updated_at=updated_at,
         additional_rankings=language_rankings,
+        excluded_paths=obsolete,
     )
     try:
         validate_payload("state", state_payload)
@@ -1357,37 +1405,24 @@ def run_update(
     except SchemaValidationError as exc:
         raise DataIntegrityError(str(exc)) from exc
     if not dry_run:
+        # Durable intent precedes every output; ordinary retries finish this batch first.
+        atomic_write_json(pending_path, {"snapshot": snapshot, "candidates": candidates})
         sync_public_schemas(public_dir)
         atomic_write_json(state_path, state_payload)
         atomic_write_json(snapshot_path, snapshot)
-        if ranking is not None:
-            atomic_write_json(public_dir / "daily" / f"{ranking['date']}.json", ranking)
-        for language_ranking in language_rankings:
-            atomic_write_json(
-                public_dir / "language" / str(language_ranking["slug"]) / "daily" / f"{language_ranking['date']}.json",
-                language_ranking,
-            )
-        for period_ranking in period_rankings:
-            atomic_write_json(
-                public_dir / "period" / f"{period_ranking['period_days']}d" / f"{period_ranking['date']}.json",
-                period_ranking,
-            )
-        for exploration_pool in exploration_pools:
-            board_kind = str(exploration_pool["board_kind"])
-            if board_kind == "candidate_daily":
-                destination = public_dir / "explore" / "daily" / f"{exploration_pool['date']}.json"
-            else:
-                period = board_kind.removeprefix("candidate_period_")
-                destination = public_dir / "explore" / "period" / period / f"{exploration_pool['date']}.json"
-            atomic_write_json(destination, exploration_pool)
+        for destination, payload in derived.items():
+            atomic_write_json(destination, payload)
+        for path in obsolete:
+            path.unlink(missing_ok=True)
         atomic_write_json(public_dir / "repositories.json", repositories)
         atomic_write_json(public_dir / "language" / "index.json", language_index)
         atomic_write_json(public_dir / "index.json", index)
         removed_snapshots = prune_old_snapshots(snapshot_dir, current_date=snapshot_date)
+        pending_path.unlink(missing_ok=True)
     else:
         removed_snapshots = []
     return {
-        "status": "updated",
+        "status": status,
         "snapshot": snapshot,
         "ranking": ranking,
         "language_rankings": language_rankings,

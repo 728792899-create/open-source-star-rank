@@ -10,12 +10,15 @@
 - CORS 只允许 `SITE_ORIGIN`，返回路径必须位于 `SITE_BASE_PATH`。
 - GitHub App 只需 `Metadata: read` 与用户级 `Starring: read and write`；不需要 private key、webhook 或仓库内容权限。
 
+本地开发与 CI 要求 Node.js 22.19 或更高版本。
+
 ## 本地校验
 
 ```bash
 npm ci
 npm run check
 npm test
+npm run preflight
 npx wrangler deploy --dry-run
 ```
 
@@ -33,4 +36,6 @@ npx wrangler deploy
 
 `TOKEN_ENCRYPTION_KEY` 必须是恰好 32 字节的 base64url 字符串。GitHub App Callback URL 是 `https://<worker>/auth/callback`。部署后在 GitHub 仓库 Actions Variables 中设置 `PUBLIC_AUTH_API_URL=https://<worker>`，再重新构建 Pages。
 
-完整配置、免费限额、验收和故障恢复见 [`docs/STAR_RANK_RUNBOOK.md`](../docs/STAR_RANK_RUNBOOK.md#27-github-登录与-star-同步)。
+完整配置、免费限额、验收和故障恢复见 [`docs/STAR_RANK_RUNBOOK.md`](../docs/STAR_RANK_RUNBOOK.md#7-github-登录与-star-同步)。
+
+已有数据库升级时也必须先执行 migrations apply，以安装 `0002_browser_binding.sql`。旧版页面无法兑换新版 handoff，请同时重新构建 Pages；用户重新登录即可。

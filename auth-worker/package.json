@@ -6,12 +6,17 @@
   "scripts": {
     "check": "tsc --noEmit",
     "test": "vitest run",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "preflight": "node scripts/preflight.mjs"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "5.20260721.1",
+    "@cloudflare/workers-types": "5.20260919.1",
     "typescript": "5.9.3",
-    "vitest": "^3.2.4",
-    "wrangler": "4.112.0"
+    "vitest": "5.0.1",
+    "wrangler": "4.135.0",
+    "@types/node": "^22.19.0"
+  },
+  "engines": {
+    "node": ">=22.19.0"
   }
 }

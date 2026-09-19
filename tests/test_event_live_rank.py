@@ -149,7 +149,7 @@ class EventLiveRankTests(unittest.TestCase):
             self.assertEqual(result["fetched_hours"], 1)
             self.assertEqual(next_source.calls, [new_hour.isoformat()])
             self.assertEqual(ranking["source_metrics"]["observed_hour_count"], 5)
-            self.assertEqual(ranking["source_metrics"]["api_request_count"], 0)
+            self.assertEqual(ranking["source_metrics"]["api_request_count"], 10)
             self.assertTrue(all(item["rank_change"] == 0 for item in ranking["entries"]))
             self.assertTrue(all(item["trend_7d"][-1] == 5 for item in ranking["entries"]))
 

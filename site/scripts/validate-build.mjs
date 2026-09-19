@@ -261,7 +261,7 @@ for (const category of classificationIndex.categories) {
   if (JSON.stringify(actualIds) !== JSON.stringify(expectedIds)) {
     throw new Error(`Category board ${category.id} does not match the extended pool top 100`);
   }
-  const expectedRobots = expectedIds.length ? 'index,follow' : 'noindex,follow';
+  const expectedRobots = 'noindex,follow';
   if (!categoryHtml.includes(`name="robots" content="${expectedRobots}"`)) {
     throw new Error(`Category board ${category.id} has an incorrect robots policy`);
   }

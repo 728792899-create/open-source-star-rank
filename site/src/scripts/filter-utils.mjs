@@ -11,3 +11,9 @@ export function matchesEntry(entry, search, language, category = '', projectType
   const matchesScenario = !scenario || (entry.scenarios ?? []).includes(scenario);
   return matchesSearch && matchesLanguage && matchesCategory && matchesProjectType && matchesScenario;
 }
+
+export function clampResultPage(value, total, pageSize) {
+  const page = Number(value);
+  const normalized = Number.isFinite(page) ? Math.max(1, Math.floor(page)) : 1;
+  return Math.min(normalized, Math.max(1, Math.ceil(total / pageSize)));
+}

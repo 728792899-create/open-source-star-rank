@@ -285,7 +285,10 @@ test('publishes independent category boards with renumbered ranks and empty noin
   const gains = (await rows.locator('.stars-cell').allTextContents())
     .map((text) => Number(text.split('+')[1]?.replaceAll(/[^0-9]/g, '') ?? '0'));
   expect(gains).toEqual([...gains].sort((left, right) => right - left));
-  await expect(page.getByRole('link', { name: '返回全部榜单 →' })).toBeVisible();
+  await expect(page.getByRole('link', { name: '查看当前净增榜筛选结果 →' }).first()).toBeVisible();
+  await expect(page.locator('[data-archive-notice]')).toContainText('已停止更新');
+  await expect(page.locator('[data-update-countdown]')).toHaveCount(0);
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,follow');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/category\/ai-machine-learning\/$/);
 
   const noScriptContext = await browser.newContext({ javaScriptEnabled: false });
@@ -369,4 +372,19 @@ test('publishes canonical ranking pages and three feed formats', async ({ page, 
     expect(body.length).toBeGreaterThan(100);
     expect(body).toContain('测试项目 10001');
   }
+});
+
+
+test('clamps out-of-range filter pagination before rendering rows', async ({ page }) => {
+  await page.goto(`${latestPath}?q=repo-0&result_page=999`);
+  await expect(page.locator('[data-ranking-row]')).not.toHaveCount(0);
+  await expect(page).not.toHaveURL(/result_page=999/);
+  await expect(page.locator('[data-empty-state]')).toBeHidden();
+});
+
+test('treats script-closing repository metadata as text', async ({ page }) => {
+  await page.goto('repo/12000/');
+  expect(await page.evaluate(() => globalThis.auditProof)).toBeUndefined();
+  const payload = await page.locator('script[type="application/ld+json"]').textContent();
+  expect(JSON.parse(payload).description).toContain('</script>');
 });

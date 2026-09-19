@@ -295,7 +295,7 @@ const repositories = Array.from({ length: 2_000 }, (_, offset) => {
   return {
     repository_id: repositoryId,
     full_name: fullName,
-    description: offset === 16 ? 'A deliberately long description that exercises wrapping and readable static project history on narrow screens.' : `Fixture repository ${padded}`,
+    description: offset === 1999 ? '</script><script>globalThis.auditProof=1</script>' : offset === 16 ? 'A deliberately long description that exercises wrapping and readable static project history on narrow screens.' : `Fixture repository ${padded}`,
     language: languages[offset % languages.length].name,
     stars_total: 200_000 - offset * 31,
     html_url: `https://github.com/${fullName}`,

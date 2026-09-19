@@ -213,3 +213,7 @@ STAR_RANK_DATA_DIR="$PWD/.e2e-data" npm run build && npm run validate-build
 **数据来自 GitHub 公共 API · 昨日净增榜每日更新 · 可在现有免费额度内运行**
 
 </div>
+
+开发环境要求 Node.js >= 22.19（Astro 7、Vitest 5、Lighthouse 13）与 Python 3.12+。两套 npm 项目均应执行全量 `npm audit --audit-level=moderate`；构建依赖也纳入检查。
+
+本次缺陷修复与升级步骤见 [2026-09-19 修复记录](docs/AUDIT_FIXES_2026-09-19.md)。

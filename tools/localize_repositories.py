@@ -129,7 +129,15 @@ def discover_ranked_repositories(public_dir: Path) -> dict[int, dict[str, Any]]:
                 "description": item.get("description"),
                 "language": item.get("language"),
             }
-            key = (date, priority, path.as_posix())
+            observed_at = payload.get("generated_at") or payload.get("window_end") or date
+            try:
+                timestamp = dt.datetime.fromisoformat(str(observed_at).replace("Z", "+00:00"))
+                if timestamp.tzinfo is None:
+                    timestamp = timestamp.replace(tzinfo=dt.timezone.utc)
+                observed_at = timestamp.astimezone(dt.timezone.utc).isoformat()
+            except ValueError:
+                observed_at = date
+            key = (str(observed_at), priority, path.as_posix())
             previous = sources.get(repository_id)
             if previous is None or key > previous[0]:
                 sources[repository_id] = (key, source)
@@ -141,9 +149,7 @@ def discover_ranked_repositories(public_dir: Path) -> dict[int, dict[str, Any]]:
             payload = read_json(path)
             register(payload, date=str(payload.get("date", path.stem)), priority=priority, path=path)
 
-    # The all-time board is undated; give it the lowest preference so any fresh
-    # dated ranking metadata wins, while repositories that only appear here still
-    # become eligible for Chinese content and classification.
+    # All sources compete on observation time; priority only breaks ties.
     alltime_path = public_dir / "alltime" / "top-1000.json"
     if alltime_path.is_file():
         register(read_json(alltime_path), date="", priority=-1, path=alltime_path)
@@ -158,7 +164,7 @@ def discover_ranked_repositories(public_dir: Path) -> dict[int, dict[str, Any]]:
 
 def latest_public_timestamp(public_dir: Path) -> dt.datetime:
     timestamps: list[dt.datetime] = []
-    for path in (public_dir / "index.json", public_dir / "events" / "index.json"):
+    for path in (public_dir / "index.json", public_dir / "events" / "index.json", public_dir / "alltime" / "index.json"):
         if not path.is_file():
             continue
         value = read_json(path).get("updated_at")

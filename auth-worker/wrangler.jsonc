@@ -4,6 +4,7 @@
   "main": "src/index.ts",
   "compatibility_date": "2026-07-20",
   "workers_dev": true,
+  "triggers": { "crons": ["17 * * * *"] },
   "vars": {
     "SITE_ORIGIN": "https://728792899-create.github.io",
     "SITE_BASE_PATH": "/open-source-star-rank",

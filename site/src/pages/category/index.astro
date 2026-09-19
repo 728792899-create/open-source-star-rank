@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { classificationMap } from '../../lib/classification';
 import {
-  readClassificationIndex, readClassificationRepositories, readEventRankingIndex, readLatestEventCategoryPool,
+  readClassificationIndex, readClassificationRepositories,  readLatestEventCategoryPool,
 } from '../../lib/data';
 import { facetCounts } from '../../lib/facet-rankings';
 import { withBase } from '../../lib/paths';
@@ -10,7 +10,6 @@ import { withBase } from '../../lib/paths';
 const classificationIndex = readClassificationIndex();
 const classifications = classificationMap(readClassificationRepositories());
 const pool = readLatestEventCategoryPool();
-const eventIndex = readEventRankingIndex();
 const counts = pool
   ? facetCounts(pool, classifications, 'category', classificationIndex.categories.map((term) => term.id))
   : new Map<string, number>();
@@ -32,11 +31,12 @@ const structuredData = {
   title="GitHub 开源项目方向分类独立榜｜开源星榜"
   description="按 AI、开发者工具、Web、数据基础设施等方向，浏览各自独立的每日新增 Star 前 100 榜。"
   structuredData={structuredData}
+  robots="noindex,follow"
 >
   <main id="main-content" class="shell language-page category-page">
     <p class="eyebrow">Direction boards · daily gain</p>
     <h1>不只看语言，<br />也看项目解决什么。</h1>
-    <p class="status-lead">每个方向都有自己独立的「每日新增 Star 前 100」榜，名次在方向内重新排序，不再只是全站榜的子集。{eventIndex.status === 'ready' ? '当前口径：全站公开事件新增榜的扩展候选池。' : '扩展候选池发布后自动生效。'}</p>
+    <p class="status-lead" data-archive-notice>历史归档：事件分类榜已停止更新。最后数据日期：{pool?.date ?? '暂无数据'}。以下入口仅用于浏览历史记录；<a href={withBase('/')}>当前净增榜支持语言、方向、形态与场景筛选 →</a></p>
     <p class="status-lead"><a href={withBase('/board/')}>查看全部四个维度的独立榜（语言 · 方向 · 形态 · 场景）→</a> · <a href={withBase('/all-time/')}>全部历史星标 Top 1000 →</a></p>
 
     <section class="language-list" aria-labelledby="category-list-title">
@@ -45,7 +45,7 @@ const structuredData = {
         {classificationIndex.categories.map((term) => <a href={withBase(`/category/${term.id}/`)}>
           <span>{term.label}</span>
           <strong>{counts.get(term.id) ?? 0} 个项目</strong>
-          <small>{(counts.get(term.id) ?? 0) > 0 ? '查看独立榜 →' : '暂无入池项目'}</small>
+          <small>{(counts.get(term.id) ?? 0) > 0 ? '查看历史归档 →' : '暂无历史记录'}</small>
         </a>)}
       </div>
     </section>
