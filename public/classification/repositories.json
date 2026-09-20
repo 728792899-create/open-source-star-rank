@@ -1,22 +1,8 @@
 {
   "schema_version": "1.0.0",
   "taxonomy_version": "1.0.0",
-  "generated_at": "2026-09-20T05:30:08.850087Z",
+  "generated_at": "2026-09-20T18:39:07.197775Z",
   "repositories": [
-    {
-      "repository_id": 3314,
-      "source_full_name": "spree/spree",
-      "source_hash": "124445f664694c83382fc168332afb026e3efbd6d1d005f9c0ba0061b440d18c",
-      "primary_category": "industry-solutions",
-      "project_type": "platform-service",
-      "use_cases": [
-        "api-backend",
-        "self-hosting"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-17T01:04:06.946438Z",
-      "provenance": "github_models"
-    },
     {
       "repository_id": 8514,
       "source_full_name": "rails/rails",
@@ -14669,21 +14655,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 180190854,
-      "source_full_name": "appwrite/appwrite",
-      "source_hash": "961513d7e6f606d8d47727aee412142d945178eebbfb7816cbafa307377382b8",
-      "primary_category": "data-infrastructure",
-      "project_type": "platform-service",
-      "use_cases": [
-        "database-storage",
-        "api-backend",
-        "self-hosting"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-19T04:20:56.637414Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 180328715,
       "source_full_name": "pmndrs/zustand",
       "source_hash": "4782b76983f31a49f431cb59a9403872fa4aa7055f86da61a5933b23d28a3b16",
@@ -18329,19 +18300,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 299510783,
-      "source_full_name": "rui314/mold",
-      "source_hash": "ef1576f525336266d10ee797f963a26219558c2d1b1ef536a67988b891673229",
-      "primary_category": "systems-network-hardware",
-      "project_type": "cli-developer-tool",
-      "use_cases": [
-        "system-admin-optimization"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-20T18:30:55.656026Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 299588328,
       "source_full_name": "toUpperCase78/tiobe-index-ratings",
       "source_hash": "456e5d0a6cc91fe1526744a1ce7cf067cb13d040aa7b80e8605d6e63b98da290",
@@ -19788,21 +19746,6 @@
       "use_cases": [
         "web-frontend",
         "personal-productivity"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-17T03:58:39.338555Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 357897199,
-      "source_full_name": "netbirdio/netbird",
-      "source_hash": "3a6e7b56dbacef75835139ed4f9c0a8c5043aac97340c825da43260f4d94b871",
-      "primary_category": "security-privacy",
-      "project_type": "application",
-      "use_cases": [
-        "security-defense",
-        "privacy-local",
-        "network-tools"
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T03:58:39.338555Z",
@@ -23057,20 +23000,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 535360445,
-      "source_full_name": "ultralytics/ultralytics",
-      "source_hash": "d70720af1af40ad7509c488dbbf6f0f4e71f9fab92c3e8e59421ed90af8fd5da",
-      "primary_category": "ai-machine-learning",
-      "project_type": "library-framework",
-      "use_cases": [
-        "model-training-inference",
-        "image-video-audio"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-17T03:58:39.338555Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 536718843,
       "source_full_name": "michelcrypt4d4mus/pdfalyzer",
       "source_hash": "8a50b5602251b58948bc06b068704ac693d0f33e3a6ad6e5b012dae59b3c2522",
@@ -23269,20 +23198,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-22T04:12:02.172495Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 543101941,
-      "source_full_name": "dream-num/univer",
-      "source_hash": "28d989b82b836a99331c0a5b3af59733d5d5f7f4da70fafa33f6ef9b734762d8",
-      "primary_category": "productivity-collaboration",
-      "project_type": "library-framework",
-      "use_cases": [
-        "web-frontend",
-        "documents-office"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-20T18:30:55.656026Z",
       "provenance": "github_models"
     },
     {
@@ -26194,20 +26109,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 658928958,
-      "source_full_name": "ollama/ollama",
-      "source_hash": "4a73e4a8013634ccdb9b06355e6b0b1628f45e0fff1f21927d2e68981a34dc9a",
-      "primary_category": "ai-machine-learning",
-      "project_type": "platform-service",
-      "use_cases": [
-        "ai-coding",
-        "model-training-inference"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-21T19:37:54.117571Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 660474192,
       "source_full_name": "Anri-Lombard/AI-for-Good",
       "source_hash": "5d83638c9d4d7c53e08f42c7629e1de154fe6544021054cc51b0b216e7374964",
@@ -27468,21 +27369,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 709027512,
-      "source_full_name": "getmaxun/maxun",
-      "source_hash": "cb832a9d423a7b57facc092100326c2baf3ea78722445fd8feb191293ccb586e",
-      "primary_category": "ai-machine-learning",
-      "project_type": "platform-service",
-      "use_cases": [
-        "agents-automation",
-        "rag-knowledge",
-        "search-scraping"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-21T19:37:54.117571Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 709589487,
       "source_full_name": "ashishps1/awesome-system-design-resources",
       "source_hash": "65485d8ce7e3df1ec66d4ba6dc30738e00eac7ce8b3903546dc4287e15f3b7c1",
@@ -27863,19 +27749,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T01:04:20.264126Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 722597620,
-      "source_full_name": "rustfs/rustfs",
-      "source_hash": "73c503b7b968a0d22302c745a51a548f443fe0b7cb994089298a7234005959a3",
-      "primary_category": "data-infrastructure",
-      "project_type": "application",
-      "use_cases": [
-        "database-storage"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-18T00:15:46.311660Z",
       "provenance": "github_models"
     },
     {
@@ -32285,19 +32158,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T01:04:20.264126Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 916009087,
-      "source_full_name": "rowboatlabs/rowboat",
-      "source_hash": "2a74ff0df313ab7bb8862325abdf0c9a456060ae42af9effdab446c512ed2998",
-      "primary_category": "ai-machine-learning",
-      "project_type": "application",
-      "use_cases": [
-        "agents-automation"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-17T03:58:39.338555Z",
       "provenance": "github_models"
     },
     {
@@ -40475,20 +40335,6 @@
         "agents-automation",
         "search-scraping",
         "network-tools"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-16T06:51:50.292861Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1165324947,
-      "source_full_name": "agentscope-ai/QwenPaw",
-      "source_hash": "1dcc4e5fce16bf5628afb2ad098e970959047076bab7cf2b3dcd8d5ee7fb8132",
-      "primary_category": "productivity-collaboration",
-      "project_type": "application",
-      "use_cases": [
-        "personal-productivity",
-        "team-collaboration"
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-16T06:51:50.292861Z",

@@ -6,6 +6,7 @@
   "additionalProperties": false,
   "required": ["schema_version", "taxonomy_version", "locale", "generated_at", "model", "prompt_version", "coverage", "categories", "project_types", "use_cases"],
   "properties": {
+    "failed_repository_ids": { "type": "array", "uniqueItems": true, "items": { "type": "integer", "minimum": 1 } },
     "schema_version": { "const": "1.0.0" },
     "taxonomy_version": { "const": "1.0.0" },
     "locale": { "const": "zh-CN" },
