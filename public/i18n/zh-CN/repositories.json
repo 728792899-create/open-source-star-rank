@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-14T07:27:01.173048Z",
+  "generated_at": "2026-09-20T05:30:06.695423Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3970,
-    "localized_count": 3807,
-    "pending_count": 163,
-    "failed_count": 163,
-    "coverage_ratio": 0.958942
+    "localized_count": 3794,
+    "pending_count": 176,
+    "failed_count": 176,
+    "coverage_ratio": 0.955668
   },
   "repositories": [
     {
@@ -3019,15 +3019,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 21289110,
-      "source_full_name": "vinta/awesome-python",
-      "source_hash": "7af4339a71c72a1bf7e0fb71fa32f31967850d6370fa15b5b0b2d5d3096fe5e8",
-      "display_name_zh": "awesome-python｜Python资源精选列表",
-      "description_zh": "Python框架、库、工具和资源的精选列表。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 21329550,
       "source_full_name": "wireshark/wireshark",
       "source_hash": "d1906abc2ccd7b35d0af7b1c9fd90619f7e0d67d9445f16f9e976cb636d71a29",
@@ -3124,15 +3115,6 @@
       "display_name_zh": "awesome-ios｜优秀 iOS 生态项目集合",
       "description_zh": "精选优秀的 iOS 生态项目，包括 Objective-C 和 Swift。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 21737465,
-      "source_full_name": "sindresorhus/awesome",
-      "source_hash": "c590c275977c2daa603634fc695fdd325c7d510ca826e1f2e3ab8ccee06dd913",
-      "display_name_zh": "awesome｜精选主题列表",
-      "description_zh": "涵盖各种有趣主题的精选列表。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
     },
     {
@@ -7150,15 +7132,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 92807616,
-      "source_full_name": "byoungd/up",
-      "source_hash": "a8e8580611e6ed6e17e33743b1e728561794febd5e39ea79f7ebb67d00d7b4fd",
-      "display_name_zh": "up｜人生进阶与英语学习指南",
-      "description_zh": "人生进阶指南及英语学习教程",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 93324141,
       "source_full_name": "FouadRaheb/Watusi-for-WhatsApp",
       "source_hash": "2ba96897b990ad64f68eee1bcc03d1cf4fd7190d86b5eb47c9159c5531ac34c4",
@@ -8896,15 +8869,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 143328315,
-      "source_full_name": "mindsdb/mindshub",
-      "source_hash": "60bd53f31baf614544838499aef87b2d9cc95003b7341079a37c0d40bdf503a3",
-      "display_name_zh": "mindshub｜AI实际应用平台",
-      "description_zh": "使AI完成实际工作，支持随时更换模型，保留已有成果。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 143455116,
       "source_full_name": "google/filament",
       "source_hash": "e0f17dc41a3a203e04606123361fbf709fc36b1c88340d362c6acc08a790099e",
@@ -9730,15 +9694,6 @@
       "display_name_zh": "ts2php｜TypeScript 转 PHP 转译器",
       "description_zh": "TypeScript 到 PHP 的转译器。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 172227885,
-      "source_full_name": "fastapi/full-stack-fastapi-template",
-      "source_hash": "17f1e71e7cd031945095549fd78d4d53cc2edff3137bdca11014b320751f0614",
-      "display_name_zh": "full-stack-fastapi-template｜基于 FastAPI 的全栈 Web 应用模板（含 SQLModel、HTTPS）",
-      "description_zh": "基于 FastAPI、React、SQLModel、PostgreSQL、Docker 和 GitHub Actions 的全栈现代 Web 应用模板，支持自动 HTTPS。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
     {
@@ -11431,15 +11386,6 @@
       "display_name_zh": "saltcorn｜开源无代码应用构建器",
       "description_zh": "saltcorn 是一款免费开源的无代码应用构建工具。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 249995750,
-      "source_full_name": "amruthpillai/reactive-resume",
-      "source_hash": "45fb19671d62d93b540ef8ca1cd1e3737f634051c1b7f4d0944c7975d02d84d7",
-      "display_name_zh": "reactive-resume｜隐私保护简历生成器",
-      "description_zh": "一款注重隐私的简洁简历生成器，开源且免费。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
     {
@@ -15283,15 +15229,6 @@
       "display_name_zh": "infisical｜开源机密与访问管理平台",
       "description_zh": "开源的机密、证书及特权访问管理平台",
       "generated_at": "2026-07-17T00:57:38.909807Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 522158088,
-      "source_full_name": "zhayujie/CowAgent",
-      "source_hash": "e3a5cbebe4697d99dfa5935cf937961b6284ea3ebf3199318520a4c1d6ce7d3f",
-      "display_name_zh": "CowAgent｜开源超级 AI 助手",
-      "description_zh": "开源超级 AI 助手与代理框架，支持多模型、多渠道，具备记忆和自我进化能力。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
     {
@@ -19759,15 +19696,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 793375104,
-      "source_full_name": "Shubhamsaboo/awesome-llm-apps",
-      "source_hash": "8eadbf5092f667d1efed1de17e83d701341281690c6b090c5e8492a009114b2d",
-      "display_name_zh": "awesome-llm-apps｜100+ AI 代理与 RAG 应用",
-      "description_zh": "awesome-llm-apps 收录了 100 多个可运行的 AI 代理和基于检索增强生成（RAG）的应用，支持克隆、定制和发布。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 793784055,
       "source_full_name": "google-research/timesfm",
       "source_hash": "029afc17da089b85068a14915d1a479164561c85643a6f273ad402b6540c24fd",
@@ -19990,15 +19918,6 @@
       "display_name_zh": "ladybird｜独立网页浏览器",
       "description_zh": "一款真正独立的网页浏览器。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 808144141,
-      "source_full_name": "DigitalPlatDev/FreeDomain",
-      "source_hash": "187c11304bc4cdab807b13bede1deb51270034ac981e9856919ef4c89487e5c2",
-      "display_name_zh": "FreeDomain｜免费域名服务",
-      "description_zh": "FreeDomain 提供免费域名服务。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
     },
     {
@@ -24601,15 +24520,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1065059442,
-      "source_full_name": "KeygraphHQ/shannon",
-      "source_hash": "50f16e884e2991e907ef50d2b6325002956116e2d8d046017f40cc92388c8e9a",
-      "display_name_zh": "shannon｜面向AI和APIs的自主白盒渗透测试工具",
-      "description_zh": "Shannon是一款自主白盒AI渗透测试工具，针对Web应用和APIs进行源码分析、攻击向量识别及漏洞验证。",
-      "generated_at": "2026-07-19T17:30:28.788483Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1065526562,
       "source_full_name": "AHEKOT/ComfyUI_VNCCS",
       "source_hash": "87e8905c7d9f710b4f25b15232f97cb127e1e947310fd4837b2b05c2f3bf471d",
@@ -27913,15 +27823,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1183325896,
-      "source_full_name": "emilkowalski/skills",
-      "source_hash": "578100b22eede10bda2aaf3be11575f9c7e0e2f186d3ebaa2c5db06e0c47b9dd",
-      "display_name_zh": "skills｜设计工程师技能",
-      "description_zh": "为设计工程师提供的技能集合。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1183340106,
       "source_full_name": "cubetribe/CODEX_GodMode_ON",
       "source_hash": "5307f9044ceba4baa7a1705585fb7857a6a83354f0d6ab70f804b6f6718565f4",
@@ -28921,15 +28822,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1211139949,
-      "source_full_name": "tt-a1i/archify",
-      "source_hash": "3d867d0be9b227d9c2558ec03df2f3343445d1e337bac00dafb54f4240dec67e",
-      "display_name_zh": "archify｜建筑架构图生成工具",
-      "description_zh": "任意代理技能：生成美观的建筑架构图，支持暗黑/明亮主题切换及 PNG、JPEG、WebP、SVG 格式导出。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1211358196,
       "source_full_name": "LeMo-CtRes/CtRes",
       "source_hash": "2650c5889b679a07e5a9e58d396b041f60651ded47b36539ae3c61bc332cd780",
@@ -29773,15 +29665,6 @@
       "display_name_zh": "FAROS｜AI研究工作流协调平台",
       "description_zh": "基于蓝图驱动的AutoResearch运行时，用于协调AI研究工作流，从创意生成、实验到论文写作和同行评审。",
       "generated_at": "2026-07-20T22:06:55.994311Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1238120057,
-      "source_full_name": "ayghri/i-have-adhd",
-      "source_hash": "4eddba75c4772715cfb91a13551c81e97f6774542ead69c2d4ac7f0c1c374c27",
-      "display_name_zh": "i-have-adhd｜编码智能体 ADHD 友好输出技能",
-      "description_zh": "为编码智能体设计的技能，帮助其避免隐藏答案，输出适合 ADHD 用户的友好格式。",
-      "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
     },
     {
