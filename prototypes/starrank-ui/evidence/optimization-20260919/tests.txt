@@ -1,0 +1,104 @@
+
+> open-source-star-rank-ui-demo@0.0.0 test
+> node --test tests/*.test.mjs
+
+TAP version 13
+# Subtest: serves existing static assets without a fallback
+ok 1 - serves existing static assets without a fallback
+  ---
+  duration_ms: 27.297583
+  type: 'test'
+  ...
+# Subtest: falls back to index.html for an unknown app route
+ok 2 - falls back to index.html for an unknown app route
+  ---
+  duration_ms: 0.5185
+  type: 'test'
+  ...
+# Subtest: does not turn missing API or write requests into the app shell
+ok 3 - does not turn missing API or write requests into the app shell
+  ---
+  duration_ms: 0.238542
+  type: 'test'
+  ...
+# Subtest: emits the files required by Sites packaging
+ok 4 - emits the files required by Sites packaging
+  ---
+  duration_ms: 2.458208
+  type: 'test'
+  ...
+# Subtest: shared links preserve Unicode filters, details, date and comparison choices
+ok 5 - shared links preserve Unicode filters, details, date and comparison choices
+  ---
+  duration_ms: 1.56825
+  type: 'test'
+  ...
+# Subtest: untrusted route input is bounded and canonicalized
+ok 6 - untrusted route input is bounded and canonicalized
+  ---
+  duration_ms: 0.261375
+  type: 'test'
+  ...
+# Subtest: opening a shared panel provides one list base without duplicating on reload
+ok 7 - opening a shared panel provides one list base without duplicating on reload
+  ---
+  duration_ms: 0.118708
+  type: 'test'
+  ...
+# Subtest: favorites persist an explicitly empty list and sanitize old project IDs
+ok 8 - favorites persist an explicitly empty list and sanitize old project IDs
+  ---
+  duration_ms: 0.16275
+  type: 'test'
+  ...
+# Subtest: corrupt, future-schema and unavailable storage degrade without crashing
+ok 9 - corrupt, future-schema and unavailable storage degrade without crashing
+  ---
+  duration_ms: 0.074208
+  type: 'test'
+  ...
+# Subtest: all fixed snapshots reconcile daily and weekly totals and adjacent dates
+ok 10 - all fixed snapshots reconcile daily and weekly totals and adjacent dates
+  ---
+  duration_ms: 0.407584
+  type: 'test'
+  ...
+# Subtest: cancelled snapshot requests never replace a newer successful request
+ok 11 - cancelled snapshot requests never replace a newer successful request
+  ---
+  duration_ms: 2.952292
+  type: 'test'
+  ...
+# Subtest: stale, unavailable and empty states retain truthful snapshot identity
+ok 12 - stale, unavailable and empty states retain truthful snapshot identity
+  ---
+  duration_ms: 3.05375
+  type: 'test'
+  ...
+# Subtest: missing, zero and negative changes are distinct and missing values rank last
+ok 13 - missing, zero and negative changes are distinct and missing values rank last
+  ---
+  duration_ms: 21.519458
+  type: 'test'
+  ...
+# Subtest: combined search filters and cumulative ranking select the intended projects
+ok 14 - combined search filters and cumulative ranking select the intended projects
+  ---
+  duration_ms: 0.351709
+  type: 'test'
+  ...
+# Subtest: comparison hides shared fields and prioritizes related scenarios
+ok 15 - comparison hides shared fields and prioritizes related scenarios
+  ---
+  duration_ms: 0.11525
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 92.596334

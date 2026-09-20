@@ -220,28 +220,28 @@ def aggregate_hour_states(states: Sequence[Mapping[str, Any]]) -> list[dict[str,
     return rows
 
 
-def load_metadata_cache(public_dir: Path) -> dict[int, Mapping[str, Any]]:
+def load_metadata_cache(public_dir: Path, *, now: dt.datetime | None = None) -> dict[int, Mapping[str, Any]]:
+    # A live publication timestamp does not prove its reused metadata was refreshed.
+    # Only daily collectors perform fresh API enrichment on every publication.
+    now = now or utc_now()
     cache: dict[int, Mapping[str, Any]] = {}
-    def remember(item: Mapping[str, Any]) -> None:
-        repository_id = int(item["repository_id"])
-        current = cache.get(repository_id)
-        current_has_lifecycle = bool(current and current.get("created_at") and "pushed_at" in current)
-        item_has_lifecycle = bool(item.get("created_at") and "pushed_at" in item)
-        if current is None or (item_has_lifecycle and not current_has_lifecycle):
-            cache[repository_id] = item
-
-    live = load_json(public_dir / "events" / "live.json")
-    if isinstance(live, dict):
-        for item in live.get("entries", []):
-            remember(item)
-    index = load_json(public_dir / "events" / "index.json")
-    latest_date = index.get("latest_date") if isinstance(index, dict) else None
-    if latest_date:
-        for relative in (f"events/category/{latest_date}.json", f"events/daily/{latest_date}.json"):
-            payload = load_json(public_dir / relative)
-            if isinstance(payload, dict):
-                for item in payload.get("entries", []):
-                    remember(item)
+    observed: dict[int, dt.datetime] = {}
+    for folder in ("daily", "category"):
+        for path in sorted((public_dir / "events" / folder).glob("????-??-??.json"), reverse=True)[:7]:
+            payload = load_json(path)
+            if not isinstance(payload, dict):
+                continue
+            try:
+                fetched_at = parse_timestamp(payload["generated_at"])
+            except (KeyError, TypeError, ValueError):
+                continue
+            if not 0 <= (now - fetched_at).total_seconds() < 3600:
+                continue
+            for item in payload.get("entries", []):
+                repository_id = int(item["repository_id"])
+                if repository_id not in observed or fetched_at > observed[repository_id]:
+                    cache[repository_id] = item
+                    observed[repository_id] = fetched_at
     return cache
 
 
@@ -420,7 +420,7 @@ def run_live_update(
     enriched, metadata_metrics = enrich_live_aggregates(
         github,
         rows,
-        metadata_cache=load_metadata_cache(public_dir),
+        metadata_cache=load_metadata_cache(public_dir, now=generated_at),
     )
     history = load_event_state_history(data_dir / "state" / "events" / "daily", end_date=date - dt.timedelta(days=1))
     ranking = build_live_output(

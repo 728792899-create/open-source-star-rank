@@ -5,7 +5,7 @@
 ## 1. 产品与数据边界
 
 - 首页和 `/daily/` 均展示最新“昨日净增榜”。
-- “今日实时榜”和“昨日完整事件榜”已经下线；相关 GH Archive 历史 JSON 仅为审计兼容保留，不再采集、部署页面或出现在导航中。
+- “今日实时榜”和“昨日完整事件榜”已经下线；相关 GH Archive 历史 JSON 为审计兼容保留，不再定时采集。旧 `/category/`、`/board/` 路由仅展示带日期的历史归档，不进入 sitemap、不提供更新倒计时；当前分类筛选使用净增榜。
 - 7 日榜、30 日榜和语言榜均由连续有效零点快照派生。
 - 全部历史星标榜使用 GitHub Search 累计 Star 排序，每周更新 Top 1000。
 - 机器数据只进入 `star-rank-data` 分支的 `state/`、`snapshots/` 和 `public/`；不得合并进 `main`。
@@ -70,22 +70,27 @@
 ### GitHub App
 
 - Homepage URL：正式 Pages 地址。
-- Callback URL：`https://<worker-domain>/auth/github/callback`。
+- Callback URL：`https://<worker-domain>/auth/callback`。
 - Webhook：关闭。
-- Repository permissions：Metadata 只读、Starring 读写；不申请代码、Issue、组织或管理权限。
+- Repository permissions：Metadata 只读；Account permissions：Starring 读写；不申请代码、Issue、组织或管理权限。
 
 ### Worker 与 D1
 
 1. 在 `auth-worker/` 执行 `npx wrangler d1 create open-source-star-rank-auth`。
-2. 把返回的数据库 ID 写入 `wrangler.toml` 的 D1 binding。
+2. 把返回的数据库 ID 写入 `wrangler.jsonc` 的 D1 binding。
 3. 执行 `npx wrangler d1 migrations apply open-source-star-rank-auth --remote`。
-4. 配置 `GITHUB_APP_CLIENT_ID`、`GITHUB_APP_CLIENT_SECRET`、`TOKEN_ENCRYPTION_KEY`、`SITE_ORIGIN`。
-5. 部署 Worker，并把其 HTTPS Origin 写入仓库变量 `PUBLIC_AUTH_API_URL`。
+4. 配置 `GITHUB_CLIENT_ID`、`SITE_ORIGIN`、`SITE_BASE_PATH`（vars），通过 `wrangler secret put` 设置 `GITHUB_CLIENT_SECRET`、`TOKEN_ENCRYPTION_KEY`（secret）。
+5. 执行 `npm run preflight` 校验配置与迁移文件，再部署 Worker，并把其 HTTPS Origin 写入仓库变量 `PUBLIC_AUTH_API_URL`。
 6. 重新部署 Pages，验证登录、退出、收藏、取消收藏和“同步到 GitHub”二次确认。
 
 GitHub access token 必须使用 AES-GCM 加密后存入 D1；D1 只保存站点会话令牌的 SHA-256 摘要。浏览器仅在当前标签页的 `sessionStorage` 保存不透明会话，最长 8 小时。首次登录不得自动同步历史本地收藏。
 
+已有 D1 必须先应用 `0002_browser_binding.sql` 再部署新版 Worker；进行中的旧登录需重新发起。前端登录生成仅保存在当前标签页的 verifier，Worker 保存其 SHA-256 challenge；回调 handoff 只能由发起登录的标签页兑换。state 与 handoff 均以单条 DELETE RETURNING 原子消费。每小时清理过期授权记录；5xx/离线保留有效会话，401、主动退出与自然过期才清除。前端与 Worker 应在同次发布中更新。
+
 ## 8. 数据分支恢复
+
+若采集进程在文件写入中断，保留 `state/pending-update.json` 并重跑同一命令；采集器会先恢复该批次的全部派生文件与索引，再采集新日期。不要手工删除 journal，也不要把不完整的工作树提交为数据版本。
+
 
 当最新数据提交损坏但历史提交可靠时：
 

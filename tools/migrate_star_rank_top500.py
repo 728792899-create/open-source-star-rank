@@ -61,7 +61,7 @@ def build_manifest(data_dir: Path) -> dict[str, Any]:
             source = load_json(source_dir / path.name, {})
             current_count = len(current.get("entries", []))
             source_count = len(source.get("entries", []))
-            already = current.get("schema_version") == "1.3.0" and current.get("entry_count") == current_count
+            already = current.get("schema_version") in {"1.3.0", "1.4.0"} and current.get("ranking_limit") == RANKING_LIMIT and current.get("entry_count") == current_count
             can = not already and source_count > current_count and source.get("date") == current.get("date")
             reason = "already_top500_contract" if already else "same_day_source_available" if can else "source_pool_missing_or_not_deeper"
             records.append(_record(
@@ -78,7 +78,7 @@ def build_manifest(data_dir: Path) -> dict[str, Any]:
                 pool = load_json(public / "explore" / "daily" / path.name, {})
                 matching = [item for item in pool.get("entries", []) if item.get("language") == current.get("language")]
                 current_count = len(current.get("entries", []))
-                already = current.get("schema_version") == "1.3.0" and current.get("entry_count") == current_count
+                already = current.get("schema_version") in {"1.3.0", "1.4.0"} and current.get("ranking_limit") == RANKING_LIMIT and current.get("entry_count") == current_count
                 can = not already and len(matching) >= 5 and len(matching) > current_count
                 reason = "already_top500_contract" if already else "same_day_language_source_available" if can else "source_pool_missing_or_not_deeper"
                 records.append(_record(
@@ -148,7 +148,7 @@ def _upgrade_base(
     entries = _rerank(source_entries, previous)
     return {
         **dict(current),
-        "schema_version": "1.3.0",
+        "schema_version": current.get("schema_version") if current.get("schema_version") in {"1.3.0", "1.4.0"} else "1.3.0",
         "ranking_limit": RANKING_LIMIT,
         "entry_count": len(entries),
         "eligible_count": max(int(current.get("eligible_count", 0)), len(source_entries)),
@@ -211,12 +211,12 @@ def apply_manifest(data_dir: Path, manifest: Mapping[str, Any], *, recomputed_at
     language_index_path = language_root / "index.json"
     language_index = load_json(language_index_path)
     if isinstance(language_index, dict) and (
-        language_index.get("schema_version") != "1.3.0"
+        language_index.get("schema_version") not in {"1.3.0", "1.4.0"}
         or language_index.get("ranking_limit") != RANKING_LIMIT
         or language_index.get("page_size") != PAGE_SIZE
     ):
         language_index.update({
-            "schema_version": "1.3.0",
+            "schema_version": language_index.get("schema_version") if language_index.get("schema_version") in {"1.3.0", "1.4.0"} else "1.3.0",
             "ranking_limit": RANKING_LIMIT,
             "page_size": PAGE_SIZE,
         })
@@ -228,7 +228,7 @@ def apply_manifest(data_dir: Path, manifest: Mapping[str, Any], *, recomputed_at
     index = load_json(index_path)
     if isinstance(index, dict) and index.get("latest_date"):
         latest = load_json(public / "daily" / f"{index['latest_date']}.json")
-        if isinstance(latest, dict) and latest.get("schema_version") == "1.3.0":
+        if isinstance(latest, dict) and latest.get("schema_version") in {"1.3.0", "1.4.0"} and index.get("schema_version") not in {"1.3.0", "1.4.0"}:
             index.update({"schema_version": "1.3.0", "ranking_limit": RANKING_LIMIT, "page_size": PAGE_SIZE})
             validate_payload("index", index)
             atomic_write_json(index_path, index)

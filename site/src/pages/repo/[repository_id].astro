@@ -302,7 +302,7 @@ const structuredData = {
           const choice = auth ? await auth.chooseFavoriteMode() : 'local';
           if (choice === 'cancel') return;
           if (choice === 'github') {
-            try { auth.login(); }
+            try { await auth.login(); }
             catch (error) { setStatus(error instanceof Error ? error.message : 'GitHub 登录暂不可用。'); }
             return;
           }

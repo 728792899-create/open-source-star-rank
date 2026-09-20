@@ -16,6 +16,7 @@ interface Props {
   ranking: DailyRanking | LanguageRanking | PeriodRanking | EventDailyRanking | EventLiveRanking | FacetRanking;
   index: RankingIndex | EventRankingIndex;
   isLatest?: boolean;
+  archived?: boolean;
   mode?: 'daily' | 'language' | 'period' | 'event';
   variant?: 'default' | 'facet';
   availableDates?: string[];
@@ -46,6 +47,7 @@ const {
   ranking,
   index,
   isLatest = false,
+  archived = false,
   mode = 'daily',
   variant = 'default',
   availableDates = index.available_dates,
@@ -137,7 +139,7 @@ const sectionEyebrow = sectionEyebrowOverride ?? (isLive ? `Live public events t
 const sectionTitle = sectionTitleOverride ?? (isLive ? '今日实时新增 Star 排行' : isEvent ? '昨日完整新增 Star 排行' : `${languageName ? `${languageName} ` : ''}${periodDays ? `${periodDays} 日 ` : '昨日 '}Star 净增排行`);
 const uniqueAdditionCount = eventRanking?.source_metrics.unique_star_addition_count ?? null;
 const explorationPoolSize = explorationEntries.length || ranking.entries.length;
-const updateFrequency = periodDays ? `每日检查连续 ${periodDays} 日窗口` : isLive ? '每小时更新' : isEvent ? '24 小时完整榜' : languageName ? '随每日净增榜更新' : '每日零点快照';
+const updateFrequency = archived ? '历史归档 · 已停止更新' : periodDays ? `每日检查连续 ${periodDays} 日窗口` : isLive ? '每小时更新' : isEvent ? '24 小时完整榜' : languageName ? '随每日净增榜更新' : '每日零点快照';
 const nextUpdateAt = isLive
   ? (eventRanking as EventLiveRanking).next_refresh_at
   : isEvent || isFacet
@@ -185,7 +187,7 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
     </time>
   </header>
 
-  <div class="data-update-strip">
+  {archived ? <p class="fallback-notice" data-archive-notice>历史归档：事件分类榜已停止更新。以下数据日期为 {ranking.date}。<a href={withBase(alternateHref ?? '/')}>查看当前净增榜筛选结果 →</a></p> : <div class="data-update-strip">
     <FreshnessStatus updatedAt={isLive ? eventRanking!.generated_at : index.updated_at} thresholdHours={isLive ? 2 : index.freshness_threshold_hours} compact />
     <UpdateCountdown
       nextAt={nextUpdateAt}
@@ -193,7 +195,7 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
       indexPath={updateIndexPath}
       label={isLive ? '下次实时榜刷新' : '下次榜单更新'}
     />
-  </div>
+  </div>}
   {isLive && <script is:inline define:vars={{ liveDate: ranking.date }}>
     (() => {
       const parts = new Intl.DateTimeFormat('en-US', {
@@ -457,7 +459,7 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
 </main>
 
 <script>
-  import { matchesEntry } from '../scripts/filter-utils.mjs';
+  import { matchesEntry, clampResultPage } from '../scripts/filter-utils.mjs';
   import { filteredRanking, metadataMaps, trendShape } from '../scripts/ranking-explorer.mjs';
 
   const root = document.querySelector('[data-ranking]');
@@ -781,6 +783,7 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
           const loaded = await resources();
           if (currentRequest !== requestId) return;
           const result = filteredRanking(loaded.current, loaded.previous, loaded.maps, value, 500);
+          resultPage = clampResultPage(resultPage, result.available, resultPageSize);
           const first = (resultPage - 1) * resultPageSize;
           const pageEntries = result.entries.slice(first, first + resultPageSize);
           if (body) body.replaceChildren(...pageEntries.map((entry: any) => renderRow(entry, loaded.maps)));

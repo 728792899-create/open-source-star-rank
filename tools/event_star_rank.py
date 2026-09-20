@@ -652,6 +652,26 @@ def rebuild_dependent_rankings(
     return rebuilt
 
 
+def rebuild_dependent_pools(
+    public_dir: Path, state_dir: Path, *, date: dt.date, raw_state: Mapping[str, Any],
+) -> dict[dt.date, dict[str, Any]]:
+    """Refresh the same seven-day history for every retained category pool."""
+    rebuilt = {}
+    for path in (public_dir / "events" / "category").glob("????-??-??.json"):
+        pool_date = dt.date.fromisoformat(path.stem)
+        if not date < pool_date <= date + dt.timedelta(days=6):
+            continue
+        pool = load_json(path)
+        history = load_event_state_history(state_dir, end_date=pool_date)
+        history[date] = raw_state
+        entries = pool["entries"]
+        rebuilt[pool_date] = build_category_pool(
+            date=pool_date, generated_at=dt.datetime.fromisoformat(pool["generated_at"].replace("Z", "+00:00")),
+            enriched=entries, state_history=history,
+        )
+    return rebuilt
+
+
 def validate_requested_date(date: dt.date, *, now: dt.datetime) -> None:
     yesterday = now.astimezone(ZoneInfo(TIMEZONE)).date() - dt.timedelta(days=1)
     age = (yesterday - date).days
@@ -760,6 +780,7 @@ def run_event_update(
         ranking=ranking,
         raw_state=raw_state,
     )
+    rebuilt_pools = rebuild_dependent_pools(public_dir, state_dir, date=date, raw_state=raw_state)
     pool: Optional[dict[str, Any]] = None
     if category_pool_limit:
         pool_enriched = enrich_category_pool(
@@ -777,7 +798,13 @@ def run_event_update(
             enriched=pool_enriched,
             state_history=pool_history,
         )
-        validate_payload("event_category_pool", pool)
+        rebuilt_pools[date] = pool
+    elif (public_dir / "events" / "category" / f"{date.isoformat()}.json").exists():
+        # Disabled extension enrichment still replaces the old pool with verified Top 500.
+        rebuilt_pools[date] = build_category_pool(date=date, generated_at=generated_at,
+            enriched=enriched, state_history={**history, date: raw_state})
+    for payload in rebuilt_pools.values():
+        validate_payload("event_category_pool", payload)
     current_metrics = dict(rebuilt[date]["source_metrics"])
     current_metrics.update({
         "api_request_count": int(github.request_count) - request_start,
@@ -794,11 +821,9 @@ def run_event_update(
         atomic_write_json(public_dir / "events" / "daily" / f"{ranking_date.isoformat()}.json", payload)
     atomic_write_json(public_dir / "events" / "index.json", index)
     removed = prune_event_states(state_dir, current_date=date)
-    pool_size = 0
-    if pool is not None:
-        atomic_write_json(public_dir / "events" / "category" / f"{date.isoformat()}.json", pool)
-        prune_event_pools(public_dir / "events" / "category", current_date=date)
-        pool_size = pool["pool_size"]
+    for pool_date, payload in rebuilt_pools.items():
+        atomic_write_json(public_dir / "events" / "category" / f"{pool_date.isoformat()}.json", payload)
+    pool_size = rebuilt_pools.get(date, {}).get("pool_size", 0)
     return {
         "status": "updated",
         "ranking": rebuilt[date],

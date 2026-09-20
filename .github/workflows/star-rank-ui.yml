@@ -1,0 +1,46 @@
+name: Validate Star Rank UI Prototype
+
+on:
+  pull_request:
+    paths:
+      - "prototypes/starrank-ui/**"
+      - ".github/workflows/star-rank-ui.yml"
+  push:
+    branches: [main, "codex/**"]
+    paths:
+      - "prototypes/starrank-ui/**"
+      - ".github/workflows/star-rank-ui.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: star-rank-ui-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: prototypes/starrank-ui
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: prototypes/starrank-ui/package-lock.json
+
+      - name: Install prototype dependencies
+        run: npm ci
+
+      - name: Build prototype and packaging adapter
+        run: npm run build
+
+      - name: Test navigation, snapshots and packaged output
+        run: npm test

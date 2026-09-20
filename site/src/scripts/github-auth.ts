@@ -1,9 +1,12 @@
 type GitHubUser = { id: number; login: string; avatar_url: string };
 type StoredSession = { token: string; expiresAt: number };
-type AuthState = { configured: boolean; authenticated: boolean; user: GitHubUser | null; expiresAt: number | null };
+type AuthState = { configured: boolean; authenticated: boolean; user: GitHubUser | null; expiresAt: number | null; error?: string };
 type FavoriteChoice = 'github' | 'local' | 'cancel';
 
 const storageKey = 'star-rank-github-session-v1';
+const browserProofKey = 'star-rank-oauth-proof-v1';
+let sessionVersion = 0;
+let expiryTimer: ReturnType<typeof setTimeout> | undefined;
 const apiBase = document.documentElement.dataset.authApiUrl?.replace(/\/$/u, '') ?? '';
 let state: AuthState = { configured: Boolean(apiBase), authenticated: false, user: null, expiresAt: null };
 
@@ -11,7 +14,6 @@ const readSession = (): StoredSession | null => {
   try {
     const value = JSON.parse(window.sessionStorage.getItem(storageKey) || 'null') as Partial<StoredSession> | null;
     if (!value || typeof value.token !== 'string' || typeof value.expiresAt !== 'number' || value.expiresAt <= Date.now()) {
-      window.sessionStorage.removeItem(storageKey);
       return null;
     }
     return value as StoredSession;
@@ -23,29 +25,45 @@ const readSession = (): StoredSession | null => {
 const saveSession = (token: string, expiresIn: number) => {
   const expiresAt = Date.now() + Math.min(Math.max(1, expiresIn), 8 * 60 * 60) * 1000;
   window.sessionStorage.setItem(storageKey, JSON.stringify({ token, expiresAt } satisfies StoredSession));
+  sessionVersion += 1;
+  scheduleExpiry(expiresAt);
 };
 
 const clearSession = () => {
+  sessionVersion += 1;
+  clearTimeout(expiryTimer);
   try { window.sessionStorage.removeItem(storageKey); } catch {}
-  state = { ...state, authenticated: false, user: null, expiresAt: null };
+  state = { ...state, authenticated: false, user: null, expiresAt: null, error: undefined };
+};
+
+const publishState = () => {
+  render();
+  window.dispatchEvent(new CustomEvent('starrankauthchange', { detail: state }));
+};
+const invalidateSession = () => { clearSession(); publishState(); };
+const scheduleExpiry = (expiresAt: number) => {
+  clearTimeout(expiryTimer);
+  expiryTimer = setTimeout(() => { if (!readSession()) invalidateSession(); }, Math.max(0, expiresAt - Date.now()));
 };
 
 const request = async (path: string, init: RequestInit = {}, requiresSession = true) => {
   if (!apiBase) throw new Error('GitHub 登录同步尚未配置');
   const session = readSession();
-  if (requiresSession && !session) throw new Error('authentication_required');
+  if (requiresSession && !session) {
+    invalidateSession();
+    throw new Error('登录已过期，请重新登录。');
+  }
+  const version = sessionVersion;
   const response = await fetch(`${apiBase}${path}`, {
     ...init,
     headers: {
       ...(init.body ? { 'content-type': 'application/json' } : {}),
-      ...(session ? { authorization: `Bearer ${session.token}` } : {}),
+      ...(requiresSession && session ? { authorization: `Bearer ${session.token}` } : {}),
       ...init.headers,
     },
   });
-  if (response.status === 401 && requiresSession) {
-    clearSession();
-    render();
-    window.dispatchEvent(new CustomEvent('starrankauthchange', { detail: state }));
+  if (response.status === 401 && requiresSession && version === sessionVersion && readSession()?.token === session?.token) {
+    invalidateSession();
   }
   return response;
 };
@@ -64,44 +82,62 @@ const errorMessage = async (response: Response) => {
 
 const currentReturnTo = () => `${window.location.pathname}${window.location.search}${window.location.hash}`;
 
-const login = (returnTo = currentReturnTo()) => {
+const login = async (returnTo = currentReturnTo()) => {
   if (!apiBase) throw new Error('GitHub 登录同步尚未配置');
-  window.location.assign(`${apiBase}/auth/login?return_to=${encodeURIComponent(returnTo)}`);
+  const bytes = crypto.getRandomValues(new Uint8Array(32));
+  const encode = (value: Uint8Array) => btoa(String.fromCharCode(...value)).replaceAll('+', '-').replaceAll('/', '_').replace(/=+$/u, '');
+  const verifier = encode(bytes);
+  const challenge = encode(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier))));
+  // Only the hash leaves this tab until the one-time handoff is redeemed.
+  window.sessionStorage.setItem(browserProofKey, JSON.stringify({ verifier, expiresAt: Date.now() + 10 * 60_000 }));
+  window.location.assign(`${apiBase}/auth/login?return_to=${encodeURIComponent(returnTo)}&browser_challenge=${challenge}`);
 };
 
 const loadSession = async () => {
-  if (!apiBase || !readSession()) {
-    clearSession();
+  const session = readSession();
+  if (!apiBase) return state;
+  if (!session) {
+    // A focus/online refresh without a session must not cancel a pending login.
+    if (state.authenticated || window.sessionStorage.getItem(storageKey)) clearSession();
     return state;
   }
+  const version = sessionVersion;
+  scheduleExpiry(session.expiresAt);
   const response = await request('/api/session');
-  if (!response.ok) {
-    clearSession();
-    return state;
-  }
+  if (version !== sessionVersion || readSession()?.token !== session.token) return state;
+  if (!response.ok) throw new Error(await errorMessage(response));
   const payload = await response.json() as { user: GitHubUser; expires_at: string };
+  if (version !== sessionVersion || readSession()?.token !== session.token) return state;
   state = { configured: true, authenticated: true, user: payload.user, expiresAt: new Date(payload.expires_at).getTime() };
   return state;
 };
 
 const exchangeHandoff = async (handoff: string) => {
+  await initialize;
+  let proof: { verifier?: string; expiresAt?: number } | null = null;
+  try { proof = JSON.parse(window.sessionStorage.getItem(browserProofKey) || 'null'); } catch {}
+  if (!proof?.verifier || !/^[A-Za-z0-9_-]{43}$/u.test(proof.verifier) || !proof.expiresAt || proof.expiresAt <= Date.now()) {
+    throw new Error('登录回传不属于当前标签页或已过期，请重新发起登录。');
+  }
+  const version = sessionVersion;
   const response = await request('/auth/exchange', {
-    method: 'POST', body: JSON.stringify({ handoff }),
+    method: 'POST', body: JSON.stringify({ handoff, browser_verifier: proof.verifier }),
   }, false);
   if (!response.ok) throw new Error(await errorMessage(response));
   const payload = await response.json() as { session_token: string; expires_in: number; return_to: string };
+  if (version !== sessionVersion) throw new Error('登录状态已改变，请重新发起登录。');
   saveSession(payload.session_token, payload.expires_in);
+  window.sessionStorage.removeItem(browserProofKey);
   await loadSession();
-  render();
-  window.dispatchEvent(new CustomEvent('starrankauthchange', { detail: state }));
+  publishState();
   return payload.return_to;
 };
 
 const logout = async () => {
-  if (readSession()) await request('/auth/logout', { method: 'POST' }).catch(() => null);
-  clearSession();
-  render();
-  window.dispatchEvent(new CustomEvent('starrankauthchange', { detail: state }));
+  const pending = readSession() ? request('/auth/logout', { method: 'POST' }).catch(() => null) : Promise.resolve();
+  window.sessionStorage.removeItem(browserProofKey);
+  invalidateSession();
+  await pending;
 };
 
 const splitName = (fullName: string) => {
@@ -139,6 +175,7 @@ const syncFavorites = async (fullNames: string[], onProgress?: (completed: numbe
 };
 
 const chooseFavoriteMode = () => new Promise<FavoriteChoice>((resolve) => {
+  if (state.authenticated && !readSession()) invalidateSession();
   if (state.authenticated) return resolve('github');
   const dialog = document.querySelector('[data-auth-choice]');
   if (!(dialog instanceof HTMLDialogElement)) return resolve('local');
@@ -178,13 +215,24 @@ const render = () => {
     avatar.src = state.user.avatar_url;
     avatar.alt = `${state.user.login} 的 GitHub 头像`;
   }
+  const status = document.querySelector('[data-sync-status]');
+  if (status && state.error) status.textContent = state.error;
   const sync = document.querySelector('[data-sync-favorites]');
   const library = (window as Window & { starRankLibrary?: { read: () => { favorites: Array<{ fullName?: string }> } } }).starRankLibrary?.read();
   if (sync instanceof HTMLButtonElement) sync.hidden = !state.authenticated || !(library?.favorites.length);
 };
 
+const refreshSession = async () => {
+  const version = sessionVersion;
+  await loadSession().catch((error) => {
+    if (version === sessionVersion) state = { ...state, error: error instanceof Error ? error.message : '登录服务暂时不可用，请稍后重试。' };
+  });
+  publishState();
+  return state;
+};
+
 const initialize = (async () => {
-  await loadSession().catch(() => clearSession());
+  await refreshSession();
   render();
   window.dispatchEvent(new CustomEvent('starrankauthready', { detail: state }));
   window.dispatchEvent(new CustomEvent('starrankauthchange', { detail: state }));
@@ -192,15 +240,17 @@ const initialize = (async () => {
 })();
 
 const api = {
-  get state() { return state; }, initialize, login, logout, exchangeHandoff, starStatus, setStar, syncFavorites, chooseFavoriteMode,
+  get state() { return state; }, initialize, refreshSession, login, logout, exchangeHandoff, starStatus, setStar, syncFavorites, chooseFavoriteMode,
 };
 (window as Window & { starRankAuth?: typeof api }).starRankAuth = api;
 
-document.querySelector('[data-github-login]')?.addEventListener('click', () => {
-  try { login(); } catch (error) { window.alert(error instanceof Error ? error.message : '登录暂不可用'); }
+document.querySelector('[data-github-login]')?.addEventListener('click', async () => {
+  try { await login(); } catch (error) { window.alert(error instanceof Error ? error.message : '登录暂不可用'); }
 });
 document.querySelector('[data-github-logout]')?.addEventListener('click', () => logout());
 window.addEventListener('starranklibrarychange', render);
+window.addEventListener('focus', () => { void refreshSession(); });
+window.addEventListener('online', () => { void refreshSession(); });
 document.querySelector('[data-sync-favorites]')?.addEventListener('click', async () => {
   const library = (window as Window & { starRankLibrary?: { read: () => { favorites: Array<{ fullName?: string }> } } }).starRankLibrary?.read();
   const names = library?.favorites.map((item) => item.fullName).filter((item): item is string => Boolean(item)) ?? [];

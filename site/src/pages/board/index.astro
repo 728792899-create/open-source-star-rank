@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { classificationMap } from '../../lib/classification';
 import {
-  readAllTimeIndex, readClassificationIndex, readClassificationRepositories, readEventRankingIndex,
+  readAllTimeIndex, readClassificationIndex, readClassificationRepositories,
   readLatestEventCategoryPool,
 } from '../../lib/data';
 import {
@@ -13,7 +13,6 @@ import { withBase } from '../../lib/paths';
 const classificationIndex = readClassificationIndex();
 const classifications = classificationMap(readClassificationRepositories());
 const pool = readLatestEventCategoryPool();
-const eventIndex = readEventRankingIndex();
 const allTime = readAllTimeIndex();
 
 interface Section {
@@ -53,13 +52,14 @@ const structuredData = {
   title="分类独立榜总览｜开源星榜"
   description="按编程语言、项目方向、产品形态、适用场景浏览各自独立的每日新增 Star 前 100 榜，并可切回全部榜单或全部历史星标 Top 1000。"
   structuredData={structuredData}
+  robots="noindex,follow"
 >
   <main id="main-content" class="shell language-page category-page">
     <p class="eyebrow">Independent boards · daily gain</p>
     <h1>每个分类，<br />都有自己的前 100。</h1>
-    <p class="status-lead">从全站公开事件榜的扩展候选池出发，每个编程语言、项目方向、产品形态和适用场景都有独立的「每日新增 Star 前 100」榜，名次在该维度内重新排序。{eventIndex.status === 'ready' ? '' : '扩展候选池发布后自动生效。'}</p>
+    <p class="status-lead" data-archive-notice>历史归档：事件分类榜已停止更新。最后数据日期：{pool?.date ?? '暂无数据'}。以下入口仅用于浏览历史记录；<a href={withBase('/')}>当前净增榜支持语言、方向、形态与场景筛选 →</a></p>
     <p class="status-lead">
-      <a href={withBase('/')}>← 返回全部榜单（全站新增榜）</a>
+      <a href={withBase('/')}>← 返回全部榜单（当前净增榜）</a>
       · <a href={withBase('/all-time/')}>全部历史星标 Top 1000 →</a>
       {allTime.status === 'ready' && allTime.top_stars ? <span>（最高约 {new Intl.NumberFormat('zh-CN', { notation: 'compact', maximumFractionDigits: 1 }).format(allTime.top_stars)} Star）</span> : null}
     </p>
@@ -70,9 +70,9 @@ const structuredData = {
         {section.items.map((item) => <a href={item.href}>
           <span>{item.label}</span>
           <strong>{item.count} 个项目</strong>
-          <small>{item.count > 0 ? '查看独立榜 →' : '暂无入池项目'}</small>
+          <small>{item.count > 0 ? '查看历史归档 →' : '暂无历史记录'}</small>
         </a>)}
-      </div> : <p class="empty-copy">扩展候选池发布后，这里会列出所有{section.meta.labelZh}的独立榜。</p>}
+      </div> : <p class="empty-copy">历史数据中暂无{section.meta.labelZh}的独立榜。</p>}
     </section>)}
   </main>
 </BaseLayout>

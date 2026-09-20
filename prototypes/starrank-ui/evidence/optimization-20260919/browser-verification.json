@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-19",
+  "tested": [
+    "filter apply persists on dialog close",
+    "per-view filters and browser Back/Forward",
+    "Unicode query restored by reload",
+    "favorites add/remove restored after reload",
+    "fourth compare selection disabled",
+    "detail limit caption and replacement picker",
+    "dialog toast visible",
+    "return from detail restores compare button focus",
+    "shared compare to detail closes once to list",
+    "only-differences hides common fields",
+    "lazy chart with daily data table",
+    "error retry, stale date, missing/zero/negative/archived/empty cases",
+    "mobile collapsed/expanded tray",
+    "319px drawer footer fully within viewport",
+    "clipboard write success",
+    "keyboard period tab and reduced motion"
+  ],
+  "consoleWarningsOrErrors": [
+    {
+      "level": "warn",
+      "message": "You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled",
+      "timestamp": "2026-09-19T05:22:11.795Z",
+      "url": "http://127.0.0.1:4323/node_modules/.vite/deps/motion_react.js?v=8be91bfc"
+    }
+  ],
+  "limitations": [
+    "No real mobile device or full screen reader test",
+    "Clipboard denial fallback not forced in browser",
+    "Storage denial handled by automated tests, not browser settings",
+    "Backend and authentication not connected"
+  ]
+}

@@ -70,6 +70,7 @@ export default defineConfig({
   build: { inlineStylesheets: 'always' },
   devToolbar: { enabled: false },
   integrations: [sitemap({
+    filter: (url) => !/\/(category|board)(\/|$)/u.test(new URL(url).pathname),
     serialize(item) {
       const pathname = new URL(item.url).pathname;
       const basePrefix = base === '/' ? '' : base.replace(/\/$/, '');

@@ -50,25 +50,25 @@ const structuredData = hasProjects ? {
 ---
 
 <BaseLayout
-  title={`${label} 独立榜｜${meta.labelZh}｜开源星榜`}
+  title={`${label} 历史归档｜${meta.labelZh}｜开源星榜`}
   description={`“${label}”（${meta.labelZh}）的独立前 100 榜，按 GH Archive 每日新增 Star 在该维度内重新排名。`}
   structuredData={structuredData}
-  robots={hasProjects ? 'index,follow' : 'noindex,follow'}
+  robots="noindex,follow"
 >
   {hasProjects ? <RankingView
     ranking={ranking!}
     index={eventIndex}
-    isLatest
+    archived
     mode="event"
     variant="facet"
     showDateTools={false}
     downloadable={false}
-    headlineOverride={`${label}，昨日哪些项目新增 Star 最多？`}
+    headlineOverride={`${label} · ${ranking!.date} 历史归档`}
     sectionEyebrowOverride={`${meta.eyebrow} · ${label}`}
     sectionTitleOverride={`${label}·${meta.labelZh}独立榜`}
     switcherLabelOverride={`${label}·${meta.labelZh}独立榜`}
-    alternateHref="/board/"
-    alternateLabel="返回独立榜总览"
+    alternateHref={`/?${meta.routeSegment}=${encodeURIComponent(rawValue)}`}
+    alternateLabel="查看当前净增榜筛选结果"
     rankingPathOverride={`/board/${meta.routeSegment}/${facetValueSlug(meta.dimension, rawValue)}/`}
   /> : <main id="main-content" class="shell language-page category-page">
     <nav class="ranking-mode-switcher" aria-label="榜单口径">
@@ -77,7 +77,7 @@ const structuredData = hasProjects ? {
     </nav>
     <p class="eyebrow">{meta.eyebrow} · {label}</p>
     <h1>{label}</h1>
-    <p class="empty-copy">该{meta.labelZh}暂无进入扩展候选池的项目。榜单发布并完成分类后，这里会自动显示“{label}”的独立前 100。</p>
+    <p class="empty-copy">该{meta.labelZh}暂无进入扩展候选池的项目。该事件分类榜已停止更新，历史记录中没有“{label}”的独立前 100。</p>
     <p><a href={withBase('/board/')}>浏览全部独立榜 →</a></p>
   </main>}
 </BaseLayout>

@@ -4,8 +4,8 @@ __pycache__/
 *.tmp
 *.bak
 gha-creds-*.json
-.venv/
-site/node_modules/
+.venv
+**/node_modules
 site/dist/
 site/.astro/
 site/generated/
@@ -15,6 +15,5 @@ site/.e2e-data/
 site/.lighthouseci/
 site/playwright-report/
 site/test-results/
-auth-worker/node_modules/
 auth-worker/.wrangler/
 auth-worker/.dev.vars

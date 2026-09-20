@@ -30,7 +30,7 @@
         "properties": {
           "language": { "type": "string", "minLength": 1 },
           "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
-          "candidate_count": { "type": "integer", "minimum": 1, "maximum": 2000 },
+          "candidate_count": { "type": "integer", "minimum": 0, "maximum": 2000 },
           "latest_date": { "type": ["string", "null"], "format": "date" },
           "available_dates": { "type": "array", "uniqueItems": true, "items": { "type": "string", "format": "date" } },
           "status": { "enum": ["accumulating", "ready"] }

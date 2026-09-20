@@ -18,6 +18,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     if (!handoff) throw new Error('缺少一次性登录回传，请重新发起登录。');
     const auth = (window as any).starRankAuth;
     if (!auth) throw new Error('登录模块加载失败，请刷新后重试。');
+    // Remove the short-lived credential from history/referrers before any requests.
+    window.history.replaceState({}, '', window.location.pathname);
     const returnTo = await auth.exchangeHandoff(handoff);
     if (status) status.textContent = '登录成功，正在返回原页面…';
     window.location.replace(returnTo);

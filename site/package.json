@@ -13,7 +13,7 @@
     "preview": "astro preview",
     "test:e2e": "playwright test",
     "test:reproducible": "node scripts/test-reproducible-build.mjs",
-    "lighthouse": "lhci autorun"
+    "lighthouse": "node scripts/lighthouse.mjs"
   },
   "overrides": {
     "esbuild": "0.28.1",
@@ -21,13 +21,17 @@
     "uuid": "11.1.1"
   },
   "devDependencies": {
-    "@astrojs/check": "0.9.9",
-    "@astrojs/sitemap": "3.7.3",
+    "@astrojs/check": "0.9.10",
+    "@astrojs/sitemap": "3.7.4",
     "@axe-core/playwright": "4.12.1",
-    "@lhci/cli": "0.15.1",
-    "@playwright/test": "1.61.1",
+    "@playwright/test": "1.63.0",
     "@resvg/resvg-js": "^2.6.2",
-    "astro": "6.4.8",
+    "astro": "7.3.3",
+    "chrome-launcher": "1.2.1",
+    "lighthouse": "13.5.0",
     "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=22.19.0"
   }
 }

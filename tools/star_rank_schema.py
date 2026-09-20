@@ -9,6 +9,7 @@ from typing import Any, Mapping
 
 from jsonschema import Draft202012Validator, FormatChecker
 from jsonschema.exceptions import SchemaError, ValidationError
+from referencing import Registry, Resource
 
 
 SCHEMA_FILES = {
@@ -57,7 +58,16 @@ def load_schema(kind: str, schema_dir: Path | None = None) -> Mapping[str, Any]:
 
 def validate_payload(kind: str, payload: Any, schema_dir: Path | None = None) -> None:
     schema = load_schema(kind, schema_dir)
-    validator = Draft202012Validator(schema, format_checker=FormatChecker())
+    # Resolve public $id references from the same checkout, never from a live site.
+    root = (schema_dir or default_schema_dir()).resolve()
+    resources = []
+    for filename in SCHEMA_FILES.values():
+        path = root / filename
+        if path.is_file():
+            document = json.loads(path.read_text(encoding="utf-8"))
+            resources.append((document["$id"], Resource.from_contents(document)))
+    validator = Draft202012Validator(schema, format_checker=FormatChecker(),
+                                     registry=Registry().with_resources(resources))
     errors = sorted(validator.iter_errors(payload), key=lambda error: list(error.absolute_path))
     if not errors:
         return

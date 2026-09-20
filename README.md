@@ -23,6 +23,16 @@
 
 ---
 
+## 开发进展与新版 UI
+
+- [开发进度与逐步同步记录](docs/DEVELOPMENT_PROGRESS.md)：已完成、待修复和待接入范围。
+- [暖橙工作台 UI 原型](prototypes/starrank-ui/README.md)：选定的新版界面、交互优化、预览截图与本地运行方式。
+- [第一轮审查修复](docs/AUDIT_FIXES_2026-09-19.md) · [剩余业务问题与产品接入计划](docs/KNOWN_ISSUES.md)。
+
+新版 UI 当前是独立的六项目演示原型，尚未迁移到下述 Astro 生产站点或连接真实 GitHub 数据；公开源码同步不代表已经上线。后续每个完成并验证的开发步骤会提交、推送并更新进度。
+
+---
+
 ## 这是什么
 
 **开源星榜**是一个每天自动运行、完全由 GitHub Actions 驱动的中文开源项目趋势站。它把 GitHub API 连续快照和可复现的数据契约组合成静态榜单，不做网页爬虫、不猜测、不补零，只发布可以被独立验证的净增信号；榜单页面、历史记录和 JSON 数据均可公开访问和复用。
@@ -213,3 +223,7 @@ STAR_RANK_DATA_DIR="$PWD/.e2e-data" npm run build && npm run validate-build
 **数据来自 GitHub 公共 API · 昨日净增榜每日更新 · 可在现有免费额度内运行**
 
 </div>
+
+开发环境要求 Node.js >= 22.19（Astro 7、Vitest 5、Lighthouse 13）与 Python 3.12+。两套 npm 项目均应执行全量 `npm audit --audit-level=moderate`；构建依赖也纳入检查。
+
+本次缺陷修复与升级步骤见 [2026-09-19 修复记录](docs/AUDIT_FIXES_2026-09-19.md)。

@@ -150,6 +150,8 @@ const purgeExpired = async (env: Env, now: number) => {
 
 const authorize = async (request: Request, env: Env) => {
   const url = new URL(request.url);
+  const browserChallenge = url.searchParams.get('browser_challenge');
+  if (!browserChallenge || !/^[A-Za-z0-9_-]{43}$/u.test(browserChallenge)) return json({ error: 'missing_browser_challenge' }, 400);
   const state = randomToken();
   const verifier = randomToken(48);
   const challenge = await digest(verifier);
@@ -157,8 +159,8 @@ const authorize = async (request: Request, env: Env) => {
   const returnTo = safeReturnTo(url.searchParams.get('return_to'), env.SITE_BASE_PATH);
   await purgeExpired(env, now);
   await env.AUTH_DB.prepare(
-    'INSERT INTO oauth_states (state_hash, encrypted_verifier, return_to, expires_at, created_at) VALUES (?, ?, ?, ?, ?)',
-  ).bind(await digest(state), await encrypt(env, verifier), returnTo, now + OAUTH_STATE_SECONDS, now).run();
+    'INSERT INTO oauth_states (state_hash, encrypted_verifier, return_to, expires_at, created_at, browser_challenge) VALUES (?, ?, ?, ?, ?, ?)',
+  ).bind(await digest(state), await encrypt(env, verifier), returnTo, now + OAUTH_STATE_SECONDS, now, browserChallenge).run();
   const target = new URL('https://github.com/login/oauth/authorize');
   target.searchParams.set('client_id', env.GITHUB_CLIENT_ID);
   target.searchParams.set('redirect_uri', callbackUrl(request));
@@ -176,9 +178,8 @@ const oauthCallback = async (request: Request, env: Env) => {
   const now = Math.floor(Date.now() / 1000);
   const stateHash = await digest(state);
   const saved = await env.AUTH_DB.prepare(
-    'SELECT encrypted_verifier, return_to, expires_at FROM oauth_states WHERE state_hash = ?',
-  ).bind(stateHash).first<{ encrypted_verifier: string; return_to: string; expires_at: number }>();
-  await env.AUTH_DB.prepare('DELETE FROM oauth_states WHERE state_hash = ?').bind(stateHash).run();
+    'DELETE FROM oauth_states WHERE state_hash = ? AND expires_at > ? AND browser_challenge IS NOT NULL RETURNING encrypted_verifier, return_to, expires_at, browser_challenge',
+  ).bind(stateHash, now).first<{ encrypted_verifier: string; return_to: string; expires_at: number; browser_challenge: string }>();
   if (!saved || saved.expires_at <= now) return json({ error: 'invalid_or_expired_oauth_state' }, 400);
   const token = await githubToken(env, {
     code,
@@ -207,26 +208,26 @@ const oauthCallback = async (request: Request, env: Env) => {
   ).run();
   const handoff = randomToken();
   await env.AUTH_DB.prepare(
-    'INSERT INTO handoffs (handoff_hash, encrypted_session_token, return_to, expires_at, created_at) VALUES (?, ?, ?, ?, ?)',
-  ).bind(await digest(handoff), await encrypt(env, sessionToken), saved.return_to, now + HANDOFF_SECONDS, now).run();
+    'INSERT INTO handoffs (handoff_hash, encrypted_session_token, return_to, expires_at, created_at, browser_challenge, session_expires_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+  ).bind(await digest(handoff), await encrypt(env, sessionToken), saved.return_to, now + HANDOFF_SECONDS, now, saved.browser_challenge, now + SESSION_SECONDS).run();
   const callback = new URL(`${env.SITE_ORIGIN}${normalizeBasePath(env.SITE_BASE_PATH)}/auth/callback/`);
   callback.searchParams.set('handoff', handoff);
   return Response.redirect(callback.toString(), 302);
 };
 
 const exchangeHandoff = async (request: Request, env: Env, headers: HeadersInit) => {
-  const body = await request.json().catch(() => null) as { handoff?: unknown } | null;
-  if (typeof body?.handoff !== 'string') return json({ error: 'missing_handoff' }, 400, headers);
+  const body = await request.json().catch(() => null) as { handoff?: unknown; browser_verifier?: unknown } | null;
+  if (typeof body?.handoff !== 'string' || !/^[A-Za-z0-9_-]{43}$/u.test(body.handoff)) return json({ error: 'missing_handoff' }, 400, headers);
+  if (typeof body.browser_verifier !== 'string' || !/^[A-Za-z0-9_-]{43}$/u.test(body.browser_verifier)) return json({ error: 'invalid_browser_binding' }, 400, headers);
+  const now = Math.floor(Date.now() / 1000);
   const handoffHash = await digest(body.handoff);
   const row = await env.AUTH_DB.prepare(
-    'SELECT encrypted_session_token, return_to, expires_at FROM handoffs WHERE handoff_hash = ?',
-  ).bind(handoffHash).first<{ encrypted_session_token: string; return_to: string; expires_at: number }>();
-  await env.AUTH_DB.prepare('DELETE FROM handoffs WHERE handoff_hash = ?').bind(handoffHash).run();
-  const now = Math.floor(Date.now() / 1000);
+    'DELETE FROM handoffs WHERE handoff_hash = ? AND browser_challenge = ? AND expires_at > ? AND session_expires_at > ? RETURNING encrypted_session_token, return_to, expires_at, session_expires_at',
+  ).bind(handoffHash, await digest(body.browser_verifier), now, now).first<{ encrypted_session_token: string; return_to: string; expires_at: number; session_expires_at: number }>();
   if (!row || row.expires_at <= now) return json({ error: 'invalid_or_expired_handoff' }, 400, headers);
   return json({
     session_token: await decrypt(env, row.encrypted_session_token),
-    expires_in: SESSION_SECONDS,
+    expires_in: row.session_expires_at - now,
     return_to: row.return_to,
   }, 200, headers);
 };
@@ -315,29 +316,32 @@ const syncStars = async (
 };
 
 export default {
+  async scheduled(_event: ScheduledController, env: Env): Promise<void> {
+    await purgeExpired(env, Math.floor(Date.now() / 1000));
+  },
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
     try {
-      if (url.pathname === '/auth/login' && request.method === 'GET') return authorize(request, env);
-      if (url.pathname === '/auth/callback' && request.method === 'GET') return oauthCallback(request, env);
+      if (url.pathname === '/auth/login' && request.method === 'GET') return await authorize(request, env);
+      if (url.pathname === '/auth/callback' && request.method === 'GET') return await oauthCallback(request, env);
 
       const corsHeaders = cors(request, env);
       if (!corsHeaders) return json({ error: 'origin_not_allowed' }, 403);
       if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders });
-      if (url.pathname === '/auth/exchange' && request.method === 'POST') return exchangeHandoff(request, env, corsHeaders);
+      if (url.pathname === '/auth/exchange' && request.method === 'POST') return await exchangeHandoff(request, env, corsHeaders);
 
       const auth = await authenticated(request, env);
       if (!auth) return json({ error: 'authentication_required' }, 401, corsHeaders);
-      if (url.pathname === '/api/session' && request.method === 'GET') return sessionResponse(auth, corsHeaders);
+      if (url.pathname === '/api/session' && request.method === 'GET') return await sessionResponse(auth, corsHeaders);
       if (url.pathname === '/auth/logout' && request.method === 'POST') {
         await env.AUTH_DB.prepare('DELETE FROM sessions WHERE id_hash = ?').bind(auth.row.id_hash).run();
         return new Response(null, { status: 204, headers: corsHeaders });
       }
       const repository = parseRepositoryPath(url.pathname);
       if (repository && ['GET', 'PUT', 'DELETE'].includes(request.method)) {
-        return repositoryStar(request, env, auth, repository, corsHeaders);
+        return await repositoryStar(request, env, auth, repository, corsHeaders);
       }
-      if (url.pathname === '/api/stars/sync' && request.method === 'POST') return syncStars(request, auth, corsHeaders);
+      if (url.pathname === '/api/stars/sync' && request.method === 'POST') return await syncStars(request, auth, corsHeaders);
       return json({ error: 'not_found' }, 404, corsHeaders);
     } catch (error) {
       console.error(error);

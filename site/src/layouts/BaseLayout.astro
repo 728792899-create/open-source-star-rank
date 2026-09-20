@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { withBase } from '../lib/paths';
+import { serializeJsonForHtml } from '../lib/serialize-json.mjs';
 
 interface Props {
   title?: string;
@@ -71,7 +72,7 @@ const authApiUrl = import.meta.env.PUBLIC_AUTH_API_URL?.replace(/\/$/u, '') ?? '
           : window.matchMedia('(max-width: 680px)').matches ? 'compact' : 'comfortable';
       })();
     </script>
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData ?? {
+    <script is:inline type="application/ld+json" set:html={serializeJsonForHtml(structuredData ?? {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: '开源星榜',
