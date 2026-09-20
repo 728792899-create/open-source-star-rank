@@ -107,7 +107,8 @@ def validate_ranking_time(payload: dict[str, Any], path: Path) -> None:
             raise SchemaValidationError(f"榜单日期与统计窗口不一致：{path}")
 
 
-def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[str, int]:
+def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False, card_manifest: Path | None = None) -> dict[str, int]:
+    cards: list[dict[str, str]] = []
     root = data_dir.resolve()
     public_dir = root / "public" if (root / "public").is_dir() else root
     schema_dir = Path(__file__).resolve().parents[1] / "schemas" / "star-rank"
@@ -191,6 +192,7 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
             elif len(payload["entries"]) > 100:
                 raise SchemaValidationError(f"历史日榜不得超过原版本上限 100：{path}")
             counts["daily"] += 1
+            cards.append({"kind": "daily", "path": path.relative_to(public_dir).as_posix()})
     if indexed_dates != actual_dates:
         missing = sorted(indexed_dates - actual_dates)
         extra = sorted(actual_dates - indexed_dates)
@@ -275,6 +277,7 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
                 raise SchemaValidationError(f"语言榜包含项目目录外的仓库：{path}")
             actual_language_dates.setdefault(payload["slug"], set()).add(payload["date"])
             counts["language"] += 1
+            cards.append({"kind": "language", "path": path.relative_to(public_dir).as_posix()})
         for slug, dates in actual_language_dates.items():
             if indexed_language_dates.get(slug, set()) != dates:
                 raise SchemaValidationError(f"语言索引日期不一致：{slug}")
@@ -307,6 +310,7 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
                     raise SchemaValidationError(f"周期榜包含项目目录外的仓库：{path}")
                 actual_period_dates.add(path.stem)
                 counts["period"] += 1
+                cards.append({"kind": "period", "path": path.relative_to(public_dir).as_posix()})
             if set(index["periods"][f"{days}d"]["available_dates"]) != actual_period_dates:
                 raise SchemaValidationError(f"{days} 日榜索引日期不一致")
             if index["periods"][f"{days}d"]["latest_date"] != (max(actual_period_dates) if actual_period_dates else None):
@@ -602,6 +606,10 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
             raise SchemaValidationError("中文本地化待处理数量或覆盖率不一致")
         if coverage["failed_count"] > coverage["pending_count"]:
             raise SchemaValidationError("中文本地化失败数不得超过待处理数")
+        if "failed_repository_ids" in localization:
+            failed_ids = localization["failed_repository_ids"]
+            if failed_ids != sorted(set(failed_ids)) or len(failed_ids) != coverage["failed_count"] or not set(failed_ids) <= set(ranked_repositories) - set(repository_ids):
+                raise SchemaValidationError("中文本地化失败集合与当前待处理项目不一致")
         counts["localization"] = 1
 
     classification_index_path = public_dir / "classification" / "index.json"
@@ -642,6 +650,10 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
             raise SchemaValidationError("项目分类待处理数量或覆盖率不一致")
         if coverage["failed_count"] > coverage["pending_count"]:
             raise SchemaValidationError("项目分类失败数不得超过待处理数")
+        if "failed_repository_ids" in classification_index:
+            failed_ids = classification_index["failed_repository_ids"]
+            if failed_ids != sorted(set(failed_ids)) or len(failed_ids) != coverage["failed_count"] or not set(failed_ids) <= set(sources) - set(repository_ids):
+                raise SchemaValidationError("项目分类失败集合与当前待处理项目不一致")
         counts["classification"] = 1
 
     published_schemas = public_dir / "schema"
@@ -676,6 +688,9 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False) -> dict[st
     for filename in required_schema_files:
         if not (published_schemas / filename).is_file():
             raise SchemaValidationError(f"公开数据缺少 Schema：{published_schemas / filename}")
+    if card_manifest is not None:
+        card_manifest.parent.mkdir(parents=True, exist_ok=True)
+        card_manifest.write_text(json.dumps(cards, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
     return counts
 
 
@@ -683,9 +698,10 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="验证开源星榜数据目录")
     parser.add_argument("--data-dir", type=Path, required=True)
     parser.add_argument("--sync-schemas", action="store_true")
+    parser.add_argument("--card-manifest", type=Path)
     args = parser.parse_args()
     try:
-        counts = validate_data_tree(args.data_dir, sync_schemas=args.sync_schemas)
+        counts = validate_data_tree(args.data_dir, sync_schemas=args.sync_schemas, card_manifest=args.card_manifest)
     except SchemaValidationError as exc:
         parser.error(str(exc))
     print(json.dumps(counts, ensure_ascii=False, sort_keys=True))

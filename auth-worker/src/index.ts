@@ -330,13 +330,17 @@ export default {
       if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders });
       if (url.pathname === '/auth/exchange' && request.method === 'POST') return await exchangeHandoff(request, env, corsHeaders);
 
+      // Revocation is local and idempotent, including expired provider credentials.
+      // Never make logout depend on a successful GitHub refresh or decryption.
+      if (url.pathname === '/auth/logout' && request.method === 'POST') {
+        const token = bearer(request);
+        if (token) await env.AUTH_DB.prepare('DELETE FROM sessions WHERE id_hash = ?').bind(await digest(token)).run();
+        return new Response(null, { status: 204, headers: corsHeaders });
+      }
+
       const auth = await authenticated(request, env);
       if (!auth) return json({ error: 'authentication_required' }, 401, corsHeaders);
       if (url.pathname === '/api/session' && request.method === 'GET') return await sessionResponse(auth, corsHeaders);
-      if (url.pathname === '/auth/logout' && request.method === 'POST') {
-        await env.AUTH_DB.prepare('DELETE FROM sessions WHERE id_hash = ?').bind(auth.row.id_hash).run();
-        return new Response(null, { status: 204, headers: corsHeaders });
-      }
       const repository = parseRepositoryPath(url.pathname);
       if (repository && ['GET', 'PUT', 'DELETE'].includes(request.method)) {
         return await repositoryStar(request, env, auth, repository, corsHeaders);

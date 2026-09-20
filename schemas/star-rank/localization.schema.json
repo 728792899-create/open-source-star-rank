@@ -14,6 +14,7 @@
     "repositories"
   ],
   "properties": {
+    "failed_repository_ids": { "type": "array", "uniqueItems": true, "items": { "type": "integer", "minimum": 1 } },
     "schema_version": { "const": "1.0.0" },
     "locale": { "const": "zh-CN" },
     "generated_at": { "type": ["string", "null"], "format": "date-time" },

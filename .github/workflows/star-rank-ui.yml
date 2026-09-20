@@ -39,6 +39,9 @@ jobs:
       - name: Install prototype dependencies
         run: npm ci
 
+      - name: Audit prototype dependencies
+        run: npm audit --audit-level=moderate
+
       - name: Build prototype and packaging adapter
         run: npm run build
 
