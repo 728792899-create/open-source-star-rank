@@ -46,6 +46,19 @@ class AuditRegressionTests(unittest.TestCase):
         return s.run_update(FakeClient(repos), data_dir=self.root,
                             projects_file=self.seeds, captured_at=capture(day), **kwargs)
 
+    def test_card_manifest_lists_only_schema_validated_ranking_inputs(self):
+        self.update(15)
+        self.update(16)
+        extra = self.root / 'public/daily/editor-note.json'
+        extra.write_text('{"note":"not a ranking"}')
+        manifest = self.root / 'cards.json'
+        validate_data_tree(self.root, card_manifest=manifest)
+        cards = s.load_json(manifest)
+        self.assertTrue(any(card['kind'] == 'daily' for card in cards))
+        self.assertNotIn('daily/editor-note.json', [card['path'] for card in cards])
+        for card in cards:
+            validate_payload(card['kind'], s.load_json(self.root / 'public' / card['path']))
+
     def test_historical_language_stays_indexed_with_zero_current_candidates(self):
         for day in (15, 16, 17):
             self.update(day, repos=[{**api_repo(i, f'demo/r{i}', 100 + day),

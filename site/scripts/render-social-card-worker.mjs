@@ -1,6 +1,7 @@
 import { writeFile } from 'node:fs/promises';
-import { parentPort } from 'node:worker_threads';
+import { parentPort, workerData } from 'node:worker_threads';
 import { Resvg } from '@resvg/resvg-js';
+import { cardOutput } from './social-card-inputs.mjs';
 
 const escapeXml = (value) => String(value)
   .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
@@ -27,8 +28,9 @@ function cardSvg(ranking, label, eventMode = false) {
   </svg>`;
 }
 
-parentPort.on('message', async ({ ranking, label, output, fontFile, eventMode = false }) => {
+parentPort.on('message', async ({ ranking, label, name, fontFile, eventMode = false }) => {
   try {
+    const output = cardOutput(workerData.outputRoot, name);
     const rendered = new Resvg(cardSvg(ranking, label, eventMode), {
       fitTo: { mode: 'width', value: 1200 },
       font: fontFile ? { fontFiles: [fontFile], loadSystemFonts: false, defaultFontFamily: 'sans-serif' } : undefined,

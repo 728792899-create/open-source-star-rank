@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
 
 try:
+    from tools.enrichment_state import failure_state
     from tools.localize_repositories import (
         discover_ranked_repositories,
         iso_timestamp,
@@ -26,6 +27,7 @@ try:
     )
     from tools.star_rank_schema import SchemaValidationError, validate_payload
 except ModuleNotFoundError:  # pragma: no cover - direct script execution fallback
+    from enrichment_state import failure_state
     from localize_repositories import (  # type: ignore
         discover_ranked_repositories,
         iso_timestamp,
@@ -364,6 +366,8 @@ class GitHubModelsClassificationClient:
                 json.JSONDecodeError,
                 KeyError,
                 IndexError,
+                TypeError,
+                AttributeError,
                 ClassificationError,
             ) as exc:
                 last_error = exc
@@ -429,6 +433,7 @@ def classify_repositories(
             )
         elif (
             existing is not None
+            and existing.get("provenance") != "manual"
             and existing.get("source_hash") == source_hash
             and existing.get("taxonomy_version") == taxonomy["taxonomy_version"]
         ):
@@ -450,6 +455,11 @@ def classify_repositories(
                 current_ids = set(remaining)
                 try:
                     responses = model_client.classify(current)
+                    if not isinstance(responses, list) or not all(
+                        isinstance(item, Mapping) and type(item.get("repository_id")) is int and item["repository_id"] > 0
+                        for item in responses
+                    ):
+                        raise ClassificationError("GitHub Models 返回的记录或 repository_id 类型无效")
                     response_ids = [item.get("repository_id") for item in responses]
                     if len(response_ids) != len(set(response_ids)) or set(response_ids) != current_ids:
                         raise ClassificationError("GitHub Models 返回的 repository_id 集合不完整或重复")
@@ -488,8 +498,10 @@ def classify_repositories(
                 print(f"warning: 项目分类回退未分类状态（{details}）", file=sys.stderr)
 
     repositories = [valid[repository_id] for repository_id in sorted(valid)]
-    previous_failed = int((previous_index or {}).get("coverage", {}).get("failed_count", 0))
-    failed_count = len(failed_ids) if model_client is not None else previous_failed
+    failed_count, failure_metadata = failure_state(
+        previous_index, set(sources) - set(valid),
+        {int(item["repository_id"]) for item in attempted} if model_client is not None else set(), failed_ids,
+    )
     repositories_catalog = {
         "schema_version": "1.0.0",
         "taxonomy_version": taxonomy["taxonomy_version"],
@@ -521,6 +533,7 @@ def classify_repositories(
         "categories": taxonomy["categories"],
         "project_types": taxonomy["project_types"],
         "use_cases": taxonomy["use_cases"],
+        **failure_metadata,
     }
     if previous_index is not None:
         previous_comparable = {key: value for key, value in previous_index.items() if key != "generated_at"}

@@ -1,9 +1,10 @@
-import { mkdir, readFile, readdir, rm } from 'node:fs/promises';
+import { mkdir, readFile, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { availableParallelism } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Worker } from 'node:worker_threads';
+import { loadCardJobs } from './social-card-inputs.mjs';
 
 const siteRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dataRoot = path.join(siteRoot, 'generated', 'data');
@@ -26,47 +27,29 @@ const withLocalizedNames = (ranking) => ({
   entries: ranking.entries.map((entry) => ({ ...entry, display_name_zh: localizedNames.get(entry.repository_id) ?? null })),
 });
 
-async function jsonFiles(root) {
-  if (!existsSync(root)) return [];
-  const found = [];
-  for (const entry of await readdir(root, { withFileTypes: true })) {
-    const target = path.join(root, entry.name);
-    if (entry.isDirectory()) found.push(...await jsonFiles(target));
-    else if (entry.name.endsWith('.json') && entry.name !== 'index.json') found.push(target);
-  }
-  return found.sort();
-}
-
+const jobs = (await loadCardJobs(dataRoot, path.join(siteRoot, 'generated', 'social-cards.json')))
+  .map((job) => ({ ...job, ranking: withLocalizedNames(job.ranking) }));
 await rm(outputRoot, { recursive: true, force: true });
 await mkdir(outputRoot, { recursive: true });
-const jobs = [];
-for (const file of await jsonFiles(path.join(dataRoot, 'daily'))) {
-  const ranking = JSON.parse(await readFile(file, 'utf8'));
-  jobs.push({ ranking: withLocalizedNames(ranking), label: `昨日净增 Top ${ranking.ranking_limit ?? 100}`, name: `daily-${ranking.date}.png` });
-}
-for (const file of await jsonFiles(path.join(dataRoot, 'period'))) {
-  const ranking = JSON.parse(await readFile(file, 'utf8'));
-  jobs.push({ ranking: withLocalizedNames(ranking), label: `${ranking.period_days} 日净增 Top ${ranking.ranking_limit ?? 100}`, name: `period-${ranking.period_days}d-${ranking.date}.png` });
-}
-for (const file of (await jsonFiles(path.join(dataRoot, 'language'))).filter((item) => !item.endsWith('/index.json'))) {
-  const ranking = JSON.parse(await readFile(file, 'utf8'));
-  jobs.push({ ranking: withLocalizedNames(ranking), label: `${ranking.language} Top ${ranking.ranking_limit ?? 50}`, name: `language-${ranking.slug}-${ranking.date}.png` });
-}
 const queue = [...jobs];
 async function renderQueue() {
-  const worker = new Worker(new URL('./render-social-card-worker.mjs', import.meta.url));
+  const worker = new Worker(new URL('./render-social-card-worker.mjs', import.meta.url), { workerData: { outputRoot } });
   try {
     while (queue.length) {
       const job = queue.shift();
       await new Promise((resolve, reject) => {
-        const onError = (error) => { worker.off('message', onMessage); reject(error); };
+        const cleanup = () => { clearTimeout(timer); worker.off('message', onMessage); worker.off('error', onError); worker.off('exit', onExit); };
+        const onError = (error) => { cleanup(); reject(error); };
+        const onExit = (code) => onError(new Error(`Card renderer exited before replying (${code})`));
+        const timer = setTimeout(() => onError(new Error('Card renderer timed out')), 30_000);
         const onMessage = (message) => {
-          worker.off('error', onError);
+          cleanup();
           message.ok ? resolve() : reject(new Error(message.error));
         };
         worker.once('error', onError);
+        worker.once('exit', onExit);
         worker.once('message', onMessage);
-        worker.postMessage({ ...job, output: path.join(outputRoot, job.name), fontFile });
+        worker.postMessage({ ...job, fontFile });
       });
     }
   } finally {

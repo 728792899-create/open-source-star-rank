@@ -17,8 +17,10 @@ from pathlib import Path
 from typing import Any, Callable, Iterable, Mapping, Sequence
 
 try:
+    from tools.enrichment_state import failure_state
     from tools.star_rank_schema import SchemaValidationError, validate_payload
 except ModuleNotFoundError:  # pragma: no cover - direct script execution fallback
+    from enrichment_state import failure_state
     from star_rank_schema import SchemaValidationError, validate_payload
 
 
@@ -372,7 +374,7 @@ class GitHubModelsClient:
                     raise ModelUnavailable(f"GitHub Models HTTP {exc.code}") from exc
                 if exc.code < 500 or attempt == 1:
                     raise ModelUnavailable(f"GitHub Models HTTP {exc.code}") from exc
-            except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, KeyError, IndexError, LocalizationError) as exc:
+            except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, KeyError, IndexError, TypeError, AttributeError, LocalizationError) as exc:
                 last_error = exc
                 if attempt == 1:
                     raise ModelUnavailable(f"GitHub Models 响应不可用：{exc}") from exc
@@ -433,7 +435,7 @@ def localize_repositories(
             valid[repository_id] = validate_translation(
                 raw, source, generated_at=generated_at, provenance="manual"
             )
-        elif existing is not None and existing.get("source_hash") == repository_source_hash(source):
+        elif existing is not None and existing.get("provenance") != "manual" and existing.get("source_hash") == repository_source_hash(source):
             valid[repository_id] = dict(existing)
 
     pending = [source for repository_id, source in sources.items() if repository_id not in valid]
@@ -449,6 +451,11 @@ def localize_repositories(
                 current_ids = set(remaining)
                 try:
                     responses = model_client.translate(current)
+                    if not isinstance(responses, list) or not all(
+                        isinstance(item, Mapping) and type(item.get("repository_id")) is int and item["repository_id"] > 0
+                        for item in responses
+                    ):
+                        raise LocalizationError("GitHub Models 返回的记录或 repository_id 类型无效")
                     response_ids = [item.get("repository_id") for item in responses]
                     if len(response_ids) != len(set(response_ids)) or set(response_ids) != current_ids:
                         raise LocalizationError("GitHub Models 返回的 repository_id 集合不完整或重复")
@@ -488,8 +495,10 @@ def localize_repositories(
     repositories = [valid[repository_id] for repository_id in sorted(valid)]
     eligible_count = len(sources)
     localized_count = len(repositories)
-    previous_failed_count = int((previous_catalog or {}).get("coverage", {}).get("failed_count", 0))
-    failed_count = len(failed_ids) if model_client is not None else previous_failed_count
+    failed_count, failure_metadata = failure_state(
+        previous_catalog, set(sources) - set(valid),
+        {int(item["repository_id"]) for item in attempted} if model_client is not None else set(), failed_ids,
+    )
     catalog = {
         "schema_version": "1.0.0",
         "locale": "zh-CN",
@@ -504,6 +513,7 @@ def localize_repositories(
             "coverage_ratio": round(localized_count / eligible_count, 6) if eligible_count else 1,
         },
         "repositories": repositories,
+        **failure_metadata,
     }
     if previous_catalog is not None:
         previous_comparable = {key: value for key, value in previous_catalog.items() if key != "generated_at"}

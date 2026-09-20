@@ -39,7 +39,7 @@
         "description": { "type": ["string", "null"] },
         "language": { "type": ["string", "null"] },
         "stars_total": { "type": "integer", "minimum": 0 },
-        "html_url": { "type": "string", "format": "uri" },
+        "html_url": { "type": "string", "format": "uri", "pattern": "^https://github\\.com/" },
         "owner_avatar_url": { "type": ["string", "null"], "format": "uri" },
         "created_at": { "type": ["string", "null"], "format": "date-time" },
         "pushed_at": { "type": ["string", "null"], "format": "date-time" },

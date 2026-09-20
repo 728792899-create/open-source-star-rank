@@ -1,4 +1,25 @@
 import { test, expect } from '@playwright/test';
+
+test('logout failure is visible while the project library is collapsed', async ({ page }) => {
+  await page.addInitScript(() => sessionStorage.setItem('star-rank-github-session-v1', JSON.stringify({ token: 'browser-fixture', expiresAt: Date.now() + 3600_000 })));
+  await page.route('**/repo/10001/', async (route) => {
+    const response = await route.fetch();
+    await route.fulfill({ response, body: (await response.text()).replace(/data-auth-api-url(?:="[^"]*")?/u, 'data-auth-api-url="https://auth.fixture.invalid"') });
+  });
+  await page.route('https://auth.fixture.invalid/**', (route) => route.fulfill({
+    status: route.request().method() === 'OPTIONS' ? 204 : route.request().url().endsWith('/auth/logout') ? 503 : 200,
+    headers: { 'access-control-allow-origin': 'http://127.0.0.1:4322', 'access-control-allow-headers': 'authorization,content-type', 'access-control-allow-methods': 'GET,POST,OPTIONS' },
+    body: route.request().method() === 'OPTIONS' ? '' : JSON.stringify({ user: { id: 1, login: 'fixture', avatar_url: '' }, expires_at: new Date(Date.now() + 3600_000).toISOString(), starred: false }),
+    contentType: 'application/json',
+  }));
+  await page.goto('repo/10001/');
+  await expect(page.locator('[data-github-logout]')).toBeVisible();
+  await expect(page.locator('[data-user-library]')).not.toHaveAttribute('open');
+  await page.locator('[data-github-logout]').click();
+  await expect(page.locator('[data-auth-status]')).toBeVisible();
+  await expect(page.locator('[data-auth-status]')).toContainText('服务端撤销未确认');
+  await expect(page.locator('[data-github-login]')).toBeVisible();
+});
 import AxeBuilder from '@axe-core/playwright';
 
 const latestPath = 'daily/2026-07-14/';

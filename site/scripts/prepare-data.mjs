@@ -10,6 +10,7 @@ const repositoryRoot = path.resolve(siteRoot, '..');
 const source = path.resolve(process.env.STAR_RANK_DATA_DIR ?? path.join(siteRoot, 'seed-data'));
 const generated = path.join(siteRoot, 'generated', 'data');
 const publicData = path.join(siteRoot, 'public', 'data');
+const cardManifest = path.join(siteRoot, 'generated', 'social-cards.json');
 const schemaSource = path.join(repositoryRoot, 'schemas', 'star-rank');
 const run = promisify(execFile);
 
@@ -36,6 +37,7 @@ for (const date of index.available_dates) {
 }
 
 await rm(generated, { recursive: true, force: true });
+await rm(cardManifest, { force: true });
 await rm(publicData, { recursive: true, force: true });
 await mkdir(path.dirname(generated), { recursive: true });
 await mkdir(path.dirname(publicData), { recursive: true });
@@ -98,6 +100,8 @@ await run(process.env.PYTHON ?? 'python3', [
   path.join(repositoryRoot, 'tools', 'validate_star_rank_data.py'),
   '--data-dir',
   generated,
+  '--card-manifest',
+  cardManifest,
 ]);
 
 console.log(`Prepared ${index.available_dates.length} ranking day(s) from ${source}`);
