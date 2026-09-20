@@ -133,6 +133,7 @@ const authApiUrl = import.meta.env.PUBLIC_AUTH_API_URL?.replace(/\/$/u, '') ?? '
         <button type="button" data-project-language="original" aria-pressed="false">原文</button>
       </div>
     </header>
+    <p class="auth-notice" data-auth-status role="status" aria-live="polite" hidden></p>
     <slot />
     <footer class="site-footer">
       <div class="site-footer-copy">
@@ -270,3 +271,8 @@ const authApiUrl = import.meta.env.PUBLIC_AUTH_API_URL?.replace(/\/$/u, '') ?? '
     </script>
   </body>
 </html>
+
+<style>
+  .auth-notice { margin: 0 auto 1rem; padding: .75rem 1rem; max-width: 76rem; color: #9a3412; background: #fff7ed; border-radius: .5rem; }
+  .auth-notice[hidden] { display: none; }
+</style>

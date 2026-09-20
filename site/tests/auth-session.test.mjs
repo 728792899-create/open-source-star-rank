@@ -20,7 +20,8 @@ async function setup(t, { token = 'old', fetcher = async () => response(), initi
   t.mock.method(globalThis, 'fetch', fetcher);
   class ElementMock {}
   for (const name of ['HTMLElement', 'HTMLButtonElement', 'HTMLImageElement', 'HTMLDialogElement']) globalThis[name] = ElementMock;
-  globalThis.document = { documentElement: { dataset: { authApiUrl: 'https://worker.example' } }, querySelector: () => null };
+  const authStatus = new ElementMock();
+  globalThis.document = { documentElement: { dataset: { authApiUrl: 'https://worker.example' } }, querySelector: (selector) => selector === '[data-auth-status]' ? authStatus : null };
   const events = new Map();
   const locations = [];
   globalThis.window = {
@@ -33,7 +34,7 @@ async function setup(t, { token = 'old', fetcher = async () => response(), initi
   await import(`../src/scripts/github-auth.ts?test=${++sequence}`);
   const auth = window.starRankAuth;
   if (initialize) await auth.initialize;
-  return { auth, values, timers, events, locations };
+  return { auth, values, timers, events, locations, authStatus };
 }
 
 test('login stores the browser verifier locally and sends only its challenge', async (t) => {
@@ -118,4 +119,34 @@ test('natural expiry clears both storage and authenticated UI without an action'
   for (const callback of [...timers.values()]) callback();
   assert.equal(values.has(storageKey), false);
   assert.equal(auth.state.authenticated, false);
+});
+
+for (const failure of ['503', 'offline']) test(`logout reports unconfirmed revocation on ${failure}`, async (t) => {
+  const { auth, values, authStatus } = await setup(t, { fetcher: async (url) => {
+    if (!url.endsWith('/auth/logout')) return response();
+    if (failure === 'offline') throw new TypeError('offline');
+    return new Response('{}', { status: 503 });
+  } });
+  await auth.logout();
+  assert.equal(values.has(storageKey), false);
+  assert.equal(auth.state.authenticated, false);
+  assert.match(auth.state.error, /服务端撤销未确认/u);
+  assert.equal(authStatus.hidden, false);
+  assert.match(authStatus.textContent, /服务端撤销未确认/u);
+});
+
+test('a late logout failure cannot change a newer login', async (t) => {
+  const logout = deferred();
+  const { auth, values } = await setup(t, { fetcher: async (url) => {
+    if (url.endsWith('/auth/logout')) return logout.promise;
+    if (url.endsWith('/auth/exchange')) return Response.json({ session_token: 'new', expires_in: 3600, return_to: '/app/' });
+    return response();
+  } });
+  const pending = auth.logout();
+  values.set(proofKey, JSON.stringify({ verifier: 'v'.repeat(43), expiresAt: Date.now() + 600_000 }));
+  await auth.exchangeHandoff('h'.repeat(43));
+  logout.resolve(new Response('{}', { status: 503 }));
+  await pending;
+  assert.equal(auth.state.authenticated, true);
+  assert.equal(auth.state.error, undefined);
 });

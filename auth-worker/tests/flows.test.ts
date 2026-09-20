@@ -122,3 +122,31 @@ describe('bound one-time OAuth flow', () => {
     expect(await response.json()).toEqual({ error: 'internal_error' });
   });
 });
+
+describe('local session revocation', () => {
+  const signed = (path: string, token: string, method = 'GET', origin = 'https://site.example') => new Request(`https://worker.example${path}`, {
+    method, headers: { origin, authorization: `Bearer ${token}` },
+  });
+  it.each(['near-expiry', 'expired', 'invalid-encryption'])('revokes %s sessions without contacting GitHub', async (scenario) => {
+    const first = await (await exchange(await handoff())).json() as { session_token: string };
+    const second = await (await exchange(await handoff())).json() as { session_token: string };
+    const now = Math.floor(Date.now() / 1000);
+    database.prepare('UPDATE sessions SET access_expires_at = ?, session_expires_at = ?, encrypted_access_token = ? WHERE id_hash = ?')
+      .run(now + 30, scenario === 'expired' ? now - 1 : now + 45, 'unreadable', await hash(first.session_token));
+    vi.mocked(fetch).mockClear().mockRejectedValue(new Error('fixture provider offline'));
+    expect((await worker.fetch(signed('/auth/logout', first.session_token, 'POST'), env)).status).toBe(204);
+    expect((await worker.fetch(signed('/auth/logout', first.session_token, 'POST'), env)).status).toBe(204);
+    expect((await worker.fetch(signed('/api/session', first.session_token), env)).status).toBe(401);
+    expect(database.prepare('SELECT count(*) AS n FROM sessions').get()?.n).toBe(1);
+    expect((await worker.fetch(signed('/api/session', second.session_token), env)).status).toBe(200);
+    expect(fetch).not.toHaveBeenCalled();
+  });
+  it('requires the allowed origin and does not report database failures as revocation', async () => {
+    const { session_token: token } = await (await exchange(await handoff())).json() as { session_token: string };
+    expect((await worker.fetch(signed('/auth/logout', token, 'POST', 'https://other.example'), env)).status).toBe(403);
+    expect(database.prepare('SELECT count(*) AS n FROM sessions').get()?.n).toBe(1);
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    vi.spyOn(env.AUTH_DB, 'prepare').mockImplementation(() => { throw new Error('fixture database offline'); });
+    expect((await worker.fetch(signed('/auth/logout', token, 'POST'), env)).status).toBe(500);
+  });
+});

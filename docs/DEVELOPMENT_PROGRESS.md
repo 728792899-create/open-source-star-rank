@@ -1,5 +1,14 @@
 # 开发进度与同步记录
 
+## 2026-09-20 修复与上线批次
+
+已核实 PR #70 合并至 main（ae90c75）；以下为后续独立修复步骤，不改变六项目 UI 原型的产品范围。
+
+1. **退出登录撤销修复（R07）**：允许的 Origin 下按本站 bearer 摘要幂等删除会话，不调用 GitHub 刷新或解密；数据库失败仍返回失败。浏览器立即退出本机状态，服务端撤销未确认时在可见状态区提示，旧退出请求不能影响新登录。
+   - 验证：Worker 14 项测试、TypeScript、preflight；站点 16 项测试；Astro 检查。覆盖临期/过期/密文异常、重复退出、会话隔离、错误 Origin、数据库故障及前端延迟响应。
+   - 独立审查指出提示原先位于折叠收藏面板内，已改为页面可见的 aria-live 状态区并增加 DOM 状态断言。
+   - 当前生产 Worker 凭据已过期、GitHub 未配置部署 secret；源码同步和 Pages/Worker 上线分别跟踪，不能由本地通过推断部署完成。
+
 更新日期：2026-09-19。开发分支：[`codex/project-upgrade-20260919`](https://github.com/728792899-create/open-source-star-rank/tree/codex/project-upgrade-20260919)。
 
 ## 当前交付范围

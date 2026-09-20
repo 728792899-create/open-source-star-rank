@@ -134,10 +134,15 @@ const exchangeHandoff = async (handoff: string) => {
 };
 
 const logout = async () => {
-  const pending = readSession() ? request('/auth/logout', { method: 'POST' }).catch(() => null) : Promise.resolve();
-  window.sessionStorage.removeItem(browserProofKey);
+  const pending = readSession() ? request('/auth/logout', { method: 'POST' }).catch(() => null) : Promise.resolve(undefined);
+  try { window.sessionStorage.removeItem(browserProofKey); } catch {}
   invalidateSession();
-  await pending;
+  const version = sessionVersion;
+  const response = await pending;
+  if (version === sessionVersion && (response === null || (response && !response.ok))) {
+    state = { ...state, error: '本机已退出，但服务端撤销未确认。请在 GitHub 设置中撤销应用授权，或等待原会话过期。' };
+    publishState();
+  }
 };
 
 const splitName = (fullName: string) => {
@@ -217,6 +222,11 @@ const render = () => {
   }
   const status = document.querySelector('[data-sync-status]');
   if (status && state.error) status.textContent = state.error;
+  const authStatus = document.querySelector('[data-auth-status]');
+  if (authStatus instanceof HTMLElement) {
+    authStatus.textContent = state.error ?? '';
+    authStatus.hidden = !state.error;
+  }
   const sync = document.querySelector('[data-sync-favorites]');
   const library = (window as Window & { starRankLibrary?: { read: () => { favorites: Array<{ fullName?: string }> } } }).starRankLibrary?.read();
   if (sync instanceof HTMLButtonElement) sync.hidden = !state.authenticated || !(library?.favorites.length);
