@@ -9,6 +9,10 @@
    - 独立审查指出提示原先位于折叠收藏面板内，已改为页面可见的 aria-live 状态区并增加 DOM 状态断言。
    - 当前生产 Worker 凭据已过期、GitHub 未配置部署 secret；源码同步和 Pages/Worker 上线分别跟踪，不能由本地通过推断部署完成。
 
+2. **依赖与凭据文件加固**：核对 GitHub 的 9 条原型依赖告警，Vite 升至 6.4.3，并更新锁文件中的 Browserslist/PostCSS/nanoid/baseline-browser-mapping 等依赖；加入原型 CI 审计门禁及原型/Python Dependabot，根目录忽略 .env。
+   - 在独立临时副本执行 npm ci、构建、15 项原型测试和 moderate 级 npm audit，审计为 0；没有修改现有预览共享的 node_modules。
+   - 默认分支告警关闭与生产部署状态需在合并后另行核实。
+
 更新日期：2026-09-19。开发分支：[`codex/project-upgrade-20260919`](https://github.com/728792899-create/open-source-star-rank/tree/codex/project-upgrade-20260919)。
 
 ## 当前交付范围
