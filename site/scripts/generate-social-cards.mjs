@@ -5,18 +5,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Worker } from 'node:worker_threads';
 import { loadCardJobs } from './social-card-inputs.mjs';
+import { requireCjkFont, validateCjkFont } from './social-card-font.mjs';
 
 const siteRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dataRoot = path.join(siteRoot, 'generated', 'data');
 const outputRoot = path.join(siteRoot, 'public', 'social');
-const fontFile = [
-  '/System/Library/Fonts/Supplemental/Arial Unicode.ttf',
-  '/System/Library/Fonts/PingFang.ttc',
-  '/System/Library/Fonts/Helvetica.ttc',
-  '/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc',
-  '/usr/share/fonts/opentype/noto/NotoSansCJKSC-Regular.otf',
-  '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',
-].find((candidate) => existsSync(candidate));
+const font = requireCjkFont();
+validateCjkFont(font);
 const localizationPath = path.join(dataRoot, 'i18n', 'zh-CN', 'repositories.json');
 const localization = existsSync(localizationPath)
   ? JSON.parse(await readFile(localizationPath, 'utf8'))
@@ -49,7 +44,7 @@ async function renderQueue() {
         worker.once('error', onError);
         worker.once('exit', onExit);
         worker.once('message', onMessage);
-        worker.postMessage({ ...job, fontFile });
+        worker.postMessage({ ...job, font });
       });
     }
   } finally {

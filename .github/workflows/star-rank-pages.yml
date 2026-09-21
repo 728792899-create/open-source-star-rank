@@ -88,6 +88,9 @@ jobs:
           cache: pip
           cache-dependency-path: requirements-star-rank.txt
 
+      - name: Install Chinese fonts for social cards
+        run: sudo apt-get update && sudo apt-get install --yes fonts-noto-cjk
+
       - name: Set up Node.js
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
