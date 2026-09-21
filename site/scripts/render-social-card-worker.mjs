@@ -1,7 +1,9 @@
-import { writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { parentPort, workerData } from 'node:worker_threads';
 import { Resvg } from '@resvg/resvg-js';
 import { cardOutput } from './social-card-inputs.mjs';
+
+const brandLogo = (await readFile(new URL('../public/assets/brand/kingai-logo.svg', import.meta.url))).toString('base64');
 
 const escapeXml = (value) => String(value)
   .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
@@ -18,8 +20,8 @@ function cardSvg(ranking, label, eventMode = false) {
   }).join('');
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
     <rect width="1200" height="630" fill="#f3efe4"/><path d="M0 70H1200M0 560H1200" stroke="#cbc4b4"/>
-    <circle cx="88" cy="83" r="27" fill="#171814"/><path d="M88 65l5 12 13 1-10 9 3 13-11-7-11 7 3-13-10-9 13-1z" fill="#f2dcae"/>
-    <text x="132" y="94" font-family="sans-serif" font-size="29" font-weight="800" fill="#171814">开源星榜</text>
+    <image href="data:image/svg+xml;base64,${brandLogo}" x="62" y="50" width="66" height="66"/>
+    <text x="148" y="94" font-family="sans-serif" font-size="29" font-weight="800" fill="#171814">开源星榜</text>
     <text x="1110" y="92" text-anchor="end" font-family="monospace" font-size="20" font-weight="700" fill="#c98b18">${escapeXml(label.toUpperCase())}</text>
     <text x="88" y="178" font-family="sans-serif" font-size="54" font-weight="850" letter-spacing="-2" fill="#171814">${escapeXml(ranking.date)} · ${eventMode ? '新增 STAR' : 'STAR 净增'}</text>
     <text x="90" y="222" font-family="sans-serif" font-size="20" fill="#68685e">${eventMode ? 'GH ARCHIVE 全站公开 WATCH EVENT' : '候选池连续快照'} · ${(eventMode ? ranking.source_metrics.observed_repository_count : ranking.eligible_count).toLocaleString('zh-CN')} 个仓库 · UTC+8</text>
