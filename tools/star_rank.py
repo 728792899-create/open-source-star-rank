@@ -1183,6 +1183,8 @@ def run_update(
         pending_date = dt.date.fromisoformat(pending["snapshot"]["snapshot_date"])
         if pending_date > snapshot_date:
             raise DataIntegrityError("存在较新日期的待完成发布，拒绝回写旧日期")
+        if require_valid_capture and not snapshot_is_valid(pending["snapshot"]):
+            raise DataIntegrityError("待恢复快照不在有效采样窗口，拒绝作为正式快照发布")
         recovered = publish_snapshot(
             data_dir=data_dir, snapshot=pending["snapshot"], candidates=pending["candidates"],
             dry_run=dry_run, status="reused",
@@ -1194,6 +1196,8 @@ def run_update(
 
     existing_snapshot = load_json(snapshot_path)
     if existing_snapshot is not None and not replace_snapshot:
+        if require_valid_capture and not snapshot_is_valid(existing_snapshot):
+            raise DataIntegrityError("已有快照不在有效采样窗口，拒绝作为正式快照复用")
         state = load_json(state_path, {})
         candidates = state.get("candidates", [])
         if state.get("updated_at") != existing_snapshot.get("captured_at") or {

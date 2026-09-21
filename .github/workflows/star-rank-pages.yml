@@ -2,8 +2,9 @@ name: Update and publish Open Source Star Rank
 
 on:
   schedule:
-    # 00:20 Asia/Shanghai. Scheduled workflows may start later under GitHub load.
-    - cron: "20 16 * * *"
+    # 00:07, 00:20, 00:47 Asia/Shanghai. Bounded retries for delayed schedules.
+    # Same-day reruns reuse the first valid snapshot; the 03:00 boundary stays enforced.
+    - cron: "7,20,47 16 * * *"
   workflow_dispatch:
     inputs:
       mode:
@@ -37,10 +38,10 @@ jobs:
     timeout-minutes: 45
     permissions:
       contents: write
-      models: read
     outputs:
       should_deploy: ${{ steps.mode.outputs.should_deploy }}
       run_mode: ${{ steps.mode.outputs.run_mode }}
+      data_commit: ${{ steps.data-version.outputs.sha }}
     env:
       PYTHONUNBUFFERED: "1"
       ASTRO_TELEMETRY_DISABLED: "1"
@@ -156,28 +157,11 @@ jobs:
           fi
           python -m tools.star_rank "${args[@]}"
 
-      - name: Localize newly ranked repositories
-        if: steps.mode.outputs.run_mode == 'collect_publish' || steps.mode.outputs.run_mode == 'replace_snapshot'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LOCALIZATION_MODEL: ${{ vars.LOCALIZATION_MODEL || 'openai/gpt-4.1-mini' }}
-          LOCALIZATION_MAX_PROJECTS: ${{ vars.LOCALIZATION_MAX_PROJECTS || '200' }}
-        run: >-
-          python -m tools.localize_repositories
-          --data-dir "$STAR_RANK_DATA_DIR"
-          --overrides-file data/localization-overrides.zh-CN.json
-
-      - name: Classify newly ranked repositories
-        if: steps.mode.outputs.run_mode == 'collect_publish' || steps.mode.outputs.run_mode == 'replace_snapshot'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CLASSIFICATION_MODEL: ${{ vars.CLASSIFICATION_MODEL || 'openai/gpt-4.1-mini' }}
-          CLASSIFICATION_MAX_PROJECTS: ${{ vars.CLASSIFICATION_MAX_PROJECTS || '200' }}
-        run: >-
-          python -m tools.classify_repositories
-          --data-dir "$STAR_RANK_DATA_DIR"
-          --taxonomy-file data/classification-taxonomy.zh-CN.json
-          --overrides-file data/classification-overrides.zh-CN.json
+      - name: Reconcile content caches without blocking capture on model availability
+        if: steps.mode.outputs.run_mode != 'deploy_existing'
+        run: |
+          python -m tools.localize_repositories --data-dir "$STAR_RANK_DATA_DIR" --overrides-file data/localization-overrides.zh-CN.json --offline
+          python -m tools.classify_repositories --data-dir "$STAR_RANK_DATA_DIR" --taxonomy-file data/classification-taxonomy.zh-CN.json --overrides-file data/classification-overrides.zh-CN.json --offline
 
       - name: Validate staged data contracts
         run: python tools/validate_star_rank_data.py --data-dir "$STAR_RANK_DATA_DIR" --sync-schemas
@@ -210,6 +194,10 @@ jobs:
             git -C "$STAR_RANK_DATA_DIR" commit -m "Update star rank snapshot"
             git -C "$STAR_RANK_DATA_DIR" push origin HEAD:star-rank-data
           fi
+
+      - name: Record the exact published data version
+        id: data-version
+        run: echo "sha=$(git -C "$STAR_RANK_DATA_DIR" rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Upload GitHub Pages artifact
         if: steps.mode.outputs.should_deploy == 'true'
@@ -257,7 +245,9 @@ jobs:
           BUILD_RESULT: ${{ needs.build.result }}
           DEPLOY_RESULT: ${{ needs.deploy.result }}
           RUN_MODE: ${{ needs.build.outputs.run_mode }}
+          DATA_COMMIT: ${{ needs.build.outputs.data_commit }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          SITE_INDEX: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/data/index.json
         shell: bash
         run: |
           set -euo pipefail
@@ -265,7 +255,15 @@ jobs:
             if [[ "$RUN_MODE" == "deploy_existing" ]]; then
               echo "deploy_existing 不改变采样新鲜度，保留现有故障 Issue 状态。"
             else
-              python tools/star_rank_incident.py --status close --details "采集和部署已恢复：$RUN_URL"
+              if git fetch origin refs/heads/star-rank-data:refs/remotes/origin/star-rank-data &&
+                git show "$DATA_COMMIT:public/index.json" > "$RUNNER_TEMP/expected-index.json" &&
+                curl --fail --location --retry 3 --output "$RUNNER_TEMP/published-index.json" "$SITE_INDEX" &&
+                cmp "$RUNNER_TEMP/expected-index.json" "$RUNNER_TEMP/published-index.json" &&
+                python tools/check_star_rank_freshness.py --index "$RUNNER_TEMP/published-index.json" --require-today --require-valid-capture --require-yesterday-date; then
+                python tools/star_rank_incident.py --status close --details "今日有效快照和昨日净增榜均已发布：$RUN_URL"
+              else
+                python tools/star_rank_incident.py --status open --details "部署已完成，但昨日榜尚未恢复；请核对连续采样基线与线上数据：$RUN_URL"
+              fi
             fi
           else
             python tools/star_rank_incident.py --status open --details "build=$BUILD_RESULT, deploy=$DEPLOY_RESULT；运行记录：$RUN_URL"

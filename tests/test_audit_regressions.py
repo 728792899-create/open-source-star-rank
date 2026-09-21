@@ -13,7 +13,7 @@ from tools.event_star_rank import build_category_pool, rebuild_dependent_pools
 from tools.localize_repositories import discover_ranked_repositories
 from tools.migrate_star_rank_top500 import apply_manifest, build_manifest
 from tools.validate_star_rank_data import validate_data_tree
-from tools.star_rank_schema import validate_payload
+from tools.star_rank_schema import SchemaValidationError, validate_payload
 
 UTC = dt.timezone.utc
 
@@ -45,6 +45,57 @@ class AuditRegressionTests(unittest.TestCase):
         repos = repos or [api_repo(i, f'demo/r{i}', 100 + day) for i in range(1, 7)]
         return s.run_update(FakeClient(repos), data_dir=self.root,
                             projects_file=self.seeds, captured_at=capture(day), **kwargs)
+
+    def test_production_rerun_rejects_invalid_existing_snapshot_without_writes(self):
+        s.run_update(FakeClient([api_repo(1, 'demo/r1', 100)]), data_dir=self.root,
+                     projects_file=self.seeds, captured_at=capture(15) + dt.timedelta(hours=4))
+        before = {str(p): p.read_bytes() for p in self.root.rglob('*.json')}
+        client = FakeClient([])
+        with self.assertRaisesRegex(s.DataIntegrityError, '已有快照'):
+            s.run_update(client, data_dir=self.root, projects_file=self.seeds,
+                         captured_at=capture(15) + dt.timedelta(hours=5), require_valid_capture=True)
+        self.assertEqual(client.request_count, 0)
+        self.assertEqual(before, {str(p): p.read_bytes() for p in self.root.rglob('*.json')})
+
+    def test_production_recovery_preserves_invalid_journal_without_publishing(self):
+        candidates = [s.repository_record(api_repo(1, 'demo/r1', 100), observed_date='2026-09-16', source='test')]
+        snapshot = s.build_snapshot(candidates, captured_at=capture(15) + dt.timedelta(hours=4))
+        journal = self.root / 'state/pending-update.json'
+        s.atomic_write_json(journal, {'snapshot': snapshot, 'candidates': candidates})
+        before = journal.read_bytes()
+        client = FakeClient([])
+        with self.assertRaisesRegex(s.DataIntegrityError, '待恢复快照'):
+            s.run_update(client, data_dir=self.root, projects_file=self.seeds,
+                         captured_at=capture(15) + dt.timedelta(hours=5), require_valid_capture=True)
+        self.assertEqual(client.request_count, 0)
+        self.assertEqual(journal.read_bytes(), before)
+        self.assertFalse((self.root / 'public').exists())
+
+    def test_production_daytime_rerun_reuses_valid_snapshot(self):
+        self.update(15, require_valid_capture=True)
+        client = FakeClient([])
+        result = s.run_update(client, data_dir=self.root, projects_file=self.seeds,
+                              captured_at=capture(15) + dt.timedelta(hours=8), require_valid_capture=True)
+        self.assertEqual(result['status'], 'reused')
+        self.assertEqual(client.request_count, 0)
+        self.assertEqual(result['index']['updated_at'], s.isoformat(capture(15)))
+
+    def test_offline_reconciliation_validates_a_changed_candidate_batch(self):
+        from tools.localize_repositories import localize_repositories
+        from tools.classify_repositories import classify_repositories
+        from tests.test_enrichment_recovery import Client
+        def reconcile(client=None):
+            localize_repositories(self.root, client=client)
+            classify_repositories(self.root, taxonomy_file=Path('data/classification-taxonomy.zh-CN.json'), client=client)
+        self.update(15)
+        self.update(16)
+        reconcile(Client())
+        validate_data_tree(self.root)
+        self.update(17, repos=[api_repo(i, f'demo/renamed-{i}', 150) for i in range(1, 7)])
+        with self.assertRaises(SchemaValidationError):
+            validate_data_tree(self.root)
+        reconcile()
+        validate_data_tree(self.root)
 
     def test_card_manifest_lists_only_schema_validated_ranking_inputs(self):
         self.update(15)
