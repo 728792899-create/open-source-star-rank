@@ -110,7 +110,7 @@ def required_verbatim_tokens(repository: Mapping[str, Any]) -> list[str]:
 
 
 def discover_ranked_repositories(public_dir: Path) -> dict[int, dict[str, Any]]:
-    """Return the newest public ranking metadata for every repository ever ranked."""
+    """Newest ranked metadata, prioritizing prominent current entries."""
 
     sources: dict[int, tuple[tuple[str, int, str], dict[str, Any]]] = {}
     groups = (
@@ -156,9 +156,22 @@ def discover_ranked_repositories(public_dir: Path) -> dict[int, dict[str, Any]]:
     if alltime_path.is_file():
         register(read_json(alltime_path), date="", priority=-1, path=alltime_path)
 
+    # Prefer visible current projects within the established enrichment scope.
+    # Do not widen that scope here: archived data commits must remain valid for
+    # deploy_existing and Top500 migrations without rewriting their coverage.
+    catalog_path = public_dir / "repositories.json"
+    catalog = read_json(catalog_path) if catalog_path.is_file() else {}
+    current_entries = catalog.get("repositories", [])
+    prominent_ids: list[int] = []
+    daily_paths = sorted((public_dir / "daily").glob("????-??-??.json"))
+    if daily_paths:
+        prominent_ids.extend(int(item["repository_id"]) for item in read_json(daily_paths[-1]).get("entries", [])[:100])
+    prominent_ids.extend(int(item["repository_id"]) for item in sorted(current_entries, key=lambda item: (-int(item.get("stars_total", 0)), int(item["repository_id"]))))
+    priority_order = {repository_id: rank for rank, repository_id in reversed(list(enumerate(prominent_ids)))}
+
     ordered = sorted(
         sources.items(),
-        key=lambda item: (item[1][0], -item[0]),
+        key=lambda item: (-priority_order.get(item[0], len(prominent_ids)), item[1][0], -item[0]),
         reverse=True,
     )
     return {repository_id: source for repository_id, (_, source) in ordered}
