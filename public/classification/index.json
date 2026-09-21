@@ -2,14 +2,14 @@
   "schema_version": "1.0.0",
   "taxonomy_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-20T18:39:07.197775Z",
+  "generated_at": "2026-09-21T05:35:32.902546Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-classification-v1",
   "coverage": {
     "eligible_count": 3970,
     "classified_count": 3768,
     "pending_count": 202,
-    "failed_count": 200,
+    "failed_count": 202,
     "coverage_ratio": 0.949118
   },
   "categories": [
@@ -254,6 +254,7 @@
     68957920,
     71995937,
     75785240,
+    80149262,
     91253698,
     92807616,
     99919302,
@@ -303,6 +304,7 @@
     543101941,
     560704231,
     585146387,
+    595526110,
     596377730,
     599524116,
     599735720,
