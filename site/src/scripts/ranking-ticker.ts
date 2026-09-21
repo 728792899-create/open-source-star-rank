@@ -1,3 +1,4 @@
+export function initializeTickers(signal: AbortSignal) {
 for (const root of document.querySelectorAll<HTMLElement>('[data-ranking-ticker]')) {
   const items = [...root.querySelectorAll<HTMLElement>('[data-ticker-item]')];
   const controls = root.querySelector<HTMLElement>('[data-ticker-controls]');
@@ -34,11 +35,14 @@ for (const root of document.querySelectorAll<HTMLElement>('[data-ranking-ticker]
   };
   root.querySelector('[data-ticker-prev]')?.addEventListener('click', () => { move(-1); start(); });
   root.querySelector('[data-ticker-next]')?.addEventListener('click', () => { move(1); start(); });
-  pause?.addEventListener('click', () => { paused = !paused; render(); start(); });
-  reduced.addEventListener('change', () => { render(); start(); });
-  document.addEventListener('visibilitychange', start);
-  window.addEventListener('pagehide', stop);
-  window.addEventListener('pageshow', start);
+  pause?.addEventListener('click', () => { paused = !paused; render(); start(); }, { signal });
+  reduced.addEventListener('change', () => { render(); start(); }, { signal });
+  document.addEventListener('visibilitychange', start, { signal });
+  window.addEventListener('pagehide', stop, { signal });
+  window.addEventListener('pageshow', start, { signal });
+  signal.addEventListener('abort', stop, { once: true });
   render();
   start();
+}
+
 }

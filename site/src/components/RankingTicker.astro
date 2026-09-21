@@ -4,16 +4,17 @@ import UpdateCountdown from './UpdateCountdown.astro';
 interface Props {
   updatedAt: string | null;
   thresholdHours: number;
+  captureValid?: boolean;
   nextAt?: string | null;
   indexUpdatedAt?: string | null;
   indexPath: string;
   label?: string;
   notes: string[];
 }
-const { updatedAt, thresholdHours, nextAt, indexUpdatedAt, indexPath, label, notes } = Astro.props;
+const { updatedAt, thresholdHours, captureValid = true, nextAt, indexUpdatedAt, indexPath, label, notes } = Astro.props;
 ---
 <section class="ranking-ticker" data-ranking-ticker aria-label="榜单更新与收录信息">
-  <div class="ticker-health"><FreshnessStatus updatedAt={updatedAt} thresholdHours={thresholdHours} compact /></div>
+  <div class="ticker-health"><FreshnessStatus updatedAt={updatedAt} thresholdHours={thresholdHours} captureValid={captureValid} compact /></div>
   <div class="ticker-carousel">
     <div class="ticker-items" aria-live="off">
       {nextAt && <div class="ticker-item" data-ticker-item>
@@ -28,6 +29,3 @@ const { updatedAt, thresholdHours, nextAt, indexUpdatedAt, indexPath, label, not
     </div>
   </div>
 </section>
-<script>
-  import '../scripts/ranking-ticker';
-</script>

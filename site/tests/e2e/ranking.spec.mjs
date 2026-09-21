@@ -362,14 +362,17 @@ test('preserves historical independent boards under the archive hub', async ({ p
 
 test('publishes the all-time top 1000 board with cumulative star ordering and filters', async ({ page }) => {
   await page.goto('all-time/');
-  await expect(page.getByRole('heading', { name: '全部历史星标 Top 1000' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '累计 Star 排行' })).toBeVisible();
   const rows = page.locator('[data-ranking-row]');
   await expect(rows).toHaveCount(1_000);
   const ranks = (await rows.locator('.rank-number').allTextContents()).map((rank) => Number(rank.trim()));
   expect(ranks).toEqual(ranks.map((_, index) => index + 1));
   await page.getByLabel('编程语言').selectOption('Python');
   await expect(page).toHaveURL(/language=Python/);
-  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(250);
+  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(100);
+  await expect(page.locator('[data-matching-count]')).toHaveText('250');
+  await page.getByRole('navigation', { name: '榜单分页', exact: true }).getByRole('button', { name: '3', exact: true }).click();
+  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(50);
   await page.getByLabel('编程语言').selectOption('');
   const search = page.getByRole('searchbox', { name: '搜索项目' });
   await search.fill('project-001');

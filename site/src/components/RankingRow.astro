@@ -1,0 +1,98 @@
+---
+import type { RankingEntry, EventRankingEntry, AllTimeEntry } from '../types';
+import { withBase } from '../lib/paths';
+import { readLocalizationCatalog } from '../lib/data';
+import { classificationLabels, classificationMap } from '../lib/classification';
+import { localizedRepositoryContent } from '../lib/localization';
+import { repositoryAgeLabel, repositoryDate, repositoryOwner } from '../lib/repository-lifecycle';
+interface Props { entry: RankingEntry | EventRankingEntry | AllTimeEntry; cumulative?: boolean; isFacet?: boolean; isEvent?: boolean; gainLabel?: string; localization: ReturnType<typeof readLocalizationCatalog>; classifications: ReturnType<typeof classificationMap>; labels: ReturnType<typeof classificationLabels>; }
+const { entry: source, cumulative = false, isFacet = false, isEvent = false, gainLabel = '日净增', localization, classifications, labels } = Astro.props;
+const entry = source as RankingEntry & EventRankingEntry;
+const formatNumber = (value: number) => new Intl.NumberFormat('zh-CN').format(value);
+const formatCompact = (value: number) => new Intl.NumberFormat('zh-CN', { notation: 'compact', maximumFractionDigits: 1 }).format(value);
+const gained = cumulative ? null : 'stars_added' in source ? source.stars_added : (source as RankingEntry).stars_gained;
+          const content = localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description);
+          const classification = classifications.get(entry.repository_id);
+          const categoryLabel = classification ? labels.categories.get(classification.primary_category) : null;
+          const projectTypeLabel = classification ? labels.projectTypes.get(classification.project_type) : null;
+          const useCaseLabels = classification?.use_cases.map((id) => labels.useCases.get(id)).filter(Boolean) as string[] | undefined;
+          const searchText = `${entry.full_name} ${entry.description ?? ''} ${content.displayName} ${content.description ?? ''} ${categoryLabel ?? ''} ${projectTypeLabel ?? ''} ${useCaseLabels?.join(' ') ?? ''}`;
+const movement = cumulative || isFacet ? '' : entry.rank_change === null ? '新上榜' : entry.rank_change > 0 ? `↑${entry.rank_change}` : entry.rank_change < 0 ? `↓${Math.abs(entry.rank_change)}` : '—';
+const movementClass = cumulative || isFacet ? 'flat' : entry.rank_change === null ? 'new' : entry.rank_change > 0 ? 'up' : entry.rank_change < 0 ? 'down' : 'flat';
+---
+            <div
+              id={`repo-${entry.repository_id}`}
+              class="ranking-row"
+              role="row"
+              data-ranking-row
+              data-search-text={searchText.toLocaleLowerCase()}
+              data-language={entry.language ?? ''}
+              data-category={classification?.primary_category ?? ''}
+              data-project-type={classification?.project_type ?? ''}
+              data-scenarios={classification?.use_cases.join(',') ?? ''}
+              data-rank={entry.rank}
+              data-source-rank={entry.rank}
+            >
+              <strong
+                class:list={['rank-cell', movementClass]}
+                role="cell"
+                data-movement={movement}
+                aria-label={cumulative ? `历史排名 ${entry.rank}` : isFacet ? `分类内排名 ${entry.rank}` : `排名 ${entry.rank}，变化 ${movement}`}
+              ><span class="rank-number">{String(entry.rank).padStart(2, '0')}</span><small class="source-rank" hidden>总榜 #{entry.rank}</small></strong>
+              <div class="project-cell" role="cell">
+                <img class="workspace-project-avatar" src={entry.owner_avatar_url?.startsWith('https://avatars.githubusercontent.com/') ? entry.owner_avatar_url : withBase('/assets/ui/star.svg')} alt="" width="46" height="46" loading="lazy" decoding="async" />
+                <div class="project-copy">
+                  {content.localized ? <>
+                    <a class="project-link" data-content-language="zh" href={withBase(`/repo/${entry.repository_id}/`)}>{content.displayName}</a>
+                    <a class="project-link" data-content-language="original" href={withBase(`/repo/${entry.repository_id}/`)}>{entry.full_name}</a>
+                    <span class="project-source-row" data-content-language="zh">
+                      <span class="project-source-name">{entry.full_name}</span>
+                      <span class="translation-badge" title={content.provenance === 'manual' ? '人工校订中文内容' : 'GitHub Models 生成的中文内容'}>{content.provenance === 'manual' ? '人工校订' : 'AI 译'}</span>
+                    </span>
+                    <p>
+                      <span data-content-language="zh">{content.description || 'GitHub 未提供项目描述。'}</span>
+                      <span data-content-language="original">{entry.description || 'No description provided.'}</span>
+                    </p>
+                  </> : <>
+                    <a class="project-link" href={withBase(`/repo/${entry.repository_id}/`)}>{entry.full_name}</a>
+                    <span class="project-source-row"><span class="translation-pending">中文待生成</span></span>
+                    <p>{entry.description || 'No description provided.'}</p>
+                  </>}
+                  {classification ? <div class="classification-tags" aria-label="项目分类">
+                    <span class="primary-category-tag">{categoryLabel}</span>
+                    <span>{projectTypeLabel}</span>
+                    {useCaseLabels?.slice(0, 2).map((label) => <span>{label}</span>)}
+                  </div> : <span class="classification-pending">分类待生成</span>}
+                  <p class="project-lifecycle">
+                    <span>作者 {repositoryOwner(entry.full_name)}</span>
+                    <span>{entry.created_at ? `创建 ${repositoryDate(entry.created_at)}` : '创建时间待补充'}</span>
+                    <span>{entry.pushed_at ? `最近推送 ${repositoryDate(entry.pushed_at)}` : '更新日期待补充'}</span>
+                    <span>{repositoryAgeLabel(entry.created_at)}</span>
+                  </p>
+                </div>
+                <a class="github-link" href={entry.html_url} target="_blank" rel="noreferrer" aria-label={`在 GitHub 打开 ${entry.full_name}`}>GitHub ↗</a>
+
+              </div>
+              <div class="language-cell" role="cell">{entry.language || 'Other'}</div>
+              <div
+                class="trend-cell"
+                role="cell"
+                aria-label={cumulative ? '暂无累计 Star 趋势快照' : `最近七日${isEvent ? '新增' : '净增'}：${(entry.trend_7d ?? Array(7).fill(null)).map((value: number | null) => value ?? '无数据').join('、')}`}
+                data-trend-values={JSON.stringify(entry.trend_7d ?? Array(7).fill(null))}
+              >{cumulative ? <span class="trend-unavailable">暂无快照</span> : <canvas width="96" height="40" aria-hidden="true"></canvas>}</div>
+              <div class:list={['stars-cell', 'numeric', { negative: gained !== null && gained < 0 }]} role="cell" data-mobile-label={cumulative ? "总 Star" : `总 Star / ${gainLabel}`}>
+                {formatCompact(entry.stars_total)}{gained !== null && <> · {gained >= 0 ? '+' : ''}{formatNumber(gained)}</>}
+              </div>
+              <div class="workspace-project-actions" role="cell">
+                <a class="workspace-project-action" href={withBase(`/repo/${entry.repository_id}/`)}>查看项目 →</a>
+                <button
+                  class="share-project"
+                  type="button"
+                  data-share-project
+                  data-share-name-zh={content.displayName}
+                  data-share-name-original={entry.full_name}
+                  data-share-rank={entry.rank}
+                  aria-label={`分享 ${entry.full_name} 的第 ${entry.rank} 名`}
+                >分享</button>
+              </div>
+            </div>
