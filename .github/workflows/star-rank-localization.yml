@@ -139,13 +139,9 @@ jobs:
           if [[ "${{ steps.mode.outputs.run_mode }}" == "validate" ]]; then args+=(--offline); fi
           python -m tools.classify_repositories "${args[@]}"
 
-      - name: Validate data and build site
-        run: |
-          python tools/validate_star_rank_data.py --data-dir "$STAR_RANK_DATA_DIR" --sync-schemas
-          npm test --prefix site
-          STAR_RANK_DATA_DIR="$STAR_RANK_DATA_DIR/public" npm run check --prefix site
-          STAR_RANK_DATA_DIR="$STAR_RANK_DATA_DIR/public" npm run build --prefix site
-          npm run validate-build --prefix site
+      - name: Record validated business health
+        if: steps.mode.outputs.run_mode != 'deploy_existing'
+        run: python -m tools.operations_report --data-dir "$STAR_RANK_DATA_DIR"
 
       - name: Commit validated localization data
         if: steps.mode.outputs.run_mode == 'backfill_publish' || steps.mode.outputs.run_mode == 'migrate_scope'
@@ -154,11 +150,22 @@ jobs:
           set -euo pipefail
           git -C "$STAR_RANK_DATA_DIR" config user.name "github-actions[bot]"
           git -C "$STAR_RANK_DATA_DIR" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git -C "$STAR_RANK_DATA_DIR" add state/localization state/classification public/i18n public/classification public/schema
+          git -C "$STAR_RANK_DATA_DIR" add state/localization state/classification public/i18n public/classification public/schema public/operations.json
+          if [[ -d "$STAR_RANK_DATA_DIR/state/enrichment-queue" ]]; then
+            git -C "$STAR_RANK_DATA_DIR" add state/enrichment-queue
+          fi
           if ! git -C "$STAR_RANK_DATA_DIR" diff --cached --quiet; then
             git -C "$STAR_RANK_DATA_DIR" commit -m "Update Chinese project content and classification"
             git -C "$STAR_RANK_DATA_DIR" push origin HEAD:star-rank-data
           fi
+
+      - name: Validate data and build site
+        run: |
+          python tools/validate_star_rank_data.py --data-dir "$STAR_RANK_DATA_DIR" --sync-schemas
+          npm test --prefix site
+          STAR_RANK_DATA_DIR="$STAR_RANK_DATA_DIR/public" npm run check --prefix site
+          STAR_RANK_DATA_DIR="$STAR_RANK_DATA_DIR/public" npm run build --prefix site
+          npm run validate-build --prefix site
 
       - name: Upload GitHub Pages artifact
         if: steps.mode.outputs.should_deploy == 'true'

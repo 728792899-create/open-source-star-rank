@@ -1,0 +1,45 @@
+name: Verify independent Star Rank backup
+on:
+  schedule:
+    - cron: "30 19 * * *" # 03:30 Beijing, after the capture window
+  workflow_dispatch:
+
+permissions:
+  contents: read
+concurrency:
+  group: star-rank-r2-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      STAR_RANK_BACKUP_ENDPOINT: ${{ vars.STAR_RANK_BACKUP_ENDPOINT }}
+      STAR_RANK_BACKUP_TOKEN: ${{ secrets.STAR_RANK_BACKUP_TOKEN }}
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-star-rank.txt
+      - name: Require configured independent storage
+        run: |
+          test -n "$STAR_RANK_BACKUP_ENDPOINT" || { echo 'Configure STAR_RANK_BACKUP_ENDPOINT first' >&2; exit 1; }
+          test -n "$STAR_RANK_BACKUP_TOKEN" || { echo 'Configure STAR_RANK_BACKUP_TOKEN first' >&2; exit 1; }
+      - name: Install validation dependencies
+        run: python -m pip install --requirement requirements-star-rank.txt
+      - name: Read an exact data revision
+        run: |
+          git fetch origin refs/heads/star-rank-data
+          git worktree add --detach "$RUNNER_TEMP/backup-data" FETCH_HEAD
+      - name: Upload immutable objects and restore-verify before promoting latest
+        run: |
+          python -m tools.backup_star_rank upload --data-dir "$RUNNER_TEMP/backup-data" | tee "$RUNNER_TEMP/backup-report.json"
+      - name: Preserve verified backup identity
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: verified-backup-report
+          path: ${{ runner.temp }}/backup-report.json
+          retention-days: 30

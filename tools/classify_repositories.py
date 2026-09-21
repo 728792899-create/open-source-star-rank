@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
 
 try:
-    from tools.enrichment_state import failure_state
+    from tools.enrichment_state import failure_state, RetryQueue
     from tools.localize_repositories import (
         discover_ranked_repositories,
         iso_timestamp,
@@ -27,7 +27,7 @@ try:
     )
     from tools.star_rank_schema import SchemaValidationError, validate_payload
 except ModuleNotFoundError:  # pragma: no cover - direct script execution fallback
-    from enrichment_state import failure_state
+    from enrichment_state import failure_state, RetryQueue
     from localize_repositories import (  # type: ignore
         discover_ranked_repositories,
         iso_timestamp,
@@ -442,7 +442,10 @@ def classify_repositories(
             valid[repository_id] = dict(existing)
 
     pending = [source for repository_id, source in sources.items() if repository_id not in valid]
-    attempted = pending[:max_projects]
+    queue = RetryQueue(root, 'classification', run_at, fingerprints={key: classification_source_hash(source, str(taxonomy['taxonomy_version'])) for key, source in sources.items()})
+    attempted = queue.select(pending, max_projects)
+    actual_attempted: set[int] = set()
+    service_unavailable = False
     failed_ids: set[int] = set()
     model_client = client or (
         GitHubModelsClassificationClient(token, taxonomy, model=model) if token else None
@@ -450,6 +453,7 @@ def classify_repositories(
     if model_client is not None:
         for start in range(0, len(attempted), max_batch_size):
             batch = attempted[start : start + max_batch_size]
+            actual_attempted.update(int(item["repository_id"]) for item in batch)
             remaining = {int(item["repository_id"]): item for item in batch}
             validation_errors: dict[int, Exception] = {}
             for validation_attempt in range(2):
@@ -485,6 +489,7 @@ def classify_repositories(
                     if not remaining:
                         break
                 except ClassificationModelUnavailable as exc:
+                    service_unavailable = True
                     validation_errors.update({repository_id: exc for repository_id in current_ids})
                     break
                 except ClassificationError as exc:
@@ -499,10 +504,13 @@ def classify_repositories(
                 )
                 print(f"warning: 项目分类回退未分类状态（{details}）", file=sys.stderr)
 
+            if service_unavailable:
+                break
+
     repositories = [valid[repository_id] for repository_id in sorted(valid)]
     failed_count, failure_metadata = failure_state(
         previous_index, set(sources) - set(valid),
-        {int(item["repository_id"]) for item in attempted} if model_client is not None else set(), failed_ids,
+        actual_attempted if model_client is not None else set(), failed_ids,
     )
     repositories_catalog = {
         "schema_version": "1.1.0" if source_scope == "catalog-v1" else "1.0.0",
@@ -552,6 +560,8 @@ def classify_repositories(
         write_json_atomic(root / "state" / "classification" / "repositories.json", repositories_catalog)
     write_json_atomic(public_dir / "classification" / "repositories.json", repositories_catalog)
     write_json_atomic(public_dir / "classification" / "index.json", index)
+    if write_state and (model_client is not None or queue.path.exists()):
+        queue.save(set(sources) - set(valid), actual_attempted, failed_ids)
     return index, repositories_catalog
 
 

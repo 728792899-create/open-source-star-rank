@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const config=JSON.parse(readFileSync(new URL('../wrangler.jsonc',import.meta.url),'utf8'));
+assert.equal(config.name,'open-source-star-rank-operations');
+assert.equal(config.r2_buckets[0].binding,'STORE');
+assert.equal(config.vars.AUTO_RECOVERY,'false');
+assert.equal(config.vars.ISSUE_ALERTS,'false');
+assert.deepEqual(config.triggers.crons,['*/15 * * * *']);
+assert.match(config.vars.SITE_INDEX,/^https:\/\//);
+console.log('Operations configuration valid; recovery and issue delivery require explicit activation.');

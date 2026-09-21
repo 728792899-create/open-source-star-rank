@@ -26,6 +26,9 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, MutableMapping, Optional, Sequence, Tuple
 from zoneinfo import ZoneInfo
 
+if __package__ in (None, ""):  # retain the documented direct-script entry point
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 try:
     from tools.observation_pool import DIRECTORY_LIMIT, PROTECTION_DAYS, admission_limit, select_directory, select_observed
     from tools.star_rank_schema import (
@@ -239,6 +242,8 @@ class GitHubClient:
         timeout: int = 20,
         retries: int = 3,
         max_requests: Optional[int] = None,
+        preflight: bool = False,
+        deadline: Optional[float] = None,
     ) -> None:
         self.token = token
         self.timeout = timeout
@@ -246,6 +251,23 @@ class GitHubClient:
         self.max_requests = max_requests
         self.request_count = 0
         self.retry_count = 0
+        from tools.api_budget import BudgetPolicy
+        self.budget = BudgetPolicy(deadline=deadline)
+        self.preflight = preflight
+
+    def ensure_budget(self, required: int, resource: str = "core") -> None:
+        if not self.preflight or not required:
+            return
+        for attempt in range(2):
+            available = self._request_json("/rate_limit")["resources"][resource]
+            if available["remaining"] >= required:
+                return
+            if required > available["limit"] or attempt:
+                raise RateLimitError(f"GitHub {resource} 额度不足：需要 {required}，剩余 {available['remaining']}；保留原数据")
+            try:
+                self.budget.wait(max(1, available["reset"] - time.time() + 1))
+            except ValueError as exc:
+                raise RateLimitError(str(exc)) from exc
 
     def _request_json(self, path: str, *, not_found_ok: bool = False) -> Any:
         url = path if path.startswith("http") else f"{API_ROOT}{path}"
@@ -259,6 +281,7 @@ class GitHubClient:
         request = urllib.request.Request(url, headers=headers)
 
         for attempt in range(self.retries):
+            self.budget.check_deadline(self.timeout)
             if self.max_requests is not None and self.request_count >= self.max_requests:
                 raise RateLimitError(
                     f"GitHub API 请求已达任务安全上限 {self.max_requests}；拒绝超额采集"
@@ -273,8 +296,14 @@ class GitHubClient:
                 if exc.code == 404 and not_found_ok:
                     return None
                 remaining = exc.headers.get("X-RateLimit-Remaining")
-                if exc.code in (403, 429) and remaining == "0":
-                    raise RateLimitError("GitHub API 额度已耗尽；保留上一版数据并稍后重试") from exc
+                if exc.code == 429 or (exc.code == 403 and (remaining == "0" or exc.headers.get("Retry-After"))):
+                    if attempt + 1 < self.retries:
+                        try:
+                            self.budget.wait(self.budget.retry_delay(exc.headers))
+                        except ValueError as wait_error:
+                            raise RateLimitError(str(wait_error)) from exc
+                        continue
+                    raise RateLimitError("GitHub API 限流重试已达上限；保留上一版数据") from exc
                 if exc.code >= 500 and attempt + 1 < self.retries:
                     time.sleep(2**attempt)
                     continue
@@ -560,6 +589,8 @@ def collect_repository_pools(
     known_pinned_names = {
         str(item.get("full_name", "")).lower() for item in merged.values() if item.get("pinned")
     }
+    if hasattr(client, 'ensure_budget'):
+        client.ensure_budget(sum(name.lower() not in known_pinned_names for name in pinned_repositories))
     for full_name in pinned_repositories:
         if full_name.lower() in known_pinned_names:
             continue
@@ -595,6 +626,8 @@ def collect_repository_pools(
     else:
         selected = selected[:max_candidates]
 
+    if hasattr(client, 'ensure_budget'):
+        client.ensure_budget(sum(int(item['repository_id']) not in refreshed_ids for item in selected))
     refreshed: List[Dict[str, Any]] = []
     for candidate in selected:
         if int(candidate["repository_id"]) in refreshed_ids:
@@ -1318,6 +1351,8 @@ def run_update(
     previous_directory = state.get("directory", previous_candidates)
     existing_map = {int(item["repository_id"]): item for item in previous_directory}
     seeds = load_seed_repositories(projects_file)
+    if hasattr(client, 'ensure_budget'):
+        client.ensure_budget(1, 'search')
     discovered, search_result_counts = discover_candidates(
         client, observed_date=snapshot_date, existing=existing_map
     )
@@ -1615,8 +1650,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     try:
         captured_at = parse_timestamp(args.now) if args.now else utc_now()
         replace_date = dt.date.fromisoformat(args.replace_date) if args.replace_date else None
+        deadline = None
+        if args.require_valid_capture and not args.now:
+            boundary = dt.datetime.combine(captured_at.astimezone(ZoneInfo(TIMEZONE)).date(), dt.time(3), tzinfo=ZoneInfo(TIMEZONE))
+            # Deadline is checked only when issuing requests; offline receipt reuse still works after 03:00.
+            deadline = boundary.timestamp()
         result = run_update(
-            GitHubClient(token),
+            GitHubClient(token, preflight=True, deadline=deadline),
             data_dir=args.data_dir.resolve(),
             projects_file=args.projects_file.resolve(),
             captured_at=captured_at,

@@ -9,6 +9,7 @@ on:
       - "schemas/star-rank/**"
       - "site/**"
       - "auth-worker/**"
+      - "ops-worker/**"
       - "tests/**"
       - "tools/**"
       - "docs/**"
@@ -26,6 +27,7 @@ on:
       - "schemas/star-rank/**"
       - "site/**"
       - "auth-worker/**"
+      - "ops-worker/**"
       - "tests/**"
       - "tools/**"
       - "docs/**"
@@ -70,12 +72,14 @@ jobs:
           cache-dependency-path: |
             site/package-lock.json
             auth-worker/package-lock.json
+            ops-worker/package-lock.json
 
       - name: Install dependencies
         run: |
           python -m pip install --requirement requirements-star-rank.txt
           npm ci --prefix site
           npm ci --prefix auth-worker
+          npm ci --prefix ops-worker
 
       - name: Validate collector and repository
         run: |
@@ -100,6 +104,15 @@ jobs:
           npm run check
           npm test
           npm run preflight
+          npm audit --audit-level=moderate
+
+      - name: Validate independent operations worker
+        working-directory: ops-worker
+        run: |
+          npm run check
+          npm test
+          npm run preflight
+          npx wrangler deploy --dry-run --outdir /tmp/starrank-ops-build
           npm audit --audit-level=moderate
 
       - name: Install Chromium for interaction tests
