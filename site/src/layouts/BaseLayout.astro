@@ -41,7 +41,9 @@ const authApiUrl = import.meta.env.PUBLIC_AUTH_API_URL?.replace(/\/$/u, '') ?? '
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
     <meta name="theme-color" content="#f3efe4" />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23171814'/%3E%3Cpath d='m16 5 3.1 6.3 6.9 1-5 4.8 1.2 6.9-6.2-3.2L9.8 24l1.2-6.9-5-4.8 6.9-1z' fill='%23f2dcae'/%3E%3C/svg%3E" />
+    <link rel="icon" type="image/svg+xml" href={withBase('/assets/brand/kingai-logo.svg')} />
+    <link rel="icon" type="image/png" sizes="32x32" href={withBase('/assets/brand/favicon-32.png')} />
+    <link rel="apple-touch-icon" sizes="180x180" href={withBase('/assets/brand/apple-touch-icon.png')} />
     <link rel="canonical" href={canonical} />
     {prevPath && <link rel="prev" href={new URL(withBase(prevPath), Astro.site ?? Astro.url.origin).toString()} />}
     {nextPath && <link rel="next" href={new URL(withBase(nextPath), Astro.site ?? Astro.url.origin).toString()} />}
@@ -89,8 +91,8 @@ const authApiUrl = import.meta.env.PUBLIC_AUTH_API_URL?.replace(/\/$/u, '') ?? '
     <a class="skip-link" href="#main-content">跳到主要内容</a>
     <aside class="workspace-sidebar" id="workspace-navigation" aria-label="站点导航区域">
       <a class="brand" href={withBase('/')} aria-label="开源星榜首页">
-        <img src={withBase('/assets/ui/star.svg')} width="42" height="42" alt="" />
-        <span>开源星榜<small>StarRank</small></span>
+        <img class="kingai-logo" src={withBase('/assets/brand/kingai-logo.svg')} width="88" height="88" alt="king AI" />
+        <span class="kingai-product-name">开源星榜</span>
       </a>
       <nav aria-label="主导航">
         {[
