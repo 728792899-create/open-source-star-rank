@@ -318,6 +318,11 @@ const authApiUrl = import.meta.env.PUBLIC_AUTH_API_URL?.replace(/\/$/u, '') ?? '
           if (mobile.matches && mobileOpen) sidebar?.querySelector<HTMLElement>('nav a')?.focus();
         });
         mobile.addEventListener('change', () => { mobileOpen = false; renderSidebar(); });
+        window.addEventListener('pageshow', () => {
+          try { collapsed = window.localStorage.getItem('star-rank-sidebar') === 'collapsed'; } catch {}
+          mobileOpen = false;
+          renderSidebar();
+        });
         document.querySelector('[data-open-library]')?.addEventListener('click', () => {
           const library = document.querySelector('[data-user-library]');
           if (library instanceof HTMLDetailsElement) { library.open = true; library.querySelector('summary')?.focus(); }

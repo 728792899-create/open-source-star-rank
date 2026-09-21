@@ -20,6 +20,8 @@ test('desktop sidebar remembers its state across routes without mobile state lea
   await page.getByRole('heading', { level: 1 }).click();
   await expect(page.locator('.workspace-sidebar')).toBeVisible();
   await expect(page.getByRole('button', { name: '收起侧栏' })).toHaveAttribute('aria-expanded', 'true');
+  await page.goBack();
+  await expect(page.locator('.workspace-sidebar')).toBeVisible();
 });
 
 test('ticker advances slowly, pauses, and keeps freshness visible on every slide', async ({ page }) => {
