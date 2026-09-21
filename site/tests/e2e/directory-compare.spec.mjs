@@ -1,7 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 test('current directory covers every candidate exactly once across static pages', async ({ page }) => {
-  const catalog = await (await page.request.get('data/repositories.json')).json();
+  const discovery = await page.request.get('data/directory.json');
+  const catalog = await (discovery.ok() ? discovery : await page.request.get('data/repositories.json')).json();
   await page.goto('board/');
   await expect(page.locator('[data-directory-scope]')).toContainText(catalog.repositories.length.toLocaleString('zh-CN'));
   await page.getByRole('link', { name: '浏览全部当前项目 →' }).click();
@@ -14,6 +15,16 @@ test('current directory covers every candidate exactly once across static pages'
   } while (true);
   expect(seen.length).toBe(catalog.repositories.length);
   expect(new Set(seen).size).toBe(seen.length);
+  if (catalog.coverage) {
+    await page.goto('board/');
+    await expect(page.locator('[data-observation-coverage]')).toContainText(`等待观察 ${catalog.coverage.queued_count.toLocaleString('zh-CN')} 项`);
+    const observed = new Set(catalog.observations.map((entry) => entry.repository_id));
+    const waiting = catalog.repositories.find((entry) => !observed.has(entry.repository_id));
+    if (waiting) {
+      await page.goto(`repo/${waiting.repository_id}/`);
+      await expect(page.locator('h1')).toBeVisible();
+    }
+  }
   expect([...seen].sort((a, b) => a - b)).toEqual(catalog.repositories.map((entry) => entry.repository_id).sort((a, b) => a - b));
 });
 

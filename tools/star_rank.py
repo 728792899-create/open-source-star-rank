@@ -27,12 +27,14 @@ from typing import Any, Dict, Iterable, List, Mapping, MutableMapping, Optional,
 from zoneinfo import ZoneInfo
 
 try:
+    from tools.observation_pool import DIRECTORY_LIMIT, PROTECTION_DAYS, admission_limit, select_directory, select_observed
     from tools.star_rank_schema import (
         SchemaValidationError,
         sync_public_schemas,
         validate_payload,
     )
 except ModuleNotFoundError:  # pragma: no cover - direct script execution fallback
+    from observation_pool import DIRECTORY_LIMIT, PROTECTION_DAYS, admission_limit, select_directory, select_observed
     from star_rank_schema import SchemaValidationError, sync_public_schemas, validate_payload
 
 
@@ -483,7 +485,55 @@ def discover_candidates(
     return discovered, search_result_counts
 
 
-def merge_and_refresh_candidates(
+def observation_records(candidates, history, observed_date, previous_records=()):
+    """Derive continuity only from valid consecutive samples, never discovery age."""
+    records = []
+    prior = {item['repository_id']: item for item in previous_records}
+    for item in candidates:
+        repository_id = str(item['repository_id'])
+        end = observed_date
+        latest = history.get(end)
+        if latest is None or not snapshot_is_valid(latest) or repository_id not in latest['repositories']:
+            end -= dt.timedelta(days=1)
+            latest = history.get(end)
+        if latest is None or not snapshot_is_valid(latest) or repository_id not in latest['repositories']:
+            start = observed_date
+            last_valid = None
+        else:
+            start = end
+            while True:
+                previous_date = start - dt.timedelta(days=1)
+                previous = history.get(previous_date)
+                if previous is None or repository_id not in previous['repositories'] or not snapshot_pair_is_valid(previous, history[start]):
+                    break
+                start = previous_date
+            last_valid = end.isoformat()
+        previous = prior.get(int(repository_id))
+        continuous = last_valid is not None
+        if not continuous:
+            last_valid = next((day.isoformat() for day in sorted(history, reverse=True)
+                               if day <= observed_date and snapshot_is_valid(history[day])
+                               and repository_id in history[day]['repositories']), None)
+            if last_valid is None and previous:
+                last_valid = previous['last_valid_snapshot_on']
+        if continuous and previous and previous['last_valid_snapshot_on'] == last_valid and start < end:
+            start = min(start, dt.date.fromisoformat(previous['started_on']))
+        elif continuous and previous and last_valid == observed_date.isoformat() and previous['last_valid_snapshot_on'] == (observed_date - dt.timedelta(days=1)).isoformat() and start < observed_date:
+            start = min(start, dt.date.fromisoformat(previous['started_on']))
+        records.append({
+            'repository_id': int(repository_id), 'started_on': start.isoformat(),
+            'protected_until': (start + dt.timedelta(days=PROTECTION_DAYS)).isoformat(),
+            'last_valid_snapshot_on': last_valid,
+        })
+    return sorted(records, key=lambda item: item['repository_id'])
+
+
+def merge_and_refresh_candidates(client, **kwargs):
+    """Compatibility helper for callers selecting a single candidate pool."""
+    return collect_repository_pools(client, **kwargs)[0]
+
+
+def collect_repository_pools(
     client: GitHubClient,
     *,
     previous: Sequence[Mapping[str, Any]],
@@ -492,10 +542,13 @@ def merge_and_refresh_candidates(
     snapshot_dir: Path,
     observed_date: dt.date,
     max_candidates: int,
-) -> List[Dict[str, Any]]:
+    previous_directory: Optional[Sequence[Mapping[str, Any]]] = None,
+    previous_observations: Sequence[Mapping[str, Any]] = (),
+) -> Tuple[List[Dict[str, Any]], Optional[List[Dict[str, Any]]]]:
     date_text = observed_date.isoformat()
     refreshed_ids = set(discovered)
-    merged: Dict[int, Dict[str, Any]] = {int(item["repository_id"]): dict(item) for item in previous}
+    merged: Dict[int, Dict[str, Any]] = {int(item["repository_id"]): dict(item) for item in (previous_directory or [])}
+    merged.update({int(item["repository_id"]): dict(item) for item in previous})
     for repository_id, item in discovered.items():
         prior = merged.get(repository_id)
         merged[repository_id] = {**(prior or {}), **dict(item)}
@@ -528,8 +581,19 @@ def merge_and_refresh_candidates(
         merged.values(),
         recent_growth=growth,
         observed_date=date_text,
-        max_candidates=max_candidates,
+        max_candidates=len(merged),
     )
+    if previous_directory is not None:
+        history = load_snapshot_history(snapshot_dir)
+        allow_admission = observed_date not in history
+        history = {day: value for day, value in history.items() if day < observed_date}
+        leases = observation_records(previous, history, observed_date, previous_observations)
+        protected_ids = {item['repository_id'] for item in leases if item['protected_until'] >= date_text}
+        selected = select_observed(selected, previous_ids={item['repository_id'] for item in previous},
+                                   protected_ids=protected_ids, capacity=max_candidates,
+                                   allow_admission=allow_admission)
+    else:
+        selected = selected[:max_candidates]
 
     refreshed: List[Dict[str, Any]] = []
     for candidate in selected:
@@ -553,7 +617,14 @@ def merge_and_refresh_candidates(
     refreshed.sort(key=lambda item: str(item["full_name"]).lower())
     if not refreshed:
         raise DataIntegrityError("候选池为空，拒绝写入快照")
-    return refreshed
+    directory = None
+    if previous_directory is not None:
+        refreshed_map = {item['repository_id']: item for item in refreshed}
+        # Missing/private/archived selected repositories must not survive in the directory.
+        rejected_ids = {item['repository_id'] for item in selected} - refreshed_map.keys()
+        merged.update(refreshed_map)
+        directory = select_directory([item for key, item in merged.items() if key not in rejected_ids], refreshed)
+    return refreshed, directory
 
 
 def empty_collection_metrics(candidate_count: int) -> Dict[str, Any]:
@@ -1187,7 +1258,7 @@ def run_update(
             raise DataIntegrityError("待恢复快照不在有效采样窗口，拒绝作为正式快照发布")
         recovered = publish_snapshot(
             data_dir=data_dir, snapshot=pending["snapshot"], candidates=pending["candidates"],
-            dry_run=dry_run, status="reused",
+            directory=pending.get("directory"), observations=pending.get("observations"), observation_capacity=pending.get("observation_capacity", DEFAULT_MAX_CANDIDATES), dry_run=dry_run, status="reused",
         )
         if pending_date == snapshot_date and not replace_snapshot:
             return recovered
@@ -1207,7 +1278,7 @@ def run_update(
             raise DataIntegrityError("候选状态与已有快照不一致，拒绝使用不同批次的元数据重建")
         return publish_snapshot(
             data_dir=data_dir, snapshot=existing_snapshot, candidates=candidates,
-            dry_run=dry_run, status="reused",
+            directory=state.get("directory"), observations=state.get("observations"), observation_capacity=state.get("observation_capacity", DEFAULT_MAX_CANDIDATES), dry_run=dry_run, status="reused",
         )
 
     if require_valid_capture and not capture_quality(captured_at)["valid_for_ranking"]:
@@ -1217,21 +1288,24 @@ def run_update(
     previous_candidates = state.get("candidates", []) if isinstance(state, dict) else []
     if not isinstance(previous_candidates, list):
         raise DataIntegrityError("候选池状态文件中的 candidates 必须是数组")
-    existing_map = {int(item["repository_id"]): item for item in previous_candidates}
+    previous_directory = state.get("directory", previous_candidates)
+    existing_map = {int(item["repository_id"]): item for item in previous_directory}
     seeds = load_seed_repositories(projects_file)
     discovered, search_result_counts = discover_candidates(
         client, observed_date=snapshot_date, existing=existing_map
     )
-    candidates = merge_and_refresh_candidates(
+    candidates, directory = collect_repository_pools(
         client,
         previous=previous_candidates,
+        previous_directory=previous_directory,
+        previous_observations=state.get("observations", []),
         discovered=discovered,
         pinned_repositories=seeds,
         snapshot_dir=snapshot_dir,
         observed_date=snapshot_date,
         max_candidates=max_candidates,
     )
-    previous_ids = set(existing_map)
+    previous_ids = {int(item["repository_id"]) for item in previous_candidates}
     current_ids = {int(item["repository_id"]) for item in candidates}
     candidate_count = len(candidates)
     collection = {
@@ -1247,12 +1321,16 @@ def run_update(
     }
     snapshot = build_snapshot(candidates, captured_at=captured_at, collection=collection)
 
-    return publish_snapshot(data_dir=data_dir, snapshot=snapshot, candidates=candidates, dry_run=dry_run)
+    observations = observation_records(candidates, load_snapshot_history(snapshot_dir, include=snapshot), snapshot_date, state.get('observations', []))
+    return publish_snapshot(data_dir=data_dir, snapshot=snapshot, candidates=candidates, directory=directory, observations=observations, observation_capacity=max_candidates, dry_run=dry_run)
 
 
 def publish_snapshot(
     *, data_dir: Path, snapshot: Mapping[str, Any], candidates: Sequence[Mapping[str, Any]],
     dry_run: bool = False, status: str = "updated",
+    directory: Optional[Sequence[Mapping[str, Any]]] = None,
+    observation_capacity: int = DEFAULT_MAX_CANDIDATES,
+    observations: Optional[Sequence[Mapping[str, Any]]] = None,
 ) -> Dict[str, Any]:
     """Replay a validated observation into all derived files without querying GitHub."""
     snapshot_date = dt.date.fromisoformat(snapshot["snapshot_date"])
@@ -1360,6 +1438,10 @@ def publish_snapshot(
         "candidate_count": len(candidates),
         "candidates": candidates,
     }
+    if directory is not None:
+        if observations is None:
+            observations = observation_records(candidates, history, snapshot_date)
+        state_payload.update(schema_version="1.3.0", directory=directory, observation_capacity=observation_capacity, observations=observations)
     additional_dates = [ranking["date"]] if ranking is not None else []
     additional_period_dates = {
         days: [str(item["date"]) for item in period_rankings if item["period_days"] == days]
@@ -1385,6 +1467,28 @@ def publish_snapshot(
         additional_ranking=ranking,
         excluded_paths=obsolete,
     )
+    discovery_catalog = None
+    if directory is not None:
+        discovery_catalog = build_repository_catalog(
+            candidates=directory, snapshot_history=history, public_dir=public_dir,
+            knowledge_repositories=knowledge_repositories, updated_at=updated_at,
+            additional_ranking=ranking, excluded_paths=obsolete,
+        )
+        records = observations
+        comparable = lambda days: sum(
+            item['last_valid_snapshot_on'] == snapshot_date.isoformat()
+            and (snapshot_date - dt.date.fromisoformat(item['started_on'])).days >= days
+            for item in records
+        )
+        discovery_catalog.update(schema_version='1.0.0', repository_count=len(directory),
+                                 observation_count=len(candidates), observations=records,
+                                 policy={'capacity': observation_capacity, 'directory_limit': DIRECTORY_LIMIT,
+                                         'protection_days': PROTECTION_DAYS, 'daily_admission_limit': admission_limit(observation_capacity)},
+                                 coverage={'queued_count': len(directory) - len(candidates),
+                                           'comparable_1d_count': comparable(1),
+                                           'comparable_7d_count': comparable(7),
+                                           'comparable_30d_count': comparable(30)})
+        del discovery_catalog['candidate_count']
     language_index = build_language_index(
         candidates=candidates,
         public_dir=public_dir,
@@ -1394,6 +1498,8 @@ def publish_snapshot(
     )
     try:
         validate_payload("state", state_payload)
+        if discovery_catalog is not None:
+            validate_payload("directory", discovery_catalog)
         validate_payload("snapshot", snapshot)
         if ranking is not None:
             validate_payload("daily", ranking)
@@ -1410,7 +1516,7 @@ def publish_snapshot(
         raise DataIntegrityError(str(exc)) from exc
     if not dry_run:
         # Durable intent precedes every output; ordinary retries finish this batch first.
-        atomic_write_json(pending_path, {"snapshot": snapshot, "candidates": candidates})
+        atomic_write_json(pending_path, {"snapshot": snapshot, "candidates": candidates, **({"directory": directory, "observation_capacity": observation_capacity, "observations": observations} if directory is not None else {})})
         sync_public_schemas(public_dir)
         atomic_write_json(state_path, state_payload)
         atomic_write_json(snapshot_path, snapshot)
@@ -1419,6 +1525,8 @@ def publish_snapshot(
         for path in obsolete:
             path.unlink(missing_ok=True)
         atomic_write_json(public_dir / "repositories.json", repositories)
+        if discovery_catalog is not None:
+            atomic_write_json(public_dir / "directory.json", discovery_catalog)
         atomic_write_json(public_dir / "language" / "index.json", language_index)
         atomic_write_json(public_dir / "index.json", index)
         removed_snapshots = prune_old_snapshots(snapshot_dir, current_date=snapshot_date)
@@ -1429,6 +1537,7 @@ def publish_snapshot(
         "status": status,
         "snapshot": snapshot,
         "ranking": ranking,
+        "directory": discovery_catalog,
         "language_rankings": language_rankings,
         "period_rankings": period_rankings,
         "exploration_pools": exploration_pools,

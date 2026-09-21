@@ -490,6 +490,22 @@ await writeFile(path.join(outputRoot, 'i18n', 'zh-CN', 'repositories.json'), `${
 await mkdir(path.join(outputRoot, 'classification'), { recursive: true });
 await writeFile(path.join(outputRoot, 'classification', 'index.json'), `${JSON.stringify(classificationIndex, null, 2)}\n`);
 await writeFile(path.join(outputRoot, 'classification', 'repositories.json'), `${JSON.stringify(classificationCatalog, null, 2)}\n`);
+// One directory-only project proves discovery does not imply a measured snapshot.
+const waitingRepository = {
+  ...repositories[0], repository_id: 900_001, full_name: 'fixture-labs/waiting-project',
+  html_url: 'https://github.com/fixture-labs/waiting-project', stars_total: 1,
+  description: 'Discovered but awaiting an observation slot.', first_seen_date: '2026-07-15',
+  history_30d: historyDates.map((date) => ({ date, stars_total: null, stars_gained: null, rank: null })),
+};
+const discoveryCatalog = {
+  schema_version: '1.0.0', updated_at: updatedAt, timezone: 'Asia/Shanghai',
+  repository_count: 2_001, observation_count: 2_000, repositories: [...repositories, waitingRepository],
+  observations: repositories.map((entry) => ({ repository_id: entry.repository_id, started_on: '2026-06-27', protected_until: '2026-07-27', last_valid_snapshot_on: '2026-07-15' })),
+  policy: { capacity: 2_000, directory_limit: 5_000, protection_days: 30, daily_admission_limit: 100 },
+  coverage: { queued_count: 1, comparable_1d_count: 2_000, comparable_7d_count: 2_000, comparable_30d_count: 0 },
+};
+await writeFile(path.join(outputRoot, 'directory.json'), `${JSON.stringify(discoveryCatalog, null, 2)}\n`);
+
 const fixtureSchemaRoot = path.join(outputRoot, 'schema');
 await mkdir(fixtureSchemaRoot, { recursive: true });
 for (const filename of await readdir(schemaRoot)) {

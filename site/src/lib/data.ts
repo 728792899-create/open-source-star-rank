@@ -2,6 +2,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import type {
   DailyRanking,
+  DiscoveryCatalog,
   AllTimeBoard,
   AllTimeIndex,
   ClassificationIndex,
@@ -58,6 +59,14 @@ export function readRepositoryCatalog(): RepositoryCatalog {
     return { schema_version: '1.1.0', updated_at: '', timezone: 'Asia/Shanghai', candidate_count: 0, repositories: [] };
   }
   return JSON.parse(readFileSync(file, 'utf8')) as RepositoryCatalog;
+}
+
+/** Old fixed data commits retain their original candidate-only directory. */
+export function readDiscoveryCatalog(): DiscoveryCatalog {
+  const file = path.join(dataRoot, 'directory.json');
+  if (existsSync(file)) return JSON.parse(readFileSync(file, 'utf8')) as DiscoveryCatalog;
+  const observed = readRepositoryCatalog();
+  return { ...observed, repository_count: observed.candidate_count, observation_count: observed.candidate_count };
 }
 
 export function readEventRankingIndex(): EventRankingIndex {
@@ -225,7 +234,7 @@ export function readRepositoryProfiles(): RepositoryProfile[] {
     return current;
   };
 
-  for (const repository of readRepositoryCatalog().repositories) {
+  for (const repository of readDiscoveryCatalog().repositories) {
     const current = ensure(repository, repository.last_seen_date ?? '');
     Object.assign(current.profile, repository);
   }

@@ -140,6 +140,17 @@ export interface RepositoryDetail {
   history_30d: RepositoryHistoryPoint[];
 }
 
+export interface DiscoveryCatalog {
+  schema_version: string;
+  updated_at: string;
+  timezone: string;
+  repository_count: number;
+  observation_count: number;
+  repositories: RepositoryDetail[];
+  observations?: Array<{ repository_id: number; started_on: string; protected_until: string; last_valid_snapshot_on: string | null }>;
+  coverage?: { queued_count: number; comparable_1d_count: number; comparable_7d_count: number; comparable_30d_count: number };
+}
+
 export interface RepositoryCatalog {
   schema_version: string;
   updated_at: string;

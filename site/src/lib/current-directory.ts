@@ -1,10 +1,10 @@
-import { readRepositoryCatalog, readClassificationIndex, readClassificationRepositories } from './data';
+import { readDiscoveryCatalog, readClassificationIndex, readClassificationRepositories } from './data';
 import { classificationMap } from './classification';
 import { BOARD_DIMENSIONS, CATEGORY_DIMENSION, facetValueSlug } from './facet-rankings';
 import type { RepositoryDetail } from '../types';
 
 export function readCurrentDirectory() {
-  const catalog = readRepositoryCatalog();
+  const catalog = readDiscoveryCatalog();
   const taxonomy = readClassificationIndex();
   const classifications = classificationMap(readClassificationRepositories());
   const entries = [...catalog.repositories].sort((a, b) => b.stars_total - a.stars_total || a.full_name.localeCompare(b.full_name));

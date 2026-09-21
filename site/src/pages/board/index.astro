@@ -5,11 +5,12 @@ import { withBase } from '../../lib/paths';
 const { catalog, entries, sections } = readCurrentDirectory();
 const updatedLabel = catalog.updated_at ? new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', dateStyle: 'medium', timeStyle: 'short' }).format(new Date(catalog.updated_at)) : '暂无数据';
 ---
-<BaseLayout title="当前项目分类目录｜开源星榜" description="按方向、语言、产品形态和使用场景浏览当前候选项目，标明数据日期和实际覆盖范围。">
+<BaseLayout title="当前项目分类目录｜开源星榜" description="按方向、语言、产品形态和使用场景浏览已发现项目，标明数据日期和实际覆盖范围。">
   <main id="main-content" class="shell language-page category-page">
     <p class="eyebrow">Current project directory</p>
     <h1>按用途，找到适合你的项目。</h1>
-    <p class="status-lead" data-directory-scope>当前候选目录共 {entries.length.toLocaleString('zh-CN')} 个项目；数据更新于 {updatedLabel}（北京时间）。这里包含尚未形成连续增长窗口的项目，按累计 Star 排序；不代表 GitHub 全量收录。</p>
+    <p class="status-lead" data-directory-scope>当前发现目录共 {entries.length.toLocaleString('zh-CN')} 个项目；数据更新于 {updatedLabel}（北京时间）。其中 {catalog.observation_count.toLocaleString('zh-CN')} 个项目进入每日观察池，按累计 Star 排序；不代表 GitHub 全量收录。</p>
+    {catalog.coverage && <p class="status-lead" data-observation-coverage>等待观察 {catalog.coverage.queued_count.toLocaleString('zh-CN')} 项 · 连续可比：1 日 {catalog.coverage.comparable_1d_count.toLocaleString('zh-CN')} 项，7 日 {catalog.coverage.comparable_7d_count.toLocaleString('zh-CN')} 项，30 日 {catalog.coverage.comparable_30d_count.toLocaleString('zh-CN')} 项。观察池保护未完成的 30 日窗口，每天最多接纳容量的 5%（不足一项按一项）；采样中断后重新积累，首次建池可填满容量。</p>}
     <nav class="inline-links" aria-label="目录入口">
       {entries.length > 0 && <a href={withBase('/discover/all/')}>浏览全部当前项目 →</a>}
       <a href={withBase('/board/archive/')}>历史事件分类归档 →</a>
@@ -18,7 +19,7 @@ const updatedLabel = catalog.updated_at ? new Intl.DateTimeFormat('zh-CN', { tim
     {sections.map((section) => <section class="language-list" aria-label={`${section.meta.labelZh}目录`}>
       <div class="section-heading"><div><p class="eyebrow">Browse projects</p><h2>{section.meta.labelZh}</h2></div><strong>{section.items.length}</strong></div>
       <div class="language-cards category-cards">
-        {section.items.map((item) => <a href={withBase(`/discover/${item.path}/`)}><span>{item.label}</span><strong>{item.entries.length} 个项目</strong><small>浏览当前候选项目 →</small></a>)}
+        {section.items.map((item) => <a href={withBase(`/discover/${item.path}/`)}><span>{item.label}</span><strong>{item.entries.length} 个项目</strong><small>浏览已发现项目 →</small></a>)}
       </div>
     </section>)}
     {entries.length === 0 && <p class="empty-copy">候选数据正在准备，首次成功采集后显示分类目录。</p>}
