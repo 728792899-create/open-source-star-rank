@@ -266,7 +266,8 @@ const authenticated = async (request: Request, env: Env) => {
 const githubFailure = async (response: Response, headers: HeadersInit) => {
   const requestId = response.headers.get('x-github-request-id');
   if (response.status === 401) return json({ error: 'github_session_expired', request_id: requestId }, 401, headers);
-  if (response.status === 403) return json({ error: 'github_permission_or_rate_limit', request_id: requestId }, 403, headers);
+  if (response.status === 429 || (response.status === 403 && (response.headers.get('x-ratelimit-remaining') === '0' || response.headers.has('retry-after')))) return json({ error: 'github_rate_limit', request_id: requestId }, 429, headers);
+  if (response.status === 403) return json({ error: 'github_permission_denied', request_id: requestId }, 403, headers);
   if (response.status === 404) return json({ error: 'repository_not_found', request_id: requestId }, 404, headers);
   return json({ error: 'github_api_error', status: response.status, request_id: requestId }, 502, headers);
 };
@@ -309,8 +310,17 @@ const syncStars = async (
   if (repositories.length !== body.repositories.length) return json({ error: 'invalid_repository_name' }, 400, headers);
   const results = [] as Array<{ full_name: string; starred: boolean; status?: number }>;
   for (const fullName of repositories) {
-    const response = await github(`/user/starred/${fullName.split('/').map(encodeURIComponent).join('/')}`, auth.accessToken, { method: 'PUT' });
+    let response: Response;
+    try {
+      response = await github(`/user/starred/${fullName.split('/').map(encodeURIComponent).join('/')}`, auth.accessToken, { method: 'PUT' });
+    } catch {
+      return json({ error: 'github_api_error', results, succeeded: results.filter((item) => item.starred).length, unattempted: repositories.slice(results.length) }, 502, headers);
+    }
     results.push({ full_name: fullName, starred: response.status === 204, status: response.status === 204 ? undefined : response.status });
+    if ([401, 403, 429].includes(response.status) || response.status >= 500) {
+      const failure = await githubFailure(response, headers);
+      return json({ ...await failure.json() as object, results, succeeded: results.filter((item) => item.starred).length, unattempted: repositories.slice(results.length) }, failure.status, headers);
+    }
   }
   return json({ results, succeeded: results.filter((item) => item.starred).length }, 200, headers);
 };

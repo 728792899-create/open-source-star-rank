@@ -150,3 +150,37 @@ describe('local session revocation', () => {
     expect((await worker.fetch(signed('/auth/logout', token, 'POST'), env)).status).toBe(500);
   });
 });
+
+describe('partial favorite synchronization', () => {
+  it.each([401, 403, 429, 503, 'offline'] as const)('preserves successes and stops on upstream %s', async (failure) => {
+    const { session_token: token } = await (await exchange(await handoff())).json() as { session_token: string };
+    const calls: string[] = [];
+    vi.mocked(fetch).mockImplementation(async (url) => {
+      calls.push(String(url));
+      if (calls.length === 1) return new Response(null, { status: 204 });
+      if (failure === 'offline') throw new Error('offline');
+      return new Response('{}', { status: failure });
+    });
+    const result = await worker.fetch(new Request('https://worker.example/api/stars/sync', {
+      method: 'POST', headers: { origin: env.SITE_ORIGIN, authorization: `Bearer ${token}`, 'content-type': 'application/json' },
+      body: JSON.stringify({ repositories: ['owner/first', 'owner/second', 'owner/third'] }),
+    }), env);
+    expect(result.status).toBe(failure === 'offline' || failure === 503 ? 502 : failure);
+    const body = await result.json() as { results: Array<{ full_name: string; starred: boolean }>; succeeded: number; unattempted: string[]; error: string };
+    expect(body.succeeded).toBe(1);
+    expect(body.results[0]).toEqual({ full_name: 'owner/first', starred: true });
+    expect(body.unattempted).toEqual(failure === 'offline' ? ['owner/second', 'owner/third'] : ['owner/third']);
+    expect(body.error).toBeTruthy();
+    expect(calls).toHaveLength(2);
+  });
+  it('distinguishes a 403 rate limit from missing permissions', async () => {
+    const { session_token: token } = await (await exchange(await handoff())).json() as { session_token: string };
+    vi.mocked(fetch).mockResolvedValue(new Response('{}', { status: 403, headers: { 'x-ratelimit-remaining': '0' } }));
+    const result = await worker.fetch(new Request('https://worker.example/api/stars/sync', {
+      method: 'POST', headers: { origin: env.SITE_ORIGIN, authorization: `Bearer ${token}`, 'content-type': 'application/json' },
+      body: JSON.stringify({ repositories: ['owner/repo'] }),
+    }), env);
+    expect(result.status).toBe(429);
+    expect(await result.json()).toMatchObject({ error: 'github_rate_limit', succeeded: 0 });
+  });
+});

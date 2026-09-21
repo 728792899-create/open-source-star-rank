@@ -150,3 +150,90 @@ test('a late logout failure cannot change a newer login', async (t) => {
   assert.equal(auth.state.authenticated, true);
   assert.equal(auth.state.error, undefined);
 });
+
+test('favorite login intent belongs to the successful session and is consumed once for that repository', async (t) => {
+  const { auth, values } = await setup(t, { token: null, fetcher: async (url) => url.endsWith('/auth/exchange')
+    ? Response.json({ session_token: 'new', expires_in: 3600, return_to: '/app/' }) : response() });
+  await auth.login(undefined, 'owner/chosen');
+  assert.equal(auth.consumeFavoriteIntent('owner/chosen'), false);
+  await auth.exchangeHandoff('h'.repeat(43));
+  assert.equal(auth.consumeFavoriteIntent('owner/other'), false);
+  assert.equal(auth.consumeFavoriteIntent('owner/chosen'), true);
+  assert.equal(auth.consumeFavoriteIntent('owner/chosen'), false);
+  await auth.login(undefined, 'owner/cancelled');
+  assert.equal(values.has('star-rank-favorite-intent-v1'), false);
+  await auth.logout();
+  assert.equal(auth.consumeFavoriteIntent('owner/cancelled'), false);
+});
+
+test('favorite intent is not replayed after expiry or into a different session', async (t) => {
+  const { auth, values } = await setup(t);
+  for (const intent of [
+    { fullName: 'owner/repo', token: 'other', expiresAt: Date.now() + 10000 },
+    { fullName: 'owner/repo', token: 'old', expiresAt: Date.now() - 1 },
+  ]) {
+    values.set('star-rank-favorite-intent-v1', JSON.stringify(intent));
+    assert.equal(auth.consumeFavoriteIntent('owner/repo'), false);
+    assert.equal(values.has('star-rank-favorite-intent-v1'), false);
+  }
+});
+
+test('batch 401 invalidates the session, preserves partial successes and never sends the next chunk', async (t) => {
+  let batches = 0;
+  const { auth, values } = await setup(t, { fetcher: async (url) => {
+    if (!url.endsWith('/api/stars/sync')) return response();
+    batches++;
+    return Response.json({ error: 'github_session_expired', results: [
+      { full_name: 'owner/repo0', starred: true }, { full_name: 'owner/repo1', starred: false, status: 401 },
+    ] }, { status: 401 });
+  } });
+  const result = await auth.syncFavorites(Array.from({ length: 30 }, (_, i) => `owner/repo${i}`));
+  assert.equal(result.succeeded, 1);
+  assert.equal(result.failed.length, 1);
+  assert.equal(result.unattempted.length, 28);
+  assert.match(result.stopped, /授权已过期/);
+  assert.equal(auth.state.authenticated, false);
+  assert.equal(values.has(storageKey), false);
+  assert.equal(batches, 1);
+});
+
+test('sync broadcasts successful names only and preserves a rate-limited session', async (t) => {
+  const emitted = [];
+  const { auth } = await setup(t, { fetcher: async (url) => url.endsWith('/api/stars/sync')
+    ? Response.json({ error: 'github_rate_limit', results: [{ full_name: 'owner/ok', starred: true }, { full_name: 'owner/limited', starred: false, status: 429 }] }, { status: 429 }) : response() });
+  window.dispatchEvent = (event) => emitted.push(event);
+  const result = await auth.syncFavorites(['owner/ok', 'owner/limited', 'owner/later']);
+  assert.equal(auth.state.authenticated, true);
+  assert.deepEqual(result.unattempted, ['owner/later']);
+  assert.deepEqual(emitted.find((event) => event.type === 'starrankstarssynced').detail.fullNames, ['owner/ok']);
+});
+
+test('old batch completion cannot update a newly logged-in account or continue sending stars', async (t) => {
+  const pending = deferred();
+  let calls = 0;
+  const { auth } = await setup(t, { fetcher: async (url) => {
+    if (url.endsWith('/api/stars/sync')) { calls++; return pending.promise; }
+    if (url.endsWith('/auth/exchange')) return Response.json({ session_token: 'new', expires_in: 3600, return_to: '/app/' });
+    return response();
+  } });
+  const sync = auth.syncFavorites(Array.from({ length: 30 }, (_, i) => `owner/repo${i}`));
+  await auth.exchangeHandoff('h'.repeat(43));
+  pending.resolve(Response.json({ results: Array.from({ length: 25 }, (_, i) => ({ full_name: `owner/repo${i}`, starred: true })) }));
+  await assert.rejects(sync, /登录状态已改变/);
+  assert.equal(calls, 1);
+  assert.equal(auth.state.authenticated, true);
+});
+
+test('old batch network rejection cannot report success counts into a new login', async (t) => {
+  let rejectBatch;
+  const blocked = new Promise((_, reject) => { rejectBatch = reject; });
+  const { auth } = await setup(t, { fetcher: async (url) => {
+    if (url.endsWith('/api/stars/sync')) return blocked;
+    if (url.endsWith('/auth/exchange')) return Response.json({ session_token: 'new', expires_in: 3600, return_to: '/app/' });
+    return response();
+  } });
+  const sync = auth.syncFavorites(['owner/repo']);
+  await auth.exchangeHandoff('h'.repeat(43));
+  rejectBatch(new Error('offline'));
+  await assert.rejects(sync, /登录状态已改变/);
+});

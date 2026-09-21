@@ -237,6 +237,7 @@ const structuredData = {
     const setStatus = (message: string) => { if (status) status.textContent = message; };
     let githubStarred: boolean | null = null;
     let githubLoading = false;
+    let githubRevision = 0;
     const authApi = () => (window as any).starRankAuth;
     const updateButtons = () => {
       const library = libraryApi.read();
@@ -245,13 +246,14 @@ const structuredData = {
       if (favorite instanceof HTMLButtonElement) {
         const auth = authApi();
         const githubMode = Boolean(auth?.state?.authenticated);
-        const active = githubMode && githubStarred !== null ? githubStarred : contains(library.favorites);
+        const active = githubMode ? githubStarred : contains(library.favorites);
         favorite.textContent = githubLoading
           ? '正在同步…'
           : githubMode
-            ? active ? 'GitHub 已加星' : '加星到 GitHub'
+            ? active === null ? '状态未知 · 点击重查' : active ? 'GitHub 已加星' : '加星到 GitHub'
             : active ? '已收藏到本机' : '收藏项目';
-        favorite.setAttribute('aria-pressed', String(active));
+        if (active === null) favorite.removeAttribute('aria-pressed');
+        else favorite.setAttribute('aria-pressed', String(active));
         favorite.disabled = githubLoading;
       }
       if (compare instanceof HTMLButtonElement) {
@@ -271,22 +273,35 @@ const structuredData = {
       if (githubLoading) return;
       const auth = authApi();
       await auth?.initialize;
+      if (githubLoading) return;
       if (!auth?.state?.authenticated) {
         githubStarred = null;
         updateButtons();
         return;
       }
       githubLoading = true;
+      const revision = githubRevision;
       updateButtons();
       try {
-        githubStarred = await auth.starStatus(project.fullName);
+        if (auth.consumeFavoriteIntent(project.fullName) && window.confirm(`登录成功。将 ${project.fullName} 加星到当前 GitHub 账号？`)) {
+          const starred = await auth.setStar(project.fullName, true);
+          if (revision !== githubRevision) return;
+          githubStarred = starred;
+          mirrorLocalFavorite(starred);
+        } else {
+          const starred = await auth.starStatus(project.fullName);
+          if (revision !== githubRevision) return;
+          githubStarred = starred;
+        }
         setStatus(githubStarred ? '已与 GitHub Star 状态同步。' : '当前尚未在 GitHub 加星。');
       } catch (error) {
+        if (revision !== githubRevision) return;
         githubStarred = null;
         setStatus(error instanceof Error ? error.message : '无法读取 GitHub Star 状态。');
       } finally {
         githubLoading = false;
         updateButtons();
+        if (revision !== githubRevision) void loadGithubStar();
       }
     };
     const library = libraryApi.read();
@@ -302,7 +317,7 @@ const structuredData = {
           const choice = auth ? await auth.chooseFavoriteMode() : 'local';
           if (choice === 'cancel') return;
           if (choice === 'github') {
-            try { await auth.login(); }
+            try { await auth.login(undefined, project.fullName); }
             catch (error) { setStatus(error instanceof Error ? error.message : 'GitHub 登录暂不可用。'); }
             return;
           }
@@ -311,17 +326,25 @@ const structuredData = {
           updateButtons();
           return;
         }
+        if (githubLoading) return;
+        if (githubStarred === null) { await loadGithubStar(); return; }
         githubLoading = true;
+        const revision = githubRevision;
         updateButtons();
         try {
-          githubStarred = await auth.setStar(project.fullName, !githubStarred);
+          const starred = await auth.setStar(project.fullName, !githubStarred);
+          if (revision !== githubRevision) return;
+          githubStarred = starred;
           mirrorLocalFavorite(Boolean(githubStarred));
           setStatus(githubStarred ? '已同步为你的 GitHub Star。' : '已从你的 GitHub Star 中移除。');
         } catch (error) {
+          if (revision !== githubRevision) return;
+          githubStarred = null;
           setStatus(error instanceof Error ? error.message : 'GitHub Star 同步失败。');
         } finally {
           githubLoading = false;
           updateButtons();
+          if (revision !== githubRevision) void loadGithubStar();
         }
         return;
       }
@@ -337,7 +360,14 @@ const structuredData = {
       updateButtons();
     });
     window.addEventListener('starranklibrarychange', updateButtons);
-    window.addEventListener('starrankauthchange', loadGithubStar);
+    window.addEventListener('starrankauthchange', () => { githubRevision++; githubStarred = null; updateButtons(); void loadGithubStar(); });
+    window.addEventListener('starrankstarssynced', (event) => {
+      if (authApi()?.state?.authenticated && (event as CustomEvent).detail?.fullNames?.includes(project.fullName)) {
+        githubRevision++;
+        githubStarred = true;
+        updateButtons();
+      }
+    });
     updateButtons();
     if (authApi()) loadGithubStar();
     else window.addEventListener('starrankauthready', loadGithubStar, { once: true });
