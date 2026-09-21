@@ -20,7 +20,7 @@ button,a { touch-action:manipulation; }
 .workspace-sidebar-bottom p { margin:10px 0 0; line-height:1.8; }
 .site-header { width:100%; margin:0; padding:16px 26px; min-height:80px; flex-wrap:nowrap; gap:16px; border-bottom:1px solid var(--line); background:#fcfaf7; }
 .workspace-breadcrumb { display:flex; align-items:center; gap:14px; font-size:13px; min-width:0; flex:0 1 220px; }
-.workspace-breadcrumb>span { color:var(--muted); }
+.workspace-breadcrumb>span { color:var(--muted); white-space:nowrap; flex-shrink:0; }
 .workspace-breadcrumb strong { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; font-weight:600; }
 .workspace-search { flex:1 1 350px; min-width:100px; max-width:620px; }
 .workspace-search>a { display:block; padding:13px; border:1px solid var(--line); border-radius:9px; color:var(--muted); font-size:14px; text-decoration:none; }

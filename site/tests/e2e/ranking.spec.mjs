@@ -276,6 +276,7 @@ test('publishes status, period, language and stable repository history routes', 
   await expect(page.locator('.repo-source-name').filter({ hasText: 'fixture-labs/repo-001' })).toBeVisible();
   await expect(page.getByRole('heading', { name: '真实历史' })).toBeVisible();
   await expect(page.getByRole('heading', { name: '方向与适用场景' })).toBeVisible();
+  await page.locator('.repo-history-details summary').click();
   await expect(page.getByRole('row')).toHaveCount(31);
 
   await page.goto('repo/30001/');
