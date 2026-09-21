@@ -10,8 +10,10 @@ const mimeTypes = {
   '.css': 'text/css; charset=utf-8', '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8', '.json': 'application/json',
   '.png': 'image/png', '.txt': 'text/plain; charset=utf-8', '.xml': 'application/xml',
+  '.svg': 'image/svg+xml', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg',
+  '.ico': 'image/x-icon', '.woff2': 'font/woff2',
 };
-const compressible = new Set(['.css', '.html', '.js', '.json', '.txt', '.xml']);
+const compressible = new Set(['.css', '.html', '.js', '.json', '.txt', '.xml', '.svg']);
 
 export function createPreviewServer({ dist, basePath = '/' }) {
   const root = realpathSync(dist);

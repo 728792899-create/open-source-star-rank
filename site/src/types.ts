@@ -435,6 +435,7 @@ export interface EventHistoryPoint {
 }
 
 export interface RepositoryProfile {
+  metadata_date: string | null;
   repository_id: number;
   full_name: string;
   description: string | null;

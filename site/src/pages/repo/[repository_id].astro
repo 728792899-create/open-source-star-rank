@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { classificationLabels, classificationMap } from '../../lib/classification';
 import { readClassificationIndex, readClassificationRepositories, readLocalizationCatalog, readRepositoryProfiles } from '../../lib/data';
 import { localizedRepositoryContent } from '../../lib/localization';
+import { relatedMatch } from '../../lib/related-projects.mjs';
 import { withBase } from '../../lib/paths';
 import { repositoryAgeLabel, repositoryDate, repositoryOwner } from '../../lib/repository-lifecycle';
 
@@ -44,19 +45,25 @@ export const getStaticPaths = (() => {
       ...classification.use_cases.map((useCase) => `scenario:${useCase}`),
     ] : [];
     const seen = new Set<number>([repository.repository_id]);
-    const similarProjects = [] as Array<{ candidate: typeof repository; content: ReturnType<typeof localizedRepositoryContent> }>;
+    const candidates = [] as Array<{ candidate: typeof repository; content: ReturnType<typeof localizedRepositoryContent>; score: number; reason: string }>;
     for (const key of keys) {
       for (const candidate of recommendationBuckets.get(key) ?? []) {
         if (seen.has(candidate.repository_id)) continue;
         seen.add(candidate.repository_id);
-        similarProjects.push({
+        const match = relatedMatch(classification, classificationById.get(candidate.repository_id));
+        if (!match.score) continue;
+        const reason = match.scenarios.length ? `共同场景：${match.scenarios.map((id: string) => labels.useCases.get(id) ?? id).join('、')}`
+          : match.category ? `同一方向：${categoryLabel}` : `相同形态：${projectTypeLabel}`;
+        candidates.push({
+          score: match.score, reason,
           candidate,
           content: localizedRepositoryContent(localizationCatalog, candidate.repository_id, candidate.full_name, candidate.description),
         });
-        if (similarProjects.length >= 4) break;
+
       }
-      if (similarProjects.length >= 4) break;
+
     }
+    const similarProjects = candidates.sort((a, b) => b.score - a.score || b.candidate.stars_total - a.candidate.stars_total || a.candidate.repository_id - b.candidate.repository_id).slice(0, 4);
     return {
       params: { repository_id: String(repository.repository_id) },
       props: { repository, content, classification, categoryLabel, projectTypeLabel, useCaseLabels, similarProjects },
@@ -95,7 +102,7 @@ const structuredData = {
 ---
 
 <BaseLayout title={`${content.displayName} Star 历史｜开源星榜`} description={`${content.displayName}（${repository.full_name}）在开源星榜中的公开事件新增、候选池净增与历史排名记录。`} structuredData={structuredData}>
-  <main id="main-content" class="shell repo-page" data-repository-profile data-repository-id={repository.repository_id} data-repository-name={content.displayName} data-repository-full-name={repository.full_name} data-repository-url={withBase(`/repo/${repository.repository_id}/`)} data-repository-stars={repository.stars_total} data-repository-language={repository.language || 'Other'} data-repository-category={categoryLabel || '未分类'} data-repository-type={projectTypeLabel || '未分类'} data-repository-scenarios={useCaseLabels?.join('、') || '待生成'} data-repository-signal={rankingReason}>
+  <main id="main-content" class="shell repo-page" data-repository-profile data-repository-id={repository.repository_id} data-repository-name={content.displayName} data-repository-full-name={repository.full_name} data-repository-url={withBase(`/repo/${repository.repository_id}/`)} data-repository-stars={repository.stars_total} data-repository-language={repository.language || 'Other'} data-repository-category={categoryLabel || '未分类'} data-repository-type={projectTypeLabel || '未分类'} data-repository-scenarios={useCaseLabels?.join('、') || '待生成'} data-repository-signal={rankingReason} data-repository-date={repository.metadata_date} data-repository-pushed={repository.pushed_at} data-repository-created={repository.created_at}>
     <p class="eyebrow">Repository #{repository.repository_id} · stable identity</p>
     <div class="repo-hero">
       <div>
@@ -204,11 +211,12 @@ const structuredData = {
     {similarProjects.length > 0 && <section class="similar-projects" aria-labelledby="similar-projects-title">
       <div class="section-heading"><div><p class="eyebrow">Related repositories</p><h2 id="similar-projects-title">相似项目</h2></div></div>
       <div class="similar-project-grid">
-        {similarProjects.map(({ candidate, content: candidateContent }) => {
+        {similarProjects.map(({ candidate, content: candidateContent, reason }) => {
           return <a href={withBase(`/repo/${candidate.repository_id}/`)}>
             <strong>{candidateContent.displayName}</strong>
             <span>{candidate.full_name}</span>
-            <small>{formatNumber(candidate.stars_total)} Star · {candidate.language || 'Other'}</small>
+            <small>{reason}</small>
+            <small>{formatNumber(candidate.stars_total)} Star · {candidate.language || 'Other'} · 数据 {candidate.metadata_date || '日期未知'}</small>
           </a>;
         })}
       </div>
@@ -231,6 +239,9 @@ const structuredData = {
       type: profile.dataset.repositoryType ?? '未分类',
       scenarios: profile.dataset.repositoryScenarios ?? '待生成',
       signal: profile.dataset.repositorySignal ?? '',
+      sourceDate: profile.dataset.repositoryDate || null,
+      pushedAt: profile.dataset.repositoryPushed || null,
+      createdAt: profile.dataset.repositoryCreated || null,
     };
     const contains = (items: Array<{ id: number }>) => items.some((item) => item.id === project.id);
     const status = profile.querySelector('[data-repo-action-status]');
@@ -305,6 +316,7 @@ const structuredData = {
       }
     };
     const library = libraryApi.read();
+    library.compare = library.compare.map((item: { id: number }) => item.id === project.id ? project : item);
     library.recent = [project, ...library.recent.filter((item: { id: number }) => item.id !== project.id)].slice(0, 6);
     libraryApi.write(library);
     profile.addEventListener('click', async (event) => {

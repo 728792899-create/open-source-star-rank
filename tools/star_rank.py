@@ -502,8 +502,7 @@ def merge_and_refresh_candidates(
 
     pinned_names = {name.lower() for name in pinned_repositories}
     for item in merged.values():
-        if str(item.get("full_name", "")).lower() in pinned_names:
-            item["pinned"] = True
+        item["pinned"] = str(item.get("full_name", "")).lower() in pinned_names
 
     known_pinned_names = {
         str(item.get("full_name", "")).lower() for item in merged.values() if item.get("pinned")
@@ -519,6 +518,7 @@ def merge_and_refresh_candidates(
             observed_date=date_text,
             source="knowledge-base-seed",
             pinned=True,
+            existing=merged.get(int(payload["id"])),
         )
         merged[int(item["repository_id"])] = item
         refreshed_ids.add(int(item["repository_id"]))

@@ -2,6 +2,8 @@
 import '../styles/global.css';
 import '../styles/workspace.css';
 import { withBase } from '../lib/paths';
+import { readRankingIndex } from '../lib/data';
+import { periodState } from '../lib/period-state.mjs';
 import { serializeJsonForHtml } from '../lib/serialize-json.mjs';
 
 interface Props {
@@ -23,6 +25,8 @@ const {
   prevPath,
   nextPath,
 } = Astro.props;
+const periodIndex = readRankingIndex();
+const periodStates = new Map([['/period/7d/', periodState(periodIndex, 7)], ['/period/30d/', periodState(periodIndex, 30)]]);
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
 const socialImage = new URL(withBase(socialImagePath), Astro.site ?? Astro.url.origin).toString();
 const repositoryUrl = 'https://github.com/728792899-create/open-source-star-rank';
@@ -100,7 +104,7 @@ const authApiUrl = import.meta.env.PUBLIC_AUTH_API_URL?.replace(/\/$/u, '') ?? '
           ['/period/7d/', '7 日榜', 'chart'], ['/period/30d/', '30 日榜', 'chart'],
           ['/all-time/', '历史榜', 'chart'], ['/board/', '项目分类', 'data'],
         ].map(([href, label, icon]) => <a href={withBase(href)} aria-current={navActive(href) ? 'page' : undefined}>
-          <img src={withBase(`/assets/ui/${icon}.svg`)} width="21" height="21" alt="" />{label}
+          <img src={withBase(`/assets/ui/${icon}.svg`)} width="21" height="21" alt="" />{label}{periodStates.get(href)?.label && <small class="nav-state" title={periodStates.get(href)?.message}>{periodStates.get(href)?.label}</small>}
         </a>)}
         <button type="button" data-open-library><img src={withBase('/assets/ui/heart.svg')} width="21" height="21" alt="" />我的收藏</button>
         <a href={withBase('/compare/')} aria-current={navActive('/compare/') ? 'page' : undefined}><img src={withBase('/assets/ui/compare.svg')} width="21" height="21" alt="" />项目对比</a>

@@ -331,8 +331,8 @@ test('publishes independent category boards with renumbered ranks and empty noin
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,follow');
 });
 
-test('publishes the unified board hub with per-dimension independent boards', async ({ page }) => {
-  await page.goto('board/');
+test('preserves historical independent boards under the archive hub', async ({ page }) => {
+  await page.goto('board/archive/');
   await expect(page.getByRole('heading', { name: /每个分类/ })).toBeVisible();
   for (const section of ['项目方向', '编程语言', '产品形态', '适用场景']) {
     await expect(page.getByRole('heading', { name: section, exact: true })).toBeVisible();

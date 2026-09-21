@@ -1,0 +1,50 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { readCurrentDirectory } from '../../lib/current-directory';
+import { readLocalizationCatalog } from '../../lib/data';
+import { localizedRepositoryContent } from '../../lib/localization';
+import { withBase } from '../../lib/paths';
+export const getStaticPaths = (() => {
+  const { catalog, entries, sections } = readCurrentDirectory();
+  const localization = readLocalizationCatalog();
+  const groups = [{ path: 'all', label: '全部当前项目', entries }, ...sections.flatMap((section) => section.items)];
+  return groups.flatMap((group) => Array.from({ length: Math.ceil(group.entries.length / 100) }, (_, offset) => ({
+    params: { path: `${group.path}${offset ? `/page/${offset + 1}` : ''}` },
+    props: { label: group.label, path: group.path, updatedAt: catalog.updated_at, count: group.entries.length, page: offset + 1, pages: Math.ceil(group.entries.length / 100), projects: group.entries.slice(offset * 100, (offset + 1) * 100).map((repository) => ({ repository, content: localizedRepositoryContent(localization, repository.repository_id, repository.full_name, repository.description) })) },
+  })));
+}) satisfies GetStaticPaths;
+const { label, path, updatedAt, count, page, pages, projects } = Astro.props;
+const updatedLabel = updatedAt ? new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', dateStyle: 'medium', timeStyle: 'short' }).format(new Date(updatedAt)) : '暂无数据';
+const pagePath = (value: number) => `/discover/${path}/${value > 1 ? `page/${value}/` : ''}`;
+---
+<BaseLayout title={`${label} · 当前项目目录${page > 1 ? ` · 第 ${page} 页` : ''}｜开源星榜`} description={`${label}分类中的 ${count} 个当前候选项目，按累计 Star 排序。`} prevPath={page > 1 ? pagePath(page - 1) : undefined} nextPath={page < pages ? pagePath(page + 1) : undefined}>
+  <main id="main-content" class="shell language-page" data-current-directory>
+    <p class="eyebrow">Current candidates · {updatedLabel}（北京时间）</p>
+    <h1>{label}</h1>
+    <p class="status-lead">{count} 个当前候选项目 · 按累计 Star 排序 · 第 {page} / {pages} 页。Star 是关注度信号，不能单独代表质量、许可或适用性。</p>
+    <a class="text-link" href={withBase('/board/')}>← 返回项目分类</a>
+    <div class="directory-projects">
+      {projects.map(({ repository, content }) => <article data-directory-project>
+        <p class="eyebrow">{repository.language || 'Other'} · {repository.stars_total.toLocaleString('zh-CN')} Star</p>
+        <h2><a href={withBase(`/repo/${repository.repository_id}/`)}>{content.displayName}</a></h2>
+        <small>{repository.full_name}</small>
+        <p>{content.description || '项目简介尚未提供。'}</p>
+        <a class="text-link" href={withBase(`/repo/${repository.repository_id}/`)}>查看详情与选型信息 →</a>
+      </article>)}
+    </div>
+    <nav class="inline-links" aria-label="目录分页">
+      {page > 1 && <a href={withBase(pagePath(page - 1))}>← 上一页</a>}
+      <span>第 {page} / {pages} 页</span>
+      {page < pages && <a href={withBase(pagePath(page + 1))}>下一页 →</a>}
+    </nav>
+  </main>
+</BaseLayout>
+<style>
+  .directory-projects { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin:28px 0; }
+  article { padding:24px; border:1px solid var(--line); border-radius:14px; background:var(--paper); overflow-wrap:anywhere; }
+  article h2 { font-size:19px; line-height:1.5; margin:8px 0; }
+  article p { font-size:13px; line-height:1.8; }
+  article small { color:var(--muted); }
+  @media(max-width:680px) { .directory-projects { grid-template-columns:1fr; } article { padding:18px; } }
+</style>

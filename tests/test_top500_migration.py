@@ -44,6 +44,24 @@ class Top500MigrationTests(unittest.TestCase):
         self.assertEqual(ranked[1]["rank_change"], -1)
         self.assertIsNone(ranked[100]["rank_change"])
 
+    def test_rank_movement_does_not_cross_a_missing_calendar_day(self) -> None:
+        for gap in (1, 2):
+            for kind in ('daily', 'period/7d', 'period/30d', 'language/python/daily'):
+                with self.subTest(kind=kind, gap=gap), tempfile.TemporaryDirectory() as temporary:
+                    root = Path(temporary)
+                    first_date = '2026-07-18'
+                    next_date = f'2026-07-{18 + gap}'
+                    for date in (first_date, next_date):
+                        entry = {'repository_id': 1, 'rank': 2 if date == first_date else 1, 'rank_change': 99, 'language': 'Python'}
+                        atomic_write_json(root / 'public' / kind / f'{date}.json', {'schema_version': '1.2.0', 'date': date, 'language': 'Python', 'entries': [entry]})
+                        source = 'daily' if kind.startswith('language') else kind
+                        atomic_write_json(root / 'public' / 'explore' / source / f'{date}.json', {'entries': [entry]})
+                    selected_kind = {'daily': 'daily', 'period/7d': 'period_7d', 'period/30d': 'period_30d', 'language/python/daily': 'language:python'}[kind]
+                    with mock.patch('tools.migrate_star_rank_top500.validate_payload'), mock.patch('tools.migrate_star_rank_top500.validate_data_tree'):
+                        apply_manifest(root, {'records': [{'kind': selected_kind, 'date': next_date, 'can_recompute': True}]}, recomputed_at='2026-07-21T00:00:00Z')
+                    result = json.loads((root / 'public' / kind / f'{next_date}.json').read_text())
+                    self.assertEqual(result['entries'][0]['rank_change'], 1 if gap == 1 else None)
+
     def test_apply_is_idempotent_after_the_safe_source_is_consumed(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

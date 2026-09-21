@@ -207,7 +207,7 @@ export function readRepositoryProfiles(): RepositoryProfile[] {
           language: entry.language ?? null, stars_total: entry.stars_total, html_url: entry.html_url,
           owner_avatar_url: entry.owner_avatar_url ?? null,
           created_at: entry.created_at ?? null, pushed_at: entry.pushed_at ?? null, knowledge_url: null,
-          first_seen_date: null, last_seen_date: null, history_30d: [], event_history: [], all_time_rank: null,
+          first_seen_date: null, last_seen_date: null, metadata_date: null, history_30d: [], event_history: [], all_time_rank: null,
         },
       };
       working.set(entry.repository_id, current);
@@ -220,6 +220,7 @@ export function readRepositoryProfiles(): RepositoryProfile[] {
         pushed_at: entry.pushed_at ?? current.profile.pushed_at,
       });
       current.metadataKey = metadataKey;
+      current.profile.metadata_date = metadataKey.slice(0, 10) || null;
     }
     return current;
   };
