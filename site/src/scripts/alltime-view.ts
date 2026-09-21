@@ -1,3 +1,4 @@
+import { replaceRankingUrl } from './ranking-location';
   import { matchesEntry } from './filter-utils.mjs';
 
 export function initializeAllTimeView(signal: AbortSignal) {
@@ -101,7 +102,7 @@ export function initializeAllTimeView(signal: AbortSignal) {
           ? `当前条件匹配 ${matched} 个项目，按累计 Star 展示前 ${available} 项，本页 ${shown} 项；同时保留历史总榜名次。`
           : '';
       }
-      if (emptyState instanceof HTMLElement) emptyState.hidden = matched !== 0;
+      if (emptyState instanceof HTMLElement) emptyState.hidden = rows.length === 0 || matched !== 0;
       const next = new URL(window.location.href);
       const sync = (key: string, value: string) => value ? next.searchParams.set(key, value) : next.searchParams.delete(key);
       sync('q', query.trim());
@@ -110,7 +111,7 @@ export function initializeAllTimeView(signal: AbortSignal) {
       sync('type', selectedProjectType);
       sync('scenario', selectedScenario);
       sync('result_page', resultPage > 1 ? String(resultPage) : '');
-      window.history.replaceState(window.history.state, '', next);
+      replaceRankingUrl(next);
     };
     for (const control of [search, language, category, projectType, scenario]) {
       control?.addEventListener('input', () => { resultPage = 1; apply(); });

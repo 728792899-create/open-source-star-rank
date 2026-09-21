@@ -204,6 +204,14 @@ if (dataIndex.status === 'ready') {
     throw new Error('Historical sitemap entry is missing the ranking window lastmod');
   }
 }
+if (dataIndex.status === 'initializing') {
+  for (const relative of ['index.html', 'daily/index.html', 'period/7d/index.html', 'period/30d/index.html']) {
+    const html = await readFile(path.join(dist, relative), 'utf8');
+    for (const marker of ['data-ranking-navigation', 'data-ranking-waiting', 'ranking-summary', 'workspace-periods', '/daily/', '/period/7d/', '/period/30d/', '/all-time/']) {
+      if (!html.includes(marker)) throw new Error(`Initializing ranking page is missing ${marker}: ${relative}`);
+    }
+  }
+}
 if (dataIndex.status === 'initializing' && dataIndex.sampling?.next_scheduled_at) {
   for (const relative of ['daily/index.html', 'period/7d/index.html', 'period/30d/index.html']) {
     const html = await readFile(path.join(dist, relative), 'utf8');
@@ -231,7 +239,7 @@ if (dataIndex.status === 'ready') {
     if (!indexHtml.includes(marker)) throw new Error(`Yesterday-net homepage is missing ${marker}`);
   }
 } else {
-  for (const marker of ['Candidate pool · 初始化', '有效基线', 'data-update-countdown']) {
+  for (const marker of ['昨日 Star 净增排行', '有效基线', 'data-update-countdown']) {
     if (!indexHtml.includes(marker)) throw new Error(`Initializing homepage is missing ${marker}`);
   }
 }

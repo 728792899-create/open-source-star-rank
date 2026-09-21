@@ -1,3 +1,4 @@
+import { rankingLocation } from './ranking-location';
 import { initializeRankingView } from './ranking-view';
 import { initializeAllTimeView } from './alltime-view';
 import { initializeCountdowns } from './update-countdown';
@@ -20,7 +21,7 @@ const mount = () => {
     label.append(text, input); slot.replaceChildren(label);
   }
   document.documentElement.classList.toggle('workspace-search-ready', Boolean(slot?.querySelector('.filter-search')));
-  initializeRankingView(mounted.signal);
+  const ready = initializeRankingView(mounted.signal);
   initializeAllTimeView(mounted.signal);
   initializeCountdowns(mounted.signal);
   initializeFreshness(mounted.signal);
@@ -37,7 +38,15 @@ const mount = () => {
     button.textContent = compact ? '详细模式' : '紧凑模式';
     button.setAttribute('aria-pressed', String(compact));
   });
+  return ready;
 };
+
+function scrollToRanking(url: URL, fallbackToTop = true) {
+  let anchor: HTMLElement | null = null;
+  try { anchor = url.hash ? document.getElementById(decodeURIComponent(url.hash.slice(1))) : null; } catch { /* Malformed fragments have no target. */ }
+  if (anchor) anchor.scrollIntoView({ behavior: 'instant' });
+  else if (fallbackToTop) window.scrollTo({ top: 0, behavior: 'instant' });
+}
 
 const headSelectors = 'meta[name="description"],meta[name="robots"],meta[property^="og:"],meta[name^="twitter:"],link[rel="canonical"],link[rel="prev"],link[rel="next"],script[type="application/ld+json"]';
 async function navigate(url: URL, historyMode: 'push' | 'pop') {
@@ -71,10 +80,12 @@ async function navigate(url: URL, historyMode: 'push' | 'pop') {
       if (state) link.setAttribute('aria-current', state);
       else link.removeAttribute('aria-current');
     });
-    mount();
+    rankingLocation.key = url.pathname + url.search;
+    await mount();
+    if (ticket !== generation || request.signal.aborted) return;
     const active = document.querySelector<HTMLElement>('.workspace-periods [aria-current="page"]');
     active?.focus({ preventScroll: true });
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    scrollToRanking(url);
     document.dispatchEvent(new CustomEvent('starrank:navigated'));
   } catch {
     if (ticket !== generation || request.signal.aborted) return;
@@ -86,7 +97,14 @@ async function navigate(url: URL, historyMode: 'push' | 'pop') {
 }
 
 function initialize() {
-  mount();
+  const initialUrl = new URL(location.href);
+  const initialGeneration = generation;
+  void Promise.resolve(mount()).then(() => {
+    if (generation === initialGeneration && location.href === initialUrl.href && initialUrl.hash) scrollToRanking(initialUrl, false);
+  });
+  window.addEventListener('projectlanguagechange', () => {
+    if (!pending) rankingLocation.key = location.pathname + location.search;
+  });
   document.addEventListener('click', event => {
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('.workspace-periods a') : null;
@@ -99,7 +117,9 @@ function initialize() {
     if (url.href !== location.href || pending) void navigate(url, 'push');
   });
   window.addEventListener('popstate', () => {
-    if (document.querySelector('main[data-ranking-navigation]')) void navigate(new URL(location.href), 'pop');
+    const url = new URL(location.href);
+    if (!pending && rankingLocation.key === url.pathname + url.search) return;
+    if (document.querySelector('main[data-ranking-navigation]')) void navigate(url, 'pop');
   });
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize, { once: true });

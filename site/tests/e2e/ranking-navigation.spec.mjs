@@ -148,3 +148,67 @@ test('failed partial requests fall back to a usable normal ranking page', async 
   await expect(periods(page).getByRole('link')).toHaveCount(4);
   expect(await page.evaluate(() => window.__rankingDocument)).toBeUndefined();
 });
+
+test('hash navigation preserves anchors after pagination and across period history', async ({ page }) => {
+  await page.goto('all-time/');
+  await page.getByRole('navigation', { name: '榜单分页', exact: true }).getByRole('button', { name: '2', exact: true }).click();
+  await page.getByRole('button', { name: '原文', exact: true }).click();
+  const id = await page.locator('[data-ranking-row]:visible').nth(15).getAttribute('id');
+  let navigations = 0;
+  page.on('request', request => { if (request.resourceType() === 'fetch' && request.headers().accept === 'text/html') navigations++; });
+  await page.evaluate(id => { location.hash = id; }, id);
+  await expect(page).toHaveURL(new RegExp(`#${id}$`));
+  await expect.poll(() => page.locator(`#${id}`).evaluate(el => { const top = el.getBoundingClientRect().top; return top >= 0 && el.getBoundingClientRect().bottom <= innerHeight; })).toBe(true);
+  await page.goBack({ waitUntil: 'commit' });
+  await expect(page).toHaveURL(/result_page=2&display=original$/);
+  await page.goForward({ waitUntil: 'commit' });
+  await expect.poll(() => page.locator(`#${id}`).evaluate(el => { const top = el.getBoundingClientRect().top; return top >= 0 && el.getBoundingClientRect().bottom <= innerHeight; })).toBe(true);
+  expect(navigations).toBe(0);
+  await periods(page).getByRole('link', { name: /30 日/ }).click();
+  await expect(page).toHaveURL(/period\/30d\/$/);
+  await page.goBack({ waitUntil: 'commit' });
+  await expect(page.locator('[data-alltime]')).toBeVisible();
+  await expect.poll(() => page.locator(`#${id}`).evaluate(el => { const top = el.getBoundingClientRect().top; return top >= 0 && el.getBoundingClientRect().bottom <= innerHeight; })).toBe(true);
+  await expect(page.locator('[data-ranking-row]:visible').first().locator('.rank-number')).toHaveText('101');
+});
+
+test('an empty cumulative dataset does not claim filters are too narrow', async ({ page }) => {
+  // Exercise the real controller with the server's no-data row state.
+  await page.route('**/all-time/', async route => {
+    const response = await route.fetch();
+    const html = (await response.text()).replace(/<div class="table-body"[^>]*>[\s\S]*?(?=<nav class="ranking-pagination")/, '<div class="table-body"></div></div>');
+    await route.fulfill({ response, body: html });
+  });
+  await page.goto('all-time/');
+  await expect(page.locator('[data-ranking-row]')).toHaveCount(0);
+  await expect(page.locator('[data-empty-state]')).toBeHidden();
+  await page.locator('[data-search]').fill('unmatched');
+  await expect(page.locator('[data-empty-state]')).toBeHidden();
+});
+
+test('returning to a filtered project waits for its delayed ranking rows', async ({ page }) => {
+  await page.goto('daily/');
+  const originalIds = await page.locator('[data-ranking-row]').evaluateAll(rows => rows.map(row => row.id));
+  const pool = await page.locator('[data-ranking]').getAttribute('data-exploration-path');
+  await page.locator('select[data-language]').selectOption('Python');
+  await expect(page.locator('[data-filter-status]')).toContainText('符合条件');
+  const filteredIds = await page.locator('[data-ranking-row]:visible').evaluateAll(rows => rows.map(row => row.id));
+  const id = filteredIds.slice(10).find(id => !originalIds.includes(id));
+  expect(id).toBeTruthy();
+  await page.evaluate(id => { location.hash = id; }, id);
+  await page.reload();
+  await expect.poll(() => page.locator(`#${id}`).evaluate(el => { const top = el.getBoundingClientRect().top; return top >= 0 && el.getBoundingClientRect().bottom <= innerHeight; })).toBe(true);
+  await periods(page).getByRole('link', { name: '累计 Star', exact: true }).click();
+  await expect(page.locator('[data-alltime]')).toBeVisible();
+  let release;
+  let requested = false;
+  const hold = new Promise(resolve => { release = resolve; });
+  await page.route(new URL(pool, page.url()).href, async route => { requested = true; await hold; try { await route.continue(); } catch {} });
+  try {
+    await page.goBack({ waitUntil: 'commit' });
+    await expect.poll(() => requested).toBe(true);
+    release();
+    await expect(page.locator(`#${id}`)).toBeVisible();
+    await expect.poll(() => page.locator(`#${id}`).evaluate(el => { const top = el.getBoundingClientRect().top; return top >= 0 && el.getBoundingClientRect().bottom <= innerHeight; })).toBe(true);
+  } finally { release(); }
+});

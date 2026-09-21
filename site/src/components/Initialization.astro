@@ -1,8 +1,8 @@
 ---
 import type { RankingIndex } from '../types';
 import { withBase } from '../lib/paths';
-import FreshnessStatus from './FreshnessStatus.astro';
-import UpdateCountdown from './UpdateCountdown.astro';
+import RankingTicker from './RankingTicker.astro';
+import RankingPeriods from './RankingPeriods.astro';
 
 interface Props { index: RankingIndex }
 const { index } = Astro.props;
@@ -16,30 +16,25 @@ const formatTime = (value: string | null) => value
   : '等待首次有效采样';
 ---
 
-<main id="main-content" class="initialization shell">
-  <FreshnessStatus
-    updatedAt={index.updated_at}
-    thresholdHours={index.freshness_threshold_hours}
+<main id="main-content" class="shell ranking-page" data-ranking-view data-ranking-navigation data-ranking-waiting>
+  <header class="ranking-summary"><h1 id="ranking-title">昨日 Star 净增排行</h1><span class="ranking-date-chip">积累中</span></header>
+  <RankingTicker updatedAt={index.updated_at} thresholdHours={index.freshness_threshold_hours}
     captureValid={sampling?.latest_snapshot_valid ?? true}
     captureReason={sampling?.latest_snapshot_reason === 'outside_window' ? '不在北京时间 00:00–03:00' : sampling?.latest_snapshot_reason}
-  />
-  <UpdateCountdown
-    nextAt={nextSampling}
-    updatedAt={index.updated_at}
-    indexPath="/data/index.json"
-    label="下次有效窗口采样"
-  />
-  <p class="eyebrow">Candidate pool · 初始化</p>
-  <h1>有效基线 {validBaselines}/2，<br />星光正在积累。</h1>
-  <p class="initialization-copy">
+    nextAt={nextSampling} indexUpdatedAt={index.updated_at} indexPath="/data/index.json"
+    label="下次有效窗口采样" notes={[`有效基线 ${validBaselines} / 2 · 当前候选 ${index.candidate_count.toLocaleString('zh-CN')} 个项目`, '真实日榜积累中，可随时切换其他榜单']} />
+  <div class="ranking-toolbar"><RankingPeriods active={1} /></div>
+  <section class="ranking-waiting" aria-labelledby="waiting-title">
+  <h2 id="waiting-title">昨日榜正在积累有效基线</h2>
+  <p class="progress-copy">
     真实日榜只使用北京时间 00:00–03:00 的连续快照，间隔必须为 21–27 小时。缺失和无效日期不补造，达到门槛后会自动解锁日榜。
   </p>
-  <div class="initialization-grid initialization-grid-wide" aria-label="初始化状态">
-    <div><span>当前候选</span><strong>{index.candidate_count.toLocaleString('zh-CN')}</strong></div>
-    <div><span>有效基线</span><strong>{validBaselines}/2</strong></div>
-    <div><span>下次采样</span><strong class="small-value">{formatTime(nextSampling)}</strong></div>
-    <div><span>预计首榜</span><strong class="small-value">{formatTime(firstRanking)}</strong></div>
-  </div>
+  <dl class="progress-summary" aria-label="初始化状态">
+    <div><dt>当前候选</dt><dd>{index.candidate_count.toLocaleString('zh-CN')}</dd></div>
+    <div><dt>有效基线</dt><dd>{validBaselines} / 2<small>两个连续有效快照形成首个日窗口</small></dd></div>
+    <div><dt>下次采样</dt><dd>{formatTime(nextSampling)}</dd></div>
+    <div><dt>最早预计首榜</dt><dd>{formatTime(firstRanking)}<small>前提是后续采样连续有效</small></dd></div>
+  </dl>
   {collection && (
     <section class="coverage-panel" aria-labelledby="coverage-title">
       <div><p class="eyebrow">Collection coverage</p><h2 id="coverage-title">本次采集覆盖</h2></div>
@@ -56,4 +51,5 @@ const formatTime = (value: string | null) => value
     <a class="text-link" href={withBase('/status/')}>查看完整采样状态 <span aria-hidden="true">→</span></a>
     <a class="text-link" href={withBase('/methodology/')}>了解排行如何生成 <span aria-hidden="true">→</span></a>
   </div>
+  </section>
 </main>

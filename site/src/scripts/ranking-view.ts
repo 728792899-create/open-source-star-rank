@@ -1,3 +1,4 @@
+import { replaceRankingUrl } from './ranking-location';
   import { matchesEntry, clampResultPage } from './filter-utils.mjs';
   import { filteredRanking, metadataMaps } from './ranking-explorer.mjs';
 
@@ -94,7 +95,7 @@ export function initializeRankingView(signal: AbortSignal) {
         explicitFilterActive(value) && resultPage > 1
           ? next.searchParams.set('result_page', String(resultPage))
           : next.searchParams.delete('result_page');
-        if (!signal.aborted && root.isConnected) window.history.replaceState(window.history.state, '', next);
+        if (!signal.aborted && root.isConnected) replaceRankingUrl(next);
       };
       const updateSummary = (value: ReturnType<typeof filters>) => {
         const count = [!fixedLanguage && value.language, value.category, value.projectType, value.scenario].filter(Boolean).length;
@@ -415,14 +416,14 @@ export function initializeRankingView(signal: AbortSignal) {
           catch { setStatus('分享失败，请稍后重试'); }
         }
       });
-      apply();
+      return apply();
     };
     root.addEventListener('change', (event) => {
       if (event.target instanceof HTMLSelectElement && event.target.matches('[data-date-selector]') && event.target.value) {
         window.location.assign(event.target.value);
       }
     });
-    initializeRanking();
+    return initializeRanking();
   }
 
 }
