@@ -54,7 +54,7 @@ def check_freshness(
     if require_yesterday_date:
         expected = (now.astimezone(TIMEZONE).date() - dt.timedelta(days=1)).isoformat()
         if index.get("latest_date") != expected:
-            raise ValueError(f"北京时间昨日事件榜尚未发布，期望 {expected}")
+            raise ValueError(f"北京时间昨日榜尚未发布，期望 {expected}")
     if require_complete_event_coverage:
         if index.get("schema_version") != "1.2.0":
             raise ValueError("全站公开事件索引尚未升级至 1.2.0")

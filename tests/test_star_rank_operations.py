@@ -45,6 +45,20 @@ class OperationsTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "今日快照"):
             check_freshness(index, now=now, require_today=True)
 
+    def test_new_valid_snapshot_does_not_hide_an_old_daily_ranking(self) -> None:
+        index = {
+            "updated_at": "2026-09-19T18:38:13Z", "freshness_threshold_hours": 36,
+            "status": "ready", "latest_date": "2026-09-13",
+            "sampling": {"latest_snapshot_valid": True, "consecutive_valid_snapshots": 1},
+        }
+        now = dt.datetime(2026, 9, 19, 19, 15, tzinfo=dt.timezone.utc)
+        with self.assertRaisesRegex(ValueError, "昨日榜尚未发布"):
+            check_freshness(index, now=now, require_today=True,
+                            require_valid_capture=True, require_yesterday_date=True)
+        index["latest_date"] = "2026-09-19"
+        self.assertEqual(check_freshness(index, now=now, require_today=True,
+                         require_valid_capture=True, require_yesterday_date=True)["latest_date"], "2026-09-19")
+
     def test_freshness_rejects_data_older_than_threshold(self) -> None:
         index = {
             "updated_at": "2026-07-14T00:00:00Z",

@@ -24,6 +24,14 @@ import AxeBuilder from '@axe-core/playwright';
 
 const latestPath = 'daily/2026-07-14/';
 
+test('freshness follows the displayed ranking instead of a newer collection timestamp', async ({ page }) => {
+  await page.clock.setFixedTime(new Date('2026-07-15T04:45:00Z'));
+  await page.goto('daily/2026-07-10/');
+  const daily = await (await page.request.get('data/daily/2026-07-10.json')).json();
+  await expect(page.locator('[data-freshness]')).toHaveAttribute('data-updated-at', daily.window_end);
+  await expect(page.locator('[data-freshness-message]')).toContainText('未更新');
+});
+
 test('keeps the latest yesterday net ranking as the homepage default', async ({ page }) => {
   await page.clock.setFixedTime(new Date('2026-07-15T04:45:00Z'));
   await page.goto('');

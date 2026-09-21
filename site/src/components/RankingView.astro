@@ -188,7 +188,7 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
   </header>
 
   {archived ? <p class="fallback-notice" data-archive-notice>历史归档：事件分类榜已停止更新。以下数据日期为 {ranking.date}。<a href={withBase(alternateHref ?? '/')}>查看当前净增榜筛选结果 →</a></p> : <div class="data-update-strip">
-    <FreshnessStatus updatedAt={isLive ? eventRanking!.generated_at : index.updated_at} thresholdHours={isLive ? 2 : index.freshness_threshold_hours} compact />
+    <FreshnessStatus updatedAt={isLive ? eventRanking!.generated_at : ranking.window_end} thresholdHours={isLive ? 2 : index.freshness_threshold_hours} compact />
     <UpdateCountdown
       nextAt={nextUpdateAt}
       updatedAt={isLive ? eventRanking!.generated_at : index.updated_at}
