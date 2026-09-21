@@ -106,16 +106,6 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('zh-CN', { year: '
 const formatTime = (value: string) => new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(value));
 const formatBytes = (value: number) => `${(value / 1024 ** 3).toFixed(2)} GiB`;
 const entryGain = (entry: RankingEntry | EventRankingEntry) => 'stars_added' in entry ? entry.stars_added : entry.stars_gained;
-const makeTrendShape = (values: Array<number | null>) => {
-  const numericValues = values.filter((value): value is number => value !== null);
-  const maximum = Math.max(1, ...numericValues.map((value) => Math.abs(value)));
-  const points = values.map((value, index) => {
-    const x = Math.round((index / Math.max(1, values.length - 1)) * 100);
-    const height = value === null ? 5 : Math.max(10, Math.round((Math.abs(value) / maximum) * 100));
-    return `${x}% ${100 - height}%`;
-  });
-  return `polygon(0 100%, ${points.join(', ')}, 100% 100%)`;
-};
 const rankingBasePath = pageBasePath ?? `${routePrefix}/${ranking.date}/`;
 const rankingPath = withBase(rankingPathOverride ?? (page === 1 ? rankingBasePath : `${rankingBasePath}page/${page}/`));
 const rankingJsonPath = withBase(rankingJsonPathOverride ?? `${dataPrefix}/${ranking.date}.json`);
@@ -151,6 +141,7 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
 <main
   id="main-content"
   data-ranking
+  data-avatar-fallback={withBase('/assets/ui/star.svg')}
   data-ranking-mode={mode}
   data-daily-path={rankingPath}
   data-ranking-date={ranking.date}
@@ -176,10 +167,13 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
   {fallbackNotice && <p class="pipeline-fallback" role="status">{fallbackNotice}</p>}
   <header class="ranking-summary" aria-labelledby="ranking-title">
     <div>
+      <p class="workspace-discovery">发现下一个值得用的开源项目</p>
+      <p class="workspace-subtitle">用真实趋势，找到适合你的工具。</p>
       <p class="eyebrow">{sectionEyebrow} · 统计日 {formatDate(ranking.date)} · {updateFrequency}</p>
       <h1 id="ranking-title">{sectionTitle}</h1>
-      <p class="ranking-summary-copy"><strong>{headline}</strong><span>{heroCopy}</span></p>
+
     </div>
+    <img class="workspace-hero-art" src={withBase('/assets/ui/hero-star-320.webp')} srcset={`${withBase('/assets/ui/hero-star-320.webp')} 320w, ${withBase('/assets/ui/hero-star-640.webp')} 640w`} sizes="240px" width="240" height="160" alt="" />
     <time class="ranking-date-chip" datetime={ranking.date} aria-label={`榜单日期 ${ranking.date}`}>
       <span>{isLive ? 'LIVE' : isLatest ? 'LATEST' : 'ARCHIVE'}</span>
       <strong>{ranking.date}</strong>
@@ -215,6 +209,9 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
     })();
   </script>}
 
+  <details class="workspace-coverage">
+    <summary>{isFacet ? `来源池 ${formatNumber(facetRanking!.pool_size)} 项` : isEvent ? `观测到 ${formatNumber(eventRanking!.source_metrics.observed_repository_count)} 个仓库` : `观测候选池 ${formatNumber(snapshotRanking!.candidate_count)} 个项目`} · 上榜 {totalEntries} 项 <span>统计口径与采样详情</span></summary>
+    <p class="ranking-summary-copy"><strong>{headline}</strong><span>{heroCopy}</span></p>
   {isFacet ? <section class="metrics" aria-label="榜单统计">
     <div><span>上榜项目</span><strong>{facetRanking!.entries.length}</strong><small>本分类进入前 100</small></div>
     <div><span>本类新增合计</span><strong>{formatNumber(facetRanking!.total_gain)}</strong><small>当日唯一加星用户合计</small></div>
@@ -261,7 +258,10 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
     </dl>
   </details>}
 
+  </details>
+
   <section class="ranking-section" aria-labelledby="ranking-title">
+    <div class="workspace-controls">
     <div class="ranking-toolbar">
       <div class="ranking-actions" aria-label="榜单操作">
         <button type="button" data-copy-ranking>复制榜单链接</button>
@@ -283,10 +283,17 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
       </div>}
     </div>
 
+    <nav class="workspace-periods" aria-label="查看不同时间范围">
+      <a href={withBase('/daily/')} aria-current={!periodDays && !isEvent && !isFacet ? 'page' : undefined}>昨日</a>
+      <a href={withBase('/period/7d/')} aria-current={periodDays === 7 ? 'page' : undefined}>7 日</a>
+      <a href={withBase('/period/30d/')} aria-current={periodDays === 30 ? 'page' : undefined}>30 日</a>
+      <a href={withBase('/all-time/')}>累计 Star</a>
+    </nav>
+    </div>
     <div class="filters" role="search">
       <label class="filter-search">
         <span>搜索项目</span>
-        <input data-search type="search" placeholder="仓库名或描述" autocomplete="off" />
+        <input id="ranking-search" data-search type="search" placeholder="搜索项目、关键词或描述…" autocomplete="off" />
       </label>
       <details class="advanced-filters" data-advanced-filters open>
         <summary>更多筛选 <span data-advanced-filter-summary>未启用</span></summary>
@@ -343,11 +350,11 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
         <span role="columnheader">语言</span>
         <span role="columnheader">7 日趋势</span>
         <span role="columnheader">总 Star / {gainLabel}</span>
+        <span role="columnheader">操作</span>
       </div>
       <div class="table-body" data-ranking-body>
         {pageEntries.map((entry) => {
           const gained = entryGain(entry);
-          const trendShape = makeTrendShape(entry.trend_7d);
           const content = localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description);
           const classification = classifications.get(entry.repository_id);
           const categoryLabel = classification ? labels.categories.get(classification.primary_category) : null;
@@ -377,6 +384,7 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
                 aria-label={isFacet ? `分类内排名 ${entry.rank}` : `排名 ${entry.rank}，变化 ${movement}`}
               ><span class="rank-number">{String(entry.rank).padStart(2, '0')}</span><small class="source-rank" hidden>总榜 #{entry.rank}</small></strong>
               <div class="project-cell" role="cell">
+                <img class="workspace-project-avatar" src={entry.owner_avatar_url?.startsWith('https://avatars.githubusercontent.com/') ? entry.owner_avatar_url : withBase('/assets/ui/star.svg')} alt="" width="46" height="46" loading="lazy" decoding="async" />
                 <div class="project-copy">
                   {content.localized ? <>
                     <a class="project-link" data-content-language="zh" href={withBase(`/repo/${entry.repository_id}/`)}>{content.displayName}</a>
@@ -407,6 +415,20 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
                   </p>
                 </div>
                 <a class="github-link" href={entry.html_url} target="_blank" rel="noreferrer" aria-label={`在 GitHub 打开 ${entry.full_name}`}>GitHub ↗</a>
+
+              </div>
+              <div class="language-cell" role="cell">{entry.language || 'Other'}</div>
+              <div
+                class="trend-cell"
+                role="cell"
+                aria-label={`最近七日${isEvent ? '新增' : '净增'}：${entry.trend_7d.map((value) => value ?? '无数据').join('、')}`}
+                data-trend-values={JSON.stringify(entry.trend_7d)}
+              ><canvas width="96" height="40" aria-hidden="true"></canvas></div>
+              <div class:list={['stars-cell', 'numeric', { negative: gained < 0 }]} role="cell" data-mobile-label={`总 Star / ${gainLabel}`}>
+                {formatCompact(entry.stars_total)} · {gained >= 0 ? '+' : ''}{formatNumber(gained)}
+              </div>
+              <div class="workspace-project-actions" role="cell">
+                <a class="workspace-project-action" href={withBase(`/repo/${entry.repository_id}/`)}>查看项目 →</a>
                 <button
                   class="share-project"
                   type="button"
@@ -416,16 +438,6 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
                   data-share-rank={entry.rank}
                   aria-label={`分享 ${entry.full_name} 的第 ${entry.rank} 名`}
                 >分享</button>
-              </div>
-              <div class="language-cell" role="cell">{entry.language || 'Other'}</div>
-              <div
-                class="trend-cell"
-                role="cell"
-                aria-label={`最近七日${isEvent ? '新增' : '净增'}：${entry.trend_7d.map((value) => value ?? '无数据').join('、')}`}
-                style={`--trend-shape:${trendShape}`}
-              ></div>
-              <div class:list={['stars-cell', 'numeric', { negative: gained < 0 }]} role="cell" data-mobile-label={`总 Star / ${gainLabel}`}>
-                {formatCompact(entry.stars_total)} · {gained >= 0 ? '+' : ''}{formatNumber(gained)}
               </div>
             </div>
           );
@@ -449,6 +461,7 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
         <button type="button" data-clear-filters>清除全部筛选</button>
     </div>
     <p class="filter-status" data-filter-status aria-live="polite" hidden></p>
+    <button class="filter-retry" type="button" data-retry-filters hidden>重试深度筛选</button>
   </section>
 
   <aside class="method-note" aria-label="榜单口径提示">
@@ -460,14 +473,14 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
 
 <script>
   import { matchesEntry, clampResultPage } from '../scripts/filter-utils.mjs';
-  import { filteredRanking, metadataMaps, trendShape } from '../scripts/ranking-explorer.mjs';
+  import { filteredRanking, metadataMaps } from '../scripts/ranking-explorer.mjs';
 
   const root = document.querySelector('[data-ranking]');
   if (root instanceof HTMLElement) {
     const initializeRanking = () => {
       if (root.dataset.rankingEnhanced === 'true') return;
       root.dataset.rankingEnhanced = 'true';
-      const search = root.querySelector('[data-search]');
+      const search = document.querySelector('[data-search]');
       const language = root.querySelector('[data-language]');
       const category = root.querySelector('[data-category]');
       const projectType = root.querySelector('[data-project-type]');
@@ -478,6 +491,7 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
       const poolCount = root.querySelector('[data-pool-count]');
       const emptyState = root.querySelector('[data-empty-state]');
       const filterStatus = root.querySelector('[data-filter-status]');
+      const retryFilters = root.querySelector('[data-retry-filters]');
       const activeFilters = root.querySelector('[data-active-filters]');
       const activeFilterCopy = root.querySelector('[data-active-filter-copy]');
       const actionStatus = root.querySelector('[data-action-status]');
@@ -525,7 +539,7 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
         ]).then(([current, previous, localization, classifications, taxonomy]) => ({
           current: current?.entries ?? [], previous: previous?.entries ?? [],
           maps: metadataMaps(localization, classifications, taxonomy),
-        }));
+        })).catch(error => { resourcesPromise = null; throw error; });
         return resourcesPromise;
       };
 
@@ -695,7 +709,10 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
           element('span', '', lifecycleAge(entry.created_at)),
         );
         copy.append(lifecycle);
-        project.append(copy);
+        const avatar = element('img', 'workspace-project-avatar') as HTMLImageElement;
+        avatar.src = entry.owner_avatar_url?.startsWith('https://avatars.githubusercontent.com/') ? entry.owner_avatar_url : root.dataset.avatarFallback ?? '';
+        avatar.alt = ''; avatar.width = 46; avatar.height = 46; avatar.loading = 'lazy';
+        project.append(avatar, copy);
         const github = element('a', 'github-link', 'GitHub ↗') as HTMLAnchorElement;
         github.href = entry.html_url;
         github.target = '_blank';
@@ -709,7 +726,7 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
         share.dataset.shareNameOriginal = entry.full_name;
         share.dataset.shareRank = String(entry.filtered_rank);
         share.setAttribute('aria-label', `分享 ${entry.full_name} 的筛选榜第 ${entry.filtered_rank} 名`);
-        project.append(share);
+
         row.append(project);
         const lang = element('div', 'language-cell', entry.language || 'Other');
         lang.setAttribute('role', 'cell');
@@ -718,13 +735,17 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
         trend.setAttribute('role', 'cell');
         const trendValues = Array.isArray(entry.trend_7d) ? entry.trend_7d : Array(7).fill(null);
         trend.setAttribute('aria-label', `最近七日：${trendValues.map((item: number | null) => item ?? '无数据').join('、')}`);
-        trend.style.setProperty('--trend-shape', trendShape(trendValues));
+        trend.dataset.trendValues = JSON.stringify(trendValues);
+        const chart = element('canvas') as HTMLCanvasElement; chart.width = 96; chart.height = 40; chart.setAttribute('aria-hidden', 'true'); trend.append(chart);
         row.append(trend);
         const gain = Number(entry[root.dataset.gainField ?? 'stars_gained'] ?? 0);
         const stars = element('div', `stars-cell numeric${gain < 0 ? ' negative' : ''}`, `${compact(entry.stars_total)} · ${gain >= 0 ? '+' : ''}${number(gain)}`);
         stars.setAttribute('role', 'cell');
         stars.dataset.mobileLabel = `总 Star / ${root.dataset.gainLabel ?? '增量'}`;
         row.append(stars);
+        const action = element('a', 'workspace-project-action', '查看项目 →') as HTMLAnchorElement;
+        action.href = profileUrl;
+        const actions = element('div', 'workspace-project-actions'); actions.setAttribute('role', 'cell'); actions.append(action, share); row.append(actions);
         return row;
       };
 
@@ -757,6 +778,7 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
         syncUrl(value);
         updateSummary(value);
         const currentRequest = ++requestId;
+        if (retryFilters instanceof HTMLElement) retryFilters.hidden = true;
         if (!explicitFilterActive(value)) {
           if (body) body.innerHTML = staticMarkup;
           if (visibleCount) visibleCount.textContent = String(staticCount);
@@ -806,9 +828,11 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
           if (filterStatus instanceof HTMLElement) {
             filterStatus.hidden = false;
             filterStatus.textContent = '深度池暂时不可用，已回退到公开榜单内筛选。';
+            if (retryFilters instanceof HTMLElement) retryFilters.hidden = false;
           }
         }
       };
+      retryFilters?.addEventListener('click', () => apply());
       for (const control of [search, language, category, projectType, scenario]) {
         control?.addEventListener('input', () => { resultPage = 1; apply(); });
         control?.addEventListener('change', () => { resultPage = 1; apply(); });
@@ -869,4 +893,11 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
     });
     initializeRanking();
   }
+</script>
+
+<script>
+  import { paintTrends } from '../scripts/trend-chart.mjs';
+  paintTrends();
+  const trendBody = document.querySelector('[data-ranking-body]');
+  if (trendBody) new MutationObserver(() => paintTrends(trendBody)).observe(trendBody, { childList: true });
 </script>

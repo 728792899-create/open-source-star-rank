@@ -58,15 +58,3 @@ export function filteredRanking(entries, previousEntries, maps, filters, limit =
     }),
   };
 }
-
-export function trendShape(values) {
-  const normalized = Array.isArray(values) && values.length === 7 ? values : Array(7).fill(null);
-  const numeric = normalized.filter((value) => typeof value === 'number');
-  const maximum = Math.max(1, ...numeric.map((value) => Math.abs(value)));
-  const points = normalized.map((value, index) => {
-    const x = Math.round((index / Math.max(1, normalized.length - 1)) * 100);
-    const height = value === null ? 5 : Math.max(10, Math.round((Math.abs(value) / maximum) * 100));
-    return `${x}% ${100 - height}%`;
-  });
-  return `polygon(0 100%, ${points.join(', ')}, 100% 100%)`;
-}

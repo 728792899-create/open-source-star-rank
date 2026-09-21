@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '../styles/workspace.css';
 import { withBase } from '../lib/paths';
 import { serializeJsonForHtml } from '../lib/serialize-json.mjs';
 
@@ -26,6 +27,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).to
 const socialImage = new URL(withBase(socialImagePath), Astro.site ?? Astro.url.origin).toString();
 const repositoryUrl = 'https://github.com/728792899-create/open-source-star-rank';
 const reuseStatementUrl = `${repositoryUrl}/blob/main/REUSE.md`;
+const activePath = Astro.url.pathname;
+const navActive = (href: string) => href === '/' ? activePath === withBase('/') : activePath.startsWith(withBase(href));
 const authApiUrl = import.meta.env.PUBLIC_AUTH_API_URL?.replace(/\/$/u, '') ?? '';
 ---
 
@@ -84,28 +87,35 @@ const authApiUrl = import.meta.env.PUBLIC_AUTH_API_URL?.replace(/\/$/u, '') ?? '
   </head>
   <body>
     <a class="skip-link" href="#main-content">跳到主要内容</a>
-    <header class="site-header">
+    <aside class="workspace-sidebar" id="workspace-navigation" aria-label="站点导航区域">
       <a class="brand" href={withBase('/')} aria-label="开源星榜首页">
-        <span class="brand-mark" aria-hidden="true">★</span>
-        <span>开源星榜</span>
+        <img src={withBase('/assets/ui/star.svg')} width="42" height="42" alt="" />
+        <span>开源星榜<small>StarRank</small></span>
       </a>
       <nav aria-label="主导航">
-        <a href={withBase('/daily/')}>昨日净增榜</a>
-        <a href={withBase('/period/7d/')}>7 日榜</a>
-        <a href={withBase('/period/30d/')}>30 日榜</a>
-        <a href={withBase('/all-time/')}>历史榜</a>
-        <details class="nav-data-menu">
-          <summary>数据</summary>
-          <div>
-            <a href={withBase('/status/')}>运行状态</a>
-            <a href={withBase('/methodology/')}>数据口径</a>
-            <a href={withBase('/language/')}>语言索引</a>
-            <a href={withBase('/data/index.json')}>公开 JSON</a>
-            <a href={withBase('/rss.xml')}>订阅 RSS</a>
-          </div>
-        </details>
-        <a href={repositoryUrl} target="_blank" rel="noreferrer">GitHub ↗</a>
+        {[
+          ['/', '发现项目', 'search'], ['/daily/', '昨日净增榜', 'chart'],
+          ['/period/7d/', '7 日榜', 'chart'], ['/period/30d/', '30 日榜', 'chart'],
+          ['/all-time/', '历史榜', 'chart'], ['/board/', '项目分类', 'data'],
+        ].map(([href, label, icon]) => <a href={withBase(href)} aria-current={navActive(href) ? 'page' : undefined}>
+          <img src={withBase(`/assets/ui/${icon}.svg`)} width="21" height="21" alt="" />{label}
+        </a>)}
+        <button type="button" data-open-library><img src={withBase('/assets/ui/heart.svg')} width="21" height="21" alt="" />我的收藏</button>
+        <a href={withBase('/compare/')} aria-current={navActive('/compare/') ? 'page' : undefined}><img src={withBase('/assets/ui/compare.svg')} width="21" height="21" alt="" />项目对比</a>
       </nav>
+      <div class="workspace-sidebar-bottom">
+        <a href={withBase('/status/')}>采样与运行状态</a>
+        <a href={withBase('/methodology/')}>数据与方法</a>
+        <a href={withBase('/language/')}>语言索引</a>
+        <a href={withBase('/data/index.json')}>公开 JSON</a>
+        <p>用开源的力量，<br />让更好的工具被看见。</p>
+      </div>
+    </aside>
+    <header class="site-header">
+      <button class="workspace-menu" type="button" aria-label="展开导航" aria-controls="workspace-navigation" aria-expanded="false" data-workspace-menu><img src={withBase('/assets/ui/menu.svg')} width="24" height="24" alt="" /></button>
+      <div class="workspace-breadcrumb"><span>发现</span><span>/</span><strong>{title.split('｜')[0]}</strong></div>
+      <div class="workspace-search" data-workspace-search><a href={withBase('/#ranking-search')}>搜索榜单项目</a></div>
+      <a class="workspace-github" href={repositoryUrl} target="_blank" rel="noreferrer">GitHub ↗</a>
       <details class="user-library" data-user-library>
         <summary>我的项目 <span data-library-count>0</span></summary>
         <div class="user-library-panel">
@@ -134,6 +144,9 @@ const authApiUrl = import.meta.env.PUBLIC_AUTH_API_URL?.replace(/\/$/u, '') ?? '
       </div>
     </header>
     <p class="auth-notice" data-auth-status role="status" aria-live="polite" hidden></p>
+    <noscript><nav class="workspace-noscript" aria-label="无脚本导航">
+      <a href={withBase('/')}>发现项目</a><a href={withBase('/daily/')}>昨日榜</a><a href={withBase('/period/7d/')}>7 日榜</a><a href={withBase('/period/30d/')}>30 日榜</a><a href={withBase('/all-time/')}>历史榜</a><a href={withBase('/board/')}>分类</a>
+    </nav></noscript>
     <slot />
     <footer class="site-footer">
       <div class="site-footer-copy">
@@ -146,7 +159,7 @@ const authApiUrl = import.meta.env.PUBLIC_AUTH_API_URL?.replace(/\/$/u, '') ?? '
         <a href={reuseStatementUrl} target="_blank" rel="noreferrer">复用声明 ↗</a>
       </nav>
     </footer>
-    <aside class="compare-tray" data-compare-tray hidden>
+    <aside class="compare-tray" aria-label="待对比项目" data-compare-tray hidden>
       <strong><span data-compare-count>0</span> / 4 个项目待对比</strong>
       <a href={withBase('/compare/')}>查看对比 →</a>
     </aside>
@@ -265,6 +278,41 @@ const authApiUrl = import.meta.env.PUBLIC_AUTH_API_URL?.replace(/\/$/u, '') ?? '
           button.setAttribute('aria-pressed', String(compact));
         });
       })();
+    </script>
+    <script>
+      const initializeWorkspace = () => {
+        const field = document.querySelector('.filter-search');
+        const slot = document.querySelector('[data-workspace-search]');
+        if (field && slot) { slot.replaceChildren(field); document.documentElement.classList.add('workspace-search-ready'); }
+        const toggle = document.querySelector('[data-workspace-menu]');
+        const setOpen = (open: boolean) => {
+          document.documentElement.toggleAttribute('data-sidebar-open', open);
+          toggle?.setAttribute('aria-expanded', String(open));
+          toggle?.setAttribute('aria-label', open ? '关闭导航' : '展开导航');
+        };
+        toggle?.addEventListener('click', () => {
+          const open = !document.documentElement.hasAttribute('data-sidebar-open');
+          setOpen(open);
+          if (open) document.querySelector<HTMLElement>('.workspace-sidebar nav a')?.focus();
+        });
+        document.querySelector('[data-open-library]')?.addEventListener('click', () => {
+          const library = document.querySelector('[data-user-library]');
+          if (library instanceof HTMLDetailsElement) { library.open = true; library.querySelector('summary')?.focus(); }
+          setOpen(false);
+        });
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && document.documentElement.hasAttribute('data-sidebar-open')) { setOpen(false); (toggle as HTMLElement)?.focus(); }
+          if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+            const input = document.querySelector('[data-search]');
+            if (input instanceof HTMLInputElement) { event.preventDefault(); input.focus(); }
+          }
+        });
+        document.addEventListener('click', event => {
+          if (event.target instanceof Element && !event.target.closest('.workspace-sidebar, [data-workspace-menu]')) setOpen(false);
+        });
+      };
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initializeWorkspace, { once: true });
+      else initializeWorkspace();
     </script>
     <script>
       import '../scripts/github-auth.ts';
