@@ -225,7 +225,7 @@ const structuredData = entries.length ? {
 
   const root = document.querySelector('[data-alltime]');
   if (root instanceof HTMLElement) {
-    const search = root.querySelector('[data-search]');
+    const search = document.querySelector('[data-search]');
     const language = root.querySelector('[data-language]');
     const category = root.querySelector('[data-category]');
     const projectType = root.querySelector('[data-project-type]');

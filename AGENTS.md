@@ -3,7 +3,7 @@
 ## 项目边界
 
 - `site/`：生产 Astro 站点；`tools/`：Python 数据管线；`auth-worker/`：可选 GitHub 授权服务。
-- `prototypes/starrank-ui/`：选定的 React UI 原型，当前仅六项目演示；接入真实数据和迁移到业务页面是后续工作。该目录另有设计约束。
+- `prototypes/starrank-ui/`：选定的 React UI 原型，保留六项目设计演示；正式 Astro 站已迁移同一视觉并消费真实数据，验收见根目录 `design-qa.md`。该目录另有设计约束。
 - 已完成修复、验证和已知问题分别见 `docs/AUDIT_FIXES_2026-09-19.md`、`prototypes/starrank-ui/design-qa.md`、`docs/KNOWN_ISSUES.md`。
 
 ## 每个步骤同步 GitHub

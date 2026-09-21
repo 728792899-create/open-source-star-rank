@@ -417,3 +417,68 @@ test('treats script-closing repository metadata as text', async ({ page }) => {
   const payload = await page.locator('script[type="application/ld+json"]').textContent();
   expect(JSON.parse(payload).description).toContain('</script>');
 });
+
+test('workspace navigation, relocated search and retry recover without reloading', async ({ page }) => {
+  await page.goto(latestPath);
+  await expect(page.locator('[data-workspace-search] [data-search]')).toHaveCount(1);
+  const firstChart = page.locator('[data-ranking-row] canvas').first();
+  await expect(firstChart).toHaveAttribute('data-painted', 'true');
+  const originalChart = await firstChart.evaluate(canvas => canvas.toDataURL());
+  const deepPath = await page.locator('[data-ranking]').getAttribute('data-exploration-path');
+  let failures = 1;
+  await page.route(`**${deepPath}`, route => failures-- > 0 ? route.fulfill({status:503,body:'unavailable'}) : route.continue());
+  await page.getByRole('searchbox', {name:'搜索项目'}).fill('repo-042');
+  await expect(page.getByRole('button', {name:'重试深度筛选'})).toBeVisible();
+  await page.getByRole('button', {name:'重试深度筛选'}).click();
+  await expect(page.locator('[data-filter-status]')).toContainText('已全部纳入重新排名');
+  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(1);
+  await expect(page.locator('[data-ranking-row]:visible canvas')).toHaveAttribute('data-painted', 'true');
+  await expect(page.locator('[data-ranking-row]:visible .workspace-project-action')).toHaveAttribute('href', /repo\/10042\/$/);
+  await page.getByRole('searchbox', {name:'搜索项目'}).fill('');
+  await expect(page.locator('[data-ranking-row]')).toHaveCount(100);
+  await expect(page.locator('[data-ranking-row] canvas').first()).toHaveAttribute('data-painted', 'true');
+  await expect.poll(() => firstChart.evaluate(canvas => canvas.toDataURL())).toBe(originalChart);
+  await page.setViewportSize({width:390,height:844});
+  await page.getByRole('button',{name:'展开导航'}).click();
+  await expect(page.getByRole('navigation',{name:'主导航'})).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('button',{name:'展开导航'})).toBeFocused();
+  await page.getByRole('button',{name:'展开导航'}).click();
+  await page.getByRole('button',{name:'我的收藏',exact:true}).click();
+  await expect(page.locator('[data-user-library]')).toHaveAttribute('open');
+});
+
+for (const width of [390,768,1024,1440]) {
+  test(`keeps project text and actions inside ranking cells at ${width}px in both densities`, async ({page}) => {
+    await page.setViewportSize({width,height:900});
+    for (const route of [latestPath,'all-time/']) {
+      await page.goto(route);
+      for (const density of ['comfortable','compact']) {
+        await page.evaluate(density=>document.documentElement.dataset.rankingDensity=density,density);
+        const row=page.locator('[data-ranking-row]:visible').first();
+        await row.scrollIntoViewIfNeeded();
+        const rowBox=await row.boundingBox();
+        const copyBox=await row.locator('.project-copy').boundingBox();
+        expect(copyBox.width).toBeGreaterThan(140);
+        for (const selector of ['.stars-cell','.workspace-project-action','.share-project']) {
+          const item=row.locator(selector);
+          if (!await item.count()) continue;
+          await expect(item).toBeVisible();
+          const box=await item.boundingBox();
+          expect(box.x).toBeGreaterThanOrEqual(rowBox.x);
+          expect(box.x+box.width).toBeLessThanOrEqual(rowBox.x+rowBox.width+1);
+        }
+      }
+    }
+  });
+}
+
+test('mobile navigation remains available with JavaScript disabled',async({browser})=>{
+  const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});
+  const page=await context.newPage();
+  await page.goto(latestPath);
+  await page.getByRole('navigation',{name:'无脚本导航'}).getByRole('link',{name:'历史榜',exact:true}).click();
+  await expect(page).toHaveURL(/all-time\/$/);
+  await expect(page.locator('[data-ranking-row]')).toHaveCount(1000);
+  await context.close();
+});
