@@ -1265,6 +1265,33 @@ def run_update(
         if dry_run:
             raise DataIntegrityError("请先恢复待完成发布，再预览新的采集")
 
+    from tools.capture_store import latest_receipt
+    restored = None
+    committed_at = (load_json(public_dir / "index.json", {}) or {}).get("updated_at")
+    for folder in sorted((data_dir / "captures").glob("????-??-??")):
+        if committed_at and folder.name < local_date(parse_timestamp(committed_at)).isoformat():
+            continue
+        receipts = [latest_receipt(folder)]
+        for receipt in receipts:
+            observed = receipt['snapshot']
+            if committed_at and parse_timestamp(observed['captured_at']) < parse_timestamp(committed_at):
+                continue
+            if committed_at == observed['captured_at']:
+                saved_state = load_json(state_path, {})
+                saved_snapshot = load_json(snapshot_dir / f"{observed['snapshot_date']}.json")
+                if saved_snapshot == observed and saved_state.get('candidates') == receipt['candidates'] and saved_state.get('directory') == receipt.get('directory'):
+                    continue
+            if dt.date.fromisoformat(observed['snapshot_date']) > snapshot_date:
+                raise DataIntegrityError("存在较新日期的采集记录，拒绝回写旧日期")
+            if require_valid_capture and not snapshot_is_valid(observed):
+                raise DataIntegrityError("待恢复快照不在有效采样窗口")
+            if dry_run:
+                raise DataIntegrityError("请先恢复已保存采集记录，再预览新的采集")
+            restored = publish_snapshot(data_dir=data_dir, **receipt, status="reused")
+            committed_at = observed['captured_at']
+    if restored and restored['snapshot']['snapshot_date'] == snapshot_date.isoformat() and not replace_snapshot:
+        return restored
+
     existing_snapshot = load_json(snapshot_path)
     if existing_snapshot is not None and not replace_snapshot:
         if require_valid_capture and not snapshot_is_valid(existing_snapshot):
@@ -1333,6 +1360,15 @@ def publish_snapshot(
     observations: Optional[Sequence[Mapping[str, Any]]] = None,
 ) -> Dict[str, Any]:
     """Replay a validated observation into all derived files without querying GitHub."""
+    from tools.capture_store import store_receipt, validate_receipt
+    receipt = {"snapshot": snapshot, "candidates": candidates, **({"directory": directory, "observation_capacity": observation_capacity, "observations": observations} if directory is not None else {})}
+    try:
+        validate_receipt(receipt)
+    except SchemaValidationError as exc:
+        raise DataIntegrityError(str(exc)) from exc
+    if not dry_run:
+        store_receipt(data_dir, receipt)
+        atomic_write_json(data_dir / "state" / "pending-update.json", receipt)
     snapshot_date = dt.date.fromisoformat(snapshot["snapshot_date"])
     snapshot_dir = data_dir / "snapshots"
     snapshot_path = snapshot_dir / f"{snapshot_date.isoformat()}.json"
@@ -1515,8 +1551,6 @@ def publish_snapshot(
     except SchemaValidationError as exc:
         raise DataIntegrityError(str(exc)) from exc
     if not dry_run:
-        # Durable intent precedes every output; ordinary retries finish this batch first.
-        atomic_write_json(pending_path, {"snapshot": snapshot, "candidates": candidates, **({"directory": directory, "observation_capacity": observation_capacity, "observations": observations} if directory is not None else {})})
         sync_public_schemas(public_dir)
         atomic_write_json(state_path, state_payload)
         atomic_write_json(snapshot_path, snapshot)
