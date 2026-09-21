@@ -276,3 +276,20 @@ html[data-workspace-ready] .workspace-menu { display:grid; place-items:center; w
 }
 
 [data-ranking-view] .progress-summary dd small { display:block; margin-top:5px; font:400 10px/1.5 system-ui,sans-serif; }
+
+/* Keep historical context available without a full-width alert above the ranking. */
+[data-ranking-view] .ranking-summary .ranking-summary-meta { flex:0 1 auto; display:flex; align-items:center; justify-content:flex-end; flex-wrap:wrap; gap:4px 12px; z-index:4; }
+.ranking-history-note > summary { cursor:pointer; list-style:none; display:flex; align-items:center; min-height:36px; padding:0 9px; border:1px solid #e7d7b2; border-radius:6px; background:#fff8e9; color:#785615; font-size:12px; font-weight:600; white-space:nowrap; }
+.ranking-history-note > summary::-webkit-details-marker { display:none; }
+.ranking-history-note > summary:focus-visible { outline:2px solid var(--gold); outline-offset:3px; }
+.ranking-history-note .history-note-open, .ranking-history-note[open] .history-note-closed { display:none; }
+.ranking-history-note[open] .history-note-open { display:inline; }
+.ranking-history-panel { position:absolute; top:calc(100% + 8px); right:0; width:380px; max-width:calc(100vw - 28px); padding:16px; border:1px solid var(--line); border-radius:10px; background:var(--surface); box-shadow:0 8px 24px rgb(35 35 29 / 12%); font-size:13px; line-height:1.7; }
+.ranking-history-panel > strong { font-size:13px; }
+.ranking-history-panel p { margin:8px 0 12px; color:var(--muted); }
+.ranking-history-panel a { color:var(--gold); font-weight:600; }
+@media(max-width:680px) {
+  [data-ranking-view] .ranking-summary .ranking-summary-meta:has(.ranking-history-note) { flex-basis:100%; justify-content:space-between; }
+  .ranking-history-panel { max-width:100%; }
+  .ranking-history-note > summary { min-height:40px; }
+}

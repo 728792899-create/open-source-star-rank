@@ -163,16 +163,25 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
     <strong>{switcherLabelOverride ?? (isLive ? '今日实时新增榜' : isEvent ? '昨日完整新增榜' : periodDays ? `${periodDays} 日净增榜` : '昨日净增榜')}</strong>
     {alternateHref && alternateLabel && <a href={withBase(alternateHref)}>{alternateLabel} →</a>}
   </nav>}
-  {fallbackNotice && <p class="pipeline-fallback" role="status">{fallbackNotice}</p>}
   <header class="ranking-summary" aria-labelledby="ranking-title">
     <div>
       <h1 id="ranking-title">{sectionTitle}</h1>
 
     </div>
+    <div class="ranking-summary-meta">
     <time class="ranking-date-chip" datetime={ranking.date} aria-label={`榜单日期 ${ranking.date}`}>
       <span>{isLive ? '实时截至' : isLatest ? '统计日' : '历史统计日'}</span>
       <strong>{ranking.date}</strong>
     </time>
+    {fallbackNotice && <details class="ranking-history-note">
+      <summary>历史榜 · <span class="history-note-closed">查看说明</span><span class="history-note-open">收起说明</span></summary>
+      <div class="ranking-history-panel">
+        <strong>为什么显示历史榜？</strong>
+        <p>{fallbackNotice}</p>
+        <a href={withBase('/status/')}>查看采样状态 →</a>
+      </div>
+    </details>}
+    </div>
   </header>
 
   {archived ? <p class="fallback-notice" data-archive-notice>历史归档：事件分类榜已停止更新。以下数据日期为 {ranking.date}。<a href={withBase(alternateHref ?? '/')}>查看当前净增榜筛选结果 →</a></p> : <RankingTicker
