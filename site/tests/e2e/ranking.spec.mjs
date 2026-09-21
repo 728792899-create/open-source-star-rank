@@ -446,6 +446,16 @@ test('workspace navigation, relocated search and retry recover without reloading
   await page.getByRole('button',{name:'展开导航'}).click();
   await page.getByRole('button',{name:'我的收藏',exact:true}).click();
   await expect(page.locator('[data-user-library]')).toHaveAttribute('open');
+  await page.goto('compare/');
+  const globalSearch = page.getByRole('link', {name:'搜索榜单项目'});
+  await expect(globalSearch).toBeVisible();
+  await page.getByRole('button', {name:'展开导航'}).click();
+  const headerBox = await page.locator('.site-header').boundingBox();
+  const menuBox = await page.locator('.workspace-sidebar').boundingBox();
+  expect(Math.abs(menuBox.y - headerBox.y - headerBox.height)).toBeLessThanOrEqual(4);
+  await page.keyboard.press('Escape');
+  await globalSearch.click();
+  await expect(page.getByRole('searchbox', {name:'搜索项目'})).toBeVisible();
 });
 
 for (const width of [390,768,1024,1440]) {
