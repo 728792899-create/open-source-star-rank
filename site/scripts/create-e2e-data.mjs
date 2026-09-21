@@ -392,6 +392,11 @@ for (const entry of eventEntries(6)) localizationSources.set(entry.repository_id
 for (const entry of rankingEntries(39, 500)) localizationSources.set(entry.repository_id, entry);
 for (const entry of poolEntries) localizationSources.set(entry.repository_id, entry);
 for (const entry of alltimeEntries) localizationSources.set(entry.repository_id, entry);
+// At the same observation time, the v1.1 directory is authoritative. Preserve
+// intentional pending entries, but generate existing fixture caches from it.
+for (const entry of repositories) {
+  if (localizationSources.has(entry.repository_id)) localizationSources.set(entry.repository_id, entry);
+}
 const localizedRepositories = [...localizationSources.values()]
   .sort((left, right) => left.repository_id - right.repository_id)
   .map((entry) => ({

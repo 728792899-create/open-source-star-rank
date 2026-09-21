@@ -113,6 +113,9 @@ test('combines direction, product type and scenario filters and re-ranks the dee
   const category = await firstRow.getAttribute('data-category') ?? '';
   const projectType = await firstRow.getAttribute('data-project-type') ?? '';
   const scenario = (await firstRow.getAttribute('data-scenarios') ?? '').split(',')[0];
+  expect(category, 'fixture first row must retain its valid classification').not.toBe('');
+  expect(projectType).not.toBe('');
+  expect(scenario).not.toBe('');
   await page.getByLabel('项目方向').selectOption(category);
   await page.getByLabel('产品形态').selectOption(projectType);
   await page.getByLabel('适用场景').selectOption(scenario);
