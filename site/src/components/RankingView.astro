@@ -9,8 +9,8 @@ import { readClassificationIndex, readClassificationRepositories, readLocalizati
 import { classificationLabels, classificationMap } from '../lib/classification';
 import { localizedRepositoryContent } from '../lib/localization';
 import { repositoryAgeLabel, repositoryDate, repositoryOwner } from '../lib/repository-lifecycle';
-import FreshnessStatus from './FreshnessStatus.astro';
-import UpdateCountdown from './UpdateCountdown.astro';
+import RankingTicker from './RankingTicker.astro';
+import RankingPeriods from './RankingPeriods.astro';
 
 interface Props {
   ranking: DailyRanking | LanguageRanking | PeriodRanking | EventDailyRanking | EventLiveRanking | FacetRanking;
@@ -160,36 +160,34 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
   data-ranking-limit="500"
   class="shell ranking-page"
 >
-  <nav class="ranking-mode-switcher" aria-label="榜单口径">
+  {alternateHref && alternateLabel && <nav class="ranking-mode-switcher" aria-label="榜单口径">
     <strong>{switcherLabelOverride ?? (isLive ? '今日实时新增榜' : isEvent ? '昨日完整新增榜' : periodDays ? `${periodDays} 日净增榜` : '昨日净增榜')}</strong>
     {alternateHref && alternateLabel && <a href={withBase(alternateHref)}>{alternateLabel} →</a>}
-  </nav>
+  </nav>}
   {fallbackNotice && <p class="pipeline-fallback" role="status">{fallbackNotice}</p>}
   <header class="ranking-summary" aria-labelledby="ranking-title">
     <div>
-      <p class="workspace-discovery">发现下一个值得用的开源项目</p>
-      <p class="workspace-subtitle">用真实趋势，找到适合你的工具。</p>
-      <p class="eyebrow">{sectionEyebrow} · 统计日 {formatDate(ranking.date)} · {updateFrequency}</p>
       <h1 id="ranking-title">{sectionTitle}</h1>
 
     </div>
-    <img class="workspace-hero-art" src={withBase('/assets/ui/hero-star-320.webp')} srcset={`${withBase('/assets/ui/hero-star-320.webp')} 320w, ${withBase('/assets/ui/hero-star-640.webp')} 640w`} sizes="240px" width="240" height="160" alt="" />
     <time class="ranking-date-chip" datetime={ranking.date} aria-label={`榜单日期 ${ranking.date}`}>
-      <span>{isLive ? 'LIVE' : isLatest ? 'LATEST' : 'ARCHIVE'}</span>
+      <span>{isLive ? '实时截至' : isLatest ? '统计日' : '历史统计日'}</span>
       <strong>{ranking.date}</strong>
-      <small>UTC+8</small>
     </time>
   </header>
 
-  {archived ? <p class="fallback-notice" data-archive-notice>历史归档：事件分类榜已停止更新。以下数据日期为 {ranking.date}。<a href={withBase(alternateHref ?? '/')}>查看当前净增榜筛选结果 →</a></p> : <div class="data-update-strip">
-    <FreshnessStatus updatedAt={isLive ? eventRanking!.generated_at : ranking.window_end} thresholdHours={isLive ? 2 : index.freshness_threshold_hours} compact />
-    <UpdateCountdown
-      nextAt={nextUpdateAt}
-      updatedAt={isLive ? eventRanking!.generated_at : index.updated_at}
-      indexPath={updateIndexPath}
-      label={isLive ? '下次实时榜刷新' : '下次榜单更新'}
-    />
-  </div>}
+  {archived ? <p class="fallback-notice" data-archive-notice>历史归档：事件分类榜已停止更新。以下数据日期为 {ranking.date}。<a href={withBase(alternateHref ?? '/')}>查看当前净增榜筛选结果 →</a></p> : <RankingTicker
+    updatedAt={isLive ? eventRanking!.generated_at : ranking.window_end}
+    thresholdHours={isLive ? 2 : index.freshness_threshold_hours}
+    nextAt={nextUpdateAt}
+    indexUpdatedAt={isLive ? eventRanking!.generated_at : index.updated_at}
+    indexPath={updateIndexPath}
+    label={isLive ? '下次实时榜刷新' : '下次榜单更新'}
+    notes={[
+      `统计日 ${formatDate(ranking.date)} · ${updateFrequency}`,
+      `${isFacet ? '来源池' : isEvent ? '观测仓库' : '观测候选池'} ${formatNumber(facetRanking?.pool_size ?? eventRanking?.source_metrics.observed_repository_count ?? snapshotRanking?.candidate_count ?? 0)} 项 · 本榜 ${totalEntries} 项 · 非 GitHub 全量收录`,
+    ]}
+  /> }
   {isLive && <script is:inline define:vars={{ liveDate: ranking.date }}>
     (() => {
       const parts = new Intl.DateTimeFormat('en-US', {
@@ -211,7 +209,7 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
 
   <details class="workspace-coverage">
     <summary>{isFacet ? `来源池 ${formatNumber(facetRanking!.pool_size)} 项` : isEvent ? `观测到 ${formatNumber(eventRanking!.source_metrics.observed_repository_count)} 个仓库` : `观测候选池 ${formatNumber(snapshotRanking!.candidate_count)} 个项目`} · 上榜 {totalEntries} 项 <span>统计口径与采样详情</span></summary>
-    <p class="ranking-summary-copy"><strong>{headline}</strong><span>{heroCopy}</span></p>
+    <p class="ranking-summary-copy"><small>{sectionEyebrow}</small><strong>{headline}</strong><span>{heroCopy}</span></p>
   {isFacet ? <section class="metrics" aria-label="榜单统计">
     <div><span>上榜项目</span><strong>{facetRanking!.entries.length}</strong><small>本分类进入前 100</small></div>
     <div><span>本类新增合计</span><strong>{formatNumber(facetRanking!.total_gain)}</strong><small>当日唯一加星用户合计</small></div>
@@ -283,12 +281,7 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
       </div>}
     </div>
 
-    <nav class="workspace-periods" aria-label="查看不同时间范围">
-      <a href={withBase('/daily/')} aria-current={!periodDays && !isEvent && !isFacet ? 'page' : undefined}>昨日</a>
-      <a href={withBase('/period/7d/')} aria-current={periodDays === 7 ? 'page' : undefined}>7 日</a>
-      <a href={withBase('/period/30d/')} aria-current={periodDays === 30 ? 'page' : undefined}>30 日</a>
-      <a href={withBase('/all-time/')}>累计 Star</a>
-    </nav>
+    <RankingPeriods active={isEvent || isFacet ? null : periodDays ?? 1} />
     </div>
     <div class="filters" role="search">
       <label class="filter-search">

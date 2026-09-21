@@ -40,7 +40,7 @@ test('keeps the latest yesterday net ranking as the homepage default', async ({ 
   await expect(page.locator('main h2')).toHaveCount(0);
   await expect(page.locator('.freshness-status.compact')).toContainText('数据正常');
   await expect(page.locator('[data-ranking-mode="daily"] [data-ranking-row]')).toHaveCount(100);
-  await expect(page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '昨日净增榜' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '项目榜单' })).toBeVisible();
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /social\/daily-2026-07-14\.png$/);
   await expect(page.locator('.site-header').getByRole('link', { name: 'GitHub ↗' }))
     .toHaveAttribute('href', 'https://github.com/728792899-create/open-source-star-rank');
@@ -320,6 +320,7 @@ test('publishes independent category boards with renumbered ranks and empty noin
   expect(gains).toEqual([...gains].sort((left, right) => right - left));
   await expect(page.getByRole('link', { name: '查看当前净增榜筛选结果 →' }).first()).toBeVisible();
   await expect(page.locator('[data-archive-notice]')).toContainText('已停止更新');
+  await expect(page.locator('.workspace-periods [aria-current]')).toHaveCount(0);
   await expect(page.locator('[data-update-countdown]')).toHaveCount(0);
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,follow');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/category\/ai-machine-learning\/$/);

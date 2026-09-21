@@ -1,0 +1,18 @@
+---
+import { withBase } from '../lib/paths';
+import { readRankingIndex } from '../lib/data';
+import { periodState } from '../lib/period-state.mjs';
+interface Props { active?: number | 'all' | null; }
+const { active = 1 } = Astro.props;
+const index = readRankingIndex();
+---
+<nav class="workspace-periods" aria-label="查看不同时间范围">
+  <a href={withBase('/daily/')} aria-current={active === 1 ? 'page' : undefined}>昨日</a>
+  {[7, 30].map((days) => {
+    const state = periodState(index, days);
+    return <a href={withBase(`/period/${days}d/`)} aria-current={active === days ? 'page' : undefined}>
+      {days} 日 {state.label && <small class="nav-state" title={state.message}>{state.label}</small>}
+    </a>;
+  })}
+  <a href={withBase('/all-time/')} aria-current={active === 'all' ? 'page' : undefined}>累计 Star</a>
+</nav>

@@ -217,3 +217,56 @@ html[data-ranking-density=comfortable] .project-cell .project-lifecycle { displa
 .compare-page .compare-card { border-color:var(--line); }
 .compare-page .compare-card dt { font-size:11px; }
 .compare-page .compare-card dd { font-size:14px; }
+
+/* Quiet navigation and compact ranking updates. */
+.workspace-sidebar .brand { min-height:80px; flex-direction:row; justify-content:flex-start; padding:18px 22px; gap:10px; }
+.brand .kingai-logo { width:40px; height:40px; }
+.brand .kingai-product-name { font-size:14px; letter-spacing:.02em; }
+.workspace-sidebar nav { padding-top:2px; }
+.workspace-sidebar-bottom p { display:none; }
+.workspace-menu { display:none; }
+html[data-workspace-ready] .workspace-menu { display:grid; place-items:center; width:40px; height:40px; padding:8px; border:1px solid var(--line); border-radius:8px; background:var(--surface); flex:none; cursor:pointer; }
+@media(min-width:981px) {
+  html[data-sidebar-collapsed] body { padding-left:0; }
+  html[data-sidebar-collapsed] .workspace-sidebar { display:none; }
+  html[data-sidebar-collapsed] .compare-tray { left:24px; }
+}
+[data-ranking] .ranking-summary { min-height:0; padding:18px 0 12px; gap:16px; align-items:center; }
+[data-ranking] .ranking-summary h1 { margin:0; font-size:24px; line-height:1.4; font-weight:700; }
+[data-ranking] .ranking-date-chip { display:flex; gap:8px; align-items:center; min-width:0; padding:0; margin:0; border:0; background:transparent; flex:none; }
+[data-ranking] .ranking-date-chip span, [data-ranking] .ranking-date-chip strong { font-size:12px; line-height:1.5; }
+.workspace-periods a { display:flex; align-items:center; justify-content:center; gap:5px; padding:8px 12px; }
+.workspace-periods .nav-state { margin:0; font-size:10px; line-height:1.2; white-space:nowrap; }
+.workspace-periods a[aria-current] .nav-state { color:inherit; border-color:currentColor; }
+.ranking-ticker { display:grid; grid-template-columns:minmax(240px, .85fr) minmax(0,1.15fr); align-items:center; gap:12px; padding:8px 12px; margin:0 0 10px; border:1px solid var(--line); border-radius:8px; background:#f4f5f0; font-size:12px; }
+.ranking-ticker .freshness-status { margin:0; padding:0; border:0; background:transparent; min-width:0; font-size:12px; line-height:1.6; }
+.ranking-ticker .freshness-status p { margin:0; }
+.ticker-carousel { display:flex; align-items:center; gap:8px; min-width:0; border-left:1px solid var(--line); padding-left:12px; }
+.ticker-items { flex:1; min-width:0; display:grid; gap:6px; }
+.ticker-item { min-width:0; overflow-wrap:anywhere; line-height:1.6; }
+.ticker-item p { margin:0; }
+.ticker-enhanced .ticker-items { gap:0; }
+.ticker-enhanced .ticker-item { grid-area:1 / 1; opacity:1; transform:translateY(0); transition:opacity .65s ease, transform .65s ease; }
+.ticker-enhanced .ticker-item[aria-hidden=true] { visibility:hidden; opacity:0; transform:translateY(8px); pointer-events:none; }
+.ranking-ticker .update-countdown { margin:0; padding:0; display:flex; flex-wrap:wrap; gap:2px 8px; border:0; background:transparent; line-height:1.6; }
+.ranking-ticker .update-countdown-label, .ranking-ticker .update-countdown time { font-size:12px; }
+.ranking-ticker .update-countdown strong { font-size:13px; }
+.ticker-controls { display:flex; flex:none; gap:2px; }
+.ticker-controls[hidden] { display:none; }
+.ticker-controls button { min-width:30px; min-height:36px; border:0; border-radius:5px; background:transparent; color:var(--muted); cursor:pointer; font-size:12px; padding:4px; }
+.ticker-controls button:hover { color:var(--ink); background:var(--paper-deep); }
+@media(max-width:1100px) {
+  .ranking-ticker { grid-template-columns:1fr; gap:6px; }
+  .ticker-carousel { border-left:0; padding:6px 0 0; border-top:1px solid var(--line); }
+}
+@media(max-width:680px) {
+  [data-ranking] .ranking-summary { padding:14px 0 10px; flex-wrap:wrap; gap:4px; }
+  [data-ranking] .ranking-summary h1 { font-size:20px; }
+  [data-ranking] .ranking-date-chip { align-self:center; }
+  .ranking-ticker { padding:8px 10px; }
+  .ticker-controls button { min-width:32px; min-height:44px; }
+  .workspace-periods a { padding:8px 4px; flex-wrap:wrap; gap:3px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .ticker-enhanced .ticker-item { transition:none; transform:none; }
+}

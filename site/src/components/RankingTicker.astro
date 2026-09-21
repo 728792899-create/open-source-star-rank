@@ -1,0 +1,33 @@
+---
+import FreshnessStatus from './FreshnessStatus.astro';
+import UpdateCountdown from './UpdateCountdown.astro';
+interface Props {
+  updatedAt: string | null;
+  thresholdHours: number;
+  nextAt?: string | null;
+  indexUpdatedAt?: string | null;
+  indexPath: string;
+  label?: string;
+  notes: string[];
+}
+const { updatedAt, thresholdHours, nextAt, indexUpdatedAt, indexPath, label, notes } = Astro.props;
+---
+<section class="ranking-ticker" data-ranking-ticker aria-label="榜单更新与收录信息">
+  <div class="ticker-health"><FreshnessStatus updatedAt={updatedAt} thresholdHours={thresholdHours} compact /></div>
+  <div class="ticker-carousel">
+    <div class="ticker-items" aria-live="off">
+      {nextAt && <div class="ticker-item" data-ticker-item>
+        <UpdateCountdown nextAt={nextAt} updatedAt={indexUpdatedAt} indexPath={indexPath} label={label} announce={false} />
+      </div>}
+      {notes.map((note) => <div class="ticker-item" data-ticker-item><p>{note}</p></div>)}
+    </div>
+    <div class="ticker-controls" data-ticker-controls hidden>
+      <button type="button" data-ticker-prev aria-label="上一条信息">‹</button>
+      <button type="button" data-ticker-pause aria-label="暂停信息轮播" aria-pressed="false">暂停</button>
+      <button type="button" data-ticker-next aria-label="下一条信息">›</button>
+    </div>
+  </div>
+</section>
+<script>
+  import '../scripts/ranking-ticker';
+</script>

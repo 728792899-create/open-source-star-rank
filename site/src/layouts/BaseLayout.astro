@@ -2,8 +2,6 @@
 import '../styles/global.css';
 import '../styles/workspace.css';
 import { withBase } from '../lib/paths';
-import { readRankingIndex } from '../lib/data';
-import { periodState } from '../lib/period-state.mjs';
 import { serializeJsonForHtml } from '../lib/serialize-json.mjs';
 
 interface Props {
@@ -25,14 +23,14 @@ const {
   prevPath,
   nextPath,
 } = Astro.props;
-const periodIndex = readRankingIndex();
-const periodStates = new Map([['/period/7d/', periodState(periodIndex, 7)], ['/period/30d/', periodState(periodIndex, 30)]]);
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
 const socialImage = new URL(withBase(socialImagePath), Astro.site ?? Astro.url.origin).toString();
 const repositoryUrl = 'https://github.com/728792899-create/open-source-star-rank';
 const reuseStatementUrl = `${repositoryUrl}/blob/main/REUSE.md`;
 const activePath = Astro.url.pathname;
-const navActive = (href: string) => href === '/' ? activePath === withBase('/') : activePath.startsWith(withBase(href));
+const navActive = (href: string) => href === '/'
+  ? ['/', '/daily/', '/period/', '/all-time/'].some((route) => route === '/' ? activePath === withBase('/') : activePath.startsWith(withBase(route)))
+  : href === '/board/' ? ['/board/', '/discover/'].some((route) => activePath.startsWith(withBase(route))) : activePath.startsWith(withBase(href));
 const authApiUrl = import.meta.env.PUBLIC_AUTH_API_URL?.replace(/\/$/u, '') ?? '';
 ---
 
@@ -67,6 +65,7 @@ const authApiUrl = import.meta.env.PUBLIC_AUTH_API_URL?.replace(/\/$/u, '') ?? '
     <title>{title}</title>
     <script is:inline>
       (() => {
+        try { document.documentElement.toggleAttribute('data-sidebar-collapsed', window.localStorage.getItem('star-rank-sidebar') === 'collapsed'); } catch {}
         const parameter = new URLSearchParams(window.location.search).get('display');
         let stored = null;
         try { stored = window.localStorage.getItem('star-rank-project-language'); } catch {}
@@ -95,16 +94,14 @@ const authApiUrl = import.meta.env.PUBLIC_AUTH_API_URL?.replace(/\/$/u, '') ?? '
     <a class="skip-link" href="#main-content">跳到主要内容</a>
     <aside class="workspace-sidebar" id="workspace-navigation" aria-label="站点导航区域">
       <a class="brand" href={withBase('/')} aria-label="开源星榜首页">
-        <img class="kingai-logo" src={withBase('/assets/brand/kingai-logo.svg')} width="88" height="88" alt="king AI" />
+        <img class="kingai-logo" src={withBase('/assets/brand/kingai-logo.svg')} width="40" height="40" alt="king AI" />
         <span class="kingai-product-name">开源星榜</span>
       </a>
       <nav aria-label="主导航">
         {[
-          ['/', '发现项目', 'search'], ['/daily/', '昨日净增榜', 'chart'],
-          ['/period/7d/', '7 日榜', 'chart'], ['/period/30d/', '30 日榜', 'chart'],
-          ['/all-time/', '历史榜', 'chart'], ['/board/', '项目分类', 'data'],
+          ['/', '项目榜单', 'chart'], ['/board/', '分类目录', 'data'],
         ].map(([href, label, icon]) => <a href={withBase(href)} aria-current={navActive(href) ? 'page' : undefined}>
-          <img src={withBase(`/assets/ui/${icon}.svg`)} width="21" height="21" alt="" />{label}{periodStates.get(href)?.label && <small class="nav-state" title={periodStates.get(href)?.message}>{periodStates.get(href)?.label}</small>}
+          <img src={withBase(`/assets/ui/${icon}.svg`)} width="21" height="21" alt="" />{label}
         </a>)}
         <button type="button" data-open-library><img src={withBase('/assets/ui/heart.svg')} width="21" height="21" alt="" />我的收藏</button>
         <a href={withBase('/compare/')} aria-current={navActive('/compare/') ? 'page' : undefined}><img src={withBase('/assets/ui/compare.svg')} width="21" height="21" alt="" />项目对比</a>
@@ -290,32 +287,53 @@ const authApiUrl = import.meta.env.PUBLIC_AUTH_API_URL?.replace(/\/$/u, '') ?? '
         const field = document.querySelector('.filter-search');
         const slot = document.querySelector('[data-workspace-search]');
         if (field && slot) { slot.replaceChildren(field); document.documentElement.classList.add('workspace-search-ready'); }
-        const toggle = document.querySelector('[data-workspace-menu]');
-        const setOpen = (open: boolean) => {
-          document.documentElement.toggleAttribute('data-sidebar-open', open);
-          toggle?.setAttribute('aria-expanded', String(open));
-          toggle?.setAttribute('aria-label', open ? '关闭导航' : '展开导航');
+        const root = document.documentElement;
+        const toggle = document.querySelector<HTMLButtonElement>('[data-workspace-menu]');
+        const sidebar = document.querySelector<HTMLElement>('.workspace-sidebar');
+        const mobile = window.matchMedia('(max-width: 980px)');
+        let mobileOpen = false;
+        let collapsed = root.hasAttribute('data-sidebar-collapsed');
+        const renderSidebar = () => {
+          const visible = mobile.matches ? mobileOpen : !collapsed;
+          root.toggleAttribute('data-sidebar-open', mobile.matches && mobileOpen);
+          root.toggleAttribute('data-sidebar-collapsed', collapsed);
+          root.setAttribute('data-workspace-ready', '');
+          toggle?.setAttribute('aria-expanded', String(visible));
+          const label = mobile.matches ? visible ? '关闭导航' : '展开导航' : visible ? '收起侧栏' : '展开侧栏';
+          toggle?.setAttribute('aria-label', label);
+          toggle?.setAttribute('title', label);
+          if (sidebar) {
+            if (!visible && sidebar.contains(document.activeElement)) toggle?.focus();
+            sidebar.inert = !visible;
+          }
         };
+        const closeMobile = () => { mobileOpen = false; renderSidebar(); };
         toggle?.addEventListener('click', () => {
-          const open = !document.documentElement.hasAttribute('data-sidebar-open');
-          setOpen(open);
-          if (open) document.querySelector<HTMLElement>('.workspace-sidebar nav a')?.focus();
+          if (mobile.matches) mobileOpen = !mobileOpen;
+          else {
+            collapsed = !collapsed;
+            try { window.localStorage.setItem('star-rank-sidebar', collapsed ? 'collapsed' : 'expanded'); } catch {}
+          }
+          renderSidebar();
+          if (mobile.matches && mobileOpen) sidebar?.querySelector<HTMLElement>('nav a')?.focus();
         });
+        mobile.addEventListener('change', () => { mobileOpen = false; renderSidebar(); });
         document.querySelector('[data-open-library]')?.addEventListener('click', () => {
           const library = document.querySelector('[data-user-library]');
           if (library instanceof HTMLDetailsElement) { library.open = true; library.querySelector('summary')?.focus(); }
-          setOpen(false);
+          closeMobile();
         });
         document.addEventListener('keydown', (event) => {
-          if (event.key === 'Escape' && document.documentElement.hasAttribute('data-sidebar-open')) { setOpen(false); (toggle as HTMLElement)?.focus(); }
+          if (event.key === 'Escape' && mobile.matches && mobileOpen) { closeMobile(); toggle?.focus(); }
           if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
             const input = document.querySelector('[data-search]');
             if (input instanceof HTMLInputElement) { event.preventDefault(); input.focus(); }
           }
         });
         document.addEventListener('click', event => {
-          if (event.target instanceof Element && !event.target.closest('.workspace-sidebar, [data-workspace-menu]')) setOpen(false);
+          if (mobile.matches && mobileOpen && event.target instanceof Element && !event.target.closest('.workspace-sidebar, [data-workspace-menu]')) closeMobile();
         });
+        renderSidebar();
       };
       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initializeWorkspace, { once: true });
       else initializeWorkspace();

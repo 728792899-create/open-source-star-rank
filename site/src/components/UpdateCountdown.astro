@@ -6,9 +6,10 @@ interface Props {
   updatedAt?: string | null;
   indexPath: string;
   label?: string;
+  announce?: boolean;
 }
 
-const { nextAt, updatedAt, indexPath, label = '下次数据更新' } = Astro.props;
+const { nextAt, updatedAt, indexPath, label = '下次数据更新', announce = true } = Astro.props;
 const validNext = nextAt && !Number.isNaN(new Date(nextAt).getTime()) ? nextAt : null;
 const formatted = validNext
   ? new Intl.DateTimeFormat('zh-CN', {
@@ -23,7 +24,7 @@ const formatted = validNext
   data-next-at={validNext}
   data-updated-at={updatedAt ?? ''}
   data-index-path={withBase(indexPath)}
-  aria-live="polite"
+  aria-live={announce ? 'polite' : 'off'}
 >
   <span class="update-countdown-label">{label}</span>
   <strong data-countdown-value>计算中…</strong>

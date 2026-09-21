@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FreshnessStatus from '../../components/FreshnessStatus.astro';
 import UpdateCountdown from '../../components/UpdateCountdown.astro';
+import RankingPeriods from '../../components/RankingPeriods.astro';
 import { classificationLabels, classificationMap } from '../../lib/classification';
 import {
   readAllTimeBoard, readAllTimeIndex, readClassificationIndex, readClassificationRepositories, readLocalizationCatalog,
@@ -83,6 +84,7 @@ const structuredData = entries.length ? {
     </section>
 
     <section class="ranking-section" aria-labelledby="ranking-title">
+      <RankingPeriods active="all" />
       <div class="ranking-toolbar">
         <div class="ranking-actions" aria-label="榜单操作">
           <button type="button" data-copy-ranking>复制榜单链接</button>
