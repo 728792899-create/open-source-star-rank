@@ -6,7 +6,7 @@
   "additionalProperties": false,
   "required": ["schema_version", "taxonomy_version", "generated_at", "repositories"],
   "properties": {
-    "schema_version": { "const": "1.0.0" },
+    "schema_version": { "enum": ["1.0.0", "1.1.0"] },
     "taxonomy_version": { "const": "1.0.0" },
     "generated_at": { "type": ["string", "null"], "format": "date-time" },
     "repositories": {

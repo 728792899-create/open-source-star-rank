@@ -92,8 +92,8 @@ def read_localizations(public_dir: Path) -> dict[int, Mapping[str, Any]]:
     return {int(item["repository_id"]): item for item in payload["repositories"]}
 
 
-def build_classification_sources(public_dir: Path) -> dict[int, dict[str, Any]]:
-    ranked = discover_ranked_repositories(public_dir)
+def build_classification_sources(public_dir: Path, *, source_scope: str = "ranked-v1") -> dict[int, dict[str, Any]]:
+    ranked = discover_ranked_repositories(public_dir, source_scope=source_scope)
     localized = read_localizations(public_dir)
     result: dict[int, dict[str, Any]] = {}
     for repository_id, source in ranked.items():
@@ -389,6 +389,7 @@ def classify_repositories(
     now: dt.datetime | None = None,
     client: Any | None = None,
     write_state: bool = True,
+    source_scope: str | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     if not 1 <= max_batch_size <= 20:
         raise ClassificationError("max_batch_size 必须位于 1–20")
@@ -397,9 +398,10 @@ def classify_repositories(
     root = data_dir.resolve()
     public_dir = root / "public" if (root / "public").is_dir() else root
     taxonomy = load_taxonomy(taxonomy_file)
-    sources = build_classification_sources(public_dir)
     previous_catalog = load_cached_repositories(root, public_dir)
     previous_index = load_cached_index(public_dir)
+    source_scope = source_scope or ("catalog-v1" if (previous_catalog or {}).get("schema_version") == "1.1.0" else "ranked-v1")
+    sources = build_classification_sources(public_dir, source_scope=source_scope)
     cached = {
         int(item["repository_id"]): item
         for item in (previous_catalog or {}).get("repositories", [])
@@ -503,7 +505,7 @@ def classify_repositories(
         {int(item["repository_id"]) for item in attempted} if model_client is not None else set(), failed_ids,
     )
     repositories_catalog = {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0" if source_scope == "catalog-v1" else "1.0.0",
         "taxonomy_version": taxonomy["taxonomy_version"],
         "generated_at": run_at,
         "repositories": repositories,
@@ -517,7 +519,7 @@ def classify_repositories(
     eligible_count = len(sources)
     classified_count = len(repositories)
     index = {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0" if source_scope == "catalog-v1" else "1.0.0",
         "taxonomy_version": taxonomy["taxonomy_version"],
         "locale": taxonomy["locale"],
         "generated_at": run_at,

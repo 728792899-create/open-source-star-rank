@@ -641,7 +641,7 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False, card_manif
     if localization_path.exists():
         localization = read_json(localization_path)
         validate_payload("localization", localization, schema_dir)
-        ranked_repositories = discover_ranked_repositories(public_dir)
+        ranked_repositories = discover_ranked_repositories(public_dir, source_scope="catalog-v1" if localization["schema_version"] == "1.1.0" else "ranked-v1")
         entries = localization["repositories"]
         repository_ids = [item["repository_id"] for item in entries]
         if repository_ids != sorted(set(repository_ids)):
@@ -684,7 +684,9 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False, card_manif
                 raise SchemaValidationError(f"项目分类索引与固定词表不一致：{field}")
         if classification_repositories["taxonomy_version"] != taxonomy["taxonomy_version"]:
             raise SchemaValidationError("项目分类仓库目录词表版本不一致")
-        sources = build_classification_sources(public_dir)
+        if classification_index["schema_version"] != classification_repositories["schema_version"]:
+            raise SchemaValidationError("分类索引与项目来源范围版本不一致")
+        sources = build_classification_sources(public_dir, source_scope="catalog-v1" if classification_index["schema_version"] == "1.1.0" else "ranked-v1")
         entries = classification_repositories["repositories"]
         repository_ids = [item["repository_id"] for item in entries]
         if repository_ids != sorted(set(repository_ids)):

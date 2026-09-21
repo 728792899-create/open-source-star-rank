@@ -91,6 +91,7 @@ jobs:
           STAR_RANK_DATA_DIR="$PWD/tests/fixtures/ready-data" BASE_PATH=/open-source-star-rank npm run build
           npm run validate-build
           npm run test:reproducible
+          npm run validate-build
           npm audit --audit-level=moderate
 
       - name: Validate optional GitHub auth worker

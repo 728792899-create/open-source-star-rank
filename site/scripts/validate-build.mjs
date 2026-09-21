@@ -126,16 +126,16 @@ if (['1.2.0', '1.3.0'].includes(eventIndex.schema_version) && eventIndex.status 
   }
 }
 const localization = JSON.parse(await readFile(path.join(dist, 'data/i18n/zh-CN/repositories.json'), 'utf8'));
-if (localization.schema_version !== '1.0.0' || localization.locale !== 'zh-CN') {
-  throw new Error('Published localization catalog does not satisfy the 1.0.0 public contract');
+if (!['1.0.0', '1.1.0'].includes(localization.schema_version) || localization.locale !== 'zh-CN') {
+  throw new Error('Published localization catalog has an unsupported public contract');
 }
 if (localization.coverage.localized_count !== localization.repositories.length) {
   throw new Error('Published localization coverage is inconsistent');
 }
 const classificationIndex = JSON.parse(await readFile(path.join(dist, 'data/classification/index.json'), 'utf8'));
 const classificationCatalog = JSON.parse(await readFile(path.join(dist, 'data/classification/repositories.json'), 'utf8'));
-if (classificationIndex.schema_version !== '1.0.0' || classificationIndex.taxonomy_version !== '1.0.0') {
-  throw new Error('Published classification index does not satisfy the 1.0.0 public contract');
+if (!['1.0.0', '1.1.0'].includes(classificationIndex.schema_version) || classificationCatalog.schema_version !== classificationIndex.schema_version || classificationIndex.taxonomy_version !== '1.0.0') {
+  throw new Error('Published classification catalogs have unsupported or mismatched public contracts');
 }
 if (classificationIndex.coverage.classified_count !== classificationCatalog.repositories.length) {
   throw new Error('Published classification coverage is inconsistent');

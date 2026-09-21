@@ -109,9 +109,11 @@ def required_verbatim_tokens(repository: Mapping[str, Any]) -> list[str]:
     return tokens
 
 
-def discover_ranked_repositories(public_dir: Path) -> dict[int, dict[str, Any]]:
+def discover_ranked_repositories(public_dir: Path, *, source_scope: str = "ranked-v1") -> dict[int, dict[str, Any]]:
     """Newest ranked metadata, prioritizing prominent current entries."""
 
+    if source_scope not in {"ranked-v1", "catalog-v1"}:
+        raise LocalizationError(f"未知补全来源范围：{source_scope}")
     sources: dict[int, tuple[tuple[str, int, str], dict[str, Any]]] = {}
     groups = (
         (public_dir / "period", 0),
@@ -156,12 +158,25 @@ def discover_ranked_repositories(public_dir: Path) -> dict[int, dict[str, Any]]:
     if alltime_path.is_file():
         register(read_json(alltime_path), date="", priority=-1, path=alltime_path)
 
-    # Prefer visible current projects within the established enrichment scope.
-    # Do not widen that scope here: archived data commits must remain valid for
-    # deploy_existing and Top500 migrations without rewriting their coverage.
+    # Version 1.0 keeps ranked-only coverage. Version 1.1 explicitly opts into
+    # directory metadata; old fixed commits remain valid without any rewrite.
     catalog_path = public_dir / "repositories.json"
     catalog = read_json(catalog_path) if catalog_path.is_file() else {}
     current_entries = catalog.get("repositories", [])
+    if source_scope == "catalog-v1":
+        directory_path = public_dir / "directory.json"
+        if directory_path.is_file():
+            catalog_path = directory_path
+            catalog = read_json(directory_path)
+            current_entries = catalog.get("repositories", [])
+        updated_at = str(catalog.get('updated_at', ''))
+        updated_day = dt.datetime.fromisoformat(updated_at.replace('Z', '+00:00')).astimezone(dt.timezone(dt.timedelta(hours=8))).date().isoformat() if updated_at else ''
+        for item in current_entries:
+            # Waiting entries keep their actual metadata date. Directory assembly
+            # time must not make an older discovery override a newer ranking.
+            seen_day = item.get('last_seen_date') or ''
+            observed_at = updated_at if seen_day and seen_day == updated_day else f'{seen_day}T00:00:00+08:00' if seen_day else ''
+            register({'entries': [item], 'generated_at': observed_at}, date=seen_day, priority=6, path=catalog_path)
     prominent_ids: list[int] = []
     daily_paths = sorted((public_dir / "daily").glob("????-??-??.json"))
     if daily_paths:
@@ -411,6 +426,7 @@ def localize_repositories(
     now: dt.datetime | None = None,
     client: Any | None = None,
     write_state: bool = True,
+    source_scope: str | None = None,
 ) -> dict[str, Any]:
     if not 1 <= max_batch_size <= 20:
         raise LocalizationError("max_batch_size 必须位于 1–20")
@@ -418,8 +434,9 @@ def localize_repositories(
         raise LocalizationError("max_projects 不得为负数")
     root = data_dir.resolve()
     public_dir = root / "public" if (root / "public").is_dir() else root
-    sources = discover_ranked_repositories(public_dir)
     previous_catalog = load_cached_catalog(root, public_dir)
+    source_scope = source_scope or ("catalog-v1" if (previous_catalog or {}).get("schema_version") == "1.1.0" else "ranked-v1")
+    sources = discover_ranked_repositories(public_dir, source_scope=source_scope)
     cached = {
         int(item["repository_id"]): item
         for item in (previous_catalog or {}).get("repositories", [])
@@ -513,7 +530,7 @@ def localize_repositories(
         {int(item["repository_id"]) for item in attempted} if model_client is not None else set(), failed_ids,
     )
     catalog = {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0" if source_scope == "catalog-v1" else "1.0.0",
         "locale": "zh-CN",
         "generated_at": run_at,
         "model": model,

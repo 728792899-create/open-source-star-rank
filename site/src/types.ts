@@ -385,7 +385,7 @@ export interface RepositoryLocalization {
 }
 
 export interface LocalizationCatalog {
-  schema_version: '1.0.0';
+  schema_version: '1.0.0' | '1.1.0';
   locale: 'zh-CN';
   generated_at: string | null;
   model: string;
@@ -408,7 +408,7 @@ export interface ClassificationCoverage {
 }
 
 export interface ClassificationIndex {
-  schema_version: '1.0.0';
+  schema_version: '1.0.0' | '1.1.0';
   taxonomy_version: '1.0.0';
   locale: 'zh-CN';
   generated_at: string | null;
@@ -433,7 +433,7 @@ export interface RepositoryClassification {
 }
 
 export interface ClassificationRepositoryCatalog {
-  schema_version: '1.0.0';
+  schema_version: '1.0.0' | '1.1.0';
   taxonomy_version: '1.0.0';
   generated_at: string | null;
   repositories: RepositoryClassification[];

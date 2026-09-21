@@ -408,7 +408,7 @@ const localizedRepositories = [...localizationSources.values()]
     provenance: 'github_models',
   }));
 const localizationCatalog = {
-  schema_version: '1.0.0',
+  schema_version: '1.1.0',
   locale: 'zh-CN',
   generated_at: latestEventGeneratedAt,
   model: 'openai/gpt-4.1-mini',
@@ -454,7 +454,7 @@ const classifiedRepositories = [...localizationSources.values()]
     };
   });
 const classificationIndex = {
-  schema_version: '1.0.0',
+  schema_version: '1.1.0',
   taxonomy_version: taxonomy.taxonomy_version,
   locale: taxonomy.locale,
   generated_at: latestEventGeneratedAt,
@@ -472,7 +472,7 @@ const classificationIndex = {
   use_cases: taxonomy.use_cases,
 };
 const classificationCatalog = {
-  schema_version: '1.0.0',
+  schema_version: '1.1.0',
   taxonomy_version: taxonomy.taxonomy_version,
   generated_at: latestEventGeneratedAt,
   repositories: classifiedRepositories,
