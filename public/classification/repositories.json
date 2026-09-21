@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "taxonomy_version": "1.0.0",
-  "generated_at": "2026-09-20T18:39:07.197775Z",
+  "generated_at": "2026-09-21T07:30:46.703575Z",
   "repositories": [
     {
       "repository_id": 8514,
@@ -2887,20 +2887,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 10446890,
-      "source_full_name": "bilibili/ijkplayer",
-      "source_hash": "eb9ceccbcdcf89668cfc39b70978ff371b483dc93188186cc42452fc5ad71569",
-      "primary_category": "creative-media",
-      "project_type": "application",
-      "use_cases": [
-        "mobile-cross-platform",
-        "image-video-audio"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-19T04:20:56.637414Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 10721619,
       "source_full_name": "hajimehoshi/ebiten",
       "source_hash": "fecd477e2f143799364d35d6e05bebe351b75f1d44447850ba0ed08d24030454",
@@ -2982,19 +2968,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T01:04:06.946438Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 11167738,
-      "source_full_name": "gulpjs/gulp",
-      "source_hash": "3f1c1b1d561465a00251f2b14be01f1cf41ce309557a230de2faf3c7c5748480",
-      "primary_category": "developer-tools",
-      "project_type": "cli-developer-tool",
-      "use_cases": [
-        "general-tools"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-19T04:20:56.637414Z",
       "provenance": "github_models"
     },
     {
@@ -4505,19 +4478,6 @@
       "use_cases": [
         "learning-tutorial",
         "resource-discovery"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-19T04:20:56.637414Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 21413198,
-      "source_full_name": "immutable-js/immutable-js",
-      "source_hash": "6dfc276985d09634b8e34f2b5acaa36e1d3f17b148b43c20f55409bd757108c6",
-      "primary_category": "developer-tools",
-      "project_type": "library-framework",
-      "use_cases": [
-        "general-tools"
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T04:20:56.637414Z",
@@ -13237,21 +13197,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 145670234,
-      "source_full_name": "open-mmlab/mmdetection",
-      "source_hash": "183779d41ee3a78c7c0c9328a2c6f3d32fb790218d48309ca9561268e6cc7893",
-      "primary_category": "ai-machine-learning",
-      "project_type": "library-framework",
-      "use_cases": [
-        "ai-coding",
-        "model-training-inference",
-        "dataset-benchmark"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-19T04:20:56.637414Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 145716955,
       "source_full_name": "himkt/konoha",
       "source_hash": "3bf92bc43867368097f0f63f6f5ee22bcedcf327eddaa59cc54580864f2d706a",
@@ -17697,20 +17642,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 275386910,
-      "source_full_name": "soxoj/maigret",
-      "source_hash": "9ed66b07505e85cf207d156e3b105859a3821c0df371a79bc0910f36ab291bc9",
-      "primary_category": "security-privacy",
-      "project_type": "cli-developer-tool",
-      "use_cases": [
-        "search-scraping",
-        "security-defense"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-25T03:56:53.240576Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 275993885,
       "source_full_name": "appsmithorg/appsmith",
       "source_hash": "b33bf55fbbb319aeed7f72093b86e38a838ec4e3f6b9ba76be330d652f5e8fea",
@@ -19019,19 +18950,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T07:06:22.118650Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 328831244,
-      "source_full_name": "ibraheemdev/modern-unix",
-      "source_hash": "f92f2a30e42cc47af236417a3290fe3b1f5527ab90b3f880d5bc1532985226a6",
-      "primary_category": "developer-tools",
-      "project_type": "cli-developer-tool",
-      "use_cases": [
-        "system-admin-optimization"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -21028,19 +20946,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T18:30:55.656026Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 436658287,
-      "source_full_name": "surrealdb/surrealdb",
-      "source_hash": "57e74c9c16c67842c515ce40e5624f2db1034f6073560a5250c7c72476ac7831",
-      "primary_category": "data-infrastructure",
-      "project_type": "platform-service",
-      "use_cases": [
-        "database-storage"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -26713,20 +26618,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 679506386,
-      "source_full_name": "janhq/jan",
-      "source_hash": "a2ac4e5cd98a3b413e43a6bd942401f1217c0b138c56da25f05e39b8f72e2dee",
-      "primary_category": "ai-machine-learning",
-      "project_type": "application",
-      "use_cases": [
-        "ai-coding",
-        "privacy-local"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-21T19:37:54.117571Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 679601811,
       "source_full_name": "AutoMQ/automq",
       "source_hash": "6fa6af0c65e8c60a74ccdb3fbb3491b1f440624a30c3b5c00536e8ad2c3c43bd",
@@ -30972,19 +30863,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 872119017,
-      "source_full_name": "D4Vinci/Scrapling",
-      "source_hash": "4cac76279df85dd14294d484e3c5f7a5ff25d78548dd04ae146051de23971fad",
-      "primary_category": "developer-tools",
-      "project_type": "library-framework",
-      "use_cases": [
-        "search-scraping"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-19T17:32:43.053270Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 872272362,
       "source_full_name": "ChHsiching/GitHub-Chinese-Top-Charts",
       "source_hash": "fa194759a319c08c6e40063a97bc5ab4384dc471910fd89dde9cff7b65a0ca93",
@@ -32789,20 +32667,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T19:37:54.117571Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 937253475,
-      "source_full_name": "anthropics/claude-code",
-      "source_hash": "f0f7a6d71483a6734bcfe180575cf7156468944522c6ae7ee24974d1c9c9a52e",
-      "primary_category": "developer-tools",
-      "project_type": "application",
-      "use_cases": [
-        "ai-coding",
-        "agents-automation"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-22T04:12:02.172495Z",
       "provenance": "github_models"
     },
     {
@@ -42814,21 +42678,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T19:37:54.117571Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1206390571,
-      "source_full_name": "debpalash/OmniVoice-Studio",
-      "source_hash": "768d3b49c07e45147e4be864c0f08e37e3176155e296c9104d32f5aae7579b9b",
-      "primary_category": "creative-media",
-      "project_type": "application",
-      "use_cases": [
-        "content-generation",
-        "image-video-audio",
-        "personal-productivity"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-16T06:51:50.292861Z",
       "provenance": "github_models"
     },
     {

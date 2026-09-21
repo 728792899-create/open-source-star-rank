@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-20T18:39:03.822141Z",
+  "generated_at": "2026-09-21T07:30:44.350263Z",
   "model": "openai/gpt-4.1-mini",
   "prompt_version": "repository-localization-v1",
   "coverage": {
-    "eligible_count": 3970,
-    "localized_count": 3784,
-    "pending_count": 186,
-    "failed_count": 186,
-    "coverage_ratio": 0.953149
+    "eligible_count": 3966,
+    "localized_count": 3775,
+    "pending_count": 191,
+    "failed_count": 191,
+    "coverage_ratio": 0.951841
   },
   "repositories": [
     {
@@ -1948,15 +1948,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 10446890,
-      "source_full_name": "bilibili/ijkplayer",
-      "source_hash": "5034fd6106f7afca195829394f160d52bbbd336772b1ff3b215d388282cbb1f6",
-      "display_name_zh": "ijkplayer｜基于 FFmpeg n3.4 的视频播放器",
-      "description_zh": "基于 FFmpeg n3.4，支持 MediaCodec 和 VideoToolbox 的 Android/iOS 视频播放器。",
-      "generated_at": "2026-07-19T00:17:52.423389Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 10721619,
       "source_full_name": "hajimehoshi/ebiten",
       "source_hash": "eca175278a69d757946e4bc304cb5f402738a71171d7225a79646554d8e348ac",
@@ -2008,15 +1999,6 @@
       "display_name_zh": "keycloak｜开源身份与访问管理系统keycloak",
       "description_zh": "keycloak：现代应用和服务的开源身份与访问管理。",
       "generated_at": "2026-07-16T17:46:53.472669Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 11167738,
-      "source_full_name": "gulpjs/gulp",
-      "source_hash": "8da687a079eb0c27a8ae82971aa94209942b256369bc3063998c4336ad775f48",
-      "display_name_zh": "gulp｜自动化工作流工具包",
-      "description_zh": "自动化和优化工作流程的工具包。",
-      "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
     },
     {
@@ -3033,15 +3015,6 @@
       "source_hash": "5f0462f9b21a3a9e48643d1b21e6970184dbae32037ada9dd0d62bc708ebbf94",
       "display_name_zh": "awesome-javascript｜优秀 JavaScript 库集合",
       "description_zh": "优秀的浏览器端 JavaScript 库和资源集合。",
-      "generated_at": "2026-07-19T00:17:52.423389Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 21413198,
-      "source_full_name": "immutable-js/immutable-js",
-      "source_hash": "fd2d3497f2fec4141b4137cc5b873843439aa4f6e81c3d9a1e8f1d05af6984bd",
-      "display_name_zh": "immutable-js｜immutable-js 不可变数据集合",
-      "description_zh": "JavaScript 的不可变持久化数据集合，提高效率和简洁性。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
     },
@@ -8923,15 +8896,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 145670234,
-      "source_full_name": "open-mmlab/mmdetection",
-      "source_hash": "3a04c3e8f56b5b42f0b58a5f93eeac082df5615055f81b337db6598f61e6b09e",
-      "display_name_zh": "mmdetection｜OpenMMLab目标检测工具箱",
-      "description_zh": "OpenMMLab开源目标检测工具箱与基准。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 145716955,
       "source_full_name": "himkt/konoha",
       "source_hash": "8c01053f3b961d95576fdee2b8e22c50ed9f4e54dd1d7255463075431b16afe5",
@@ -11902,15 +11866,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 275386910,
-      "source_full_name": "soxoj/maigret",
-      "source_hash": "f8ad149496b2ddf7b4e33198c8b3a54c9122f3d3a58b212d48679352b95e99b7",
-      "display_name_zh": "maigret｜基于用户名的3000+网站信息收集工具",
-      "description_zh": "通过用户名从3000多个网站收集个人信息档案。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 275993885,
       "source_full_name": "appsmithorg/appsmith",
       "source_hash": "7bc674e4c6bb181ed94fbe751249924b2c45d5c0be598e6056858b834f691148",
@@ -12771,15 +12726,6 @@
       "source_hash": "011ddb94203745476767cc73f385f012f5e1d6b9d151021096e6d5ed5cfdd59c",
       "display_name_zh": "impostman｜Postman 集合导入工具",
       "description_zh": "在 Emacs 中导入 Postman 集合的工具。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 328831244,
-      "source_full_name": "ibraheemdev/modern-unix",
-      "source_hash": "d696afda48230f2f6cc6abf3e298b0ec791f4c4ce4548f191c2c85959aec75b2",
-      "display_name_zh": "modern-unix｜现代 Unix 命令替代集合",
-      "description_zh": "现代、快速且更合理的常用 Unix 命令替代集合。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
@@ -14104,15 +14050,6 @@
       "display_name_zh": "rill｜高速商业智能工具",
       "description_zh": "面向人类和代理的高速商业智能工具。",
       "generated_at": "2026-07-20T18:28:18.246753Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 436658287,
-      "source_full_name": "surrealdb/surrealdb",
-      "source_hash": "8b5019576d005a96dfdda11436fc8eb7126f40ed977f131f732b8acc1bb5f947",
-      "display_name_zh": "surrealdb｜分布式协作文档图数据库",
-      "description_zh": "可扩展、分布式、协作式文档图数据库，适用于实时网络应用。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
     {
@@ -20736,15 +20673,6 @@
       "source_hash": "a0b225fa33afe0dab3be129554ff0198f82f802417b752930e14ef955a0a51e8",
       "display_name_zh": "readest｜现代电子书阅读器",
       "description_zh": "readest是一款现代化功能丰富的电子书阅读器，支持跨平台访问，提供强大工具和直观界面，提升阅读体验。",
-      "generated_at": "2026-07-19T07:03:48.394229Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 872119017,
-      "source_full_name": "D4Vinci/Scrapling",
-      "source_hash": "d6c158df9cf90d33b57cb84b290e26b4e88b32efa0f1065590b2aaf764cf330e",
-      "display_name_zh": "Scrapling｜自适应网页爬取框架",
-      "description_zh": "Scrapling是一款自适应网页爬取框架，支持从单次请求到大规模爬取的各种需求。",
       "generated_at": "2026-07-19T07:03:48.394229Z",
       "provenance": "github_models"
     },
@@ -28588,15 +28516,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1206390571,
-      "source_full_name": "debpalash/OmniVoice-Studio",
-      "source_hash": "2df17b66ed1546864af029248e617c90d173b9ad4f9805eff502131eb488e372",
-      "display_name_zh": "OmniVoice-Studio｜本地语音克隆与配音工具",
-      "description_zh": "开源的本地语音克隆、设计、配音和听写桌面应用，是ElevenLabs的替代方案。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1206553433,
       "source_full_name": "TencentCloud/CubeSandbox",
       "source_hash": "2200c22bdddffa4068d35135fcbaf87ca402fec730d2bd0d0a85fcef1b40a68a",
@@ -34112,6 +34031,7 @@
     234739976,
     249995750,
     266417772,
+    275386910,
     280363952,
     283211901,
     291438522,
@@ -34175,6 +34095,7 @@
     863835427,
     866513204,
     868173144,
+    872119017,
     879822807,
     881458615,
     912559512,
@@ -34236,18 +34157,21 @@
     1196447493,
     1201173969,
     1201476594,
+    1206390571,
     1211139949,
     1212769188,
     1223170290,
     1224172037,
     1237819660,
     1238120057,
+    1241960226,
     1248769131,
     1250822765,
     1267485499,
     1271113810,
     1273015953,
     1275806147,
+    1277471539,
     1278926400,
     1280278993,
     1283907968,
