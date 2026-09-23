@@ -1,6 +1,14 @@
 # 开发进度与同步记录
 
 
+## 2026-09-23 D1 观察模式实际部署
+
+- bdd7171已推送并核对远端提交。15项Worker测试及独立复核通过；完整CI运行35872940554仍在执行，授权专项35872940519已成功，尚未合并PR #86。
+- Cloudflare Worker已部署版本deb19a1c-201a-4a1e-bf92-871fde210ef5，地址 https://open-source-star-rank-operations.728792899-create.workers.dev 。专用D1已实际应用迁移并远程查询确认operations_state表；没有访问或修改登录数据库。
+- 每15分钟Cron已配置，AUTO_RECOVERY=false、ISSUE_ALERTS=false、BACKUP_MODE=disabled。通过代理读取线上/health返回未初始化503（尚无首轮Cron结果），/backup/latest返回停用404；这证明部署与绑定可访问，不等于业务健康或自动恢复验收完成。本地直连workers.dev超时，代理访问成功。
+- 已准备仅限目标仓库的GitHub App授权流程，申请Contents只读及Actions读写；尚未收到用户安装结果，因此未配置调度凭据、未开启自动恢复。独立R2备份未开通。真实Cron、GitHub授权、主分支同步和31日连续验收仍待完成。
+
+
 ## 2026-09-23 无 R2 订阅的 D1 调度方案
 
 - 用户无法订阅R2，确认采用Workers + 专用D1。新增operations_state存储适配器与独立迁移，单条SQL条件写入/revision实现并发锁；运行状态、预约次数在D1保存，项目历史仍在GitHub数据分支，不访问登录数据库。
