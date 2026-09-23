@@ -110,7 +110,7 @@ export async function githubCredentials(env,now=new Date()) {
   const pem=env.GITHUB_APP_PRIVATE_KEY.replace(/-----[^-]+-----/g,'').replace(/\s/g,'');
   const key=await crypto.subtle.importKey('pkcs8',Uint8Array.from(atob(pem),c=>c.charCodeAt(0)),{name:'RSASSA-PKCS1-v1_5',hash:'SHA-256'},false,['sign']);
   const signature=await crypto.subtle.sign('RSASSA-PKCS1-v1_5',key,new TextEncoder().encode(unsigned));
-  const response=await fetch('https://api.github.com/app/installations/'+env.GITHUB_INSTALLATION_ID+'/access_tokens',{method:'POST',redirect:'error',signal:AbortSignal.timeout(15000),headers:{Authorization:'Bearer '+unsigned+'.'+encode(new Uint8Array(signature)),Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2026-03-10','User-Agent':'star-rank-operations'}});
+  const response=await fetch('https://api.github.com/app/installations/'+env.GITHUB_INSTALLATION_ID+'/access_tokens',{method:'POST',redirect:'manual',signal:AbortSignal.timeout(15000),headers:{Authorization:'Bearer '+unsigned+'.'+encode(new Uint8Array(signature)),Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2026-03-10','User-Agent':'star-rank-operations'}});
   if(!response.ok)throw new Error('GitHub request failed ('+response.status+')');
   const body=await response.json();
   if(typeof body.token!=='string' || !Number.isFinite(Date.parse(body.expires_at)) || Date.parse(body.expires_at)<=now.getTime()+60000)throw new Error('Invalid installation token');
@@ -118,7 +118,7 @@ export async function githubCredentials(env,now=new Date()) {
 }
 async function github(env,path,options={}) {
   if(!/^[\w.-]+\/[\w.-]+$/.test(env.GITHUB_REPOSITORY??''))throw new Error('Invalid repository configuration');
-  const response=await fetch(`https://api.github.com/repos/${env.GITHUB_REPOSITORY}${path}`,{...options,redirect:'error',signal:AbortSignal.timeout(15000),headers:{'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2026-03-10','User-Agent':'star-rank-operations',...(env.GITHUB_TOKEN?{'Authorization':`Bearer ${env.GITHUB_TOKEN}`} : {}),'Content-Type':'application/json',...options.headers}});
+  const response=await fetch(`https://api.github.com/repos/${env.GITHUB_REPOSITORY}${path}`,{...options,redirect:'manual',signal:AbortSignal.timeout(15000),headers:{'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2026-03-10','User-Agent':'star-rank-operations',...(env.GITHUB_TOKEN?{'Authorization':`Bearer ${env.GITHUB_TOKEN}`} : {}),'Content-Type':'application/json',...options.headers}});
   if(response.status===404 && options.allowMissing)return null;
   if(!response.ok)throw new Error(`GitHub request failed (${response.status})`);
   return response.status===204?null:response.json();
@@ -156,7 +156,7 @@ export async function monitor(env,now=new Date()) {
     const data=await content(env,'public/index.json',sha,true);
     const receipt=await content(env,`captures/${beijingDay(now)}/latest.json`,sha,true);
     let site=null;
-    try{const response=await fetch(env.SITE_INDEX,{signal:AbortSignal.timeout(15000),redirect:'error',cache:'no-store'});if(response.ok)site=await response.json();}catch{}
+    try{const response=await fetch(env.SITE_INDEX,{signal:AbortSignal.timeout(15000),redirect:'manual',cache:'no-store'});if(response.ok)site=await response.json();}catch{}
     const plan=recoveryPlan({data,site,receiptAvailable:SHA.test(receipt?.sha256??''),now});
     report.data_commit=sha;report.snapshot_at=data?.updated_at??null;report.ranking_date=data?.latest_date??null;
     report.sampling=data?.sampling??null;
@@ -182,7 +182,7 @@ export async function monitor(env,now=new Date()) {
       report.enrichment=operations?.enrichment??null;
       if(operations && currentCapture(data,now) && plan.mode!=='collect_publish') {
         let published=null;
-        try{const response=await fetch(new URL('operations.json',env.SITE_INDEX),{signal:AbortSignal.timeout(15000),redirect:'error',cache:'no-store'});if(response.ok)published=await response.json();}catch{}
+        try{const response=await fetch(new URL('operations.json',env.SITE_INDEX),{signal:AbortSignal.timeout(15000),redirect:'manual',cache:'no-store'});if(response.ok)published=await response.json();}catch{}
         if(!published || !same(operations,published)) {
           plan.mode='deploy_existing';plan.reason='补全数据已保存，线上业务摘要未同步';
           report.state_reason=plan.reason;report.issues.push(plan.reason);

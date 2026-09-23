@@ -68,6 +68,7 @@ test('GitHub App credentials mint a signed, short lived installation token',asyn
  const privateKey='-----BEGIN PRIVATE KEY-----\n'+Buffer.from(der).toString('base64')+'\n-----END PRIVATE KEY-----';
  t.mock.method(globalThis,'fetch',async(url,options)=>{
   assert.equal(url,'https://api.github.com/app/installations/456/access_tokens');
+  assert.equal(options.redirect,'manual');
   const jwt=options.headers.Authorization.slice(7);const [header,body,signature]=jwt.split('.');
   assert.equal(await crypto.subtle.verify('RSASSA-PKCS1-v1_5',keys.publicKey,Buffer.from(signature,'base64url'),new TextEncoder().encode(header+'.'+body)),true);
   const claims=JSON.parse(Buffer.from(body,'base64url'));assert.equal(claims.iss,'123');assert.equal(claims.exp-claims.iat,600);
@@ -111,4 +112,32 @@ test('enrichment publication lag is detected even when ranking index is unchange
  });
  const report=await monitor(e,now);
  assert.equal(report.action,'deploy_existing');assert.equal(dispatch.inputs.data_ref,'a'.repeat(40));
+});
+
+test('GitHub redirects are rejected without following or dispatching',async(t)=>{
+ const e=env();const calls=[];
+ t.mock.method(globalThis,'fetch',async(url,options)=>{
+  calls.push(String(url));assert.equal(options.redirect,'manual');
+  return new Response(null,{status:302,headers:{location:'https://untrusted.test/redirect'}});
+ });
+ const report=await monitor(e,now);
+ assert.equal(report.status,'unhealthy');
+ assert.deepEqual(report.issues,['GitHub request failed (302)']);
+ assert.equal(calls.length,1);assert.equal(report.action,null);
+});
+test('redirected site data is unavailable and cannot be treated as a current publication',async(t)=>{
+ const e=env();e.AUTO_RECOVERY='false';
+ const calls=[];
+ t.mock.method(globalThis,'fetch',async(url,options)=>{
+  url=String(url);calls.push(url);assert.equal(options.redirect,'manual');
+  if(url.includes('/git/ref/'))return Response.json({object:{sha:'a'.repeat(40)}});
+  if(url.includes('/contents/public/index.json'))return Response.json({encoding:'base64',content:Buffer.from(JSON.stringify(current)).toString('base64')});
+  if(url.includes('/contents/'))return new Response(null,{status:404});
+  if(url===e.SITE_INDEX)return new Response(JSON.stringify(current),{status:302,headers:{location:'https://untrusted.test/redirect'}});
+  throw Error('Unexpected URL');
+ });
+ const report=await monitor(e,now);
+ assert.equal(report.state_reason,'数据已保存，线上版本未同步');
+ assert.equal(report.status,'unhealthy');assert.equal(report.action,null);
+ assert.ok(!calls.some(url=>url.includes('untrusted.test')));
 });

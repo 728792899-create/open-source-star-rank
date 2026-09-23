@@ -1,5 +1,13 @@
 # 开发进度与同步记录
 
+## 2026-09-23 调度 App 接通与 Worker 运行时修复
+
+- 已通过 GitHub API 核实专用 App 的 Contents/Metadata 只读、Actions 读写权限，安装范围仅 open-source-star-rank。已向 Worker Secret 与仓库 Secret/Variable 配置专用 App 凭据，私钥不进入源码、日志或聊天；未使用个人令牌作为运行器长期凭据。
+- 上一提交29e9bf7完整CI（35873629045）及授权专项（35873629083）均成功。真实Cron已写入D1，但检查在请求前失败；实际workerd复现redirect:error不支持。四处外部请求改为manual并以response.ok拒绝重定向，继续防止凭据被转发到其他地址。
+- 验证：17项Worker测试、语法与preflight通过，新增GitHub重定向拒绝和站点重定向不能冒充成功回归。真实workerd导入生产monitor源码，已读取固定数据提交及真实采样信息；独立只读复核无待处理发现。
+- 自动恢复仍关闭，Issue投递关闭，独立备份停用。新版本生产Cron、主分支合并和真实调度/Pages发布分别待验收；数据已断档，禁止在窗口外补造样本，7/30日连续窗口需重新真实累积。
+
+
 
 ## 2026-09-23 D1 观察模式实际部署
 
