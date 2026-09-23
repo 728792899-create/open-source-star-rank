@@ -1,5 +1,14 @@
 # 开发进度与同步记录
 
+
+## 2026-09-23 无 R2 订阅的 D1 调度方案
+
+- 用户无法订阅R2，确认采用Workers + 专用D1。新增operations_state存储适配器与独立迁移，单条SQL条件写入/revision实现并发锁；运行状态、预约次数在D1保存，项目历史仍在GitHub数据分支，不访问登录数据库。
+- 默认BACKUP_MODE=disabled，备份接口关闭，不检查或补调度R2；/health公开backup_status、limitations、auto_recovery和dispatch_authorized。备份工作流需STAR_RANK_BACKUP_ENABLED=true才执行上传，停用时只说明未启用，不生成伪备份成功报告。可选R2校验恢复功能保留。
+- 验证：15项Worker测试通过（新增真实SQLite并发CAS、持久重试上限、失败预约、禁用备份和缺少授权），语法/preflight、打包及workflow YAML解析通过。独立只读复核无可执行缺陷。本地workerd完成迁移、未初始化503、Cron结果写入/读取及备份404验证；本地外网业务检查返回失败，不能称为业务健康验收。
+- Cloudflare授权已恢复，专用数据库open-source-star-rank-operations已创建并应用迁移；没有修改auth-worker/D1。运行器真实部署、Cron和GitHub调度授权的验收结果后续单独记录，自动恢复仍关闭。
+- 本方案没有跨平台完整备份。GitHub数据历史不是独立灾备；31日连续采样及恢复效果仍需要真实运行验收。
+
 ## 2026-09-21 运行器 Linux 依赖修正
 
 - dc6a30f远端完整CI在安装新Worker依赖时失败：本机共享node_modules生成的锁文件包含指向现有checkout的链接及macOS必选二进制。业务与授权专项检查已通过，不能将该轮完整CI记作成功。

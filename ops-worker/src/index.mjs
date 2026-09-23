@@ -1,3 +1,4 @@
+import {stateStore} from './state-store.mjs';
 const JSON_HEADERS = {'content-type':'application/json; charset=utf-8','cache-control':'no-store'};
 const MAX_BYTES = 16 * 1024 * 1024;
 const SHA = /^[a-f0-9]{64}$/;
@@ -56,12 +57,15 @@ async function putImmutable(store,key,body,hash) {
 export async function handleRequest(request,env) {
   const url=new URL(request.url);
   if(url.pathname==='/health' && request.method==='GET') {
-    const state=await env.STORE.get('monitor/latest.json');
+    let state;
+    try { state=await stateStore(env).get('monitor/latest.json'); }
+    catch { return reply({status:'storage_unavailable',monitor_stale:true,backup_enabled:env.BACKUP_MODE==='r2'},503); }
     const report=state ? await state.json() : {status:'not_initialized'};
     const checked=Date.parse(report.checked_at);
     const stale=!Number.isFinite(checked) || checked>Date.now()+300000 || Date.now()-checked>45*60000;
-    return reply({...report,monitor_stale:stale},!stale && report.status==='healthy'?200:503);
+    return reply({...report,backup_enabled:env.BACKUP_MODE==='r2',monitor_stale:stale},!stale && report.status==='healthy'?200:503);
   }
+  if(env.BACKUP_MODE!=='r2') return reply({error:'Independent backup is disabled'},404);
   if(!await authorized(request,env)) return reply({error:'Unauthorized'},401);
   try {
     const match=url.pathname.match(/^\/(objects|manifests)\/([a-f0-9]{64})$/);
@@ -134,12 +138,20 @@ async function syncIssue(env,reason,now) {
   if(reason && !existing)await github(env,'/issues',{method:'POST',body:JSON.stringify({title,body:`自动检查发现：${reason}\n\n首次检查：${now.toISOString()}。具体状态请查看独立运行器 /health 与 Actions；恢复后自动关闭。`})});
 }
 export async function monitor(env,now=new Date()) {
-  const lease=await env.STORE.get('locks/monitor');
+  const store=stateStore(env);
+  const lease=await store.get('locks/monitor');
   if(lease && (await lease.json()).until>now.getTime())return {skipped:'locked'};
-  if(!await env.STORE.put('locks/monitor',JSON.stringify({until:now.getTime()+10*60000}),{onlyIf:lease?{etagMatches:lease.etag}:{etagDoesNotMatch:'*'}}))return {skipped:'locked'};
-  const report={checked_at:now.toISOString(),status:'unhealthy',issues:[],action:null};
+  if(!await store.put('locks/monitor',JSON.stringify({until:now.getTime()+10*60000}),{onlyIf:lease?{etagMatches:lease.etag}:{etagDoesNotMatch:'*'}}))return {skipped:'locked'};
+  const backupEnabled=env.BACKUP_MODE==='r2';
+  const report={checked_at:now.toISOString(),status:'unhealthy',issues:[],action:null,
+    state_backend:env.STATE_DB?'d1':'r2',auto_recovery:env.AUTO_RECOVERY==='true',dispatch_authorized:false,
+    backup_enabled:backupEnabled,backup_status:backupEnabled?'unverified':'disabled',
+    limitations:backupEnabled?[]:['未启用跨平台完整备份；GitHub 数据分支中的历史不等于独立灾备']};
   try {
+    if(!['disabled','r2'].includes(env.BACKUP_MODE)) throw new Error('Invalid backup mode');
     env=await githubCredentials(env,now);
+    report.dispatch_authorized=Boolean(env.GITHUB_TOKEN);
+    if(report.auto_recovery && !report.dispatch_authorized) report.issues.push('自动恢复已启用，但尚未配置 GitHub 调度授权');
     const ref=await github(env,'/git/ref/heads/star-rank-data');const sha=ref.object.sha;
     const data=await content(env,'public/index.json',sha,true);
     const receipt=await content(env,`captures/${beijingDay(now)}/latest.json`,sha,true);
@@ -154,8 +166,15 @@ export async function monitor(env,now=new Date()) {
     const baseline=currentCapture(data,now) && site && same(site,data) && data.latest_date!==yesterday(now) && data.sampling?.consecutive_valid_snapshots===1;
     if(plan.reason && !grace && !baseline)report.issues.push(plan.reason);
     report.warming_up=Boolean(baseline || (grace && plan.reason));
-    const backup=await env.STORE.get('backup/latest.json');const backupState=backup?await backup.json():null;
-    if(!backupState || !Number.isFinite(Date.parse(backupState.received_at)) || now.getTime()-Date.parse(backupState.received_at)>36*3600000)report.issues.push('独立备份缺失或超过36小时未完成');
+    let backupState=null;
+    if(backupEnabled) {
+      try {
+        const backup=await env.STORE.get('backup/latest.json');backupState=backup?await backup.json():null;
+        const age=now.getTime()-Date.parse(backupState?.received_at);
+        report.backup_status=!backupState?'missing':!Number.isFinite(age)||age < -300000||age>36*3600000?'stale':'verified';
+        if(report.backup_status!=='verified')report.issues.push('独立备份缺失或超过36小时未完成');
+      } catch { report.backup_status='unavailable';report.issues.push('独立备份存储不可用'); }
+    }
     report.backup_at=backupState?.received_at??null;
     report.backup_commit=backupState?.data_commit??null;
     try {
@@ -174,31 +193,31 @@ export async function monitor(env,now=new Date()) {
       }
     }catch{report.issues.push('无法读取补全运行摘要');}
     try {
-    if(env.AUTO_RECOVERY==='true' && env.GITHUB_TOKEN && (!backupState || now.getTime()-Date.parse(backupState.received_at)>26*3600000)) {
+    if(backupEnabled && env.AUTO_RECOVERY==='true' && env.GITHUB_TOKEN && (!backupState || now.getTime()-Date.parse(backupState.received_at)>26*3600000)) {
       const key='backup-dispatch/'+beijingDay(now)+'.json';
-      const prior=await env.STORE.get(key);const attempts=prior?await prior.json():{count:0,last_at:0};
+      const prior=await store.get(key);const attempts=prior?await prior.json():{count:0,last_at:0};
       const runs=await github(env,'/actions/workflows/star-rank-backup.yml/runs?branch='+encodeURIComponent(env.SOURCE_BRANCH??'main')+'&per_page=20');
       if(!runs.workflow_runs.some(run=>run.status!=='completed') && attempts.count<3 && now.getTime()-attempts.last_at>=3600000) {
-        await env.STORE.put(key,JSON.stringify({count:attempts.count+1,last_at:now.getTime()}));
+        await store.put(key,JSON.stringify({count:attempts.count+1,last_at:now.getTime()}));
         await github(env,'/actions/workflows/star-rank-backup.yml/dispatches',{method:'POST',body:JSON.stringify({ref:env.SOURCE_BRANCH??'main'})});
         report.backup_action='dispatched';
       }
     }
     }catch{report.issues.push('独立备份补调度失败');}
     if(plan.mode && env.AUTO_RECOVERY==='true' && env.GITHUB_TOKEN) {
-      const historyKey=`recovery/${beijingDay(now)}.json`;const previous=await env.STORE.get(historyKey);const history=previous?await previous.json():{count:0,last_at:0};
+      const historyKey=`recovery/${beijingDay(now)}.json`;const previous=await store.get(historyKey);const history=previous?await previous.json():{count:0,last_at:0};
       const runs=await github(env,`/actions/workflows/star-rank-pages.yml/runs?branch=${encodeURIComponent(env.SOURCE_BRANCH??'main')}&per_page=20`);
       const active=runs.workflow_runs.some(run=>run.status!=='completed');
       if(!active && history.count<3 && now.getTime()-history.last_at>=30*60000) {
         // Reserve an attempt before sending: an uncertain network response must not create an unbounded loop.
-        await env.STORE.put(historyKey,JSON.stringify({count:history.count+1,last_at:now.getTime(),mode:plan.mode}));
+        await store.put(historyKey,JSON.stringify({count:history.count+1,last_at:now.getTime(),mode:plan.mode}));
         await github(env,'/actions/workflows/star-rank-pages.yml/dispatches',{method:'POST',body:JSON.stringify({ref:env.SOURCE_BRANCH??'main',inputs:{mode:plan.mode,...(plan.mode==='deploy_existing'?{data_ref:sha}:{})}})});
         report.action=plan.mode;
       }
     }
   }catch(error){report.issues.push(error.message?.startsWith('GitHub request failed')?error.message:'独立检查失败，请查看运行器配置与日志');}
   report.status=report.issues.length?'unhealthy':'healthy';
-  await env.STORE.put('monitor/latest.json',JSON.stringify(report));
+  await store.put('monitor/latest.json',JSON.stringify(report));
   try{await syncIssue(env,report.issues.join('；')||null,now);}catch{console.error('Incident delivery failed');}
   return report;
 }

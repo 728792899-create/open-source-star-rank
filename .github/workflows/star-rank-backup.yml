@@ -11,7 +11,15 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  disabled:
+    if: vars.STAR_RANK_BACKUP_ENABLED != 'true'
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - name: Report disabled independent backup
+        run: echo 'Independent backup is disabled. GitHub history is not cross-platform disaster recovery.' >> "$GITHUB_STEP_SUMMARY"
   backup:
+    if: vars.STAR_RANK_BACKUP_ENABLED == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:

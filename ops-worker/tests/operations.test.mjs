@@ -7,7 +7,7 @@ class Store {
   async head(key){return this.get(key);}
   async put(key,value,options={}){const old=this.data.get(key);if(options.onlyIf?.etagMatches && options.onlyIf.etagMatches!==old?.etag)return null;if(options.onlyIf?.etagDoesNotMatch==='*' && old)return null;const raw=typeof value==='string'?new TextEncoder().encode(value):new Uint8Array(value);const record={raw,size:raw.byteLength,etag:String(++this.revision),customMetadata:options.customMetadata};this.data.set(key,record);return record;}
 }
-const env=()=>({STORE:new Store(),BACKUP_TOKEN:'x'.repeat(40),GITHUB_REPOSITORY:'owner/repo',SOURCE_BRANCH:'main',SITE_INDEX:'https://example.test/data/index.json',AUTO_RECOVERY:'true',ISSUE_ALERTS:'false',GITHUB_TOKEN:'test'});
+const env=()=>({BACKUP_MODE:'r2',STORE:new Store(),BACKUP_TOKEN:'x'.repeat(40),GITHUB_REPOSITORY:'owner/repo',SOURCE_BRANCH:'main',SITE_INDEX:'https://example.test/data/index.json',AUTO_RECOVERY:'true',ISSUE_ALERTS:'false',GITHUB_TOKEN:'test'});
 const req=(path,body,auth=true)=>new Request('https://ops.test'+path,{method:body===undefined?'GET':'PUT',headers:auth?{authorization:'Bearer '+'x'.repeat(40)}:{},...(body===undefined?{}:{body:typeof body==='string'?body:JSON.stringify(body)})});
 const now=new Date('2026-09-20T17:15:00Z');
 const current={updated_at:'2026-09-20T16:20:00Z',latest_date:'2026-09-20',sampling:{latest_snapshot_valid:true}};
