@@ -17,10 +17,10 @@ from pathlib import Path
 from typing import Any, Callable, Iterable, Mapping, Sequence
 
 try:
-    from tools.enrichment_state import failure_state
+    from tools.enrichment_state import failure_state, RetryQueue
     from tools.star_rank_schema import SchemaValidationError, validate_payload
 except ModuleNotFoundError:  # pragma: no cover - direct script execution fallback
-    from enrichment_state import failure_state
+    from enrichment_state import failure_state, RetryQueue
     from star_rank_schema import SchemaValidationError, validate_payload
 
 
@@ -109,9 +109,11 @@ def required_verbatim_tokens(repository: Mapping[str, Any]) -> list[str]:
     return tokens
 
 
-def discover_ranked_repositories(public_dir: Path) -> dict[int, dict[str, Any]]:
-    """Return the newest public ranking metadata for every repository ever ranked."""
+def discover_ranked_repositories(public_dir: Path, *, source_scope: str = "ranked-v1") -> dict[int, dict[str, Any]]:
+    """Newest ranked metadata, prioritizing prominent current entries."""
 
+    if source_scope not in {"ranked-v1", "catalog-v1"}:
+        raise LocalizationError(f"未知补全来源范围：{source_scope}")
     sources: dict[int, tuple[tuple[str, int, str], dict[str, Any]]] = {}
     groups = (
         (public_dir / "period", 0),
@@ -156,9 +158,35 @@ def discover_ranked_repositories(public_dir: Path) -> dict[int, dict[str, Any]]:
     if alltime_path.is_file():
         register(read_json(alltime_path), date="", priority=-1, path=alltime_path)
 
+    # Version 1.0 keeps ranked-only coverage. Version 1.1 explicitly opts into
+    # directory metadata; old fixed commits remain valid without any rewrite.
+    catalog_path = public_dir / "repositories.json"
+    catalog = read_json(catalog_path) if catalog_path.is_file() else {}
+    current_entries = catalog.get("repositories", [])
+    if source_scope == "catalog-v1":
+        directory_path = public_dir / "directory.json"
+        if directory_path.is_file():
+            catalog_path = directory_path
+            catalog = read_json(directory_path)
+            current_entries = catalog.get("repositories", [])
+        updated_at = str(catalog.get('updated_at', ''))
+        updated_day = dt.datetime.fromisoformat(updated_at.replace('Z', '+00:00')).astimezone(dt.timezone(dt.timedelta(hours=8))).date().isoformat() if updated_at else ''
+        for item in current_entries:
+            # Waiting entries keep their actual metadata date. Directory assembly
+            # time must not make an older discovery override a newer ranking.
+            seen_day = item.get('last_seen_date') or ''
+            observed_at = updated_at if seen_day and seen_day == updated_day else f'{seen_day}T00:00:00+08:00' if seen_day else ''
+            register({'entries': [item], 'generated_at': observed_at}, date=seen_day, priority=6, path=catalog_path)
+    prominent_ids: list[int] = []
+    daily_paths = sorted((public_dir / "daily").glob("????-??-??.json"))
+    if daily_paths:
+        prominent_ids.extend(int(item["repository_id"]) for item in read_json(daily_paths[-1]).get("entries", [])[:100])
+    prominent_ids.extend(int(item["repository_id"]) for item in sorted(current_entries, key=lambda item: (-int(item.get("stars_total", 0)), int(item["repository_id"]))))
+    priority_order = {repository_id: rank for rank, repository_id in reversed(list(enumerate(prominent_ids)))}
+
     ordered = sorted(
         sources.items(),
-        key=lambda item: (item[1][0], -item[0]),
+        key=lambda item: (-priority_order.get(item[0], len(prominent_ids)), item[1][0], -item[0]),
         reverse=True,
     )
     return {repository_id: source for repository_id, (_, source) in ordered}
@@ -398,6 +426,7 @@ def localize_repositories(
     now: dt.datetime | None = None,
     client: Any | None = None,
     write_state: bool = True,
+    source_scope: str | None = None,
 ) -> dict[str, Any]:
     if not 1 <= max_batch_size <= 20:
         raise LocalizationError("max_batch_size 必须位于 1–20")
@@ -405,8 +434,9 @@ def localize_repositories(
         raise LocalizationError("max_projects 不得为负数")
     root = data_dir.resolve()
     public_dir = root / "public" if (root / "public").is_dir() else root
-    sources = discover_ranked_repositories(public_dir)
     previous_catalog = load_cached_catalog(root, public_dir)
+    source_scope = source_scope or ("catalog-v1" if (previous_catalog or {}).get("schema_version") == "1.1.0" else "ranked-v1")
+    sources = discover_ranked_repositories(public_dir, source_scope=source_scope)
     cached = {
         int(item["repository_id"]): item
         for item in (previous_catalog or {}).get("repositories", [])
@@ -439,11 +469,15 @@ def localize_repositories(
             valid[repository_id] = dict(existing)
 
     pending = [source for repository_id, source in sources.items() if repository_id not in valid]
-    attempted = pending[:max_projects]
+    queue = RetryQueue(root, 'localization', run_at, fingerprints={key: repository_source_hash(source) for key, source in sources.items()})
+    attempted = queue.select(pending, max_projects)
+    actual_attempted: set[int] = set()
+    service_unavailable = False
     failed_ids: set[int] = set()
     model_client = client or (GitHubModelsClient(token, model=model) if token else None)
     if model_client is not None:
         for batch in chunks(attempted, max_batch_size):
+            actual_attempted.update(int(item["repository_id"]) for item in batch)
             remaining = {int(item["repository_id"]): item for item in batch}
             validation_errors: dict[int, Exception] = {}
             for validation_attempt in range(2):
@@ -478,6 +512,7 @@ def localize_repositories(
                     if not remaining:
                         break
                 except ModelUnavailable as exc:
+                    service_unavailable = True
                     validation_errors.update({repository_id: exc for repository_id in current_ids})
                     break
                 except LocalizationError as exc:
@@ -492,15 +527,18 @@ def localize_repositories(
                 )
                 print(f"warning: 中文本地化项目回退原文（{details}）", file=sys.stderr)
 
+            if service_unavailable:
+                break
+
     repositories = [valid[repository_id] for repository_id in sorted(valid)]
     eligible_count = len(sources)
     localized_count = len(repositories)
     failed_count, failure_metadata = failure_state(
         previous_catalog, set(sources) - set(valid),
-        {int(item["repository_id"]) for item in attempted} if model_client is not None else set(), failed_ids,
+        actual_attempted if model_client is not None else set(), failed_ids,
     )
     catalog = {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0" if source_scope == "catalog-v1" else "1.0.0",
         "locale": "zh-CN",
         "generated_at": run_at,
         "model": model,
@@ -527,6 +565,8 @@ def localize_repositories(
     if write_state:
         write_json_atomic(root / "state" / "localization" / "zh-CN" / "repositories.json", catalog)
     write_json_atomic(public_dir / "i18n" / "zh-CN" / "repositories.json", catalog)
+    if write_state and (model_client is not None or queue.path.exists()):
+        queue.save(set(sources) - set(valid), actual_attempted, failed_ids)
     return catalog
 
 

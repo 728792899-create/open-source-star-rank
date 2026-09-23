@@ -108,21 +108,47 @@ def _search_pages(
     *,
     max_pages: int,
 ) -> tuple[list[Mapping[str, Any]], int]:
+    # Search is not snapshot-isolated. Retry the whole query once rather than
+    # mixing pages from different attempts or silently backfilling missing ranks.
+    for attempt in range(2):
+        try:
+            return _search_pages_once(client, query, max_pages=max_pages)
+        except DataIntegrityError:
+            if attempt == 1:
+                raise
+    raise AssertionError("unreachable")
+
+
+def _search_pages_once(
+    client: SearchClient, query: str, *, max_pages: int,
+) -> tuple[list[Mapping[str, Any]], int]:
     items: list[Mapping[str, Any]] = []
+    seen: set[int] = set()
     total_count: Optional[int] = None
     for page in range(1, max_pages + 1):
         payload = client.search_repository_page(query, sort="stars", page=page, per_page=100)
         page_items = payload.get("items")
-        if not isinstance(page_items, list) or not isinstance(payload.get("total_count"), int):
-            raise DataIntegrityError("GitHub 搜索响应缺少 items 或 total_count")
+        count = payload.get("total_count")
+        if not isinstance(page_items, list) or type(count) is not int or count < 0:
+            raise DataIntegrityError("GitHub 搜索响应缺少有效 items 或 total_count")
         if payload.get("incomplete_results") is True:
             raise DataIntegrityError("GitHub 搜索标记为 incomplete_results，拒绝生成历史榜")
         if total_count is None:
-            total_count = int(payload["total_count"])
-        elif total_count != int(payload["total_count"]):
+            total_count = count
+        elif total_count != count:
             raise DataIntegrityError("GitHub 搜索分页期间 total_count 发生变化，拒绝发布不稳定结果")
+        expected = min(100, max(0, total_count - (page - 1) * 100))
+        if len(page_items) != expected:
+            raise DataIntegrityError("GitHub 搜索分页数量与 total_count 不符，拒绝发布截断结果")
+        for item in page_items:
+            repository_id = item.get("id") if isinstance(item, Mapping) else None
+            if type(repository_id) is not int or repository_id <= 0:
+                raise DataIntegrityError("GitHub 搜索返回无效仓库 ID")
+            if repository_id in seen:
+                raise DataIntegrityError("GitHub 搜索分页出现重复仓库，拒绝用低名次补齐遗漏")
+            seen.add(repository_id)
         items.extend(page_items)
-        if len(page_items) < 100 or len(items) >= total_count:
+        if len(items) >= total_count:
             break
     return items, int(total_count or 0)
 

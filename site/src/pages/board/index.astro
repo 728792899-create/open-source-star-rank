@@ -1,78 +1,27 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { classificationMap } from '../../lib/classification';
-import {
-  readAllTimeIndex, readClassificationIndex, readClassificationRepositories,
-  readLatestEventCategoryPool,
-} from '../../lib/data';
-import {
-  BOARD_DIMENSIONS, CATEGORY_DIMENSION, dimensionValues, facetCounts, facetValueSlug, type FacetDimensionMeta,
-} from '../../lib/facet-rankings';
+import { readCurrentDirectory } from '../../lib/current-directory';
 import { withBase } from '../../lib/paths';
-
-const classificationIndex = readClassificationIndex();
-const classifications = classificationMap(readClassificationRepositories());
-const pool = readLatestEventCategoryPool();
-const allTime = readAllTimeIndex();
-
-interface Section {
-  meta: FacetDimensionMeta;
-  basePath: string;
-  items: Array<{ id: string; label: string; count: number; href: string }>;
-}
-
-function buildSection(meta: FacetDimensionMeta, basePath: string): Section {
-  const values = dimensionValues(meta, classificationIndex, pool);
-  const counts = pool ? facetCounts(pool, classifications, meta.dimension, values.map((value) => value.id)) : new Map<string, number>();
-  const items = values.map((value) => ({
-    id: value.id,
-    label: value.label,
-    count: counts.get(value.id) ?? 0,
-    href: withBase(`${basePath}${facetValueSlug(meta.dimension, value.id)}/`),
-  }));
-  items.sort((left, right) => right.count - left.count || left.label.localeCompare(right.label));
-  return { meta, basePath, items };
-}
-
-const sections: Section[] = [
-  buildSection(CATEGORY_DIMENSION, '/category/'),
-  buildSection(BOARD_DIMENSIONS[0], '/board/language/'),
-  buildSection(BOARD_DIMENSIONS[1], '/board/type/'),
-  buildSection(BOARD_DIMENSIONS[2], '/board/scenario/'),
-];
-const structuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  name: 'GitHub 开源项目分类独立榜总览',
-  description: '按编程语言、项目方向、产品形态与适用场景，浏览各自独立的每日新增 Star 前 100 榜。',
-};
+const { catalog, entries, sections } = readCurrentDirectory();
+const updatedLabel = catalog.updated_at ? new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', dateStyle: 'medium', timeStyle: 'short' }).format(new Date(catalog.updated_at)) : '暂无数据';
 ---
-
-<BaseLayout
-  title="分类独立榜总览｜开源星榜"
-  description="按编程语言、项目方向、产品形态、适用场景浏览各自独立的每日新增 Star 前 100 榜，并可切回全部榜单或全部历史星标 Top 1000。"
-  structuredData={structuredData}
-  robots="noindex,follow"
->
+<BaseLayout title="当前项目分类目录｜开源星榜" description="按方向、语言、产品形态和使用场景浏览已发现项目，标明数据日期和实际覆盖范围。">
   <main id="main-content" class="shell language-page category-page">
-    <p class="eyebrow">Independent boards · daily gain</p>
-    <h1>每个分类，<br />都有自己的前 100。</h1>
-    <p class="status-lead" data-archive-notice>历史归档：事件分类榜已停止更新。最后数据日期：{pool?.date ?? '暂无数据'}。以下入口仅用于浏览历史记录；<a href={withBase('/')}>当前净增榜支持语言、方向、形态与场景筛选 →</a></p>
-    <p class="status-lead">
-      <a href={withBase('/')}>← 返回全部榜单（当前净增榜）</a>
-      · <a href={withBase('/all-time/')}>全部历史星标 Top 1000 →</a>
-      {allTime.status === 'ready' && allTime.top_stars ? <span>（最高约 {new Intl.NumberFormat('zh-CN', { notation: 'compact', maximumFractionDigits: 1 }).format(allTime.top_stars)} Star）</span> : null}
-    </p>
-
-    {sections.map((section) => <section class="language-list" aria-label={`${section.meta.labelZh}独立榜`}>
-      <div class="section-heading"><div><p class="eyebrow">{section.meta.eyebrow}</p><h2>{section.meta.labelZh}</h2></div><strong>{section.items.length}</strong></div>
-      {section.items.length ? <div class="language-cards category-cards">
-        {section.items.map((item) => <a href={item.href}>
-          <span>{item.label}</span>
-          <strong>{item.count} 个项目</strong>
-          <small>{item.count > 0 ? '查看历史归档 →' : '暂无历史记录'}</small>
-        </a>)}
-      </div> : <p class="empty-copy">历史数据中暂无{section.meta.labelZh}的独立榜。</p>}
+    <p class="eyebrow">Current project directory</p>
+    <h1>按用途，找到适合你的项目。</h1>
+    <p class="status-lead" data-directory-scope>当前发现目录共 {entries.length.toLocaleString('zh-CN')} 个项目；数据更新于 {updatedLabel}（北京时间）。其中 {catalog.observation_count.toLocaleString('zh-CN')} 个项目进入每日观察池，按累计 Star 排序；不代表 GitHub 全量收录。</p>
+    {catalog.coverage && <p class="status-lead" data-observation-coverage>等待观察 {catalog.coverage.queued_count.toLocaleString('zh-CN')} 项 · 连续可比：1 日 {catalog.coverage.comparable_1d_count.toLocaleString('zh-CN')} 项，7 日 {catalog.coverage.comparable_7d_count.toLocaleString('zh-CN')} 项，30 日 {catalog.coverage.comparable_30d_count.toLocaleString('zh-CN')} 项。观察池保护未完成的 30 日窗口，每天最多接纳容量的 5%（不足一项按一项）；采样中断后重新积累，首次建池可填满容量。</p>}
+    <nav class="inline-links" aria-label="目录入口">
+      {entries.length > 0 && <a href={withBase('/discover/all/')}>浏览全部当前项目 →</a>}
+      <a href={withBase('/board/archive/')}>历史事件分类归档 →</a>
+      <a href={withBase('/')}>查看当前净增榜 →</a>
+    </nav>
+    {sections.map((section) => <section class="language-list" aria-label={`${section.meta.labelZh}目录`}>
+      <div class="section-heading"><div><p class="eyebrow">Browse projects</p><h2>{section.meta.labelZh}</h2></div><strong>{section.items.length}</strong></div>
+      <div class="language-cards category-cards">
+        {section.items.map((item) => <a href={withBase(`/discover/${item.path}/`)}><span>{item.label}</span><strong>{item.entries.length} 个项目</strong><small>浏览已发现项目 →</small></a>)}
+      </div>
     </section>)}
+    {entries.length === 0 && <p class="empty-copy">候选数据正在准备，首次成功采集后显示分类目录。</p>}
   </main>
 </BaseLayout>

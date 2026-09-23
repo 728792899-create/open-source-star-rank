@@ -2,6 +2,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import type {
   DailyRanking,
+  DiscoveryCatalog,
   AllTimeBoard,
   AllTimeIndex,
   ClassificationIndex,
@@ -58,6 +59,14 @@ export function readRepositoryCatalog(): RepositoryCatalog {
     return { schema_version: '1.1.0', updated_at: '', timezone: 'Asia/Shanghai', candidate_count: 0, repositories: [] };
   }
   return JSON.parse(readFileSync(file, 'utf8')) as RepositoryCatalog;
+}
+
+/** Old fixed data commits retain their original candidate-only directory. */
+export function readDiscoveryCatalog(): DiscoveryCatalog {
+  const file = path.join(dataRoot, 'directory.json');
+  if (existsSync(file)) return JSON.parse(readFileSync(file, 'utf8')) as DiscoveryCatalog;
+  const observed = readRepositoryCatalog();
+  return { ...observed, repository_count: observed.candidate_count, observation_count: observed.candidate_count };
 }
 
 export function readEventRankingIndex(): EventRankingIndex {
@@ -207,7 +216,7 @@ export function readRepositoryProfiles(): RepositoryProfile[] {
           language: entry.language ?? null, stars_total: entry.stars_total, html_url: entry.html_url,
           owner_avatar_url: entry.owner_avatar_url ?? null,
           created_at: entry.created_at ?? null, pushed_at: entry.pushed_at ?? null, knowledge_url: null,
-          first_seen_date: null, last_seen_date: null, history_30d: [], event_history: [], all_time_rank: null,
+          first_seen_date: null, last_seen_date: null, metadata_date: null, history_30d: [], event_history: [], all_time_rank: null,
         },
       };
       working.set(entry.repository_id, current);
@@ -220,11 +229,12 @@ export function readRepositoryProfiles(): RepositoryProfile[] {
         pushed_at: entry.pushed_at ?? current.profile.pushed_at,
       });
       current.metadataKey = metadataKey;
+      current.profile.metadata_date = metadataKey.slice(0, 10) || null;
     }
     return current;
   };
 
-  for (const repository of readRepositoryCatalog().repositories) {
+  for (const repository of readDiscoveryCatalog().repositories) {
     const current = ensure(repository, repository.last_seen_date ?? '');
     Object.assign(current.profile, repository);
   }

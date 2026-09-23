@@ -72,6 +72,12 @@ test('preview contains request failures, handles missing fallback and preserves 
   assert.equal(okay.status, 200);
   assert.equal(gunzipSync(okay.body).toString(), 'preview fixture');
   assert.equal((await request('/app/', 'HEAD')).body.length, 0);
+  for (const [name, contentType] of [['brand.svg', 'image/svg+xml'], ['art.webp', 'image/webp']]) {
+    await writeFile(path.join(dist, name), 'fixture asset');
+    const asset = await request(`/app/${name}`);
+    assert.equal(asset.status, 200);
+    assert.equal(asset.headers['content-type'], contentType);
+  }
   await writeFile(path.join(dist, '404.html'), 'missing fixture');
   const missing = await request('/app/not-found');
   assert.equal(missing.status, 404);

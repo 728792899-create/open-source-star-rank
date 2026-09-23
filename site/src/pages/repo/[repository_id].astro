@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { classificationLabels, classificationMap } from '../../lib/classification';
 import { readClassificationIndex, readClassificationRepositories, readLocalizationCatalog, readRepositoryProfiles } from '../../lib/data';
 import { localizedRepositoryContent } from '../../lib/localization';
+import { relatedMatch } from '../../lib/related-projects.mjs';
 import { withBase } from '../../lib/paths';
 import { repositoryAgeLabel, repositoryDate, repositoryOwner } from '../../lib/repository-lifecycle';
 
@@ -44,19 +45,25 @@ export const getStaticPaths = (() => {
       ...classification.use_cases.map((useCase) => `scenario:${useCase}`),
     ] : [];
     const seen = new Set<number>([repository.repository_id]);
-    const similarProjects = [] as Array<{ candidate: typeof repository; content: ReturnType<typeof localizedRepositoryContent> }>;
+    const candidates = [] as Array<{ candidate: typeof repository; content: ReturnType<typeof localizedRepositoryContent>; score: number; reason: string }>;
     for (const key of keys) {
       for (const candidate of recommendationBuckets.get(key) ?? []) {
         if (seen.has(candidate.repository_id)) continue;
         seen.add(candidate.repository_id);
-        similarProjects.push({
+        const match = relatedMatch(classification, classificationById.get(candidate.repository_id));
+        if (!match.score) continue;
+        const reason = match.scenarios.length ? `共同场景：${match.scenarios.map((id: string) => labels.useCases.get(id) ?? id).join('、')}`
+          : match.category ? `同一方向：${categoryLabel}` : `相同形态：${projectTypeLabel}`;
+        candidates.push({
+          score: match.score, reason,
           candidate,
           content: localizedRepositoryContent(localizationCatalog, candidate.repository_id, candidate.full_name, candidate.description),
         });
-        if (similarProjects.length >= 4) break;
+
       }
-      if (similarProjects.length >= 4) break;
+
     }
+    const similarProjects = candidates.sort((a, b) => b.score - a.score || b.candidate.stars_total - a.candidate.stars_total || a.candidate.repository_id - b.candidate.repository_id).slice(0, 4);
     return {
       params: { repository_id: String(repository.repository_id) },
       props: { repository, content, classification, categoryLabel, projectTypeLabel, useCaseLabels, similarProjects },
@@ -95,8 +102,8 @@ const structuredData = {
 ---
 
 <BaseLayout title={`${content.displayName} Star 历史｜开源星榜`} description={`${content.displayName}（${repository.full_name}）在开源星榜中的公开事件新增、候选池净增与历史排名记录。`} structuredData={structuredData}>
-  <main id="main-content" class="shell repo-page" data-repository-profile data-repository-id={repository.repository_id} data-repository-name={content.displayName} data-repository-full-name={repository.full_name} data-repository-url={withBase(`/repo/${repository.repository_id}/`)} data-repository-stars={repository.stars_total} data-repository-language={repository.language || 'Other'} data-repository-category={categoryLabel || '未分类'} data-repository-type={projectTypeLabel || '未分类'} data-repository-scenarios={useCaseLabels?.join('、') || '待生成'} data-repository-signal={rankingReason}>
-    <p class="eyebrow">Repository #{repository.repository_id} · stable identity</p>
+  <main id="main-content" class="shell repo-page" data-repository-profile data-repository-id={repository.repository_id} data-repository-name={content.displayName} data-repository-full-name={repository.full_name} data-repository-url={withBase(`/repo/${repository.repository_id}/`)} data-repository-stars={repository.stars_total} data-repository-language={repository.language || 'Other'} data-repository-category={categoryLabel || '未分类'} data-repository-type={projectTypeLabel || '未分类'} data-repository-scenarios={useCaseLabels?.join('、') || '待生成'} data-repository-signal={rankingReason} data-repository-date={repository.metadata_date} data-repository-pushed={repository.pushed_at} data-repository-created={repository.created_at}>
+    <p class="eyebrow repo-identity">项目详情 <span>#{repository.repository_id}</span></p>
     <div class="repo-hero">
       <div>
         {content.localized ? <>
@@ -131,24 +138,17 @@ const structuredData = {
       {repository.all_time_rank && <div><dt>历史星标榜</dt><dd>#{repository.all_time_rank}</dd></div>}
     </dl>
 
+    <div class="repo-summary-grid">
     <section class="repo-overview" aria-labelledby="repo-overview-title">
-      <div class="section-heading"><div><p class="eyebrow">Decision brief</p><h2 id="repo-overview-title">项目速览</h2></div></div>
+      <div class="section-heading"><h2 id="repo-overview-title">项目速览</h2></div>
       <div class="repo-overview-grid">
-        <article><h3>它解决什么</h3><p>{content.description || repository.description || 'GitHub 尚未提供项目描述。'}</p></article>
         <article><h3>适合谁</h3><p>{useCaseLabels?.length ? `需要${useCaseLabels.join('、')}能力的开发者或团队。` : categoryLabel ? `关注${categoryLabel}方向的开发者和团队。` : '建议先查看项目 README 确认适用范围。'}</p></article>
         <article><h3>为什么上榜</h3><p>{rankingReason}</p></article>
       </div>
-      <nav class="repo-quick-links" aria-label="项目快速链接">
-        <a href={`${repository.html_url}#readme`} target="_blank" rel="noreferrer">阅读 README ↗</a>
-        <a href={`${repository.html_url}/releases`} target="_blank" rel="noreferrer">最新发布 ↗</a>
-        <a href={`${repository.html_url}/issues`} target="_blank" rel="noreferrer">Issues ↗</a>
-        <a href={feedbackUrl} target="_blank" rel="noreferrer">AI 内容纠错 ↗</a>
-      </nav>
-      <p class="ai-disclosure">中文名称、简介和分类属于辅助理解层；GitHub 原始仓库信息始终是权威来源。</p>
     </section>
 
     <section class="repo-classification" aria-labelledby="repo-classification-title">
-      <div class="section-heading"><div><p class="eyebrow">Project taxonomy</p><h2 id="repo-classification-title">方向与适用场景</h2></div></div>
+      <div class="section-heading"><h2 id="repo-classification-title">方向与适用场景</h2></div>
       {classification ? <dl>
         <div><dt>项目方向</dt><dd><a href={`${withBase('/')}?category=${classification.primary_category}`}>{categoryLabel}</a></dd></div>
         <div><dt>产品形态</dt><dd>{projectTypeLabel}</dd></div>
@@ -157,13 +157,26 @@ const structuredData = {
       </dl> : <p class="empty-copy">分类待生成；这不影响项目排名和原始 GitHub 数据。</p>}
     </section>
 
+    </div>
+    <div class="repo-resources">
+      <nav class="repo-quick-links" aria-label="项目快速链接">
+        <a href={`${repository.html_url}#readme`} target="_blank" rel="noreferrer">阅读 README ↗</a>
+        <a href={`${repository.html_url}/releases`} target="_blank" rel="noreferrer">最新发布 ↗</a>
+        <a href={`${repository.html_url}/issues`} target="_blank" rel="noreferrer">Issues ↗</a>
+        <a href={feedbackUrl} target="_blank" rel="noreferrer">AI 内容纠错 ↗</a>
+      </nav>
+      <p class="ai-disclosure">中文名称、简介和分类属于辅助理解层；GitHub 原始仓库信息始终是权威来源。</p>
+    </div>
+
     {repository.event_history.length > 0 && <section class="history-section" aria-labelledby="event-history-title">
-      <div class="section-heading"><div><p class="eyebrow">Public event history</p><h2 id="event-history-title">公开事件新增历史</h2></div></div>
+      <div class="section-heading"><h2 id="event-history-title">公开事件新增历史</h2><span>公开加星事件</span></div>
       <div class="history-chart" aria-label="公开 WatchEvent 唯一新增用户柱状图">
         {repository.event_history.map((item) => <div title={`${item.date}: +${item.stars_added}`}>
           <span style={`height:${Math.max(4, Math.round((item.stars_added / eventMaximum) * 100))}%`}></span>
         </div>)}
       </div>
+      <details class="repo-history-details">
+        <summary>查看每日明细 <span>{repository.event_history.length} 条记录</span></summary>
       <div class="history-table" role="table" aria-label="公开事件新增与全站榜排名记录">
         <div role="row"><strong role="columnheader">日期</strong><strong role="columnheader">唯一新增</strong><strong role="columnheader">全站名次</strong></div>
         {repository.event_history.toReversed().map((item) => <div role="row">
@@ -172,11 +185,12 @@ const structuredData = {
           <span role="cell">#{item.rank}</span>
         </div>)}
       </div>
+      </details>
       <p class="history-note">来自 GH Archive 归档的公开 WatchEvent，按用户—仓库唯一对计数；不扣除取消 Star。</p>
     </section>}
 
     {repository.history_30d.length > 0 && <section class="history-section" aria-labelledby="history-title">
-      <div class="section-heading"><div><p class="eyebrow">30 day true history</p><h2 id="history-title">真实历史</h2></div></div>
+      <div class="section-heading"><h2 id="history-title">真实历史</h2><span>近 30 日 · Star 净增</span></div>
       <div class="history-chart" aria-label="近 30 日 Star 净增柱状图">
         {repository.history_30d.map((item) => <div title={`${item.date}: ${item.stars_gained ?? '无数据'}`}>
           {item.stars_gained === null
@@ -184,6 +198,8 @@ const structuredData = {
             : <span class:list={{ negative: item.stars_gained < 0 }} style={`height:${Math.max(4, Math.round((Math.abs(item.stars_gained) / maximum) * 100))}%`}></span>}
         </div>)}
       </div>
+      <details class="repo-history-details">
+        <summary>查看每日明细 <span>{repository.history_30d.length} 条记录</span></summary>
       <div class="history-table" role="table" aria-label="近 30 日 Star 与排名记录">
         <div role="row"><strong role="columnheader">日期</strong><strong role="columnheader">总 Star</strong><strong role="columnheader">净增</strong><strong role="columnheader">日榜排名</strong></div>
         {repository.history_30d.toReversed().map((item) => <div role="row">
@@ -193,28 +209,100 @@ const structuredData = {
           <span role="cell">{item.rank === null ? '—' : `#${item.rank}`}</span>
         </div>)}
       </div>
+      </details>
       <p class="history-note">— 表示当日缺少有效连续快照，或项目当日不在可比较候选中；不补零，不插值。</p>
     </section>}
 
     {repository.event_history.length === 0 && repository.history_30d.length === 0 && <section class="history-section" aria-labelledby="history-title">
-      <div class="section-heading"><div><p class="eyebrow">Ranking history</p><h2 id="history-title">榜单记录</h2></div></div>
+      <div class="section-heading"><h2 id="history-title">榜单记录</h2></div>
       <p class="empty-copy">该项目目前仅出现在历史累计榜，日度事件或候选池历史尚未积累。</p>
     </section>}
 
     {similarProjects.length > 0 && <section class="similar-projects" aria-labelledby="similar-projects-title">
-      <div class="section-heading"><div><p class="eyebrow">Related repositories</p><h2 id="similar-projects-title">相似项目</h2></div></div>
+      <div class="section-heading"><h2 id="similar-projects-title">相似项目</h2></div>
       <div class="similar-project-grid">
-        {similarProjects.map(({ candidate, content: candidateContent }) => {
+        {similarProjects.map(({ candidate, content: candidateContent, reason }) => {
           return <a href={withBase(`/repo/${candidate.repository_id}/`)}>
             <strong>{candidateContent.displayName}</strong>
             <span>{candidate.full_name}</span>
-            <small>{formatNumber(candidate.stars_total)} Star · {candidate.language || 'Other'}</small>
+            <small>{reason}</small>
+            <small>{formatNumber(candidate.stars_total)} Star · {candidate.language || 'Other'} · 数据 {candidate.metadata_date || '日期未知'}</small>
           </a>;
         })}
       </div>
     </section>}
   </main>
 </BaseLayout>
+
+<style>
+  .repo-page { padding: 28px 0 56px; min-height: 0; }
+  .repo-page .repo-identity { margin: 0 0 12px; font-size: 11px; letter-spacing: .08em; }
+  .repo-identity span { margin-left: 8px; color: var(--muted); font-weight: 500; }
+  .repo-page .repo-hero { padding: 0 0 20px; gap: 20px; align-items: start; }
+  .repo-hero > div:first-child { min-width: 0; flex: 1; }
+  .repo-page .repo-hero h1 { max-width: none; font-size: clamp(24px, 2.4vw, 36px); line-height: 1.22; letter-spacing: -.035em; }
+  .repo-page .repo-source-name { margin-top: 7px; flex-wrap: wrap; font-size: 12px; }
+  .repo-page .repo-hero p { max-width: 76ch; margin-top: 12px; font-size: 14px; line-height: 1.65; overflow-wrap: anywhere; }
+  .repo-page .repo-actions { max-width: 360px; gap: 6px; }
+  .repo-page .repo-actions a, .repo-page .repo-actions button { min-height: 40px; padding: 0 12px; font-size: 12px; border-color: var(--line); border-radius: 6px; }
+  .repo-page .repo-actions a { background: var(--gold); color: white; border-color: var(--gold); }
+  .repo-page .repo-action-status { font-size: 12px; overflow-wrap: anywhere; }
+  .repo-page .repo-action-status:empty { display: none; }
+  .repo-page .repo-metrics { grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 8px 0; border-color: var(--line); }
+  .repo-page .repo-metrics div { min-width: 0; padding: 10px 14px; border: 0; }
+  .repo-page .repo-metrics dt { font-size: 12px; }
+  .repo-page .repo-metrics dd { margin-top: 5px; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
+  .repo-page .repo-metrics div:first-child dd { color: var(--gold); font-size: 22px; line-height: 1; }
+  .repo-summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding-top: 22px; }
+  .repo-page .repo-overview, .repo-page .repo-classification { margin: 0; min-width: 0; }
+  .repo-page .section-heading { margin-bottom: 12px; gap: 12px; align-items: center; }
+  .repo-page .section-heading h2 { font-size: 19px; line-height: 1.4; letter-spacing: -.02em; }
+  .repo-page .section-heading > span { font-size: 12px; color: var(--muted); }
+  .repo-page .repo-overview-grid { display: grid; grid-template-columns: 1fr; border: 0; background: transparent; gap: 12px; }
+  .repo-page .repo-overview-grid article { display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 12px; padding: 0; border: 0; }
+  .repo-page .repo-overview-grid h3 { margin: 0; font-size: 13px; line-height: 1.7; }
+  .repo-page .repo-overview-grid p { font-size: 13px; overflow-wrap: anywhere; }
+  .repo-page .repo-classification dl { gap: 12px 20px; border: 0; }
+  .repo-page .repo-classification dl div { padding: 0; border: 0; background: transparent; min-width: 0; }
+  .repo-page .repo-classification dt { font-size: 12px; letter-spacing: 0; }
+  .repo-page .repo-classification dd { margin-top: 3px; font-size: 13px; overflow-wrap: anywhere; }
+  .repo-page .empty-copy { padding: 0; margin: 0; border: 0; background: transparent; font-size: 13px; line-height: 1.7; }
+  .repo-resources { margin-top: 18px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+  .repo-page .repo-quick-links { margin: 0; gap: 8px; }
+  .repo-page .repo-quick-links a { min-height: 36px; font-size: 12px; border-radius: 5px; }
+  .repo-page .ai-disclosure { margin: 10px 0 0; font-size: 12px; line-height: 1.6; }
+  .repo-page .history-section, .repo-page .similar-projects { padding-top: 24px; margin-top: 0; }
+  .repo-page .history-chart { height: 130px; padding: 12px; gap: 4px; }
+  .repo-history-details { margin-top: 10px; border: 1px solid var(--line); border-radius: 5px; }
+  .repo-history-details summary { padding: 10px 12px; cursor: pointer; font-size: 13px; font-weight: 600; }
+  .repo-history-details summary span { margin-left: 8px; color: var(--muted); font-weight: 400; font-size: 12px; }
+  .repo-history-details summary:hover { background: var(--paper-deep); }
+  .repo-page .history-table { margin-top: 0; border-color: var(--line); }
+  .repo-page .history-table > div { min-height: 36px; padding: 8px 12px; }
+  .repo-page .history-note { margin: 8px 0 0; }
+  .repo-page .similar-project-grid { gap: 10px; }
+  .repo-page .similar-project-grid a { padding: 14px; gap: 5px; }
+  .repo-page .similar-project-grid small, .repo-page .similar-project-grid span { font-size: 12px; }
+  @media (max-width: 1200px) {
+    .repo-page .repo-hero { flex-direction: column; gap: 14px; }
+    .repo-page .repo-actions { max-width: none; justify-content: flex-start; }
+    .repo-page .repo-action-status { max-width: none; text-align: left; }
+    .repo-page .repo-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (max-width: 760px) {
+    .repo-page { padding: 20px 0 40px; }
+    .repo-summary-grid { grid-template-columns: 1fr; gap: 20px; padding-top: 20px; }
+    .repo-page .repo-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .repo-page .repo-metrics div { padding: 10px 8px; }
+    .repo-page .repo-classification dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .repo-page .repo-actions { width: 100%; }
+    .repo-page .repo-actions a, .repo-page .repo-actions button { min-height: 44px; flex: 1 1 auto; }
+    .repo-page .repo-quick-links a { min-height: 40px; }
+    .repo-page .section-heading { flex-wrap: wrap; gap: 4px 12px; }
+    .repo-page .history-chart { height: 112px; padding: 8px; gap: 3px; }
+    .repo-page .history-table > div { padding: 8px 6px; font-size: 11px; }
+  }
+</style>
 
 <script>
   const profile = document.querySelector('[data-repository-profile]');
@@ -231,12 +319,16 @@ const structuredData = {
       type: profile.dataset.repositoryType ?? '未分类',
       scenarios: profile.dataset.repositoryScenarios ?? '待生成',
       signal: profile.dataset.repositorySignal ?? '',
+      sourceDate: profile.dataset.repositoryDate || null,
+      pushedAt: profile.dataset.repositoryPushed || null,
+      createdAt: profile.dataset.repositoryCreated || null,
     };
     const contains = (items: Array<{ id: number }>) => items.some((item) => item.id === project.id);
     const status = profile.querySelector('[data-repo-action-status]');
     const setStatus = (message: string) => { if (status) status.textContent = message; };
     let githubStarred: boolean | null = null;
     let githubLoading = false;
+    let githubRevision = 0;
     const authApi = () => (window as any).starRankAuth;
     const updateButtons = () => {
       const library = libraryApi.read();
@@ -245,13 +337,14 @@ const structuredData = {
       if (favorite instanceof HTMLButtonElement) {
         const auth = authApi();
         const githubMode = Boolean(auth?.state?.authenticated);
-        const active = githubMode && githubStarred !== null ? githubStarred : contains(library.favorites);
+        const active = githubMode ? githubStarred : contains(library.favorites);
         favorite.textContent = githubLoading
           ? '正在同步…'
           : githubMode
-            ? active ? 'GitHub 已加星' : '加星到 GitHub'
+            ? active === null ? '状态未知 · 点击重查' : active ? 'GitHub 已加星' : '加星到 GitHub'
             : active ? '已收藏到本机' : '收藏项目';
-        favorite.setAttribute('aria-pressed', String(active));
+        if (active === null) favorite.removeAttribute('aria-pressed');
+        else favorite.setAttribute('aria-pressed', String(active));
         favorite.disabled = githubLoading;
       }
       if (compare instanceof HTMLButtonElement) {
@@ -271,25 +364,39 @@ const structuredData = {
       if (githubLoading) return;
       const auth = authApi();
       await auth?.initialize;
+      if (githubLoading) return;
       if (!auth?.state?.authenticated) {
         githubStarred = null;
         updateButtons();
         return;
       }
       githubLoading = true;
+      const revision = githubRevision;
       updateButtons();
       try {
-        githubStarred = await auth.starStatus(project.fullName);
+        if (auth.consumeFavoriteIntent(project.fullName) && window.confirm(`登录成功。将 ${project.fullName} 加星到当前 GitHub 账号？`)) {
+          const starred = await auth.setStar(project.fullName, true);
+          if (revision !== githubRevision) return;
+          githubStarred = starred;
+          mirrorLocalFavorite(starred);
+        } else {
+          const starred = await auth.starStatus(project.fullName);
+          if (revision !== githubRevision) return;
+          githubStarred = starred;
+        }
         setStatus(githubStarred ? '已与 GitHub Star 状态同步。' : '当前尚未在 GitHub 加星。');
       } catch (error) {
+        if (revision !== githubRevision) return;
         githubStarred = null;
         setStatus(error instanceof Error ? error.message : '无法读取 GitHub Star 状态。');
       } finally {
         githubLoading = false;
         updateButtons();
+        if (revision !== githubRevision) void loadGithubStar();
       }
     };
     const library = libraryApi.read();
+    library.compare = library.compare.map((item: { id: number }) => item.id === project.id ? project : item);
     library.recent = [project, ...library.recent.filter((item: { id: number }) => item.id !== project.id)].slice(0, 6);
     libraryApi.write(library);
     profile.addEventListener('click', async (event) => {
@@ -302,7 +409,7 @@ const structuredData = {
           const choice = auth ? await auth.chooseFavoriteMode() : 'local';
           if (choice === 'cancel') return;
           if (choice === 'github') {
-            try { await auth.login(); }
+            try { await auth.login(undefined, project.fullName); }
             catch (error) { setStatus(error instanceof Error ? error.message : 'GitHub 登录暂不可用。'); }
             return;
           }
@@ -311,17 +418,25 @@ const structuredData = {
           updateButtons();
           return;
         }
+        if (githubLoading) return;
+        if (githubStarred === null) { await loadGithubStar(); return; }
         githubLoading = true;
+        const revision = githubRevision;
         updateButtons();
         try {
-          githubStarred = await auth.setStar(project.fullName, !githubStarred);
+          const starred = await auth.setStar(project.fullName, !githubStarred);
+          if (revision !== githubRevision) return;
+          githubStarred = starred;
           mirrorLocalFavorite(Boolean(githubStarred));
           setStatus(githubStarred ? '已同步为你的 GitHub Star。' : '已从你的 GitHub Star 中移除。');
         } catch (error) {
+          if (revision !== githubRevision) return;
+          githubStarred = null;
           setStatus(error instanceof Error ? error.message : 'GitHub Star 同步失败。');
         } finally {
           githubLoading = false;
           updateButtons();
+          if (revision !== githubRevision) void loadGithubStar();
         }
         return;
       }
@@ -337,7 +452,14 @@ const structuredData = {
       updateButtons();
     });
     window.addEventListener('starranklibrarychange', updateButtons);
-    window.addEventListener('starrankauthchange', loadGithubStar);
+    window.addEventListener('starrankauthchange', () => { githubRevision++; githubStarred = null; updateButtons(); void loadGithubStar(); });
+    window.addEventListener('starrankstarssynced', (event) => {
+      if (authApi()?.state?.authenticated && (event as CustomEvent).detail?.fullNames?.includes(project.fullName)) {
+        githubRevision++;
+        githubStarred = true;
+        updateButtons();
+      }
+    });
     updateButtons();
     if (authApi()) loadGithubStar();
     else window.addEventListener('starrankauthready', loadGithubStar, { once: true });

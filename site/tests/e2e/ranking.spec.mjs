@@ -40,7 +40,7 @@ test('keeps the latest yesterday net ranking as the homepage default', async ({ 
   await expect(page.locator('main h2')).toHaveCount(0);
   await expect(page.locator('.freshness-status.compact')).toContainText('数据正常');
   await expect(page.locator('[data-ranking-mode="daily"] [data-ranking-row]')).toHaveCount(100);
-  await expect(page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '昨日净增榜' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '项目榜单' })).toBeVisible();
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /social\/daily-2026-07-14\.png$/);
   await expect(page.locator('.site-header').getByRole('link', { name: 'GitHub ↗' }))
     .toHaveAttribute('href', 'https://github.com/728792899-create/open-source-star-rank');
@@ -113,6 +113,9 @@ test('combines direction, product type and scenario filters and re-ranks the dee
   const category = await firstRow.getAttribute('data-category') ?? '';
   const projectType = await firstRow.getAttribute('data-project-type') ?? '';
   const scenario = (await firstRow.getAttribute('data-scenarios') ?? '').split(',')[0];
+  expect(category, 'fixture first row must retain its valid classification').not.toBe('');
+  expect(projectType).not.toBe('');
+  expect(scenario).not.toBe('');
   await page.getByLabel('项目方向').selectOption(category);
   await page.getByLabel('产品形态').selectOption(projectType);
   await page.getByLabel('适用场景').selectOption(scenario);
@@ -273,6 +276,7 @@ test('publishes status, period, language and stable repository history routes', 
   await expect(page.locator('.repo-source-name').filter({ hasText: 'fixture-labs/repo-001' })).toBeVisible();
   await expect(page.getByRole('heading', { name: '真实历史' })).toBeVisible();
   await expect(page.getByRole('heading', { name: '方向与适用场景' })).toBeVisible();
+  await page.locator('.repo-history-details summary').click();
   await expect(page.getByRole('row')).toHaveCount(31);
 
   await page.goto('repo/30001/');
@@ -316,6 +320,7 @@ test('publishes independent category boards with renumbered ranks and empty noin
   expect(gains).toEqual([...gains].sort((left, right) => right - left));
   await expect(page.getByRole('link', { name: '查看当前净增榜筛选结果 →' }).first()).toBeVisible();
   await expect(page.locator('[data-archive-notice]')).toContainText('已停止更新');
+  await expect(page.locator('.workspace-periods [aria-current]')).toHaveCount(0);
   await expect(page.locator('[data-update-countdown]')).toHaveCount(0);
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,follow');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/category\/ai-machine-learning\/$/);
@@ -331,8 +336,8 @@ test('publishes independent category boards with renumbered ranks and empty noin
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,follow');
 });
 
-test('publishes the unified board hub with per-dimension independent boards', async ({ page }) => {
-  await page.goto('board/');
+test('preserves historical independent boards under the archive hub', async ({ page }) => {
+  await page.goto('board/archive/');
   await expect(page.getByRole('heading', { name: /每个分类/ })).toBeVisible();
   for (const section of ['项目方向', '编程语言', '产品形态', '适用场景']) {
     await expect(page.getByRole('heading', { name: section, exact: true })).toBeVisible();
@@ -357,14 +362,17 @@ test('publishes the unified board hub with per-dimension independent boards', as
 
 test('publishes the all-time top 1000 board with cumulative star ordering and filters', async ({ page }) => {
   await page.goto('all-time/');
-  await expect(page.getByRole('heading', { name: '全部历史星标 Top 1000' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '累计 Star 排行' })).toBeVisible();
   const rows = page.locator('[data-ranking-row]');
   await expect(rows).toHaveCount(1_000);
   const ranks = (await rows.locator('.rank-number').allTextContents()).map((rank) => Number(rank.trim()));
   expect(ranks).toEqual(ranks.map((_, index) => index + 1));
   await page.getByLabel('编程语言').selectOption('Python');
   await expect(page).toHaveURL(/language=Python/);
-  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(250);
+  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(100);
+  await expect(page.locator('[data-matching-count]')).toHaveText('250');
+  await page.getByRole('navigation', { name: '榜单分页', exact: true }).getByRole('button', { name: '3', exact: true }).click();
+  await expect(page.locator('[data-ranking-row]:visible')).toHaveCount(50);
   await page.getByLabel('编程语言').selectOption('');
   const search = page.getByRole('searchbox', { name: '搜索项目' });
   await search.fill('project-001');

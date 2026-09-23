@@ -1,8 +1,8 @@
 ---
 import type { RankingIndex } from '../types';
 import { withBase } from '../lib/paths';
-import FreshnessStatus from './FreshnessStatus.astro';
-import UpdateCountdown from './UpdateCountdown.astro';
+import RankingTicker from './RankingTicker.astro';
+import RankingPeriods from './RankingPeriods.astro';
 
 interface Props {
   index: RankingIndex;
@@ -26,26 +26,21 @@ const expectedAt = (() => {
 })();
 ---
 
-<main id="main-content" class="shell progress-page">
-  <FreshnessStatus
-    updatedAt={index.updated_at}
-    thresholdHours={index.freshness_threshold_hours}
+<main id="main-content" class="shell ranking-page" data-ranking-view data-ranking-navigation data-ranking-waiting>
+  <header class="ranking-summary"><h1 id="ranking-title">{days} 日 Star 净增排行</h1><span class="ranking-date-chip">积累中</span></header>
+  <RankingTicker updatedAt={index.updated_at} thresholdHours={index.freshness_threshold_hours}
     captureValid={index.sampling?.latest_snapshot_valid ?? true}
-  />
-  <UpdateCountdown
-    nextAt={index.sampling?.next_scheduled_at}
-    updatedAt={index.updated_at}
-    indexPath="/data/index.json"
-    label="下次有效窗口采样"
-  />
-  <p class="eyebrow">{days} day ranking · 每日检查连续窗口</p>
-  <h1>近 {days} 日榜正在积累真实窗口。</h1>
+    nextAt={index.sampling?.next_scheduled_at} indexUpdatedAt={index.updated_at} indexPath="/data/index.json"
+    label="下次有效窗口采样" notes={[`已完成 ${progress.completed} / ${progress.required} 个连续统计窗口`, '有效窗口积累中，可随时切换其他榜单']} />
+  <div class="ranking-toolbar"><RankingPeriods active={days} /></div>
+  <section class="ranking-waiting" aria-labelledby="waiting-title">
+  <h2 id="waiting-title">近 {days} 日榜正在积累真实窗口</h2>
   <p class="progress-copy">已经采到 {consecutiveSnapshots} 个连续有效快照，其中形成 {progress.completed} 个完整统计窗口。基线快照本身不代表一天增量，所以“1 个基线、0 个窗口”是正常状态。</p>
   <dl class="progress-summary">
-    <div><dt>连续有效快照</dt><dd>{consecutiveSnapshots}</dd><small>第一个只作为基线</small></div>
-    <div><dt>已完成窗口</dt><dd>{progress.completed} / {progress.required}</dd><small>还差 {remainingWindows} 个</small></div>
-    <div><dt>下次计划采样</dt><dd>{formatDateTime(index.sampling?.next_scheduled_at)}</dd><small>有效窗 00:00–03:00</small></div>
-    <div><dt>最早预计发布</dt><dd>{remainingWindows === 0 ? '已具备条件' : formatDateTime(expectedAt)}</dd><small>前提是后续采样连续有效</small></div>
+    <div><dt>连续有效快照</dt><dd>{consecutiveSnapshots}<small>第一个只作为基线</small></dd></div>
+    <div><dt>已完成窗口</dt><dd>{progress.completed} / {progress.required}<small>还差 {remainingWindows} 个</small></dd></div>
+    <div><dt>下次计划采样</dt><dd>{formatDateTime(index.sampling?.next_scheduled_at)}<small>有效窗 00:00–03:00</small></dd></div>
+    <div><dt>最早预计发布</dt><dd>{remainingWindows === 0 ? '已具备条件' : formatDateTime(expectedAt)}<small>前提是后续采样连续有效</small></dd></div>
   </dl>
   <div class="progress-meter" aria-label={`已完成 ${progress.completed} / ${progress.required}`}>
     <div><span style={`width:${percentage}%`}></span></div>
@@ -56,4 +51,5 @@ const expectedAt = (() => {
     <a class="text-link" href={withBase('/status/')}>查看采样状态 →</a>
     <a class="text-link" href={withBase('/methodology/')}>了解有效窗口 →</a>
   </nav>
+  </section>
 </main>

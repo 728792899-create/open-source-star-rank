@@ -132,6 +132,7 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False, card_manif
         "localization": 0,
         "classification": 0,
     }
+    state = None
     state_path = root / "state" / "candidates.json"
     if state_path.exists():
         state = read_json(state_path)
@@ -140,6 +141,12 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False, card_manif
             raise SchemaValidationError("候选状态 candidate_count 与数组长度不一致")
         if len({item["repository_id"] for item in state["candidates"]}) != len(state["candidates"]):
             raise SchemaValidationError("候选状态包含重复 repository_id")
+        if state.get('schema_version') == '1.3.0':
+            directory_map = {item['repository_id']: item for item in state['directory']}
+            if len(directory_map) != len(state['directory']) or any(directory_map.get(item['repository_id']) != item for item in state['candidates']):
+                raise SchemaValidationError('发现状态重复或不包含完整观察成员')
+            if state['candidate_count'] > state['observation_capacity']:
+                raise SchemaValidationError('观察成员超过配置容量')
         counts["state"] += 1
 
     snapshot_dir = root / "snapshots"
@@ -247,6 +254,55 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False, card_manif
         if repositories.get("schema_version") == "1.3.0":
             validate_lifecycle_metadata(repositories["repositories"], repositories_path)
         counts["repositories"] = 1
+        directory_path = public_dir / 'directory.json'
+        if state and state.get('schema_version') == '1.3.0' and not directory_path.is_file():
+            raise SchemaValidationError('新版本状态缺少发现目录')
+        if directory_path.is_file():
+            directory = read_json(directory_path)
+            validate_payload('directory', directory, schema_dir)
+            directory_map = {item['repository_id']: item for item in directory['repositories']}
+            records = directory['observations']
+            if (len(directory_map) != len(directory['repositories'])
+                or directory['repository_count'] != len(directory_map)
+                or directory['observation_count'] != repositories['candidate_count']
+                or len(records) != directory['observation_count']
+                or {item['repository_id'] for item in records} != repository_ids
+                or directory['updated_at'] != repositories['updated_at']
+                or any(directory_map.get(item['repository_id']) != item for item in repositories['repositories'])):
+                raise SchemaValidationError('发现目录与观察目录的成员、计数或批次不一致')
+            validate_lifecycle_metadata(directory['repositories'], directory_path)
+            policy = directory['policy']
+            if (not 1 <= policy['capacity'] <= 2000 or directory['observation_count'] > policy['capacity']
+                or policy['directory_limit'] != 5000 or policy['protection_days'] != 30
+                or policy['daily_admission_limit'] != max(1, policy['capacity'] // 20)):
+                raise SchemaValidationError('观察策略不符合容量及保护规则')
+            observed_date = timestamp(directory['updated_at']).astimezone(ZoneInfo('Asia/Shanghai')).date()
+            for record in records:
+                started = dt.date.fromisoformat(record['started_on'])
+                last = dt.date.fromisoformat(record['last_valid_snapshot_on']) if record['last_valid_snapshot_on'] else None
+                if (started > observed_date or (last and last > observed_date)
+                    or dt.date.fromisoformat(record['protected_until']) != started + dt.timedelta(days=30)):
+                    raise SchemaValidationError('观察保护期或有效采样日期不合法')
+            expected_coverage = {'queued_count': len(directory_map) - len(records)}
+            for days in (1, 7, 30):
+                expected_coverage[f'comparable_{days}d_count'] = sum(
+                    item['last_valid_snapshot_on'] == observed_date.isoformat()
+                    and (observed_date - dt.date.fromisoformat(item['started_on'])).days >= days
+                    for item in records)
+            if directory['coverage'] != expected_coverage:
+                raise SchemaValidationError('连续观察覆盖统计与成员日期不一致')
+            for days in (1, 7, 30):
+                evidenced = sum(all(point['stars_gained'] is not None
+                                    for point in directory_map[item['repository_id']]['history_30d'][-days:])
+                               for item in records)
+                if expected_coverage[f'comparable_{days}d_count'] != evidenced:
+                    raise SchemaValidationError('连续观察覆盖缺少对应项目历史证据')
+            if state and state.get('schema_version') == '1.3.0':
+                if (state['updated_at'] != directory['updated_at'] or state['observation_capacity'] != policy['capacity']
+                    or {item['repository_id'] for item in state['directory']} != set(directory_map)
+                    or state['observations'] != records):
+                    raise SchemaValidationError('发现目录与内部状态批次不一致')
+            counts['directory'] = 1
         language_index = read_json(language_index_path)
         validate_payload("language_index", language_index, schema_dir)
         language_slugs = [item["slug"] for item in language_index["languages"]]
@@ -585,7 +641,7 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False, card_manif
     if localization_path.exists():
         localization = read_json(localization_path)
         validate_payload("localization", localization, schema_dir)
-        ranked_repositories = discover_ranked_repositories(public_dir)
+        ranked_repositories = discover_ranked_repositories(public_dir, source_scope="catalog-v1" if localization["schema_version"] == "1.1.0" else "ranked-v1")
         entries = localization["repositories"]
         repository_ids = [item["repository_id"] for item in entries]
         if repository_ids != sorted(set(repository_ids)):
@@ -628,7 +684,9 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False, card_manif
                 raise SchemaValidationError(f"项目分类索引与固定词表不一致：{field}")
         if classification_repositories["taxonomy_version"] != taxonomy["taxonomy_version"]:
             raise SchemaValidationError("项目分类仓库目录词表版本不一致")
-        sources = build_classification_sources(public_dir)
+        if classification_index["schema_version"] != classification_repositories["schema_version"]:
+            raise SchemaValidationError("分类索引与项目来源范围版本不一致")
+        sources = build_classification_sources(public_dir, source_scope="catalog-v1" if classification_index["schema_version"] == "1.1.0" else "ranked-v1")
         entries = classification_repositories["repositories"]
         repository_ids = [item["repository_id"] for item in entries]
         if repository_ids != sorted(set(repository_ids)):
@@ -671,6 +729,8 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False, card_manif
         "event-daily.schema.json",
         "event-live.schema.json",
     ]
+    if (public_dir / 'directory.json').is_file():
+        required_schema_files.append('directory.schema.json')
     if pool_dir.exists():
         required_schema_files.append("event-category-pool.schema.json")
     if alltime_board_path.exists():

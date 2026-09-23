@@ -1,0 +1,31 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "open-source-star-rank-operations",
+  "main": "src/index.mjs",
+  "compatibility_date": "2026-09-21",
+  "workers_dev": true,
+  "triggers": {
+    "crons": [
+      "*/15 * * * *"
+    ]
+  },
+  "vars": {
+    "GITHUB_REPOSITORY": "728792899-create/open-source-star-rank",
+    "SOURCE_BRANCH": "main",
+    "SITE_INDEX": "https://728792899-create.github.io/open-source-star-rank/data/index.json",
+    "AUTO_RECOVERY": "false",
+    "ISSUE_ALERTS": "false",
+    "BACKUP_MODE": "disabled"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "STATE_DB",
+      "database_name": "open-source-star-rank-operations",
+      "database_id": "3384eede-7d38-4965-bd43-55261ab696e3",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

@@ -5,6 +5,7 @@ type FavoriteChoice = 'github' | 'local' | 'cancel';
 
 const storageKey = 'star-rank-github-session-v1';
 const browserProofKey = 'star-rank-oauth-proof-v1';
+const favoriteIntentKey = 'star-rank-favorite-intent-v1';
 let sessionVersion = 0;
 let expiryTimer: ReturnType<typeof setTimeout> | undefined;
 const apiBase = document.documentElement.dataset.authApiUrl?.replace(/\/$/u, '') ?? '';
@@ -68,28 +69,33 @@ const request = async (path: string, init: RequestInit = {}, requiresSession = t
   return response;
 };
 
-const errorMessage = async (response: Response) => {
-  const payload = await response.json().catch(() => ({})) as { error?: string };
+const errorMessage = async (response: Response) => messageForError((await response.json().catch(() => ({})) as { error?: string }).error, response.status);
+const messageForError = (error: string | undefined, status: number) => {
   const messages: Record<string, string> = {
     authentication_required: '登录已过期，请重新登录。',
     github_session_expired: 'GitHub 授权已过期，请重新登录。',
     github_permission_or_rate_limit: 'GitHub 权限不足或请求额度已用尽。请确认应用拥有 Starring 读写权限。',
+    github_permission_denied: 'GitHub 权限不足，请确认应用拥有 Starring 读写权限。',
+    github_rate_limit: 'GitHub 请求额度已用尽，请稍后重试。',
+    github_api_error: 'GitHub 暂时不可用，请稍后重试。',
     repository_not_found: '仓库不存在或当前账号无权访问。',
     invalid_or_expired_handoff: '登录回传已过期，请重新发起登录。',
   };
-  return messages[payload.error ?? ''] ?? `请求失败（HTTP ${response.status}）`;
+  return messages[error ?? ''] ?? `请求失败（HTTP ${status}）`;
 };
 
 const currentReturnTo = () => `${window.location.pathname}${window.location.search}${window.location.hash}`;
 
-const login = async (returnTo = currentReturnTo()) => {
+const login = async (returnTo = currentReturnTo(), favorite?: string) => {
+  window.sessionStorage.removeItem(favoriteIntentKey);
+  if (favorite && !/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/u.test(favorite)) throw new Error('无效的 GitHub 仓库名');
   if (!apiBase) throw new Error('GitHub 登录同步尚未配置');
   const bytes = crypto.getRandomValues(new Uint8Array(32));
   const encode = (value: Uint8Array) => btoa(String.fromCharCode(...value)).replaceAll('+', '-').replaceAll('/', '_').replace(/=+$/u, '');
   const verifier = encode(bytes);
   const challenge = encode(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier))));
   // Only the hash leaves this tab until the one-time handoff is redeemed.
-  window.sessionStorage.setItem(browserProofKey, JSON.stringify({ verifier, expiresAt: Date.now() + 10 * 60_000 }));
+  window.sessionStorage.setItem(browserProofKey, JSON.stringify({ verifier, favorite, expiresAt: Date.now() + 10 * 60_000 }));
   window.location.assign(`${apiBase}/auth/login?return_to=${encodeURIComponent(returnTo)}&browser_challenge=${challenge}`);
 };
 
@@ -114,7 +120,7 @@ const loadSession = async () => {
 
 const exchangeHandoff = async (handoff: string) => {
   await initialize;
-  let proof: { verifier?: string; expiresAt?: number } | null = null;
+  let proof: { verifier?: string; expiresAt?: number; favorite?: string } | null = null;
   try { proof = JSON.parse(window.sessionStorage.getItem(browserProofKey) || 'null'); } catch {}
   if (!proof?.verifier || !/^[A-Za-z0-9_-]{43}$/u.test(proof.verifier) || !proof.expiresAt || proof.expiresAt <= Date.now()) {
     throw new Error('登录回传不属于当前标签页或已过期，请重新发起登录。');
@@ -125,17 +131,20 @@ const exchangeHandoff = async (handoff: string) => {
   }, false);
   if (!response.ok) throw new Error(await errorMessage(response));
   const payload = await response.json() as { session_token: string; expires_in: number; return_to: string };
-  if (version !== sessionVersion) throw new Error('登录状态已改变，请重新发起登录。');
+  if (version !== sessionVersion || JSON.parse(window.sessionStorage.getItem(browserProofKey) || 'null')?.verifier !== proof.verifier) throw new Error('登录状态已改变，请重新发起登录。');
   saveSession(payload.session_token, payload.expires_in);
   window.sessionStorage.removeItem(browserProofKey);
   await loadSession();
+  if (proof.favorite && state.authenticated && readSession()?.token === payload.session_token) {
+    window.sessionStorage.setItem(favoriteIntentKey, JSON.stringify({ fullName: proof.favorite, token: payload.session_token, expiresAt: Date.now() + 10 * 60_000 }));
+  }
   publishState();
   return payload.return_to;
 };
 
 const logout = async () => {
   const pending = readSession() ? request('/auth/logout', { method: 'POST' }).catch(() => null) : Promise.resolve(undefined);
-  try { window.sessionStorage.removeItem(browserProofKey); } catch {}
+  try { window.sessionStorage.removeItem(browserProofKey); window.sessionStorage.removeItem(favoriteIntentKey); } catch {}
   invalidateSession();
   const version = sessionVersion;
   const response = await pending;
@@ -151,32 +160,62 @@ const splitName = (fullName: string) => {
   return `${encodeURIComponent(owner)}/${encodeURIComponent(repository)}`;
 };
 
-const starStatus = async (fullName: string) => {
-  const response = await request(`/api/star/${splitName(fullName)}`);
-  if (!response.ok) throw new Error(await errorMessage(response));
-  return (await response.json() as { starred: boolean }).starred;
+const consumeFavoriteIntent = (fullName: string) => {
+  try {
+    const intent = JSON.parse(window.sessionStorage.getItem(favoriteIntentKey) || 'null');
+    if (!intent) return false;
+    if (intent.token !== readSession()?.token || intent.expiresAt <= Date.now()) {
+      window.sessionStorage.removeItem(favoriteIntentKey);
+      return false;
+    }
+    if (intent.fullName !== fullName) return false;
+    window.sessionStorage.removeItem(favoriteIntentKey);
+    return true;
+  } catch { return false; }
 };
 
-const setStar = async (fullName: string, starred: boolean) => {
-  const response = await request(`/api/star/${splitName(fullName)}`, { method: starred ? 'PUT' : 'DELETE' });
+const starRequest = async (fullName: string, init: RequestInit = {}) => {
+  const version = sessionVersion;
+  const response = await request(`/api/star/${splitName(fullName)}`, init);
   if (!response.ok) throw new Error(await errorMessage(response));
-  return (await response.json() as { starred: boolean }).starred;
+  const payload = await response.json() as { starred: boolean };
+  if (version !== sessionVersion) throw new Error('登录状态已改变，请重试。');
+  return payload.starred;
 };
+const starStatus = (fullName: string) => starRequest(fullName);
+const setStar = (fullName: string, starred: boolean) => starRequest(fullName, { method: starred ? 'PUT' : 'DELETE' });
 
 const syncFavorites = async (fullNames: string[], onProgress?: (completed: number, total: number) => void) => {
   const unique = [...new Set(fullNames.filter((item) => /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/u.test(item)))];
-  let completed = 0;
+  const token = readSession()?.token;
+  const version = sessionVersion;
+  const succeeded: string[] = [];
   const failed: string[] = [];
+  let stopped: string | undefined;
   for (let offset = 0; offset < unique.length; offset += 25) {
+    if (sessionVersion !== version || readSession()?.token !== token) throw new Error('登录状态已改变，请重新确认同步结果。');
     const chunk = unique.slice(offset, offset + 25);
-    const response = await request('/api/stars/sync', { method: 'POST', body: JSON.stringify({ repositories: chunk }) });
-    if (!response.ok) throw new Error(await errorMessage(response));
-    const payload = await response.json() as { results: Array<{ full_name: string; starred: boolean }> };
-    failed.push(...payload.results.filter((item) => !item.starred).map((item) => item.full_name));
-    completed += chunk.length;
-    onProgress?.(completed, unique.length);
+    let response: Response;
+    try {
+      response = await request('/api/stars/sync', { method: 'POST', body: JSON.stringify({ repositories: chunk }) });
+    } catch (error) {
+      if (sessionVersion !== version || readSession()?.token !== token) throw new Error('登录状态已改变，请重新确认同步结果。');
+      stopped = error instanceof Error ? error.message : '网络中断，请重试。';
+      break;
+    }
+    const payload = await response.json().catch(() => ({})) as { error?: string; results?: Array<{ full_name: string; starred: boolean }> };
+    if (sessionVersion !== version && !(response.status === 401 && !readSession())) throw new Error('登录状态已改变，请重新确认同步结果。');
+    const results = (Array.isArray(payload.results) ? payload.results : []).filter((item) => chunk.includes(item.full_name));
+    succeeded.push(...results.filter((item) => item.starred).map((item) => item.full_name));
+    failed.push(...results.filter((item) => !item.starred).map((item) => item.full_name));
+    if (readSession()?.token === token && results.some((item) => item.starred)) window.dispatchEvent(new CustomEvent('starrankstarssynced', { detail: { fullNames: results.filter((item) => item.starred).map((item) => item.full_name) } }));
+    onProgress?.(succeeded.length + failed.length, unique.length);
+    if (!response.ok || results.length !== chunk.length) {
+      stopped = response.ok ? '部分同步结果未返回，请重新检查。' : messageForError(payload.error, response.status);
+      break;
+    }
   }
-  return { total: unique.length, succeeded: unique.length - failed.length, failed };
+  return { total: unique.length, succeeded: succeeded.length, failed, unattempted: unique.filter((name) => !succeeded.includes(name) && !failed.includes(name)), stopped };
 };
 
 const chooseFavoriteMode = () => new Promise<FavoriteChoice>((resolve) => {
@@ -250,7 +289,7 @@ const initialize = (async () => {
 })();
 
 const api = {
-  get state() { return state; }, initialize, refreshSession, login, logout, exchangeHandoff, starStatus, setStar, syncFavorites, chooseFavoriteMode,
+  get state() { return state; }, initialize, refreshSession, login, logout, exchangeHandoff, starStatus, setStar, syncFavorites, chooseFavoriteMode, consumeFavoriteIntent,
 };
 (window as Window & { starRankAuth?: typeof api }).starRankAuth = api;
 
@@ -268,8 +307,8 @@ document.querySelector('[data-sync-favorites]')?.addEventListener('click', async
   const status = document.querySelector('[data-sync-status]');
   try {
     const result = await syncFavorites(names, (completed, total) => { if (status) status.textContent = `正在同步 ${completed} / ${total}…`; });
-    if (status) status.textContent = result.failed.length
-      ? `已同步 ${result.succeeded} 个，${result.failed.length} 个失败。`
+    if (status) status.textContent = result.stopped || result.failed.length
+      ? `已同步 ${result.succeeded} 个，${result.failed.length} 个失败，${result.unattempted.length} 个未确认。${result.stopped ?? ''}`
       : `已将 ${result.succeeded} 个收藏同步到 GitHub。`;
   } catch (error) {
     if (status) status.textContent = error instanceof Error ? error.message : '同步失败，请稍后重试。';

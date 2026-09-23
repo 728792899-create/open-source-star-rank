@@ -1,16 +1,15 @@
 ---
 import type {
-  DailyRanking, EventCategoryPoolEntry, EventDailyRanking, EventLiveRanking, EventRankingEntry, EventRankingIndex, LanguageRanking,
+  DailyRanking, EventCategoryPoolEntry, EventDailyRanking, EventLiveRanking, EventRankingIndex, LanguageRanking,
   PeriodRanking, RankingEntry, RankingIndex,
 } from '../types';
 import type { FacetRanking } from '../lib/facet-rankings';
 import { withBase } from '../lib/paths';
 import { readClassificationIndex, readClassificationRepositories, readLocalizationCatalog } from '../lib/data';
 import { classificationLabels, classificationMap } from '../lib/classification';
-import { localizedRepositoryContent } from '../lib/localization';
-import { repositoryAgeLabel, repositoryDate, repositoryOwner } from '../lib/repository-lifecycle';
-import FreshnessStatus from './FreshnessStatus.astro';
-import UpdateCountdown from './UpdateCountdown.astro';
+import RankingRow from './RankingRow.astro';
+import RankingTicker from './RankingTicker.astro';
+import RankingPeriods from './RankingPeriods.astro';
 
 interface Props {
   ranking: DailyRanking | LanguageRanking | PeriodRanking | EventDailyRanking | EventLiveRanking | FacetRanking;
@@ -101,11 +100,9 @@ const dateIndex = availableDates.indexOf(ranking.date);
 const newer = dateIndex > 0 ? availableDates[dateIndex - 1] : null;
 const older = dateIndex >= 0 && dateIndex < availableDates.length - 1 ? availableDates[dateIndex + 1] : null;
 const formatNumber = (value: number) => new Intl.NumberFormat('zh-CN').format(value);
-const formatCompact = (value: number) => new Intl.NumberFormat('zh-CN', { notation: 'compact', maximumFractionDigits: 1 }).format(value);
 const formatDate = (value: string) => new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(`${value}T12:00:00+08:00`));
 const formatTime = (value: string) => new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(value));
 const formatBytes = (value: number) => `${(value / 1024 ** 3).toFixed(2)} GiB`;
-const entryGain = (entry: RankingEntry | EventRankingEntry) => 'stars_added' in entry ? entry.stars_added : entry.stars_gained;
 const rankingBasePath = pageBasePath ?? `${routePrefix}/${ranking.date}/`;
 const rankingPath = withBase(rankingPathOverride ?? (page === 1 ? rankingBasePath : `${rankingBasePath}page/${page}/`));
 const rankingJsonPath = withBase(rankingJsonPathOverride ?? `${dataPrefix}/${ranking.date}.json`);
@@ -141,6 +138,8 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
 <main
   id="main-content"
   data-ranking
+  data-ranking-view
+  data-ranking-navigation={!isEvent && !isFacet && !languageName ? '' : undefined}
   data-avatar-fallback={withBase('/assets/ui/star.svg')}
   data-ranking-mode={mode}
   data-daily-path={rankingPath}
@@ -160,36 +159,43 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
   data-ranking-limit="500"
   class="shell ranking-page"
 >
-  <nav class="ranking-mode-switcher" aria-label="榜单口径">
+  {alternateHref && alternateLabel && <nav class="ranking-mode-switcher" aria-label="榜单口径">
     <strong>{switcherLabelOverride ?? (isLive ? '今日实时新增榜' : isEvent ? '昨日完整新增榜' : periodDays ? `${periodDays} 日净增榜` : '昨日净增榜')}</strong>
     {alternateHref && alternateLabel && <a href={withBase(alternateHref)}>{alternateLabel} →</a>}
-  </nav>
-  {fallbackNotice && <p class="pipeline-fallback" role="status">{fallbackNotice}</p>}
+  </nav>}
   <header class="ranking-summary" aria-labelledby="ranking-title">
     <div>
-      <p class="workspace-discovery">发现下一个值得用的开源项目</p>
-      <p class="workspace-subtitle">用真实趋势，找到适合你的工具。</p>
-      <p class="eyebrow">{sectionEyebrow} · 统计日 {formatDate(ranking.date)} · {updateFrequency}</p>
       <h1 id="ranking-title">{sectionTitle}</h1>
 
     </div>
-    <img class="workspace-hero-art" src={withBase('/assets/ui/hero-star-320.webp')} srcset={`${withBase('/assets/ui/hero-star-320.webp')} 320w, ${withBase('/assets/ui/hero-star-640.webp')} 640w`} sizes="240px" width="240" height="160" alt="" />
+    <div class="ranking-summary-meta">
     <time class="ranking-date-chip" datetime={ranking.date} aria-label={`榜单日期 ${ranking.date}`}>
-      <span>{isLive ? 'LIVE' : isLatest ? 'LATEST' : 'ARCHIVE'}</span>
+      <span>{isLive ? '实时截至' : isLatest ? '统计日' : '历史统计日'}</span>
       <strong>{ranking.date}</strong>
-      <small>UTC+8</small>
     </time>
+    {fallbackNotice && <details class="ranking-history-note">
+      <summary>历史榜 · <span class="history-note-closed">查看说明</span><span class="history-note-open">收起说明</span></summary>
+      <div class="ranking-history-panel">
+        <strong>为什么显示历史榜？</strong>
+        <p>{fallbackNotice}</p>
+        <a href={withBase('/status/')}>查看采样状态 →</a>
+      </div>
+    </details>}
+    </div>
   </header>
 
-  {archived ? <p class="fallback-notice" data-archive-notice>历史归档：事件分类榜已停止更新。以下数据日期为 {ranking.date}。<a href={withBase(alternateHref ?? '/')}>查看当前净增榜筛选结果 →</a></p> : <div class="data-update-strip">
-    <FreshnessStatus updatedAt={isLive ? eventRanking!.generated_at : ranking.window_end} thresholdHours={isLive ? 2 : index.freshness_threshold_hours} compact />
-    <UpdateCountdown
-      nextAt={nextUpdateAt}
-      updatedAt={isLive ? eventRanking!.generated_at : index.updated_at}
-      indexPath={updateIndexPath}
-      label={isLive ? '下次实时榜刷新' : '下次榜单更新'}
-    />
-  </div>}
+  {archived ? <p class="fallback-notice" data-archive-notice>历史归档：事件分类榜已停止更新。以下数据日期为 {ranking.date}。<a href={withBase(alternateHref ?? '/')}>查看当前净增榜筛选结果 →</a></p> : <RankingTicker
+    updatedAt={isLive ? eventRanking!.generated_at : ranking.window_end}
+    thresholdHours={isLive ? 2 : index.freshness_threshold_hours}
+    nextAt={nextUpdateAt}
+    indexUpdatedAt={isLive ? eventRanking!.generated_at : index.updated_at}
+    indexPath={updateIndexPath}
+    label={isLive ? '下次实时榜刷新' : '下次榜单更新'}
+    notes={[
+      `统计日 ${formatDate(ranking.date)} · ${updateFrequency}`,
+      `${isFacet ? '来源池' : isEvent ? '观测仓库' : '观测候选池'} ${formatNumber(facetRanking?.pool_size ?? eventRanking?.source_metrics.observed_repository_count ?? snapshotRanking?.candidate_count ?? 0)} 项 · 本榜 ${totalEntries} 项 · 非 GitHub 全量收录`,
+    ]}
+  /> }
   {isLive && <script is:inline define:vars={{ liveDate: ranking.date }}>
     (() => {
       const parts = new Intl.DateTimeFormat('en-US', {
@@ -211,7 +217,7 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
 
   <details class="workspace-coverage">
     <summary>{isFacet ? `来源池 ${formatNumber(facetRanking!.pool_size)} 项` : isEvent ? `观测到 ${formatNumber(eventRanking!.source_metrics.observed_repository_count)} 个仓库` : `观测候选池 ${formatNumber(snapshotRanking!.candidate_count)} 个项目`} · 上榜 {totalEntries} 项 <span>统计口径与采样详情</span></summary>
-    <p class="ranking-summary-copy"><strong>{headline}</strong><span>{heroCopy}</span></p>
+    <p class="ranking-summary-copy"><small>{sectionEyebrow}</small><strong>{headline}</strong><span>{heroCopy}</span></p>
   {isFacet ? <section class="metrics" aria-label="榜单统计">
     <div><span>上榜项目</span><strong>{facetRanking!.entries.length}</strong><small>本分类进入前 100</small></div>
     <div><span>本类新增合计</span><strong>{formatNumber(facetRanking!.total_gain)}</strong><small>当日唯一加星用户合计</small></div>
@@ -283,12 +289,7 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
       </div>}
     </div>
 
-    <nav class="workspace-periods" aria-label="查看不同时间范围">
-      <a href={withBase('/daily/')} aria-current={!periodDays && !isEvent && !isFacet ? 'page' : undefined}>昨日</a>
-      <a href={withBase('/period/7d/')} aria-current={periodDays === 7 ? 'page' : undefined}>7 日</a>
-      <a href={withBase('/period/30d/')} aria-current={periodDays === 30 ? 'page' : undefined}>30 日</a>
-      <a href={withBase('/all-time/')}>累计 Star</a>
-    </nav>
+    <RankingPeriods active={isEvent || isFacet ? null : periodDays ?? 1} />
     </div>
     <div class="filters" role="search">
       <label class="filter-search">
@@ -353,95 +354,7 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
         <span role="columnheader">操作</span>
       </div>
       <div class="table-body" data-ranking-body>
-        {pageEntries.map((entry) => {
-          const gained = entryGain(entry);
-          const content = localizedRepositoryContent(localization, entry.repository_id, entry.full_name, entry.description);
-          const classification = classifications.get(entry.repository_id);
-          const categoryLabel = classification ? labels.categories.get(classification.primary_category) : null;
-          const projectTypeLabel = classification ? labels.projectTypes.get(classification.project_type) : null;
-          const useCaseLabels = classification?.use_cases.map((id) => labels.useCases.get(id)).filter(Boolean) as string[] | undefined;
-          const searchText = `${entry.full_name} ${entry.description ?? ''} ${content.displayName} ${content.description ?? ''} ${categoryLabel ?? ''} ${projectTypeLabel ?? ''} ${useCaseLabels?.join(' ') ?? ''}`;
-          const movement = isFacet ? '' : entry.rank_change === null ? '新上榜' : entry.rank_change > 0 ? `↑${entry.rank_change}` : entry.rank_change < 0 ? `↓${Math.abs(entry.rank_change)}` : '—';
-          const movementClass = isFacet ? 'flat' : entry.rank_change === null ? 'new' : entry.rank_change > 0 ? 'up' : entry.rank_change < 0 ? 'down' : 'flat';
-          return (
-            <div
-              id={`repo-${entry.repository_id}`}
-              class="ranking-row"
-              role="row"
-              data-ranking-row
-              data-search-text={searchText.toLocaleLowerCase()}
-              data-language={entry.language ?? ''}
-              data-category={classification?.primary_category ?? ''}
-              data-project-type={classification?.project_type ?? ''}
-              data-scenarios={classification?.use_cases.join(',') ?? ''}
-              data-rank={entry.rank}
-              data-source-rank={entry.rank}
-            >
-              <strong
-                class:list={['rank-cell', movementClass]}
-                role="cell"
-                data-movement={movement}
-                aria-label={isFacet ? `分类内排名 ${entry.rank}` : `排名 ${entry.rank}，变化 ${movement}`}
-              ><span class="rank-number">{String(entry.rank).padStart(2, '0')}</span><small class="source-rank" hidden>总榜 #{entry.rank}</small></strong>
-              <div class="project-cell" role="cell">
-                <img class="workspace-project-avatar" src={entry.owner_avatar_url?.startsWith('https://avatars.githubusercontent.com/') ? entry.owner_avatar_url : withBase('/assets/ui/star.svg')} alt="" width="46" height="46" loading="lazy" decoding="async" />
-                <div class="project-copy">
-                  {content.localized ? <>
-                    <a class="project-link" data-content-language="zh" href={withBase(`/repo/${entry.repository_id}/`)}>{content.displayName}</a>
-                    <a class="project-link" data-content-language="original" href={withBase(`/repo/${entry.repository_id}/`)}>{entry.full_name}</a>
-                    <span class="project-source-row" data-content-language="zh">
-                      <span class="project-source-name">{entry.full_name}</span>
-                      <span class="translation-badge" title={content.provenance === 'manual' ? '人工校订中文内容' : 'GitHub Models 生成的中文内容'}>{content.provenance === 'manual' ? '人工校订' : 'AI 译'}</span>
-                    </span>
-                    <p>
-                      <span data-content-language="zh">{content.description || 'GitHub 未提供项目描述。'}</span>
-                      <span data-content-language="original">{entry.description || 'No description provided.'}</span>
-                    </p>
-                  </> : <>
-                    <a class="project-link" href={withBase(`/repo/${entry.repository_id}/`)}>{entry.full_name}</a>
-                    <span class="project-source-row"><span class="translation-pending">中文待生成</span></span>
-                    <p>{entry.description || 'No description provided.'}</p>
-                  </>}
-                  {classification ? <div class="classification-tags" aria-label="项目分类">
-                    <span class="primary-category-tag">{categoryLabel}</span>
-                    <span>{projectTypeLabel}</span>
-                    {useCaseLabels?.slice(0, 2).map((label) => <span>{label}</span>)}
-                  </div> : <span class="classification-pending">分类待生成</span>}
-                  <p class="project-lifecycle">
-                    <span>作者 {repositoryOwner(entry.full_name)}</span>
-                    <span>{entry.created_at ? `创建 ${repositoryDate(entry.created_at)}` : '创建时间待补充'}</span>
-                    <span>{entry.pushed_at ? `最近推送 ${repositoryDate(entry.pushed_at)}` : '更新日期待补充'}</span>
-                    <span>{repositoryAgeLabel(entry.created_at)}</span>
-                  </p>
-                </div>
-                <a class="github-link" href={entry.html_url} target="_blank" rel="noreferrer" aria-label={`在 GitHub 打开 ${entry.full_name}`}>GitHub ↗</a>
-
-              </div>
-              <div class="language-cell" role="cell">{entry.language || 'Other'}</div>
-              <div
-                class="trend-cell"
-                role="cell"
-                aria-label={`最近七日${isEvent ? '新增' : '净增'}：${entry.trend_7d.map((value) => value ?? '无数据').join('、')}`}
-                data-trend-values={JSON.stringify(entry.trend_7d)}
-              ><canvas width="96" height="40" aria-hidden="true"></canvas></div>
-              <div class:list={['stars-cell', 'numeric', { negative: gained < 0 }]} role="cell" data-mobile-label={`总 Star / ${gainLabel}`}>
-                {formatCompact(entry.stars_total)} · {gained >= 0 ? '+' : ''}{formatNumber(gained)}
-              </div>
-              <div class="workspace-project-actions" role="cell">
-                <a class="workspace-project-action" href={withBase(`/repo/${entry.repository_id}/`)}>查看项目 →</a>
-                <button
-                  class="share-project"
-                  type="button"
-                  data-share-project
-                  data-share-name-zh={content.displayName}
-                  data-share-name-original={entry.full_name}
-                  data-share-rank={entry.rank}
-                  aria-label={`分享 ${entry.full_name} 的第 ${entry.rank} 名`}
-                >分享</button>
-              </div>
-            </div>
-          );
-        })}
+        {pageEntries.map((entry) => <RankingRow localization={localization} classifications={classifications} labels={labels} entry={entry} isFacet={isFacet} isEvent={isEvent} gainLabel={gainLabel} />)}
       </div>
     </div>
     {totalPages > 1 && <nav class="ranking-pagination" data-static-pagination aria-label="榜单分页">
@@ -470,434 +383,3 @@ const updateIndexPath = isLive ? '/data/events/live.json' : isEvent || isFacet ?
     <a href={withBase('/methodology/')}>完整口径 →</a>
   </aside>
 </main>
-
-<script>
-  import { matchesEntry, clampResultPage } from '../scripts/filter-utils.mjs';
-  import { filteredRanking, metadataMaps } from '../scripts/ranking-explorer.mjs';
-
-  const root = document.querySelector('[data-ranking]');
-  if (root instanceof HTMLElement) {
-    const initializeRanking = () => {
-      if (root.dataset.rankingEnhanced === 'true') return;
-      root.dataset.rankingEnhanced = 'true';
-      const search = document.querySelector('[data-search]');
-      const language = root.querySelector('[data-language]');
-      const category = root.querySelector('[data-category]');
-      const projectType = root.querySelector('[data-project-type]');
-      const scenario = root.querySelector('[data-scenario]');
-      const advancedFilters = root.querySelector('[data-advanced-filters]');
-      const advancedFilterSummary = root.querySelector('[data-advanced-filter-summary]');
-      const visibleCount = root.querySelector('[data-visible-count]');
-      const poolCount = root.querySelector('[data-pool-count]');
-      const emptyState = root.querySelector('[data-empty-state]');
-      const filterStatus = root.querySelector('[data-filter-status]');
-      const retryFilters = root.querySelector('[data-retry-filters]');
-      const activeFilters = root.querySelector('[data-active-filters]');
-      const activeFilterCopy = root.querySelector('[data-active-filter-copy]');
-      const actionStatus = root.querySelector('[data-action-status]');
-      const body = root.querySelector('[data-ranking-body]');
-      const staticPagination = root.querySelector('[data-static-pagination]');
-      const filterPagination = root.querySelector('[data-filter-pagination]');
-      const rankingDate = root.dataset.rankingDate ?? '';
-      const fixedLanguage = root.dataset.fixedLanguage ?? '';
-      const resultPageSize = Number(root.dataset.pageSize || 100);
-      const staticMarkup = body?.innerHTML ?? '';
-      const staticCount = root.querySelectorAll('[data-ranking-row]').length;
-      const parameters = new URLSearchParams(window.location.search);
-      let resultPage = Math.max(1, Number(parameters.get('result_page') || 1) || 1);
-      const restore = (element: Element | null, value: string) => {
-        if (element instanceof HTMLInputElement || element instanceof HTMLSelectElement) element.value = value;
-      };
-      restore(search, parameters.get('q') ?? '');
-      restore(language, fixedLanguage || parameters.get('language') || '');
-      restore(category, parameters.get('category') ?? '');
-      restore(projectType, parameters.get('type') ?? '');
-      restore(scenario, parameters.get('scenario') ?? '');
-      if (advancedFilters instanceof HTMLDetailsElement) {
-        const restoreAdvanced = [parameters.get('language'), parameters.get('category'), parameters.get('type'), parameters.get('scenario')].some(Boolean);
-        advancedFilters.open = restoreAdvanced || !window.matchMedia('(max-width: 680px)').matches;
-      }
-
-      const json = async (url: string | undefined, optional = false) => {
-        if (!url) return null;
-        const response = await fetch(url, { cache: 'force-cache' });
-        if (!response.ok) {
-          if (optional && response.status === 404) return null;
-          throw new Error(`HTTP ${response.status}`);
-        }
-        return response.json();
-      };
-      let resourcesPromise: Promise<any> | null = null;
-      const resources = () => {
-        if (resourcesPromise) return resourcesPromise;
-        resourcesPromise = Promise.all([
-          json(root.dataset.explorationPath),
-          json(root.dataset.previousExplorationPath, true),
-          json(root.dataset.localizationPath),
-          json(root.dataset.classificationPath),
-          json(root.dataset.taxonomyPath),
-        ]).then(([current, previous, localization, classifications, taxonomy]) => ({
-          current: current?.entries ?? [], previous: previous?.entries ?? [],
-          maps: metadataMaps(localization, classifications, taxonomy),
-        })).catch(error => { resourcesPromise = null; throw error; });
-        return resourcesPromise;
-      };
-
-      const filters = () => ({
-        query: search instanceof HTMLInputElement ? search.value.trim() : '',
-        language: fixedLanguage || (language instanceof HTMLSelectElement ? language.value : ''),
-        category: category instanceof HTMLSelectElement ? category.value : '',
-        projectType: projectType instanceof HTMLSelectElement ? projectType.value : '',
-        scenario: scenario instanceof HTMLSelectElement ? scenario.value : '',
-      });
-      const explicitFilterActive = (value: ReturnType<typeof filters>) => Boolean(
-        value.query || (!fixedLanguage && value.language) || value.category || value.projectType || value.scenario,
-      );
-      const syncUrl = (value: ReturnType<typeof filters>) => {
-        const next = new URL(window.location.href);
-        const sync = (key: string, selected: string) => selected ? next.searchParams.set(key, selected) : next.searchParams.delete(key);
-        sync('q', value.query);
-        sync('language', fixedLanguage ? '' : value.language);
-        sync('category', value.category);
-        sync('type', value.projectType);
-        sync('scenario', value.scenario);
-        explicitFilterActive(value) && resultPage > 1
-          ? next.searchParams.set('result_page', String(resultPage))
-          : next.searchParams.delete('result_page');
-        window.history.replaceState({}, '', next);
-      };
-      const updateSummary = (value: ReturnType<typeof filters>) => {
-        const count = [!fixedLanguage && value.language, value.category, value.projectType, value.scenario].filter(Boolean).length;
-        if (advancedFilterSummary) advancedFilterSummary.textContent = count ? `${count} 项已启用` : '未启用';
-        const label = (control: Element | null, selected: string) => control instanceof HTMLSelectElement
-          ? control.selectedOptions[0]?.textContent?.trim() || selected
-          : selected;
-        const selected = [
-          value.query ? `搜索：${value.query}` : '',
-          !fixedLanguage && value.language ? label(language, value.language) : '',
-          value.category ? label(category, value.category) : '',
-          value.projectType ? label(projectType, value.projectType) : '',
-          value.scenario ? label(scenario, value.scenario) : '',
-        ].filter(Boolean);
-        if (activeFilters instanceof HTMLElement) activeFilters.hidden = selected.length === 0;
-        if (activeFilterCopy) activeFilterCopy.textContent = selected.length ? `当前条件：${selected.join(' × ')}` : '';
-      };
-      const element = (tag: string, className?: string, text?: string) => {
-        const node = document.createElement(tag);
-        if (className) node.className = className;
-        if (text !== undefined) node.textContent = text;
-        return node;
-      };
-      const compact = (value: number) => new Intl.NumberFormat('zh-CN', { notation: 'compact', maximumFractionDigits: 1 }).format(value);
-      const number = (value: number) => new Intl.NumberFormat('zh-CN').format(value);
-      const movement = (value: number | null) => value === null ? ['新入选', 'new'] : value > 0 ? [`↑${value}`, 'up'] : value < 0 ? [`↓${Math.abs(value)}`, 'down'] : ['—', 'flat'];
-      const contentLanguage = () => document.documentElement.dataset.projectLanguage === 'original' ? 'original' : 'zh';
-      const lifecycleDate = (value: string | null | undefined) => {
-        if (!value) return null;
-        const date = new Date(value);
-        if (Number.isNaN(date.getTime())) return null;
-        return new Intl.DateTimeFormat('zh-CN', {
-          timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit',
-        }).format(date);
-      };
-      const lifecycleAge = (value: string | null | undefined) => {
-        if (!value) return '发布天数待补充';
-        const date = new Date(value);
-        if (Number.isNaN(date.getTime())) return '发布天数待补充';
-        const key = (item: Date) => new Intl.DateTimeFormat('en-CA', {
-          timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit',
-        }).format(item);
-        const days = Math.max(0, Math.floor((new Date(`${key(new Date())}T00:00:00+08:00`).getTime()
-          - new Date(`${key(date)}T00:00:00+08:00`).getTime()) / 86_400_000));
-        return days === 0 ? '今天发布' : `已发布 ${number(days)} 天`;
-      };
-
-      const renderFilterPagination = (available: number, onSelect: (page: number) => void) => {
-        if (!(filterPagination instanceof HTMLElement)) return;
-        const pages = Math.ceil(available / resultPageSize);
-        resultPage = Math.min(Math.max(1, resultPage), Math.max(1, pages));
-        filterPagination.hidden = pages <= 1;
-        filterPagination.replaceChildren();
-        if (pages <= 1) return;
-        const add = (label: string, target: number, current = false) => {
-          if (current) {
-            const active = element('strong', '', label);
-            active.setAttribute('aria-current', 'page');
-            filterPagination.append(active);
-            return;
-          }
-          const button = element('button', '', label) as HTMLButtonElement;
-          button.type = 'button';
-          button.addEventListener('click', () => onSelect(target));
-          filterPagination.append(button);
-        };
-        add('首页', 1, resultPage === 1);
-        if (resultPage > 1) add('← 上一页', resultPage - 1);
-        for (let target = 1; target <= pages; target += 1) add(String(target), target, target === resultPage);
-        if (resultPage < pages) add('下一页 →', resultPage + 1);
-      };
-
-      const renderRow = (entry: any, maps: any) => {
-        const classification = maps.classified.get(Number(entry.repository_id));
-        const localization = maps.localized.get(Number(entry.repository_id));
-        const categoryLabel = classification ? maps.labels.categories.get(classification.primary_category) : null;
-        const typeLabel = classification ? maps.labels.projectTypes.get(classification.project_type) : null;
-        const scenarioLabels = (classification?.use_cases ?? []).map((item: string) => maps.labels.useCases.get(item)).filter(Boolean);
-        const [movementText, movementClass] = movement(entry.filtered_rank_change);
-        const row = element('div', 'ranking-row');
-        row.id = `repo-${entry.repository_id}`;
-        row.setAttribute('role', 'row');
-        row.dataset.rankingRow = '';
-        row.dataset.rank = String(entry.filtered_rank);
-        row.dataset.sourceRank = String(entry.source_rank);
-        row.dataset.language = entry.language ?? '';
-        row.dataset.category = classification?.primary_category ?? '';
-        row.dataset.projectType = classification?.project_type ?? '';
-        row.dataset.scenarios = (classification?.use_cases ?? []).join(',');
-
-        const rank = element('strong', `rank-cell ${movementClass}`);
-        rank.setAttribute('role', 'cell');
-        rank.dataset.movement = movementText;
-        rank.setAttribute('aria-label', `筛选排名 ${entry.filtered_rank}，总榜排名 ${entry.source_rank}，变化 ${movementText}`);
-        rank.append(element('span', 'rank-number', String(entry.filtered_rank).padStart(2, '0')));
-        rank.append(element('small', 'source-rank', `总榜 #${entry.source_rank}`));
-        row.append(rank);
-
-        const project = element('div', 'project-cell');
-        project.setAttribute('role', 'cell');
-        const copy = element('div', 'project-copy');
-        const profileUrl = `${root.dataset.repositoryBase}${entry.repository_id}/`;
-        const link = (label: string, languageName?: string) => {
-          const anchor = element('a', 'project-link', label) as HTMLAnchorElement;
-          anchor.href = profileUrl;
-          if (languageName) anchor.dataset.contentLanguage = languageName;
-          return anchor;
-        };
-        if (localization) {
-          copy.append(link(localization.display_name_zh, 'zh'), link(entry.full_name, 'original'));
-          const source = element('span', 'project-source-row');
-          source.dataset.contentLanguage = 'zh';
-          source.append(element('span', 'project-source-name', entry.full_name));
-          source.append(element('span', 'translation-badge', localization.provenance === 'manual' ? '人工校订' : 'AI 译'));
-          copy.append(source);
-          const description = element('p');
-          const zh = element('span', '', localization.description_zh || 'GitHub 未提供项目描述。');
-          zh.dataset.contentLanguage = 'zh';
-          const original = element('span', '', entry.description || 'No description provided.');
-          original.dataset.contentLanguage = 'original';
-          description.append(zh, original);
-          copy.append(description);
-        } else {
-          copy.append(link(entry.full_name));
-          const pending = element('span', 'project-source-row');
-          pending.append(element('span', 'translation-pending', '中文待生成'));
-          copy.append(pending, element('p', '', entry.description || 'No description provided.'));
-        }
-        if (classification) {
-          const tags = element('div', 'classification-tags');
-          tags.setAttribute('aria-label', '项目分类');
-          tags.append(element('span', 'primary-category-tag', categoryLabel ?? classification.primary_category));
-          tags.append(element('span', '', typeLabel ?? classification.project_type));
-          for (const label of scenarioLabels.slice(0, 2)) tags.append(element('span', '', label));
-          copy.append(tags);
-        } else copy.append(element('span', 'classification-pending', '分类待生成'));
-        const lifecycle = element('p', 'project-lifecycle');
-        lifecycle.append(
-          element('span', '', `作者 ${String(entry.full_name).split('/')[0] || entry.full_name}`),
-          element('span', '', entry.created_at ? `创建 ${lifecycleDate(entry.created_at)}` : '创建时间待补充'),
-          element('span', '', entry.pushed_at ? `最近推送 ${lifecycleDate(entry.pushed_at)}` : '更新日期待补充'),
-          element('span', '', lifecycleAge(entry.created_at)),
-        );
-        copy.append(lifecycle);
-        const avatar = element('img', 'workspace-project-avatar') as HTMLImageElement;
-        avatar.src = entry.owner_avatar_url?.startsWith('https://avatars.githubusercontent.com/') ? entry.owner_avatar_url : root.dataset.avatarFallback ?? '';
-        avatar.alt = ''; avatar.width = 46; avatar.height = 46; avatar.loading = 'lazy';
-        project.append(avatar, copy);
-        const github = element('a', 'github-link', 'GitHub ↗') as HTMLAnchorElement;
-        github.href = entry.html_url;
-        github.target = '_blank';
-        github.rel = 'noreferrer';
-        github.setAttribute('aria-label', `在 GitHub 打开 ${entry.full_name}`);
-        project.append(github);
-        const share = element('button', 'share-project', '分享') as HTMLButtonElement;
-        share.type = 'button';
-        share.dataset.shareProject = '';
-        share.dataset.shareNameZh = localization?.display_name_zh ?? entry.full_name;
-        share.dataset.shareNameOriginal = entry.full_name;
-        share.dataset.shareRank = String(entry.filtered_rank);
-        share.setAttribute('aria-label', `分享 ${entry.full_name} 的筛选榜第 ${entry.filtered_rank} 名`);
-
-        row.append(project);
-        const lang = element('div', 'language-cell', entry.language || 'Other');
-        lang.setAttribute('role', 'cell');
-        row.append(lang);
-        const trend = element('div', 'trend-cell');
-        trend.setAttribute('role', 'cell');
-        const trendValues = Array.isArray(entry.trend_7d) ? entry.trend_7d : Array(7).fill(null);
-        trend.setAttribute('aria-label', `最近七日：${trendValues.map((item: number | null) => item ?? '无数据').join('、')}`);
-        trend.dataset.trendValues = JSON.stringify(trendValues);
-        const chart = element('canvas') as HTMLCanvasElement; chart.width = 96; chart.height = 40; chart.setAttribute('aria-hidden', 'true'); trend.append(chart);
-        row.append(trend);
-        const gain = Number(entry[root.dataset.gainField ?? 'stars_gained'] ?? 0);
-        const stars = element('div', `stars-cell numeric${gain < 0 ? ' negative' : ''}`, `${compact(entry.stars_total)} · ${gain >= 0 ? '+' : ''}${number(gain)}`);
-        stars.setAttribute('role', 'cell');
-        stars.dataset.mobileLabel = `总 Star / ${root.dataset.gainLabel ?? '增量'}`;
-        row.append(stars);
-        const action = element('a', 'workspace-project-action', '查看项目 →') as HTMLAnchorElement;
-        action.href = profileUrl;
-        const actions = element('div', 'workspace-project-actions'); actions.setAttribute('role', 'cell'); actions.append(action, share); row.append(actions);
-        return row;
-      };
-
-      let requestId = 0;
-      const applyStaticFallback = (value: ReturnType<typeof filters>) => {
-        let rank = 0;
-        for (const row of root.querySelectorAll('[data-ranking-row]')) {
-          if (!(row instanceof HTMLElement)) continue;
-          const visible = matchesEntry({
-            searchText: row.dataset.searchText ?? '', language: row.dataset.language ?? '',
-            category: row.dataset.category ?? '', projectType: row.dataset.projectType ?? '',
-            scenarios: (row.dataset.scenarios ?? '').split(',').filter(Boolean),
-          }, value.query, value.language, value.category, value.projectType, value.scenario);
-          row.hidden = !visible;
-          if (!visible) continue;
-          rank += 1;
-          const numberNode = row.querySelector('.rank-number');
-          if (numberNode) numberNode.textContent = String(rank).padStart(2, '0');
-          const source = row.querySelector('.source-rank');
-          if (source instanceof HTMLElement) source.hidden = false;
-          if (rank >= 100) break;
-        }
-        if (visibleCount) visibleCount.textContent = String(rank);
-        if (emptyState instanceof HTMLElement) emptyState.hidden = rank !== 0;
-        if (staticPagination instanceof HTMLElement) staticPagination.hidden = true;
-        if (filterPagination instanceof HTMLElement) filterPagination.hidden = true;
-      };
-      const apply = async () => {
-        const value = filters();
-        syncUrl(value);
-        updateSummary(value);
-        const currentRequest = ++requestId;
-        if (retryFilters instanceof HTMLElement) retryFilters.hidden = true;
-        if (!explicitFilterActive(value)) {
-          if (body) body.innerHTML = staticMarkup;
-          if (visibleCount) visibleCount.textContent = String(staticCount);
-          if (poolCount) poolCount.textContent = root.dataset.explorationSize ?? String(staticCount);
-          if (emptyState instanceof HTMLElement) emptyState.hidden = true;
-          if (filterStatus instanceof HTMLElement) filterStatus.hidden = true;
-          if (staticPagination instanceof HTMLElement) staticPagination.hidden = false;
-          if (filterPagination instanceof HTMLElement) filterPagination.hidden = true;
-          return;
-        }
-        if (!root.dataset.explorationPath) {
-          applyStaticFallback(value);
-          if (filterStatus instanceof HTMLElement) {
-            filterStatus.hidden = false;
-            filterStatus.textContent = '该历史日期尚无深度池，当前仅在已发布榜单内筛选。';
-          }
-          return;
-        }
-        if (filterStatus instanceof HTMLElement) {
-          filterStatus.hidden = false;
-          filterStatus.textContent = '正在从深度池生成筛选榜…';
-        }
-        try {
-          const loaded = await resources();
-          if (currentRequest !== requestId) return;
-          const result = filteredRanking(loaded.current, loaded.previous, loaded.maps, value, 500);
-          resultPage = clampResultPage(resultPage, result.available, resultPageSize);
-          const first = (resultPage - 1) * resultPageSize;
-          const pageEntries = result.entries.slice(first, first + resultPageSize);
-          if (body) body.replaceChildren(...pageEntries.map((entry: any) => renderRow(entry, loaded.maps)));
-          if (visibleCount) visibleCount.textContent = String(pageEntries.length);
-          if (poolCount) poolCount.textContent = String(result.total);
-          if (emptyState instanceof HTMLElement) emptyState.hidden = result.total !== 0;
-          if (staticPagination instanceof HTMLElement) staticPagination.hidden = true;
-          renderFilterPagination(result.available, (target) => { resultPage = target; apply(); });
-          syncUrl(value);
-          if (filterStatus instanceof HTMLElement) {
-            filterStatus.hidden = false;
-            filterStatus.textContent = result.total > 500
-              ? `符合条件 ${result.total} 项，按当前榜单口径展示重新排名后的前 500。`
-              : `符合条件 ${result.total} 项，已全部纳入重新排名。`;
-          }
-        } catch {
-          if (currentRequest !== requestId) return;
-          if (body) body.innerHTML = staticMarkup;
-          applyStaticFallback(value);
-          if (filterStatus instanceof HTMLElement) {
-            filterStatus.hidden = false;
-            filterStatus.textContent = '深度池暂时不可用，已回退到公开榜单内筛选。';
-            if (retryFilters instanceof HTMLElement) retryFilters.hidden = false;
-          }
-        }
-      };
-      retryFilters?.addEventListener('click', () => apply());
-      for (const control of [search, language, category, projectType, scenario]) {
-        control?.addEventListener('input', () => { resultPage = 1; apply(); });
-        control?.addEventListener('change', () => { resultPage = 1; apply(); });
-      }
-      root.addEventListener('click', (event) => {
-        if (!(event.target instanceof Element) || !event.target.closest('[data-clear-filters]')) return;
-        if (search instanceof HTMLInputElement) search.value = '';
-        if (language instanceof HTMLSelectElement && !fixedLanguage) language.value = '';
-        if (category instanceof HTMLSelectElement) category.value = '';
-        if (projectType instanceof HTMLSelectElement) projectType.value = '';
-        if (scenario instanceof HTMLSelectElement) scenario.value = '';
-        resultPage = 1;
-        if (advancedFilters instanceof HTMLDetailsElement && window.matchMedia('(max-width: 680px)').matches) advancedFilters.open = false;
-        apply();
-      });
-
-      const copyText = async (value: string) => {
-        if (!navigator.clipboard?.writeText) throw new Error('Clipboard API unavailable');
-        await navigator.clipboard.writeText(value);
-      };
-      const setStatus = (message: string) => { if (actionStatus) actionStatus.textContent = message; };
-      const rankingUrl = () => {
-        const url = new URL(window.location.href);
-        url.hash = '';
-        return url.toString();
-      };
-      root.addEventListener('click', async (event) => {
-        if (!(event.target instanceof Element)) return;
-        if (event.target.closest('[data-copy-ranking]')) {
-          try { await copyText(rankingUrl()); setStatus('榜单链接已复制'); }
-          catch { setStatus('复制失败，请从地址栏复制'); }
-          return;
-        }
-        const button = event.target.closest('[data-share-project]');
-        if (!(button instanceof HTMLButtonElement)) return;
-        const name = contentLanguage() === 'original'
-          ? button.dataset.shareNameOriginal ?? 'GitHub 项目'
-          : button.dataset.shareNameZh ?? button.dataset.shareNameOriginal ?? 'GitHub 项目';
-        const rank = button.dataset.shareRank ?? '';
-        const row = button.closest('[data-ranking-row]');
-        const url = `${rankingUrl()}#${row?.id ?? ''}`;
-        const shareData = { title: `${name}｜开源星榜第 ${rank} 名`, text: `${name} 在 ${rankingDate} 开源星榜位列第 ${rank} 名。`, url };
-        try {
-          if (navigator.share) { await navigator.share(shareData); setStatus('分享面板已打开'); }
-          else { await copyText(url); setStatus(`${name} 的排名链接已复制`); }
-        } catch (error) {
-          if (error instanceof DOMException && error.name === 'AbortError') return;
-          try { await copyText(url); setStatus(`${name} 的排名链接已复制`); }
-          catch { setStatus('分享失败，请稍后重试'); }
-        }
-      });
-      apply();
-    };
-    root.addEventListener('change', (event) => {
-      if (event.target instanceof HTMLSelectElement && event.target.matches('[data-date-selector]') && event.target.value) {
-        window.location.assign(event.target.value);
-      }
-    });
-    initializeRanking();
-  }
-</script>
-
-<script>
-  import { paintTrends } from '../scripts/trend-chart.mjs';
-  paintTrends();
-  const trendBody = document.querySelector('[data-ranking-body]');
-  if (trendBody) new MutationObserver(() => paintTrends(trendBody)).observe(trendBody, { childList: true });
-</script>

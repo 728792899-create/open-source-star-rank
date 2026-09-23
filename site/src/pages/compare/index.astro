@@ -4,10 +4,12 @@ import { withBase } from '../../lib/paths';
 ---
 
 <BaseLayout title="项目对比｜开源星榜" description="对比收集到本地浏览器的开源项目，查看 Star、语言、方向和适用场景。" robots="noindex,follow">
-  <main id="main-content" class="shell compare-page">
+  <main id="main-content" class="shell compare-page" data-project-base={withBase('/repo/')}>
     <p class="eyebrow">Local project workspace</p>
     <h1>项目对比</h1>
     <p class="status-lead">对比列表只保存在当前浏览器，不需要登录，也不会上传使用记录。最多同时对比 4 个项目。</p>
+    <p data-comparison-status role="status">正在核对站点最新快照…</p>
+    <button type="button" data-refresh-comparison>刷新项目数据</button>
     <div class="compare-grid" data-compare-grid></div>
     <div class="compare-empty" data-compare-empty>
       <strong>还没有待对比项目</strong>
@@ -23,6 +25,10 @@ import { withBase } from '../../lib/paths';
   const empty = document.querySelector('[data-compare-empty]');
   const clear = document.querySelector('[data-clear-comparison]');
   const libraryApi = (window as any).starRankLibrary;
+  const refreshButton = document.querySelector('[data-refresh-comparison]');
+  const refreshStatus = document.querySelector('[data-comparison-status]');
+  const projectBase = document.querySelector<HTMLElement>('[data-project-base]')?.dataset.projectBase ?? '';
+  const refreshedIds = new Set<number>();
   const formatNumber = (value: number) => new Intl.NumberFormat('zh-CN').format(value);
   const render = () => {
     if (!(grid instanceof HTMLElement) || !libraryApi) return;
@@ -33,14 +39,16 @@ import { withBase } from '../../lib/paths';
       card.className = 'compare-card';
       const title = document.createElement('h2');
       const link = document.createElement('a');
-      link.href = project.url;
+      link.href = `${projectBase}${Number(project.id)}/`;
       link.textContent = project.name;
       title.append(link);
       const source = document.createElement('p');
       source.textContent = project.fullName;
       const metrics = document.createElement('dl');
       for (const [label, value] of [
-        ['当前 Star', formatNumber(project.stars || 0)], ['主要语言', project.language || 'Other'],
+        [refreshedIds.has(project.id) ? '站点快照 Star' : '本机保存 Star', formatNumber(project.stars || 0)],
+        ['数据日期', project.sourceDate || '旧记录未保存日期'], ['最近提交', project.pushedAt?.slice(0, 10) || '未提供'],
+        ['创建日期', project.createdAt?.slice(0, 10) || '未提供'], ['主要语言', project.language || 'Other'],
         ['项目方向', project.category || '未分类'], ['产品形态', project.type || '未分类'],
         ['适用场景', project.scenarios || '待生成'], ['最近榜单信号', project.signal || '暂无'],
       ]) {
@@ -74,6 +82,43 @@ import { withBase } from '../../lib/paths';
     libraryApi.write(library);
     render();
   });
+  let refreshing = false;
+  const refresh = async () => {
+    if (refreshing || !libraryApi || !projectBase) return;
+    refreshing = true;
+    if (refreshButton instanceof HTMLButtonElement) refreshButton.disabled = true;
+    const projects = libraryApi.read().compare.slice(0, 4);
+    let failed = 0;
+    if (refreshStatus) refreshStatus.textContent = '正在核对站点最新快照…';
+    await Promise.all(projects.map(async (project: { id: number }) => {
+      try {
+        if (!Number.isSafeInteger(project.id) || project.id <= 0) throw new Error('Invalid ID');
+        const response = await fetch(`${projectBase}${project.id}/`, { cache: 'no-cache', signal: AbortSignal.timeout(15000) });
+        if (!response.ok) throw new Error('Unavailable');
+        const document = new DOMParser().parseFromString(await response.text(), 'text/html');
+        const profile = document.querySelector<HTMLElement>('[data-repository-profile]')?.dataset;
+        if (!profile || Number(profile.repositoryId) !== project.id || !Number.isFinite(Number(profile.repositoryStars))) throw new Error('Invalid profile');
+        const next = libraryApi.read();
+        next.compare = next.compare.map((entry: { id: number }) => entry.id === project.id ? {
+          ...entry, name: profile.repositoryName, fullName: profile.repositoryFullName,
+          stars: Number(profile.repositoryStars), language: profile.repositoryLanguage,
+          category: profile.repositoryCategory, type: profile.repositoryType, scenarios: profile.repositoryScenarios,
+          signal: profile.repositorySignal, sourceDate: profile.repositoryDate || null,
+          pushedAt: profile.repositoryPushed || null, createdAt: profile.repositoryCreated || null,
+        } : entry);
+        refreshedIds.add(project.id);
+        libraryApi.write(next);
+      } catch { failed++; refreshedIds.delete(project.id); }
+    }));
+    render();
+    if (refreshStatus) refreshStatus.textContent = !projects.length ? '选择项目后可在这里对比。' : failed
+      ? `${failed} 个项目更新失败，保留本机保存值；请检查日期或稍后重试。`
+      : '已核对站点最新快照。各项目数据日期可能不同，Star 数并非实时查询 GitHub。';
+    refreshing = false;
+    if (refreshButton instanceof HTMLButtonElement) refreshButton.disabled = false;
+  };
+  refreshButton?.addEventListener('click', refresh);
   window.addEventListener('starranklibrarychange', render);
   render();
+  void refresh();
 </script>

@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://728792899-create.github.io/open-source-star-rank/data/schema/directory.schema.json",
+  "title": "Discovered repositories and continuous observation pool",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "updated_at",
+    "timezone",
+    "repository_count",
+    "observation_count",
+    "repositories",
+    "observations",
+    "policy",
+    "coverage"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "timezone": {
+      "const": "Asia/Shanghai"
+    },
+    "repository_count": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5000
+    },
+    "observation_count": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2000
+    },
+    "repositories": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5000,
+      "items": {
+        "$ref": "repositories.schema.json#/$defs/repository"
+      }
+    },
+    "observations": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 2000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "repository_id",
+          "started_on",
+          "protected_until",
+          "last_valid_snapshot_on"
+        ],
+        "properties": {
+          "repository_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "started_on": {
+            "type": "string",
+            "format": "date"
+          },
+          "protected_until": {
+            "type": "string",
+            "format": "date"
+          },
+          "last_valid_snapshot_on": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          }
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capacity",
+        "directory_limit",
+        "protection_days",
+        "daily_admission_limit"
+      ],
+      "properties": {
+        "capacity": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "directory_limit": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "protection_days": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "daily_admission_limit": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "queued_count",
+        "comparable_1d_count",
+        "comparable_7d_count",
+        "comparable_30d_count"
+      ],
+      "properties": {
+        "queued_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "comparable_1d_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "comparable_7d_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "comparable_30d_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

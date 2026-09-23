@@ -140,6 +140,17 @@ export interface RepositoryDetail {
   history_30d: RepositoryHistoryPoint[];
 }
 
+export interface DiscoveryCatalog {
+  schema_version: string;
+  updated_at: string;
+  timezone: string;
+  repository_count: number;
+  observation_count: number;
+  repositories: RepositoryDetail[];
+  observations?: Array<{ repository_id: number; started_on: string; protected_until: string; last_valid_snapshot_on: string | null }>;
+  coverage?: { queued_count: number; comparable_1d_count: number; comparable_7d_count: number; comparable_30d_count: number };
+}
+
 export interface RepositoryCatalog {
   schema_version: string;
   updated_at: string;
@@ -374,7 +385,7 @@ export interface RepositoryLocalization {
 }
 
 export interface LocalizationCatalog {
-  schema_version: '1.0.0';
+  schema_version: '1.0.0' | '1.1.0';
   locale: 'zh-CN';
   generated_at: string | null;
   model: string;
@@ -397,7 +408,7 @@ export interface ClassificationCoverage {
 }
 
 export interface ClassificationIndex {
-  schema_version: '1.0.0';
+  schema_version: '1.0.0' | '1.1.0';
   taxonomy_version: '1.0.0';
   locale: 'zh-CN';
   generated_at: string | null;
@@ -422,7 +433,7 @@ export interface RepositoryClassification {
 }
 
 export interface ClassificationRepositoryCatalog {
-  schema_version: '1.0.0';
+  schema_version: '1.0.0' | '1.1.0';
   taxonomy_version: '1.0.0';
   generated_at: string | null;
   repositories: RepositoryClassification[];
@@ -435,6 +446,7 @@ export interface EventHistoryPoint {
 }
 
 export interface RepositoryProfile {
+  metadata_date: string | null;
   repository_id: number;
   full_name: string;
   description: string | null;

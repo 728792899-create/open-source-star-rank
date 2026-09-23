@@ -12,6 +12,7 @@ on:
         options:
           - validate
           - backfill_publish
+          - migrate_scope
           - deploy_existing
         default: validate
 
@@ -54,7 +55,7 @@ jobs:
           mode="$REQUESTED_MODE"
           if [[ "${{ github.event_name }}" == "schedule" ]]; then mode="backfill_publish"; fi
           case "$mode" in
-            validate) should_deploy=false ;;
+            validate|migrate_scope) should_deploy=false ;;
             backfill_publish|deploy_existing) should_deploy=true ;;
             *) echo "Unsupported mode: $mode" >&2; exit 2 ;;
           esac
@@ -67,6 +68,9 @@ jobs:
           python-version: "3.12"
           cache: pip
           cache-dependency-path: requirements-star-rank.txt
+
+      - name: Install Chinese fonts for social cards
+        run: sudo apt-get update && sudo apt-get install --yes fonts-noto-cjk
 
       - name: Set up Node.js
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
@@ -90,10 +94,20 @@ jobs:
           echo "STAR_RANK_DATA_DIR=$data_dir" >> "$GITHUB_ENV"
 
       - name: Validate localization and classification code
-        run: python -m unittest tests.test_localize_repositories tests.test_classify_repositories -v
+        run: python -m unittest tests.test_localize_repositories tests.test_classify_repositories tests.test_enrichment_scope_migration -v
+
+      - name: Migrate enrichment scope in a validated offline copy
+        if: steps.mode.outputs.run_mode == 'migrate_scope'
+        shell: bash
+        run: |
+          set -euo pipefail
+          migration_output="$RUNNER_TEMP/star-rank-enrichment-migration"
+          python -m tools.migrate_enrichment_scope --data-dir "$STAR_RANK_DATA_DIR" --output-dir "$migration_output" | tee "$RUNNER_TEMP/enrichment-migration.json"
+          rsync -a --exclude=.git "$migration_output/" "$STAR_RANK_DATA_DIR/"
+          cat "$RUNNER_TEMP/enrichment-migration.json" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Refresh Chinese project content
-        if: steps.mode.outputs.run_mode != 'deploy_existing'
+        if: steps.mode.outputs.run_mode != 'deploy_existing' && steps.mode.outputs.run_mode != 'migrate_scope'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LOCALIZATION_MODEL: ${{ vars.LOCALIZATION_MODEL || 'openai/gpt-4.1-mini' }}
@@ -109,7 +123,7 @@ jobs:
           python -m tools.localize_repositories "${args[@]}"
 
       - name: Refresh project classifications
-        if: steps.mode.outputs.run_mode != 'deploy_existing'
+        if: steps.mode.outputs.run_mode != 'deploy_existing' && steps.mode.outputs.run_mode != 'migrate_scope'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CLASSIFICATION_MODEL: ${{ vars.CLASSIFICATION_MODEL || 'openai/gpt-4.1-mini' }}
@@ -125,6 +139,26 @@ jobs:
           if [[ "${{ steps.mode.outputs.run_mode }}" == "validate" ]]; then args+=(--offline); fi
           python -m tools.classify_repositories "${args[@]}"
 
+      - name: Record validated business health
+        if: steps.mode.outputs.run_mode != 'deploy_existing'
+        run: python -m tools.operations_report --data-dir "$STAR_RANK_DATA_DIR"
+
+      - name: Commit validated localization data
+        if: steps.mode.outputs.run_mode == 'backfill_publish' || steps.mode.outputs.run_mode == 'migrate_scope'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git -C "$STAR_RANK_DATA_DIR" config user.name "github-actions[bot]"
+          git -C "$STAR_RANK_DATA_DIR" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C "$STAR_RANK_DATA_DIR" add state/localization state/classification public/i18n public/classification public/schema public/operations.json
+          if [[ -d "$STAR_RANK_DATA_DIR/state/enrichment-queue" ]]; then
+            git -C "$STAR_RANK_DATA_DIR" add state/enrichment-queue
+          fi
+          if ! git -C "$STAR_RANK_DATA_DIR" diff --cached --quiet; then
+            git -C "$STAR_RANK_DATA_DIR" commit -m "Update Chinese project content and classification"
+            git -C "$STAR_RANK_DATA_DIR" push origin HEAD:star-rank-data
+          fi
+
       - name: Validate data and build site
         run: |
           python tools/validate_star_rank_data.py --data-dir "$STAR_RANK_DATA_DIR" --sync-schemas
@@ -132,19 +166,6 @@ jobs:
           STAR_RANK_DATA_DIR="$STAR_RANK_DATA_DIR/public" npm run check --prefix site
           STAR_RANK_DATA_DIR="$STAR_RANK_DATA_DIR/public" npm run build --prefix site
           npm run validate-build --prefix site
-
-      - name: Commit validated localization data
-        if: steps.mode.outputs.run_mode == 'backfill_publish'
-        shell: bash
-        run: |
-          set -euo pipefail
-          git -C "$STAR_RANK_DATA_DIR" config user.name "github-actions[bot]"
-          git -C "$STAR_RANK_DATA_DIR" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git -C "$STAR_RANK_DATA_DIR" add state/localization state/classification public/i18n public/classification public/schema
-          if ! git -C "$STAR_RANK_DATA_DIR" diff --cached --quiet; then
-            git -C "$STAR_RANK_DATA_DIR" commit -m "Update Chinese project content and classification"
-            git -C "$STAR_RANK_DATA_DIR" push origin HEAD:star-rank-data
-          fi
 
       - name: Upload GitHub Pages artifact
         if: steps.mode.outputs.should_deploy == 'true'

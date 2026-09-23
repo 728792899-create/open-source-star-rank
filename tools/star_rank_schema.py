@@ -14,6 +14,7 @@ from referencing import Registry, Resource
 
 SCHEMA_FILES = {
     "state": "state.schema.json",
+    "directory": "directory.schema.json",
     "snapshot": "snapshot.schema.json",
     "index": "index.schema.json",
     "daily": "daily.schema.json",

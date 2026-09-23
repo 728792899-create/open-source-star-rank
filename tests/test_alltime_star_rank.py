@@ -12,6 +12,7 @@ from tools.alltime_star_rank import (
     build_alltime_entries,
     build_alltime_outputs,
     run_alltime_update,
+    _search_pages,
 )
 from tools.star_rank import DataIntegrityError
 from tools.star_rank_schema import validate_payload
@@ -172,6 +173,60 @@ class AllTimeStarRankTests(unittest.TestCase):
             with self.assertRaises(DataIntegrityError):
                 run_alltime_update(client, data_dir=root, generated_at=self.now, minimum_stars=-1)
             self.assertFalse((root / "public" / "alltime").exists())
+
+    def test_duplicate_page_does_not_backfill_a_missing_high_rank_or_replace_publication(self) -> None:
+        class DriftingClient(FakeSearchClient):
+            def search_repository_page(self, query, **kwargs):
+                payload = super().search_repository_page(query, **kwargs)
+                if kwargs['page'] == 2:
+                    payload['items'][0] = self.items[99]  # loses rank 101, total stays 1100
+                return payload
+        client = DriftingClient([search_item(i + 1, 500_000 - i) for i in range(1100)])
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            output = root / 'public' / 'alltime'
+            output.mkdir(parents=True)
+            for name in ('top-1000.json', 'index.json'):
+                (output / name).write_bytes(b'previous valid publication')
+            with self.assertRaisesRegex(DataIntegrityError, '重复'):
+                run_alltime_update(client, data_dir=root, generated_at=self.now)
+            for name in ('top-1000.json', 'index.json'):
+                self.assertEqual((output / name).read_bytes(), b'previous valid publication')
+        self.assertEqual([page for _, _, page, _ in client.queries], [1, 2, 1, 2])
+
+    def test_short_pages_are_rejected_including_final_partial_page(self) -> None:
+        for damaged_page in (1, 2, 3):
+            with self.subTest(page=damaged_page):
+                class TruncatedClient(FakeSearchClient):
+                    def search_repository_page(self, query, **kwargs):
+                        payload = super().search_repository_page(query, **kwargs)
+                        if kwargs['page'] == damaged_page:
+                            payload['items'].pop()
+                        return payload
+                client = TruncatedClient([search_item(i + 1, 500_000 - i) for i in range(250)])
+                with self.assertRaisesRegex(DataIntegrityError, '数量'):
+                    _search_pages(client, 'stars:>=10000', max_pages=10)
+
+    def test_clean_retry_restarts_at_page_one_and_does_not_mix_results(self) -> None:
+        class RecoveringClient(FakeSearchClient):
+            def search_repository_page(self, query, **kwargs):
+                payload = super().search_repository_page(query, **kwargs)
+                if len(self.queries) == 2:
+                    payload['items'][0] = self.items[99]
+                return payload
+        client = RecoveringClient([search_item(i + 1, 500_000 - i) for i in range(150)])
+        items, total = _search_pages(client, 'stars:>=10000', max_pages=10)
+        self.assertEqual(total, 150)
+        self.assertEqual([item['id'] for item in items], list(range(1, 151)))
+        self.assertEqual([page for _, _, page, _ in client.queries], [1, 2, 1, 2])
+
+    def test_search_count_boundaries_and_search_cap(self) -> None:
+        for count in (0, 1, 100, 250, 1000, 1100):
+            with self.subTest(count=count):
+                client = FakeSearchClient([search_item(i + 1, 500_000 - i) for i in range(count)])
+                items, total = _search_pages(client, 'stars:>=10000', max_pages=10)
+                self.assertEqual(total, count)
+                self.assertEqual(len(items), min(count, 1000))
 
 
 if __name__ == "__main__":

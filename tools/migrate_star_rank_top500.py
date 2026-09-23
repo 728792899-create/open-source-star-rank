@@ -145,6 +145,11 @@ def _upgrade_base(
     current: Mapping[str, Any], source_entries: Sequence[Mapping[str, Any]],
     previous: Optional[Mapping[str, Any]], recomputed_at: str,
 ) -> dict[str, Any]:
+    # Rank movement is against the preceding calendar day, never the last
+    # available file across a missing date.
+    previous_date = (dt.date.fromisoformat(current["date"]) - dt.timedelta(days=1)).isoformat()
+    if previous is not None and previous.get("date") != previous_date:
+        previous = None
     entries = _rerank(source_entries, previous)
     return {
         **dict(current),

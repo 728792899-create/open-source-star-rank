@@ -9,6 +9,7 @@ on:
       - "schemas/star-rank/**"
       - "site/**"
       - "auth-worker/**"
+      - "ops-worker/**"
       - "tests/**"
       - "tools/**"
       - "docs/**"
@@ -26,6 +27,7 @@ on:
       - "schemas/star-rank/**"
       - "site/**"
       - "auth-worker/**"
+      - "ops-worker/**"
       - "tests/**"
       - "tools/**"
       - "docs/**"
@@ -59,6 +61,9 @@ jobs:
           cache: pip
           cache-dependency-path: requirements-star-rank.txt
 
+      - name: Install Chinese fonts for social cards
+        run: sudo apt-get update && sudo apt-get install --yes fonts-noto-cjk
+
       - name: Set up Node.js
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
@@ -67,12 +72,14 @@ jobs:
           cache-dependency-path: |
             site/package-lock.json
             auth-worker/package-lock.json
+            ops-worker/package-lock.json
 
       - name: Install dependencies
         run: |
           python -m pip install --requirement requirements-star-rank.txt
           npm ci --prefix site
           npm ci --prefix auth-worker
+          npm ci --prefix ops-worker
 
       - name: Validate collector and repository
         run: |
@@ -88,6 +95,7 @@ jobs:
           STAR_RANK_DATA_DIR="$PWD/tests/fixtures/ready-data" BASE_PATH=/open-source-star-rank npm run build
           npm run validate-build
           npm run test:reproducible
+          npm run validate-build
           npm audit --audit-level=moderate
 
       - name: Validate optional GitHub auth worker
@@ -96,6 +104,15 @@ jobs:
           npm run check
           npm test
           npm run preflight
+          npm audit --audit-level=moderate
+
+      - name: Validate independent operations worker
+        working-directory: ops-worker
+        run: |
+          npm run check
+          npm test
+          npm run preflight
+          npx wrangler deploy --dry-run --outdir /tmp/starrank-ops-build
           npm audit --audit-level=moderate
 
       - name: Install Chromium for interaction tests

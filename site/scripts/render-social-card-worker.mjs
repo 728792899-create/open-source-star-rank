@@ -2,6 +2,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { parentPort, workerData } from 'node:worker_threads';
 import { Resvg } from '@resvg/resvg-js';
 import { cardOutput } from './social-card-inputs.mjs';
+import { fontOptions } from './social-card-font.mjs';
 
 const brandLogo = (await readFile(new URL('../public/assets/brand/kingai-logo.svg', import.meta.url))).toString('base64');
 
@@ -30,12 +31,12 @@ function cardSvg(ranking, label, eventMode = false) {
   </svg>`;
 }
 
-parentPort.on('message', async ({ ranking, label, name, fontFile, eventMode = false }) => {
+parentPort.on('message', async ({ ranking, label, name, font, eventMode = false }) => {
   try {
     const output = cardOutput(workerData.outputRoot, name);
     const rendered = new Resvg(cardSvg(ranking, label, eventMode), {
       fitTo: { mode: 'width', value: 1200 },
-      font: fontFile ? { fontFiles: [fontFile], loadSystemFonts: false, defaultFontFamily: 'sans-serif' } : undefined,
+      font: fontOptions(font),
     }).render();
     await writeFile(output, rendered.asPng());
     parentPort.postMessage({ ok: true });
