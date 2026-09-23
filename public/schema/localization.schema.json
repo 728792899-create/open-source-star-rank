@@ -15,7 +15,7 @@
   ],
   "properties": {
     "failed_repository_ids": { "type": "array", "uniqueItems": true, "items": { "type": "integer", "minimum": 1 } },
-    "schema_version": { "const": "1.0.0" },
+    "schema_version": { "enum": ["1.0.0", "1.1.0"] },
     "locale": { "const": "zh-CN" },
     "generated_at": { "type": ["string", "null"], "format": "date-time" },
     "model": { "type": "string", "minLength": 1, "maxLength": 120 },
