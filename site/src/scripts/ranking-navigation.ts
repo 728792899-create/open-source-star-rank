@@ -48,6 +48,12 @@ function scrollToRanking(url: URL, fallbackToTop = true) {
   else if (fallbackToTop) window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
+async function settleAnchorLayout() {
+  await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+  await document.fonts.ready;
+  await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+}
+
 const headSelectors = 'meta[name="description"],meta[name="robots"],meta[property^="og:"],meta[name^="twitter:"],link[rel="canonical"],link[rel="prev"],link[rel="next"],script[type="application/ld+json"]';
 async function navigate(url: URL, historyMode: 'push' | 'pop') {
   const current = document.querySelector('main[data-ranking-navigation]');
@@ -82,6 +88,7 @@ async function navigate(url: URL, historyMode: 'push' | 'pop') {
     });
     rankingLocation.key = url.pathname + url.search;
     await mount();
+    if (url.hash) await settleAnchorLayout();
     if (ticket !== generation || request.signal.aborted) return;
     const active = document.querySelector<HTMLElement>('.workspace-periods [aria-current="page"]');
     active?.focus({ preventScroll: true });
@@ -99,7 +106,11 @@ async function navigate(url: URL, historyMode: 'push' | 'pop') {
 function initialize() {
   const initialUrl = new URL(location.href);
   const initialGeneration = generation;
-  void Promise.resolve(mount()).then(() => {
+  void Promise.resolve(mount()).then(async () => {
+    if (!initialUrl.hash) return;
+    // Reload's native scroll restoration runs after DOMContentLoaded.
+    if (document.readyState !== 'complete') await new Promise<void>(resolve => window.addEventListener('load', () => resolve(), { once: true }));
+    await settleAnchorLayout();
     if (generation === initialGeneration && location.href === initialUrl.href && initialUrl.hash) scrollToRanking(initialUrl, false);
   });
   window.addEventListener('projectlanguagechange', () => {
@@ -115,6 +126,17 @@ function initialize() {
     for (const key of filterKeys) { const value = current.searchParams.get(key); if (value) url.searchParams.set(key, value); }
     event.preventDefault();
     if (url.href !== location.href || pending) void navigate(url, 'push');
+  });
+  window.addEventListener('hashchange', () => {
+    const url = new URL(location.href);
+    const ticket = generation;
+    // History can restore a position captured during a smooth anchor scroll.
+    // Run after that restoration, without fetching or remounting the same page.
+    requestAnimationFrame(() => {
+      if (!pending && ticket === generation && location.href === url.href && rankingLocation.key === url.pathname + url.search) {
+        scrollToRanking(url, false);
+      }
+    });
   });
   window.addEventListener('popstate', () => {
     const url = new URL(location.href);

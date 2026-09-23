@@ -159,10 +159,13 @@ test('hash navigation preserves anchors after pagination and across period histo
   await page.evaluate(id => { location.hash = id; }, id);
   await expect(page).toHaveURL(new RegExp(`#${id}$`));
   await expect.poll(() => page.locator(`#${id}`).evaluate(el => { const top = el.getBoundingClientRect().top; return top >= 0 && el.getBoundingClientRect().bottom <= innerHeight; })).toBe(true);
-  await page.goBack({ waitUntil: 'commit' });
-  await expect(page).toHaveURL(/result_page=2&display=original$/);
-  await page.goForward({ waitUntil: 'commit' });
-  await expect.poll(() => page.locator(`#${id}`).evaluate(el => { const top = el.getBoundingClientRect().top; return top >= 0 && el.getBoundingClientRect().bottom <= innerHeight; })).toBe(true);
+  for (let traversal = 0; traversal < 3; traversal++) {
+    await page.goBack({ waitUntil: 'commit' });
+    await expect(page).toHaveURL(/result_page=2&display=original$/);
+    await page.goForward({ waitUntil: 'commit' });
+    await expect(page).toHaveURL(new RegExp(`#${id}$`));
+    await expect.poll(() => page.locator(`#${id}`).evaluate(el => { const top = el.getBoundingClientRect().top; return top >= 0 && el.getBoundingClientRect().bottom <= innerHeight; })).toBe(true);
+  }
   expect(navigations).toBe(0);
   await periods(page).getByRole('link', { name: /30 日/ }).click();
   await expect(page).toHaveURL(/period\/30d\/$/);
