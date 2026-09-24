@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-24T05:30:48.875680Z",
+  "generated_at": "2026-09-24T10:39:32.532132Z",
   "model": "deepseek-flash",
-  "prompt_version": "repository-localization-v1",
+  "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 3966,
-    "localized_count": 3958,
-    "pending_count": 8,
-    "failed_count": 8,
-    "coverage_ratio": 0.997983
+    "localized_count": 3966,
+    "pending_count": 0,
+    "failed_count": 0,
+    "coverage_ratio": 1.0
   },
   "repositories": [
     {
@@ -9175,6 +9175,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 145553672,
+      "source_full_name": "fighting41love/funNLP",
+      "source_hash": "9eced01fa66c7b9449f063735d15fa2651fe2df42caabb29152a071c338edce9",
+      "display_name_zh": "funNLP｜中文自然语言处理资源与工具集",
+      "description_zh": "汇集中文自然语言处理相关的语料、数据集、词库与工具，涵盖敏感词、语言检测、信息抽取、词向量、知识图谱、语音识别及文本生成等方向。",
+      "generated_at": "2026-09-24T10:39:32.532132Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 145670155,
       "source_full_name": "open-mmlab/mmcv",
       "source_hash": "cb946598115a115ee6174eb23ce57aac173c27071fb2cac9a7a4b7973c85cf81",
@@ -13126,6 +13135,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 326174741,
+      "source_full_name": "ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code",
+      "source_hash": "1c5cac937e7439ab4ce75eb3b0dbafd3e7ad130986c5d1cd385c62f3ce3eb39c",
+      "display_name_zh": "500 个 AI 机器学习深度学习计算机视觉 NLP 项目代码合集",
+      "description_zh": "收录 500 个 AI、机器学习、深度学习、计算机视觉与 NLP 项目，并附带代码实现。",
+      "generated_at": "2026-09-24T10:39:32.532132Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 326360794,
       "source_full_name": "RikkaApps/Sui",
       "source_hash": "9c84fa88f89a4739ba12f2bf718511dce01ee853f75841ff32ac65b45cfd4329",
@@ -13322,6 +13340,15 @@
       "description_zh": "自托管的购物清单和食谱管理应用，支持添加购物项和创建食谱。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 335780269,
+      "source_full_name": "anthophilee/SpiderFoot-",
+      "source_hash": "5eff55c2c41c2c218e5d59e93f15e13fd2419b01473ff7538fd2966ee8077792",
+      "display_name_zh": "SpiderFoot｜开源情报信息收集工具",
+      "description_zh": "SpiderFoot 是一款开源情报工具，可用于红队演练或渗透测试中的目标侦察，也可用于防御性地收集自身或组织在互联网上暴露的信息，支持对 IP、域名、邮箱、用户名、比特币地址等实体进行扫描。",
+      "generated_at": "2026-09-24T10:39:32.532132Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 336895436,
@@ -15484,6 +15511,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 510463319,
+      "source_full_name": "pocketbase/js-sdk",
+      "source_hash": "ad1d07e6306a0485591c8d8952c00e3121b349f143b454c10b8a78cbda8de495",
+      "display_name_zh": "PocketBase JavaScript SDK 开发工具包",
+      "description_zh": "PocketBase 的 JavaScript SDK 开发工具包。",
+      "generated_at": "2026-09-24T10:39:32.532132Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 510607652,
       "source_full_name": "pocketbase/pocketbase",
       "source_hash": "798ae48fc6fde92b35d428efb413aace0fb98de1c42176ccbf161c080196fa54",
@@ -17381,6 +17417,15 @@
       "description_zh": "Flowise 提供可视化界面，帮助用户构建 AI 代理。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 623657072,
+      "source_full_name": "sandialabs/Advanced-Data-Analysis-in-Inertial-Confinement-Fusion-and-High-Energy-Density-Physics",
+      "source_hash": "80d98e88809ccd2ef535e99deae4ea0ecd5a22d416072028b799d4e996b41690",
+      "display_name_zh": "惯性约束聚变与高能量密度物理中的高级数据分析",
+      "description_zh": "用于 HEDP 和 ICF 中贝叶斯推断与机器学习的示例代码。",
+      "generated_at": "2026-09-24T10:39:32.532132Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 624994625,
@@ -19685,6 +19730,15 @@
       "description_zh": "支持从创意到论文、演示、网站、书籍和知识库的增强Markdown编辑器。",
       "generated_at": "2026-07-18T00:14:53.937273Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 751161649,
+      "source_full_name": "akhirr/Sistem-Informasi-Geografis-Pelaporan-Kerusakan-Jalan-di-Kota-Padangsidimpuan-Berbasis-Website",
+      "source_hash": "8cf39944e8adf71201dcea70343e7a0d89f99438dd63f11b7825a7f9d56c2f38",
+      "display_name_zh": "SIG 道路损坏报告地理信息系统",
+      "description_zh": "一个基于网站的地理信息系统（SIG），用于在 Padangsidimpuan 市报告道路损坏情况。",
+      "generated_at": "2026-09-24T10:39:32.532132Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 751783276,
@@ -22952,6 +23006,15 @@
       "description_zh": "GitHub 官方 MCP 服务器。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 942867788,
+      "source_full_name": "elder-plinius/CL4R1T4S",
+      "source_hash": "4fefa3cf17fea4e0f212d04f2b95cbaf178da4ed18f968203eb45429066a69c3",
+      "display_name_zh": "CL4R1T4S｜泄露的 AI 系统提示词合集",
+      "description_zh": "汇集泄露的 CHATGPT、CLAUDE、GEMINI、GROK、PERPLEXITY、CURSOR、LOVABLE、REPLIT 等 AI 系统提示词，用于 AI 系统透明度研究。",
+      "generated_at": "2026-09-24T10:39:32.532132Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 943134016,
@@ -29081,6 +29144,15 @@
       "description_zh": "针对 TypeScript 和 JavaScript 的代码智能分析工具，支持静态检测未使用代码、代码重复、循环依赖、复杂度热点、架构边界和设计系统偏差。提供可选付费运行时层（Fallow Runtime），基于真实生产流量进行热点路径审查和冷路径删除证据收集。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1184460122,
+      "source_full_name": "andrewwoan/alpha-chads-cozy-cafes",
+      "source_hash": "63e48a11ca7a2e67bb332478560e5dc4c31751ec781342252587d0e5ae5c67e4",
+      "display_name_zh": "alpha-chads-cozy-cafes｜初学者舒适咖啡馆作品集",
+      "description_zh": "面向初学者的舒适咖啡馆主题作品集项目。",
+      "generated_at": "2026-09-24T10:39:32.532132Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1184626912,
@@ -35635,14 +35707,5 @@
       "provenance": "model_api"
     }
   ],
-  "failed_repository_ids": [
-    145553672,
-    326174741,
-    335780269,
-    510463319,
-    623657072,
-    751161649,
-    942867788,
-    1184460122
-  ]
+  "failed_repository_ids": []
 }

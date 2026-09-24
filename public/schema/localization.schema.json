@@ -19,7 +19,7 @@
     "locale": { "const": "zh-CN" },
     "generated_at": { "type": ["string", "null"], "format": "date-time" },
     "model": { "type": "string", "minLength": 1, "maxLength": 120 },
-    "prompt_version": { "const": "repository-localization-v1" },
+    "prompt_version": { "enum": ["repository-localization-v1", "repository-localization-v2"] },
     "coverage": {
       "type": "object",
       "additionalProperties": false,

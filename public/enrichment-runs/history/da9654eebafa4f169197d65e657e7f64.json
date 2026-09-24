@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "id": "da9654eebafa4f169197d65e657e7f64",
+  "kind": "classification",
+  "started_at": "2026-09-24T10:39:37.478399Z",
+  "finished_at": "2026-09-24T10:39:39.970204+00:00",
+  "model": "deepseek-flash",
+  "attempted_projects": 8,
+  "accepted_projects": 8,
+  "failed_projects": 0,
+  "failures": [],
+  "requests": 1,
+  "usage_responses": 1,
+  "unknown_usage_requests": 0,
+  "usage_complete": true,
+  "observed_tokens": {
+    "prompt_tokens": 5956,
+    "completion_tokens": 313,
+    "cache_hit_tokens": 1280,
+    "cache_miss_tokens": 4676
+  },
+  "request_errors": {},
+  "estimated_cost": {
+    "currency": "USD",
+    "min": "0.00089304",
+    "max": "0.00178608"
+  },
+  "pricing": {
+    "source": "https://api-docs.deepseek.com/quick_start/pricing",
+    "verified_on": "2026-09-24",
+    "valid_until": "2026-10-24",
+    "currency": "USD",
+    "cache_hit": [
+      "0.003",
+      "0.006"
+    ],
+    "cache_miss": [
+      "0.15",
+      "0.3"
+    ],
+    "output": [
+      "0.6",
+      "1.2"
+    ]
+  },
+  "pricing_status": "estimated_range",
+  "billing_note": "估算区间并非账单；缺失用量或过期价格不计算费用。"
+}

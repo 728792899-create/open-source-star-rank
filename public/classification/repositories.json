@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "taxonomy_version": "1.0.0",
-  "generated_at": "2026-09-24T05:31:01.797022Z",
+  "generated_at": "2026-09-24T10:39:37.478399Z",
   "repositories": [
     {
       "repository_id": 3314,
@@ -13754,18 +13754,18 @@
     {
       "repository_id": 145553672,
       "source_full_name": "fighting41love/funNLP",
-      "source_hash": "8121df2b880383f8e8072107d49f7fe238a8ca44d2d11c9bfe1725e2610420e7",
+      "source_hash": "63ecd07e044d26acfe9fb57c5bf0966ef24dfe04713db145f1b0f8ca959e9bf7",
       "primary_category": "ai-machine-learning",
-      "project_type": "library-framework",
+      "project_type": "tutorial-resource",
       "use_cases": [
-        "ai-coding",
         "rag-knowledge",
+        "model-training-inference",
         "learning-tutorial",
         "dataset-benchmark"
       ],
       "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-19T04:20:56.637414Z",
-      "provenance": "github_models"
+      "generated_at": "2026-09-24T10:39:37.478399Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 145670155,
@@ -19733,15 +19733,17 @@
     {
       "repository_id": 326174741,
       "source_full_name": "ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code",
-      "source_hash": "6932477fad7b89330c8e80ced82d0836837172542f077313bf41e75a8acaf093",
+      "source_hash": "825817b535e18e524731c547969a5cd78abe3bbdd8c7da9e64f32216ae350c43",
       "primary_category": "ai-machine-learning",
-      "project_type": "other",
+      "project_type": "tutorial-resource",
       "use_cases": [
-        "learning-tutorial"
+        "model-training-inference",
+        "learning-tutorial",
+        "dataset-benchmark"
       ],
       "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-19T07:06:22.118650Z",
-      "provenance": "github_models"
+      "generated_at": "2026-09-24T10:39:37.478399Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 326360794,
@@ -20048,16 +20050,17 @@
     {
       "repository_id": 335780269,
       "source_full_name": "anthophilee/SpiderFoot-",
-      "source_hash": "0bc668e23491d8993e8b3468925fc6913fb1a1baab44b310a1afd6fae8e21efc",
+      "source_hash": "5443fb9fbf8809202c47fd9a44094a2269ad2d9a23bc6ebf3e405fedfeb11afd",
       "primary_category": "security-privacy",
       "project_type": "application",
       "use_cases": [
         "search-scraping",
-        "security-defense"
+        "security-defense",
+        "network-tools"
       ],
       "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-19T07:06:22.118650Z",
-      "provenance": "github_models"
+      "generated_at": "2026-09-24T10:39:37.478399Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 336895436,
@@ -23299,16 +23302,16 @@
     {
       "repository_id": 510463319,
       "source_full_name": "pocketbase/js-sdk",
-      "source_hash": "2bcb2116528c5328e99906950055956fbc3e11cf4ea8bf11fdde9e170624e6a7",
-      "primary_category": "developer-tools",
+      "source_hash": "f34afa24b436c18a241c18e08f5848737b33042c0d48bd5aab7a39f24cf840c8",
+      "primary_category": "web-app-development",
       "project_type": "library-framework",
       "use_cases": [
-        "database-storage",
-        "api-backend"
+        "api-backend",
+        "web-frontend"
       ],
       "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-20T04:33:26.833539Z",
-      "provenance": "github_models"
+      "generated_at": "2026-09-24T10:39:37.478399Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 510607652,
@@ -26191,16 +26194,17 @@
     {
       "repository_id": 623657072,
       "source_full_name": "sandialabs/Advanced-Data-Analysis-in-Inertial-Confinement-Fusion-and-High-Energy-Density-Physics",
-      "source_hash": "33ee4897873895b95a06a9bfda7a84054033a989be49d4af05f99c9216da6313",
+      "source_hash": "107e6761f43d54a1815cf9ba63aa826bdd3b5531eb8f73e27dac5d3730d18541",
       "primary_category": "science-research",
       "project_type": "tutorial-resource",
       "use_cases": [
+        "model-training-inference",
         "learning-tutorial",
         "scientific-research"
       ],
       "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-22T04:12:02.172495Z",
-      "provenance": "github_models"
+      "generated_at": "2026-09-24T10:39:37.478399Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 624994625,
@@ -29707,15 +29711,16 @@
     {
       "repository_id": 751161649,
       "source_full_name": "akhirr/Sistem-Informasi-Geografis-Pelaporan-Kerusakan-Jalan-di-Kota-Padangsidimpuan-Berbasis-Website",
-      "source_hash": "717722a882e8b8583af1493834f2ab932844afc660f16f634667891bdf7c5198",
-      "primary_category": "web-app-development",
+      "source_hash": "c360ade641656f5520febd0d94010c1a00bd143451ef128e6186769d303cb848",
+      "primary_category": "industry-solutions",
       "project_type": "application",
       "use_cases": [
+        "data-analysis-visualization",
         "web-frontend"
       ],
       "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-21T01:04:20.264126Z",
-      "provenance": "github_models"
+      "generated_at": "2026-09-24T10:39:37.478399Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 751783276,
@@ -34640,15 +34645,16 @@
     {
       "repository_id": 942867788,
       "source_full_name": "elder-plinius/CL4R1T4S",
-      "source_hash": "e56340d286ddf72a9bb358cad7c956cbfb810bcdda7f5b2ac130e97984ed3c0b",
-      "primary_category": "other",
-      "project_type": "other",
+      "source_hash": "7e368bb607aa9d42aeb9182acef235393dd66033a6f7cddf026e0bb198f76ac4",
+      "primary_category": "ai-machine-learning",
+      "project_type": "tutorial-resource",
       "use_cases": [
-        "general-tools"
+        "learning-tutorial",
+        "resource-discovery"
       ],
       "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-24T04:00:32.535148Z",
-      "provenance": "github_models"
+      "generated_at": "2026-09-24T10:39:37.478399Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 943134016,
@@ -44027,15 +44033,16 @@
     {
       "repository_id": 1184460122,
       "source_full_name": "andrewwoan/alpha-chads-cozy-cafes",
-      "source_hash": "399fad2d6dcddfce2188245f161eaf591dbfc4cf90073eae608778b15e621591",
-      "primary_category": "other",
-      "project_type": "other",
+      "source_hash": "9a712c6a844e4db615cb67fb1532f2c7bf14c9e5a33f3d5054bf4b4f2c240b73",
+      "primary_category": "web-app-development",
+      "project_type": "application",
       "use_cases": [
-        "general-tools"
+        "web-frontend",
+        "design-ui-ux"
       ],
       "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-21T19:37:54.117571Z",
-      "provenance": "github_models"
+      "generated_at": "2026-09-24T10:39:37.478399Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1184626912,
