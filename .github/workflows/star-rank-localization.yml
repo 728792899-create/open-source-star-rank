@@ -29,7 +29,6 @@ jobs:
     timeout-minutes: 35
     permissions:
       contents: write
-      models: read
     outputs:
       should_deploy: ${{ steps.mode.outputs.should_deploy }}
     env:
@@ -49,11 +48,19 @@ jobs:
         id: mode
         env:
           REQUESTED_MODE: ${{ inputs.mode }}
+          ENRICHMENT_API_URL: ${{ vars.ENRICHMENT_API_URL }}
+          ENRICHMENT_API_KEY: ${{ secrets.ENRICHMENT_API_KEY }}
+          LOCALIZATION_MODEL: ${{ vars.LOCALIZATION_MODEL }}
+          CLASSIFICATION_MODEL: ${{ vars.CLASSIFICATION_MODEL }}
         shell: bash
         run: |
           set -euo pipefail
           mode="$REQUESTED_MODE"
           if [[ "${{ github.event_name }}" == "schedule" ]]; then mode="backfill_publish"; fi
+          if [[ "$mode" == "backfill_publish" ]] && [[ -z "$ENRICHMENT_API_URL" || -z "$ENRICHMENT_API_KEY" || -z "$LOCALIZATION_MODEL" || -z "$CLASSIFICATION_MODEL" ]]; then
+            echo "模型补全等待接口、专用密钥和两个模型 ID；本次仅离线验证，不调用旧服务或发布。" >> "$GITHUB_STEP_SUMMARY"
+            mode=validate
+          fi
           case "$mode" in
             validate|migrate_scope) should_deploy=false ;;
             backfill_publish|deploy_existing) should_deploy=true ;;
@@ -94,7 +101,7 @@ jobs:
           echo "STAR_RANK_DATA_DIR=$data_dir" >> "$GITHUB_ENV"
 
       - name: Validate localization and classification code
-        run: python -m unittest tests.test_localize_repositories tests.test_classify_repositories tests.test_enrichment_scope_migration -v
+        run: python -m unittest tests.test_localize_repositories tests.test_classify_repositories tests.test_enrichment_scope_migration tests.test_model_transport tests.test_enrichment_recovery -v
 
       - name: Migrate enrichment scope in a validated offline copy
         if: steps.mode.outputs.run_mode == 'migrate_scope'
@@ -109,8 +116,9 @@ jobs:
       - name: Refresh Chinese project content
         if: steps.mode.outputs.run_mode != 'deploy_existing' && steps.mode.outputs.run_mode != 'migrate_scope'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LOCALIZATION_MODEL: ${{ vars.LOCALIZATION_MODEL || 'openai/gpt-4.1-mini' }}
+          ENRICHMENT_API_URL: ${{ vars.ENRICHMENT_API_URL }}
+          ENRICHMENT_API_KEY: ${{ secrets.ENRICHMENT_API_KEY }}
+          LOCALIZATION_MODEL: ${{ vars.LOCALIZATION_MODEL }}
           LOCALIZATION_MAX_PROJECTS: ${{ vars.LOCALIZATION_MAX_PROJECTS || '500' }}
         shell: bash
         run: |
@@ -125,8 +133,9 @@ jobs:
       - name: Refresh project classifications
         if: steps.mode.outputs.run_mode != 'deploy_existing' && steps.mode.outputs.run_mode != 'migrate_scope'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CLASSIFICATION_MODEL: ${{ vars.CLASSIFICATION_MODEL || 'openai/gpt-4.1-mini' }}
+          ENRICHMENT_API_URL: ${{ vars.ENRICHMENT_API_URL }}
+          ENRICHMENT_API_KEY: ${{ secrets.ENRICHMENT_API_KEY }}
+          CLASSIFICATION_MODEL: ${{ vars.CLASSIFICATION_MODEL }}
           CLASSIFICATION_MAX_PROJECTS: ${{ vars.CLASSIFICATION_MAX_PROJECTS || '500' }}
         shell: bash
         run: |
@@ -138,6 +147,10 @@ jobs:
           )
           if [[ "${{ steps.mode.outputs.run_mode }}" == "validate" ]]; then args+=(--offline); fi
           python -m tools.classify_repositories "${args[@]}"
+
+      - name: Synchronize schemas and validate before data commit
+        if: steps.mode.outputs.run_mode != 'deploy_existing'
+        run: python tools/validate_star_rank_data.py --data-dir "$STAR_RANK_DATA_DIR" --sync-schemas
 
       - name: Record validated business health
         if: steps.mode.outputs.run_mode != 'deploy_existing'

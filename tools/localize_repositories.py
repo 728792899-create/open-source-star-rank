@@ -17,16 +17,18 @@ from pathlib import Path
 from typing import Any, Callable, Iterable, Mapping, Sequence
 
 try:
+    from tools.model_transport import ModelResponseError, request_entries, runtime_config
     from tools.enrichment_state import failure_state, RetryQueue
     from tools.star_rank_schema import SchemaValidationError, validate_payload
 except ModuleNotFoundError:  # pragma: no cover - direct script execution fallback
+    from model_transport import ModelResponseError, request_entries, runtime_config
     from enrichment_state import failure_state, RetryQueue
     from star_rank_schema import SchemaValidationError, validate_payload
 
 
 DEFAULT_MODEL = "openai/gpt-4.1-mini"
 PROMPT_VERSION = "repository-localization-v1"
-MODELS_ENDPOINT = "https://models.github.ai/inference/chat/completions"
+MODELS_ENDPOINT = ""  # Explicit configuration required; GitHub Models is retired.
 CONTROL_CHARACTERS = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
 CJK_CHARACTER = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]")
 IMPORTANT_TOKEN = re.compile(
@@ -324,9 +326,10 @@ class GitHubModelsClient:
         model: str = DEFAULT_MODEL,
         endpoint: str = MODELS_ENDPOINT,
         timeout: int = 45,
-        opener: Callable[..., Any] = urllib.request.urlopen,
+        opener: Callable[..., Any] | None = None,
         sleeper: Callable[[float], None] = time.sleep,
     ) -> None:
+        self.provenance = "model_api"
         self.token = token
         self.model = model
         self.endpoint = endpoint
@@ -339,6 +342,7 @@ class GitHubModelsClient:
         payload = {
             "model": self.model,
             "temperature": 0,
+            "stream": False,
             "max_tokens": 8000,
             "messages": [
                 {"role": "system", "content": system},
@@ -372,42 +376,12 @@ class GitHubModelsClient:
                 },
             },
         }
-        request = urllib.request.Request(
-            self.endpoint,
-            data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
-            method="POST",
-            headers={
-                "Accept": "application/vnd.github+json",
-                "Authorization": f"Bearer {self.token}",
-                "Content-Type": "application/json",
-                "X-GitHub-Api-Version": "2022-11-28",
-            },
-        )
-        last_error: Exception | None = None
-        for attempt in range(2):
-            try:
-                with self.opener(request, timeout=self.timeout) as response:
-                    body = json.loads(response.read().decode("utf-8"))
-                content = body["choices"][0]["message"]["content"]
-                if not isinstance(content, str):
-                    raise LocalizationError("GitHub Models 返回了非文本 content")
-                decoded = json.loads(content)
-                entries = decoded.get("repositories")
-                if not isinstance(entries, list) or not all(isinstance(item, Mapping) for item in entries):
-                    raise LocalizationError("GitHub Models 返回的 repositories 不是对象数组")
-                return entries
-            except urllib.error.HTTPError as exc:
-                last_error = exc
-                if exc.code in (401, 403, 429):
-                    raise ModelUnavailable(f"GitHub Models HTTP {exc.code}") from exc
-                if exc.code < 500 or attempt == 1:
-                    raise ModelUnavailable(f"GitHub Models HTTP {exc.code}") from exc
-            except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, KeyError, IndexError, TypeError, AttributeError, LocalizationError) as exc:
-                last_error = exc
-                if attempt == 1:
-                    raise ModelUnavailable(f"GitHub Models 响应不可用：{exc}") from exc
-            self.sleeper(float(2**attempt))
-        raise ModelUnavailable(f"GitHub Models 响应不可用：{last_error}")
+        try:
+            return request_entries(self.endpoint, self.token, payload, timeout=self.timeout,
+                                   opener=self.opener, sleeper=self.sleeper)
+        except ModelResponseError as exc:
+            raise ModelUnavailable(str(exc)) from exc
+
 
 
 def chunks(values: Sequence[Any], size: int) -> Iterable[Sequence[Any]]:
@@ -421,6 +395,7 @@ def localize_repositories(
     overrides_file: Path | None = None,
     model: str = DEFAULT_MODEL,
     token: str | None = None,
+    endpoint: str | None = None,
     max_batch_size: int = 20,
     max_projects: int = 200,
     now: dt.datetime | None = None,
@@ -472,9 +447,10 @@ def localize_repositories(
     queue = RetryQueue(root, 'localization', run_at, fingerprints={key: repository_source_hash(source) for key, source in sources.items()})
     attempted = queue.select(pending, max_projects)
     actual_attempted: set[int] = set()
+    model_updated = False
     service_unavailable = False
     failed_ids: set[int] = set()
-    model_client = client or (GitHubModelsClient(token, model=model) if token else None)
+    model_client = client or (GitHubModelsClient(token, model=model, endpoint=endpoint or MODELS_ENDPOINT) if token else None)
     if model_client is not None:
         for batch in chunks(attempted, max_batch_size):
             actual_attempted.update(int(item["repository_id"]) for item in batch)
@@ -502,8 +478,9 @@ def localize_repositories(
                                 by_id[repository_id],
                                 source,
                                 generated_at=run_at,
-                                provenance="github_models",
+                                provenance=getattr(model_client, "provenance", "github_models"),
                             )
+                            model_updated = True
                             validation_errors.pop(repository_id, None)
                         except LocalizationError as exc:
                             invalid[repository_id] = source
@@ -541,7 +518,7 @@ def localize_repositories(
         "schema_version": "1.1.0" if source_scope == "catalog-v1" else "1.0.0",
         "locale": "zh-CN",
         "generated_at": run_at,
-        "model": model,
+        "model": model if model_updated else (previous_catalog or {}).get("model", model),
         "prompt_version": PROMPT_VERSION,
         "coverage": {
             "eligible_count": eligible_count,
@@ -574,20 +551,24 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="为开源星榜生成可缓存的中文项目名称与简介")
     parser.add_argument("--data-dir", type=Path, required=True)
     parser.add_argument("--overrides-file", type=Path, default=Path("data/localization-overrides.zh-CN.json"))
-    parser.add_argument("--model", default=os.environ.get("LOCALIZATION_MODEL", DEFAULT_MODEL))
+    parser.add_argument("--model", default=os.environ.get("LOCALIZATION_MODEL"))
     parser.add_argument("--max-batch-size", type=int, default=20)
     parser.add_argument("--max-projects", type=int, default=int(os.environ.get("LOCALIZATION_MAX_PROJECTS", "200")))
     parser.add_argument("--offline", action="store_true", help="只整理已有缓存和人工覆盖，不调用模型")
     parser.add_argument("--public-only", action="store_true", help="只生成公开目录，不写 state 缓存")
     parser.add_argument("--deterministic", action="store_true", help="无缓存构建时使用数据时间而不是当前时间")
     args = parser.parse_args()
-    token = None if args.offline else os.environ.get("GITHUB_TOKEN")
+    try:
+        token, endpoint = runtime_config(args.offline, args.model)
+    except ModelResponseError as exc:
+        parser.error(str(exc))
     try:
         catalog = localize_repositories(
             args.data_dir,
             overrides_file=args.overrides_file,
-            model=args.model,
+            model=args.model or DEFAULT_MODEL,
             token=token,
+            endpoint=endpoint,
             max_batch_size=args.max_batch_size,
             max_projects=args.max_projects,
             now=latest_public_timestamp((args.data_dir / "public") if (args.data_dir / "public").is_dir() else args.data_dir) if args.deterministic else None,

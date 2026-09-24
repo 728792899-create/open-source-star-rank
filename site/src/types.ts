@@ -381,7 +381,7 @@ export interface RepositoryLocalization {
   display_name_zh: string;
   description_zh: string | null;
   generated_at: string;
-  provenance: 'github_models' | 'manual';
+  provenance: 'github_models' | 'model_api' | 'manual';
 }
 
 export interface LocalizationCatalog {
@@ -429,7 +429,7 @@ export interface RepositoryClassification {
   use_cases: string[];
   taxonomy_version: '1.0.0';
   generated_at: string;
-  provenance: 'github_models' | 'manual';
+  provenance: 'github_models' | 'model_api' | 'manual';
 }
 
 export interface ClassificationRepositoryCatalog {

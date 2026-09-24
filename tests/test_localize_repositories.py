@@ -218,7 +218,7 @@ class LocalizeRepositoriesTests(unittest.TestCase):
                 def opener(*_args, **_kwargs):
                     raise failure
 
-                client = GitHubModelsClient("token", opener=opener, sleeper=lambda _seconds: None)
+                client = GitHubModelsClient("token", endpoint="https://example.com/v1/chat/completions", opener=opener, sleeper=lambda _seconds: None)
                 with self.assertRaises(ModelUnavailable):
                     client.translate([source(1)])
 

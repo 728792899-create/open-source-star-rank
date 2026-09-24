@@ -50,7 +50,12 @@
 ## 5. 中文内容与项目分类
 
 - 中文内容和分类通过独立补全工作流异步生成，榜单采集不依赖模型成功。
-- 默认模型为 `openai/gpt-4.1-mini`，使用 Actions 的 `GITHUB_TOKEN` 与 `models: read`，不保存模型密钥，不启用付费额度。
+- GitHub Models 已于 2026-07-30 退役（[官方说明](https://docs.github.com/en/github-models)）。旧地址返回 HTTP 200 文本 `OK`，不能当作模型结果。补全不再使用 `GITHUB_TOKEN` 或 `models: read`。
+- 接入已确认的兼容服务：仓库变量 `ENRICHMENT_API_URL` 为完整 HTTPS `/chat/completions` 地址（通常为基础地址加 `/chat/completions`），`LOCALIZATION_MODEL`、`CLASSIFICATION_MODEL` 必须是该服务准确的模型 ID；密钥只放仓库 Secret `ENRICHMENT_API_KEY`。本机同名环境变量可用；不要把密钥写入源码、命令参数或聊天。
+- 通用接口需要支持非流式 Chat Completions、`response_format: json_schema`、`finish_reason: stop`。DeepSeek 官方 `https://api.deepseek.com/chat/completions` 使用 `json_object`，关闭 thinking，并把完整 Schema 放入系统提示；收到结果后仍在本地严格校验原 Schema。当前已通过官方 `/models` 与小批量真实调用验证 `deepseek-flash`。不会自动降级为自由文本、修补截断 JSON 或发送到备用服务。最多两次请求，401/403/429 与重定向立即停止；错误日志不回显响应体、提示词或密钥。
+- 未配置完整时，定时补全仅做离线验证并在 Actions 摘要标记等待配置，不发布、不请求旧接口。日榜及累计榜只协调缓存；新增项目交给独立补全任务。停用补全时清空 `ENRICHMENT_API_URL` 即可，不影响采样。
+- 新结果标记 `model_api`，已有 `github_models`/`manual` 保留；离线构建不改写原模型元数据。先合并本次 Schema/读取器更新，再配置密钥并启用真实补全。新枚举被写入后，回滚旧代码需同时恢复匹配的旧补全数据，不能用旧验证器直接发布新数据。
+- 接入验收：先用少量项目验证两类结构化结果、专名/ID/分类词表与缓存保留，再运行 `backfill_publish`，核对数据分支、公开覆盖率及 Pages 发布。不以工作流绿色代替补全成功。
 - 可选变量：`LOCALIZATION_MODEL`、`LOCALIZATION_MAX_PROJECTS`、`CLASSIFICATION_MODEL`、`CLASSIFICATION_MAX_PROJECTS`。
 - 补全顺序固定为先翻译、后分类；模型失败时保留旧缓存并回退 GitHub 原文。
 - 人工中文修正在 `data/localization-overrides.zh-CN.json`；人工分类修正在 `data/classification-overrides.zh-CN.json`。
