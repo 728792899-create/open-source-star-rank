@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "version",
+    "id",
+    "kind",
+    "started_at",
+    "finished_at",
+    "model",
+    "attempted_projects",
+    "accepted_projects",
+    "failed_projects",
+    "requests",
+    "usage_responses",
+    "unknown_usage_requests",
+    "failures",
+    "usage_complete",
+    "observed_tokens",
+    "request_errors",
+    "estimated_cost",
+    "pricing",
+    "pricing_status",
+    "billing_note"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{32}$"
+    },
+    "kind": {
+      "enum": [
+        "localization",
+        "classification"
+      ]
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "finished_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "attempted_projects": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "accepted_projects": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "failed_projects": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "requests": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "usage_responses": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "unknown_usage_requests": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "failures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "repository_id",
+          "reason"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "repository_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "reason": {
+            "enum": [
+              "missing_verbatim",
+              "missing_chinese",
+              "missing_description",
+              "text_limits",
+              "repository_identity",
+              "taxonomy_or_fields",
+              "schema",
+              "provider_http",
+              "network",
+              "invalid_result"
+            ]
+          }
+        }
+      }
+    },
+    "usage_complete": {
+      "type": "boolean"
+    },
+    "observed_tokens": {
+      "type": "object",
+      "required": [
+        "prompt_tokens",
+        "completion_tokens",
+        "cache_hit_tokens",
+        "cache_miss_tokens"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "prompt_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "completion_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cache_hit_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cache_miss_tokens": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "request_errors": {
+      "type": "object",
+      "patternProperties": {
+        "^(http_[0-9]{3}|network|invalid_response)$": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "estimated_cost": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "currency",
+            "min",
+            "max"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "currency": {
+              "const": "USD"
+            },
+            "min": {
+              "type": "string",
+              "pattern": "^\\d+(\\.\\d+)?([Ee][+-]?\\d+)?$"
+            },
+            "max": {
+              "type": "string",
+              "pattern": "^\\d+(\\.\\d+)?([Ee][+-]?\\d+)?$"
+            }
+          }
+        }
+      ]
+    },
+    "pricing": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "source",
+            "verified_on",
+            "valid_until",
+            "currency",
+            "cache_hit",
+            "cache_miss",
+            "output"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "source": {
+              "const": "https://api-docs.deepseek.com/quick_start/pricing"
+            },
+            "verified_on": {
+              "type": "string",
+              "format": "date"
+            },
+            "valid_until": {
+              "type": "string",
+              "format": "date"
+            },
+            "currency": {
+              "const": "USD"
+            },
+            "cache_hit": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "string",
+                "pattern": "^\\d+(\\.\\d+)?$"
+              }
+            },
+            "cache_miss": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "string",
+                "pattern": "^\\d+(\\.\\d+)?$"
+              }
+            },
+            "output": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "string",
+                "pattern": "^\\d+(\\.\\d+)?$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "pricing_status": {
+      "enum": [
+        "estimated_range",
+        "unavailable"
+      ]
+    },
+    "billing_note": {
+      "type": "string"
+    }
+  },
+  "$id": "https://728792899-create.github.io/open-source-star-rank/data/schema/enrichment-run.schema.json"
+}

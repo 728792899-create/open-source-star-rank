@@ -1,53 +1,6 @@
 {
   "version": 1,
-  "snapshot_at": "2026-09-23T16:47:17Z",
-  "ranking_date": "2026-09-20",
-  "observed_count": 1993,
-  "sampling": {
-    "target_local_time": "00:20",
-    "valid_window_start": "00:00",
-    "valid_window_end": "03:00",
-    "latest_snapshot_at": "2026-09-23T16:47:17Z",
-    "latest_snapshot_valid": true,
-    "latest_snapshot_reason": "within_window",
-    "latest_valid_snapshot_at": "2026-09-23T16:47:17Z",
-    "consecutive_valid_snapshots": 1,
-    "next_scheduled_at": "2026-09-25T00:20:00+08:00",
-    "expected_first_ranking_at": null,
-    "period_progress": {
-      "7d": {
-        "completed": 0,
-        "required": 7
-      },
-      "30d": {
-        "completed": 0,
-        "required": 30
-      }
-    }
-  },
-  "enrichment": {
-    "translation": {
-      "generated_at": "2026-09-24T05:30:48.875680Z",
-      "coverage": {
-        "eligible_count": 3966,
-        "localized_count": 3958,
-        "pending_count": 8,
-        "failed_count": 8,
-        "coverage_ratio": 0.997983
-      }
-    },
-    "classification": {
-      "generated_at": "2026-09-24T04:30:45.978519Z",
-      "coverage": {
-        "eligible_count": 3966,
-        "classified_count": 3966,
-        "pending_count": 0,
-        "failed_count": 0,
-        "coverage_ratio": 1.0
-      }
-    }
-  },
-  "enrichment_runs": {
+  "runs": {
     "localization": {
       "version": 1,
       "id": "cbd07c16943440b08323f1e3281c2718",

@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-24T04:29:49.592970Z",
+  "generated_at": "2026-09-24T05:30:48.875680Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3966,
-    "localized_count": 3957,
-    "pending_count": 9,
-    "failed_count": 9,
-    "coverage_ratio": 0.997731
+    "localized_count": 3958,
+    "pending_count": 8,
+    "failed_count": 8,
+    "coverage_ratio": 0.997983
   },
   "repositories": [
     {
@@ -32458,6 +32458,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1275806147,
+      "source_full_name": "ornith-ai/Ornith-1",
+      "source_hash": "4c56ad31bbf08281737242cdff7b349363eff1395260d34b6e4e1a9709f42849",
+      "display_name_zh": "Ornith-1｜AI 模型",
+      "description_zh": null,
+      "generated_at": "2026-09-24T05:30:48.875680Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1275879704,
       "source_full_name": "isene/frame",
       "source_hash": "7ecdc5b9d55d7e2c16b8bc06253d495989d03d84fceab3d7957068b92fd88dac",
@@ -35634,7 +35643,6 @@
     623657072,
     751161649,
     942867788,
-    1184460122,
-    1275806147
+    1184460122
   ]
 }
