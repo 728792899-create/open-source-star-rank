@@ -17,6 +17,9 @@ def write_report(root):
     for kind,path in [('translation','public/i18n/zh-CN/repositories.json'),('classification','public/classification/index.json')]:
         value=read(path)
         report['enrichment'][kind]={'generated_at':value['generated_at'],'coverage':value['coverage']} if value else None
+    runs=read('public/enrichment-runs/latest.json')
+    if runs is not None:
+        report['enrichment_runs']=runs['runs']
     atomic_write_json(root/'public/operations.json',report)
     return report
 

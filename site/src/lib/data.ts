@@ -289,3 +289,25 @@ export function readRepositoryProfiles(): RepositoryProfile[] {
     }))
     .sort((left, right) => left.repository_id - right.repository_id);
 }
+
+
+export interface EnrichmentRun {
+  id: string;
+  kind: 'localization' | 'classification';
+  finished_at: string;
+  attempted_projects: number;
+  accepted_projects: number;
+  failed_projects: number;
+  requests: number;
+  unknown_usage_requests: number;
+  observed_tokens: { prompt_tokens: number; completion_tokens: number };
+  estimated_cost: { currency: string; min: string; max: string } | null;
+}
+
+export function readEnrichmentRuns(): EnrichmentRun[] {
+  const file = path.join(dataRoot, 'enrichment-runs', 'latest.json');
+  if (!existsSync(file)) return [];
+  // The build validates receipts and their immutable history before rendering.
+  const value = JSON.parse(readFileSync(file, 'utf8')) as { runs: Record<string, EnrichmentRun> };
+  return Object.values(value.runs).sort((a, b) => a.kind.localeCompare(b.kind));
+}
