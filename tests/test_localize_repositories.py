@@ -10,12 +10,14 @@ from pathlib import Path
 
 from tools.localize_repositories import (
     GitHubModelsClient,
+    LocalizationError,
     ModelUnavailable,
     build_prompt,
     discover_ranked_repositories,
     localize_repositories,
     repository_source_hash,
     required_verbatim_tokens,
+    uses_summary,
     validate_translation,
 )
 
@@ -221,6 +223,74 @@ class LocalizeRepositoriesTests(unittest.TestCase):
                 client = GitHubModelsClient("token", endpoint="https://example.com/v1/chat/completions", opener=opener, sleeper=lambda _seconds: None)
                 with self.assertRaises(ModelUnavailable):
                     client.translate([source(1)])
+
+    def test_uppercase_prose_can_be_translated_but_product_terms_remain_protected(self):
+        item = source(1, description="LEAKED SYSTEM PROMPTS FOR CHATGPT, CLAUDE, GEMINI AND MORE! AI SYSTEMS TRANSPARENCY FOR ALL!")
+        self.assertEqual(required_verbatim_tokens(item), ["CHATGPT", "CLAUDE", "GEMINI", "AI"])
+        cafe = source(2, description="BEAST MODE COZY CAFE PORTFOLIO FOR BEGINNERS")
+        self.assertEqual(required_verbatim_tokens(cafe), [])
+        validate_translation({"repository_id": 2, "display_name_zh": "舒适咖啡馆作品集", "description_zh": "面向初学者的咖啡馆风格作品集。"}, cafe, generated_at=NOW.isoformat(), provenance="model_api")
+
+    def test_long_repository_names_do_not_compete_with_chinese_title_limit(self):
+        names = [
+            "500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code",
+            "Advanced-Data-Analysis-in-Inertial-Confinement-Fusion-and-High-Energy-Density-Physics",
+            "Sistem-Informasi-Geografis-Pelaporan-Kerusakan-Jalan-di-Kota-Padangsidimpuan-Berbasis-Website",
+        ]
+        for name in names:
+            _, prompt = build_prompt([source(1, full_name=f"owner/{name}")])
+            row = json.loads(prompt)["repositories"][0]
+            self.assertIsNone(row["brand_hint"])
+            self.assertEqual(row["full_name"], f"owner/{name}")
+
+    def test_short_technical_descriptions_still_require_chinese_numbers_and_identifiers(self):
+        item = source(1, description="GPT-4.1 SDK with 25GB RAM and 65% less memory")
+        good = {"repository_id": 1, "display_name_zh": "模型开发工具", "description_zh": "GPT-4.1 SDK，使用 25GB RAM，内存减少 65%。"}
+        validate_translation(good, item, generated_at=NOW.isoformat(), provenance="model_api")
+        for token in ["GPT", "4.1", "SDK", "25GB", "RAM", "65%"]:
+            with self.subTest(token=token), self.assertRaises(LocalizationError):
+                validate_translation(dict(good, description_zh=good["description_zh"].replace(token, "")), item, generated_at=NOW.isoformat(), provenance="model_api")
+        for update in [{"display_name_zh": "English SDK"}, {"description_zh": None}, {"display_name_zh": "工具" * 41}]:
+            with self.subTest(update=update), self.assertRaises(LocalizationError):
+                validate_translation(dict(good, **update), item, generated_at=NOW.isoformat(), provenance="model_api")
+
+    def test_long_catalog_summary_omits_lists_without_inventing_numbers(self):
+        item = source(1, full_name="owner/catalog", description="NLP Qwen2.5 资源目录。" + "BERT GPT ELMo 和相关工具、数据集；" * 40)
+        self.assertTrue(uses_summary(item))
+        self.assertEqual(required_verbatim_tokens(item), [])
+        raw = {"repository_id": 1, "display_name_zh": "自然语言处理资源汇总", "description_zh": "汇总自然语言处理工具与数据集。"}
+        validate_translation(raw, item, generated_at=NOW.isoformat(), provenance="model_api")
+        validate_translation(dict(raw, description_zh="汇总 Qwen2.5 相关资源。"), item, generated_at=NOW.isoformat(), provenance="model_api")
+        for text in ["包含999个模型。", "包含999.", "大小999k。", "支持 GPT-9.9。", "节省 99% 内存。", "汇总 Qwen9.9 资源。", "汇总 GPT99 资源。"]:
+            with self.subTest(text=text), self.assertRaises(LocalizationError):
+                validate_translation(dict(raw, description_zh=text), item, generated_at=NOW.isoformat(), provenance="model_api")
+        for model in ["GPT4", "BERT2"]:
+            punctuated = dict(item, description=f"Supports {model}. " + "Tools and datasets. " * 40)
+            validate_translation(dict(raw, description_zh=f"汇总 {model} 相关资源。"), punctuated, generated_at=NOW.isoformat(), provenance="model_api")
+            with self.assertRaises(LocalizationError):
+                validate_translation(dict(raw, description_zh=f"汇总 {model}9 相关资源。"), punctuated, generated_at=NOW.isoformat(), provenance="model_api")
+
+    def test_long_identifier_list_uses_summary_before_exceeding_output_budget(self):
+        item = source(1, description=" ".join(f"MODEL{i}" for i in range(30)))
+        self.assertLess(len(item["description"]), 600)
+        self.assertTrue(uses_summary(item))
+        _, prompt = build_prompt([item])
+        self.assertEqual(json.loads(prompt)["repositories"][0]["description_mode"], "summary")
+
+    def test_legacy_catalog_and_backoff_survive_prompt_revision(self):
+        self.add_daily("2026-07-14", [source(1), source(2)])
+        first = localize_repositories(self.root, client=PartialRetryClient(2, recover=False), now=NOW)
+        first["prompt_version"] = "repository-localization-v1"
+        for path in [self.root / "state/localization/zh-CN/repositories.json", self.public / "i18n/zh-CN/repositories.json"]:
+            write_json(path, first)
+        client = FakeClient()
+        blocked = localize_repositories(self.root, client=client, now=NOW + dt.timedelta(minutes=1))
+        self.assertEqual(client.calls, [])
+        self.assertEqual(blocked, first)
+        recovered = localize_repositories(self.root, client=client, now=NOW + dt.timedelta(hours=1))
+        self.assertEqual([[row["repository_id"] for row in call] for call in client.calls], [[2]])
+        self.assertEqual(recovered["repositories"][0], first["repositories"][0])
+        self.assertEqual(recovered["prompt_version"], "repository-localization-v2")
 
 
 if __name__ == "__main__":
