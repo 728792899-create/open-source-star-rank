@@ -167,6 +167,9 @@ jobs:
           if [[ -d "$STAR_RANK_DATA_DIR/state/enrichment-queue" ]]; then
             git -C "$STAR_RANK_DATA_DIR" add state/enrichment-queue
           fi
+          if [[ -d "$STAR_RANK_DATA_DIR/public/enrichment-runs" ]]; then
+            git -C "$STAR_RANK_DATA_DIR" add public/enrichment-runs
+          fi
           if ! git -C "$STAR_RANK_DATA_DIR" diff --cached --quiet; then
             git -C "$STAR_RANK_DATA_DIR" commit -m "Update Chinese project content and classification"
             git -C "$STAR_RANK_DATA_DIR" push origin HEAD:star-rank-data

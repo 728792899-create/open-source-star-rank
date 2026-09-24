@@ -13,6 +13,7 @@ from referencing import Registry, Resource
 
 
 SCHEMA_FILES = {
+    "enrichment_run": "enrichment-run.schema.json",
     "state": "state.schema.json",
     "directory": "directory.schema.json",
     "snapshot": "snapshot.schema.json",

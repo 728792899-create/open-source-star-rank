@@ -1,9 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FreshnessStatus from '../../components/FreshnessStatus.astro';
-import { readClassificationIndex, readLocalizationCatalog, readRankingIndex } from '../../lib/data';
+import { withBase } from '../../lib/paths';
+import { readEnrichmentRuns, readClassificationIndex, readLocalizationCatalog, readRankingIndex } from '../../lib/data';
 
 const index = readRankingIndex();
+const enrichmentRuns = readEnrichmentRuns();
 const sampling = index.sampling;
 const collection = index.latest_collection;
 const localization = readLocalizationCatalog();
@@ -101,6 +103,21 @@ const structuredData = {
         <div><dt>最近整理</dt><dd>{formatDateTime(classification.generated_at)}</dd></div>
         <div><dt>回退策略</dt><dd>分类不可用时标记待生成，不影响榜单</dd></div>
       </dl>
+    </section>
+    <section class="status-grid" aria-labelledby="enrichment-runs-title">
+      <div class="section-heading"><div><p class="eyebrow">Model usage</p><h2 id="enrichment-runs-title">最近补全运行</h2></div></div>
+      <p class="empty-copy">每次运行独立记录，包含重试及被拒绝结果的已返回用量。费用为美元估算区间，并非账单；用量缺失或价格过期时不估算。</p>
+      {enrichmentRuns.length ? enrichmentRuns.map(run => <div>
+        <h3>{run.kind === 'localization' ? '中文翻译' : '项目分类'}</h3>
+        <dl>
+          <div><dt>运行结束</dt><dd>{formatDateTime(run.finished_at)}</dd></div>
+          <div><dt>尝试 / 接受 / 失败项目</dt><dd>{run.attempted_projects} / {run.accepted_projects} / {run.failed_projects}</dd></div>
+          <div><dt>HTTP 请求 / 缺失用量</dt><dd>{run.requests} / {run.unknown_usage_requests}</dd></div>
+          <div><dt>已观察输入 / 输出 Token</dt><dd>{run.observed_tokens.prompt_tokens.toLocaleString('zh-CN')} / {run.observed_tokens.completion_tokens.toLocaleString('zh-CN')}</dd></div>
+          <div><dt>本次估算费用（USD）</dt><dd>{run.estimated_cost ? `${run.estimated_cost.min}–${run.estimated_cost.max}` : '未知'}</dd></div>
+          <div><dt>审计记录</dt><dd><a class="text-link" href={withBase(`/data/enrichment-runs/history/${run.id}.json`)}>查看本次 JSON →</a></dd></div>
+        </dl>
+      </div>) : <p class="empty-copy">尚无运行用量记录，首次在线补全后生成。</p>}
     </section>
   </main>
 </BaseLayout>

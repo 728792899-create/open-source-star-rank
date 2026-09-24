@@ -11,6 +11,7 @@ from typing import Any
 from zoneinfo import ZoneInfo
 
 try:
+    from tools.enrichment_metrics import validate_history
     from tools.star_rank_schema import SchemaValidationError, sync_public_schemas, validate_payload
     from tools.localize_repositories import discover_ranked_repositories, repository_source_hash
     from tools.classify_repositories import (
@@ -19,6 +20,7 @@ try:
         load_taxonomy,
     )
 except ModuleNotFoundError:  # pragma: no cover - direct script execution fallback
+    from enrichment_metrics import validate_history
     from star_rank_schema import SchemaValidationError, sync_public_schemas, validate_payload
     from localize_repositories import discover_ranked_repositories, repository_source_hash
     from classify_repositories import build_classification_sources, classification_source_hash, load_taxonomy
@@ -111,6 +113,7 @@ def validate_data_tree(data_dir: Path, *, sync_schemas: bool = False, card_manif
     cards: list[dict[str, str]] = []
     root = data_dir.resolve()
     public_dir = root / "public" if (root / "public").is_dir() else root
+    validate_history(public_dir)
     schema_dir = Path(__file__).resolve().parents[1] / "schemas" / "star-rank"
     if sync_schemas:
         sync_public_schemas(public_dir, schema_dir)

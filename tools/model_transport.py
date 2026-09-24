@@ -92,7 +92,7 @@ def provider_payload(endpoint: str, payload: dict) -> dict:
     return adapted
 
 
-def request_entries(endpoint, token, payload, *, timeout=45, opener=None, sleeper=time.sleep):
+def request_entries(endpoint, token, payload, *, timeout=45, opener=None, sleeper=time.sleep, meter=None):
     validate_endpoint(endpoint)
     schema = payload.get("response_format", {}).get("json_schema", {}).get("schema")
     payload = provider_payload(endpoint, payload)
@@ -100,19 +100,30 @@ def request_entries(endpoint, token, payload, *, timeout=45, opener=None, sleepe
     request = urllib.request.Request(endpoint, data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
         method="POST", headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": f"Bearer {token}"})
     for attempt in range(2):
+        if meter is not None:
+            meter.requests += 1
         try:
             with open_request(request, timeout=timeout) as response:
-                return parse_response(response.read(), schema)
+                raw = response.read()
+                if meter is not None:
+                    meter.observe(raw)
+                return parse_response(raw, schema)
         except urllib.error.HTTPError as exc:
             status = exc.code
+            if meter is not None:
+                meter.errors[f"http_{status}"] += 1
             exc.close()
             # Do not echo provider bodies/URLs: they may include credentials or prompts.
             if status < 500 or attempt == 1:
                 raise ModelResponseError(f"模型接口 HTTP {status}") from None
         except (urllib.error.URLError, TimeoutError, OSError):
+            if meter is not None:
+                meter.errors["network"] += 1
             if attempt == 1:
                 raise ModelResponseError("模型接口网络异常或超时") from None
         except ModelResponseError:
+            if meter is not None:
+                meter.errors["invalid_response"] += 1
             if attempt == 1:
                 raise
         sleeper(float(2**attempt))
