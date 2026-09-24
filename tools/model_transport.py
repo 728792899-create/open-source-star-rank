@@ -1,7 +1,10 @@
 """Bounded, non-redirecting transport for explicitly configured enrichment APIs."""
 from __future__ import annotations
 
+import copy
 import json
+
+from jsonschema import Draft202012Validator
 import os
 import sys
 import time
@@ -47,7 +50,7 @@ def runtime_config(offline: bool, model: str | None) -> tuple[str | None, str | 
     return token, endpoint
 
 
-def parse_response(raw: bytes) -> list[dict[str, Any]]:
+def parse_response(raw: bytes, schema: dict | None = None) -> list[dict[str, Any]]:
     try:
         body = json.loads(raw)
     except (ValueError, UnicodeError):
@@ -67,21 +70,39 @@ def parse_response(raw: bytes) -> list[dict[str, Any]]:
         decoded = json.loads(content)
     except ValueError:
         raise ModelResponseError("模型内容不是完整 JSON；未尝试修补或提取片段") from None
+    if schema is not None and not Draft202012Validator(schema).is_valid(decoded):
+        raise ModelResponseError("模型结果不符合请求 Schema，拒绝写入")
     entries = decoded.get("repositories") if isinstance(decoded, dict) else None
     if not isinstance(entries, list) or not all(isinstance(item, dict) for item in entries):
         raise ModelResponseError("模型返回的 repositories 不是对象数组")
     return entries
 
 
+def provider_payload(endpoint: str, payload: dict) -> dict:
+    """DeepSeek supports JSON mode; retain schema enforcement on our side."""
+    adapted = copy.deepcopy(payload)
+    if urllib.parse.urlsplit(endpoint).hostname == "api.deepseek.com":
+        schema = adapted["response_format"]["json_schema"]["schema"]
+        adapted["response_format"] = {"type": "json_object"}
+        adapted["thinking"] = {"type": "disabled"}
+        adapted["messages"][0]["content"] += (
+            '\n只输出 JSON 对象。结构示例：{"repositories": []}；实际数组须包含每个输入项目。'
+            "严格遵循以下 JSON Schema，不增加字段：" + json.dumps(schema, ensure_ascii=False)
+        )
+    return adapted
+
+
 def request_entries(endpoint, token, payload, *, timeout=45, opener=None, sleeper=time.sleep):
     validate_endpoint(endpoint)
+    schema = payload.get("response_format", {}).get("json_schema", {}).get("schema")
+    payload = provider_payload(endpoint, payload)
     open_request = opener or urllib.request.build_opener(NoRedirect()).open
     request = urllib.request.Request(endpoint, data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
         method="POST", headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": f"Bearer {token}"})
     for attempt in range(2):
         try:
             with open_request(request, timeout=timeout) as response:
-                return parse_response(response.read())
+                return parse_response(response.read(), schema)
         except urllib.error.HTTPError as exc:
             status = exc.code
             exc.close()

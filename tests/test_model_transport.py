@@ -9,7 +9,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from tools.model_transport import (ModelResponseError, NoRedirect, parse_response,
-                                   request_entries, runtime_config, validate_endpoint)
+                                   request_entries, runtime_config, validate_endpoint, provider_payload)
 from tools.localize_repositories import GitHubModelsClient, localize_repositories
 from tools.classify_repositories import GitHubModelsClassificationClient, classify_repositories
 from tests.test_localize_repositories import source, write_json, ranking
@@ -79,6 +79,35 @@ class ModelTransportTests(unittest.TestCase):
                 request_entries(ENDPOINT,'dedicated',{})
             self.assertIsInstance(builder.call_args.args[0],NoRedirect)
         self.assertEqual(len(calls),1)
+
+    def test_deepseek_uses_json_mode_and_local_schema_validation(self):
+        tax=json.loads(Path('data/classification-taxonomy.zh-CN.json').read_text())
+        captured=[]
+        def invalid(req, **kw):
+            body=json.loads(req.data); captured.append(body)
+            self.assertEqual(body['response_format'], {'type':'json_object'})
+            self.assertEqual(body['thinking'], {'type':'disabled'})
+            self.assertIn('JSON Schema',body['messages'][0]['content'])
+            self.assertIn('primary_category',body['messages'][0]['content'])
+            row={'repository_id':1,'primary_category':'developer-tools','project_type':'cli-developer-tool','use_cases':[{}]}
+            return io.BytesIO(response(json.dumps({'repositories':[row]})))
+        from tools.classify_repositories import ClassificationModelUnavailable
+        client=GitHubModelsClassificationClient('dedicated',tax,endpoint='https://api.deepseek.com/chat/completions',opener=invalid,sleeper=lambda _:None)
+        with self.assertRaisesRegex(ClassificationModelUnavailable,'Schema'):
+            client.classify([source(1)])
+        self.assertEqual(len(captured),2)
+        payload={'response_format':{'type':'json_schema','json_schema':{'schema':{'type':'object'}}},'messages':[{'role':'system','content':'prompt'}]}
+        original=json.dumps(payload)
+        self.assertEqual(provider_payload(ENDPOINT,payload),payload)
+        provider_payload('https://api.deepseek.com/chat/completions',payload)
+        self.assertEqual(json.dumps(payload),original)
+
+    def test_schema_rejects_missing_required_field_even_when_nullable(self):
+        from tools.localize_repositories import ModelUnavailable
+        row={'repository_id':1,'display_name_zh':'开发工具'}
+        client=GitHubModelsClient('dedicated',endpoint='https://api.deepseek.com/chat/completions',opener=lambda *a,**k:io.BytesIO(response(json.dumps({'repositories':[row]}))),sleeper=lambda _:None)
+        with self.assertRaisesRegex(ModelUnavailable,'Schema'):
+            client.translate([dict(source(1),description=None)])
 
     def test_runtime_never_uses_github_token_or_offline_credentials(self):
         with patch.dict(os.environ,{'GITHUB_TOKEN':'repo-secret'},clear=True):

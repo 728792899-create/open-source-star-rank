@@ -1,5 +1,12 @@
 # 开发进度与同步记录
 
+## 2026-09-24 DeepSeek 官方 API 接入
+
+- 用户改为 DeepSeek 官方服务。密钥存入专用 GitHub Secret ENRICHMENT_API_KEY，不提交源码、不回显日志。官方 /models 实测返回 deepseek-flash 与 deepseek-v4-pro，采用 deepseek-flash。
+- 按官方文档，为 api.deepseek.com 使用 json_object、关闭 thinking，完整 JSON Schema 放入系统提示。保留原 Schema 并在本地校验所有必填字段/类型/枚举，再执行已有 ID、中文专名和分类词表检查；其他兼容接口仍使用 json_schema。非正常结束、空内容、拒绝、非 JSON 与错误 Schema 均不会写入。
+- 已对采样记录中的 0sec-labs/foxguard 和 0xAX/linux-insides 进行真实翻译、分类调用，两类均 2/2 通过完整校验。测试结果仅留本机，未伪装为正式补全数据。
+- 新增 DeepSeek 适配不修改原请求、错误 use_cases 元素、缺失可空必填字段回归；34 项专项及最终全套 170 项 Python 测试通过，独立只读复核无待处理发现。远端 CI 记录于 PR #92；生产补全将在合并后运行，不能把小样本成功称为全部积压清零。
+
 ## 2026-09-24 模型补全退役诊断与兼容接口迁移
 
 - 真实旧推理和模型目录接口均返回 HTTP 200、text/plain、4 字节 `OK\r\n`；GitHub 官方文档明确 Models 于 2026-07-30 退役。原始错误发生在 HTTP 响应 JSON 解码层，不能通过放宽模型内容解析或无限重试修复。
