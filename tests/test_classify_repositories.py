@@ -250,7 +250,7 @@ class ClassifyRepositoriesTests(unittest.TestCase):
                     raise failure
 
                 client = GitHubModelsClassificationClient(
-                    "token", self.taxonomy, opener=opener, sleeper=lambda _seconds: None
+                    "token", self.taxonomy, endpoint="https://example.com/v1/chat/completions", opener=opener, sleeper=lambda _seconds: None
                 )
                 with self.assertRaises(ClassificationModelUnavailable):
                     client.classify([source(1)])
@@ -267,7 +267,7 @@ class ClassifyRepositoriesTests(unittest.TestCase):
 
             def read(self):
                 return json.dumps({
-                    "choices": [{"message": {"content": json.dumps({
+                    "choices": [{"finish_reason": "stop", "message": {"content": json.dumps({
                         "repositories": [{
                             "repository_id": 1,
                             "primary_category": "developer-tools",
@@ -281,23 +281,24 @@ class ClassifyRepositoriesTests(unittest.TestCase):
             captured.update(json.loads(request.data.decode()))
             return Response()
 
-        client = GitHubModelsClassificationClient("token", self.taxonomy, opener=opener)
+        client = GitHubModelsClassificationClient("token", self.taxonomy, endpoint="https://example.com/v1/chat/completions", opener=opener)
         client.classify([source(1)])
         schema = captured["response_format"]["json_schema"]["schema"]
         use_cases = schema["properties"]["repositories"]["items"]["properties"]["use_cases"]
         self.assertEqual(set(use_cases), {"type", "items"})
 
-    def test_http_error_includes_safe_service_detail(self) -> None:
+    def test_http_error_does_not_echo_provider_body(self) -> None:
         body = io.BytesIO(json.dumps({"error": {"message": "Unsupported schema keyword: uniqueItems"}}).encode())
 
         def opener(*_args, **_kwargs):
             raise urllib.error.HTTPError("https://models.github.ai", 400, "bad request", {}, body)
 
         client = GitHubModelsClassificationClient(
-            "token", self.taxonomy, opener=opener, sleeper=lambda _seconds: None
+            "token", self.taxonomy, endpoint="https://example.com/v1/chat/completions", opener=opener, sleeper=lambda _seconds: None
         )
-        with self.assertRaisesRegex(ClassificationModelUnavailable, "Unsupported schema keyword"):
+        with self.assertRaisesRegex(ClassificationModelUnavailable, "HTTP 400") as caught:
             client.classify([source(1)])
+        self.assertNotIn("Unsupported schema keyword", str(caught.exception))
 
 
 if __name__ == "__main__":

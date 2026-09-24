@@ -53,7 +53,7 @@
           "display_name_zh": { "type": "string", "minLength": 1, "maxLength": 80 },
           "description_zh": { "type": ["string", "null"], "maxLength": 280 },
           "generated_at": { "type": "string", "format": "date-time" },
-          "provenance": { "enum": ["github_models", "manual"] }
+          "provenance": { "enum": ["github_models", "model_api", "manual"] }
         }
       }
     }

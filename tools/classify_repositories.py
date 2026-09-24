@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
 
 try:
+    from tools.model_transport import ModelResponseError, request_entries, runtime_config
     from tools.enrichment_state import failure_state, RetryQueue
     from tools.localize_repositories import (
         discover_ranked_repositories,
@@ -27,6 +28,7 @@ try:
     )
     from tools.star_rank_schema import SchemaValidationError, validate_payload
 except ModuleNotFoundError:  # pragma: no cover - direct script execution fallback
+    from model_transport import ModelResponseError, request_entries, runtime_config
     from enrichment_state import failure_state, RetryQueue
     from localize_repositories import (  # type: ignore
         discover_ranked_repositories,
@@ -41,7 +43,7 @@ except ModuleNotFoundError:  # pragma: no cover - direct script execution fallba
 
 DEFAULT_MODEL = "openai/gpt-4.1-mini"
 PROMPT_VERSION = "repository-classification-v1"
-MODELS_ENDPOINT = "https://models.github.ai/inference/chat/completions"
+MODELS_ENDPOINT = ""  # Explicit configuration required; GitHub Models is retired.
 
 
 class ClassificationError(RuntimeError):
@@ -268,9 +270,10 @@ class GitHubModelsClassificationClient:
         model: str = DEFAULT_MODEL,
         endpoint: str = MODELS_ENDPOINT,
         timeout: int = 45,
-        opener: Callable[..., Any] = urllib.request.urlopen,
+        opener: Callable[..., Any] | None = None,
         sleeper: Callable[[float], None] = time.sleep,
     ) -> None:
+        self.provenance = "model_api"
         self.token = token
         self.taxonomy = taxonomy
         self.model = model
@@ -284,6 +287,7 @@ class GitHubModelsClassificationClient:
         payload = {
             "model": self.model,
             "temperature": 0,
+            "stream": False,
             "max_tokens": 8000,
             "messages": [
                 {"role": "system", "content": system},
@@ -321,60 +325,12 @@ class GitHubModelsClassificationClient:
                 },
             },
         }
-        request = urllib.request.Request(
-            self.endpoint,
-            data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
-            method="POST",
-            headers={
-                "Accept": "application/vnd.github+json",
-                "Authorization": f"Bearer {self.token}",
-                "Content-Type": "application/json",
-                "X-GitHub-Api-Version": "2022-11-28",
-            },
-        )
-        last_error: Exception | None = None
-        for attempt in range(2):
-            try:
-                with self.opener(request, timeout=self.timeout) as response:
-                    body = json.loads(response.read().decode("utf-8"))
-                content = body["choices"][0]["message"]["content"]
-                if not isinstance(content, str):
-                    raise ClassificationError("GitHub Models 返回了非文本 content")
-                decoded = json.loads(content)
-                entries = decoded.get("repositories")
-                if not isinstance(entries, list) or not all(isinstance(item, Mapping) for item in entries):
-                    raise ClassificationError("GitHub Models 返回的 repositories 不是对象数组")
-                return entries
-            except urllib.error.HTTPError as exc:
-                last_error = exc
-                try:
-                    error_body = exc.read().decode("utf-8", errors="replace")
-                    error_payload = json.loads(error_body)
-                    error_detail = str(error_payload.get("error", {}).get("message") or error_payload.get("message") or "")
-                except (AttributeError, json.JSONDecodeError):
-                    error_detail = ""
-                finally:
-                    exc.close()
-                detail = f"：{error_detail[:300]}" if error_detail else ""
-                if exc.code in (401, 403, 429):
-                    raise ClassificationModelUnavailable(f"GitHub Models HTTP {exc.code}{detail}") from exc
-                if exc.code < 500 or attempt == 1:
-                    raise ClassificationModelUnavailable(f"GitHub Models HTTP {exc.code}{detail}") from exc
-            except (
-                urllib.error.URLError,
-                TimeoutError,
-                json.JSONDecodeError,
-                KeyError,
-                IndexError,
-                TypeError,
-                AttributeError,
-                ClassificationError,
-            ) as exc:
-                last_error = exc
-                if attempt == 1:
-                    raise ClassificationModelUnavailable(f"GitHub Models 响应不可用：{exc}") from exc
-            self.sleeper(float(2**attempt))
-        raise ClassificationModelUnavailable(f"GitHub Models 响应不可用：{last_error}")
+        try:
+            return request_entries(self.endpoint, self.token, payload, timeout=self.timeout,
+                                   opener=self.opener, sleeper=self.sleeper)
+        except ModelResponseError as exc:
+            raise ClassificationModelUnavailable(str(exc)) from exc
+
 
 
 def classify_repositories(
@@ -384,6 +340,7 @@ def classify_repositories(
     overrides_file: Path | None = None,
     model: str = DEFAULT_MODEL,
     token: str | None = None,
+    endpoint: str | None = None,
     max_batch_size: int = 20,
     max_projects: int = 400,
     now: dt.datetime | None = None,
@@ -445,10 +402,11 @@ def classify_repositories(
     queue = RetryQueue(root, 'classification', run_at, fingerprints={key: classification_source_hash(source, str(taxonomy['taxonomy_version'])) for key, source in sources.items()})
     attempted = queue.select(pending, max_projects)
     actual_attempted: set[int] = set()
+    model_updated = False
     service_unavailable = False
     failed_ids: set[int] = set()
     model_client = client or (
-        GitHubModelsClassificationClient(token, taxonomy, model=model) if token else None
+        GitHubModelsClassificationClient(token, taxonomy, model=model, endpoint=endpoint or MODELS_ENDPOINT) if token else None
     )
     if model_client is not None:
         for start in range(0, len(attempted), max_batch_size):
@@ -479,8 +437,9 @@ def classify_repositories(
                                 source,
                                 taxonomy,
                                 generated_at=run_at,
-                                provenance="github_models",
+                                provenance=getattr(model_client, "provenance", "github_models"),
                             )
+                            model_updated = True
                             validation_errors.pop(repository_id, None)
                         except ClassificationError as exc:
                             invalid[repository_id] = source
@@ -531,7 +490,7 @@ def classify_repositories(
         "taxonomy_version": taxonomy["taxonomy_version"],
         "locale": taxonomy["locale"],
         "generated_at": run_at,
-        "model": model,
+        "model": model if model_updated else (previous_index or {}).get("model", model),
         "prompt_version": PROMPT_VERSION,
         "coverage": {
             "eligible_count": eligible_count,
@@ -570,22 +529,26 @@ def main() -> int:
     parser.add_argument("--data-dir", type=Path, required=True)
     parser.add_argument("--taxonomy-file", type=Path, default=Path("data/classification-taxonomy.zh-CN.json"))
     parser.add_argument("--overrides-file", type=Path, default=Path("data/classification-overrides.zh-CN.json"))
-    parser.add_argument("--model", default=os.environ.get("CLASSIFICATION_MODEL", DEFAULT_MODEL))
+    parser.add_argument("--model", default=os.environ.get("CLASSIFICATION_MODEL"))
     parser.add_argument("--max-batch-size", type=int, default=20)
     parser.add_argument("--max-projects", type=int, default=int(os.environ.get("CLASSIFICATION_MAX_PROJECTS", "400")))
     parser.add_argument("--offline", action="store_true", help="只整理已有缓存和人工覆盖")
     parser.add_argument("--public-only", action="store_true", help="只生成公开目录，不写 state 缓存")
     parser.add_argument("--deterministic", action="store_true", help="无缓存构建使用数据时间")
     args = parser.parse_args()
-    token = None if args.offline else os.environ.get("GITHUB_TOKEN")
+    try:
+        token, endpoint = runtime_config(args.offline, args.model)
+    except ModelResponseError as exc:
+        parser.error(str(exc))
     public_dir = args.data_dir / "public" if (args.data_dir / "public").is_dir() else args.data_dir
     try:
         index, _ = classify_repositories(
             args.data_dir,
             taxonomy_file=args.taxonomy_file,
             overrides_file=args.overrides_file,
-            model=args.model,
+            model=args.model or DEFAULT_MODEL,
             token=token,
+            endpoint=endpoint,
             max_batch_size=args.max_batch_size,
             max_projects=args.max_projects,
             now=latest_public_timestamp(public_dir) if args.deterministic else None,

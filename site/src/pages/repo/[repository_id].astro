@@ -153,7 +153,7 @@ const structuredData = {
         <div><dt>项目方向</dt><dd><a href={`${withBase('/')}?category=${classification.primary_category}`}>{categoryLabel}</a></dd></div>
         <div><dt>产品形态</dt><dd>{projectTypeLabel}</dd></div>
         <div><dt>适用场景</dt><dd>{useCaseLabels?.join('、')}</dd></div>
-        <div><dt>分类来源</dt><dd>{classification.provenance === 'manual' ? '人工修正' : 'GitHub Models 生成'} · 词表 {classification.taxonomy_version}</dd></div>
+        <div><dt>分类来源</dt><dd>{classification.provenance === 'manual' ? '人工修正' : classification.provenance === 'github_models' ? 'GitHub Models 生成' : 'AI 模型生成'} · 词表 {classification.taxonomy_version}</dd></div>
       </dl> : <p class="empty-copy">分类待生成；这不影响项目排名和原始 GitHub 数据。</p>}
     </section>
 

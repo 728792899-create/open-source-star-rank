@@ -28,7 +28,6 @@ jobs:
     timeout-minutes: 35
     permissions:
       contents: write
-      models: read
     outputs:
       should_deploy: ${{ steps.mode.outputs.should_deploy }}
     env:
@@ -101,31 +100,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python -m tools.alltime_star_rank --data-dir "$STAR_RANK_DATA_DIR"
 
-      - name: Localize newly listed repositories
-        if: steps.mode.outputs.run_mode == 'collect_publish'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LOCALIZATION_MODEL: ${{ vars.LOCALIZATION_MODEL || 'openai/gpt-4.1-mini' }}
-          LOCALIZATION_MAX_PROJECTS: ${{ vars.LOCALIZATION_MAX_PROJECTS || '400' }}
-        run: >-
-          python -m tools.localize_repositories
-          --data-dir "$STAR_RANK_DATA_DIR"
-          --overrides-file data/localization-overrides.zh-CN.json
-
-      - name: Classify newly listed repositories
-        if: steps.mode.outputs.run_mode == 'collect_publish'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CLASSIFICATION_MODEL: ${{ vars.CLASSIFICATION_MODEL || 'openai/gpt-4.1-mini' }}
-          CLASSIFICATION_MAX_PROJECTS: ${{ vars.CLASSIFICATION_MAX_PROJECTS || '400' }}
-        run: >-
-          python -m tools.classify_repositories
-          --data-dir "$STAR_RANK_DATA_DIR"
-          --taxonomy-file data/classification-taxonomy.zh-CN.json
-          --overrides-file data/classification-overrides.zh-CN.json
-
-      - name: Refresh offline coverage for validate runs
-        if: steps.mode.outputs.run_mode == 'validate'
+      - name: Refresh cached content without blocking collection on a model
+        if: steps.mode.outputs.run_mode != 'deploy_existing'
         run: |
           python -m tools.localize_repositories --data-dir "$STAR_RANK_DATA_DIR" --overrides-file data/localization-overrides.zh-CN.json --offline
           python -m tools.classify_repositories --data-dir "$STAR_RANK_DATA_DIR" --taxonomy-file data/classification-taxonomy.zh-CN.json --overrides-file data/classification-overrides.zh-CN.json --offline

@@ -47,7 +47,7 @@ const movementClass = cumulative || isFacet ? 'flat' : entry.rank_change === nul
                     <a class="project-link" data-content-language="original" href={withBase(`/repo/${entry.repository_id}/`)}>{entry.full_name}</a>
                     <span class="project-source-row" data-content-language="zh">
                       <span class="project-source-name">{entry.full_name}</span>
-                      <span class="translation-badge" title={content.provenance === 'manual' ? '人工校订中文内容' : 'GitHub Models 生成的中文内容'}>{content.provenance === 'manual' ? '人工校订' : 'AI 译'}</span>
+                      <span class="translation-badge" title={content.provenance === 'manual' ? '人工校订中文内容' : content.provenance === 'github_models' ? 'GitHub Models 生成的中文内容' : 'AI 模型生成的中文内容'}>{content.provenance === 'manual' ? '人工校订' : 'AI 译'}</span>
                     </span>
                     <p>
                       <span data-content-language="zh">{content.description || 'GitHub 未提供项目描述。'}</span>

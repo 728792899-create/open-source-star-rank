@@ -35,8 +35,8 @@ class Client:
 class EnrichmentRecoveryTests(unittest.TestCase):
     def test_malformed_provider_envelopes_fail_through_bounded_fallback(self):
         rows = [{'repository_id': 1, 'full_name': 'owner/repo', 'description': None, 'language': 'Python'}]
-        for body in [None, [], {'choices': None}, {'choices': [{'message': None}]},
-                     {'choices': [{'message': {'content': '[]'}}]}]:
+        for body in [None, [], {'choices': None}, {'choices': [{'finish_reason': 'stop', 'message': None}]},
+                     {'choices': [{'finish_reason': 'stop', 'message': {'content': '[]'}}]}]:
             for kind in ['localization', 'classification']:
                 with self.subTest(body=body, kind=kind):
                     calls = []
@@ -44,11 +44,11 @@ class EnrichmentRecoveryTests(unittest.TestCase):
                         calls.append(1)
                         return io.BytesIO(json.dumps(body).encode())
                     if kind == 'localization':
-                        client = GitHubModelsClient('fixture', opener=opener, sleeper=lambda _: None)
+                        client = GitHubModelsClient('fixture', endpoint='https://example.com/v1/chat/completions', opener=opener, sleeper=lambda _: None)
                         with self.assertRaises(ModelUnavailable):
                             client.translate(rows)
                     else:
-                        client = GitHubModelsClassificationClient('fixture', load_taxonomy(TAXONOMY), opener=opener, sleeper=lambda _: None)
+                        client = GitHubModelsClassificationClient('fixture', load_taxonomy(TAXONOMY), endpoint='https://example.com/v1/chat/completions', opener=opener, sleeper=lambda _: None)
                         with self.assertRaises(ClassificationModelUnavailable):
                             client.classify(rows)
                     self.assertEqual(len(calls), 2)
