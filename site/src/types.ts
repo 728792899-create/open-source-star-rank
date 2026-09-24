@@ -389,7 +389,7 @@ export interface LocalizationCatalog {
   locale: 'zh-CN';
   generated_at: string | null;
   model: string;
-  prompt_version: 'repository-localization-v1';
+  prompt_version: 'repository-localization-v1' | 'repository-localization-v2';
   coverage: LocalizationCoverage;
   repositories: RepositoryLocalization[];
 }
