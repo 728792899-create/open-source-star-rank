@@ -30,7 +30,7 @@
           },
           "taxonomy_version": { "const": "1.0.0" },
           "generated_at": { "type": "string", "format": "date-time" },
-          "provenance": { "enum": ["github_models", "manual"] }
+          "provenance": { "enum": ["github_models", "model_api", "manual"] }
         }
       }
     }

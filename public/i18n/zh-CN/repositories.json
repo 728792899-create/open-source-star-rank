@@ -1,17 +1,26 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-21T07:30:44.350263Z",
-  "model": "openai/gpt-4.1-mini",
+  "generated_at": "2026-09-24T04:29:49.592970Z",
+  "model": "deepseek-flash",
   "prompt_version": "repository-localization-v1",
   "coverage": {
     "eligible_count": 3966,
-    "localized_count": 3775,
-    "pending_count": 191,
-    "failed_count": 191,
-    "coverage_ratio": 0.951841
+    "localized_count": 3957,
+    "pending_count": 9,
+    "failed_count": 9,
+    "coverage_ratio": 0.997731
   },
   "repositories": [
+    {
+      "repository_id": 3314,
+      "source_full_name": "spree/spree",
+      "source_hash": "33dfb7a643882b8c93b3aad0674d2ca07b5ad23985e440c5cc71fd0b3d929b85",
+      "display_name_zh": "spree｜开源电商平台",
+      "description_zh": "面向 DTC、B2B 商务、市场和全渠道的开源平台，提供 REST APIs、TypeScript SDKs 和生产可用的 Next.js 店面，支持自托管。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
     {
       "repository_id": 8514,
       "source_full_name": "rails/rails",
@@ -265,6 +274,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 612230,
+      "source_full_name": "nvm-sh/nvm",
+      "source_hash": "9a0671593070f045a098a509593659ba0aa68a4edbc0cc5b7879c7f31b016870",
+      "display_name_zh": "nvm｜Node 版本管理器",
+      "description_zh": "Node Version Manager - 符合 POSIX 的 bash 脚本，用于管理多个活跃的 node.js 版本。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 639921,
       "source_full_name": "Kitware/ParaView",
       "source_hash": "31d0b85914af5b683426a2dac22883a126bdb39ea2feb03ea80af79a3bf4f003",
@@ -515,6 +533,15 @@
       "description_zh": "基于 GitHub 信息生成的简历。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1357796,
+      "source_full_name": "emscripten-core/emscripten",
+      "source_hash": "f5d8ba39c4209f231b98bb7fc8e6a70fdaa0beba9a27d04a14b65f5d794144f6",
+      "display_name_zh": "emscripten｜LLVM 到 WebAssembly 编译器",
+      "description_zh": "Emscripten：一个 LLVM 到 WebAssembly 的编译器。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1362490,
@@ -904,6 +931,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 2909429,
+      "source_full_name": "nicolargo/glances",
+      "source_hash": "290d14254f324b17f4a15bdef93da7ea6d629fb18b20668e0f0b619336a87d16",
+      "display_name_zh": "glances｜系统监控工具",
+      "description_zh": "Glances 是 GNU/Linux、BSD、macOS 和 Windows 操作系统上的 top/htop 替代系统监控工具。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 2928948,
       "source_full_name": "Azure/azure-sdk-for-java",
       "source_hash": "8039ce9fd6032fe9d8634df8e4273f003fa8bb022c70203ef7c20c7298c3cad5",
@@ -1082,6 +1118,15 @@
       "description_zh": "包含Raspberry Pi内核、模块、用户空间库及启动加载程序/GPU固件的预编译二进制文件。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 3618133,
+      "source_full_name": "web-platform-tests/wpt",
+      "source_hash": "75e408386c37c3fd20481710c56a77900ca2dc9ea2af1a0d42661426e6448325",
+      "display_name_zh": "wpt｜Web 平台规范测试套件",
+      "description_zh": "Web 平台规范测试套件——包括 WHATWG、W3C 等。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 3623050,
@@ -1561,6 +1606,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 6899875,
+      "source_full_name": "opf/openproject",
+      "source_hash": "d4feddfd824369d3666c274ac0c3a4ae19f703e6fc664203e1980336e56ddfa8",
+      "display_name_zh": "openproject｜开源项目管理软件",
+      "description_zh": "OpenProject 是领先的开源项目管理软件，面向产品、项目和项目组合管理。可作为 Jira 的替代方案，支持敏捷规划、问题跟踪、路线图、甘特图、时间跟踪和协作功能，可本地部署或云端使用。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 6930489,
       "source_full_name": "facebook/watchman",
       "source_hash": "c3eb948a2b74eb50f6170d703d2b97387c5b3c30b3be1776a0b501f08093562c",
@@ -1928,6 +1982,15 @@
       "description_zh": "OpenVPN 的安装脚本，支持 Ubuntu、Debian、AlmaLinux、Rocky Linux、CentOS 和 Fedora。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 10187082,
+      "source_full_name": "Unitech/pm2",
+      "source_hash": "b87b7b33f683bff77fc68f26ccd69b2b9b7a03bf26b31ad3e7432f064b76c80a",
+      "display_name_zh": "pm2｜Node.js 生产进程管理器",
+      "description_zh": "Node.js/Typescript/Bun 生产进程管理器，内置负载均衡器。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 10270250,
@@ -2452,6 +2515,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 14964475,
+      "source_full_name": "AvaloniaUI/Avalonia",
+      "source_hash": "8a9a5d286c2e041589806147c01017346d141ad8fbefa69c2e64379ee738b954",
+      "display_name_zh": "Avalonia｜C# 与 XAML 跨平台 UI 框架",
+      "description_zh": "使用 C# 和 XAML 开发桌面、嵌入式、移动与 WebAssembly 应用，面向 .NET UI 的跨平台框架。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 15019962,
       "source_full_name": "tldr-pages/tldr",
       "source_hash": "78bb7d4a53c37432a9d4598b174affa5d7e0019fb1e6670857b61f8849aec487",
@@ -2578,6 +2650,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 16089035,
+      "source_full_name": "wekan/wekan",
+      "source_hash": "b98e1e59d83f2c4e83ac3782a1e4556354c55225336291f8109e6dfb2441c27f",
+      "display_name_zh": "wekan｜开源看板",
+      "description_zh": "开源看板，使用 Meteor 构建。GitHub issues/PRs 仅面向 FLOSS 开发者，不用于支持，支持请访问 https://wekan.fi/commercial-support/ 。PR 源翻译提交至 imports/i18n/data/en.i18n.json，其他翻译见 https://app.transifex.com/wekan/wekan 。无遥测。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 16408992,
       "source_full_name": "neovim/neovim",
       "source_hash": "9fac48d3497bca941d3eed75adcbce1d434caaabc4e1b4d7c55453cb38d2fec6",
@@ -2648,6 +2729,15 @@
       "description_zh": "spark 是一个统一的大规模数据处理分析引擎。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 17420614,
+      "source_full_name": "seleniumbase/SeleniumBase",
+      "source_hash": "3d1d956b91af7c1f3aae12240eeb9cda6811dca408be31aeadb532e294d164f5",
+      "display_name_zh": "SeleniumBase｜浏览器自动化与测试",
+      "description_zh": "浏览器自动化、网页抓取与测试工具。CDP 模式提供可绕过机器人检测的隐蔽 Chromium 实例，并包含 MCP 服务器。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 17420913,
@@ -2992,6 +3082,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 21289110,
+      "source_full_name": "vinta/awesome-python",
+      "source_hash": "c4bd8c196e25576cf48625290232b68e0c0b183e56bca6187357d0f53ace1eb5",
+      "display_name_zh": "awesome-python｜Python 资源清单",
+      "description_zh": "回答“我想用 Python 做 X，该用哪个工具？”的权威清单。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 21329550,
       "source_full_name": "wireshark/wireshark",
       "source_hash": "d1906abc2ccd7b35d0af7b1c9fd90619f7e0d67d9445f16f9e976cb636d71a29",
@@ -3080,6 +3179,24 @@
       "description_zh": "精选优秀的 iOS 生态项目，包括 Objective-C 和 Swift。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 21737266,
+      "source_full_name": "sindresorhus/awesome-nodejs",
+      "source_hash": "2a82985b12ced9d4da3860ff56d1e64c0621d0f419a69185864ea25060feeefe",
+      "display_name_zh": "awesome-nodejs｜Node.js 资源列表",
+      "description_zh": "令人愉悦的 Node.js 包与资源 [BECAUSE OF TOO MUCH SPAM AND LOW QUALITY SUBMISSIONS, SUBMISSIONS ARE PAUSED TEMPORARILY]",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 21737465,
+      "source_full_name": "sindresorhus/awesome",
+      "source_hash": "e314e75f67136c3d8e8bd4e70d6c89a07523cc3815013c951dbc4e777a848206",
+      "display_name_zh": "awesome｜各类主题资源列表",
+      "description_zh": "关于各类有趣主题的 Awesome 列表 [NOTE: Pull requests are temporarily disabled until I have a chance to catch up with the existing ones]",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 21827146,
@@ -3359,6 +3476,15 @@
       "description_zh": "angular 是一个用于构建 Web 应用的框架。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 24268127,
+      "source_full_name": "nvm-windows/nvm",
+      "source_hash": "c646266a6957bd70ae88389c94fdb945d9373ad6461cbee807656a4fabd6f35f",
+      "display_name_zh": "nvm｜Windows Node.js 版本管理器",
+      "description_zh": "适用于 Windows 的 Node.js 版本管理器。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 24297122,
@@ -3973,6 +4099,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 32215970,
+      "source_full_name": "mobxjs/mobx",
+      "source_hash": "21b44823dab59d958bb91f124dfdac00f9ccda9bf5ac4f82117888c2e66974b6",
+      "display_name_zh": "mobx｜简单可扩展状态管理",
+      "description_zh": "简单、可扩展的状态管理。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 32238354,
       "source_full_name": "import-js/eslint-plugin-import",
       "source_hash": "af78bbe8d84e82e5418611e5d1be19970fa9453f865fdf8fe9298a7ec9d5ddab",
@@ -4322,6 +4457,15 @@
       "description_zh": "tmux 终端复用器源代码",
       "generated_at": "2026-07-16T17:46:53.472669Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 36891867,
+      "source_full_name": "angular/angular-cli",
+      "source_hash": "603eadb0f3e0b927d66c278ebd4ff12425cf5b427f6d5554f5a9e0ced8dca021",
+      "display_name_zh": "angular-cli｜Angular CLI 工具",
+      "description_zh": "用于 Angular 的 CLI 工具。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 37060852,
@@ -4909,6 +5053,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 46273445,
+      "source_full_name": "transloadit/uppy",
+      "source_hash": "7a681c6c0d917d5138650f0ff0fe6930ab08f27618301455a633d02142566dc1",
+      "display_name_zh": "uppy｜开源网页文件上传器",
+      "description_zh": "面向网页浏览器的下一代开源文件上传器。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 46398090,
       "source_full_name": "datahub-project/datahub",
       "source_hash": "d1f0eb7839065cc7276b772efb96910b975773fe150fe511d1cc8e7ec4bb4ac1",
@@ -5323,6 +5476,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 52855516,
+      "source_full_name": "Homebrew/homebrew-core",
+      "source_hash": "e1c4e3f32d16908e17de33bad5a2b22146efbf60585fd1a2e7e985960f6dcb1a",
+      "display_name_zh": "homebrew-core｜Homebrew 默认 OSS 配方",
+      "description_zh": "Homebrew 包管理器的默认 OSS 配方（从源码构建的软件包）。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 52980493,
       "source_full_name": "spring-projects/spring-kafka",
       "source_hash": "de8049d5c24d48b8acfc0fa40e94b6d2a580f72aa20282a2b4640b98ac0bbf62",
@@ -5368,6 +5530,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 53548867,
+      "source_full_name": "dbt-labs/dbt",
+      "source_hash": "48cfa5d3106c981e8c942bde3a0d89fbd5daa5795b1db921630cdeffaebdb8c5",
+      "display_name_zh": "dbt｜数据转换工具",
+      "description_zh": "dbt 让数据分析师和工程师用软件工程师构建应用的方式实践来转换数据。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 53631945,
       "source_full_name": "BurntSushi/ripgrep",
       "source_hash": "759136a22fb5cbc1c5ba4c483f4dbcc31bf3613b5bf1cd25f999c771fcb3366e",
@@ -5411,6 +5582,15 @@
       "description_zh": "免费APIs的集合列表。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 54614238,
+      "source_full_name": "stdlib-js/stdlib",
+      "source_hash": "0a00e1774a8028e00fac130612f201c77a576657082d853c574c1886d32082c3",
+      "display_name_zh": "stdlib｜JavaScript 与 TypeScript 数值库",
+      "description_zh": "JavaScript 与 TypeScript 的基础数值库。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 55076063,
@@ -5989,6 +6169,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 66474729,
+      "source_full_name": "prowler-cloud/prowler",
+      "source_hash": "9cc7e52277bcadb8722b4f5db4f770fa2aa0cf7a1e18fd8be79a92763215df63",
+      "display_name_zh": "prowler｜开源云安全平台",
+      "description_zh": "Prowler 是广泛使用的开源云安全平台，可在任意云环境中自动化安全与合规检查。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 66670819,
       "source_full_name": "apify/crawlee",
       "source_hash": "1c110268599c12f2ca70b3db9e116179955f00e0fadc465c8659e2d7a092337c",
@@ -6086,6 +6275,15 @@
       "description_zh": "first-contributions 帮助初学者参与开源项目贡献。",
       "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 68957920,
+      "source_full_name": "justjavac/wechat-miniapp-radar",
+      "source_hash": "887f5cfd442665c1498cd276d7e33434021824dc80013da3cff66c3085cd7e3e",
+      "display_name_zh": "wechat-miniapp-radar｜AI 小程序雷达",
+      "description_zh": "小程序雷达：AI 驱动的小程序技术选型、趋势追踪和迁移诊断工具",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 69495170,
@@ -6259,6 +6457,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 71995937,
+      "source_full_name": "nuxt/nuxt",
+      "source_hash": "a4bff68bbaabfa2f97081206b1442b4995518f2bb683bfa0c06d1e3dc653087f",
+      "display_name_zh": "nuxt｜全栈 Vue 框架",
+      "description_zh": "全栈 Vue 框架。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 72343657,
       "source_full_name": "mifi/lossless-cut",
       "source_hash": "41b7b2749893c84150434e576e6c0c1b9e5934a83535bab96362192d0dc70af8",
@@ -6428,6 +6635,15 @@
       "description_zh": "rxdb 是一个本地优先的数据库，支持所有 JS 运行时并可与现有后端同步，无供应商锁定。",
       "generated_at": "2026-07-20T18:28:18.246753Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 75785240,
+      "source_full_name": "authelia/authelia",
+      "source_hash": "999d7a74bc883429c7195b1357e7d0bb2aa9014bcf43f760c6cf046e214927f0",
+      "display_name_zh": "authelia｜单点登录多因素门户",
+      "description_zh": "面向 Web 应用的单点登录多因素门户。OpenID 认证™，并已为后量子密码学做好准备。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 75821432,
@@ -6644,6 +6860,15 @@
       "description_zh": "用于测试、调整和破解JSON Web Tokens的工具包。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 80149262,
+      "source_full_name": "react-navigation/react-navigation",
+      "source_hash": "d8f91d5e71d4440751e05313cd3412fb7b3353ed157c66ba3d9fd3d0728a6b7e",
+      "display_name_zh": "react-navigation｜React Native 与 Web 路由导航",
+      "description_zh": "面向 React Native 和 Web 应用的路由与导航。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 80276245,
@@ -7024,6 +7249,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 91253698,
+      "source_full_name": "ccxt/ccxt",
+      "source_hash": "1a43e5244cffe4dab3d5a9b6bfd97b50c7786c13f5a9e8eca002be183285a7a0",
+      "display_name_zh": "ccxt｜统一加密货币交易 API",
+      "description_zh": "统一交易 API，覆盖 100 多家加密货币交易所与预测市场，支持 JavaScript / TypeScript / Python / C# / PHP / Go / Java / Rust。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 91573963,
       "source_full_name": "DedSecInside/TorBot",
       "source_hash": "8b5f5f06ca97aae08d1f69ef355529f5075dd4e8b5358a9db0f53d96c1c76c43",
@@ -7094,6 +7328,15 @@
       "description_zh": "draw.io的官方Electron桌面版",
       "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 92807616,
+      "source_full_name": "byoungd/up",
+      "source_hash": "8aa504050cc9c44ad4ea9e0774fa6646edc5544c68d8fd0c6493767ff4402160",
+      "display_name_zh": "up｜人生进阶与 AI 学习指南",
+      "description_zh": "一份可能让你受益匪浅的进阶指南 🎉。韩先凯的人生进阶指南 人生进阶指南 离谱的人生 人生进阶 AI学习 AI指南 韩先凯的AI学习指南 英语学习指南/英语学习教程/英语学习/学英语",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 93324141,
@@ -7339,6 +7582,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 100061716,
+      "source_full_name": "nrwl/nx",
+      "source_hash": "d1e4ea05e59a64422a00d8b8448df3605c20a01fda85cd80ba08b4e6757b8621",
+      "display_name_zh": "nx｜Monorepo 平台",
+      "description_zh": "面向开发者和 AI 智能体的 Monorepo 平台。Nx 优化构建、扩展 CI，并自动修复失败的 PRs。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 101138315,
       "source_full_name": "d2l-ai/d2l-zh",
       "source_hash": "7ef793b2a542ed8f9473d98e93590b6809451f1608deb1e4ba9b3e411788fa83",
@@ -7499,6 +7751,15 @@
       "description_zh": "tailwindcss｜基于实用工具的 CSS 框架，支持快速 UI 开发",
       "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 106087444,
+      "source_full_name": "electerm/electerm",
+      "source_hash": "4b50df0a7deee58f7d3bb9a6e4b1e208309efa76a1d75521f446617bd64a5658",
+      "display_name_zh": "electerm｜终端与远程连接客户端",
+      "description_zh": "免费开源的终端/ssh/sftp/ftp/telnet/serialport/RDP/VNC/Spice 客户端，支持 Linux、Mac、Windows、Android、HarmonyOS、iOS。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 106473613,
@@ -7679,6 +7940,15 @@
       "description_zh": "简洁实用的 Git 钩子管理工具",
       "generated_at": "2026-07-20T04:28:39.695110Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 110795721,
+      "source_full_name": "kungfu-systems/kungfu",
+      "source_hash": "474cb6f0868cb718dab8c2e37c957f767e902e5739848579148b6e26f918b5e6",
+      "display_name_zh": "kungfu｜跨代理持续工作流",
+      "description_zh": "你的代理无需交接工作。Kungfu 让同一份 Work 在 Codex、Claude、OpenCode 及你自己的执行面上持续流转。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 111058386,
@@ -8374,6 +8644,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 128624453,
+      "source_full_name": "NervJS/taro",
+      "source_hash": "5d3b627eebdf214b06cabdde5b5fa8638e220b18e4c287e36ab99f1acce545f3",
+      "display_name_zh": "taro｜开放式跨端跨框架解决方案",
+      "description_zh": "开放式跨端跨框架解决方案，支持使用 React/Vue 等框架来开发微信/京东/百度/支付宝/字节跳动/ QQ 小程序/H5/React Native 等应用。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 128907699,
       "source_full_name": "iamkun/dayjs",
       "source_hash": "4db9367bd4d02d0eb52d42a788e36c71cc5da7b7b2243a4520233dad066e2fdd",
@@ -8833,6 +9112,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 143328315,
+      "source_full_name": "mindsdb/mindshub",
+      "source_hash": "e7a8054c91115dc5a6cd24a3baa8502752d11a735fc49aee5290bfc828e76c3b",
+      "display_name_zh": "mindshub｜开源模型统一工作空间",
+      "description_zh": "开源模型为你完成任务的统一工作空间。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 143455116,
       "source_full_name": "google/filament",
       "source_hash": "e0f17dc41a3a203e04606123361fbf709fc36b1c88340d362c6acc08a790099e",
@@ -9283,6 +9571,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 159152904,
+      "source_full_name": "jeecgboot/JeecgBoot",
+      "source_hash": "f6e93bff482d5b7cb8aff2d873f9625946a06507688b193872bb5a028d535195",
+      "display_name_zh": "JeecgBoot｜企业级AI低代码平台v2.0",
+      "description_zh": "低代码v2.0，一句话即可生成整个系统。企业级AI低代码平台，一键生成前后端代码甚至整个系统。AI Skills 一句话画流程、设计表单、生成报表、大屏。内置 AI应用平台涵盖：AI聊天、知识库、流程编排、MCP插件等，兼容主流大模型。引领AI低代码「Skills 生成 → 在线配置 → 代码生成 → 手工合并->AI修改」开发模式，解决 Java 项目 90% 重复工作。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 159271175,
       "source_full_name": "sqlalchemy/sqlalchemy",
       "source_hash": "3a57324b3fa0ae41fc537be592581b77f5ea270c074c55fa2e98bf643e8bf7d6",
@@ -9650,6 +9947,15 @@
       "description_zh": "TypeScript 到 PHP 的转译器。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 172227885,
+      "source_full_name": "fastapi/full-stack-fastapi-template",
+      "source_hash": "7aab91d636503836e966bddb86b629af7f22fd25048a045d110fe43acd0b1c9e",
+      "display_name_zh": "full-stack-fastapi-template｜全栈Web应用模板",
+      "description_zh": "基于 FastAPI、React、SQLModel、PostgreSQL、Vite、Tailwind CSS、shadcn/ui、FastAPI Cloud 和 Docker Compose 的全栈 Web 应用模板。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 172378503,
@@ -10156,6 +10462,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 192640529,
+      "source_full_name": "HumanSignal/label-studio",
+      "source_hash": "1cda5d3c8d41b81528515a0a2173edfcccb910c16272d51a74451c0eaa5b520d",
+      "display_name_zh": "label-studio｜多类型数据标注工具",
+      "description_zh": "Label Studio 是一款多类型数据标注与注释工具，提供标准化输出格式。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 192676329,
       "source_full_name": "SamboyCoding/Cpp2IL",
       "source_hash": "e2d2adae268d25ca344eab82dac38b456df4a5467cf2ab18140e0d944fc11cb7",
@@ -10181,6 +10496,24 @@
       "description_zh": "AdGuard Extra 旨在解决常规广告屏蔽规则无法覆盖的复杂情况。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 192925833,
+      "source_full_name": "prisma/orm",
+      "source_hash": "e712cda52203247d4dad8bb896f29648cdc8d439e00f776ce9cdd0316954197c",
+      "display_name_zh": "orm｜Node.js 与 TypeScript ORM",
+      "description_zh": "面向 Node.js 与 TypeScript 的下一代 ORM | 支持 PostgreSQL、MySQL、MariaDB、SQL Server、SQLite、MongoDB 和 CockroachDB。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 193162629,
+      "source_full_name": "rxhanson/Rectangle",
+      "source_hash": "ef731b2a86d892c535ce6812b6dbf2185c6ac3ea5a04bae81e8bd8d6fa26926c",
+      "display_name_zh": "Rectangle｜macOS 窗口管理",
+      "description_zh": "在 macOS 上通过键盘快捷键和吸附区域移动与调整窗口大小。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 193215554,
@@ -10930,6 +11263,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 224979610,
+      "source_full_name": "Feng-CityUHK/EquityCharacteristicsSAS",
+      "source_hash": "944d9b38610b7fc88703bdf2e9139c5987f95e7ff8d14456d78439ef3a3ec84d",
+      "display_name_zh": "EquityCharacteristicsSAS｜US 股票特征",
+      "description_zh": "US 股票（投资组合）特征数据，主文件使用 SAS 编写。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 225349535,
       "source_full_name": "Pixeval/Pixeval",
       "source_hash": "4105ba484127a8b57b255f15f31a2a1de6512775e9d42123d7c27ac7daf80cd3",
@@ -11081,6 +11423,15 @@
       "description_zh": "fiber 是用 Go 语言编写的灵感来源于 Express 的 Web 框架。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 234739976,
+      "source_full_name": "medusajs/medusa",
+      "source_hash": "10f79dc895aefbc05f11d59f2f6005fb000a75515a43a3da8dffb3471eb5587b",
+      "display_name_zh": "medusa｜面向智能体与开发者的商务平台",
+      "description_zh": "面向智能体与开发者的灵活商务平台。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 234798675,
@@ -11342,6 +11693,15 @@
       "description_zh": "saltcorn 是一款免费开源的无代码应用构建工具。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 249995750,
+      "source_full_name": "reactive-resume/reactive-resume",
+      "source_hash": "8a16fb7feb515240cd2067aeda9e6ccd7fa2d662dce50eef95131cc9b4a55fda",
+      "display_name_zh": "reactive-resume｜隐私优先简历生成器",
+      "description_zh": "一款注重隐私的简历生成器，完全安全、可定制、可移植、开源且永久免费。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 250190178,
@@ -11686,6 +12046,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 266417772,
+      "source_full_name": "SimplifyJobs/Summer2027-Internships",
+      "source_hash": "334e9bc9eafe5bc37441c4ff858748ad1389dfa88632a30dcadcf06b1370fc83",
+      "display_name_zh": "Summer2027-Internships｜2027 暑期实习岗位汇总",
+      "description_zh": "汇总 2027 年暑期软件工程、数据科学、AI、量化、产品管理与硬件实习岗位，由 Simplify 与 Pitt CSC 每日更新。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 267054247,
       "source_full_name": "anchore/grype",
       "source_hash": "bb209aa2210ce50b5c1e5509e528f3f8fefa0205856dbb15533e70d03e53fae5",
@@ -11866,6 +12235,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 275386910,
+      "source_full_name": "soxoj/maigret",
+      "source_hash": "6814343123b873b517ff2f70368dd50e7507d4d89781a6e5655f7ab39c771bfc",
+      "display_name_zh": "maigret｜用户名跨站信息收集",
+      "description_zh": "通过用户名从 6K 个网站收集个人档案信息。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 275993885,
       "source_full_name": "appsmithorg/appsmith",
       "source_hash": "7bc674e4c6bb181ed94fbe751249924b2c45d5c0be598e6056858b834f691148",
@@ -11927,6 +12305,15 @@
       "description_zh": "CS-Situational-Awareness-BOF：使用Beacon Object Files实现的态势感知命令。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 280363952,
+      "source_full_name": "umami-software/umami",
+      "source_hash": "1d337ce4b1c05712dee9b056cbc2336592f424868dbdb357544923f50835a003",
+      "display_name_zh": "umami｜隐私优先分析平台",
+      "description_zh": "Umami 是隐私优先的分析平台，将流量、活动、行为、转化和收入集中在一处，无 Cookie、无监控，支持自托管或云端部署。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 280557054,
@@ -12008,6 +12395,15 @@
       "description_zh": "my-setup：用于启动新项目的开发环境配置。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 283211901,
+      "source_full_name": "yuliskov/SmartTube",
+      "source_hash": "1b35b0c52509b49b13e966d4ee3150d8a28433a31bf70b05b66ec5f3f03d64b1",
+      "display_name_zh": "SmartTube｜Android TV 媒体浏览",
+      "description_zh": "在 Android TV 上按自己的规则浏览媒体内容。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 283868135,
@@ -12116,6 +12512,15 @@
       "description_zh": "fuel-core 是 Fuel v2 协议的 Rust 全节点实现。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 291438522,
+      "source_full_name": "siyuan-note/siyuan",
+      "source_hash": "ae151dfcd1063ff1038635917fdb6b4ff87b07b854458b87153b14e3b14ea603",
+      "display_name_zh": "siyuan｜隐私优先的自托管知识工作空间",
+      "description_zh": "开源、隐私优先、自托管的知识工作空间，让人与 AI 智能体在此协作。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 291926647,
@@ -12253,6 +12658,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 299510783,
+      "source_full_name": "rui314/mold",
+      "source_hash": "6a56d9e099db08e1fc3d591e499e079e859fe5d3ebf6cf51029be5930070b857",
+      "display_name_zh": "mold｜Rust 现代链接器",
+      "description_zh": "mold：用 Rust 编写的现代链接器。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 299588328,
       "source_full_name": "toUpperCase78/tiobe-index-ratings",
       "source_hash": "a9ee35c50eaf5c0f4a6ca15a21604315f4a75c49816ca70a28d586a6a3bb1400",
@@ -12370,6 +12784,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 307213173,
+      "source_full_name": "openai/openai-python",
+      "source_hash": "5c87bb1b24ac566457751d4a4591f0054629f9f6faae1fd23dad02950968f3cf",
+      "display_name_zh": "openai-python｜OpenAI API 官方 Python 库",
+      "description_zh": "OpenAI API 的官方 Python 库。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 307260205,
       "source_full_name": "yt-dlp/yt-dlp",
       "source_hash": "a011f1655ce89b98410a1a8c253e566112edbe9368511f3d722e435acf1be9c2",
@@ -12377,6 +12800,15 @@
       "description_zh": "yt-dlp 是一款功能丰富的命令行音视频下载工具。",
       "generated_at": "2026-07-17T00:57:38.909807Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 307489284,
+      "source_full_name": "remix-run/remix",
+      "source_hash": "48624bcc174a6920038e54710083287a02f2609ad0d459d181cbecd5d41d9a77",
+      "display_name_zh": "remix｜全栈 Web 框架",
+      "description_zh": "全栈 Web 框架。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 307843105,
@@ -12593,6 +13025,15 @@
       "description_zh": "Mealie 是一个自托管的食谱管理和膳食规划工具，提供基于 RestAPI 的后端和基于 Vue 的响应式前端，支持通过 URL 自动导入食谱或使用 UI 编辑器添加家庭食谱。",
       "generated_at": "2026-07-20T18:28:18.246753Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 320566331,
+      "source_full_name": "enarjord/passivbot",
+      "source_hash": "882def078e4586d98b4d91d3c8cfaba265e03b47bc2a32d830867cee4e4edabb",
+      "display_name_zh": "passivbot｜多交易所交易机器人",
+      "description_zh": "运行于 Bybit、Bitget、OKX、GateIO、Binance、Kucoin、WEEX 和 Hyperliquid 的交易机器人",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 320636477,
@@ -12829,6 +13270,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 333303663,
+      "source_full_name": "bytebase/bytebase",
+      "source_hash": "3f6eec832d1cc621d78ab4faf8ed7dd336c2578c5333ee8d7eea5b31f00b9b8c",
+      "display_name_zh": "bytebase｜数据库治理平台",
+      "description_zh": "面向人与智能体的数据库治理，控制各类主流数据库的变更与访问。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 333335111,
       "source_full_name": "snailspeed3/mkw",
       "source_hash": "7723a9608a9ee71fe5d2ddb304df1902b920c4a89ae2e9c26b6efe30046a277b",
@@ -12872,6 +13322,15 @@
       "description_zh": "自托管的购物清单和食谱管理应用，支持添加购物项和创建食谱。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 336895436,
+      "source_full_name": "wader/fq",
+      "source_hash": "62f8a42f8a19087409828d1046bbb8daab211dfb3d3620250fd5556e742f5fe3",
+      "display_name_zh": "fq｜二进制格式 jq 工具",
+      "description_zh": "fq - 面向二进制格式的 jq。用于处理二进制格式的工具、语言和解码器。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 338326527,
@@ -13135,6 +13594,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 352933140,
+      "source_full_name": "ToolJet/ToolJet",
+      "source_hash": "b510a6baa2400313b15dfa568d1f53e3d6a9d8fad6d6cb02ed4de114d5673bd8",
+      "display_name_zh": "ToolJet｜开源 AI 企业应用生成平台",
+      "description_zh": "ToolJet AI 的开源基础，面向内部工具、仪表盘、业务应用、工作流与 AI 智能体的企业应用生成平台。可通过可视化、提示词，或经 MCP 使用 Claude Code、Codex 和 Cursor 构建。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 353854676,
       "source_full_name": "tamaskis/derivative-MATLAB",
       "source_hash": "f340562692767e1ea22f50f25df3dfa7ff2ce4072292702f35f94bb269c7cac8",
@@ -13196,6 +13664,15 @@
       "description_zh": "bun 是一款集成了 JavaScript 运行时、打包器、测试运行器和包管理器的高速工具。",
       "generated_at": "2026-07-17T00:57:38.909807Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 357897199,
+      "source_full_name": "netbirdio/netbird",
+      "source_hash": "671b298bbbe44889cefe2d9b20b3ab4df68efde3f4eee294a498e6549ecf89c3",
+      "display_name_zh": "netbird｜WireGuard 安全覆盖网络",
+      "description_zh": "将设备、用户和智能体连接为基于 WireGuard® 的安全覆盖网络，支持 SSO、MFA 和细粒度访问控制。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 358446986,
@@ -13376,6 +13853,15 @@
       "description_zh": "bulletproof-react提供简单、可扩展且强大的架构，用于构建生产级React应用。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 372536760,
+      "source_full_name": "oceanbase/oceanbase",
+      "source_hash": "242848234e93be4da3f345c37adb3220e52a757179e0a50286325d04a2ccdf2a",
+      "display_name_zh": "OceanBase｜AI 时代统一分布式数据库",
+      "description_zh": "OceanBase 是面向 AI 时代的统一分布式数据库，开源、多模型，以单一引擎承载高要求工作负载。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 374377910,
@@ -13630,6 +14116,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 395140743,
+      "source_full_name": "skypilot-org/skypilot",
+      "source_hash": "f4722f8b8e7f40d4c4d4e1ccea673fd6bba7baa383663f650db9ad624228efb8",
+      "display_name_zh": "skypilot｜AI 计算平台",
+      "description_zh": "面向前沿团队的 AI 计算平台，将分散的 AI 算力整合为一台 AI 超级计算机。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 395733062,
       "source_full_name": "malloydata/malloy",
       "source_hash": "22e7fa4e7975be8c6cf3652965a518d0605aa1f1cde03f12851781b46a5123c4",
@@ -13837,6 +14332,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 416714911,
+      "source_full_name": "free-nodes/v2rayfree",
+      "source_hash": "53c8ca4bf364404c983b53b10142d800c655574e1c51e72c47183f1f15896be1",
+      "display_name_zh": "v2rayfree｜免费 v2ray 节点订阅",
+      "description_zh": "免费节点、免费 v2ray 节点、最新公益免费 v2ray 节点订阅地址、免费 v2ray 节点每日更新、免费 ss/v2ray/trojan 节点。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 418070757,
       "source_full_name": "obviyus/HamVerBot",
       "source_hash": "20a3f2078af231d48c3aa55ca984a5b34f4622e5e0117380567a137b4bf3f251",
@@ -13853,6 +14357,15 @@
       "description_zh": "计算机自学指南。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 419661684,
+      "source_full_name": "DataTalksClub/data-engineering-zoomcamp",
+      "source_hash": "f0debf437aa2f41948bf4056697f04460fd6486893703aba542abfe07bf780fb",
+      "display_name_zh": "data-engineering-zoomcamp｜9周数据工程课程",
+      "description_zh": "Data Engineering Zoomcamp 是一门免费 9 周课程，讲解如何构建生产级数据管道。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 419800251,
@@ -14548,6 +15061,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 480217156,
+      "source_full_name": "GreptimeTeam/greptimedb",
+      "source_hash": "80f30a8fcb67d9ed5a32a411a57a881d886bfb00588783603f5900d0bf04701a",
+      "display_name_zh": "GreptimeDB｜开源可观测性数据库",
+      "description_zh": "开源可观测性数据库。面向指标、日志与追踪的单一列式引擎，运行于对象存储之上。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 481153226,
       "source_full_name": "FireDragonGameStudio/ARIndoorNavigation",
       "source_hash": "9eaba356d29be4a39cecc602e429e3ab22bfc43333bde543f412fc763dcaa45f",
@@ -15052,6 +15574,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 515647260,
+      "source_full_name": "1Panel-dev/1Panel",
+      "source_hash": "be5181d10d8178b256d00ec14489f435f2b9650a2304ca127bd3f15b986d215d",
+      "display_name_zh": "1Panel｜Linux服务器管理与AI平台",
+      "description_zh": "1Panel 是一款现代化的开源 Linux 服务器管理面板，也是轻量级 AI 管理平台。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 516106592,
       "source_full_name": "amber-lang/amber",
       "source_hash": "a491d00f39e88f4ae8619016c75ffa9e2ebac0ccc1bd39d1c5d4bfc21527813c",
@@ -15124,6 +15655,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 519895363,
+      "source_full_name": "GyulyVGC/sniffnet",
+      "source_hash": "01cd0e443562665d8f26b7c261e1448a1917c3526365cc276b6bed4266e8a077",
+      "display_name_zh": "sniffnet｜网络流量监控工具",
+      "description_zh": "舒适地监控你的网络流量。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 520969009,
       "source_full_name": "mouredev/Hello-Python",
       "source_hash": "97b9a554d37adfa26e31eccf4dcbfa9091190763c4dba9b2e0878c9f7f784cd1",
@@ -15140,6 +15680,15 @@
       "description_zh": "开源的机密、证书及特权访问管理平台",
       "generated_at": "2026-07-17T00:57:38.909807Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 522158088,
+      "source_full_name": "zhayujie/CowAgent",
+      "source_hash": "417923ea4a25e7aefcfe3d4e3c700e2c8cc01731c761041f64eef9168af43633",
+      "display_name_zh": "CowAgent｜开源超级AI助手与Agent Harness",
+      "description_zh": "开源超级 AI 助手与 Agent Harness。可规划任务、运行工具和技能，通过记忆与知识自我进化。支持多智能体、多模型、多渠道，轻量可扩展，一行命令安装（原 chatgpt-on-wechat）。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 523007292,
@@ -15358,6 +15907,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 535360445,
+      "source_full_name": "ultralytics/ultralytics",
+      "source_hash": "ee3ef128ac240852c6ed95d53eeb7a1cd99f66ef8b03542eb5acd0eadda84759",
+      "display_name_zh": "ultralytics｜YOLO 视觉模型工具",
+      "description_zh": "Ultralytics YOLO27、YOLO26、YOLO11、YOLOv8——目标检测、实例分割、语义分割、图像分类、姿态估计、目标跟踪。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 536718843,
       "source_full_name": "michelcrypt4d4mus/pdfalyzer",
       "source_hash": "fae5015ea57f009c07bfd94213f5b1bfca0564bf4bcdf04e482cedbc814bb4ee",
@@ -15365,6 +15923,15 @@
       "description_zh": "用于分析带颜色的 PDFs 文件，并支持 YARA 规则。",
       "generated_at": "2026-07-20T05:34:33.694685Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 537340460,
+      "source_full_name": "SilentDemonSD/WZML-X",
+      "source_hash": "1d74645f941536b500b0b77e3d8e9c468aef783b29487143718967bd545b872c",
+      "display_name_zh": "WZML-X｜Telegram 下载上传机器人",
+      "description_zh": "一个优雅增强的 Telegram Bot，可下载种子、mega、Google Drive 链接、Telegram 文件、直链及所有 yt-dlp 站点，上传至 Google Drive、Telegram 云、rclone 云或 ddl 服务器。由 WZML-X Devs 用 wzgram 以 Python 制作。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 537459518,
@@ -15493,6 +16060,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 543101941,
+      "source_full_name": "dream-num/univer",
+      "source_hash": "cda072fbdee6c870867fe7c4137ca5ab1d22782269c507e81f55b08f9359e860",
+      "display_name_zh": "univer｜面向 AI Agent 的 Office 运行时",
+      "description_zh": "面向 AI Agent 的 Office Harness——在同一运行时中提供电子表格、文档、幻灯片、画布、关系表和 PDF。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 543632052,
       "source_full_name": "somepaulo/MoreWaita",
       "source_hash": "9d652cd1112f2c4b2514ff16c32bb1621033198605d9b11f0a4aa39aa5d017d3",
@@ -15590,6 +16166,15 @@
       "description_zh": "端到端加密的云存储服务。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 560704231,
+      "source_full_name": "run-llama/llama_index",
+      "source_hash": "2d51cbcdd6ba8ae25a1da1e14c2781118b479365eba7e803df125d4ba07b899e",
+      "display_name_zh": "llama_index｜AI文档处理平台",
+      "description_zh": "LlamaIndex 是面向 AI 的文档处理平台。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 561730219,
@@ -15997,6 +16582,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 585146387,
+      "source_full_name": "shadcn-ui/ui",
+      "source_hash": "7f44f373ed92d50a9be710d5899b762b6f1bdbde9a6289e48fa7a9ad67aa53d4",
+      "display_name_zh": "ui｜可组合组件库",
+      "description_zh": "可组合、可访问且默认设计周到的组件。用可自定义、可扩展、可自主掌控的代码构建你自己的组件库。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 585196214,
       "source_full_name": "restatedev/restate",
       "source_hash": "5db15b1231d27d517bcffe5f154a894d7f6d4802cbe428bb11aba8727f81ed1c",
@@ -16195,6 +16789,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 595526110,
+      "source_full_name": "akto-api-security/akto",
+      "source_hash": "9b78a2196e68d1b52b32bbbcbc113c2babccc30d47690bb6c3f42fe8483ae693",
+      "display_name_zh": "akto｜AI 安全平台",
+      "description_zh": "Akto 是增长最快的 AI 安全平台，帮助团队保护组织中的 AI 智能体、MCPs、LLMs、Agent 技能和生成式 AI 应用。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 595662105,
       "source_full_name": "gitbutlerapp/gitbutler",
       "source_hash": "edd67e2cd120fccdf71e633b96b1a0cfbf532d33cff675f71b380989e7d66564",
@@ -16229,6 +16832,15 @@
       "description_zh": "Themerr-jellyfin 是 Jellyfin 插件，利用 ThemerrDB 为电影和电视剧添加主题曲。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 596377730,
+      "source_full_name": "openobserve/openobserve",
+      "source_hash": "a199b8c09a952d542f8bc0d3a583d5f9d76fd420a8f8cc272f81efce0866e16f",
+      "display_name_zh": "openobserve｜开源可观测性平台",
+      "description_zh": "面向日志、指标、追踪、RUM、会话回放、管道、SLO 和 LLM 可观测性的开源可观测性平台。是 Datadog、Splunk 和 Elasticsearch 的高性能简洁替代方案，存储成本降低 140 倍，支持单二进制部署。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 598342280,
@@ -16267,6 +16879,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 599524116,
+      "source_full_name": "SillyTavern/SillyTavern",
+      "source_hash": "69b8aae4bcd8e71d5472cab190baf9d309880aae771756e58a7878a50a8b84c0",
+      "display_name_zh": "SillyTavern｜高级用户LLM前端",
+      "description_zh": "面向高级用户的 LLM 前端。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 599547518,
       "source_full_name": "vllm-project/vllm",
       "source_hash": "d16966e09064cf053aa9ec9a1add4d6e6e34958c8cbb63ad8e91320079383ac2",
@@ -16274,6 +16895,15 @@
       "description_zh": "vllm，高吞吐量且内存高效的LLMs推理与服务引擎。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 599735720,
+      "source_full_name": "MHSanaei/3x-ui",
+      "source_hash": "58d8be7d6a957e953e1038589e2b4caa5760d3ea50996ebab7dfa0e8ba0db2fb",
+      "display_name_zh": "3x-ui｜多协议多用户面板",
+      "description_zh": "支持多协议多用户，包括 Vmess、Vless、Trojan、ShadowSocks、Wireguard、Hysteria、Tunnel、Mixed、HTTP、Tun、MTProto、AmneziaWG。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 599752040,
@@ -16508,6 +17138,15 @@
       "description_zh": "QZFM 是用于与 QuSpin 零场磁强计进行串口通信的 Python 类。",
       "generated_at": "2026-07-20T05:34:33.694685Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 612344730,
+      "source_full_name": "ChatGPTNextWeb/NextChat",
+      "source_hash": "9cdb20cbd7b3f3f5a51ba7df6cca6c4b7e1a96029baf3f06df1aea85e7547e33",
+      "display_name_zh": "NextChat｜零配置AI聊天助手",
+      "description_zh": "零配置 AI 聊天助手。无需 API key，注册即可与 GPT-5、Claude 4、Gemini 2.5、DeepSeek 及 100+ 主流模型聊天。按量付费更省，支持 Web、iOS、macOS、Android、Linux、Windows。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 612354784,
@@ -16879,6 +17518,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 631567741,
+      "source_full_name": "chatanywhere/GPT_API_free",
+      "source_hash": "fbcc46952d1fe166a2164b39a6485c1a1569c7def59ace0f9f454ba556d90ace",
+      "display_name_zh": "GPT_API_free｜免费大模型API",
+      "description_zh": "免费大模型 API，支持免费调用 GPT、DeepSeek 等主流模型，免费额度 10000 点，每日刷新！另付费价格最低官方 1-2 折！",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 632693436,
       "source_full_name": "FriesI23/mhabit",
       "source_hash": "292517a2abfceb0fe19bb7ae7af00b683efc59490579fe2dda3d83f1a3cb4c9f",
@@ -16996,6 +17644,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 640079149,
+      "source_full_name": "The-Vibe-Company/quivr",
+      "source_hash": "1a6aff75719a0289973bed4909cc32fd1995f85c8638b7caa5678ba53faf879a",
+      "display_name_zh": "quivr｜应用集成RAG方案",
+      "description_zh": "面向应用集成 GenAI 的 RAG 方案，让你专注产品而非 RAG。易于集成到现有产品并支持定制。支持任意 LLM（GPT4、Groq、Llama）、任意向量库（PGVector、Faiss）、任意文件。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 640182997,
       "source_full_name": "TransformerOptimus/SuperAGI",
       "source_hash": "91eb93c8053cbd50f5ffe54ef5165c50ca1cf4ba0497c8bacb476fa3995e186e",
@@ -17048,6 +17705,15 @@
       "description_zh": "DragGAN 是 SIGGRAPH 2023 官方发布的图像编辑代码。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 642497346,
+      "source_full_name": "langfuse/langfuse",
+      "source_hash": "11b9a0fa0bcae6886d2f678ff457b3abba461d0f4c9e4e2b7f02a505270868ae",
+      "display_name_zh": "langfuse｜开源 LLM 智能体评估与可观测平台",
+      "description_zh": "开源智能体评估与可观测平台：在一个开放平台中追踪、评估并改进 LLM 应用。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 642858415,
@@ -17347,6 +18013,24 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 656099147,
+      "source_full_name": "mem0ai/mem0",
+      "source_hash": "42409787d57954c0e8e253fa7b6ff8e7afbce6c58f29c6e12afdd31fa0998e9e",
+      "display_name_zh": "mem0｜AI Agent 记忆层",
+      "description_zh": "面向 AI Agent 的记忆层——为 AI Agent 和应用提供即插即用的记忆基础设施。持久化上下文，为生产环境打造。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 656227652,
+      "source_full_name": "OtterMind/Chat2DB",
+      "source_hash": "bb8f82cceca56b32b2c8d0aaeeea29cff9dadd47530dfd2ac1d42c4431bd2c2d",
+      "display_name_zh": "Chat2DB｜数据库客户端与 SQL 工作区",
+      "description_zh": "Chat2DB 是免费、跨平台、本地优先的数据库客户端与 SQL 工作区，面向开发者、DBAs、分析师和数据团队。可连接 40+ 数据库，管理数据、编辑并运行 SQL，并使用自有 AI 模型生成、解释和优化查询。支持桌面、Web、Docker 和 CLI，并支持 MCP。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 657147811,
       "source_full_name": "autox-community/autox-super-kit",
       "source_hash": "7876aa0a930fb17af83e55a4d582e3aa2cc957dc8e05f7e38dc1f1b4d98d9ad8",
@@ -17408,6 +18092,15 @@
       "description_zh": "shadcn-ui的Vue版本实现。",
       "generated_at": "2026-07-20T18:28:18.246753Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 658928958,
+      "source_full_name": "ollama/ollama",
+      "source_hash": "e0e2c470a322b71c4b1fd0eee68b5a30bfe2a92d71f4675bae2b521bb479c604",
+      "display_name_zh": "ollama｜本地大模型运行工具",
+      "description_zh": "快速上手运行 Kimi、GLM、MiniMax、DeepSeek、gpt-oss、Qwen、Gemma 等模型。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 660474192,
@@ -17516,6 +18209,15 @@
       "description_zh": "Bilibili音乐播放器",
       "generated_at": "2026-07-19T07:03:48.394229Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 666299222,
+      "source_full_name": "openinterpreter/openinterpreter",
+      "source_hash": "ce18a1022bd279cf4f26802288f66ca836843a9e459fc7ff786a6fc84ade3e39",
+      "display_name_zh": "openinterpreter｜开放模型编码智能体",
+      "description_zh": "面向 Kimi K3 和 GLM 5.3 等开放模型的编码智能体。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 666584530,
@@ -17914,6 +18616,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 683560668,
+      "source_full_name": "babalae/better-genshin-impact",
+      "source_hash": "a3288e181cba34d9b3cf900cc515966866ce97964c27e56a6c3a7ec042004e71",
+      "display_name_zh": "better-genshin-impact｜原神 UI 自动化工具",
+      "description_zh": "BetterGI · 更好的原神：自动拾取、自动剧情、全自动钓鱼（AI）、全自动七圣召唤、自动伐木、自动刷本、自动采集/挖矿/锄地、一条龙、全连音游、自动烹饪、桌面分身，是面向原神的 UI 自动化测试工具。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 683892956,
       "source_full_name": "OpenBMB/ChatDev",
       "source_hash": "2e37aa01a20083ba2855212d18d1ce37f1b33e8524a9cee114a274ed810f1aec",
@@ -18238,6 +18949,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 709027512,
+      "source_full_name": "getmaxun/maxun",
+      "source_hash": "6a3b75ef37ae498ed187024900693565f73e45389de645ee600b6c451bcf93af",
+      "display_name_zh": "maxun｜网站转结构化 API",
+      "description_zh": "将任意网站转为结构化 API，支持提取、自动化、搜索与监控网页。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 709589487,
       "source_full_name": "ashishps1/awesome-system-design-resources",
       "source_hash": "d949105c710911ceaaba9271adcd3ea0caf586234c2472b713e104b8ef232c5e",
@@ -18382,6 +19102,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 717197250,
+      "source_full_name": "QuantumNous/new-api",
+      "source_hash": "b5ba916d9cbc8c4459c03be986800d69179f069e005d98469193f2b187e8ea48",
+      "display_name_zh": "new-api｜统一 AI 模型网关",
+      "description_zh": "用于聚合与分发的统一 AI 模型中心。支持将各种 LLMs 交叉转换为 OpenAI 兼容、Claude 兼容或 Gemini 兼容格式。面向个人与企业模型管理的集中式网关。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 717520331,
       "source_full_name": "ning-y/ning-y",
       "source_hash": "1bd1b444ff0f8343aa8b83d9fda4c71d277c0e5aad0625220e91f680a46087ef",
@@ -18499,6 +19228,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 722184017,
+      "source_full_name": "assistant-ui/assistant-ui",
+      "source_hash": "f4a4db9959200fab753c814ca261385c6250fd240a6d484e5ecb2e5feaf0103b",
+      "display_name_zh": "assistant-ui｜AI 聊天 React 库",
+      "description_zh": "用于 AI 聊天的 TypeScript/React 库。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 722267905,
       "source_full_name": "giantpinkrobots/varia",
       "source_hash": "2affabeaf36ba2d82decda8038dcf93e2fe9fd22637d4ed43a21172e86dceb05",
@@ -18506,6 +19244,15 @@
       "description_zh": "支持常规下载、种子和视频的下载管理器。",
       "generated_at": "2026-07-20T05:34:33.694685Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 722597620,
+      "source_full_name": "rustfs/rustfs",
+      "source_hash": "4c144b809c1f4d06d565c0534f6fac15521459cc737697db8bbda77046ab8f2f",
+      "display_name_zh": "rustfs｜S3 兼容高性能对象存储",
+      "description_zh": "RustFS 是开源、S3 兼容的高性能对象存储系统，支持与其他 S3 兼容平台（如 MinIO 和 Ceph）迁移与共存。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 722655859,
@@ -18551,6 +19298,15 @@
       "description_zh": "MIT与MyShell联合开发的即时语音克隆及音频基础模型",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 725205304,
+      "source_full_name": "unslothai/unsloth",
+      "source_hash": "250e5115923c58fc885cc7dc725275c5b7b1188d6ea227dce2b48a6ec2a692b6",
+      "display_name_zh": "unsloth｜本地 LLM 与扩散模型 UI",
+      "description_zh": "用于运行和训练 LLMs 与扩散模型的本地 UI。支持 GGUF、MLX、Qwen3.8、DeepSeek-V4、MiniMax-H3、Gemma 4、FLUX 等。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 725700931,
@@ -18668,6 +19424,15 @@
       "description_zh": "针对新兴模型架构的高效实现。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 736272311,
+      "source_full_name": "pipecat-ai/pipecat",
+      "source_hash": "20b9bc2f746de1e76a555153206ed092ef722ada0cb65628a25f77dc88cc90b4",
+      "display_name_zh": "pipecat｜语音智能体与实时 AI 框架",
+      "description_zh": "用于语音智能体、多模态应用和实时 AI 的开源框架，由 Daily 与社区维护。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 737204897,
@@ -19129,6 +19894,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 764555401,
+      "source_full_name": "piotrkulpinski/open-source-alternatives",
+      "source_hash": "e0956f54d06ab5b6aef771fc2bf25f0f260e83748b9d4beb247319851308c601",
+      "display_name_zh": "open-source-alternatives｜专有软件开源替代清单",
+      "description_zh": "专有软件开源替代方案的精选列表。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 764723738,
       "source_full_name": "Skyvern-AI/skyvern",
       "source_hash": "a60acc638ddacef77172a59cda61499a31cc0a1791c07f062a1c11e995b74996",
@@ -19381,6 +20155,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 781524183,
+      "source_full_name": "WecoAI/aideml",
+      "source_hash": "ded3e5bb7fe0e0984dbab1a9f14da207733515501fc89ef7259ce753a35e87c9",
+      "display_name_zh": "aideml｜AIDE 机器学习工程 LLM 智能体",
+      "description_zh": "AIDE：用于机器学习工程的 LLM 智能体——Weco 由此研究发展而来。被 OpenAI MLE-bench 引用。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 782996020,
       "source_full_name": "jimmckeeth/Linux4Delphi",
       "source_hash": "c16edc1871d70ee5c27c4c7d8828d6983e6b8c87153acc8f26ce33b9fa5dd9c8",
@@ -19433,6 +20216,15 @@
       "description_zh": "DoubleClickFix：缓解因鼠标故障引起的双击问题。",
       "generated_at": "2026-07-19T07:03:48.394229Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 787076358,
+      "source_full_name": "firecrawl/firecrawl",
+      "source_hash": "6dc1699402294c586e9b7c7fe47d6eef252ca4130c6de1c534fafa5dee3e415a",
+      "display_name_zh": "firecrawl｜网页数据 API",
+      "description_zh": "用于大规模搜索、抓取和交互的网页数据 API。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 787908531,
@@ -19559,6 +20351,15 @@
       "description_zh": "glance 是一个自托管的仪表盘，能够将所有信息源集中展示在一个界面。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 793375104,
+      "source_full_name": "Shubhamsaboo/awesome-llm-apps",
+      "source_hash": "34aa7d04b733be173df91376afb1de1600a20f3f130dbf39e4b081f310c0c7af",
+      "display_name_zh": "awesome-llm-apps｜100+ AI Agent与RAG应用",
+      "description_zh": "100+ AI Agents、Agent Skills 和 RAG 应用，免费开源。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 793784055,
@@ -19786,6 +20587,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 808144141,
+      "source_full_name": "DigitalPlatDev/FreeDomain",
+      "source_hash": "da36ee643c51eac3c75599b691bcb2d791f6a0a41a8e8f11a56b6b14d3f24585",
+      "display_name_zh": "FreeDomain｜免费域名注册与DNS学习",
+      "description_zh": "面向所有人的免费域名注册和实用 DNS 学习资源。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 809296367,
       "source_full_name": "alpkeskin/rota",
       "source_hash": "0f3978a3b5784ca34a80383a5016dc5701a103962d7970bd994ae2da8de0516b",
@@ -19885,6 +20695,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 814684486,
+      "source_full_name": "longbridge/gpui-kit",
+      "source_hash": "ce38eefa736dc192431d1a67bcd43c3688cda415e727b97f4d92dde3a1a6f8ed",
+      "display_name_zh": "gpui-kit｜GPUI 跨平台 GUI 组件",
+      "description_zh": "使用 GPUI 构建跨平台桌面应用的 Rust GUI 组件。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 815588503,
       "source_full_name": "PerformanC/ReZygisk",
       "source_hash": "1025624906ed26e69fc9d675381ebdbccb8289b8da70553d0254a6f1c5031bfd",
@@ -19939,6 +20758,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 817326197,
+      "source_full_name": "screenpipe/screenpipe",
+      "source_hash": "38228c0d9f3dcaf327ee7dc778b5d875512cafbb3d31c9803938dd2914651fbd",
+      "display_name_zh": "screenpipe｜开放计算机历史记录",
+      "description_zh": "YC (S26) | 开放计算机历史 | 在本地持续录制屏幕，并为你的智能体（Claude、Codex、Openclaw、Hermes、Runner 等）提供上下文。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 817354652,
       "source_full_name": "TEN-framework/ten-framework",
       "source_hash": "9fe87384781a895286bc6c5b3846e4385e34a8a894e328a21b924dd58231268d",
@@ -19966,6 +20794,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 818331198,
+      "source_full_name": "pydantic/pydantic-ai",
+      "source_hash": "eca2f9acb272f4bb8c2d6303d5fd7f3241a46d8e8fbd52f1cc88139e5d7bcb7d",
+      "display_name_zh": "pydantic-ai｜Python AI 开发框架",
+      "description_zh": "Python 做 AI 的方式。智能体、实时语音、图像生成、嵌入。支持所有模型、所有接口，端到端类型化。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 819531180,
       "source_full_name": "Adexxxx/virusi",
       "source_hash": "f1e535d39d367503e3f0e53f9c35410cdce32b4c5d05eb401b4f37eff2cd084e",
@@ -19991,6 +20828,15 @@
       "description_zh": null,
       "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 821360765,
+      "source_full_name": "latitude-dev/latitude-llm",
+      "source_hash": "8088ad88d50d967836dca1e4f858a13c800867683f4caa7e76c127c6bc69faa9",
+      "display_name_zh": "latitude-llm｜AI 代理可观测性",
+      "description_zh": "面向 AI 代理的开源可观测性。定位代理失败之处，派发编码代理修复，并基于真实追踪验证修复。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 822001003,
@@ -20173,6 +21019,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 832452447,
+      "source_full_name": "web-infra-dev/midscene",
+      "source_hash": "6233e04b821b1cff280325a6fb514eadaf720f9619b388fbf14839173ce2a1d6",
+      "display_name_zh": "midscene｜端到端测试 GUI 智能体",
+      "description_zh": "用于端到端测试的 GUI 智能体。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 832690363,
       "source_full_name": "dan1471/FREE-openai-api-keys",
       "source_hash": "ca6945c09a2ffd1ec2ddfe4bfe8abfda859ae6a335d896aff68cd80faf4f2e34",
@@ -20207,6 +21062,15 @@
       "description_zh": "camoufox 是一款反指纹识别浏览器。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 834369920,
+      "source_full_name": "jingyaogong/minimind",
+      "source_hash": "070b1d7fb8fe7ab23af7881700984db493631d3531240363e6b725f3fb31eb0a",
+      "display_name_zh": "minimind｜2小时从零训练64M参数LLM",
+      "description_zh": "仅用 2 小时从零训练一个 64M 参数的 LLM。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 835510315,
@@ -20261,6 +21125,15 @@
       "description_zh": "react-bits 是一个开源的 React 组件集合，包含动画、交互和高度可定制的组件，用于构建有特色的网站。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 838849799,
+      "source_full_name": "amzxyz/rime-wanxiang",
+      "source_hash": "ae57a443531cfb71573f6b18122c7aa8d79f8d8c0b4846c8ab1da61a2ec6a683",
+      "display_name_zh": "rime-wanxiang｜万象拼音输入方案",
+      "description_zh": "「万象拼音」：把算法留在幕后，把纯粹还给指尖，用更优质的数据，接管你的候选。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 839037098,
@@ -20596,6 +21469,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 863835427,
+      "source_full_name": "fosrl/pangolin",
+      "source_hash": "c15bebdde1c5409f537d757086259cfaa882da5050982e22b3550bd7903c146d",
+      "display_name_zh": "pangolin｜网络与安全平台",
+      "description_zh": "现代网络与安全平台，为应用、基础设施和 AI 工作负载提供安全访问与连接。连接并保护你的用户。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 864514982,
       "source_full_name": "dwrensha/Chess.lean",
       "source_hash": "5bf9ff8e20fddc37cfcf38df4622e33c59329bfec943b4351617823f4903aabe",
@@ -20603,6 +21485,15 @@
       "description_zh": "Chess.lean是在Lean 4语言中实现的国际象棋项目。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 866513204,
+      "source_full_name": "HKUDS/LightRAG",
+      "source_hash": "e991b70d86699eba5908a7128aab1a2d505f6d45199fbce8df47741e2bf43ba4",
+      "display_name_zh": "LightRAG｜简单快速的检索增强生成",
+      "description_zh": "[EMNLP2025] LightRAG：简单快速的检索增强生成。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 867337374,
@@ -20630,6 +21521,15 @@
       "description_zh": "moonshine 提供低延迟的语音转文本、意图识别和文本转语音功能，适用于构建语音代理和交互界面。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 868173144,
+      "source_full_name": "kortix-ai/suna",
+      "source_hash": "0968e5c95138b284d6844778b7f3890b4ed222cf57b932c7ae60dd3abeaf6c51",
+      "display_name_zh": "suna｜开源 AI 管理系统",
+      "description_zh": "开源 AI 管理系统。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 869139913,
@@ -20675,6 +21575,15 @@
       "description_zh": "readest是一款现代化功能丰富的电子书阅读器，支持跨平台访问，提供强大工具和直观界面，提升阅读体验。",
       "generated_at": "2026-07-19T07:03:48.394229Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 872119017,
+      "source_full_name": "D4Vinci/Scrapling",
+      "source_hash": "0ea2be8de2ca476b9b5df935e420409e2b78a0ed22d1f9e70df00b4c8ad8729c",
+      "display_name_zh": "Scrapling｜自适应网页抓取框架",
+      "description_zh": "Scrapling 是一个自适应网页抓取框架，支持从单次请求到大规模爬取。Discord 社区：https://discord.gg/EMgGbDceNQ",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 872272362,
@@ -20821,6 +21730,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 879822807,
+      "source_full_name": "Omar-Elemary/Data-Analytics-Graduation-Project-Data-analysis-on-Boston-crime-record-",
+      "source_hash": "9798948ace43378fec414388ff0bcc132be7674d7134dbd0b9a27e11399f5942",
+      "display_name_zh": "波士顿犯罪记录数据分析毕业项目",
+      "description_zh": "波士顿犯罪数据分析项目：分析 2015-2018 年波士顿犯罪数据，揭示各社区的犯罪模式、热点与趋势。使用 Excel（数据透视表/查询）、Python（清洗/EDA）和 Tableau（可视化），支持数据驱动决策以提升社区安全与犯罪预防。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 879874959,
       "source_full_name": "jnsahaj/lumen",
       "source_hash": "e309ad5c15c1a20b76f78f3656c770aaa363affe78cb4573c9eeae194beaa00d",
@@ -20855,6 +21773,15 @@
       "description_zh": "一款极速、隐私优先的 Windows 智能启动器，支持拼音和模糊匹配，容错率高，响应迅速。基于 Rust、Tauri 和 Vue 构建。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 881458615,
+      "source_full_name": "browser-use/browser-use",
+      "source_hash": "cbb7e328137ba909f6230de6173f63b34d0a040f67e66f008810f6055700f7c9",
+      "display_name_zh": "browser-use｜浏览器智能体",
+      "description_zh": "使用浏览器的智能体。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 881804112,
@@ -21397,6 +22324,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 912559512,
+      "source_full_name": "simstudioai/sim",
+      "source_hash": "66deabc8f798ddeb0a78d72a2498062aad41e10989c9749a1958a0af2f39fc45",
+      "display_name_zh": "sim｜AI 智能体协作工作区",
+      "description_zh": "Sim 是用于构建、部署和监控 AI 智能体与工作流的协作工作区，已被 100,000+ 构建者使用。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 913030762,
       "source_full_name": "vxcontrol/pentagi",
       "source_hash": "1e1d4dff06c7c1d1a2aa9f75933c7d2e56dec1f691bfebe6d8ba5d8bb4b52ccc",
@@ -21449,6 +22385,15 @@
       "description_zh": "新加坡国立大学（NUS）CS5242课程，涵盖神经网络与深度学习，2025年版。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 916009087,
+      "source_full_name": "rowboatlabs/rowboat",
+      "source_hash": "f1b5cd4e753e4d3ebca386482e9a84e02bbbf63e610b41af2606cc60816112eb",
+      "display_name_zh": "rowboat｜AI 协作助手",
+      "description_zh": "具备记忆与协作能力的 AI 同事。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 916247115,
@@ -21647,6 +22592,15 @@
       "description_zh": null,
       "generated_at": "2026-07-19T07:03:48.394229Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 924632872,
+      "source_full_name": "CSD-1993/Online-Uretici-Yapay-Zeka-Dogal-Dil-Isleme-ve-Buyuk-Dil-Modelleri-Kursu-17-Ocak-2026",
+      "source_hash": "caae46e1b32e27204899ed414d376018493d67ef69e5952524a567e34a709b05",
+      "display_name_zh": "Online 生成式人工智能自然语言处理与大语言模型课程 2026 年 1 月 17 日",
+      "description_zh": "由 Kaan Aslan 讲授的 Online 生成式人工智能自然语言处理与大语言模型课程，2026 年 1 月 17 日开课，课程时间为周六和周日 17:00 – 21:00，现已开放报名。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 924706399,
@@ -22774,6 +23728,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 976921297,
+      "source_full_name": "asgeirtj/system_prompts_leaks",
+      "source_hash": "c3427ceea7d85f3ac4e19e17789893a16b063ca03adc3b35005c2f95364174d1",
+      "display_name_zh": "system_prompts_leaks｜系统提示词提取合集",
+      "description_zh": "从 Anthropic（Claude Fable 5.1、Opus 5、Claude Design、Claude Code）、OpenAI（ChatGPT GPT-6-Astra、Codex）、Google（Gemini 3.8 Flash、3.1 Pro、Antigravity）、xAI（Grok、Grok Bot、Cursor、Kimi 等）提取的系统提示词，定期更新。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 977671574,
       "source_full_name": "stackrender/stackrender",
       "source_hash": "778988a8544e85de818dcf2179383cba6ead540adc1b6995ec7071f02086696c",
@@ -22817,6 +23780,15 @@
       "description_zh": "AG-UI：代理与用户交互协议，将代理集成到前端应用中。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 979560403,
+      "source_full_name": "superplanehq/superplane",
+      "source_hash": "4a5b2b4317fa68c7c15445932ae000ad20ac585fd48a4259855cb0252b06fe2e",
+      "display_name_zh": "superplane｜一次性工程开源工厂",
+      "description_zh": "面向一次性工程的开源工厂。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 980205160,
@@ -23053,6 +24025,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 994093166,
+      "source_full_name": "omacom/omarchy",
+      "source_hash": "59a4c5c54d55135cc75861f7e976fc08294641f5ea9daa6e342feaa437a6dab8",
+      "display_name_zh": "omarchy｜现代风格化 Linux",
+      "description_zh": "美观、现代且风格鲜明的 Linux。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 994252890,
       "source_full_name": "11cafe/jaaz",
       "source_hash": "6befd1553afb2716c64bbdb9d0db3d34c6989268052f1d4a7fb0cf35271814e2",
@@ -23069,6 +24050,15 @@
       "description_zh": "AI SDK课程仓库，包含基础教学内容。",
       "generated_at": "2026-07-21T04:09:00.150793Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 995029641,
+      "source_full_name": "ruvnet/ruflo",
+      "source_hash": "1a6cbbc6a6b3a1c8aeeef32f169d8ba9b51f73cade327757560877c34c8d3954",
+      "display_name_zh": "ruflo｜多智能体编排框架",
+      "description_zh": "原始 agent harness。部署智能多玩家 swarm，协调自主工作流，构建对话式 AI 系统。具备自适应记忆、自学习智能、联邦、向量 RAG 集成，并原生集成 Claude Code、Codex、Hermes 等。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 995289258,
@@ -23296,6 +24286,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1007827531,
+      "source_full_name": "Crosstalk-Solutions/project-nomad",
+      "source_hash": "7a9e706fc62e97c5ce0f47065bebe3d091ab913496ba2b3744bd0a1e850fd324",
+      "display_name_zh": "project-nomad｜离线优先知识教育服务器",
+      "description_zh": "Project NOMAD 是离线优先的知识与教育服务器，包含 Wikipedia、数千本书籍、课程、地图以及可选的本地 AI，全部运行在自有硬件上，无需互联网。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1008277677,
       "source_full_name": "FSoft-AI4Code/CodeWiki",
       "source_hash": "677836530254ab6383aaa6f8d4aa1aef7f7de7f83366e411cf51a549d8ebe91a",
@@ -23368,6 +24367,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1012087571,
+      "source_full_name": "router-for-me/CLIProxyAPI",
+      "source_hash": "69643075293fc125dffb48ebc92335598ecbb5ccb3f037d750c5b66ee18e2e36",
+      "display_name_zh": "CLIProxyAPI｜多模型统一 API 代理",
+      "description_zh": "将 Antigravity、ChatGPT Codex、Claude Code、Grok Build、Muse Code、Davin 封装为兼容 OpenAI/Gemini/Claude/Codex 的 API 服务，可通过 API 使用免费的 Gemini 系列、GPT 系列、Grok 系列与 Claude 模型。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1012476581,
       "source_full_name": "Karthikeyanvenugopalan/Patch-Antenna-Design-and-Simulation",
       "source_hash": "09a935692201f76f8e4221ca36a487657cfeed551ea734abba3d02446995f575",
@@ -23402,6 +24410,15 @@
       "description_zh": "基于AAG框架的LLM驱动图数据分析智能体，挖掘数据关联价值。",
       "generated_at": "2026-07-19T07:03:48.394229Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1013830656,
+      "source_full_name": "permissionlesstech/bitchat",
+      "source_hash": "e9ea3079bd8c90b19b5aec3d17a04b380483c2f1e0e6fb3cb4502f2f82fa050a",
+      "display_name_zh": "bitchat｜蓝牙 mesh 聊天",
+      "description_zh": "蓝牙 mesh 聊天，IRC 风格。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1014729376,
@@ -23557,6 +24574,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1021174826,
+      "source_full_name": "phishdestroy/destroylist",
+      "source_hash": "1fed42f2a83d30f85dbe9048376b9429e16cf1d71b19ae05cda1caf8a9d0f600",
+      "display_name_zh": "destroylist｜实时钓鱼与诈骗域名拦截列表",
+      "description_zh": "实时钓鱼与诈骗域名拦截列表 - 205k+ 精选威胁、1M+ 社区、免费 API、多种格式",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1021586981,
       "source_full_name": "Scriptez1/RedXFreeSteamInstaller",
       "source_hash": "c6a1b7a173e7a55460b3ba1d5a8fb0434c36087de8d7384ab5feb71d72f094d9",
@@ -23618,6 +24644,15 @@
       "description_zh": "面向所有人的个人理财应用。",
       "generated_at": "2026-07-19T07:03:48.394229Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1025856648,
+      "source_full_name": "wshobson/agents",
+      "source_hash": "59bb19faa2ca21cd34ecd9656c4fabe426af6f2db5f8b0325aa283997ca03a97",
+      "display_name_zh": "agents｜多平台智能体插件市场",
+      "description_zh": "面向 Claude Code、Codex、Cursor、OpenCode、GitHub Copilot、Google Antigravity 和 Pi 的多平台智能体插件市场。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1026309415,
@@ -23782,6 +24817,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1031059905,
+      "source_full_name": "abhigyanpatwari/GitNexus",
+      "source_hash": "688c258cdcedbab938b7b3c29069a169cdae66758d2ee83f95520d4977414711",
+      "display_name_zh": "GitNexus｜零服务器代码智能引擎",
+      "description_zh": "GitNexus：零服务器代码智能引擎。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1031180012,
       "source_full_name": "YanjieZe/GMR",
       "source_hash": "f4721d6b199fa0286ee65362fcc905bf31a001690b61fe7969eb66d4fdadd32d",
@@ -23834,6 +24878,15 @@
       "description_zh": "uView-Pro 是基于 uView 1.8.8 用 TypeScript 重构的跨平台 UI 框架，专为 Vue 3 + TypeScript 的 uni-app 生态设计，提供 80+ 高质量组件，支持 H5、APP 等多端开发。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1031912724,
+      "source_full_name": "farion1231/cc-switch",
+      "source_hash": "df51ecb8853e50b28a593b2132d0f15e35fc5365307a83d3a998c04ea9b2b01c",
+      "display_name_zh": "cc-switch｜跨平台多智能体桌面助手",
+      "description_zh": "面向 Claude Code、Codex、OpenCode、OpenClaw、Grok Build 与 Hermes Agent 的跨平台桌面一体化助手。唯一官网：ccswitch.io",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1031953656,
@@ -23906,6 +24959,15 @@
       "description_zh": "AI代理工具包：统一LLM API，代理循环，TUI界面，编码代理CLI。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1036441713,
+      "source_full_name": "kubernetes-sigs/agent-sandbox",
+      "source_hash": "4f088a9ad8ebf161e095a9d8db759b8aaa49a707acd990bece91d2a5670b706a",
+      "display_name_zh": "agent-sandbox｜隔离有状态单例工作负载管理",
+      "description_zh": "agent-sandbox 可轻松管理隔离、有状态、单例工作负载，适用于 AI 代理运行时和强化学习（RL）等场景。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1036727887,
@@ -24223,6 +25285,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1057515940,
+      "source_full_name": "KEV0143/Comparative-analysis-of-hourly-load-forecasting-using-PatchTST-TFT-NHiTS-and-CatBoost",
+      "source_hash": "78906c0de298293adbaf167b5612c2263833c13719cf3f4969cb6570ebdef251",
+      "display_name_zh": "PatchTST、TFT、NHiTS 与 CatBoost 小时负荷预测对比分析",
+      "description_zh": "一个全面的时间序列基准，评估 PatchTST、TFT、N-HiTS 等先进深度学习架构与传统梯度提升 CatBoost 在 24 小时负荷预测中的表现。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1057664813,
       "source_full_name": "OpenBMB/VoxCPM",
       "source_hash": "524ddb76cc5a546e221b4253128f1af93e25343dc33c179c2a218b119d86ca51",
@@ -24313,6 +25384,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1062356571,
+      "source_full_name": "tw93/Mole",
+      "source_hash": "c0443ee54db9061bdb3c8f0ab0a392c23f5afa3b81724b853f845bd9479b72c9",
+      "display_name_zh": "Mole｜Mac 清理与优化 CLI",
+      "description_zh": "清理、卸载、分析、优化并监控你的 Mac。免费开源 CLI，另有原生 Mac 应用。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1062458369,
       "source_full_name": "alibaba/page-agent",
       "source_hash": "ba54997c71949f7d6cc060397b1114a02a44ed7275a6541563ad20e1ce4461b7",
@@ -24365,6 +25445,15 @@
       "description_zh": "聊天机器人项目，持续优化以提升用户体验。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1065059442,
+      "source_full_name": "KeygraphHQ/shannon",
+      "source_hash": "50ce272a09b6cc2cc9bfd1ef98bd181ff305c685d1d1bf011a83ac84125720a5",
+      "display_name_zh": "shannon｜AI 渗透测试工具",
+      "description_zh": "Shannon 是面向 Web 应用和 APIs 的 AI 渗透测试工具。它分析源代码、识别攻击向量，并执行真实漏洞利用，在上线前验证漏洞。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1065526562,
@@ -24520,6 +25609,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1077819522,
+      "source_full_name": "pascalorg/editor",
+      "source_hash": "588a028e143824a9c79c46e135a2c788541eca3e00c68d27f27c33b15a9ee0d9",
+      "display_name_zh": "editor｜开源 3D 建筑编辑器",
+      "description_zh": "开源 3D 建筑编辑器，提供本地 CLI、MCP 工具，以及面向人类和 AI 智能体的实用工作流。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1078079172,
       "source_full_name": "ComposioHQ/awesome-claude-skills",
       "source_hash": "706433a840368caa52a4f1593be3df70974b777da5396e8941e49b175050a0b7",
@@ -24556,6 +25654,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1079456184,
+      "source_full_name": "K-Dense-AI/scientific-agent-skills",
+      "source_hash": "f79eb2ac2e9ecd7b1547a6593c3d680bac673a9276e9b8f581a16130f55f6cc0",
+      "display_name_zh": "scientific-agent-skills｜AI 科学智能体技能库",
+      "description_zh": "将任意 AI 智能体变为 AI Scientist。面向科学的 #1 Agent Skills 库，全球 190,000+ 科学家使用。包含 165 个即用型经验证技能及 100+ 科学数据库，覆盖生物学、化学、医学和药物发现。兼容 Cursor、Claude Code、Codex、Pi、Antigravity 及开放 Agent Skills 标准。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1080314243,
       "source_full_name": "QmDeve/QmBlurView",
       "source_hash": "97426b47792616ac64af4bb353e4719a99d1fd136e9cc347aaeafb3701e8e98f",
@@ -24563,6 +25670,15 @@
       "description_zh": "Android UI 组件库，提供实时动态高斯模糊效果，采用原生 C++ 实现高效模糊处理。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1080370450,
+      "source_full_name": "superset-sh/superset",
+      "source_hash": "5f6960e67ceabebdbf146f8b89093073958f36384864ab88229dd182c0298197",
+      "display_name_zh": "superset｜并行编码智能体 IDE",
+      "description_zh": "Superset 是一个智能体 IDE，可并行编排 100+ 编码智能体，并支持使用自己的订阅运行任意智能体。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1081397957,
@@ -24626,6 +25742,15 @@
       "description_zh": "为所有AI代理提供本地优先、Markdown原生、用户拥有且自我进化的便携记忆层。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1086419061,
+      "source_full_name": "vectorize-io/hindsight",
+      "source_hash": "ed2be513c46f354b6dc54a6dbb5e43aed4fd3024b7a0acc05f7a9262101e07e1",
+      "display_name_zh": "hindsight｜会学习的智能体记忆",
+      "description_zh": "Hindsight：会学习的智能体记忆。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1086502772,
@@ -24952,6 +26077,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1103012935,
+      "source_full_name": "openclaw/openclaw",
+      "source_hash": "ba5f7a84c045b1086ea4b7b3042928a6efb05cfdbe4464f795b145790ac3a9bf",
+      "display_name_zh": "openclaw｜跨平台 AI 执行工具",
+      "description_zh": "真正能做事的 AI。任意 OS，任意平台。龙虾之道。🦞",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1103475517,
       "source_full_name": "jindds/BT25049-DECODE",
       "source_hash": "e00e32e66016bb0f8695b844894e89bb0f52776cc1064839be3a9c08ffa07b81",
@@ -25033,6 +26167,24 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1106663535,
+      "source_full_name": "Anionex/banana-slides",
+      "source_hash": "c2c2153e957b8fc1b2805f6a610be191f33e87d19191543079758841608ed815",
+      "display_name_zh": "banana-slides｜AI PPT 生成应用",
+      "description_zh": "一站式原生 AI PPT 生成应用，几分钟内生成一套幻灯片；支持上传任意模板图片与素材并智能解析，通过一句话、大纲或页面描述自动生成 PPT，可口头修改指定区域，一键导出可编辑 PPT、视频等。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1106996539,
+      "source_full_name": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "source_hash": "49a92f600bd73fb110e7aec7820d0a352c2a96cbc99ba375fe4bef2e5b85a606",
+      "display_name_zh": "ui-ux-pro-max-skill｜AI 设计技能",
+      "description_zh": "一个 AI 技能，为跨多个平台构建专业 UI/UX 提供设计智能。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1107097669,
       "source_full_name": "kachetong1314/ninja",
       "source_hash": "578cd7b28e8c442f8425e942edc1655d39b9ab87e27c536ee1876e8b00880d62",
@@ -25058,6 +26210,15 @@
       "description_zh": "为Claude智能体提供使用网页浏览器能力的技能。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1108837393,
+      "source_full_name": "code-yeongyu/oh-my-openagent",
+      "source_hash": "f9000da222bf58bb782bde39e461687af85b0044544c59e20a3f3a59accc3c29",
+      "display_name_zh": "oh-my-openagent｜图工程智能体",
+      "description_zh": "OmO：在提示词中输入“mass ulw”关键词，即可成为图工程大师。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1109205296,
@@ -25184,6 +26345,15 @@
       "description_zh": "基于命令行的 YouTube 视频下载和格式转换工具（CLI）",
       "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1114604376,
+      "source_full_name": "itsomg134/create-a-website-that-rewrites-text-to-make-it-sound-more-natural-and-human-like",
+      "source_hash": "b826783324988981f53837c00c700752dc711a67fb8e447d8074af7d076afb66",
+      "display_name_zh": "文本自然化改写网站",
+      "description_zh": null,
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1114940046,
@@ -25456,6 +26626,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1125856365,
+      "source_full_name": "can1357/oh-my-pi",
+      "source_hash": "838c4c3a6e89c77e714179834126e35019450609f36ca51efe696ae3c13032ac",
+      "display_name_zh": "oh-my-pi｜内置 IDE 的编码智能体",
+      "description_zh": "内置 IDE 的编码智能体。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1125992130,
       "source_full_name": "spotiflacapp/SpotiFLAC-Mobile",
       "source_hash": "d2746d44e106c821aeda218bb5986e22538478f4459f804fff49f8774ef31454",
@@ -25481,6 +26660,15 @@
       "description_zh": "Obsidian 的 Agent 技能，支持通过 CLI 操作 Obsidian 及使用包括 Markdown、Bases、JSON Canvas 在内的开放格式。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1127110039,
+      "source_full_name": "OthmanAdi/planning-with-files",
+      "source_hash": "3a41e260a20e06f636307894a89d3eb12c99851d4046b0b77bd03860c12fbb65",
+      "display_name_zh": "planning-with-files｜AI 编码智能体文件规划",
+      "description_zh": "面向 AI 编码智能体和长时任务的持久化文件规划。防崩溃的 markdown 计划，在 /clear 和压缩后可恢复会话，每轮重新注入以对抗上下文腐化，确定性完成门控。Manus 风格。可从 npm、Claude Code 插件市场或 npx skills 安装。支持 Codex、Cursor、OpenCode 等 60+ 智能体。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1127457932,
@@ -25589,6 +26777,15 @@
       "description_zh": "Reddit 生意调研 Agent，自动抓取帖子和评论数据，使用 LLM 进行 AI 内容分析，生成市场验证报告，帮助用户在 10 分钟内验证商业想法，避免 6 个月后悔。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1129786550,
+      "source_full_name": "teng-lin/notebooklm-py",
+      "source_hash": "a38a209611cb3589d61c7661456afa806d13aac5c0318dc179f0bf07d7be585d",
+      "display_name_zh": "notebooklm-py｜非官方 Python API 与智能体技能",
+      "description_zh": "面向 Google Gemini Notebook 的非官方 Python API 与智能体技能，通过 Python、CLI 和 Claude Code、Codex、OpenClaw 等 AI 智能体，以编程方式完整访问 NotebookLM 功能，包括网页 UI 未开放的能力。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1129930192,
@@ -25771,6 +26968,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1133707766,
+      "source_full_name": "multica-ai/multica",
+      "source_hash": "9bc97cbf3cad13370e8528a06fc4023e3743e403f47e852e296d77bb014a6ca4",
+      "display_name_zh": "multica｜人机协作团队",
+      "description_zh": "让人类与 AI 代理作为一个团队协作——开源且可自托管。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1133883850,
       "source_full_name": "github/copilot-sdk",
       "source_hash": "e9f3c9ec819fbec7a8f42ec45ade5c8dbbc7cf40769769d10909dab379cf76f5",
@@ -25807,6 +27013,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1134426800,
+      "source_full_name": "sickn33/agentic-awesome-skills",
+      "source_hash": "cd4af7dfc8569cad7fdbfbfaec341e45e95ce9340773ce78ae344db8ab88e30c",
+      "display_name_zh": "agentic-awesome-skills｜AAS 本地智能体控制平面",
+      "description_zh": "AAS Core 是本地、智能体优先的控制平面，用于完整目录发现、智能体自主选择、技术栈校验与规划，背后有 2,400+ 智能体技能，包含 CLI、本地 MCP、目录、插件与 Workbench。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1134543109,
       "source_full_name": "vercel-labs/skills",
       "source_hash": "8a9e511a67ebbe727092997c05aa66fce688f45f1aabf86ba7a07e3cc8ad4258",
@@ -25814,6 +27029,15 @@
       "description_zh": "开源智能体技能工具，支持通过 npx 命令使用。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1134819911,
+      "source_full_name": "nyldn/claude-octopus",
+      "source_hash": "0aeddcbc8244ef5027e8bb80e6568a594dbe609e58e7e9a8c61bfc588c8ffa17",
+      "display_name_zh": "claude-octopus｜多 AI 模型同任务对比",
+      "description_zh": "让多个 AI 模型针对同一研究、设计或编码任务运行，在交付前暴露分歧。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1135212071,
@@ -25888,6 +27112,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1136666433,
+      "source_full_name": "blader/humanizer",
+      "source_hash": "b4238a3753a0c4ec89eccf6de6c74f29d536cef527ff2cfd0609849e90ce9b31",
+      "display_name_zh": "humanizer｜去除 AI 写作痕迹技能",
+      "description_zh": "用于从文本中去除 AI 生成写作痕迹的智能体技能。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1136772909,
       "source_full_name": "vanloctech/youwee",
       "source_hash": "0cd10d92856ee515cb523b393942ecebdd06f9a2ae4f940e6a93fbef67322f9e",
@@ -25906,6 +27139,33 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1137078255,
+      "source_full_name": "colbymchenry/codegraph",
+      "source_hash": "7b5462b28c66d309ce2ac12c637dd5203e2a58092657e0fba064b3857a72b3ad",
+      "display_name_zh": "codegraph｜预索引代码知识图谱",
+      "description_zh": "预索引的代码知识图谱，代码变更时自动同步，支持 Claude Code、Codex、Gemini、Cursor、OpenCode、AntiGravity、Kiro、CoPilot 和 Hermes Agent，减少 token 与工具调用，100% 本地运行。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1137306148,
+      "source_full_name": "PerryTS/perry",
+      "source_hash": "4f3246299c35cb2d8b0dcc3cb5cc8312fb95d0bde71450f4502cd720f568cb2c",
+      "display_name_zh": "perry｜Rust 编写的原生 TypeScript/JavaScript 编译器",
+      "description_zh": "用 Rust 编写的原生 TypeScript/JavaScript 编译器。使用 SWC 和 LLVM 将 TypeScript/JavaScript 直接编译为可执行文件。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1137711311,
+      "source_full_name": "Hmbown/Codewhale",
+      "source_hash": "8093b895a0220aff1225ff682190f5949c0e1d5aecc68fc0fb29de3717c825a9",
+      "display_name_zh": "Codewhale｜终端开源编码智能体",
+      "description_zh": "面向终端的开源编码智能体，使用 Rust 构建，并在社区持续改进中，欢迎提交 Issues 和 PRs。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1137837751,
       "source_full_name": "66HEX/frame",
       "source_hash": "3dfdc06c09e72d0cb12dbb756e2172465154d0538b741b01e34a110ee900e0b6",
@@ -25913,6 +27173,15 @@
       "description_zh": "基于FFmpeg的图形用户界面（GUI）工具。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1137846174,
+      "source_full_name": "xai-org/x-algorithm",
+      "source_hash": "77dc5cdf92d6f7ae0efb6bc77eebe09cc8c884799c9ed1b844d1f894014ba0bb",
+      "display_name_zh": "x-algorithm｜X For You 信息流算法",
+      "description_zh": "驱动 X 上 For You 信息流的算法。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1138327045,
@@ -25931,6 +27200,15 @@
       "description_zh": "manim_skill 是 Manim 的代理技能集，用于创建 3Blue1Brown 风格动画。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1139883371,
+      "source_full_name": "xeronsh/openOii",
+      "source_hash": "132bae864bf335aa5c090747d5536ee647176b7a1b9fb7bb426241dfeb33ad32",
+      "display_name_zh": "openOii｜AI 漫剧生成平台",
+      "description_zh": "故事想法 → 多智能体协作 → 漫剧成片 | 基于 LangGraph 的 AI 漫剧生成平台",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1139971460,
@@ -26095,6 +27373,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1144520675,
+      "source_full_name": "Alishahryar1/free-claude-code",
+      "source_hash": "054dcf76cba4505503aa0d5be19c990324d508fed41ce1b4de645cf504c6ff4e",
+      "display_name_zh": "free-claude-code｜免费多框架编码工具",
+      "description_zh": "在终端、应用、IDE 或手机上免费使用 Claude Code、Codex、Pi、OpenCode 等 6 个其他 harness（1.3B+ 免费 token），现在还支持浏览器原生会话（多 harness + 多模型），类似 OpenClaw（支持语音且符合 ToS）。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1144764199,
       "source_full_name": "didilili/ai-agents-from-zero",
       "source_hash": "5b818871e4fcdc38b437eb52db7d64a014bf2da3ecf866a9d1d20828dc83dad0",
@@ -26174,6 +27461,24 @@
       "description_zh": "免费开源的子域名服务，方便开发者无需购买域名即可发布 APIs、演示和副项目。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1146738089,
+      "source_full_name": "nanocoai/nanoclaw",
+      "source_hash": "99ee9e36d3fa64a4ab78140ffef32bc5000baec19a56d8f37b2e81808519a7f6",
+      "display_name_zh": "nanoclaw｜容器化轻量消息助手",
+      "description_zh": "OpenClaw 的轻量替代方案，在容器中运行以保障安全。可连接 WhatsApp、Telegram、Slack、Discord、Gmail 等消息应用，具备记忆与定时任务，并直接运行于 Anthropic 的 Agents SDK。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1147094660,
+      "source_full_name": "HKUDS/nanobot",
+      "source_hash": "beaa69110fdd5042ed340d9f2e87bd235b7d72b665365b21703299716701e5cb",
+      "display_name_zh": "nanobot｜超轻量个人 AI Agent 框架",
+      "description_zh": "超轻量、开源、自托管的 Python 个人 AI Agent 框架，具备 WebUI、工具、记忆、MCP、多智能体工作流、自动化和聊天应用。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1147838400,
@@ -26527,6 +27832,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1157102282,
+      "source_full_name": "diegosouzapw/OmniRoute",
+      "source_hash": "d029a62f625367d6b5bd65901fbb176f9641dedd5fb1c1b21c3357b497f8581b",
+      "display_name_zh": "OmniRoute｜MIT AI 网关",
+      "description_zh": "永不停止编码。免费 MIT AI 网关：单一端点接入 352 家提供商（150+ 免费）、1200+ 模型，包括 Kimi、Claude、GPT、Gemini、GLM、DeepSeek、MiniMax。兼容 Claude Code、Codex、Cursor、OpenCode、Cline 与 Copilot。配额感知自动回退，RTK+Caveman 压缩节省 15-95% token，支持 MCP/A2A、桌面/PWA。由 550+ 贡献者构建。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1157122048,
       "source_full_name": "danesto/cold0",
       "source_hash": "108b31a243a6879dc62c826efa10ff0f1b61a251af73a0c268b22694f216e87d",
@@ -26588,6 +27902,15 @@
       "description_zh": null,
       "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1158472225,
+      "source_full_name": "edison7009/EchoBird",
+      "source_hash": "d7ad13f981cfac73a2b513f69cc4e818a3e52314841d061ac46a202612509f42",
+      "display_name_zh": "EchoBird｜多账号与多模型路由管理",
+      "description_zh": "集中管理 ChatGPT、Codex CLI 和 Claude Code 账号并追踪配额。支持带优先级与自动故障转移的多模型智能路由。一键安装 AI 工具并部署本地 LLMs。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1158479469,
@@ -26723,6 +28046,15 @@
       "description_zh": "Lumen's World中的一部分，构建人类与AI协作的主权AI平台，永久免费开放。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1161163182,
+      "source_full_name": "tinyhumansai/openhuman",
+      "source_hash": "c776bfe503e49a1307f208272a68d9549729af5688ec6c0d356e5d3cecae0a81",
+      "display_name_zh": "openhuman｜本地优先智能体框架",
+      "description_zh": "OpenHuman 是开源智能体框架，具备本地优先记忆、智能体编排与工作流。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1161521332,
@@ -26905,6 +28237,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1167034425,
+      "source_full_name": "NVIDIA/skills",
+      "source_hash": "2408f53354fa1bc41ed075d625c9837d8c734024e24b2718cddcc0f649753a73",
+      "display_name_zh": "NVIDIA｜skills 智能体技能集",
+      "description_zh": "面向 NVIDIA 产品的 Agent Skills，可安装到 Claude Code、Codex 等编码智能体中，端到端运行 Physical AI、机器人、仿真、CUDA 与 RAG 工作流。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1167300963,
       "source_full_name": "Imbad0202/academic-research-skills",
       "source_hash": "a9434c5538e465250ba77652233282ce92ac07ef0857ef3330f51145af5a4c1f",
@@ -26984,6 +28325,15 @@
       "description_zh": "针对Even Reality G2智能眼镜的地标探索应用。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1168900408,
+      "source_full_name": "Gentleman-Programming/gentle-ai",
+      "source_hash": "e813c763d887f4f3676546758ddbd9e97e7d24e8b202b883ab49dd2b1906dacb",
+      "display_name_zh": "gentle-ai｜AI 编码代理配置工具",
+      "description_zh": "Gentle-AI 配置你已在使用的 AI 编码代理：Claude Code、Cursor、OpenCode、Codex、Pi 等。可选择持久记忆、Organic-Driven Development、精选技能、MCP 服务器、角色设定与可选的有界审查。开源，无代理锁定。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1168908344,
@@ -27247,6 +28597,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1174789082,
+      "source_full_name": "block/buzz",
+      "source_hash": "61e239bb5c94c9d5ff0a687e338cf45da659de4fe48402ec03e46ad81a461148",
+      "display_name_zh": "buzz｜蜂群思维通信平台",
+      "description_zh": "蜂群思维通信平台。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1174815292,
       "source_full_name": "Pouzor/homelable",
       "source_hash": "0172f4c97def6ee02d4e8ab83d26055c06d8a5fa0b15c86e04c3fcf4890039b7",
@@ -27281,6 +28640,15 @@
       "description_zh": "实验性AI研究连续性基础设施，涵盖内感知、记忆巩固和词汇框架。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1175278883,
+      "source_full_name": "whiteguo233/OpenBiliClaw",
+      "source_hash": "6faf89d04a5e40c24f32b8764e2e0d6e726beb2341c66f7297ad40611635e147",
+      "display_name_zh": "OpenBiliClaw｜本地优先跨平台 AI 内容发现 Agent",
+      "description_zh": "本地私有、开源的自进化跨平台 AI 内容发现 Agent：先理解你，再主动从 B站、小红书、抖音、YouTube、X、知乎、Reddit、微博等平台与开放 Web 寻找内容。（支持 deepseek harness 插件）",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1175538883,
@@ -27670,6 +29038,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1183325896,
+      "source_full_name": "emilkowalski/skills",
+      "source_hash": "fbbdf9d094128ed10ee64143ca1646bb62583702a4b50b3cf1a3a84185e4f4b5",
+      "display_name_zh": "skills｜设计师与工程师技能集",
+      "description_zh": "面向设计师和工程师的技能集。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1183340106,
       "source_full_name": "cubetribe/CODEX_GodMode_ON",
       "source_hash": "5307f9044ceba4baa7a1705585fb7857a6a83354f0d6ab70f804b6f6718565f4",
@@ -27686,6 +29063,15 @@
       "description_zh": null,
       "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1183888342,
+      "source_full_name": "stablyai/orca",
+      "source_hash": "6b708e8a6a5ac7d668986a973e5f98bd774fb728324736de16dff5583259cd89",
+      "display_name_zh": "orca｜并行代理 ADE",
+      "description_zh": "Orca 是用于管理并行代理集群的 ADE。可使用自己的订阅运行任意编码代理，支持桌面、移动和远程运行时。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1184090452,
@@ -28030,6 +29416,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1193909050,
+      "source_full_name": "herdrdev/herdr",
+      "source_hash": "bea33cbaeefb93ab2b98e825ad114c91fb4f7193a1cac0a53ac2a07b3c395739",
+      "display_name_zh": "herdr｜编码代理运行时",
+      "description_zh": "你的编码代理所运行的运行时。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1194006225,
       "source_full_name": "tristcoil/zero-sum-public",
       "source_hash": "d84380b4dd10d15757b5187ba4ab6f38d1154055ed640c8f2c66cc74e7a6806e",
@@ -28102,6 +29497,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1195360525,
+      "source_full_name": "calesthio/OpenMontage",
+      "source_hash": "a19cc567e092aed6e12a91b25a618caceae2cd73253885fb14c6a6eb32f6068a",
+      "display_name_zh": "OpenMontage｜代理式视频制作系统",
+      "description_zh": "全球首个开源、代理式视频制作系统。包含 12 条制作流水线、100+ 工具、700+ 代理技能与制作知识文件。将你的 AI 编码助手变成完整的视频制作工作室。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1195624057,
       "source_full_name": "Akarikev/luma",
       "source_hash": "0d28b5f1cd8f3f0a9a5d56ef27a4290d551de2219e94f63acbdb2c1b078d3e37",
@@ -28118,6 +29522,24 @@
       "description_zh": "WebOS的SSAP工具集。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1196321162,
+      "source_full_name": "openai/codex-plugin-cc",
+      "source_hash": "4e60b5a893073c4ac0a177487bdee78e4aaab673fb2a8f0f138c7d4ac1701ac6",
+      "display_name_zh": "codex-plugin-cc｜在 Claude Code 中使用 Codex",
+      "description_zh": "在 Claude Code 中使用 Codex 审查代码或委派任务。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1196447493,
+      "source_full_name": "google/ax",
+      "source_hash": "614ee119e91ece637f8dea5b357c490cac3168d333a1f07b0cc117183513818b",
+      "display_name_zh": "Google ax｜开放代理编排器",
+      "description_zh": "Google 的开放代理编排器。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1196918663,
@@ -28318,6 +29740,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1201173969,
+      "source_full_name": "JuliusBrussee/caveman",
+      "source_hash": "a53785a5a45e84c6462aa6ed41f742bc191a9574d5ac2cf951b49a19798a2693",
+      "display_name_zh": "caveman｜编码智能体省 token 技能与代理",
+      "description_zh": "用更少 token 说清意思：面向编码智能体的热门技能与代理，通过“原始人式”表达减少 65% 的 token 消耗。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1201253077,
       "source_full_name": "VectifyAI/OpenKB",
       "source_hash": "c92fafe4c0639bb2fbd7e45ca815a589f32baf97c1774fe21b86d3507ceacbf2",
@@ -28325,6 +29756,15 @@
       "description_zh": "OpenKB：开放式大语言模型（LLM）知识库。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1201476594,
+      "source_full_name": "career-ops-hq/career-ops",
+      "source_hash": "e4c7dad43ef8c3e89e688eff39e35d14c9ab0365f24353abe0b614843f4d03c0",
+      "display_name_zh": "career-ops｜开源 AI 求职搜索",
+      "description_zh": "开源 AI 求职工具：扫描招聘门户，将职位评估为带全局 1-5 评分的结构化 A-H 报告，定制 CV，跟踪申请进度，在本地 AI 编码 CLI（Claude Code、Codex、OpenCode、Antigravity 等）中运行。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1201656210,
@@ -28516,6 +29956,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1206390571,
+      "source_full_name": "debpalash/VoiceStudio",
+      "source_hash": "3f86a1f3d2649adb1f28940ffc430dec7835f85ac0d410f4215fac7915422d43",
+      "display_name_zh": "VoiceStudio｜本地开源语音克隆与配音",
+      "description_zh": "VoiceStudio 是开源、完全本地的 ElevenLabs 替代方案，支持语音克隆、语音设计、视频配音、听写、转录与有声书制作，覆盖 646 种语言。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1206553433,
       "source_full_name": "TencentCloud/CubeSandbox",
       "source_hash": "2200c22bdddffa4068d35135fcbaf87ca402fec730d2bd0d0a85fcef1b40a68a",
@@ -28651,6 +30100,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1211139949,
+      "source_full_name": "tt-a1i/archify",
+      "source_hash": "d1a0114fdaf12d421aa7330bc4ef928c65f238ec72fe1c14228720422d40d95a",
+      "display_name_zh": "archify｜架构图智能体技能",
+      "description_zh": "用于生成美观、可验证的架构、工作流、时序、数据流和生命周期图的智能体技能，输出带动态效果且可清晰导出的自包含 HTML。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1211358196,
       "source_full_name": "LeMo-CtRes/CtRes",
       "source_hash": "2650c5889b679a07e5a9e58d396b041f60651ded47b36539ae3c61bc332cd780",
@@ -28721,6 +30179,15 @@
       "description_zh": "wtk 是一个 Windows Token Killer 命令行代理，能减少 60-90% 的 LLM 令牌消耗。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1212769188,
+      "source_full_name": "cathrynlavery/diagram-design",
+      "source_hash": "77526da4d6c4a0d3dbe71f9e99acd5dd0b3e0a4c728664fbd5a9d5a773085d29",
+      "display_name_zh": "diagram-design｜编辑式图表设计",
+      "description_zh": "面向 Claude Code、Codex 和 Pi 的编辑式图表设计。自包含 HTML + SVG。无阴影，无 Mermaid 式粗糙效果。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1213049020,
@@ -29002,6 +30469,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1223170290,
+      "source_full_name": "nexu-io/open-design",
+      "source_hash": "1d63e6d40019f4abb3e2f7c8a6a07163877c3cce985a8fe8da6eec9b2ec4f432",
+      "display_name_zh": "open-design｜开源本地优先设计应用",
+      "description_zh": "DeepSeek Harness 设计插件，开源版 Claude Design 替代方案。本地优先桌面应用，让编码智能体成为设计引擎：原型、落地页、仪表盘、幻灯片、图像与视频，输出真实文件并支持 HTML/PDF/PPTX/MP4 导出。通过 BYOK 接入 Claude Code、Codex、Cursor、DeepSeek Harness、OpenCode 等 20+ CLIs。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1223229944,
       "source_full_name": "ESI-Bench/ESI-Bench",
       "source_hash": "f960e0b7e4fc744d0869b44cb9fe43280a731ada9ff26019f7ea3f316c5201e7",
@@ -29036,6 +30512,15 @@
       "description_zh": "Obsidian-Compact-UI-Component 是 Obsidian 的紧凑型用户界面组件。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1224172037,
+      "source_full_name": "t8y2/dbx",
+      "source_hash": "ee68efa320ccb7b3228ec7c1f6e7b3aa842baf4a36b7fb697ffd758a5aa0f262",
+      "display_name_zh": "dbx｜轻量级跨平台数据库客户端",
+      "description_zh": "25 MB 轻量级跨平台数据库客户端，支持 MySQL、PostgreSQL、SQLite、Redis、MongoDB、DuckDB、SQL Server、达梦等 90+ 数据库。内置 AI、MCP Server、CLI，提供桌面端与 Docker。 | 轻量级跨平台数据库管理工具，支持 MySQL、PostgreSQL、SQLite、Redis、MongoDB、达梦等 90+ 数据库，提供桌面端、Docker、CLI、内置 AI 助手和 MCP Server。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1224392175,
@@ -29497,6 +30982,24 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1237819660,
+      "source_full_name": "zhaoxuya520/reverse-skill",
+      "source_hash": "1e63b698005d13839df9615255859e6952423e1ca0dec4bdf21bccd7d18e35c3",
+      "display_name_zh": "reverse-skill｜逆向与安全技能路由包",
+      "description_zh": "逆向工程 / 授权渗透测试 / 安全研究技能路由包：AI 自动路由 + 按需自举工具链 + 自动进化经验库。支持 Claude Code、Kiro、Cursor、Cline 等代码 AI 客户端。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1238120057,
+      "source_full_name": "ayghri/i-have-adhd",
+      "source_hash": "60330e4a6ea3dbd99af52a42a36ac5ac550f19d0b9162cbf5af472d3c32a2382",
+      "display_name_zh": "i-have-adhd｜ADHD 友好输出技能",
+      "description_zh": "一个让编码智能体不再把答案埋在长篇输出里的技能，提供 ADHD 友好的输出。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1240183493,
       "source_full_name": "saeedkolivand/ai-job-hunter-app",
       "source_hash": "b7bc83a4d74d75bf0d883290006e29d0ae0e98fa10e9d89b1a35010e4d839689",
@@ -29549,6 +31052,15 @@
       "description_zh": "基于AI的采购报价管理邮件代理。",
       "generated_at": "2026-07-20T22:06:55.994311Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1241960226,
+      "source_full_name": "alibaba/open-code-review",
+      "source_hash": "9401de31b54b451cbdf53c0006674bab42098c456c7bf8b22e6d3f25671a13e7",
+      "display_name_zh": "open-code-review｜混合架构代码审查工具",
+      "description_zh": "安全、快速、高效，经阿里巴巴规模实战检验。混合架构代码审查工具：确定性流水线 + LLM Agent，精确行级评论，内置多语言规则集（NPE、线程安全、XSS、SQL 注入），兼容 OpenAI 与 Anthropic。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1242402978,
@@ -29776,6 +31288,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1248769131,
+      "source_full_name": "luolangaga/tubatools",
+      "source_hash": "e33f503b4672f83ec9e430704ef2f5fae9b4a4e5bdfc23dcb9715d9bfdcf2de9",
+      "display_name_zh": "tubatools｜图吧工具箱 CE",
+      "description_zh": "图吧工具箱 CE。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1249107749,
       "source_full_name": "UditAkhourii/adhd",
       "source_hash": "af3ab121e56eb26195ba541e2887d2a9061f3f299f00cd96d995d54bb0c494a8",
@@ -29846,6 +31367,15 @@
       "description_zh": "倪海厦中医课程资料的智能助手，支持课程检索、方证穴位辨析、学习笔记整理及板书截图证据索引。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1250822765,
+      "source_full_name": "nexu-io/html-video",
+      "source_hash": "54bb79d089e760611041a240947ad456288f215ce58a6121687256ba70780b7a",
+      "display_name_zh": "html-video｜HTML 转视频",
+      "description_zh": "面向编码代理的程序化视频工具——在本地将 HTML 转为视频。把 HTML、CSS 与数据渲染为真实 MP4s，支持可插拔渲染引擎、21 个模板和 AI 配乐。Apache-2.0 许可，无按次渲染费用。由 Open Design 团队出品的官方项目。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1250942740,
@@ -30541,6 +32071,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1267485499,
+      "source_full_name": "vorssaint/vorssaint-utils",
+      "source_hash": "984febfc9c177959c1da3e42f10023872a2e1dede38b6caea913800dbf7cc87c",
+      "display_name_zh": "vorssaint-utils｜macOS 菜单栏工具集",
+      "description_zh": "免费开源的 macOS 菜单栏工具集。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1268021332,
       "source_full_name": "hahwul/gori",
       "source_hash": "502bc411e84ee8946684d30791c4a5d2efe65326fb7bc0af01d54f9bd13536b6",
@@ -30667,6 +32206,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1271113810,
+      "source_full_name": "vercel/eve",
+      "source_hash": "1fa412bbbd3847eece266601647f03b2425e9adb815cad697023ef9c6c7b19ca",
+      "display_name_zh": "eve｜构建代理的开放框架",
+      "description_zh": "用于构建代理的开放框架。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1271159623,
       "source_full_name": "sumit-ai-ml/claude-md-starter",
       "source_hash": "6e88f2a55081e0ca52cc40fa38b1c6dacb30df48b0d200e600294e3abccb7629",
@@ -30728,6 +32276,15 @@
       "description_zh": "爻枢 Token 提供智能网关、智能聚合、大模型评测和排名等功能。",
       "generated_at": "2026-07-20T22:06:55.994311Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1273015953,
+      "source_full_name": "shy3130/tick-stock-panel",
+      "source_hash": "7683d968ab2f09d73d02953862a83bffe1ba58c714d7a6a049bac9b5fc57f782",
+      "display_name_zh": "tick-stock-panel｜TSP A 股量化工作台",
+      "description_zh": "TSP 自托管、零运维的 A 股「选股 + 监控 + 回测」量化工作台 | LLM 能力驱使策略定制 + 个股分析 + 复盘 | 自由接入第三方数据源与个性化扩展数据 | 个人开源。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1273138090,
@@ -30946,6 +32503,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1277471539,
+      "source_full_name": "bilawalsidhu/gods-eye-view",
+      "source_hash": "d6034e4c6bcf351c803df5b55f060a297c7cd1cd3978e4f9ae2251f07f574b97",
+      "display_name_zh": "gods-eye-view｜浏览器间谍卫星模拟器",
+      "description_zh": "浏览器中的间谍卫星模拟器，但数据是真实的。在照片级 3D 地球上提供实时开源空间情报。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1277477208,
       "source_full_name": "langchain-ai/openwiki",
       "source_hash": "afc74dd2268df72add769c165e63608912de58061560abfd81a9f1b0953d84bc",
@@ -31054,6 +32620,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1278926400,
+      "source_full_name": "amplifthq/opentag",
+      "source_hash": "aa081ccc759ad13971b063378daf8b89fd8314445b2a35ea8f054a7556b765a4",
+      "display_name_zh": "opentag｜在协作工具中调用 ACP 编码智能体",
+      "description_zh": "在 Slack、GitHub、GitLab、Linear 或 Lark 中提及任意 ACP 编码智能体。OpenTag 在你自己的机器上运行 Claude Code、Codex、Cursor 等，并在话题中回复经过验证、有证据支撑的结果。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1279159149,
       "source_full_name": "davidondrej/skills",
       "source_hash": "df5eb78e5c31390af3308d79391513fbc17fb027ef291c3ccda02155a9446ed1",
@@ -31124,6 +32699,15 @@
       "description_zh": null,
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1280278993,
+      "source_full_name": "baairon/torlink",
+      "source_hash": "0748045966edf42a82ae541c78234e015e633d134e3da031916bdb31209db2f7",
+      "display_name_zh": "torlink｜终端种子搜索下载工具",
+      "description_zh": "一款简洁、零配置的种子搜索与下载工具，直接运行在终端中。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1280415626,
@@ -31369,6 +32953,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1283907968,
+      "source_full_name": "oomol-lab/open-connector",
+      "source_hash": "3b37fd650ddac7be6467e391da5e7d30d85bb73f70fa3144959b9e7dc30c62ce",
+      "display_name_zh": "open-connector｜连接 1500+ SaaS 的 AI 认证网关",
+      "description_zh": "开源认证网关，通过 SDK、CLI、MCP、HTTP 和 OpenAPI 将 1500+ SaaS 提供商连接到 AI 代理。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1284051274,
       "source_full_name": "kennss/SpectArk",
       "source_hash": "e6e8ae5160dfba5e2de8ed8d72f2bfb6c67639a263591b41c0d299180c406cc9",
@@ -31495,6 +33088,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1286080397,
+      "source_full_name": "JustVugg/colibri",
+      "source_hash": "bb82c2137559dc3dbf6e08d91a19783ca5ac7ea7e187358a2c6ecb753e402ccc",
+      "display_name_zh": "colibri｜纯 C 本地运行 MoE 模型引擎",
+      "description_zh": "在自有硬件上运行前沿 MoE 模型：纯 C 实现、零依赖，专家参数从磁盘流式加载。小引擎，大模型。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1286415059,
       "source_full_name": "Bunn/xcbox",
       "source_hash": "9090cecb6c3582fbad8f61a44d34e542a342fdd6a81dba4a5ee95dd554e65adf",
@@ -31610,6 +33212,15 @@
       "description_zh": "全球工作空间可解释性论文的配套代码。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1287845516,
+      "source_full_name": "xuchonglang/investing-for-beginners",
+      "source_hash": "33e4761755fcb3d8cc755a7cc999bf43841884e87bd37a9447bd66a39d6fc07b",
+      "display_name_zh": "investing-for-beginners｜美股、期权与加密货币知识框架",
+      "description_zh": "美股、期权与加密货币知识框架",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1288013365,
@@ -31943,6 +33554,15 @@
       "description_zh": null,
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1291501023,
+      "source_full_name": "oso95/scroll-world",
+      "source_hash": "872495c5fef82c5e316744074c2e0fba0d782977fa88b8cc0ffc95ef3f0eac69",
+      "display_name_zh": "scroll-world｜品牌 3D 滚动落地页技能",
+      "description_zh": "一个可将任意品牌转化为可滚动 3D 世界落地页的技能。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1291503861,
@@ -32429,6 +34049,15 @@
       "description_zh": "开源兼容CMA的多智能体运行时，支持本地运行多模型（Ollama/vLLM/Claude/GPT）、MCP工具、场景模板及仪表盘，一键启动，面向企业团队。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1297316519,
+      "source_full_name": "MDX-Tom/gpt-instruct",
+      "source_hash": "bf976734fb6084d461a4e856a10a3d040949bc686478221aa7fe5728bf0ff489",
+      "display_name_zh": "gpt-instruct｜Codex 破甲提示词与测试包",
+      "description_zh": "针对 gpt 系列的 Codex 破甲提示词与测试包。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1297730489,
@@ -33986,199 +35615,26 @@
       "description_zh": "Next.js项目模板和源码存储库。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1333065091,
+      "source_full_name": "deepseek-ai/deepseek-harness",
+      "source_hash": "da261a052d9ea45428b18c0a371b6d013cd2955e0379627fbaa41a112ca2e076",
+      "display_name_zh": "DeepSeek Harness｜一切皆插件",
+      "description_zh": "DeepSeek Harness：一切皆插件。",
+      "generated_at": "2026-09-24T04:29:49.592970Z",
+      "provenance": "model_api"
     }
   ],
   "failed_repository_ids": [
-    3314,
-    612230,
-    1357796,
-    2909429,
-    3618133,
-    6899875,
-    10187082,
-    14964475,
-    16089035,
-    17420614,
-    21289110,
-    21737266,
-    21737465,
-    24268127,
-    32215970,
-    36891867,
-    46273445,
-    52855516,
-    53548867,
-    54614238,
-    66474729,
-    68957920,
-    71995937,
-    75785240,
-    80149262,
-    91253698,
-    92807616,
-    100061716,
-    106087444,
-    110795721,
-    128624453,
-    143328315,
     145553672,
-    159152904,
-    172227885,
-    192640529,
-    192925833,
-    193162629,
-    224979610,
-    234739976,
-    249995750,
-    266417772,
-    275386910,
-    280363952,
-    283211901,
-    291438522,
-    299510783,
-    307213173,
-    307489284,
-    320566331,
     326174741,
-    333303663,
     335780269,
-    336895436,
-    352933140,
-    357897199,
-    372536760,
-    395140743,
-    416714911,
-    419661684,
-    480217156,
     510463319,
-    515647260,
-    519895363,
-    522158088,
-    535360445,
-    537340460,
-    543101941,
-    560704231,
-    585146387,
-    595526110,
-    596377730,
-    599524116,
-    599735720,
-    612344730,
     623657072,
-    631567741,
-    640079149,
-    642497346,
-    656099147,
-    656227652,
-    658928958,
-    666299222,
-    683560668,
-    709027512,
-    717197250,
-    722184017,
-    722597620,
-    725205304,
-    736272311,
     751161649,
-    764555401,
-    781524183,
-    787076358,
-    793375104,
-    808144141,
-    814684486,
-    817326197,
-    818331198,
-    821360765,
-    832452447,
-    834369920,
-    838849799,
-    863835427,
-    866513204,
-    868173144,
-    872119017,
-    879822807,
-    881458615,
-    912559512,
-    916009087,
-    924632872,
     942867788,
-    976921297,
-    979560403,
-    994093166,
-    995029641,
-    1007827531,
-    1012087571,
-    1013830656,
-    1021174826,
-    1025856648,
-    1031059905,
-    1031912724,
-    1036441713,
-    1057515940,
-    1062356571,
-    1065059442,
-    1077819522,
-    1079456184,
-    1080370450,
-    1086419061,
-    1103012935,
-    1106663535,
-    1106996539,
-    1108837393,
-    1114604376,
-    1125856365,
-    1127110039,
-    1129786550,
-    1133707766,
-    1134426800,
-    1134819911,
-    1136666433,
-    1137078255,
-    1137306148,
-    1137711311,
-    1137846174,
-    1139883371,
-    1144520675,
-    1146738089,
-    1147094660,
-    1157102282,
-    1158472225,
-    1161163182,
-    1167034425,
-    1168900408,
-    1174789082,
-    1175278883,
-    1183325896,
-    1183888342,
     1184460122,
-    1193909050,
-    1195360525,
-    1196321162,
-    1196447493,
-    1201173969,
-    1201476594,
-    1206390571,
-    1211139949,
-    1212769188,
-    1223170290,
-    1224172037,
-    1237819660,
-    1238120057,
-    1241960226,
-    1248769131,
-    1250822765,
-    1267485499,
-    1271113810,
-    1273015953,
-    1275806147,
-    1277471539,
-    1278926400,
-    1280278993,
-    1283907968,
-    1286080397,
-    1287845516,
-    1291501023,
-    1297316519,
-    1333065091
+    1275806147
   ]
 }
