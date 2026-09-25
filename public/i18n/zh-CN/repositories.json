@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-25T05:32:45.254187Z",
+  "generated_at": "2026-09-25T16:10:07.158275Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4887,
-    "localized_count": 4167,
-    "pending_count": 720,
+    "localized_count": 4162,
+    "pending_count": 725,
     "failed_count": 1,
-    "coverage_ratio": 0.85267
+    "coverage_ratio": 0.851647
   },
   "repositories": [
     {
@@ -3044,15 +3044,6 @@
       "description_zh": "spark 是一个统一的大规模数据处理分析引擎。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 17420614,
-      "source_full_name": "seleniumbase/SeleniumBase",
-      "source_hash": "5f3cd1bd9c9d84756c3de38f9676f4746eb748d6f49a537ea8915e9db8026250",
-      "display_name_zh": "SeleniumBase｜浏览器自动化与测试框架",
-      "description_zh": "用于浏览器自动化、网页抓取和测试。CDP 模式提供可绕过机器人检测的隐蔽 Chromium 实例，并包含 MCP 支持。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 17420913,
@@ -14242,15 +14233,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 338719962,
-      "source_full_name": "KRTirtho/spotube",
-      "source_hash": "e1641eec5a555ca214af1bfc06eeb09c34480c31ad4f2d781794b3b2ec549139",
-      "display_name_zh": "spotube｜开源音乐流媒体应用",
-      "description_zh": "开源音乐流媒体应用，支持桌面和移动端。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 339283024,
       "source_full_name": "ax-i-om/bitcrook",
       "source_hash": "78d4fa2ac9747598f6196b9fd97207183950a9ec4a79cd93ce7695aaa339d9c8",
@@ -21991,15 +21973,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 817962136,
-      "source_full_name": "vllm-project/llm-compressor",
-      "source_hash": "dcea28e2fd576bf8764f7b94a38792001d193f6ab9208273fa51d42ee9aabd95",
-      "display_name_zh": "llm-compressor｜LLMs压缩优化库",
-      "description_zh": "兼容Transformers的库，支持对LLMs应用多种压缩算法以优化部署。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 818331198,
       "source_full_name": "pydantic/pydantic-ai",
       "source_hash": "eca2f9acb272f4bb8c2d6303d5fd7f3241a46d8e8fbd52f1cc88139e5d7bcb7d",
@@ -27580,15 +27553,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1105249676,
-      "source_full_name": "UllrAI/CineGen-ShortDrama",
-      "source_hash": "a7f502d9247d9031c959b6ffc6059d39fee619f5601513e249ec368abc6e3951",
-      "display_name_zh": "CineGen-ShortDrama｜AI 漫剧生成系统",
-      "description_zh": "AI 导演系统，支持 AI 漫剧、动漫、短剧、动画和草图生成。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1105932355,
       "source_full_name": "jay3-yy/BiliPai",
       "source_hash": "65f3d2ed0b1a641b1a9fb3904e0cfe7246aefae6100a9b9ccf532e5d71c99578",
@@ -32141,15 +32105,6 @@
       "description_zh": "Obsidian-Compact-UI-Component 是 Obsidian 的紧凑型用户界面组件。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1224172037,
-      "source_full_name": "t8y2/dbx",
-      "source_hash": "ee68efa320ccb7b3228ec7c1f6e7b3aa842baf4a36b7fb697ffd758a5aa0f262",
-      "display_name_zh": "dbx｜轻量级跨平台数据库客户端",
-      "description_zh": "25 MB 轻量级跨平台数据库客户端，支持 MySQL、PostgreSQL、SQLite、Redis、MongoDB、DuckDB、SQL Server、达梦等 90+ 数据库。内置 AI、MCP Server、CLI，提供桌面端与 Docker。 | 轻量级跨平台数据库管理工具，支持 MySQL、PostgreSQL、SQLite、Redis、MongoDB、达梦等 90+ 数据库，提供桌面端、Docker、CLI、内置 AI 助手和 MCP Server。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1224392175,

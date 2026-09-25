@@ -1,0 +1,203 @@
+{
+  "schema_version": "1.4.0",
+  "date": "2026-09-25",
+  "timezone": "Asia/Shanghai",
+  "window_start": "2026-09-24T16:02:18Z",
+  "window_end": "2026-09-25T16:02:24Z",
+  "window_quality": {
+    "duration_minutes": 1440,
+    "valid_for_ranking": true,
+    "reason": "valid"
+  },
+  "candidate_count": 2000,
+  "collection": {
+    "search_result_counts": {
+      "recent_created": 1000,
+      "recent_active": 500,
+      "established_active": 500
+    },
+    "unique_discovered_count": 1909,
+    "candidate_added_count": 0,
+    "candidate_removed_count": 0,
+    "api_request_count": 1262,
+    "api_retry_count": 0,
+    "snapshot_expected_count": 2000,
+    "snapshot_complete_count": 2000,
+    "snapshot_completeness": 1.0
+  },
+  "language": "PowerShell",
+  "slug": "powershell-55947b6c",
+  "eligible_count": 7,
+  "ranking_limit": 500,
+  "entry_count": 7,
+  "entries": [
+    {
+      "repository_id": 307843105,
+      "full_name": "Raphire/Win11Debloat",
+      "description": "A simple, lightweight PowerShell script that allows you to remove pre-installed apps, disable telemetry, as well as perform various other changes to declutter and customize your Windows experience. Win11Debloat works for both Windows 10 and Windows 11.",
+      "language": "PowerShell",
+      "stars_total": 57584,
+      "created_at": "2020-10-27T22:26:59Z",
+      "pushed_at": "2026-09-10T15:48:43Z",
+      "stars_gained": 41,
+      "html_url": "https://github.com/Raphire/Win11Debloat",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/9938813?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        36,
+        null,
+        null,
+        null,
+        22,
+        41
+      ],
+      "rank": 1,
+      "rank_change": 1
+    },
+    {
+      "repository_id": 486418532,
+      "full_name": "ChrisTitusTech/winutil",
+      "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
+      "language": "PowerShell",
+      "stars_total": 63147,
+      "created_at": "2022-04-28T02:25:19Z",
+      "pushed_at": "2026-09-19T23:16:16Z",
+      "stars_gained": 38,
+      "html_url": "https://github.com/ChrisTitusTech/winutil",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/7896101?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        45,
+        null,
+        null,
+        null,
+        42,
+        38
+      ],
+      "rank": 2,
+      "rank_change": -1
+    },
+    {
+      "repository_id": 1351538048,
+      "full_name": "big0lives/codex-task-pointer",
+      "description": "Pre-compaction hooks + a CAS-guarded task pointer that keep Codex agents on-goal across context auto-compaction — no mainline drift, no duplicate work, no conflicting progress in long runs.",
+      "language": "PowerShell",
+      "stars_total": 246,
+      "created_at": "2026-08-30T16:04:16Z",
+      "pushed_at": "2026-08-30T16:09:15Z",
+      "stars_gained": 10,
+      "html_url": "https://github.com/big0lives/codex-task-pointer",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/126476684?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        5,
+        10
+      ],
+      "rank": 3,
+      "rank_change": 0
+    },
+    {
+      "repository_id": 156369540,
+      "full_name": "YerongAI/Office-Tool",
+      "description": "Office Tool Plus localization projects.",
+      "language": "PowerShell",
+      "stars_total": 14296,
+      "created_at": "2018-11-06T10:54:58Z",
+      "pushed_at": "2026-09-21T09:58:53Z",
+      "stars_gained": 3,
+      "html_url": "https://github.com/YerongAI/Office-Tool",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/44803668?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        3
+      ],
+      "rank": 4,
+      "rank_change": 1
+    },
+    {
+      "repository_id": 26784827,
+      "full_name": "dotnet/core",
+      "description": ".NET news, announcements, release notes, and more!",
+      "language": "PowerShell",
+      "stars_total": 22038,
+      "created_at": "2014-11-18T00:44:57Z",
+      "pushed_at": "2026-09-25T15:58:59Z",
+      "stars_gained": 0,
+      "html_url": "https://github.com/dotnet/core",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/9141961?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        1,
+        null,
+        null,
+        null,
+        1,
+        0
+      ],
+      "rank": 5,
+      "rank_change": -1
+    },
+    {
+      "repository_id": 202706094,
+      "full_name": "farag2/Adobe-Acrobat-DC-Setup",
+      "description": "Adobe Acrobat Pro/Reader DC Setup",
+      "language": "PowerShell",
+      "stars_total": 199,
+      "created_at": "2019-08-16T10:11:47Z",
+      "pushed_at": "2026-09-20T18:24:11Z",
+      "stars_gained": 0,
+      "html_url": "https://github.com/farag2/Adobe-Acrobat-DC-Setup",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/10544660?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        0,
+        0
+      ],
+      "rank": 6,
+      "rank_change": 0
+    },
+    {
+      "repository_id": 1342512832,
+      "full_name": "Arcadeq/windows-cursor-scheme-fix",
+      "description": "Fixes an issue where custom mouse cursor themes stop working after a Windows 11 update and remain stuck on the Windows Aero cursor scheme.",
+      "language": "PowerShell",
+      "stars_total": 144,
+      "created_at": "2026-08-22T06:29:41Z",
+      "pushed_at": "2026-09-03T02:15:19Z",
+      "stars_gained": 0,
+      "html_url": "https://github.com/Arcadeq/windows-cursor-scheme-fix",
+      "owner_avatar_url": "https://avatars.githubusercontent.com/u/115779977?v=4",
+      "knowledge_url": null,
+      "trend_7d": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        0,
+        0
+      ],
+      "rank": 7,
+      "rank_change": 0
+    }
+  ]
+}
