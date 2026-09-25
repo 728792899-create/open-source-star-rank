@@ -2,14 +2,14 @@
   "schema_version": "1.0.0",
   "taxonomy_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-24T16:08:51.268272Z",
+  "generated_at": "2026-09-25T05:33:40.795441Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-classification-v1",
   "coverage": {
     "eligible_count": 4887,
     "classified_count": 3944,
     "pending_count": 943,
-    "failed_count": 0,
+    "failed_count": 20,
     "coverage_ratio": 0.807039
   },
   "categories": [
@@ -226,5 +226,26 @@
       "label": "通用工具"
     }
   ],
-  "failed_repository_ids": []
+  "failed_repository_ids": [
+    600596928,
+    976921297,
+    1125856365,
+    1157102282,
+    1165361576,
+    1196447493,
+    1217040185,
+    1222789989,
+    1333321333,
+    1342935078,
+    1351691201,
+    1358948316,
+    1367299537,
+    1369262910,
+    1374789451,
+    1375987946,
+    1375997079,
+    1376970259,
+    1377172300,
+    1377211520
+  ]
 }

@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "id": "220989cd40954365954436543dd82527",
+  "kind": "localization",
+  "started_at": "2026-09-25T05:32:45.254187Z",
+  "finished_at": "2026-09-25T05:33:39.156342+00:00",
+  "model": "deepseek-flash",
+  "attempted_projects": 220,
+  "accepted_projects": 219,
+  "failed_projects": 1,
+  "failures": [
+    {
+      "repository_id": 359970576,
+      "reason": "schema"
+    }
+  ],
+  "requests": 20,
+  "usage_responses": 20,
+  "unknown_usage_requests": 0,
+  "usage_complete": true,
+  "observed_tokens": {
+    "prompt_tokens": 31799,
+    "completion_tokens": 11868,
+    "cache_hit_tokens": 7936,
+    "cache_miss_tokens": 23863
+  },
+  "request_errors": {
+    "invalid_response": 3
+  },
+  "estimated_cost": {
+    "currency": "USD",
+    "min": "0.010724058",
+    "max": "0.021448116"
+  },
+  "pricing": {
+    "source": "https://api-docs.deepseek.com/quick_start/pricing",
+    "verified_on": "2026-09-24",
+    "valid_until": "2026-10-24",
+    "currency": "USD",
+    "cache_hit": [
+      "0.003",
+      "0.006"
+    ],
+    "cache_miss": [
+      "0.15",
+      "0.3"
+    ],
+    "output": [
+      "0.6",
+      "1.2"
+    ]
+  },
+  "pricing_status": "estimated_range",
+  "billing_note": "估算区间并非账单；缺失用量或过期价格不计算费用。"
+}
