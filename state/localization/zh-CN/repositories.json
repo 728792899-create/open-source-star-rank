@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-26T05:39:29.399495Z",
+  "generated_at": "2026-09-26T16:15:03.972018Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4887,
-    "localized_count": 4660,
-    "pending_count": 227,
+    "localized_count": 4655,
+    "pending_count": 232,
     "failed_count": 3,
-    "coverage_ratio": 0.95355
+    "coverage_ratio": 0.952527
   },
   "repositories": [
     {
@@ -18625,15 +18625,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 589831718,
-      "source_full_name": "Comfy-Org/ComfyUI",
-      "source_hash": "10edd7deeaa5b4f366a34979d35ff5d2a69e2d5e3c3fb8fd0aded56e41d28091",
-      "display_name_zh": "ComfyUI｜扩散模型图形界面（GUI）",
-      "description_zh": "ComfyUI，功能强大且模块化的扩散模型图形界面和API。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 590934000,
       "source_full_name": "wiegerhelsdingen/lasercom-link-model",
       "source_hash": "6ffa59bff73a1bf4af8e648b40087f045c8b365166b07aeaf614e5db4e8046ec",
@@ -27697,15 +27688,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1042367133,
-      "source_full_name": "github/spec-kit",
-      "source_hash": "cf992689a8a92498bbb4ecfa08de5a722b0a73907c60e6ec7537acf0279c48bf",
-      "display_name_zh": "spec-kit｜规范驱动开发工具包",
-      "description_zh": "spec-kit 是一个帮助入门规范驱动开发的工具包。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1043649158,
       "source_full_name": "NeKonnnn/Astra-Studio",
       "source_hash": "a6eac945ea3d0d215cb7169ed97617ce782b77f84687b955e06407c4e416f22d",
@@ -33995,15 +33977,6 @@
       "description_zh": "现代化的音乐干声提取平台，支持分离人声、鼓声、贝斯、钢琴和吉他，适用于练习、转录、混音及创意音频工作流程。",
       "generated_at": "2026-07-20T22:06:55.994311Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1229168545,
-      "source_full_name": "alvinunreal/openpets",
-      "source_hash": "a57b31dc05cc98aa256ceffac41e8bc746eaafd14df79264101b7372f75075ce",
-      "display_name_zh": "openpets｜本地优先桌面伴侣平台",
-      "description_zh": "本地优先的桌面伴侣平台，提供动画宠物、插件 SDK 和编码智能体集成。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1229620488,
@@ -41269,15 +41242,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1367131646,
-      "source_full_name": "ardeyouxipianyi/workbuddy2api-hub",
-      "source_hash": "4b2747645906958154727b709f0b443d5cf9067e2089b2782b2577e87a38a1e5",
-      "display_name_zh": "workbuddy2api-hub｜多账号反代网关",
-      "description_zh": "WorkBuddy 国际国内多账号反代网关：双域独立路由与切换、稳定设备指纹防风控、国内成长任务全自动完成、后台定时调度器、Web 监控看板，支持 Codex、Claude Code、DSH 与标准 OpenAI 客户端。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1367145309,
       "source_full_name": "ashleyotooligan/ant-1",
       "source_hash": "6f4bd3ea7e62f0d82ae6e23c53385a8fd96613145d4cfc347cb1c30ec8ccdc5d",
@@ -41553,15 +41517,6 @@
       "source_hash": "3ddc6b5083b498aefd13e1676776319658785818f61539fa27c19dc26605c1e1",
       "display_name_zh": "ai-model-world｜AI 大模型像素可视化站点",
       "description_zh": "AI 大模型世界，把 556 个大模型拟人化成像素小人的可视化站点，可查看模型智能、编程、价格与发布时间，并提供厂商广场、时间线和多维排行榜，数据每小时自动同步，所有文案由真实数据生成，不调用任何 LLM。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1373977947,
-      "source_full_name": "itsmostafa/typesafe-mcp",
-      "source_hash": "6c692c9db9b6765e98ac0c05376a8fa45a84ea414a3208d53b6328c760691b06",
-      "display_name_zh": "typesafe-mcp｜MCP 连接器",
-      "description_zh": "一个 MCP 连接器，可快速且低成本地评估任何内容。让 AI 智能体直接访问 typesafe ai 的 jev 模型以及 laya 等开放权重模型。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
