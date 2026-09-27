@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-27T05:55:57.020638Z",
+  "generated_at": "2026-09-27T16:09:34.029650Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4887,
-    "localized_count": 4885,
-    "pending_count": 2,
+    "localized_count": 4877,
+    "pending_count": 10,
     "failed_count": 2,
-    "coverage_ratio": 0.999591
+    "coverage_ratio": 0.997954
   },
   "repositories": [
     {
@@ -29092,15 +29092,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1102719615,
-      "source_full_name": "teja2495/quick-search",
-      "source_hash": "09fa4af9b34e0304e9af56fa3cc07f47215843b52fc5ec90ca94bdc7be87abb0",
-      "display_name_zh": "quick-search｜Android 通用搜索应用",
-      "description_zh": "适用于 Android 的通用搜索应用，可搜索应用、快捷方式、联系人、文件、日历事件、笔记、设置和互联网。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1103012935,
       "source_full_name": "openclaw/openclaw",
       "source_hash": "ba5f7a84c045b1086ea4b7b3042928a6efb05cfdbe4464f795b145790ac3a9bf",
@@ -30190,15 +30181,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1134426800,
-      "source_full_name": "sickn33/agentic-awesome-skills",
-      "source_hash": "cebf896a3ed711c62a17867ab8b3215eabfcd816e8792d32a040497a2ef50ef2",
-      "display_name_zh": "AAS｜智能体技能控制平面",
-      "description_zh": "AAS Core 是本地、智能体优先的控制平面，用于完整目录发现、智能体自主选择、技术栈验证与规划，由 2,445+ 智能体技能支撑，包含 CLI、本地 MCP、目录、插件与 Workbench。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1134543109,
       "source_full_name": "vercel-labs/skills",
       "source_hash": "8a9e511a67ebbe727092997c05aa66fce688f45f1aabf86ba7a07e3cc8ad4258",
@@ -30611,15 +30593,6 @@
       "description_zh": "适用于已 root 的 Android 的无挂载模块加载器。支持内核级 VFS 路径重定向，避免挂载表污染，集成 SUSFS，提供 WebUI、启动循环保护及策略回退。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1144520675,
-      "source_full_name": "Alishahryar1/free-claude-code",
-      "source_hash": "054dcf76cba4505503aa0d5be19c990324d508fed41ce1b4de645cf504c6ff4e",
-      "display_name_zh": "free-claude-code｜免费多框架编码工具",
-      "description_zh": "在终端、应用、IDE 或手机上免费使用 Claude Code、Codex、Pi、OpenCode 等 6 个其他 harness（1.3B+ 免费 token），现在还支持浏览器原生会话（多 harness + 多模型），类似 OpenClaw（支持语音且符合 ToS）。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1144764199,
@@ -31520,15 +31493,6 @@
       "description_zh": "高性能代码智能MCP服务器，将代码库索引为持久知识图谱，支持158种语言，查询延迟亚毫秒，令牌使用减少99%，单一静态二进制文件，无依赖。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1166182351,
-      "source_full_name": "raullenchai/Rapid-MLX",
-      "source_hash": "8496dbb51396323e3a9155f6d3e0340b5c7530189c39fb7bcefdcec7ecb7a093",
-      "display_name_zh": "Rapid-MLX｜Apple Silicon 本地 AI 引擎",
-      "description_zh": "面向 Apple Silicon 的最快本地 AI 引擎，比 Ollama 快 4.2 倍，缓存 TTFT 0.08s，100% 工具调用，支持 17 个工具解析器、提示缓存、推理分离和云路由，可无缝替代 OpenAI，兼容 Claude Code、Cursor、Aider。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1166205118,
@@ -35867,15 +35831,6 @@
       "description_zh": "《形式化$q$级数：罗杰斯-拉马努金恒等式及其扩展》的相关资料。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1269663771,
-      "source_full_name": "LittleBitUA/DPRecomp",
-      "source_hash": "100c645fe8579092c97eab9dc52b819d4439e64d7ed52021110a2a5fc36ca1f2",
-      "display_name_zh": "DPRecomp｜Deadly Premonition 静态重编译移植",
-      "description_zh": "通过静态重编译将 Deadly Premonition（Xbox 360）原生移植到 PC，v2.0.5 版本提供可测试的原生 DirectX 12 渲染器（最高 4 倍内部分辨率），支持 60 FPS、鼠标视角、键盘驾驶、FSR 3、ISO 安装程序，以及 PAL 与 USA 版本。",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1269806075,
@@ -41872,15 +41827,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1356918624,
-      "source_full_name": "Apeireth/Apeireth",
-      "source_hash": "48eb3a25b020a2db2e64babc820220e224b43fa7bfbdcf781d3907da35637f49",
-      "display_name_zh": "Apeireth｜纯安全 Rust AGI 操作系统与认知微内核",
-      "description_zh": "Apeireth 是一个纯安全 Rust 编写的 AGI 操作系统与认知微内核，包含 16 个 crate：连续拓扑记忆、因果世界模型、认知调度器、Ember HUD、三重洋葱安全与便携 USB 智能体。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1356960006,
       "source_full_name": "Sreehari05055/thesys-core",
       "source_hash": "142beb792697d475a9f89778a94ddceda9d3c63e60ff8bc937e611f1d8dabaa6",
@@ -43537,15 +43483,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1373977947,
-      "source_full_name": "itsmostafa/system-one-connector",
-      "source_hash": "6445a15b4da228e627bacb0d22fa1166e1a4751c8aa25e0e905da8566acda679",
-      "display_name_zh": "system-one-connector｜MCP 连接器",
-      "description_zh": "System One MCP 连接器，可快速且低成本地评估任何内容，让 AI 智能体直接访问 Typesafe AI 的 Jev 模型和 Laya 等模型。",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1373978991,
       "source_full_name": "NiazMorshed2007/jev-review",
       "source_hash": "b32f62be9c7e255bd06b54b32d8aa160030aa9a91c49a0e2bf765c551429370e",
@@ -43713,15 +43650,6 @@
       "source_hash": "85b15aefe824b0e6189bea4c43268f35e88195a1125dcfe0d628132268627a3a",
       "display_name_zh": "Awesome Jev 项目雷达",
       "description_zh": "Awesome Jev：有来源支撑的开源生态雷达，用通俗语言发现项目，并自动与 GitHub 同步。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1375594818,
-      "source_full_name": "chaseleantj/desktop-habitats",
-      "source_hash": "023291f3ee1c482c7f2809b2a4fb8e947bd6c32fd0621a2289719e26f90559fb",
-      "display_name_zh": "desktop-habitats｜桌面生态互动",
-      "description_zh": "可在桌面上互动的活体生态系统。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
