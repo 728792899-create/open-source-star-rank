@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-28T08:05:25.596340Z",
+  "generated_at": "2026-09-28T16:11:14.735200Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4884,
-    "localized_count": 4879,
-    "pending_count": 5,
+    "localized_count": 4872,
+    "pending_count": 12,
     "failed_count": 1,
-    "coverage_ratio": 0.998976
+    "coverage_ratio": 0.997543
   },
   "repositories": [
     {
@@ -3134,15 +3134,6 @@
       "description_zh": "spark 是一个统一的大规模数据处理分析引擎。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 17420614,
-      "source_full_name": "seleniumbase/SeleniumBase",
-      "source_hash": "831b2e7018b37e70cf533f1e80e245b20e3778b2d5662d379abe8a7089767a96",
-      "display_name_zh": "SeleniumBase｜浏览器自动化框架与 MCP 服务器",
-      "description_zh": "用于网页抓取和测试的浏览器自动化框架与 MCP 服务器。CDP 模式可让 Chrome 具备隐蔽性，以绕过机器人检测。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 17420913,
@@ -16303,15 +16294,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 436297812,
-      "source_full_name": "usememos/memos",
-      "source_hash": "a41b624d71974be1351634ae56c5230eb786ef222f26ee44eaaf4a453dbf6876",
-      "display_name_zh": "memos｜开源自托管笔记工具",
-      "description_zh": "开源自托管笔记工具，支持Markdown，轻量且私有。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 436466520,
       "source_full_name": "rilldata/rill",
       "source_hash": "1c5dd9fc06766a488be45b4e2fe28a673ee13f5c4ad0ac77484be1919690c07b",
@@ -20674,15 +20656,6 @@
       "display_name_zh": "scalar｜现代REST API平台",
       "description_zh": "开源API平台，提供现代REST API客户端和优美的API文档，支持OpenAPI/Swagger。",
       "generated_at": "2026-07-20T18:28:18.246753Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 679343504,
-      "source_full_name": "topoteretes/cognee",
-      "source_hash": "b787b376229ccb75808d24462830688652df676cfed64e0ac11f13b108784c25",
-      "display_name_zh": "cognee｜开源 AI 记忆平台",
-      "description_zh": "cognee 是一个开源 AI 记忆平台，提供自托管知识图谱引擎，支持 AI 代理跨会话的持久记忆。",
-      "generated_at": "2026-07-20T04:28:39.695110Z",
       "provenance": "github_models"
     },
     {
@@ -32161,15 +32134,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1179222510,
-      "source_full_name": "AgentiLoop/Agent",
-      "source_hash": "bccf56d2895722512b7c9ffebebeb24f2b99f2f096d8f638326d112bd6153628",
-      "display_name_zh": "AgentiLoop Agent｜Mac 原生 AI 智能体",
-      "description_zh": "AgentiLoop Agent：一个应用，任意 AI，让你的 Mac 为你工作。原生 Swift 智能体，可通过辅助功能驱动任意应用，在 Xcode 中编码构建，自动化 AppleScript、JXA、Swift 与 SMAppService shell（用户/root）。支持 23 家 LLM 提供商、本地/云端、端侧 Apple Intelligence 与 Jev 防护，支持 MCP。CLI 以 Rust/Go 开发，支持 Mac/Win/Linux，仍在开发中。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1179264259,
       "source_full_name": "garrytan/gstack",
       "source_hash": "ae3bf714710aa17e296003205c35b42f3740fc7fe88d3b8690d99e8713d3dc4b",
@@ -35813,15 +35777,6 @@
       "description_zh": "《形式化$q$级数：罗杰斯-拉马努金恒等式及其扩展》的相关资料。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1269663771,
-      "source_full_name": "LittleBitUA/DPRecomp",
-      "source_hash": "f3fb331dd266c90f11b3e85c3f848369e0a1c186521eecb9d4b48a3c175354d4",
-      "display_name_zh": "DPRecomp｜Deadly Premonition PC 移植版",
-      "description_zh": "通过静态重编译实现的 Deadly Premonition（Xbox 360）原生 PC 移植版，v2.0.7 带来可测试的原生 DirectX 12 渲染器（最高 4 倍内部分辨率），支持 60 FPS、鼠标视角、键盘驾驶、FSR 3、ISO 安装程序，以及 PAL 与 USA 版本。",
-      "generated_at": "2026-09-28T06:01:47.380329Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1269806075,
@@ -43186,15 +43141,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1367446577,
-      "source_full_name": "suoha888/Trader-Archives",
-      "source_hash": "8e0229a7d20aee0b1cfd8d071491d4b1d4c670315c95223333b9f7449d83ab69",
-      "display_name_zh": "Trader-Archives｜CJ DeFi 做市与套利手册",
-      "description_zh": "CJ DeFi 做市与套利实战手册 · 顶级高手 CJ（@gch_enbsbxbs）502篇推文体系化精解与全量开源数据集。",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1367501425,
       "source_full_name": "rizqinrr/viserys-agent",
       "source_hash": "2846adf0bc25a8ce0e591943dc483d6852ecc9b929df8a50690247e6b80a5849",
@@ -43245,15 +43191,6 @@
       "source_hash": "1d44da5079ad9278d0e40e9d0cb048c99442adbf7999c4102e323db6b37b4adb",
       "display_name_zh": "Ember｜从零编写的操作系统",
       "description_zh": "从零开始编写的操作系统：引导扇区、FAT 文件系统、DOS 兼容中断、声音、32 位运行时以及图形桌面。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1368837058,
-      "source_full_name": "arsumbris/arsumbris",
-      "source_hash": "581c1a9094960ee56e0325878c8d87da608cac97c34e36182f93a3baf55d6df4",
-      "display_name_zh": "arsumbris｜面向类型化知识的智能体原生 IDE",
-      "description_zh": "一款可塑、面向智能体、用于类型化知识的 IDE。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
