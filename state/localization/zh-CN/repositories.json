@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-28T06:01:47.380329Z",
+  "generated_at": "2026-09-28T08:05:25.596340Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
-    "eligible_count": 4887,
-    "localized_count": 4886,
-    "pending_count": 1,
+    "eligible_count": 4884,
+    "localized_count": 4879,
+    "pending_count": 5,
     "failed_count": 1,
-    "coverage_ratio": 0.999795
+    "coverage_ratio": 0.998976
   },
   "repositories": [
     {
@@ -4167,15 +4167,6 @@
       "source_hash": "dd6ed4b1ceb99b3f185fea7e7bc8c33888ec6037fa6c06f9b06c0ba1cc055ce7",
       "display_name_zh": "FiraCode｜编程连字等宽字体",
       "description_zh": "一款带有编程连字的免费等宽字体。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 26516210,
-      "source_full_name": "certbot/certbot",
-      "source_hash": "35c992c0215cb5bb180fdfaa5c89289e88fc43b9fa9f74cd420661f5622e06e6",
-      "display_name_zh": "certbot｜EFF的ACME协议证书获取工具",
-      "description_zh": "EFF开发的工具，用于从Let's Encrypt获取证书，并可选地自动启用服务器上的HTTPS。它也可以作为任何使用ACME协议的CA的客户端。",
       "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
     },
@@ -10885,15 +10876,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 162723104,
-      "source_full_name": "OWASP/CheatSheetSeries",
-      "source_hash": "293a2b9539091b1face82dbc01acac369752a6e4db054d2504da4753eb4365f6",
-      "display_name_zh": "CheatSheetSeries｜OWASP 应用安全简明手册系列",
-      "description_zh": "CheatSheetSeries 是 OWASP 提供的应用安全主题高价值信息简明合集。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 162998479,
       "source_full_name": "sherlock-project/sherlock",
       "source_hash": "a133de5d7299726d30f431a623880920602141641d7b51c1abc1fcb340a32ac1",
@@ -14230,15 +14212,6 @@
       "display_name_zh": "atuin｜命令行增强工具",
       "description_zh": "atuin 旨在提升命令行 shell 的使用体验。",
       "generated_at": "2026-07-17T00:57:38.909807Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 302603001,
-      "source_full_name": "qier222/YesPlayMusic",
-      "source_hash": "252a0dde124d82986e9baf3e2b5a4c5c6d92ced66513c716b7c456ec9e7bb06b",
-      "display_name_zh": "YesPlayMusic｜高颜值网易云音乐播放器",
-      "description_zh": "YesPlayMusic 是一款高颜值的第三方网易云音乐播放器，支持 Windows、macOS 和 Linux 平台。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
     {
@@ -17599,15 +17572,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 522158088,
-      "source_full_name": "zhayujie/CowAgent",
-      "source_hash": "417923ea4a25e7aefcfe3d4e3c700e2c8cc01731c761041f64eef9168af43633",
-      "display_name_zh": "CowAgent｜开源超级AI助手与Agent Harness",
-      "description_zh": "开源超级 AI 助手与 Agent Harness。可规划任务、运行工具和技能，通过记忆与知识自我进化。支持多智能体、多模型、多渠道，轻量可扩展，一行命令安装（原 chatgpt-on-wechat）。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 523007292,
       "source_full_name": "openxla/xla",
       "source_hash": "db4108d8f248e2181135d21c888dd4b216e292dc5c35c11864bad66c70ca4c98",
@@ -19234,15 +19198,6 @@
       "display_name_zh": "chatbot-ui｜AI 聊天界面",
       "description_zh": "chatbot-ui 支持任意模型的 AI 聊天界面。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 612781022,
-      "source_full_name": "cursor/cursor",
-      "source_hash": "bb6347559b00bf50cb2169d37bf29a8269e0a75600292c1eb23fe672ca1f3f88",
-      "display_name_zh": "cursor｜代码编辑器",
-      "description_zh": null,
-      "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
     },
     {
@@ -22855,15 +22810,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 798201435,
-      "source_full_name": "unclecode/crawl4ai",
-      "source_hash": "decc82157475b2963c406522c278c87fb80d7f6ef2158ce9e2b17e4e57250b91",
-      "display_name_zh": "crawl4ai｜开源 LLM 友好网页爬虫与抓取工具",
-      "description_zh": "crawl4ai 是一个开源的适用于大型语言模型（LLM）的网页爬取与数据抓取工具。",
-      "generated_at": "2026-07-18T00:14:53.937273Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 798300247,
       "source_full_name": "celebrated0/ixrail",
       "source_hash": "9e31a2f86b5279341254ac028b55c275d16eca29bfcace4c46eb11d25bb906ca",
@@ -24095,15 +24041,6 @@
       "description_zh": "readest是一款现代化功能丰富的电子书阅读器，支持跨平台访问，提供强大工具和直观界面，提升阅读体验。",
       "generated_at": "2026-07-19T07:03:48.394229Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 872119017,
-      "source_full_name": "D4Vinci/Scrapling",
-      "source_hash": "0ea2be8de2ca476b9b5df935e420409e2b78a0ed22d1f9e70df00b4c8ad8729c",
-      "display_name_zh": "Scrapling｜自适应网页抓取框架",
-      "description_zh": "Scrapling 是一个自适应网页抓取框架，支持从单次请求到大规模爬取。Discord 社区：https://discord.gg/EMgGbDceNQ",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 872272362,

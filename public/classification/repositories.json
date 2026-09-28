@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "taxonomy_version": "1.0.0",
-  "generated_at": "2026-09-27T16:09:35.259466Z",
+  "generated_at": "2026-09-28T08:05:27.786567Z",
   "repositories": [
     {
       "repository_id": 3314,
@@ -4593,20 +4593,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 19148949,
-      "source_full_name": "PhilJay/MPAndroidChart",
-      "source_hash": "1ad368c5f2b7e610ee416a8efa16fe3811e453d2e462243322e5e53c1c718486",
-      "primary_category": "creative-media",
-      "project_type": "library-framework",
-      "use_cases": [
-        "data-analysis-visualization",
-        "mobile-cross-platform"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-19T04:20:56.637414Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 19205896,
       "source_full_name": "restic/restic",
       "source_hash": "a9bcc991a381f71d8b6d9d14d9a215da1ed60ee02e5c0e38a17192cfc5d95a6f",
@@ -5840,21 +5826,6 @@
       "project_type": "other",
       "use_cases": [
         "design-ui-ux"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-18T05:32:12.135995Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 26516210,
-      "source_full_name": "certbot/certbot",
-      "source_hash": "28ac6730b40fba765242881bde249511da1da431b92a9f59798598fb747d3f63",
-      "primary_category": "security-privacy",
-      "project_type": "application",
-      "use_cases": [
-        "security-defense",
-        "privacy-local",
-        "self-hosting"
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-18T05:32:12.135995Z",
@@ -15314,20 +15285,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 162723104,
-      "source_full_name": "OWASP/CheatSheetSeries",
-      "source_hash": "683d7de66d640afe32a0953a26fe89efffe3933ed725c0a2794e121f7b480672",
-      "primary_category": "security-privacy",
-      "project_type": "tutorial-resource",
-      "use_cases": [
-        "security-defense",
-        "learning-tutorial"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-19T04:20:56.637414Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 162998479,
       "source_full_name": "sherlock-project/sherlock",
       "source_hash": "31ecf52dec624c7bf1487c415764184f5cef5201bd9da481dd8c8244eab34679",
@@ -15513,21 +15470,6 @@
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T04:20:56.637414Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 167694194,
-      "source_full_name": "blakeblackshear/frigate",
-      "source_hash": "bd647149e839eeab17097f9b9ce3c11cd4049abdf22cb5acfdb13873978d588f",
-      "primary_category": "ai-machine-learning",
-      "project_type": "application",
-      "use_cases": [
-        "observability",
-        "image-video-audio",
-        "self-hosting"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-09-26T05:41:27.855117Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 167942942,
@@ -20033,19 +19975,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T03:58:39.338555Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 302603001,
-      "source_full_name": "qier222/YesPlayMusic",
-      "source_hash": "01e32b168051552ed23cf3807b1dbe651f8df58a68307cceaba0474ff042bfce",
-      "primary_category": "creative-media",
-      "project_type": "application",
-      "use_cases": [
-        "image-video-audio"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-25T03:56:53.240576Z",
       "provenance": "github_models"
     },
     {
@@ -24664,21 +24593,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 522158088,
-      "source_full_name": "zhayujie/CowAgent",
-      "source_hash": "50c74916209e238a79e0ebef6e5779c1cee37634c4f0b3b3c2aecb7c063400b5",
-      "primary_category": "ai-machine-learning",
-      "project_type": "platform-service",
-      "use_cases": [
-        "agents-automation",
-        "rag-knowledge",
-        "model-training-inference"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-09-24T04:30:45.978519Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 523007292,
       "source_full_name": "openxla/xla",
       "source_hash": "c4250e3452187ff1db5aaf4eeb297219ba5d5bf49869208fe4f413f4ece00165",
@@ -26962,19 +26876,6 @@
       "use_cases": [
         "ai-coding",
         "agents-automation"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-25T03:56:53.240576Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 612781022,
-      "source_full_name": "cursor/cursor",
-      "source_hash": "6feb2faf4afe31eab5fe7c2e130ebec3094d76ebbf0ec694e20d60fbb5d74978",
-      "primary_category": "developer-tools",
-      "project_type": "application",
-      "use_cases": [
-        "ai-coding"
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-25T03:56:53.240576Z",
@@ -32075,20 +31976,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 798201435,
-      "source_full_name": "unclecode/crawl4ai",
-      "source_hash": "35f842f3d6d08f63763deb907772fac55c4f8b6a6ab95f1b93d1daa9f8064efd",
-      "primary_category": "ai-machine-learning",
-      "project_type": "application",
-      "use_cases": [
-        "rag-knowledge",
-        "search-scraping"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-18T00:15:46.311660Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 798300247,
       "source_full_name": "celebrated0/ixrail",
       "source_hash": "3803bca067a0220c528c4f0a16e5e976f4c45fd57bb9f0853e7bc9a1d74b6e1c",
@@ -33811,20 +33698,6 @@
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T17:32:43.053270Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 872119017,
-      "source_full_name": "D4Vinci/Scrapling",
-      "source_hash": "b066e3696f733d9d51c69f18311c7d2443871b58b51a0a22bc870c56c43b8084",
-      "primary_category": "developer-tools",
-      "project_type": "library-framework",
-      "use_cases": [
-        "agents-automation",
-        "search-scraping"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-09-24T04:30:45.978519Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 872272362,
