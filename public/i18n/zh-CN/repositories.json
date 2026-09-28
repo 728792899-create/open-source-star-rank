@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-27T16:09:34.029650Z",
+  "generated_at": "2026-09-28T06:01:47.380329Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4887,
-    "localized_count": 4877,
-    "pending_count": 10,
-    "failed_count": 2,
-    "coverage_ratio": 0.997954
+    "localized_count": 4886,
+    "pending_count": 1,
+    "failed_count": 1,
+    "coverage_ratio": 0.999795
   },
   "repositories": [
     {
@@ -29092,6 +29092,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1102719615,
+      "source_full_name": "teja2495/quick-search",
+      "source_hash": "2a55f43e0d4b6b8395a6bed2fd75483243d6f473e74e6e8c7ce6580cb60c5634",
+      "display_name_zh": "quick-search｜Android 通用搜索应用",
+      "description_zh": "适用于 Android 的通用搜索应用，可搜索应用、快捷方式、联系人、文件、日历事件、笔记、设置以及互联网内容。",
+      "generated_at": "2026-09-28T06:01:47.380329Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1103012935,
       "source_full_name": "openclaw/openclaw",
       "source_hash": "ba5f7a84c045b1086ea4b7b3042928a6efb05cfdbe4464f795b145790ac3a9bf",
@@ -30181,6 +30190,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1134426800,
+      "source_full_name": "sickn33/agentic-awesome-skills",
+      "source_hash": "cd4af7dfc8569cad7fdbfbfaec341e45e95ce9340773ce78ae344db8ab88e30c",
+      "display_name_zh": "AAS Core｜智能体技能控制平面",
+      "description_zh": "AAS Core 是本地、智能体优先的控制平面，用于完整目录发现、智能体自主选择、技术栈验证与规划，背后有 2,400+ 智能体技能，包含 CLI、本地 MCP、目录、插件与 Workbench。",
+      "generated_at": "2026-09-28T06:01:47.380329Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1134543109,
       "source_full_name": "vercel-labs/skills",
       "source_hash": "8a9e511a67ebbe727092997c05aa66fce688f45f1aabf86ba7a07e3cc8ad4258",
@@ -30595,6 +30613,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1144520675,
+      "source_full_name": "Alishahryar1/free-claude-code",
+      "source_hash": "a7fc845304e12c5e88ffb886aae35ae960970553f85de17b3b2e1e41d69b6940",
+      "display_name_zh": "free-claude-code｜多终端免费 AI 编程工具",
+      "description_zh": "可在终端、应用、IDE 或手机中使用 Claude Code、Codex、VSCode、Pi、OpenCode 等 6 种以上工具，提供 1.3B+ 免费 token，并新增浏览器原生会话，支持多工具与多模型。",
+      "generated_at": "2026-09-28T06:01:47.380329Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1144764199,
       "source_full_name": "didilili/ai-agents-from-zero",
       "source_hash": "5b818871e4fcdc38b437eb52db7d64a014bf2da3ecf866a9d1d20828dc83dad0",
@@ -30602,6 +30629,15 @@
       "description_zh": "2026 年最系统的 AI Agent 速成指南，涵盖智能体实战教程、完整学习路径、实战项目、面试题库，涉及 LangChain、LangGraph、Coze、Dify、MCP、skills、LLM、RAG，支持企业级部署与微调。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1144769376,
+      "source_full_name": "cbusifabcap/daily_free_vpn",
+      "source_hash": "67ebf06091df57eb91bd98d050752b81a1a36b0ee653df8eb6b1436a755b59cf",
+      "display_name_zh": "daily_free_vpn｜免费节点与订阅分享",
+      "description_zh": "分享免费节点、免费与付费机场、电报代理、SSR 节点、v2ray 节点与订阅、clash 节点与订阅、shadowrocket 订阅、Quantumult X 订阅、Clash .NET 订阅、小火箭与小猫咪节点，以及免费翻墙、科学上网、梯子、trojan 节点、蓝灯、安卓 VPN、iPhone 翻墙节点、一键翻墙浏览器、节点分享、免费 SSR、TG 代理、Telegram 代理、ip 加速、翻墙软件、socks5、破解 VPN 与机场推荐等。",
+      "generated_at": "2026-09-28T06:01:47.380329Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1145022970,
@@ -31493,6 +31529,15 @@
       "description_zh": "高性能代码智能MCP服务器，将代码库索引为持久知识图谱，支持158种语言，查询延迟亚毫秒，令牌使用减少99%，单一静态二进制文件，无依赖。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1166182351,
+      "source_full_name": "raullenchai/Rapid-MLX",
+      "source_hash": "175269ca285a510339d4ecf008b5717aa4c5fae581e38fb32fbaa1d5b7d20766",
+      "display_name_zh": "Rapid-MLX｜Apple Silicon 推理服务器",
+      "description_zh": "Rapid-MLX 是开源（Apache 2.0）的 OpenAI 与 Anthropic 兼容 LLM 推理服务器及 Mac 应用，基于 MLX 面向 Apple Silicon，专注为编程智能体提供可靠工具调用，已通过 Claude Code、Codex CLI、Aider、Hermes 与 DeepSeek Harness 发布验证。",
+      "generated_at": "2026-09-28T06:01:47.380329Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1166205118,
@@ -35831,6 +35876,15 @@
       "description_zh": "《形式化$q$级数：罗杰斯-拉马努金恒等式及其扩展》的相关资料。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1269663771,
+      "source_full_name": "LittleBitUA/DPRecomp",
+      "source_hash": "f3fb331dd266c90f11b3e85c3f848369e0a1c186521eecb9d4b48a3c175354d4",
+      "display_name_zh": "DPRecomp｜Deadly Premonition PC 移植版",
+      "description_zh": "通过静态重编译实现的 Deadly Premonition（Xbox 360）原生 PC 移植版，v2.0.7 带来可测试的原生 DirectX 12 渲染器（最高 4 倍内部分辨率），支持 60 FPS、鼠标视角、键盘驾驶、FSR 3、ISO 安装程序，以及 PAL 与 USA 版本。",
+      "generated_at": "2026-09-28T06:01:47.380329Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1269806075,
@@ -41827,6 +41881,15 @@
       "provenance": "model_api"
     },
     {
+      "repository_id": 1356918624,
+      "source_full_name": "Apeireth/Apeireth",
+      "source_hash": "97e26e4446dc5ddf381dfe7eb7ffc52a8523f41a4e40866e471a3b2085d00bf0",
+      "display_name_zh": "Apeireth｜纯安全 Rust AGI 操作系统",
+      "description_zh": "Apeireth 是纯安全 Rust 编写的 AGI 操作系统与认知微内核，包含 18 个 crate：连续拓扑记忆、因果世界模型、认知调度器、Ember HUD、三重洋葱安全与便携 USB 智能体。",
+      "generated_at": "2026-09-28T06:01:47.380329Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1356960006,
       "source_full_name": "Sreehari05055/thesys-core",
       "source_hash": "142beb792697d475a9f89778a94ddceda9d3c63e60ff8bc937e611f1d8dabaa6",
@@ -43483,6 +43546,15 @@
       "provenance": "model_api"
     },
     {
+      "repository_id": 1373977947,
+      "source_full_name": "itsmostafa/system-one-connector",
+      "source_hash": "570eaa5ab9f9970fb598bfa467da93ad4ec650c9dfa271fcfa830df89e64c273",
+      "display_name_zh": "System One MCP 连接器｜快速评估模型",
+      "description_zh": "System One MCP 连接器，用于快速且低成本地评估任何内容，让 AI 智能体直接访问 Jev、CLM 和 Laya 等模型。",
+      "generated_at": "2026-09-28T06:01:47.380329Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1373978991,
       "source_full_name": "NiazMorshed2007/jev-review",
       "source_hash": "b32f62be9c7e255bd06b54b32d8aa160030aa9a91c49a0e2bf765c551429370e",
@@ -43651,6 +43723,15 @@
       "display_name_zh": "Awesome Jev 项目雷达",
       "description_zh": "Awesome Jev：有来源支撑的开源生态雷达，用通俗语言发现项目，并自动与 GitHub 同步。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1375594818,
+      "source_full_name": "chaseleantj/deskworlds",
+      "source_hash": "c7a6b845f0412caff38f6a350c6666b2752639613f245f5b3d56e5936c5ea278",
+      "display_name_zh": "deskworlds｜互动动态桌面壁纸",
+      "description_zh": "互动式、有生命感的桌面壁纸。",
+      "generated_at": "2026-09-28T06:01:47.380329Z",
       "provenance": "model_api"
     },
     {
@@ -43907,7 +43988,6 @@
     }
   ],
   "failed_repository_ids": [
-    1144769376,
     1351626350
   ]
 }
