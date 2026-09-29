@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-29T06:19:55.816330Z",
+  "generated_at": "2026-09-29T16:10:12.233740Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4884,
-    "localized_count": 4883,
-    "pending_count": 1,
+    "localized_count": 4874,
+    "pending_count": 10,
     "failed_count": 1,
-    "coverage_ratio": 0.999795
+    "coverage_ratio": 0.997952
   },
   "repositories": [
     {
@@ -5076,15 +5076,6 @@
       "source_hash": "3e8041d3d4ff89e4411df859c7fc57609763bee2148c92e7e481028be80b9a64",
       "display_name_zh": "rx-player｜DASH/Smooth HTML5 视频播放器",
       "description_zh": "支持 DASH 与 Smooth 的 HTML5 视频播放器。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 37751280,
-      "source_full_name": "dborth/vbagx",
-      "source_hash": "084283ca6687997e7980bebbe59fd480ce05cf329f33c8866fcf885c913af809",
-      "display_name_zh": "vbagx｜Visual Boy Advance GX 模拟器",
-      "description_zh": "Visual Boy Advance GX 游戏模拟器。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
@@ -13150,15 +13141,6 @@
       "display_name_zh": "Sandboxie｜Sandboxie Plus 与经典版本",
       "description_zh": "Sandboxie Plus & Classic 是 Sandboxie 的增强和经典版本。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 254328371,
-      "source_full_name": "NangoHQ/nango",
-      "source_hash": "a18a16f24c51c9d034c90a6c43bb22c7f689c0adcf483eea32e02c08a3877c49",
-      "display_name_zh": "nango｜AI产品集成平台",
-      "description_zh": "nango：基于AI构建产品集成的平台。",
-      "generated_at": "2026-07-20T04:28:39.695110Z",
       "provenance": "github_models"
     },
     {
@@ -31639,15 +31621,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1168844155,
-      "source_full_name": "node9-ai/node9-proxy",
-      "source_hash": "5a432fe83d9da7fee18b27b05649868f71f3c7eaa1358df9869fc5726947ebfa",
-      "display_name_zh": "node9-proxy｜AI 智能体 IAM 权限代理",
-      "description_zh": "为你的 AI 智能体提供 IAM：设定 Claude Code、Codex、Gemini、Cursor 及任意 MCP 服务器可执行的操作，在风险操作运行前审查，并记录每一次操作。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1168883139,
       "source_full_name": "cmdlabtech/Wondereye",
       "source_hash": "57b24ee5ac36905e8b359f374d2d177b21c0ea2922413108604560f01936bf41",
@@ -33106,15 +33079,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1197990888,
-      "source_full_name": "Gitlawb/openclaude",
-      "source_hash": "8aa0146dab72647962b5524c5ae5414739a6217e9521de4ed613fab0e37d9344",
-      "display_name_zh": "openclaude｜通用运行框架",
-      "description_zh": "可在任意环境运行，支持多种工具的通用框架。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1198246700,
       "source_full_name": "emdash-cms/emdash",
       "source_hash": "8c76e68beba0c7b236dd085818eae102d141a997b165c0f8b0ab41d38c3d178b",
@@ -33256,15 +33220,6 @@
       "display_name_zh": "AetherKiri｜跨平台多运行时视觉小说模拟器",
       "description_zh": "使用 Godot 4 作为渲染层的跨平台、多运行时视觉小说模拟器。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1201476594,
-      "source_full_name": "career-ops-hq/career-ops",
-      "source_hash": "e4c7dad43ef8c3e89e688eff39e35d14c9ab0365f24353abe0b614843f4d03c0",
-      "display_name_zh": "career-ops｜开源 AI 求职搜索",
-      "description_zh": "开源 AI 求职工具：扫描招聘门户，将职位评估为带全局 1-5 评分的结构化 A-H 报告，定制 CV，跟踪申请进度，在本地 AI 编码 CLI（Claude Code、Codex、OpenCode、Antigravity 等）中运行。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
       "provenance": "model_api"
     },
     {
@@ -35849,15 +35804,6 @@
       "description_zh": "《形式化$q$级数：罗杰斯-拉马努金恒等式及其扩展》的相关资料。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1269663771,
-      "source_full_name": "LittleBitUA/DPRecomp",
-      "source_hash": "01112614b92df625de55fb421fa89e8abfdfffec67a02315c02fd3f8d9a500dc",
-      "display_name_zh": "DPRecomp｜Deadly Premonition PC 移植",
-      "description_zh": "通过静态重编译实现的 Deadly Premonition（Xbox 360）原生 PC 移植版 - v2.0.10：原生 DirectX 12 渲染器已可测试（内部渲染分辨率最高 4 倍）；支持 60 FPS、鼠标视角、键盘驾驶、FSR 3、ISO 安装程序，PAL + USA。",
-      "generated_at": "2026-09-29T06:19:55.816330Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1269806075,
@@ -40333,15 +40279,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1346327782,
-      "source_full_name": "starVLA/VLAct",
-      "source_hash": "bfcc2a1a747e3ae24aa154370011fdd420dacfc6c62bbbfc3fb852acae1c5706",
-      "display_name_zh": "VLAct｜以表征为中心的视觉-语言-动作模型持续预训练",
-      "description_zh": "超越数据扩展：面向视觉-语言-动作模型的以表征为中心的持续预训练。",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1346328866,
       "source_full_name": "Aadiii00/SIH-Winners-PPt-and-Sources",
       "source_hash": "d426d0f026b78ed99fd126085beab4b6b976d678b378ee7373d766828b8a599c",
@@ -42124,15 +42061,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1358286075,
-      "source_full_name": "fidetolabs/qanat",
-      "source_hash": "78f770e37bcd69070423ced4222a30cb18b97313a1c6b6645f871d6a950350f5",
-      "display_name_zh": "qanat｜面向智能体的回测引擎",
-      "description_zh": "面向系统化交易者的智能体优先回测引擎。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1358295353,
       "source_full_name": "vinzdg/codenotch",
       "source_hash": "4534b3656dea6090b8378636567109b094153e3b3f2d6d2e35268ad6d7d0d35f",
@@ -43309,15 +43237,6 @@
       "display_name_zh": "Qwen-Image-2.1｜图像生成模型",
       "description_zh": "Qwen 最强大的开源图像生成模型。",
       "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1369493694,
-      "source_full_name": "Tencent/WeVisDoc",
-      "source_hash": "7a4d69afea6e75bb77863e7b45578e73deb5f54f830f0b762d427f90f21b1ab4",
-      "display_name_zh": "WeVisDoc｜可视化文档工具",
-      "description_zh": null,
-      "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
     {
