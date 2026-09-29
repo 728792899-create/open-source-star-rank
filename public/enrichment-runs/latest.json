@@ -3,18 +3,18 @@
   "runs": {
     "localization": {
       "version": 1,
-      "id": "ee03857524aa4e75a48e542b6e4ec6c7",
+      "id": "5038ae89787b4985a4419d615a922498",
       "kind": "localization",
-      "started_at": "2026-09-28T06:01:47.380329Z",
-      "finished_at": "2026-09-28T06:01:52.448617+00:00",
+      "started_at": "2026-09-29T06:19:55.816330Z",
+      "finished_at": "2026-09-29T06:20:00.971397+00:00",
       "model": "deepseek-flash",
-      "attempted_projects": 10,
-      "accepted_projects": 9,
+      "attempted_projects": 12,
+      "accepted_projects": 11,
       "failed_projects": 1,
       "failures": [
         {
           "repository_id": 1351626350,
-          "reason": "missing_description"
+          "reason": "missing_verbatim"
         }
       ],
       "requests": 2,
@@ -22,16 +22,16 @@
       "unknown_usage_requests": 0,
       "usage_complete": true,
       "observed_tokens": {
-        "prompt_tokens": 2606,
-        "completion_tokens": 886,
+        "prompt_tokens": 2659,
+        "completion_tokens": 925,
         "cache_hit_tokens": 768,
-        "cache_miss_tokens": 1838
+        "cache_miss_tokens": 1891
       },
       "request_errors": {},
       "estimated_cost": {
         "currency": "USD",
-        "min": "0.000809604",
-        "max": "0.001619208"
+        "min": "0.000840954",
+        "max": "0.001681908"
       },
       "pricing": {
         "source": "https://api-docs.deepseek.com/quick_start/pricing",
@@ -56,113 +56,113 @@
     },
     "classification": {
       "version": 1,
-      "id": "5e57beb1f09c469790cb11aeaccdbb48",
+      "id": "74094d3fd7e549d68d6b2db0b62cc2b3",
       "kind": "classification",
-      "started_at": "2026-09-28T06:01:54.277283Z",
-      "finished_at": "2026-09-28T06:02:02.730160+00:00",
+      "started_at": "2026-09-29T06:20:02.666720Z",
+      "finished_at": "2026-09-29T06:20:18.920689+00:00",
       "model": "deepseek-flash",
-      "attempted_projects": 20,
-      "accepted_projects": 0,
+      "attempted_projects": 80,
+      "accepted_projects": 60,
       "failed_projects": 20,
       "failures": [
         {
-          "repository_id": 1890957,
+          "repository_id": 9721284,
           "reason": "schema"
         },
         {
-          "repository_id": 3234987,
+          "repository_id": 32292516,
           "reason": "schema"
         },
         {
-          "repository_id": 7290458,
+          "repository_id": 59752363,
           "reason": "schema"
         },
         {
-          "repository_id": 57351353,
+          "repository_id": 89738953,
           "reason": "schema"
         },
         {
-          "repository_id": 235221262,
+          "repository_id": 290241816,
           "reason": "schema"
         },
         {
-          "repository_id": 501385974,
+          "repository_id": 398904359,
           "reason": "schema"
         },
         {
-          "repository_id": 814403270,
+          "repository_id": 561960509,
           "reason": "schema"
         },
         {
-          "repository_id": 1009499810,
+          "repository_id": 631569264,
           "reason": "schema"
         },
         {
-          "repository_id": 1133883850,
+          "repository_id": 709619834,
           "reason": "schema"
         },
         {
-          "repository_id": 1134426800,
+          "repository_id": 1113133379,
           "reason": "schema"
         },
         {
-          "repository_id": 1144520675,
+          "repository_id": 1121989093,
           "reason": "schema"
         },
         {
-          "repository_id": 1166182351,
+          "repository_id": 1131388506,
           "reason": "schema"
         },
         {
-          "repository_id": 1169620429,
+          "repository_id": 1141514919,
           "reason": "schema"
         },
         {
-          "repository_id": 1269124956,
+          "repository_id": 1148587428,
           "reason": "schema"
         },
         {
-          "repository_id": 1276362063,
+          "repository_id": 1222042205,
           "reason": "schema"
         },
         {
-          "repository_id": 1302449868,
+          "repository_id": 1348316078,
           "reason": "schema"
         },
         {
-          "repository_id": 1342432270,
+          "repository_id": 1360725349,
           "reason": "schema"
         },
         {
-          "repository_id": 1358168557,
+          "repository_id": 1366546611,
           "reason": "schema"
         },
         {
-          "repository_id": 1372535054,
+          "repository_id": 1367606050,
           "reason": "schema"
         },
         {
-          "repository_id": 1372665897,
+          "repository_id": 1376380583,
           "reason": "schema"
         }
       ],
-      "requests": 2,
-      "usage_responses": 2,
+      "requests": 5,
+      "usage_responses": 5,
       "unknown_usage_requests": 0,
       "usage_complete": true,
       "observed_tokens": {
-        "prompt_tokens": 7804,
-        "completion_tokens": 1434,
-        "cache_hit_tokens": 4992,
-        "cache_miss_tokens": 2812
+        "prompt_tokens": 18821,
+        "completion_tokens": 3599,
+        "cache_hit_tokens": 8832,
+        "cache_miss_tokens": 9989
       },
       "request_errors": {
         "invalid_response": 2
       },
       "estimated_cost": {
         "currency": "USD",
-        "min": "0.001297176",
-        "max": "0.002594352"
+        "min": "0.003684246",
+        "max": "0.007368492"
       },
       "pricing": {
         "source": "https://api-docs.deepseek.com/quick_start/pricing",

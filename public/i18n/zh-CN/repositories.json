@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-28T16:11:14.735200Z",
+  "generated_at": "2026-09-29T06:19:55.816330Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4884,
-    "localized_count": 4872,
-    "pending_count": 12,
+    "localized_count": 4883,
+    "pending_count": 1,
     "failed_count": 1,
-    "coverage_ratio": 0.997543
+    "coverage_ratio": 0.999795
   },
   "repositories": [
     {
@@ -3134,6 +3134,15 @@
       "description_zh": "spark 是一个统一的大规模数据处理分析引擎。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 17420614,
+      "source_full_name": "seleniumbase/SeleniumBase",
+      "source_hash": "23d945aae19349d88479db48c675cf5a01f7ee2d80346777e49e71ac9045e0f8",
+      "display_name_zh": "SeleniumBase｜浏览器自动化框架",
+      "description_zh": "SeleniumBase 是用于测试和网页抓取的浏览器自动化框架。CDP 模式可增强隐蔽性以绕过机器人检测，并支持 MCP。",
+      "generated_at": "2026-09-29T06:19:55.816330Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 17420913,
@@ -16294,6 +16303,15 @@
       "provenance": "model_api"
     },
     {
+      "repository_id": 436297812,
+      "source_full_name": "usememos/memos",
+      "source_hash": "57b1de610b9e5421d90e9a4a7c952500e8ddb18ee35fe6ebbe432ce6c0e71366",
+      "display_name_zh": "memos｜个人时间线速记工具",
+      "description_zh": "一个用于快速记录的个人时间线工具。写下简短备忘录，之后可通过搜索、标签或日期找回。开源且可自托管。",
+      "generated_at": "2026-09-29T06:19:55.816330Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 436466520,
       "source_full_name": "rilldata/rill",
       "source_hash": "1c5dd9fc06766a488be45b4e2fe28a673ee13f5c4ad0ac77484be1919690c07b",
@@ -17552,6 +17570,15 @@
       "description_zh": "开源的机密、证书及特权访问管理平台",
       "generated_at": "2026-07-17T00:57:38.909807Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 522158088,
+      "source_full_name": "zhayujie/CowAgent",
+      "source_hash": "742da4d7a1c568b05dda746dc9e7d15c004e8e8426d63e9313f4832db534b7c5",
+      "display_name_zh": "CowAgent｜开源超级 AI 助手",
+      "description_zh": "开源超级 AI 助手与 Agent Harness。可规划任务、运行工具与技能，并通过记忆和知识自我进化。支持多智能体、多模型、多渠道。轻量、可扩展、一行命令安装。",
+      "generated_at": "2026-09-29T06:19:55.816330Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 523007292,
@@ -20659,6 +20686,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 679343504,
+      "source_full_name": "topoteretes/cognee",
+      "source_hash": "6373cd93152bbc125e4d3b148b209c21b74b3fd449129cfbe627ba9efd01e3df",
+      "display_name_zh": "cognee｜开源 AI 记忆平台",
+      "description_zh": "cognee 是面向智能体的开源 AI 记忆平台，为 AI 智能体提供持久长期记忆，并可用小模型免费运行。",
+      "generated_at": "2026-09-29T06:19:55.816330Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 679366051,
       "source_full_name": "NVIDIA/TensorRT-LLM",
       "source_hash": "008a06871beece659abbd31ffc44fac4679d1cd01c33c780b3b938785b42f1c0",
@@ -22783,6 +22819,15 @@
       "provenance": "model_api"
     },
     {
+      "repository_id": 798201435,
+      "source_full_name": "unclecode/crawl4ai",
+      "source_hash": "993a487e5d7f9b78095d4385a6a0168026dfc28999c1f98f4ba9382ad4235e09",
+      "display_name_zh": "crawl4ai｜面向 LLM 的网页爬虫",
+      "description_zh": "面向 LLMs 和 AI 智能体的开源网页爬虫与抓取工具：可将任意网站转换为干净、适合 LLM 的 Markdown。可自行运行，也可使用 Crawl4AI Cloud 一键接入。",
+      "generated_at": "2026-09-29T06:19:55.816330Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 798300247,
       "source_full_name": "celebrated0/ixrail",
       "source_hash": "9e31a2f86b5279341254ac028b55c275d16eca29bfcace4c46eb11d25bb906ca",
@@ -24014,6 +24059,15 @@
       "description_zh": "readest是一款现代化功能丰富的电子书阅读器，支持跨平台访问，提供强大工具和直观界面，提升阅读体验。",
       "generated_at": "2026-07-19T07:03:48.394229Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 872119017,
+      "source_full_name": "D4Vinci/Scrapling",
+      "source_hash": "9a4095536cdea3b4c95e6a456c38bb673af8c1642cde2c127461f1b4faf65bc8",
+      "display_name_zh": "Scrapling｜自适应网页抓取框架",
+      "description_zh": "一个自适应网页抓取框架，可处理从单次请求到大规模爬取的各种任务。欢迎加入 https://discord.gg/EMgGbDceNQ 并关注获取每日技巧。",
+      "generated_at": "2026-09-29T06:19:55.816330Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 872272362,
@@ -32134,6 +32188,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1179222510,
+      "source_full_name": "AgentiLoop/Agent",
+      "source_hash": "8f24dc87db294669caf701097eb1340a4447bced29a6fca002cbb46d86c30c5b",
+      "display_name_zh": "Agent｜Mac AI 智能体",
+      "description_zh": "Agent 现支持 macOS 14.6 或更高版本，兼容 Apple Silicon 与 Intel。这款 Mac AI 智能体可通过辅助功能驱动任意应用、在 Xcode 中编码构建，并自动化 AppleScript、JXA、Swift 和 SMAppService shell（用户/root）。支持 23 个 LLM 提供商、本地/云端、设备端 Apple Intelligence 与 Jev guard，并支持 MCP。",
+      "generated_at": "2026-09-29T06:19:55.816330Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1179264259,
       "source_full_name": "garrytan/gstack",
       "source_hash": "ae3bf714710aa17e296003205c35b42f3740fc7fe88d3b8690d99e8713d3dc4b",
@@ -33878,6 +33941,15 @@
       "description_zh": "一款功能单一的虚拟定位软件，需root权限及Lsposed支持。",
       "generated_at": "2026-07-20T22:06:55.994311Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1220744720,
+      "source_full_name": "freestylefly/awesome-gpt-image-2",
+      "source_hash": "efbff53cd0e487fde60a65774dd61a05c29a858344430c7f360e81389fc76d85",
+      "display_name_zh": "awesome-gpt-image-2｜提示词案例库",
+      "description_zh": "Prompt as Code | GPT Image 2 / 2.5 提示词与案例库，530+ 个案例、20+ 套工业级模板与可复用 Skills，新增 2.5 同提示词对比专区，附完整提示词与生成记录，持续更新。",
+      "generated_at": "2026-09-29T06:19:55.816330Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1221103129,
@@ -35777,6 +35849,15 @@
       "description_zh": "《形式化$q$级数：罗杰斯-拉马努金恒等式及其扩展》的相关资料。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1269663771,
+      "source_full_name": "LittleBitUA/DPRecomp",
+      "source_hash": "01112614b92df625de55fb421fa89e8abfdfffec67a02315c02fd3f8d9a500dc",
+      "display_name_zh": "DPRecomp｜Deadly Premonition PC 移植",
+      "description_zh": "通过静态重编译实现的 Deadly Premonition（Xbox 360）原生 PC 移植版 - v2.0.10：原生 DirectX 12 渲染器已可测试（内部渲染分辨率最高 4 倍）；支持 60 FPS、鼠标视角、键盘驾驶、FSR 3、ISO 安装程序，PAL + USA。",
+      "generated_at": "2026-09-29T06:19:55.816330Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1269806075,
@@ -43141,6 +43222,15 @@
       "provenance": "model_api"
     },
     {
+      "repository_id": 1367446577,
+      "source_full_name": "suoha888/Trader-Archives",
+      "source_hash": "b980f43c0f7caf39bebee87eb65ade3d4e688d3fee15e9cb882764312faf7049",
+      "display_name_zh": "Trader-Archives｜交易员推文收录",
+      "description_zh": "推特顶级实战派交易员推文公开收录大典，剥离噪音，沉淀真金白银实盘认知体系与全量开源数据湖，完全开源免费 by 梭哈.AI。",
+      "generated_at": "2026-09-29T06:19:55.816330Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1367501425,
       "source_full_name": "rizqinrr/viserys-agent",
       "source_hash": "2846adf0bc25a8ce0e591943dc483d6852ecc9b929df8a50690247e6b80a5849",
@@ -43192,6 +43282,15 @@
       "display_name_zh": "Ember｜从零编写的操作系统",
       "description_zh": "从零开始编写的操作系统：引导扇区、FAT 文件系统、DOS 兼容中断、声音、32 位运行时以及图形桌面。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1368837058,
+      "source_full_name": "arsumbris/arsumbris",
+      "source_hash": "925a6f2d0eb5139623ec353c527aa523dd24bbf250182c8fac49749bb298c7dd",
+      "display_name_zh": "arsumbris｜智能体知识工作框架",
+      "description_zh": "一个用于构建面向智能体知识工作的领域专用系统的工作区与框架。",
+      "generated_at": "2026-09-29T06:19:55.816330Z",
       "provenance": "model_api"
     },
     {
