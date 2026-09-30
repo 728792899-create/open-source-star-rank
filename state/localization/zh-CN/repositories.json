@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-29T16:10:12.233740Z",
+  "generated_at": "2026-09-30T06:05:05.752395Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4884,
-    "localized_count": 4874,
-    "pending_count": 10,
+    "localized_count": 4883,
+    "pending_count": 1,
     "failed_count": 1,
-    "coverage_ratio": 0.997952
+    "coverage_ratio": 0.999795
   },
   "repositories": [
     {
@@ -5077,6 +5077,15 @@
       "display_name_zh": "rx-player｜DASH/Smooth HTML5 视频播放器",
       "description_zh": "支持 DASH 与 Smooth 的 HTML5 视频播放器。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 37751280,
+      "source_full_name": "dborth/vbagx",
+      "source_hash": "74597ca7a9cd2836702565e3477d2f2df6abc224726564ec529558ad90ba03e8",
+      "display_name_zh": "vbagx｜GB/GBC/GBA 模拟器",
+      "description_zh": "Visual Boy Advance GX——适用于 GameCube、Wii 和 Wii U 的 GB/GBC/GBA 模拟器。",
+      "generated_at": "2026-09-30T06:05:05.752395Z",
       "provenance": "model_api"
     },
     {
@@ -13142,6 +13151,15 @@
       "description_zh": "Sandboxie Plus & Classic 是 Sandboxie 的增强和经典版本。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 254328371,
+      "source_full_name": "NangoHQ/nango",
+      "source_hash": "a82eba24edf96bcabbbdb206392e3cb1f465f13f64551c45108af531ea8189c5",
+      "display_name_zh": "nango｜连接 1,000 APIs 的集成平台",
+      "description_zh": "将你的代理与产品连接到 1,000 APIs。",
+      "generated_at": "2026-09-30T06:05:05.752395Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 254832799,
@@ -31621,6 +31639,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1168844155,
+      "source_full_name": "node9-ai/node9-proxy",
+      "source_hash": "55ae315d6094b06827fbcaa8facdccbf5061c7fbb37b15a78eb2b524b54ddf4f",
+      "display_name_zh": "node9-proxy｜AI 代理访问控制",
+      "description_zh": "面向 AI 代理的访问控制：设定 Claude Code、Codex、Gemini、Cursor 及任意 MCP 服务器可执行的操作，在风险操作运行前进行审查，并记录每一项操作。",
+      "generated_at": "2026-09-30T06:05:05.752395Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1168883139,
       "source_full_name": "cmdlabtech/Wondereye",
       "source_hash": "57b24ee5ac36905e8b359f374d2d177b21c0ea2922413108604560f01936bf41",
@@ -33079,6 +33106,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1197990888,
+      "source_full_name": "Twigpine/openclaude",
+      "source_hash": "4ca67ab12365cea0c9f2dbb3b75112cd009206790a38f1a18955684c43b0ddb6",
+      "display_name_zh": "openclaude｜随处运行工具",
+      "description_zh": "随处运行，任意调用。",
+      "generated_at": "2026-09-30T06:05:05.752395Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1198246700,
       "source_full_name": "emdash-cms/emdash",
       "source_hash": "8c76e68beba0c7b236dd085818eae102d141a997b165c0f8b0ab41d38c3d178b",
@@ -33220,6 +33256,15 @@
       "display_name_zh": "AetherKiri｜跨平台多运行时视觉小说模拟器",
       "description_zh": "使用 Godot 4 作为渲染层的跨平台、多运行时视觉小说模拟器。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1201476594,
+      "source_full_name": "career-ops-hq/career-ops",
+      "source_hash": "1baea228c9c25cdfe1eedf6584d1d000e29d36b2d1f126bacd4d396805f7995d",
+      "display_name_zh": "career-ops｜AI 求职搜索代理",
+      "description_zh": "开源 AI 求职搜索代理：扫描招聘门户，将职位评估为带全局 1-5 评分的结构化 A-H 报告，定制 CV，跟踪申请进度，可在本地 AI 编程 CLI（Claude Code、Codex、OpenCode、Antigravity 等）中运行。",
+      "generated_at": "2026-09-30T06:05:05.752395Z",
       "provenance": "model_api"
     },
     {
@@ -35804,6 +35849,15 @@
       "description_zh": "《形式化$q$级数：罗杰斯-拉马努金恒等式及其扩展》的相关资料。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1269663771,
+      "source_full_name": "LittleBitUA/DPRecomp",
+      "source_hash": "444d326abbfe707512f28b01dc6188995f1ee30d3f80000ff609128a6aeaeacd",
+      "display_name_zh": "DPRecomp｜Deadly Premonition PC 移植",
+      "description_zh": "通过静态重编译实现的 Deadly Premonition（Xbox 360）原生 PC 移植——v2.0.11：原生 DirectX 12 渲染器可供测试（最高 4 倍内部分辨率）；60 FPS、鼠标视角、键盘驾驶、FSR 3、ISO 安装程序、PAL + USA。",
+      "generated_at": "2026-09-30T06:05:05.752395Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1269806075,
@@ -40279,6 +40333,15 @@
       "provenance": "model_api"
     },
     {
+      "repository_id": 1346327782,
+      "source_full_name": "starVLA/VLAct",
+      "source_hash": "f2116da253f83dbe47c63d72ffaecc0d5d5a20ea17e44dd064e91ad24d558e8b",
+      "display_name_zh": "VLAct｜视觉-语言-动作模型持续预训练",
+      "description_zh": "[NeurIPS 2026] 超越数据扩展：面向视觉-语言-动作模型的以表征为中心的持续预训练。",
+      "generated_at": "2026-09-30T06:05:05.752395Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1346328866,
       "source_full_name": "Aadiii00/SIH-Winners-PPt-and-Sources",
       "source_hash": "d426d0f026b78ed99fd126085beab4b6b976d678b378ee7373d766828b8a599c",
@@ -42061,6 +42124,15 @@
       "provenance": "model_api"
     },
     {
+      "repository_id": 1358286075,
+      "source_full_name": "fidetolabs/qanat",
+      "source_hash": "f5b8384e13fb4e48ca23db4ae0a3db110158f2bb54ed8527e43303405e382ebf",
+      "display_name_zh": "qanat｜量化因子 MCP 服务器",
+      "description_zh": "用于量化因子处理与回测的 MCP 服务器，连接你的代理即可提问。",
+      "generated_at": "2026-09-30T06:05:05.752395Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1358295353,
       "source_full_name": "vinzdg/codenotch",
       "source_hash": "4534b3656dea6090b8378636567109b094153e3b3f2d6d2e35268ad6d7d0d35f",
@@ -43237,6 +43309,15 @@
       "display_name_zh": "Qwen-Image-2.1｜图像生成模型",
       "description_zh": "Qwen 最强大的开源图像生成模型。",
       "generated_at": "2026-09-25T05:32:45.254187Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1369493694,
+      "source_full_name": "Tencent/WeVisDoc",
+      "source_hash": "da56e86bcab951d15e50570f5b40666759a0e9940d5fdd2c55e7baf3d5b4abed",
+      "display_name_zh": "WeVisDoc｜端到端文档解析器",
+      "description_zh": "WeVisDoc 是面向页面图像的端到端文档解析器，基于 Qwen3-VL-2B-Instruct 与 Qwen3-VL-4B-Instruct 微调，可将页面转换为结构化 Markdown，并支持 LaTeX 公式与 HTML 表格。",
+      "generated_at": "2026-09-30T06:05:05.752395Z",
       "provenance": "model_api"
     },
     {
