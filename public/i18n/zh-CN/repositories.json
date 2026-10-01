@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-09-30T16:11:34.314106Z",
+  "generated_at": "2026-10-01T06:39:02.374651Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4884,
-    "localized_count": 4871,
-    "pending_count": 13,
+    "localized_count": 4883,
+    "pending_count": 1,
     "failed_count": 1,
-    "coverage_ratio": 0.997338
+    "coverage_ratio": 0.999795
   },
   "repositories": [
     {
@@ -3134,6 +3134,15 @@
       "description_zh": "spark 是一个统一的大规模数据处理分析引擎。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 17420614,
+      "source_full_name": "seleniumbase/SeleniumBase",
+      "source_hash": "9f19b4fed27671439b4bab5dcc2f0055146db80d9ad2f8c7b327767fdc8191f1",
+      "display_name_zh": "SeleniumBase｜浏览器自动化 APIs",
+      "description_zh": "用于浏览器自动化、测试和绕过机器人检测的 APIs，可将 Chromium 变为处理 CAPTCHAs 的反检测浏览器，并支持 MCP。",
+      "generated_at": "2026-10-01T06:39:02.374651Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 17420913,
@@ -22576,6 +22585,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 787076358,
+      "source_full_name": "firecrawl/firecrawl",
+      "source_hash": "c2b7cb9a13e4ea04107570ee0f984861820837ecdfff5ddde378e4a1f9adbc8a",
+      "display_name_zh": "firecrawl｜网页数据 AI API",
+      "description_zh": "用来自网络及更多来源的数据增强你的 AI 智能体。一个用于搜索、抓取并访问更多来源的网页数据 API。",
+      "generated_at": "2026-10-01T06:39:02.374651Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 787908531,
       "source_full_name": "TagStudioDev/TagStudio",
       "source_hash": "b78eaee63f7a374522b56f6cfa62d8fb163d32e023f5cd12b88725de34dc42a3",
@@ -25924,6 +25942,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 956679248,
+      "source_full_name": "kodustech/kodus-ai",
+      "source_hash": "805d3d3812e491a57c8801cefa2f8854402d2c07cdc3aeca4d8571fc475ae9cf",
+      "display_name_zh": "kodus-ai｜自托管 AI 代码审查",
+      "description_zh": "开源、自托管的 AI 代码审查，可自带 LLM。",
+      "generated_at": "2026-10-01T06:39:02.374651Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 957275282,
       "source_full_name": "meerilahi/Books-Collection",
       "source_hash": "c45ad603987bf18ab15821ff05544dfb16ec9ea93a506bb30d26ce8440015977",
@@ -28345,6 +28372,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1072945981,
+      "source_full_name": "spec-kitty/spec-kitty",
+      "source_hash": "7e3fc7e5a15e856299b68825f71940eb741079d00417b29647d2f9bdaa5e2ef0",
+      "display_name_zh": "spec-kitty｜规范驱动开发治理",
+      "description_zh": "带组织治理的规范驱动开发。规范告诉 AI 智能体构建什么，Charter 治理它们如何构建。为 AI 编码智能体和运行框架提供 Git 原生任务、可执行工作流和一致的工程标准。",
+      "generated_at": "2026-10-01T06:39:02.374651Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1073214662,
       "source_full_name": "jqssun/android-titanium-browser",
       "source_hash": "b0a5195b736f1e16798a0caaf3262b6197a7c4afcbe1301c8c2c8cf643b7cfdd",
@@ -29909,6 +29945,15 @@
       "description_zh": "worldmonitor 是一个实时全球情报仪表盘，集成 AI 驱动的新闻聚合、地缘政治监控和基础设施跟踪。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1130667066,
+      "source_full_name": "nirholas/three.ws",
+      "source_hash": "ef85b2173645d47bb3ca68a8b98d1f77cd09c4ebfecfd70cd99d94418890840b",
+      "display_name_zh": "three.ws｜3D AI 智能体平台",
+      "description_zh": "面向 3D AI 智能体的开源平台。将文本或照片变成绑定骨骼并带动画的 GLB 虚拟形象，赋予其 LLM 大脑、记忆和钱包，并通过一个 Web Component 嵌入任何位置。支持远程 MCP 服务器、x402 支付、Three.js，浏览器原生。",
+      "generated_at": "2026-10-01T06:39:02.374651Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1130697338,
@@ -32476,6 +32521,15 @@
       "provenance": "model_api"
     },
     {
+      "repository_id": 1184090452,
+      "source_full_name": "fallow-rs/fallow",
+      "source_hash": "13f03335188edf744e549158f333ebfcef8d4c65311c7644a5bbd1fde743134a",
+      "display_name_zh": "fallow｜TypeScript 与 JavaScript 代码库洞察",
+      "description_zh": "面向 TypeScript 和 JavaScript 的代码库洞察，从一张图中呈现健康度、复杂度热点、重复、架构边界、循环依赖、设计系统漂移和未使用代码。提供 CLI、GitHub Action、LSP、MCP 和 VS Code 支持。Rust 编写，MIT 许可。",
+      "generated_at": "2026-10-01T06:39:02.374651Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1184460122,
       "source_full_name": "andrewwoan/alpha-chads-cozy-cafes",
       "source_hash": "63e48a11ca7a2e67bb332478560e5dc4c31751ec781342252587d0e5ae5c67e4",
@@ -33779,6 +33833,15 @@
       "description_zh": "用Rust重写的Postgres数据库，已通过100%的Postgres回归测试。",
       "generated_at": "2026-07-20T22:06:55.994311Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1216785679,
+      "source_full_name": "esengine/DeepSeek-Reasonix",
+      "source_hash": "b9bbf16da803811bd25f244a6299bbb18d886e495849e0f71b8e3246e2762c3c",
+      "display_name_zh": "DeepSeek-Reasonix｜编码智能体",
+      "description_zh": "一个用于复杂软件工程任务的可靠编码智能体。",
+      "generated_at": "2026-10-01T06:39:02.374651Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1216954187,
@@ -39793,6 +39856,15 @@
       "provenance": "model_api"
     },
     {
+      "repository_id": 1344068353,
+      "source_full_name": "Reality-JH/frontend-promotion-guard",
+      "source_hash": "9afcb85ebda9f12766835b927003b62cf5dafa3f193e5d47a4d61b1c1573c692",
+      "display_name_zh": "frontend-promotion-guard｜前端发布门禁",
+      "description_zh": "发布门禁，用于捕获“构建通过、容器健康、页面却损坏”的部署问题：CSS 审计、计算样式断言、截图差异，以及带经验证回滚的 Docker 候选晋级。",
+      "generated_at": "2026-10-01T06:39:02.374651Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1344209362,
       "source_full_name": "x4gpanell/Marzban",
       "source_hash": "8d86164cf33413b485139a713404c3cd97e8afba7e336c5bde99b30f70893cf8",
@@ -40684,6 +40756,15 @@
       "provenance": "model_api"
     },
     {
+      "repository_id": 1349410105,
+      "source_full_name": "rokbenko/quackd",
+      "source_hash": "e93a6482c76b1de62ef2fa2b1c0b90088e5bf07d143dc6e9455afe7dadf6a572",
+      "display_name_zh": "quackd｜机器人统一 CLI",
+      "description_zh": "一个 CLI 管理所有机器人。连接、指挥并让它们协同工作，每个机器人都以 LLM 为大脑（Claude、OpenAI、Gemini、Grok，或通过 Ollama、vLLM 本地运行），用 VLAs 控制手臂，并用决策 LLMs（Jev、Laya、Kev）决策。可从笔记本以离板方式驱动 Microduck、Open Duck Mini、LeRobot、XLeRobot、AlohaMini、ToddlerBot 或任何 ROS 2 底盘。",
+      "generated_at": "2026-10-01T06:39:02.374651Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1349514211,
       "source_full_name": "Iwtbs27/collab-agent",
       "source_hash": "9cb338c022b945c842384e07534dbb2e0271e95edd28712418a1faae68053da1",
@@ -40969,6 +41050,15 @@
       "display_name_zh": "dsh-trading｜智能体原生交易终端",
       "description_zh": "基于 DeepSeek Harness 的智能体原生交易终端，三栏 GUI 集成加密货币、US、CN 与 HK 市场，提供 19+ 可热插拔连接器，默认模拟运行且每笔实盘订单需人工确认，采用 BYOK 模式且不转售数据。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1351274581,
+      "source_full_name": "qunqin24/Pulse",
+      "source_hash": "9b398d7b538a83e8639bc5c0e1d0c04e21f7cd6256577f4f9b9dc61a76ba9fd4",
+      "display_name_zh": "Pulse｜AI 编码工具额度监控",
+      "description_zh": "了解 Claude Code、Codex、Cursor、Copilot 及其他 70+ 款 AI 编码工具还剩多少额度——一款免费、开源的 macOS 屏幕边缘监控工具。",
+      "generated_at": "2026-10-01T06:39:02.374651Z",
       "provenance": "model_api"
     },
     {
@@ -43366,6 +43456,15 @@
       "provenance": "model_api"
     },
     {
+      "repository_id": 1372535054,
+      "source_full_name": "lakeday-org/perch",
+      "source_hash": "26ca0c680122a13b04f1f55e4e7c89875431545f4d9319b77dd849c0bad7aff3",
+      "display_name_zh": "perch｜语义代码检查",
+      "description_zh": "使用决策模型进行语义代码检查。",
+      "generated_at": "2026-10-01T06:39:02.374651Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1372555324,
       "source_full_name": "leoliu0/ratex",
       "source_hash": "1d64c4a605cf8aca6022c27bde5352d77c628c7f1b8da0c8e5c62c5b3137bd9a",
@@ -43417,6 +43516,15 @@
       "display_name_zh": "ai-model-world｜AI 大模型像素可视化站点",
       "description_zh": "AI 大模型世界，把 556 个大模型拟人化成像素小人的可视化站点，可查看模型智能、编程、价格与发布时间，并提供厂商广场、时间线和多维排行榜，数据每小时自动同步，所有文案由真实数据生成，不调用任何 LLM。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1373977947,
+      "source_full_name": "itsmostafa/system-one-connector",
+      "source_hash": "af779f74a197577cc551057f75fe3468be5b5058feb403be8cb93c73d664152f",
+      "display_name_zh": "system-one-connector｜MCP 连接器",
+      "description_zh": "System One MCP 连接器，可快速且低成本地评估任何内容。让你的 AI 智能体直接访问 Jev、D1、CLM 和 Laya 等模型。",
+      "generated_at": "2026-10-01T06:39:02.374651Z",
       "provenance": "model_api"
     },
     {
