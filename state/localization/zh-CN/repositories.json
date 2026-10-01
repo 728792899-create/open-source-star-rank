@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-01T06:39:02.374651Z",
+  "generated_at": "2026-10-01T16:10:26.116427Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4884,
-    "localized_count": 4883,
-    "pending_count": 1,
+    "localized_count": 4879,
+    "pending_count": 5,
     "failed_count": 1,
-    "coverage_ratio": 0.999795
+    "coverage_ratio": 0.998976
   },
   "repositories": [
     {
@@ -3134,15 +3134,6 @@
       "description_zh": "spark 是一个统一的大规模数据处理分析引擎。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 17420614,
-      "source_full_name": "seleniumbase/SeleniumBase",
-      "source_hash": "9f19b4fed27671439b4bab5dcc2f0055146db80d9ad2f8c7b327767fdc8191f1",
-      "display_name_zh": "SeleniumBase｜浏览器自动化 APIs",
-      "description_zh": "用于浏览器自动化、测试和绕过机器人检测的 APIs，可将 Chromium 变为处理 CAPTCHAs 的反检测浏览器，并支持 MCP。",
-      "generated_at": "2026-10-01T06:39:02.374651Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 17420913,
@@ -14571,15 +14562,6 @@
       "source_hash": "071d2f5cd9e9ac6ec6abe67f8c1fd08fdfd08d0957e9277872e27af2d83701db",
       "display_name_zh": "jj｜Git 兼容 VCS",
       "description_zh": "jj 是一款兼容 Git 的版本控制系统（VCS），兼具简洁与强大。",
-      "generated_at": "2026-07-17T00:57:38.909807Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 323048702,
-      "source_full_name": "OpenBB-finance/OpenBB",
-      "source_hash": "50c0ed7f5715c8fcaf24034c7ec8893832bcc271779a018b3dc1442fd34758eb",
-      "display_name_zh": "OpenBB｜开放数据平台",
-      "description_zh": "OpenBB 是面向分析师、量化交易员和 AI 代理的开放数据平台。",
       "generated_at": "2026-07-17T00:57:38.909807Z",
       "provenance": "github_models"
     },
@@ -39433,15 +39415,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1322798245,
-      "source_full_name": "cristicretu/diri",
-      "source_hash": "30bbeaa3f816997438c98ff0a51d800e0f02f26b356b62c3bfa57c7eae470f9b",
-      "display_name_zh": "diri｜编码智能体原生工作区",
-      "description_zh": "面向编码智能体的原生工作区，支持并行运行、就地审查。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1328250646,
       "source_full_name": "UNDERdecoded/Gen2Recomped",
       "source_hash": "cc1a5937fd8d5ae341cf35926f3c8ccb4675ae5544593b9545eefef70e6a9946",
@@ -42832,15 +42805,6 @@
       "display_name_zh": "awesome-reasoning-generalization｜LLMs 推理泛化论文列表",
       "description_zh": "关于 LLMs 推理泛化的论文列表。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1363431253,
-      "source_full_name": "blixvip/MotionClone",
-      "source_hash": "34fdfe81885ea1dd64494f1d8b13109ffb8ee7b042e89b0dc0727117fb9a9a68",
-      "display_name_zh": "MotionClone｜参考视频转动态图形",
-      "description_zh": "借助 Codex 与 ChatGPT 将参考视频转为可编辑的动态图形，可对比、自定义并导出 MP4s 或 HyperFrames 项目，提供本地 Windows 应用与在线工作室。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
     {
