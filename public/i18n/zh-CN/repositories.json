@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-02T06:22:28.460057Z",
+  "generated_at": "2026-10-02T16:11:14.073182Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4884,
-    "localized_count": 4883,
-    "pending_count": 1,
+    "localized_count": 4878,
+    "pending_count": 6,
     "failed_count": 1,
-    "coverage_ratio": 0.999795
+    "coverage_ratio": 0.998771
   },
   "repositories": [
     {
@@ -3134,15 +3134,6 @@
       "description_zh": "spark 是一个统一的大规模数据处理分析引擎。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 17420614,
-      "source_full_name": "seleniumbase/SeleniumBase",
-      "source_hash": "42776b1e49d7944b8fa9455defc7a36288dce6f5349e44d823a636ea374e4541",
-      "display_name_zh": "SeleniumBase｜浏览器自动化 APIs 工具",
-      "description_zh": "用于浏览器自动化、网页抓取和测试的 Python APIs。CDP 模式使用扩展 Playwright 的隐蔽 Chromium 实例。",
-      "generated_at": "2026-10-02T06:22:28.460057Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 17420913,
@@ -6427,15 +6418,6 @@
       "display_name_zh": "HelloGitHub｜入门级开源项目分享",
       "description_zh": "分享GitHub上有趣且适合入门的开源项目。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 58414589,
-      "source_full_name": "uxlfoundation/oneDNN",
-      "source_hash": "b1c69630ea6d06419034625c7b5d46899a513432911d3f10afbc969a89f27c51",
-      "display_name_zh": "oneDNN｜深度神经网络库",
-      "description_zh": "oneDNN 是 oneAPI 深度神经网络库。",
-      "generated_at": "2026-07-20T18:28:18.246753Z",
       "provenance": "github_models"
     },
     {
@@ -32125,15 +32107,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1178494429,
-      "source_full_name": "h5i-dev/h5i",
-      "source_hash": "70782ef04c25415aa143c0978900db57556fbcb789aff9cdaeafe9923a85edb7",
-      "display_name_zh": "h5i｜智能体红队测试工作区",
-      "description_zh": "面向智能体的红队测试工作区，提供快速浏览器、直接 HTTP 流量控制、沙箱化执行与可审计会话，使用纯 Rust 编写。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1178583507,
       "source_full_name": "dylan-sutton-chavez/edge-python",
       "source_hash": "a19a2d4e8d6950d76a980ed2741f09cb1e9d1c1fb38fc880ac8d852be8c2a29f",
@@ -32186,15 +32159,6 @@
       "description_zh": "连接飞书/Lark与AI编码命令行界面（CLIs），每个DM、群组或话题生成独立的实时CLI会话。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1179222510,
-      "source_full_name": "AgentiLoop/Agent",
-      "source_hash": "8f24dc87db294669caf701097eb1340a4447bced29a6fca002cbb46d86c30c5b",
-      "display_name_zh": "Agent｜Mac AI 智能体",
-      "description_zh": "Agent 现支持 macOS 14.6 或更高版本，兼容 Apple Silicon 与 Intel。这款 Mac AI 智能体可通过辅助功能驱动任意应用、在 Xcode 中编码构建，并自动化 AppleScript、JXA、Swift 和 SMAppService shell（用户/root）。支持 23 个 LLM 提供商、本地/云端、设备端 Apple Intelligence 与 Jev guard，并支持 MCP。",
-      "generated_at": "2026-09-29T06:19:55.816330Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1179264259,
@@ -33256,15 +33220,6 @@
       "display_name_zh": "AetherKiri｜跨平台多运行时视觉小说模拟器",
       "description_zh": "使用 Godot 4 作为渲染层的跨平台、多运行时视觉小说模拟器。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1201476594,
-      "source_full_name": "career-ops-hq/career-ops",
-      "source_hash": "1baea228c9c25cdfe1eedf6584d1d000e29d36b2d1f126bacd4d396805f7995d",
-      "display_name_zh": "career-ops｜AI 求职搜索代理",
-      "description_zh": "开源 AI 求职搜索代理：扫描招聘门户，将职位评估为带全局 1-5 评分的结构化 A-H 报告，定制 CV，跟踪申请进度，可在本地 AI 编程 CLI（Claude Code、Codex、OpenCode、Antigravity 等）中运行。",
-      "generated_at": "2026-09-30T06:05:05.752395Z",
       "provenance": "model_api"
     },
     {
