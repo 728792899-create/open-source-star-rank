@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-01T16:10:26.116427Z",
+  "generated_at": "2026-10-02T06:22:28.460057Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4884,
-    "localized_count": 4879,
-    "pending_count": 5,
+    "localized_count": 4883,
+    "pending_count": 1,
     "failed_count": 1,
-    "coverage_ratio": 0.998976
+    "coverage_ratio": 0.999795
   },
   "repositories": [
     {
@@ -3134,6 +3134,15 @@
       "description_zh": "spark 是一个统一的大规模数据处理分析引擎。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 17420614,
+      "source_full_name": "seleniumbase/SeleniumBase",
+      "source_hash": "42776b1e49d7944b8fa9455defc7a36288dce6f5349e44d823a636ea374e4541",
+      "display_name_zh": "SeleniumBase｜浏览器自动化 APIs 工具",
+      "description_zh": "用于浏览器自动化、网页抓取和测试的 Python APIs。CDP 模式使用扩展 Playwright 的隐蔽 Chromium 实例。",
+      "generated_at": "2026-10-02T06:22:28.460057Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 17420913,
@@ -14564,6 +14573,15 @@
       "description_zh": "jj 是一款兼容 Git 的版本控制系统（VCS），兼具简洁与强大。",
       "generated_at": "2026-07-17T00:57:38.909807Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 323048702,
+      "source_full_name": "openbq-org/OpenBB",
+      "source_hash": "9bbeca94e55d8c4f2c5ae926e23c145074b0a048ba938f1f8e4036365c202e22",
+      "display_name_zh": "OpenBB｜开放数据平台",
+      "description_zh": "面向分析师、量化研究员和 AI 智能体的开放数据平台。",
+      "generated_at": "2026-10-02T06:22:28.460057Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 323965659,
@@ -39415,6 +39433,15 @@
       "provenance": "model_api"
     },
     {
+      "repository_id": 1322798245,
+      "source_full_name": "cristicretu/diri",
+      "source_hash": "b91ddecf6837b6de82745c613dfd8cf55e63ee6ee97fe37a0791b05c0247de06",
+      "display_name_zh": "diri｜编码智能体协作工具",
+      "description_zh": "与编码智能体协作的方式：可并行运行五十个智能体，让它们互相派生，并在同一处审查所有内容。",
+      "generated_at": "2026-10-02T06:22:28.460057Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1328250646,
       "source_full_name": "UNDERdecoded/Gen2Recomped",
       "source_hash": "cc1a5937fd8d5ae341cf35926f3c8ccb4675ae5544593b9545eefef70e6a9946",
@@ -42805,6 +42832,15 @@
       "display_name_zh": "awesome-reasoning-generalization｜LLMs 推理泛化论文列表",
       "description_zh": "关于 LLMs 推理泛化的论文列表。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1363431253,
+      "source_full_name": "blixvip/MotionClone",
+      "source_hash": "7176a2ac3dfcab2e98914507c2ecafe5007389ac5be8fb884ff496e3232429c8",
+      "display_name_zh": "MotionClone｜AI 动态图形克隆工具",
+      "description_zh": "从参考视频生成 AI 动态图形，可用 Codex 和 ChatGPT 重建为可编辑的 HyperFrames 项目，对比匹配效果并导出 MP4。提供本地 Windows 应用和在线工作室。",
+      "generated_at": "2026-10-02T06:22:28.460057Z",
       "provenance": "model_api"
     },
     {
