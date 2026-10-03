@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-03T05:52:11.665549Z",
+  "generated_at": "2026-10-03T16:12:03.715169Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4884,
-    "localized_count": 4883,
-    "pending_count": 1,
+    "localized_count": 4874,
+    "pending_count": 10,
     "failed_count": 1,
-    "coverage_ratio": 0.999795
+    "coverage_ratio": 0.997952
   },
   "repositories": [
     {
@@ -3134,15 +3134,6 @@
       "description_zh": "spark 是一个统一的大规模数据处理分析引擎。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 17420614,
-      "source_full_name": "seleniumbase/SeleniumBase",
-      "source_hash": "fcf0189e1ad67d4ff154a919e1e0985bc280219aad9b1c388066e87492c2ac44",
-      "display_name_zh": "SeleniumBase｜Python 网页抓取与测试一体化框架",
-      "description_zh": "Python 一体化框架，用于网页爬取、抓取、测试和报告，支持 pytest。CDP 模式可增加隐身能力，附带 150+ 示例。",
-      "generated_at": "2026-10-03T05:52:11.665549Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 17420913,
@@ -22585,15 +22576,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 787076358,
-      "source_full_name": "firecrawl/firecrawl",
-      "source_hash": "c2b7cb9a13e4ea04107570ee0f984861820837ecdfff5ddde378e4a1f9adbc8a",
-      "display_name_zh": "firecrawl｜网页数据 AI API",
-      "description_zh": "用来自网络及更多来源的数据增强你的 AI 智能体。一个用于搜索、抓取并访问更多来源的网页数据 API。",
-      "generated_at": "2026-10-01T06:39:02.374651Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 787908531,
       "source_full_name": "TagStudioDev/TagStudio",
       "source_hash": "b78eaee63f7a374522b56f6cfa62d8fb163d32e023f5cd12b88725de34dc42a3",
@@ -23179,15 +23161,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 817326197,
-      "source_full_name": "screenpipe/screenpipe",
-      "source_hash": "38228c0d9f3dcaf327ee7dc778b5d875512cafbb3d31c9803938dd2914651fbd",
-      "display_name_zh": "screenpipe｜开放计算机历史记录",
-      "description_zh": "YC (S26) | 开放计算机历史 | 在本地持续录制屏幕，并为你的智能体（Claude、Codex、Openclaw、Hermes、Runner 等）提供上下文。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 817354652,
       "source_full_name": "TEN-framework/ten-framework",
       "source_hash": "9fe87384781a895286bc6c5b3846e4385e34a8a894e328a21b924dd58231268d",
@@ -23663,15 +23636,6 @@
       "description_zh": "Nexterm 是一款开源服务器管理软件，支持 SSH、VNC 和 RDP 协议。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 844670429,
-      "source_full_name": "zizmorcore/zizmor",
-      "source_hash": "950b3297b3031201decda2fc2b784a332ee852a43f07698ead80ae443da52f09",
-      "display_name_zh": "zizmor｜GitHub Actions 静态分析",
-      "description_zh": "针对 GitHub Actions 的静态分析工具。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 844912517,
@@ -27101,15 +27065,6 @@
       "description_zh": "Kronos 是一个面向金融市场语言的基础模型。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1012087571,
-      "source_full_name": "router-for-me/CLIProxyAPI",
-      "source_hash": "69643075293fc125dffb48ebc92335598ecbb5ccb3f037d750c5b66ee18e2e36",
-      "display_name_zh": "CLIProxyAPI｜多模型统一 API 代理",
-      "description_zh": "将 Antigravity、ChatGPT Codex、Claude Code、Grok Build、Muse Code、Davin 封装为兼容 OpenAI/Gemini/Claude/Codex 的 API 服务，可通过 API 使用免费的 Gemini 系列、GPT 系列、Grok 系列与 Claude 模型。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1012476581,
@@ -34924,15 +34879,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1248769131,
-      "source_full_name": "luolangaga/tubatools",
-      "source_hash": "e33f503b4672f83ec9e430704ef2f5fae9b4a4e5bdfc23dcb9715d9bfdcf2de9",
-      "display_name_zh": "tubatools｜图吧工具箱 CE",
-      "description_zh": "图吧工具箱 CE。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1249107749,
       "source_full_name": "UditAkhourii/adhd",
       "source_hash": "af3ab121e56eb26195ba541e2887d2a9061f3f299f00cd96d995d54bb0c494a8",
@@ -39820,15 +39766,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1343865323,
-      "source_full_name": "Yzw202011/OmniSpace",
-      "source_hash": "17db86b51f9dc168085844494e857848bab606615496e9dbd9b2ae2f103ec296",
-      "display_name_zh": "OmniSpace｜本地优先全栈 AI 创作工作站",
-      "description_zh": "本地优先的全栈 AI 创作工作站，包含 AI 对话、AI 漫画、漫剧创作、写作台与知识学习五大模块，支持 vLLM、llama.cpp、Transformers 多引擎本地推理，具备显存智能调度与舱壁隔离自愈，仅供学习使用。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1343946559,
       "source_full_name": "yuxuant2025/vision-video-in-a-weekend",
       "source_hash": "87b7f664ed39b1fbdb3a6c6266a2521bbde3c4ef19b8a57efffd2e4bea9198a2",
@@ -41890,15 +41827,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1357036560,
-      "source_full_name": "aaravshah1311/Agent-2",
-      "source_hash": "d34a45097d0e14e52a82220db4bb2ddc84a343e3f95d599c78bcdc1231910940",
-      "display_name_zh": "Agent-2｜自主 AI 代理",
-      "description_zh": "Agent2 是一个自主 AI 代理，用于编程、网络安全、终端自动化和智能任务执行。",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1357054830,
       "source_full_name": "MiaAI-Lab/Qwen3.8-Flash-Next-Single-DGX-Spark",
       "source_hash": "41810c303bb02a7322c988978a11be255d6bdfa674947c2589d2f884c7fce0f8",
@@ -43533,15 +43461,6 @@
       "source_hash": "b32f62be9c7e255bd06b54b32d8aa160030aa9a91c49a0e2bf765c551429370e",
       "display_name_zh": "jev-review｜本地优先 MCP 代码质量审查插件",
       "description_zh": "由 Jev 驱动的本地优先 MCP 插件，让 AI 编码代理持续进行软件质量审查。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1373993338,
-      "source_full_name": "ethanplusai/astra-flash-orchestrator",
-      "source_hash": "92a2f9ad4f4b27026c9f928ccbc874e3ad75c81c3e40f86699af6e5f98e46b4b",
-      "display_name_zh": "astra-flash-orchestrator｜分阶段任务编排工作流",
-      "description_zh": "Astra 负责规划与审查，DeepSeek Flash 负责构建。这是一个原生 Codex 工作流，支持分阶段任务、验证、安全安装与可逆设置。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
