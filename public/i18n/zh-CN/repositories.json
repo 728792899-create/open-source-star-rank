@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-02T16:11:14.073182Z",
+  "generated_at": "2026-10-03T05:52:11.665549Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4884,
-    "localized_count": 4878,
-    "pending_count": 6,
+    "localized_count": 4883,
+    "pending_count": 1,
     "failed_count": 1,
-    "coverage_ratio": 0.998771
+    "coverage_ratio": 0.999795
   },
   "repositories": [
     {
@@ -3134,6 +3134,15 @@
       "description_zh": "spark 是一个统一的大规模数据处理分析引擎。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 17420614,
+      "source_full_name": "seleniumbase/SeleniumBase",
+      "source_hash": "fcf0189e1ad67d4ff154a919e1e0985bc280219aad9b1c388066e87492c2ac44",
+      "display_name_zh": "SeleniumBase｜Python 网页抓取与测试一体化框架",
+      "description_zh": "Python 一体化框架，用于网页爬取、抓取、测试和报告，支持 pytest。CDP 模式可增加隐身能力，附带 150+ 示例。",
+      "generated_at": "2026-10-03T05:52:11.665549Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 17420913,
@@ -6419,6 +6428,15 @@
       "description_zh": "分享GitHub上有趣且适合入门的开源项目。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 58414589,
+      "source_full_name": "uxlfoundation/oneDNN",
+      "source_hash": "c711a37f95886c7f50463083aac175ac3f94d571a4a1593f560c5d5e5dff086d",
+      "display_name_zh": "oneDNN｜AI 内核高性能实现库",
+      "description_zh": "面向 CPUs（x64、AArch64、RISC-V）和 Intel GPUs 的 AI 内核高性能实现，为 PyTorch、TensorFlow、OpenVINO 和 ONNX Runtime 提供支持。",
+      "generated_at": "2026-10-03T05:52:11.665549Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 58552470,
@@ -32107,6 +32125,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1178494429,
+      "source_full_name": "h5i-dev/h5i",
+      "source_hash": "4b468402d8ce8a306ce124d5c5765b4f93d0bab8fcbeef13d445d97213647407",
+      "display_name_zh": "h5i｜代理原生 Web 安全工作站",
+      "description_zh": "一个代理原生的 Web 安全工作站：通过红队测试发现漏洞，并在 Lean 4 中形式化验证 Rust 代码的属性。",
+      "generated_at": "2026-10-03T05:52:11.665549Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1178583507,
       "source_full_name": "dylan-sutton-chavez/edge-python",
       "source_hash": "a19a2d4e8d6950d76a980ed2741f09cb1e9d1c1fb38fc880ac8d852be8c2a29f",
@@ -32159,6 +32186,15 @@
       "description_zh": "连接飞书/Lark与AI编码命令行界面（CLIs），每个DM、群组或话题生成独立的实时CLI会话。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1179222510,
+      "source_full_name": "AgentiLoop/Agent",
+      "source_hash": "3da6f840658b372fcdd68b838c402731c2d9dd36b8bc7a2f09cc5f377444cb0f",
+      "display_name_zh": "Agent｜macOS AI 代理工具",
+      "description_zh": "Agent! 现支持 macOS 14.6 或更高版本，兼容 Apple Silicon 和 Intel，为最新版本。面向 Mac 的 AI 代理：通过辅助功能驱动任意应用，在 Xcode 中编码/构建，自动化 AppleScript、JXA、Swift 和 SMAppService shell（用户/root）。支持 23 个 LLM 提供商，本地/云端，以及设备端 Apple Intelligence 和 Jev guard，支持 MCP。",
+      "generated_at": "2026-10-03T05:52:11.665549Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1179264259,
@@ -33220,6 +33256,15 @@
       "display_name_zh": "AetherKiri｜跨平台多运行时视觉小说模拟器",
       "description_zh": "使用 Godot 4 作为渲染层的跨平台、多运行时视觉小说模拟器。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1201476594,
+      "source_full_name": "career-ops-hq/career-ops",
+      "source_hash": "eaf4e8a29d44b01203c78de66b6b0eba19a93dba13d34c7b00d309a9a71d0606",
+      "display_name_zh": "career-ops｜AI 求职代理与职位搜索工具",
+      "description_zh": "开源 AI 求职代理与职位搜索工具：扫描招聘网站，投递前按 CV 为每个职位打 1-5 分，定制 ATS 友好的简历和求职信，并提供面试准备与求职申请跟踪。它帮你填写每份申请，由你点击提交。可在本地 AI 编程 CLI（Claude Code、Codex、OpenCode 等）中运行。",
+      "generated_at": "2026-10-03T05:52:11.665549Z",
       "provenance": "model_api"
     },
     {
