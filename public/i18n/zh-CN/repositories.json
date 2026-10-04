@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-04T06:28:42.337679Z",
+  "generated_at": "2026-10-04T16:09:01.246477Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4884,
-    "localized_count": 4883,
-    "pending_count": 1,
+    "localized_count": 4877,
+    "pending_count": 7,
     "failed_count": 1,
-    "coverage_ratio": 0.999795
+    "coverage_ratio": 0.998567
   },
   "repositories": [
     {
@@ -24007,15 +24007,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 868173144,
-      "source_full_name": "kortix-ai/suna",
-      "source_hash": "0968e5c95138b284d6844778b7f3890b4ed222cf57b932c7ae60dd3abeaf6c51",
-      "display_name_zh": "suna｜开源 AI 管理系统",
-      "description_zh": "开源 AI 管理系统。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 869139913,
       "source_full_name": "lmstudio-ai/mlx-engine",
       "source_hash": "37b7d9decdc8d9df0c7a56200a8fbfd0596f1333f9e07f68817a9c0108fbf02d",
@@ -33628,15 +33619,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1211139949,
-      "source_full_name": "tt-a1i/archify",
-      "source_hash": "d1a0114fdaf12d421aa7330bc4ef928c65f238ec72fe1c14228720422d40d95a",
-      "display_name_zh": "archify｜架构图智能体技能",
-      "description_zh": "用于生成美观、可验证的架构、工作流、时序、数据流和生命周期图的智能体技能，输出带动态效果且可清晰导出的自包含 HTML。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1211358196,
       "source_full_name": "LeMo-CtRes/CtRes",
       "source_hash": "2650c5889b679a07e5a9e58d396b041f60651ded47b36539ae3c61bc332cd780",
@@ -35849,15 +35831,6 @@
       "description_zh": "《形式化$q$级数：罗杰斯-拉马努金恒等式及其扩展》的相关资料。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1269663771,
-      "source_full_name": "LittleBitUA/DPRecomp",
-      "source_hash": "444d326abbfe707512f28b01dc6188995f1ee30d3f80000ff609128a6aeaeacd",
-      "display_name_zh": "DPRecomp｜Deadly Premonition PC 移植",
-      "description_zh": "通过静态重编译实现的 Deadly Premonition（Xbox 360）原生 PC 移植——v2.0.11：原生 DirectX 12 渲染器可供测试（最高 4 倍内部分辨率）；60 FPS、鼠标视角、键盘驾驶、FSR 3、ISO 安装程序、PAL + USA。",
-      "generated_at": "2026-09-30T06:05:05.752395Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1269806075,
@@ -38929,15 +38902,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1304895218,
-      "source_full_name": "getkern/kern",
-      "source_hash": "f29b547596bc1ec8f00fbd0a01237cbfdbb5ff5a6b0983fab63bf9b34aab99cb",
-      "display_name_zh": "kern｜无守护进程容器运行时与沙箱",
-      "description_zh": "快速、无需 root、无守护进程的容器运行时与沙箱。它在由内核强制的真实容器中运行工作负载，包括智能体工具调用和 LLM 生成的代码。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1304896389,
       "source_full_name": "user30092/XBot",
       "source_hash": "fa53fc17d59009b66846a39e898d937ce0414fa03b4d526d0cd6bafae804c8d2",
@@ -39411,15 +39375,6 @@
       "source_hash": "5abd2c3b7f2716ebab992795643d634c261138fe7a39a62e6309071185325cbd",
       "display_name_zh": "druk｜终端代码编辑器",
       "description_zh": "一款运行在终端中的代码编辑器，单个自包含二进制文件，内置 tree-sitter 语法、语言服务器、git 和扩展。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1313901893,
-      "source_full_name": "pythops/kudu",
-      "source_hash": "428787e20eb54705c147a95070fea570667c8213033f43fba7071773fcc0e0da",
-      "display_name_zh": "kudu｜Linux 上的 TUI VM 管理器",
-      "description_zh": "Linux 上的 TUI VM 管理器。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
@@ -43677,15 +43632,6 @@
       "source_hash": "2a049be2ba99bf1320ada4c23758169e4846d177599a278a33c2b745a0b56f77",
       "display_name_zh": "von｜System One 决策模型",
       "description_zh": "开源的 System One 决策模型，非自回归，延迟低于 15ms，可作为 TypeSafe Jev 的本地替代方案直接替换使用。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1375400473,
-      "source_full_name": "ejfkdev/ddc",
-      "source_hash": "dc67e1afa9f628d9b014893b62deecc72055dd25aaf58a8697447960db997506",
-      "display_name_zh": "ddc｜DEX 转 Java 反编译器",
-      "description_zh": "用 Rust 编写的 DEX → Java 反编译器，具备快速、渐进式分析与双语 CLI。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
