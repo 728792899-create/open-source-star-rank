@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-03T16:12:03.715169Z",
+  "generated_at": "2026-10-04T06:28:42.337679Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4884,
-    "localized_count": 4874,
-    "pending_count": 10,
+    "localized_count": 4883,
+    "pending_count": 1,
     "failed_count": 1,
-    "coverage_ratio": 0.997952
+    "coverage_ratio": 0.999795
   },
   "repositories": [
     {
@@ -3134,6 +3134,15 @@
       "description_zh": "spark 是一个统一的大规模数据处理分析引擎。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 17420614,
+      "source_full_name": "seleniumbase/SeleniumBase",
+      "source_hash": "549d203283579958e6a8355df184c1d72eefb2c96f0f0f2c08500fb655eb764d",
+      "display_name_zh": "SeleniumBase｜浏览器自动化 Python APIs",
+      "description_zh": "用于浏览器自动化、端到端测试和网页抓取的 Python APIs。CDP 模式可绕过机器人检测并处理 CAPTCHAs，还为 Playwright 提供 Stealth 模式。",
+      "generated_at": "2026-10-04T06:28:42.337679Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 17420913,
@@ -22576,6 +22585,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 787076358,
+      "source_full_name": "firecrawl/firecrawl",
+      "source_hash": "43b75b907bc7d06cbe5f4967bac1efb040d1ae749e10d7d3391eca3d3bfb1797",
+      "display_name_zh": "firecrawl｜AI 智能体网页数据抓取",
+      "description_zh": "为 AI 智能体提供来自网络及更广范围的数据，构建面向超级智能的库。",
+      "generated_at": "2026-10-04T06:28:42.337679Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 787908531,
       "source_full_name": "TagStudioDev/TagStudio",
       "source_hash": "b78eaee63f7a374522b56f6cfa62d8fb163d32e023f5cd12b88725de34dc42a3",
@@ -23161,6 +23179,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 817326197,
+      "source_full_name": "screenpipe/screenpipe",
+      "source_hash": "18173eafbac397a9d165bb3bea6764d459aa066416de6ac7485045ae109db863",
+      "display_name_zh": "screenpipe｜开放计算机历史记录",
+      "description_zh": "YC (S26) | 开放计算机历史：持续记录公司电脑上的工作，梳理工作流程，帮你找到值得自动化的环节，并为智能体提供上下文。",
+      "generated_at": "2026-10-04T06:28:42.337679Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 817354652,
       "source_full_name": "TEN-framework/ten-framework",
       "source_hash": "9fe87384781a895286bc6c5b3846e4385e34a8a894e328a21b924dd58231268d",
@@ -23636,6 +23663,15 @@
       "description_zh": "Nexterm 是一款开源服务器管理软件，支持 SSH、VNC 和 RDP 协议。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 844670429,
+      "source_full_name": "zizmorcore/zizmor",
+      "source_hash": "1380ab394a7131b66adf62994db1780384e877feba702e9487ea0528dd5689c6",
+      "display_name_zh": "zizmor｜GitHub Actions 静态分析",
+      "description_zh": "面向 GitHub Actions（及更多场景）的静态分析工具。",
+      "generated_at": "2026-10-04T06:28:42.337679Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 844912517,
@@ -27065,6 +27101,15 @@
       "description_zh": "Kronos 是一个面向金融市场语言的基础模型。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1012087571,
+      "source_full_name": "router-for-me/CLIProxyAPI",
+      "source_hash": "d919c69b6963b126f06c33c3e3e33f2a70b1603a7bca9e11f68640e5c3e279e2",
+      "display_name_zh": "CLIProxyAPI｜多模型 API 兼容代理",
+      "description_zh": "将 Antigravity、ChatGPT Codex、Claude Code、Grok Build、Muse Code、Devin 封装为兼容 OpenAI/Gemini/Claude/Codex 的 API 服务，让你通过 API 使用 Gemini 系列、GPT 系列、Grok 系列和 Claude 模型。",
+      "generated_at": "2026-10-04T06:28:42.337679Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1012476581,
@@ -34879,6 +34924,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1248769131,
+      "source_full_name": "luolangaga/tubatools",
+      "source_hash": "1852f953a829776a8e88aaaf16237c4673de590e12871bda9154e65c17a93dd3",
+      "display_name_zh": "tubatools｜图吧工具箱 CE",
+      "description_zh": "图吧工具箱 CE，也非常适配笔记本电脑使用！",
+      "generated_at": "2026-10-04T06:28:42.337679Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1249107749,
       "source_full_name": "UditAkhourii/adhd",
       "source_hash": "af3ab121e56eb26195ba541e2887d2a9061f3f299f00cd96d995d54bb0c494a8",
@@ -39766,6 +39820,15 @@
       "provenance": "model_api"
     },
     {
+      "repository_id": 1343865323,
+      "source_full_name": "Yzw202011/OmniSpace",
+      "source_hash": "e99e1dec9a5b0ca3935740e93a55404d91dbd3df6bed98f90d2684de9dc78415",
+      "display_name_zh": "OmniSpace｜本地优先全栈 AI 创作工作站",
+      "description_zh": "本地优先的全栈 AI 创作工作站，包含 AI 对话、AI 漫画、漫剧创作、写作台、知识学习五大模块；支持 vLLM / llama.cpp / Transformers 多引擎本地推理，具备显存智能调度与舱壁隔离自愈，仅供学习使用。",
+      "generated_at": "2026-10-04T06:28:42.337679Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1343946559,
       "source_full_name": "yuxuant2025/vision-video-in-a-weekend",
       "source_hash": "87b7f664ed39b1fbdb3a6c6266a2521bbde3c4ef19b8a57efffd2e4bea9198a2",
@@ -41827,6 +41890,15 @@
       "provenance": "model_api"
     },
     {
+      "repository_id": 1357036560,
+      "source_full_name": "aaravshah1311/Agent-2",
+      "source_hash": "cb7f58be052080cc5783b2ccfa4c27220c3fd80084aae4761031c3f7c7434a52",
+      "display_name_zh": "Agent-2｜自主 AI 智能体执行框架",
+      "description_zh": "一个自主 AI 智能体执行框架，可编写代码、自动化终端、执行网络安全任务，并以最少人工干预完成复杂现实工作流。从编写和调试代码到分析系统、管理文件、运行命令和编排工具，Agent-2 将简单提示转化为自主执行。",
+      "generated_at": "2026-10-04T06:28:42.337679Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1357054830,
       "source_full_name": "MiaAI-Lab/Qwen3.8-Flash-Next-Single-DGX-Spark",
       "source_hash": "41810c303bb02a7322c988978a11be255d6bdfa674947c2589d2f884c7fce0f8",
@@ -43462,6 +43534,15 @@
       "display_name_zh": "jev-review｜本地优先 MCP 代码质量审查插件",
       "description_zh": "由 Jev 驱动的本地优先 MCP 插件，让 AI 编码代理持续进行软件质量审查。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1373993338,
+      "source_full_name": "ethanplusai/codex-on-crack",
+      "source_hash": "ca1150c49df6b60f719b64cd06252104efcc678f5cfc90aaaa0b3ee69485d6ec",
+      "display_name_zh": "codex-on-crack｜Codex 多模型协调",
+      "description_zh": "从 Codex 协调你的模型：跨工作区进行规划、委派、使用宿主工具并审查工作。前身为 Astra Flash Orchestrator。",
+      "generated_at": "2026-10-04T06:28:42.337679Z",
       "provenance": "model_api"
     },
     {
