@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-05T06:21:40.011982Z",
+  "generated_at": "2026-10-05T08:05:15.847378Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
-    "eligible_count": 4884,
-    "localized_count": 4883,
-    "pending_count": 1,
+    "eligible_count": 4885,
+    "localized_count": 4875,
+    "pending_count": 10,
     "failed_count": 1,
-    "coverage_ratio": 0.999795
+    "coverage_ratio": 0.997953
   },
   "repositories": [
     {
@@ -16123,15 +16123,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 420628737,
-      "source_full_name": "waydabber/BetterDisplay",
-      "source_hash": "0a7063d586800e4e276787d9180d62ce944251b40f07c292f9bf3224154f7217",
-      "display_name_zh": "BetterDisplay｜Mac显示器增强工具（支持XDR、HDR、DDC、PIP、EDID）",
-      "description_zh": "Mac显示器增强工具，支持XDR/HDR额外亮度、DDC控制、PIP画中画、EDID覆盖等功能。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 420815554,
       "source_full_name": "FRSOURCE/cypress-plugin-visual-regression-diff",
       "source_hash": "7a4141e80e5d4c518541da76cf3c123517013bd0c0cbf30d5f42cc95a71fde03",
@@ -17570,15 +17561,6 @@
       "description_zh": "开源的机密、证书及特权访问管理平台",
       "generated_at": "2026-07-17T00:57:38.909807Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 522158088,
-      "source_full_name": "zhayujie/CowAgent",
-      "source_hash": "742da4d7a1c568b05dda746dc9e7d15c004e8e8426d63e9313f4832db534b7c5",
-      "display_name_zh": "CowAgent｜开源超级 AI 助手",
-      "description_zh": "开源超级 AI 助手与 Agent Harness。可规划任务、运行工具与技能，并通过记忆和知识自我进化。支持多智能体、多模型、多渠道。轻量、可扩展、一行命令安装。",
-      "generated_at": "2026-09-29T06:19:55.816330Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 523007292,
@@ -19201,15 +19183,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 612640604,
-      "source_full_name": "mckaywrigley/chatbot-ui",
-      "source_hash": "ea4d0959fbed0b428845e9c6f192dc5cf5b316a4385fbfd54ccbcc3134adfd55",
-      "display_name_zh": "chatbot-ui｜AI 聊天界面",
-      "description_zh": "chatbot-ui 支持任意模型的 AI 聊天界面。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 612884518,
       "source_full_name": "Radiokot/photoprism-android-client",
       "source_hash": "e184f3b3f23f7b7c673ccee3bb19bea14e3544793ed20d5522c081c9c786d2c5",
@@ -19739,15 +19712,6 @@
       "description_zh": "opik 提供调试、评估和监控 LLM 应用、RAG 系统及代理工作流的工具，包含全面追踪、自动评估和生产级仪表盘。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 640079149,
-      "source_full_name": "The-Vibe-Company/quivr",
-      "source_hash": "1a6aff75719a0289973bed4909cc32fd1995f85c8638b7caa5678ba53faf879a",
-      "display_name_zh": "quivr｜应用集成RAG方案",
-      "description_zh": "面向应用集成 GenAI 的 RAG 方案，让你专注产品而非 RAG。易于集成到现有产品并支持定制。支持任意 LLM（GPT4、Groq、Llama）、任意向量库（PGVector、Faiss）、任意文件。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 640182997,
@@ -22015,15 +21979,6 @@
       "display_name_zh": "iptv-api｜IPTV 直播源自动更新工具",
       "description_zh": "IPTV 直播源自动更新工具，支持自动采集、校验、测速，生成 M3U、TXT、API 输出，支持自定义频道，兼容 IPv4/IPv6，支持 Docker、GitHub Actions、CLI 和 GUI 多端部署。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 753490180,
-      "source_full_name": "daytonaio/daytona",
-      "source_hash": "3352a1fe6e3c09832da7504c754632c7f60d9c238f11fbc112ac9efb63057b39",
-      "display_name_zh": "daytona｜AI代码运行基础设施",
-      "description_zh": "安全弹性的AI生成代码运行基础设施",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
     },
     {
@@ -28543,15 +28498,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1079456184,
-      "source_full_name": "K-Dense-AI/scientific-agent-skills",
-      "source_hash": "f79eb2ac2e9ecd7b1547a6593c3d680bac673a9276e9b8f581a16130f55f6cc0",
-      "display_name_zh": "scientific-agent-skills｜AI 科学智能体技能库",
-      "description_zh": "将任意 AI 智能体变为 AI Scientist。面向科学的 #1 Agent Skills 库，全球 190,000+ 科学家使用。包含 165 个即用型经验证技能及 100+ 科学数据库，覆盖生物学、化学、医学和药物发现。兼容 Cursor、Claude Code、Codex、Pi、Antigravity 及开放 Agent Skills 标准。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1080314243,
       "source_full_name": "QmDeve/QmBlurView",
       "source_hash": "97426b47792616ac64af4bb353e4719a99d1fd136e9cc347aaeafb3701e8e98f",
@@ -30313,15 +30259,6 @@
       "display_name_zh": "samyama-graph｜Rust 图向量数据库",
       "description_zh": "Rust 图向量数据库：OpenCypher（已评估 TCK 场景通过率 99.9%）、向量搜索、图算法、RESP + HTTP。LDBC SNB Interactive 和 BI 完整实现；单机支持 1B 条边。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1137711311,
-      "source_full_name": "Hmbown/Codewhale",
-      "source_hash": "8093b895a0220aff1225ff682190f5949c0e1d5aecc68fc0fb29de3717c825a9",
-      "display_name_zh": "Codewhale｜终端开源编码智能体",
-      "description_zh": "面向终端的开源编码智能体，使用 Rust 构建，并在社区持续改进中，欢迎提交 Issues 和 PRs。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
       "provenance": "model_api"
     },
     {
@@ -33716,15 +33653,6 @@
       "description_zh": "wtk 是一个 Windows Token Killer 命令行代理，能减少 60-90% 的 LLM 令牌消耗。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1212769188,
-      "source_full_name": "cathrynlavery/diagram-design",
-      "source_hash": "77526da4d6c4a0d3dbe71f9e99acd5dd0b3e0a4c728664fbd5a9d5a773085d29",
-      "display_name_zh": "diagram-design｜编辑式图表设计",
-      "description_zh": "面向 Claude Code、Codex 和 Pi 的编辑式图表设计。自包含 HTML + SVG。无阴影，无 Mermaid 式粗糙效果。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1213049020,
