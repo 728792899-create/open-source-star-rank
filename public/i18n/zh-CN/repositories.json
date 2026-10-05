@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-05T08:05:15.847378Z",
+  "generated_at": "2026-10-05T16:12:02.705282Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4885,
-    "localized_count": 4875,
-    "pending_count": 10,
+    "localized_count": 4866,
+    "pending_count": 19,
     "failed_count": 1,
-    "coverage_ratio": 0.997953
+    "coverage_ratio": 0.996111
   },
   "repositories": [
     {
@@ -16123,15 +16123,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 420815554,
-      "source_full_name": "FRSOURCE/cypress-plugin-visual-regression-diff",
-      "source_hash": "7a4141e80e5d4c518541da76cf3c123517013bd0c0cbf30d5f42cc95a71fde03",
-      "display_name_zh": "cypress-plugin-visual-regression-diff｜可视化回归测试",
-      "description_zh": "借助友好的 GUI 执行可视化回归测试。仅适用于 Cypress！",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 421001366,
       "source_full_name": "DouyinFE/semi-design",
       "source_hash": "e89792ca150a1427443910976f43611cc0ebfe249bfa116c82f423fd82dd950e",
@@ -32071,15 +32062,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1178583507,
-      "source_full_name": "dylan-sutton-chavez/edge-python",
-      "source_hash": "a19a2d4e8d6950d76a980ed2741f09cb1e9d1c1fb38fc880ac8d852be8c2a29f",
-      "display_name_zh": "edge-python｜Python 子集字节码编译器与 VM",
-      "description_zh": "面向 Python 子集的单遍 SSA 字节码编译器和线程化代码栈 VM。具备 NaN 装箱值、内联缓存、超指令融合、纯函数记忆化、标记清除 GC、解释器快照和覆盖率引导模糊测试。可作为 WebAssembly 模块在浏览器中运行，也可在 CLI 中作为脚本、独立二进制文件或工作进程池运行。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1178737655,
       "source_full_name": "THU-MAIC/OpenMAIC",
       "source_hash": "d99938fa0d31c8b071c2fb71156c80d70bb8849f7947def38e75cb603e855c41",
@@ -34384,15 +34366,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1233366728,
-      "source_full_name": "arbiterForge/codeArbiter",
-      "source_hash": "ef052fc38b5b6e6ca7dc7a94f91fe8b0aaff49680bb8d790c21098143981aa07",
-      "display_name_zh": "codeArbiter｜代码库审查工具",
-      "description_zh": "当你无法信任自己管理代码库时，就信任 Arbiter。",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1233418417,
       "source_full_name": "bookorbit/bookorbit",
       "source_hash": "5cbeee69be73796f6b5d6f4eef5207c5a65103e83f94c8d7dc850721812a685c",
@@ -34850,15 +34823,6 @@
       "description_zh": "适用于Windows和MacOS的Android TV设备管理工具，支持ADB连接、网络扫描、APK安装、性能调节、屏幕镜像等功能。",
       "generated_at": "2026-07-21T04:09:00.150793Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1248769131,
-      "source_full_name": "luolangaga/tubatools",
-      "source_hash": "1852f953a829776a8e88aaaf16237c4673de590e12871bda9154e65c17a93dd3",
-      "display_name_zh": "tubatools｜图吧工具箱 CE",
-      "description_zh": "图吧工具箱 CE，也非常适配笔记本电脑使用！",
-      "generated_at": "2026-10-04T06:28:42.337679Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1249107749,
@@ -37117,15 +37081,6 @@
       "display_name_zh": "electron-liquid-glass｜Electron 相关项目",
       "description_zh": null,
       "generated_at": "2026-07-21T19:32:19.354346Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1290565606,
-      "source_full_name": "inclusionAI/Avernet",
-      "source_hash": "cafe2548c1ebc566d7172d9e1a0139f7849763e48346e1ee6264e89625b9c798",
-      "display_name_zh": "Avernet｜分布式代理协调平台",
-      "description_zh": "Avernet是一个分布式代理协调平台，支持代理的共存、连接、协调、执行和进化。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
     },
     {
@@ -39388,15 +39343,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1329587981,
-      "source_full_name": "CatCatUncle/openworkbuddy",
-      "source_hash": "e88b3f88146267070e2a20976f9238a12912c61ef06bb05307ea73851c3a214c",
-      "display_name_zh": "openworkbuddy｜本地优先 AI 办公智能体",
-      "description_zh": "开源 AI 办公智能体，可将一条请求转化为真实的 PPTX、DOCX、XLSX 与 HTML 文件，支持 DeepSeek、Qwen、Doubao、Claude 或 Ollama（BYOK）与 MCP，并可驱动 Claude Code / Codex CLI。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1330606607,
       "source_full_name": "trefeon/freebucks-proxy",
       "source_hash": "56afc86166788883ef88a2c55f268f476d268ddce84ba44e6862c188b9100cea",
@@ -40060,15 +40006,6 @@
       "display_name_zh": "TSRX｜语言、编译器与工具链",
       "description_zh": "TSRX 语言、编译器、工具链以及编辑器集成。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1345395383,
-      "source_full_name": "plannotator/artifact-server",
-      "source_hash": "f4d129578c56c5473012d9e3d1472418619491dd07c0c4d9786383d8a4926e6a",
-      "display_name_zh": "artifact-server｜自托管 Claude Code 制品替代方案",
-      "description_zh": "自托管、开源的 Claude Code artifacts 替代方案。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
     {
@@ -41176,15 +41113,6 @@
       "display_name_zh": "NoGraphicsAPI｜极简图形 API",
       "description_zh": "极简图形 API，构建于最新 Vulkan 扩展之上，尽可能贴近我的“No Graphics API”博客文章和 SIGGRAPH 演讲。",
       "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1352547997,
-      "source_full_name": "fitchmultz/pi-posthorse",
-      "source_hash": "e18dc8eca9c5ec6a5e7bcd613a03c6c468517bfb27334df486458bdaef1a0ee8",
-      "display_name_zh": "pi-posthorse｜无摘要上下文窗口",
-      "description_zh": "Posthorse：全新上下文，同一旅程。为 fitchmultz/pi 分支的 Pi 编码智能体提供原生无摘要上下文窗口，并附带滚动工具、持久笔记与历史恢复。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
     {
@@ -43390,15 +43318,6 @@
       "display_name_zh": "perch｜语义代码检查",
       "description_zh": "使用决策模型进行语义代码检查。",
       "generated_at": "2026-10-01T06:39:02.374651Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1372555324,
-      "source_full_name": "leoliu0/ratex",
-      "source_hash": "1d64c4a605cf8aca6022c27bde5352d77c628c7f1b8da0c8e5c62c5b3137bd9a",
-      "display_name_zh": "ratex 工具",
-      "description_zh": null,
-      "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
     {
