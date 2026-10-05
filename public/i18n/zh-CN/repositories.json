@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-04T16:09:01.246477Z",
+  "generated_at": "2026-10-05T06:21:40.011982Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4884,
-    "localized_count": 4877,
-    "pending_count": 7,
+    "localized_count": 4883,
+    "pending_count": 1,
     "failed_count": 1,
-    "coverage_ratio": 0.998567
+    "coverage_ratio": 0.999795
   },
   "repositories": [
     {
@@ -24007,6 +24007,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 868173144,
+      "source_full_name": "kortix-ai/suna",
+      "source_hash": "c89f900fd9a80174a2a6b9ed58c85bfe631bdc09b019681dbb640340a40434f7",
+      "display_name_zh": "suna｜开源 AI 操作系统",
+      "description_zh": "开源 AI 操作系统。",
+      "generated_at": "2026-10-05T06:21:40.011982Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 869139913,
       "source_full_name": "lmstudio-ai/mlx-engine",
       "source_hash": "37b7d9decdc8d9df0c7a56200a8fbfd0596f1333f9e07f68817a9c0108fbf02d",
@@ -33619,6 +33628,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1211139949,
+      "source_full_name": "tt-a1i/archify",
+      "source_hash": "9c7add6496bed64449b8ef8e1fe2adc2af9df997021675546e46bb935fd083e6",
+      "display_name_zh": "archify｜交互式图表生成技能",
+      "description_zh": "将任何想法、计划或代码库转化为美观的交互式图表，是适用于 Claude Code、Codex 等工具的智能体技能。",
+      "generated_at": "2026-10-05T06:21:40.011982Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1211358196,
       "source_full_name": "LeMo-CtRes/CtRes",
       "source_hash": "2650c5889b679a07e5a9e58d396b041f60651ded47b36539ae3c61bc332cd780",
@@ -35831,6 +35849,15 @@
       "description_zh": "《形式化$q$级数：罗杰斯-拉马努金恒等式及其扩展》的相关资料。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1269663771,
+      "source_full_name": "LittleBitUA/DPRecomp",
+      "source_hash": "f8b8a542f35dc6b63928619100792e4d43582797c7a0fd6d5168c113105acebf",
+      "display_name_zh": "DPRecomp｜Deadly Premonition 原生 PC 移植",
+      "description_zh": "通过静态重编译实现的 Deadly Premonition（Xbox 360）原生 PC 移植 - v2.0.14：原生 DirectX 12 渲染器已可测试（内部渲染分辨率最高 4 倍）；60 FPS、鼠标视角、键盘驾驶、FSR 3、ISO 安装程序，支持 PAL 与 USA。",
+      "generated_at": "2026-10-05T06:21:40.011982Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1269806075,
@@ -38902,6 +38929,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1304895218,
+      "source_full_name": "getkern/kern",
+      "source_hash": "918001b04a01ddf1f46603a6df74d52d8629c8fa65a081800f886dbf3c13d973",
+      "display_name_zh": "kern｜无守护进程无根容器运行时",
+      "description_zh": "无守护进程的无根容器运行时，在内核强制的容器中运行智能体工具调用和 LLM 生成的代码。",
+      "generated_at": "2026-10-05T06:21:40.011982Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1304896389,
       "source_full_name": "user30092/XBot",
       "source_hash": "fa53fc17d59009b66846a39e898d937ce0414fa03b4d526d0cd6bafae804c8d2",
@@ -39376,6 +39412,15 @@
       "display_name_zh": "druk｜终端代码编辑器",
       "description_zh": "一款运行在终端中的代码编辑器，单个自包含二进制文件，内置 tree-sitter 语法、语言服务器、git 和扩展。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1313901893,
+      "source_full_name": "pythops/kudu",
+      "source_hash": "34fdab7219d64098df799ae32b570fc4b19b906353e2de924fef73b9d50ed7a6",
+      "display_name_zh": "kudu｜Linux TUI VM 管理器",
+      "description_zh": "Linux 上的 TUI VM 管理器。",
+      "generated_at": "2026-10-05T06:21:40.011982Z",
       "provenance": "model_api"
     },
     {
@@ -43633,6 +43678,15 @@
       "display_name_zh": "von｜System One 决策模型",
       "description_zh": "开源的 System One 决策模型，非自回归，延迟低于 15ms，可作为 TypeSafe Jev 的本地替代方案直接替换使用。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1375400473,
+      "source_full_name": "ejfkdev/ddc",
+      "source_hash": "40559580fcafa0746cc283cb7eb284cc7249da95ff2dd8889c90128f624b70e7",
+      "display_name_zh": "ddc｜Android DEX 转 Java 反编译器",
+      "description_zh": "用 Rust 编写的 Android DEX 转 Java 反编译器，为速度而构建：数秒完成完整应用、毫秒级查询。渐进式分析、javac 验证输出，支持所有 DEX 版本、多 dex 及 XAPK/APKS/APKM 容器。",
+      "generated_at": "2026-10-05T06:21:40.011982Z",
       "provenance": "model_api"
     },
     {
