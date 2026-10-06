@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-05T16:12:02.705282Z",
+  "generated_at": "2026-10-06T06:57:21.125643Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4885,
-    "localized_count": 4866,
-    "pending_count": 19,
+    "localized_count": 4884,
+    "pending_count": 1,
     "failed_count": 1,
-    "coverage_ratio": 0.996111
+    "coverage_ratio": 0.999795
   },
   "repositories": [
     {
@@ -10876,6 +10876,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 162723104,
+      "source_full_name": "OWASP/CheatSheetSeries",
+      "source_hash": "293a2b9539091b1face82dbc01acac369752a6e4db054d2504da4753eb4365f6",
+      "display_name_zh": "OWASP｜Cheat Sheet 系列",
+      "description_zh": "OWASP Cheat Sheet 系列旨在针对特定应用安全主题提供简明的高价值信息集合。",
+      "generated_at": "2026-10-06T06:57:21.125643Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 162998479,
       "source_full_name": "sherlock-project/sherlock",
       "source_hash": "a133de5d7299726d30f431a623880920602141641d7b51c1abc1fcb340a32ac1",
@@ -16123,6 +16132,24 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 420628737,
+      "source_full_name": "waydabber/BetterDisplay",
+      "source_hash": "d0925b5ec904d0d2df6c78d3c7cc37513437905a0799d409ac01a718bb0cee9c",
+      "display_name_zh": "BetterDisplay｜Mac 显示器解锁工具",
+      "description_zh": "解锁 Mac 显示器能力：灵活的 HiDPI 缩放、XDR/HDR 额外亮度、虚拟屏幕、DDC 控制、图像调整、PIP/串流、EDID 覆盖。",
+      "generated_at": "2026-10-06T06:57:21.125643Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 420815554,
+      "source_full_name": "pixsame/pixsame",
+      "source_hash": "a1d1f753f1800925d9d8a787fa6888c54d5abb5c59990cad2fe887946f55acec",
+      "display_name_zh": "pixsame｜可视化回归测试 GUI",
+      "description_zh": "借助美观的 GUI 执行可视化回归测试。",
+      "generated_at": "2026-10-06T06:57:21.125643Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 421001366,
       "source_full_name": "DouyinFE/semi-design",
       "source_hash": "e89792ca150a1427443910976f43611cc0ebfe249bfa116c82f423fd82dd950e",
@@ -17552,6 +17579,15 @@
       "description_zh": "开源的机密、证书及特权访问管理平台",
       "generated_at": "2026-07-17T00:57:38.909807Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 522158088,
+      "source_full_name": "zhayujie/CowAgent",
+      "source_hash": "6fe1dcbc7d1dd8239dcf4a397a2479a1cb030268b8b993f43db6bb66a88e66f5",
+      "display_name_zh": "CowAgent｜开源个人 AI 助理",
+      "description_zh": "开源个人 AI 助理与 Agent Harness，可规划任务、运行工具与技能，并通过记忆和知识自我演化；支持多智能体、多模型、多渠道，轻量、可扩展、一行安装。",
+      "generated_at": "2026-10-06T06:57:21.125643Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 523007292,
@@ -19703,6 +19739,15 @@
       "description_zh": "opik 提供调试、评估和监控 LLM 应用、RAG 系统及代理工作流的工具，包含全面追踪、自动评估和生产级仪表盘。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 640079149,
+      "source_full_name": "The-Vibe-Company/quivr",
+      "source_hash": "ba9dee66567870203569fa3233e1fc9e02e5fd6965702a1794ab71aa84e5b215",
+      "display_name_zh": "quivr｜内容流搜索与监控引擎",
+      "description_zh": "开源引擎，将连续内容流转化为搜索与监控能力，提供持久化摄取、混合搜索、告警，以及面向格式、模型和业务规则的插件。",
+      "generated_at": "2026-10-06T06:57:21.125643Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 640182997,
@@ -28489,6 +28534,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1079456184,
+      "source_full_name": "K-Dense-AI/scientific-agent-skills",
+      "source_hash": "c4d184abe657f0556a53c0bcf14c9e901e491e4ca37e5d2a4a6e48157504b26f",
+      "display_name_zh": "scientific-agent-skills｜AI 科学家技能库",
+      "description_zh": "将任意 AI 智能体变为 AI 科学家。面向科学的 Agent Skills 库，被全球 250,000+ 科学家使用，包含 177 个即用型经验证技能和 100+ 科学数据库，覆盖生物学、化学、医学与药物发现，兼容 Cursor、Claude Code、Codex、Pi、Antigravity 及开放 Agent Skills 标准。",
+      "generated_at": "2026-10-06T06:57:21.125643Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1080314243,
       "source_full_name": "QmDeve/QmBlurView",
       "source_hash": "97426b47792616ac64af4bb353e4719a99d1fd136e9cc347aaeafb3701e8e98f",
@@ -30250,6 +30304,15 @@
       "display_name_zh": "samyama-graph｜Rust 图向量数据库",
       "description_zh": "Rust 图向量数据库：OpenCypher（已评估 TCK 场景通过率 99.9%）、向量搜索、图算法、RESP + HTTP。LDBC SNB Interactive 和 BI 完整实现；单机支持 1B 条边。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1137711311,
+      "source_full_name": "codewhale-hq/Codewhale",
+      "source_hash": "b33feb40948ed9c835d68d54135081c3eb77cc3a26013a377212295257c54778",
+      "display_name_zh": "Codewhale｜终端编码智能体",
+      "description_zh": "用 Rust 构建的开源终端编码智能体，持续接受社区改进，欢迎提交 Issues 和 PRs。",
+      "generated_at": "2026-10-06T06:57:21.125643Z",
       "provenance": "model_api"
     },
     {
@@ -32062,6 +32125,15 @@
       "provenance": "model_api"
     },
     {
+      "repository_id": 1178583507,
+      "source_full_name": "dylan-sutton-chavez/edge-python",
+      "source_hash": "7e4673c7292830674c0c74ed2fc50db1926421334237e839b05989b5869e1801",
+      "display_name_zh": "edge-python｜Python 子集编译器与 VM",
+      "description_zh": "面向沙箱化 Python 子集的单遍 SSA 编译器和分层寄存器 VM，具备 NaN-boxed 值、内联缓存、记忆化、标记清除 GC 与快照；一个 WebAssembly 模块可运行于浏览器、JavaScript 运行时和 CLI。",
+      "generated_at": "2026-10-06T06:57:21.125643Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1178737655,
       "source_full_name": "THU-MAIC/OpenMAIC",
       "source_hash": "d99938fa0d31c8b071c2fb71156c80d70bb8849f7947def38e75cb603e855c41",
@@ -33205,6 +33277,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1201730379,
+      "source_full_name": "alchaincyf/nuwa-skill",
+      "source_hash": "84b56e1cc9b1896786ea3681c5ff3290035e4300db94f0ab71f4bd18c67204b8",
+      "display_name_zh": "nuwa-skill｜思维方式蒸馏工具",
+      "description_zh": "蒸馏任何人的思维方式——心智模型、决策启发式、表达 DNA。",
+      "generated_at": "2026-10-06T06:57:21.125643Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1202057891,
       "source_full_name": "garrytan/gbrain",
       "source_hash": "6764fa4f8b54eba64f78cd98be0a1b07d43ee89837a1fa7d783cd7dc230bc24a",
@@ -33635,6 +33716,15 @@
       "description_zh": "wtk 是一个 Windows Token Killer 命令行代理，能减少 60-90% 的 LLM 令牌消耗。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1212769188,
+      "source_full_name": "cathrynlavery/diagram-design",
+      "source_hash": "5239ed2e8219ef68c8758a5c474dd0978fd12a0594fbab06d3f35312d7c5c1ad",
+      "display_name_zh": "diagram-design｜编辑级图表设计",
+      "description_zh": "面向 Claude Code、Codex、GitHub Copilot、Factory Droid 和 Pi 的编辑级图表设计，包含 42 种图表类型，使用自包含 HTML + SVG，无阴影，无 Mermaid 劣质效果。",
+      "generated_at": "2026-10-06T06:57:21.125643Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1213049020,
@@ -34366,6 +34456,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1233366728,
+      "source_full_name": "arbiterForge/codeArbiter",
+      "source_hash": "9d1ced18ab2a733f28bd5cf333c1df07520ef100b5cbdb7563ed8dbb5f726dff",
+      "display_name_zh": "codeArbiter｜AI 编码智能体治理与硬门禁",
+      "description_zh": "面向 Claude Code、Codex CLI 和 Pi 等 AI 编码智能体的开源治理与硬门禁。",
+      "generated_at": "2026-10-06T06:57:21.125643Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1233418417,
       "source_full_name": "bookorbit/bookorbit",
       "source_hash": "5cbeee69be73796f6b5d6f4eef5207c5a65103e83f94c8d7dc850721812a685c",
@@ -34823,6 +34922,15 @@
       "description_zh": "适用于Windows和MacOS的Android TV设备管理工具，支持ADB连接、网络扫描、APK安装、性能调节、屏幕镜像等功能。",
       "generated_at": "2026-07-21T04:09:00.150793Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1248769131,
+      "source_full_name": "luolangaga/tubatools",
+      "source_hash": "4d1ffa73296fa4d0ac0a78218c9cc498e33c57260b4759da486118a40f9e0b54",
+      "display_name_zh": "tubatools｜WinUI 3 图吧工具箱",
+      "description_zh": "图吧工具箱基于 WinUI 3 全新重构的版本，由社区驱动，契合 Windows 11 设计美学，确保使用最新版本工具，集成更丰富的实用功能，并支持高度自定义的个性化需求。",
+      "generated_at": "2026-10-06T06:57:21.125643Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1249107749,
@@ -37084,6 +37192,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1290565606,
+      "source_full_name": "inclusionAI/Avernet",
+      "source_hash": "95531880ae1fd4ceb3f9853a05f70d75ebe27060c869d7163a1627d3a36c0632",
+      "display_name_zh": "Avernet｜分布式智能体协作平台",
+      "description_zh": "分布式智能体协作平台，让智能体像组织一样共同生活、连接、协调、执行与演化。",
+      "generated_at": "2026-10-06T06:57:21.125643Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1290703740,
       "source_full_name": "x4gKing/PasarGuard-Node",
       "source_hash": "59453954197f0cfb2521ba477e2e9b61762607edc39c8f5f5f3d02d0ee94649e",
@@ -39343,6 +39460,15 @@
       "provenance": "model_api"
     },
     {
+      "repository_id": 1329587981,
+      "source_full_name": "CatCatUncle/openworkbuddy",
+      "source_hash": "c71409be16bb5b439088fc8e9166bfe5d0261c33101fcb83e6340a6971ba4d1c",
+      "display_name_zh": "openworkbuddy｜本地优先 AI 办公智能体",
+      "description_zh": "开源 Claude Cowork / Codex 替代方案，本地优先的 AI 办公智能体，可将一次请求转为真实的 PPTX、DOCX、XLSX 和 HTML 文件；支持 DeepSeek、Qwen、Doubao、Claude 或 Ollama（BYOK）、MCP，并可驱动 Claude Code / Codex CLI。",
+      "generated_at": "2026-10-06T06:57:21.125643Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1330606607,
       "source_full_name": "trefeon/freebucks-proxy",
       "source_hash": "56afc86166788883ef88a2c55f268f476d268ddce84ba44e6862c188b9100cea",
@@ -40006,6 +40132,15 @@
       "display_name_zh": "TSRX｜语言、编译器与工具链",
       "description_zh": "TSRX 语言、编译器、工具链以及编辑器集成。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1345395383,
+      "source_full_name": "plannotator/artifact-server",
+      "source_hash": "7d9c62750d24c20b71b4c9f4edcf111a8d291dcbed71fdfabcf0d24cd68fa9bf",
+      "display_name_zh": "artifact-server｜Claude artifacts 开源替代",
+      "description_zh": "Claude artifacts 的开源替代方案。",
+      "generated_at": "2026-10-06T06:57:21.125643Z",
       "provenance": "model_api"
     },
     {
@@ -41113,6 +41248,15 @@
       "display_name_zh": "NoGraphicsAPI｜极简图形 API",
       "description_zh": "极简图形 API，构建于最新 Vulkan 扩展之上，尽可能贴近我的“No Graphics API”博客文章和 SIGGRAPH 演讲。",
       "generated_at": "2026-09-25T05:32:45.254187Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1352547997,
+      "source_full_name": "fitchmultz/pi-posthorse",
+      "source_hash": "af9862bb891ca587202510bbf72fa5a43dda32f65a169b86535a99ba2d903e5f",
+      "display_name_zh": "pi-posthorse｜Pi 编码智能体上下文滚动工具",
+      "description_zh": "Posthorse：全新上下文，同一旅程。为 Pi 编码智能体（官方 Pi 1.0+ 或 fitchmultz/pi 分支）提供无摘要上下文滚动，并支持持久笔记与历史恢复。",
+      "generated_at": "2026-10-06T06:57:21.125643Z",
       "provenance": "model_api"
     },
     {
@@ -42295,6 +42439,15 @@
       "provenance": "model_api"
     },
     {
+      "repository_id": 1359648985,
+      "source_full_name": "eternity4719/HowToLiveBetter",
+      "source_hash": "06405cecefe63b501bed630952af8fbeefddb5df8816ce801d29b683024c9c06",
+      "display_name_zh": "HowToLiveBetter｜高性价比人生指南",
+      "description_zh": "高性价比人生指南：涵盖长寿防病、急救、省钱理财、法律红线、失业与工伤、医保社保、恋爱婚育、怀孕育儿、创业与做平台合规、出国与技能，每条写明成本、收益、证据等级和原始出处，只引期刊论文与官方文件。",
+      "generated_at": "2026-10-06T06:57:21.125643Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1359742580,
       "source_full_name": "nmatt0/moria",
       "source_hash": "91af95e085bcd65dde92283063cad2cd3da565b77ed49808c83b59524274968b",
@@ -43318,6 +43471,15 @@
       "display_name_zh": "perch｜语义代码检查",
       "description_zh": "使用决策模型进行语义代码检查。",
       "generated_at": "2026-10-01T06:39:02.374651Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1372555324,
+      "source_full_name": "leoliu0/texres",
+      "source_hash": "1876258eb23ebaa9a31097f70220e5c01019fd9b33377b8549e23c8d7fca24ab",
+      "display_name_zh": "texres｜纹理资源工具",
+      "description_zh": null,
+      "generated_at": "2026-10-06T06:57:21.125643Z",
       "provenance": "model_api"
     },
     {
