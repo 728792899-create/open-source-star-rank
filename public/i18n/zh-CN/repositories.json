@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-06T06:57:21.125643Z",
+  "generated_at": "2026-10-06T16:11:58.413017Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4885,
-    "localized_count": 4884,
-    "pending_count": 1,
+    "localized_count": 4875,
+    "pending_count": 10,
     "failed_count": 1,
-    "coverage_ratio": 0.999795
+    "coverage_ratio": 0.997953
   },
   "repositories": [
     {
@@ -3134,15 +3134,6 @@
       "description_zh": "spark 是一个统一的大规模数据处理分析引擎。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 17420614,
-      "source_full_name": "seleniumbase/SeleniumBase",
-      "source_hash": "549d203283579958e6a8355df184c1d72eefb2c96f0f0f2c08500fb655eb764d",
-      "display_name_zh": "SeleniumBase｜浏览器自动化 Python APIs",
-      "description_zh": "用于浏览器自动化、端到端测试和网页抓取的 Python APIs。CDP 模式可绕过机器人检测并处理 CAPTCHAs，还为 Playwright 提供 Stealth 模式。",
-      "generated_at": "2026-10-04T06:28:42.337679Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 17420913,
@@ -6428,15 +6419,6 @@
       "description_zh": "分享GitHub上有趣且适合入门的开源项目。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 58414589,
-      "source_full_name": "uxlfoundation/oneDNN",
-      "source_hash": "c711a37f95886c7f50463083aac175ac3f94d571a4a1593f560c5d5e5dff086d",
-      "display_name_zh": "oneDNN｜AI 内核高性能实现库",
-      "description_zh": "面向 CPUs（x64、AArch64、RISC-V）和 Intel GPUs 的 AI 内核高性能实现，为 PyTorch、TensorFlow、OpenVINO 和 ONNX Runtime 提供支持。",
-      "generated_at": "2026-10-03T05:52:11.665549Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 58552470,
@@ -10063,15 +10045,6 @@
       "display_name_zh": "DeepLearning-500-questions｜深度学习500问问答集",
       "description_zh": "深度学习500问，涵盖概率知识、线性代数、机器学习、深度学习、计算机视觉等，帮助读者理解相关热点问题。全书分18章，50余万字。作者：scutjy2015，2018.06。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 139156354,
-      "source_full_name": "cvat-ai/cvat",
-      "source_hash": "36d2723e33317db6918466c126e0ccb91de12b625aaac8852df5d2067c0cd87a",
-      "display_name_zh": "cvat｜计算机视觉标注工具（支持 CVAT、AI、APIs）",
-      "description_zh": "CVAT 是领先的计算机视觉标注工具，支持图像、视频和 3D 标注，具备 AI 辅助标注、质量保证、团队协作、分析和开发者 API。",
-      "generated_at": "2026-07-20T18:28:18.246753Z",
       "provenance": "github_models"
     },
     {
@@ -15058,15 +15031,6 @@
       "display_name_zh": "ASRock-B150M-HDV-OpenCore-Hackintosh｜ASRock HDV EFI 黑苹果",
       "description_zh": "华擎 ASRock B150M-HDV OpenCore 黑苹果 EFI 配置",
       "generated_at": "2026-07-20T04:28:39.695110Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 348060227,
-      "source_full_name": "withastro/astro",
-      "source_hash": "a6016015858131e86fe6b54dca397673461d2922db40ec6e4fbf6ce6de5a8d26",
-      "display_name_zh": "astro｜内容驱动网站框架",
-      "description_zh": "面向内容驱动网站的 Web 框架。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
     {
@@ -31486,15 +31450,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1166182351,
-      "source_full_name": "raullenchai/Rapid-MLX",
-      "source_hash": "175269ca285a510339d4ecf008b5717aa4c5fae581e38fb32fbaa1d5b7d20766",
-      "display_name_zh": "Rapid-MLX｜Apple Silicon 推理服务器",
-      "description_zh": "Rapid-MLX 是开源（Apache 2.0）的 OpenAI 与 Anthropic 兼容 LLM 推理服务器及 Mac 应用，基于 MLX 面向 Apple Silicon，专注为编程智能体提供可靠工具调用，已通过 Claude Code、Codex CLI、Aider、Hermes 与 DeepSeek Harness 发布验证。",
-      "generated_at": "2026-09-28T06:01:47.380329Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1166205118,
       "source_full_name": "Emily2040/seedance-2.0",
       "source_hash": "a498a557851cc31381d5b53ab356227af149ce0977fa148c61f494e71671776f",
@@ -33239,15 +33194,6 @@
       "description_zh": "OpenKB：开放式大语言模型（LLM）知识库。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1201294899,
-      "source_full_name": "AetherKiri/AetherKiri",
-      "source_hash": "8bdc9e0514366f549145241b8f049e4262bb9fa44e3fc072e56a8386f34a7a7d",
-      "display_name_zh": "AetherKiri｜跨平台多运行时视觉小说模拟器",
-      "description_zh": "使用 Godot 4 作为渲染层的跨平台、多运行时视觉小说模拟器。",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1201476594,
@@ -35389,15 +35335,6 @@
       "display_name_zh": "oivessel｜oivessel项目",
       "description_zh": null,
       "generated_at": "2026-07-22T04:10:29.437713Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1260652867,
-      "source_full_name": "laoma2053/awesome-zhuiju-free",
-      "source_hash": "4558ff6deffbaa46de84393394ecf6c6b7b1190a8134e6c672edfdee53d141f7",
-      "display_name_zh": "awesome-zhuiju-free｜免费追剧资源指南（含APP、BT、TVBox、IPTV）",
-      "description_zh": "awesome-zhuiju-free 提供免费无广告的追剧资源指南，包含人工精选资源和每日有效性检测，涵盖在线影视、影视APP、网盘搜索、磁力BT、字幕、TVBox、IPTV直播源及相关开源项目。",
-      "generated_at": "2026-07-19T07:03:48.394229Z",
       "provenance": "github_models"
     },
     {
@@ -40630,15 +40567,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1348619663,
-      "source_full_name": "keshav-exe/mdxcn",
-      "source_hash": "be425877b63a954aa65edbf947cf1c6bac4f8642ccd10b38ce99e335bd4c2669",
-      "display_name_zh": "mdxcn｜MDX 组件集合",
-      "description_zh": "mdxcn 是一套免费开源的 MDX 组件集合，包含标注、步骤、终端、图表和时间线，可通过 shadcn CLI 复制任意组件。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1348669939,
       "source_full_name": "pgrundev/pgterm",
       "source_hash": "68f8168c0e38ead9cfa4ca6fbfdea70328ee98623a869dfd8e1b838259966ab7",
@@ -40987,15 +40915,6 @@
       "display_name_zh": "awesome-microduck｜Microduck 机器人资源列表",
       "description_zh": "面向 Pollen Robotics / Hugging Face Microduck 机器人的精选列表，涵盖软件、模拟器、策略、智能体工具与相关报道。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1351039692,
-      "source_full_name": "AlLHHH/ALH-Pro",
-      "source_hash": "931df79080b17c578ff145d22cbe0d68a007ab5eb4dcd27e82c7fbd7f6d931ba",
-      "display_name_zh": "ALH-Pro｜图片视频增强工具",
-      "description_zh": "图片视频等增强工具。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
     {
