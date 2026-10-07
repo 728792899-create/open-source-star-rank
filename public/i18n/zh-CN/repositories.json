@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-06T16:11:58.413017Z",
+  "generated_at": "2026-10-07T06:38:40.599868Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4885,
-    "localized_count": 4875,
-    "pending_count": 10,
+    "localized_count": 4884,
+    "pending_count": 1,
     "failed_count": 1,
-    "coverage_ratio": 0.997953
+    "coverage_ratio": 0.999795
   },
   "repositories": [
     {
@@ -3134,6 +3134,15 @@
       "description_zh": "spark 是一个统一的大规模数据处理分析引擎。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 17420614,
+      "source_full_name": "seleniumbase/SeleniumBase",
+      "source_hash": "76b39d03b75a9f440654658318e6f251c2ac417da99fa02c958d2307bae74d68",
+      "display_name_zh": "SeleniumBase｜端到端测试与网页抓取工具",
+      "description_zh": "轻松处理端到端测试和网页抓取，同时为现代网页绕过机器人检测和 CAPTCHAs。",
+      "generated_at": "2026-10-07T06:38:40.599868Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 17420913,
@@ -6419,6 +6428,15 @@
       "description_zh": "分享GitHub上有趣且适合入门的开源项目。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 58414589,
+      "source_full_name": "uxlfoundation/oneDNN",
+      "source_hash": "dc1063ccf4fbf0fe2e9453f91986f95190eb78af19423faaa93b775535294d54",
+      "display_name_zh": "oneDNN｜深度学习运算优化库",
+      "description_zh": "开源深度学习优化运算库（矩阵乘法、卷积、注意力），支持 CPUs（x64、AArch64、RISC-V）和 Intel GPUs，被 PyTorch、TensorFlow、OpenVINO 和 ONNX Runtime 使用。",
+      "generated_at": "2026-10-07T06:38:40.599868Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 58552470,
@@ -10046,6 +10064,15 @@
       "description_zh": "深度学习500问，涵盖概率知识、线性代数、机器学习、深度学习、计算机视觉等，帮助读者理解相关热点问题。全书分18章，50余万字。作者：scutjy2015，2018.06。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 139156354,
+      "source_full_name": "cvat-ai/cvat",
+      "source_hash": "003e8809fee3528ff5b681fad24d2caa533b4a3d4ad281d80e1a68d7cd37bed7",
+      "display_name_zh": "CVAT｜数据标注平台",
+      "description_zh": "CVAT 是面向图像、视频、音频和 3D 数据集的领先数据标注平台，提供开源、云和企业产品以及标注服务，具备 AI 辅助标注、质量保证、团队协作、分析和开发者 APIs。",
+      "generated_at": "2026-10-07T06:38:40.599868Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 139199684,
@@ -15032,6 +15059,15 @@
       "description_zh": "华擎 ASRock B150M-HDV OpenCore 黑苹果 EFI 配置",
       "generated_at": "2026-07-20T04:28:39.695110Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 348060227,
+      "source_full_name": "withastro/astro",
+      "source_hash": "c8dec97c63e2ec43aa8fa3916ebee4d6654c8bf8c644ec0223bb434058d3e1c5",
+      "display_name_zh": "astro｜内容驱动网站 Web 框架",
+      "description_zh": "面向内容驱动型网站的 Web 框架。",
+      "generated_at": "2026-10-07T06:38:40.599868Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 348258736,
@@ -31450,6 +31486,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 1166182351,
+      "source_full_name": "raullenchai/Rapid-MLX",
+      "source_hash": "8eedcff72d15869d88527f3ecf508d4accc85ead2c3d357e7054f71d8190b041",
+      "display_name_zh": "Rapid-MLX｜Apple Silicon LLM 推理服务器",
+      "description_zh": "Rapid-MLX 是面向 Apple Silicon 的开源（Apache 2.0）LLM 推理服务器，兼容 OpenAI 和 Anthropic，基于 MLX 构建，专注于为编码代理提供可靠的工具调用，在相同权重下比 Apple 的 MLX（mlx-lm）快最多 4 倍。",
+      "generated_at": "2026-10-07T06:38:40.599868Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1166205118,
       "source_full_name": "Emily2040/seedance-2.0",
       "source_hash": "a498a557851cc31381d5b53ab356227af149ce0977fa148c61f494e71671776f",
@@ -33194,6 +33239,15 @@
       "description_zh": "OpenKB：开放式大语言模型（LLM）知识库。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1201294899,
+      "source_full_name": "AetherKiri/Aether",
+      "source_hash": "418e002b5655b6a3261993d1f7837ade0ac506875a024f67162d32dca59d4fb6",
+      "display_name_zh": "Aether｜跨平台视觉小说模拟器",
+      "description_zh": "使用 Godot 4 作为渲染层的跨平台、多运行时视觉小说模拟器。",
+      "generated_at": "2026-10-07T06:38:40.599868Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1201476594,
@@ -35336,6 +35390,15 @@
       "description_zh": null,
       "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1260652867,
+      "source_full_name": "laoma528/awesome-zhuiju-free",
+      "source_hash": "57d0cca4f2e097a933736c4de63225617bd72494c65d65a2f8296258afc2bcbd",
+      "display_name_zh": "awesome-zhuiju-free｜免费追剧资源指南",
+      "description_zh": "免费无广告的追剧资源指南，人工精选资源、每天检测资源有效性。收录在线影视、影视 APP、网盘搜索、磁力 BT、字幕、TVBox / 影视仓空壳软件/配置地址、IPTV 直播源、会员拼团、影视相关开源项目。开源，社区共同维护。",
+      "generated_at": "2026-10-07T06:38:40.599868Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1260999168,
@@ -40567,6 +40630,15 @@
       "provenance": "model_api"
     },
     {
+      "repository_id": 1348619663,
+      "source_full_name": "shadcn-labs/mdxcn",
+      "source_hash": "83902ebaf062c69af7e81380bfcceb17f8b2b7de5ca67f6df418fdf53d13548b",
+      "display_name_zh": "mdxcn｜mdx 组件集合",
+      "description_zh": "mdxcn 是一套免费开源的 mdx 提示框、步骤、终端、图表和时间线组件，可用 shadcn cli 复制任意组件。",
+      "generated_at": "2026-10-07T06:38:40.599868Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 1348669939,
       "source_full_name": "pgrundev/pgterm",
       "source_hash": "68f8168c0e38ead9cfa4ca6fbfdea70328ee98623a869dfd8e1b838259966ab7",
@@ -40915,6 +40987,15 @@
       "display_name_zh": "awesome-microduck｜Microduck 机器人资源列表",
       "description_zh": "面向 Pollen Robotics / Hugging Face Microduck 机器人的精选列表，涵盖软件、模拟器、策略、智能体工具与相关报道。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1351039692,
+      "source_full_name": "AlLHHH/ALH-Pro",
+      "source_hash": "18d49afb411e5a6d9e3dffce97ca5a6172484f5555293cc1017fc471b49bc6ba",
+      "display_name_zh": "ALH-Pro｜本地 AI 媒体增强工具",
+      "description_zh": "本地运行的开源 AI 图片/视频/音频增强工具：图片超分、AI 抠图、视频超分、视频补帧、去重、音频分离与增强（全部在本机完成）。",
+      "generated_at": "2026-10-07T06:38:40.599868Z",
       "provenance": "model_api"
     },
     {
