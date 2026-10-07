@@ -2,9 +2,10 @@
   "schema_version": "1.4.0",
   "status": "ready",
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-10-06T16:02:55Z",
-  "latest_date": "2026-10-06",
+  "updated_at": "2026-10-07T16:02:39Z",
+  "latest_date": "2026-10-07",
   "available_dates": [
+    "2026-10-07",
     "2026-10-06",
     "2026-10-05",
     "2026-10-04",
@@ -39,7 +40,7 @@
     "2026-07-20",
     "2026-07-16"
   ],
-  "candidate_count": 2000,
+  "candidate_count": 1999,
   "methodology_version": "candidate-pool-snapshot-v1",
   "freshness_threshold_hours": 36,
   "ranking_limit": 500,
@@ -50,25 +51,25 @@
       "recent_active": 500,
       "established_active": 500
     },
-    "unique_discovered_count": 1898,
+    "unique_discovered_count": 1914,
     "candidate_added_count": 0,
-    "candidate_removed_count": 0,
-    "api_request_count": 1488,
+    "candidate_removed_count": 1,
+    "api_request_count": 1502,
     "api_retry_count": 0,
-    "snapshot_expected_count": 2000,
-    "snapshot_complete_count": 2000,
+    "snapshot_expected_count": 1999,
+    "snapshot_complete_count": 1999,
     "snapshot_completeness": 1.0
   },
   "sampling": {
     "target_local_time": "00:20",
     "valid_window_start": "00:00",
     "valid_window_end": "03:00",
-    "latest_snapshot_at": "2026-10-06T16:02:55Z",
+    "latest_snapshot_at": "2026-10-07T16:02:39Z",
     "latest_snapshot_valid": true,
     "latest_snapshot_reason": "within_window",
-    "latest_valid_snapshot_at": "2026-10-06T16:02:55Z",
+    "latest_valid_snapshot_at": "2026-10-07T16:02:39Z",
     "consecutive_valid_snapshots": 2,
-    "next_scheduled_at": "2026-10-08T00:20:00+08:00",
+    "next_scheduled_at": "2026-10-09T00:20:00+08:00",
     "expected_first_ranking_at": null,
     "period_progress": {
       "7d": {
@@ -76,15 +77,16 @@
         "required": 7
       },
       "30d": {
-        "completed": 13,
+        "completed": 14,
         "required": 30
       }
     }
   },
   "periods": {
     "7d": {
-      "latest_date": "2026-10-06",
+      "latest_date": "2026-10-07",
       "available_dates": [
+        "2026-10-07",
         "2026-10-06",
         "2026-10-05",
         "2026-10-04",
