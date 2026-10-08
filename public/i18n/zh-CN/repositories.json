@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-08T07:04:07.521126Z",
+  "generated_at": "2026-10-08T16:12:43.278749Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4885,
-    "localized_count": 4884,
-    "pending_count": 1,
+    "localized_count": 4879,
+    "pending_count": 6,
     "failed_count": 1,
-    "coverage_ratio": 0.999795
+    "coverage_ratio": 0.998772
   },
   "repositories": [
     {
@@ -3134,15 +3134,6 @@
       "description_zh": "spark 是一个统一的大规模数据处理分析引擎。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 17420614,
-      "source_full_name": "seleniumbase/SeleniumBase",
-      "source_hash": "1d4082459d759717409faa32a85fac35e23f7e09e0d264edc32379f87b41a49b",
-      "display_name_zh": "SeleniumBase｜Python 网页抓取与测试框架",
-      "description_zh": "Python 一体化框架，用于网页爬取、抓取、测试和报告，支持 pytest。CDP 模式可增加隐蔽性，附带 100+ 示例。",
-      "generated_at": "2026-10-08T07:04:07.521126Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 17420913,
@@ -30307,15 +30298,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1137711311,
-      "source_full_name": "codewhale-hq/Codewhale",
-      "source_hash": "b33feb40948ed9c835d68d54135081c3eb77cc3a26013a377212295257c54778",
-      "display_name_zh": "Codewhale｜终端编码智能体",
-      "description_zh": "用 Rust 构建的开源终端编码智能体，持续接受社区改进，欢迎提交 Issues 和 PRs。",
-      "generated_at": "2026-10-06T06:57:21.125643Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1137837751,
       "source_full_name": "66HEX/frame",
       "source_hash": "3dfdc06c09e72d0cb12dbb756e2172465154d0538b741b01e34a110ee900e0b6",
@@ -40531,15 +40513,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1347599898,
-      "source_full_name": "ArasTey/ArasClient",
-      "source_hash": "c66f21f7a26a6cde7673d2e4f9f92d5d9457c20212af82da8e59288f93ad643e",
-      "display_name_zh": "ArasClient｜Android VPN 客户端",
-      "description_zh": "一款现代、快速的 Android VPN 客户端，支持加密 .arasc 配置分享、智能连接、订阅流量与公告。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1347713438,
       "source_full_name": "0xBakeer/qwen38-flash-next-spark",
       "source_hash": "2c3b478717d81faf1526e790244a1577a09692f57eba4a5a22d07ee03bfb05cb",
@@ -43222,15 +43195,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1367299537,
-      "source_full_name": "Clearailhc/clearai-dsh",
-      "source_hash": "3867886923bd452d8d8ab3f93b3e44262d0800812100b02a10e7d2a2e685b14e",
-      "display_name_zh": "clearai-dsh｜DSH 原生插件",
-      "description_zh": "ClearAI 是一个原生 DSH 插件，将 Epistemic Loop 引入 DeepSeek Harness。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1367446577,
       "source_full_name": "suoha888/Trader-Archives",
       "source_hash": "b980f43c0f7caf39bebee87eb65ade3d4e688d3fee15e9cb882764312faf7049",
@@ -43245,15 +43209,6 @@
       "source_hash": "2846adf0bc25a8ce0e591943dc483d6852ecc9b929df8a50690247e6b80a5849",
       "display_name_zh": "viserys-agent｜智能体项目",
       "description_zh": null,
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1367606050,
-      "source_full_name": "yifanzhang-pro/recurrent-looped-tranformer",
-      "source_hash": "5860167156863a36f70d78e357e5688e40d159f412a653a6dbd374fd3087e2fe",
-      "display_name_zh": "RLT｜循环递归 Transformer 项目主页",
-      "description_zh": "Recurrent Looped Transformer（RLT）的项目主页。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
