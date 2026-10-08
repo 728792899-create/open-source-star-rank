@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-07T16:12:43.465085Z",
+  "generated_at": "2026-10-08T07:04:07.521126Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4885,
-    "localized_count": 4878,
-    "pending_count": 7,
+    "localized_count": 4884,
+    "pending_count": 1,
     "failed_count": 1,
-    "coverage_ratio": 0.998567
+    "coverage_ratio": 0.999795
   },
   "repositories": [
     {
@@ -3037,6 +3037,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 16089035,
+      "source_full_name": "wekan/wekan",
+      "source_hash": "88bfbfb84964e29720ac0cbf8bae229d36fb64c0dae26a3973d7ba8585a02fd1",
+      "display_name_zh": "wekan｜FLOSS 看板工具",
+      "description_zh": "基于 Meteor 构建的 FLOSS 看板工具。官方公开支持仅通过 GitHub issues 提供，官方付费私有支持仅通过 https://wekan.fi/commercial-support/ 提供。翻译 PRs 请提交至 imports/i18n/data/en.i18n.json，其他翻译见 https://app.transifex.com/wekan/wekan。无遥测。",
+      "generated_at": "2026-10-08T07:04:07.521126Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 16157746,
       "source_full_name": "dotnet/efcore",
       "source_hash": "020759d88e517f3a7969e95dea2ab75792d02be29c2a0752f28519dfdf215988",
@@ -3125,6 +3134,15 @@
       "description_zh": "spark 是一个统一的大规模数据处理分析引擎。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 17420614,
+      "source_full_name": "seleniumbase/SeleniumBase",
+      "source_hash": "1d4082459d759717409faa32a85fac35e23f7e09e0d264edc32379f87b41a49b",
+      "display_name_zh": "SeleniumBase｜Python 网页抓取与测试框架",
+      "description_zh": "Python 一体化框架，用于网页爬取、抓取、测试和报告，支持 pytest。CDP 模式可增加隐蔽性，附带 100+ 示例。",
+      "generated_at": "2026-10-08T07:04:07.521126Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 17420913,
@@ -22981,6 +22999,15 @@
       "provenance": "github_models"
     },
     {
+      "repository_id": 809475352,
+      "source_full_name": "dockur/macos",
+      "source_hash": "fe279941c851ccbb9027de2cfa781506cd31663cccb65047500d9158aed1fcea",
+      "display_name_zh": "macos｜Docker 容器内运行 macOS",
+      "description_zh": "在 Docker 容器中运行 macOS。",
+      "generated_at": "2026-10-08T07:04:07.521126Z",
+      "provenance": "model_api"
+    },
+    {
       "repository_id": 810364325,
       "source_full_name": "plait-board/drawnix",
       "source_hash": "5b7fbfee891307b89daa7de57d9491ae31bac2f30712470308e9a16adf858274",
@@ -27308,6 +27335,15 @@
       "description_zh": "RedXFreeSteamInstaller 可自动安全免费地将所有免费和付费游戏及 DLCs 添加到 Steam 账户。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1021895365,
+      "source_full_name": "slopus/happy",
+      "source_hash": "2fa433d827d3c818b7a2223bb2ef325463cdff1788fc266d55b2eaa61091ec23",
+      "display_name_zh": "happy｜Claude Code 等编码代理桌面应用",
+      "description_zh": "Happy 是面向 Claude Code、Codex 和 Grok 的开源桌面应用，并配有 iOS 和 Android 应用，让你随时随地控制编码代理。",
+      "generated_at": "2026-10-08T07:04:07.521126Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1022286339,
@@ -32141,6 +32177,15 @@
       "description_zh": "连接飞书/Lark与AI编码命令行界面（CLIs），每个DM、群组或话题生成独立的实时CLI会话。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
       "provenance": "github_models"
+    },
+    {
+      "repository_id": 1179222510,
+      "source_full_name": "AgentiLoop/Agent",
+      "source_hash": "881e659a5b26203a71d24339bb3edc6e041c56ef1df1af341383e53b47c8c710",
+      "display_name_zh": "Agent｜macOS AI 代理工具",
+      "description_zh": "Agent! 现支持 macOS 14.6 或更高版本，兼容 Apple Silicon 和 Intel，最新发布版。面向 Mac 的 AI 代理：通过辅助功能驱动任意应用，在 Xcode 中编码/构建，自动化 AppleScript、JXA、Swift 和 SMAppService shell（用户/root）。支持 23 个 LLM 提供商，本地/云端，以及设备端 Apple Intelligence 和 Jev guard。具备 Auto-Pilot、MCP、Avatar。",
+      "generated_at": "2026-10-08T07:04:07.521126Z",
+      "provenance": "model_api"
     },
     {
       "repository_id": 1179264259,
@@ -41707,6 +41752,15 @@
       "display_name_zh": "amneziawg-ui｜浏览器 WEB UI 与 AmneziaWG 3.1 VPN",
       "description_zh": "在浏览器中使用的图形化 WEB UI，配合 VPS 上 Docker 部署的 AmneziaWG 3.1 VPN，一条命令即可完成，无冗余内容与多余依赖。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
+      "provenance": "model_api"
+    },
+    {
+      "repository_id": 1356154557,
+      "source_full_name": "CangShui/workbuddy-gateway",
+      "source_hash": "edce2cedb70ef46a4758d10434974ad97a5f27b5b4c45eaa0a3025457ae4724a",
+      "display_name_zh": "workbuddy-gateway｜CodeBuddy 账号池网关",
+      "description_zh": "用 Go 语言编写的腾讯 CodeBuddy 账号池纯 CLI/Web 管理控制台，以及 OpenAI 兼容反向代理网关。",
+      "generated_at": "2026-10-08T07:04:07.521126Z",
       "provenance": "model_api"
     },
     {
