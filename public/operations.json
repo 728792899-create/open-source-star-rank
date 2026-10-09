@@ -27,22 +27,22 @@
   },
   "enrichment": {
     "translation": {
-      "generated_at": "2026-10-08T16:12:43.278749Z",
+      "generated_at": "2026-10-09T06:52:55.589054Z",
       "coverage": {
         "eligible_count": 4885,
         "localized_count": 4879,
         "pending_count": 6,
-        "failed_count": 1,
+        "failed_count": 6,
         "coverage_ratio": 0.998772
       }
     },
     "classification": {
-      "generated_at": "2026-10-08T16:12:45.152091Z",
+      "generated_at": "2026-10-09T06:52:59.609482Z",
       "coverage": {
         "eligible_count": 4885,
         "classified_count": 4432,
         "pending_count": 453,
-        "failed_count": 271,
+        "failed_count": 289,
         "coverage_ratio": 0.907267
       }
     }
@@ -50,36 +50,50 @@
   "enrichment_runs": {
     "localization": {
       "version": 1,
-      "id": "4182ee32db6542b1a1685e750ed4f719",
+      "id": "70e560e2bfe546bf80ef23f59d04b9fd",
       "kind": "localization",
-      "started_at": "2026-10-08T07:04:07.521126Z",
-      "finished_at": "2026-10-08T07:04:12.651280+00:00",
+      "started_at": "2026-10-09T06:52:55.589054Z",
+      "finished_at": "2026-10-09T06:52:57.028542+00:00",
       "model": "deepseek-flash",
-      "attempted_projects": 7,
-      "accepted_projects": 6,
-      "failed_projects": 1,
+      "attempted_projects": 5,
+      "accepted_projects": 0,
+      "failed_projects": 5,
       "failures": [
         {
-          "repository_id": 1351626350,
-          "reason": "missing_verbatim"
+          "repository_id": 17420614,
+          "reason": "provider_http"
+        },
+        {
+          "repository_id": 1137711311,
+          "reason": "provider_http"
+        },
+        {
+          "repository_id": 1347599898,
+          "reason": "provider_http"
+        },
+        {
+          "repository_id": 1367299537,
+          "reason": "provider_http"
+        },
+        {
+          "repository_id": 1367606050,
+          "reason": "provider_http"
         }
       ],
-      "requests": 2,
-      "usage_responses": 2,
-      "unknown_usage_requests": 0,
-      "usage_complete": true,
+      "requests": 1,
+      "usage_responses": 0,
+      "unknown_usage_requests": 1,
+      "usage_complete": false,
       "observed_tokens": {
-        "prompt_tokens": 2002,
-        "completion_tokens": 568,
-        "cache_hit_tokens": 896,
-        "cache_miss_tokens": 1106
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "cache_hit_tokens": 0,
+        "cache_miss_tokens": 0
       },
-      "request_errors": {},
-      "estimated_cost": {
-        "currency": "USD",
-        "min": "0.000509388",
-        "max": "0.001018776"
+      "request_errors": {
+        "http_402": 1
       },
+      "estimated_cost": null,
       "pricing": {
         "source": "https://api-docs.deepseek.com/quick_start/pricing",
         "verified_on": "2026-09-24",
@@ -98,119 +112,115 @@
           "1.2"
         ]
       },
-      "pricing_status": "estimated_range",
+      "pricing_status": "unavailable",
       "billing_note": "估算区间并非账单；缺失用量或过期价格不计算费用。"
     },
     "classification": {
       "version": 1,
-      "id": "b369107f66ce41e0b5a28aa27e86f3e6",
+      "id": "47b55491ffb1460c841f1c2155233c48",
       "kind": "classification",
-      "started_at": "2026-10-08T07:04:14.202196Z",
-      "finished_at": "2026-10-08T07:04:26.299113+00:00",
+      "started_at": "2026-10-09T06:52:59.609482Z",
+      "finished_at": "2026-10-09T06:53:01.016522+00:00",
       "model": "deepseek-flash",
-      "attempted_projects": 40,
-      "accepted_projects": 20,
+      "attempted_projects": 20,
+      "accepted_projects": 0,
       "failed_projects": 20,
       "failures": [
         {
-          "repository_id": 42579199,
-          "reason": "schema"
+          "repository_id": 17420614,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 84363301,
-          "reason": "schema"
+          "repository_id": 129437289,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 386538156,
-          "reason": "schema"
+          "repository_id": 180190854,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 472486817,
-          "reason": "schema"
+          "repository_id": 1137711311,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 1061026489,
-          "reason": "schema"
+          "repository_id": 1344676556,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 1115864958,
-          "reason": "schema"
+          "repository_id": 1346397198,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 1140929355,
-          "reason": "schema"
+          "repository_id": 1346816817,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 1344068353,
-          "reason": "schema"
+          "repository_id": 1347599898,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 1344620985,
-          "reason": "schema"
+          "repository_id": 1350046847,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 1346738096,
-          "reason": "schema"
+          "repository_id": 1350362371,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 1349990522,
-          "reason": "schema"
+          "repository_id": 1351310492,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 1352807807,
-          "reason": "schema"
+          "repository_id": 1355313438,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 1355222070,
-          "reason": "schema"
+          "repository_id": 1357670785,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 1355405465,
-          "reason": "schema"
+          "repository_id": 1358080066,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 1358585087,
-          "reason": "schema"
+          "repository_id": 1358480028,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 1360534683,
-          "reason": "schema"
+          "repository_id": 1365044767,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 1360643571,
-          "reason": "schema"
+          "repository_id": 1367299537,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 1365550050,
-          "reason": "schema"
+          "repository_id": 1367606050,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 1369732737,
-          "reason": "schema"
+          "repository_id": 1374570446,
+          "reason": "provider_http"
         },
         {
-          "repository_id": 1374827115,
-          "reason": "schema"
+          "repository_id": 1375299700,
+          "reason": "provider_http"
         }
       ],
-      "requests": 3,
-      "usage_responses": 3,
-      "unknown_usage_requests": 0,
-      "usage_complete": true,
+      "requests": 1,
+      "usage_responses": 0,
+      "unknown_usage_requests": 1,
+      "usage_complete": false,
       "observed_tokens": {
-        "prompt_tokens": 11587,
-        "completion_tokens": 2100,
-        "cache_hit_tokens": 6144,
-        "cache_miss_tokens": 5443
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "cache_hit_tokens": 0,
+        "cache_miss_tokens": 0
       },
       "request_errors": {
-        "invalid_response": 2
+        "http_402": 1
       },
-      "estimated_cost": {
-        "currency": "USD",
-        "min": "0.002094882",
-        "max": "0.004189764"
-      },
+      "estimated_cost": null,
       "pricing": {
         "source": "https://api-docs.deepseek.com/quick_start/pricing",
         "verified_on": "2026-09-24",
@@ -229,7 +239,7 @@
           "1.2"
         ]
       },
-      "pricing_status": "estimated_range",
+      "pricing_status": "unavailable",
       "billing_note": "估算区间并非账单；缺失用量或过期价格不计算费用。"
     }
   }
