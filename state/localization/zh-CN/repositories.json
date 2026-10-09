@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-09T06:52:55.589054Z",
+  "generated_at": "2026-10-09T16:13:25.215491Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4885,
-    "localized_count": 4879,
-    "pending_count": 6,
+    "localized_count": 4869,
+    "pending_count": 16,
     "failed_count": 6,
-    "coverage_ratio": 0.998772
+    "coverage_ratio": 0.996725
   },
   "repositories": [
     {
@@ -15214,15 +15214,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 357897199,
-      "source_full_name": "netbirdio/netbird",
-      "source_hash": "671b298bbbe44889cefe2d9b20b3ab4df68efde3f4eee294a498e6549ecf89c3",
-      "display_name_zh": "netbird｜WireGuard 安全覆盖网络",
-      "description_zh": "将设备、用户和智能体连接为基于 WireGuard® 的安全覆盖网络，支持 SSO、MFA 和细粒度访问控制。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 358446986,
       "source_full_name": "waydroid/waydroid",
       "source_hash": "1d29d436beb83819db4a842bfb97bc8cb299e07db6ebfed6573d086bcd2670c5",
@@ -18038,15 +18029,6 @@
       "description_zh": "无障碍 HTML 标准。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
-    },
-    {
-      "repository_id": 551376520,
-      "source_full_name": "tw93/Pake",
-      "source_hash": "84ae65400b604fc33f47b03d98317928f0925c091d67c3b4bc48fe914a30e248",
-      "display_name_zh": "Pake｜网页转桌面应用工具",
-      "description_zh": "一条命令将任意网页转换为桌面应用。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
     },
     {
       "repository_id": 551550787,
@@ -23422,15 +23404,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 832452447,
-      "source_full_name": "web-infra-dev/midscene",
-      "source_hash": "6233e04b821b1cff280325a6fb514eadaf720f9619b388fbf14839173ce2a1d6",
-      "display_name_zh": "midscene｜端到端测试 GUI 智能体",
-      "description_zh": "用于端到端测试的 GUI 智能体。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 832690363,
       "source_full_name": "dan1471/FREE-openai-api-keys",
       "source_hash": "ca6945c09a2ffd1ec2ddfe4bfe8abfda859ae6a335d896aff68cd80faf4f2e34",
@@ -28228,15 +28201,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1062356571,
-      "source_full_name": "tw93/Mole",
-      "source_hash": "c0443ee54db9061bdb3c8f0ab0a392c23f5afa3b81724b853f845bd9479b72c9",
-      "display_name_zh": "Mole｜Mac 清理与优化 CLI",
-      "description_zh": "清理、卸载、分析、优化并监控你的 Mac。免费开源 CLI，另有原生 Mac 应用。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1062458369,
       "source_full_name": "alibaba/page-agent",
       "source_hash": "ba54997c71949f7d6cc060397b1114a02a44ed7275a6541563ad20e1ce4461b7",
@@ -31288,15 +31252,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1161163182,
-      "source_full_name": "tinyhumansai/openhuman",
-      "source_hash": "ad7be8608fe08d62e5429c7b5936f8d2a5c1a1e157a45838f6538999402ee9d8",
-      "display_name_zh": "OpenHuman｜开源智能体运行框架",
-      "description_zh": "OpenHuman 是速度最快、成本最低、效率最高的开源智能体运行框架，使用 Rust 编写。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1161521332,
       "source_full_name": "0xtresser/OpenCode-Book",
       "source_hash": "070d821f7bc258cec0da68ee9bfb62251cd72f4b4c18cbff12c3ef0bcf40d7c7",
@@ -31439,15 +31394,6 @@
       "description_zh": "个人AI助手，易于安装和部署，支持多聊天应用，功能可扩展。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1165361576,
-      "source_full_name": "cactus-compute/needle",
-      "source_hash": "a9fd33581e74143caf43ef487bf9c4ffbdd95f22d059f7a159e8d7a890ee4ab6",
-      "display_name_zh": "needle｜微型设备自动化基础模型",
-      "description_zh": "面向微型设备的自动化基础模型：2-bit 量化，体积 8-29 MB，可在手机、可穿戴设备、智能家居、机器人、汽车和微控制器上完成工具调用、结构化抽取与嵌入。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1165744194,
@@ -33977,15 +33923,6 @@
       "description_zh": "一款生产级CLI工具，包含100+实用工具，支持压缩、视频音频编辑、网络扫描、Git自动化及Android/Termux控制。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1222042205,
-      "source_full_name": "maddada/Ghostex",
-      "source_hash": "01fd7bc0245d65b1e1108605f9b54e66fc6a598b482c0f2702822b716eba7e27",
-      "display_name_zh": "Ghostex｜macOS 原生 Agent CLIs 管理器",
-      "description_zh": "面向 macOS 的 Rust 与 GPUI 原生 Agent CLIs 管理器，结合 Ghostty 终端与 Codex 应用功能及 UX，内置浏览器与 IDE，提供大量实用功能。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1222469137,
@@ -41116,15 +41053,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1351886195,
-      "source_full_name": "zordhalo/runs-on.dev",
-      "source_hash": "3e5e391f7443b224c889b01f79d787c16262e3114b92f1c795c96e7fb7aa7006",
-      "display_name_zh": "runs-on.dev｜免费子域名获取",
-      "description_zh": "获取属于自己的 runs-on.dev 子域名，可永久免费使用。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1351890013,
       "source_full_name": "AlephAITech/DoubaoWorkGuide",
       "source_hash": "e6d076c54d6e31e29fb74dac76ab7269ac4ab9fea6b4ad496ba09b7d7460f73c",
@@ -42817,15 +42745,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1363431253,
-      "source_full_name": "blixvip/MotionClone",
-      "source_hash": "7176a2ac3dfcab2e98914507c2ecafe5007389ac5be8fb884ff496e3232429c8",
-      "display_name_zh": "MotionClone｜AI 动态图形克隆工具",
-      "description_zh": "从参考视频生成 AI 动态图形，可用 Codex 和 ChatGPT 重建为可编辑的 HyperFrames 项目，对比匹配效果并导出 MP4。提供本地 Windows 应用和在线工作室。",
-      "generated_at": "2026-10-02T06:22:28.460057Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1363703224,
       "source_full_name": "chuspeeism/iphone-duo",
       "source_hash": "0cac037a029a7b22a3c22bd343f6921c2764d04a8e332c37069a2a3637418bef",
@@ -43120,15 +43039,6 @@
       "display_name_zh": "ai-data-extractor｜AI 编程助手聊天记录提取器",
       "description_zh": "免费开源提取器，用于提取 AI 编程助手的聊天记录，支持 Claude Code、Cursor、Windsurf、Aider、Cline/Roo Code 等。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1366893424,
-      "source_full_name": "Leviidev/Husk",
-      "source_hash": "7d0b361b86b4750709f4b7e8cf0dd94dead00c297a6d300ed3f3a115fde0dfcd",
-      "display_name_zh": "Husk｜iOS 上的 Android 模拟器",
-      "description_zh": "在 iOS 上运行的 Android 模拟器。",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
       "provenance": "model_api"
     },
     {
