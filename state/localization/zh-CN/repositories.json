@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-10T06:29:51.628924Z",
+  "generated_at": "2026-10-10T16:11:46.040069Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4885,
-    "localized_count": 4869,
-    "pending_count": 16,
+    "localized_count": 4861,
+    "pending_count": 24,
     "failed_count": 16,
-    "coverage_ratio": 0.996725
+    "coverage_ratio": 0.995087
   },
   "repositories": [
     {
@@ -11368,15 +11368,6 @@
       "display_name_zh": "hello-stm32-3-canbus｜STM32 和 libopencm3 的 CANBus 示例",
       "description_zh": "基于 STM32 和 libopencm3 的 CANBus 示例。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 180190854,
-      "source_full_name": "appwrite/appwrite",
-      "source_hash": "c7d9653b0edb68a1b9c89804b3e3b802c51a8531344f8ecdc1b80eaf5be48bf7",
-      "display_name_zh": "appwrite｜完整云基础设施平台（含 AI 支持）",
-      "description_zh": "appwrite® 提供完整的云基础设施，支持 Web、移动和 AI 应用，包括认证、数据库、存储、函数、消息、托管、实时等功能。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
     {
@@ -26221,15 +26212,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 969302809,
-      "source_full_name": "hesreallyhim/awesome-claude-code",
-      "source_hash": "90b6bb7fed9164e3a1437b71d941d4354e398e55ee16d553514d45167a3ef83c",
-      "display_name_zh": "awesome-claude-code｜Anthropic PBC Claude Code 资源合集",
-      "description_zh": "awesome-claude-code 收集了 Anthropic PBC 团队打造的 Claude Code 相关优质资源，包括技能、代理、状态栏、开发工具和插件。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 970046788,
       "source_full_name": "utkarshdalal/GameNative",
       "source_hash": "ae493d9e0842119b3616f9ba36962efdb2db6794c4df05d44bae8427ff83e7a4",
@@ -26542,15 +26524,6 @@
       "display_name_zh": "japanese-analyzer｜日语分析工具",
       "description_zh": null,
       "generated_at": "2026-07-21T04:09:00.150793Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 987975584,
-      "source_full_name": "langchain-ai/open-swe",
-      "source_hash": "858d7c749e3443f2a9365116325c0722ff9ef0bd63530562674f3fd75e361218",
-      "display_name_zh": "open-swe｜开源异步编码代理",
-      "description_zh": "一个开源的异步编码代理。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
     },
     {
@@ -30136,15 +30109,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1135449996,
-      "source_full_name": "QuipNetwork/quip-miner",
-      "source_hash": "b0494976a93a4522b0afafcaf2e7a61f83c4e50cbddf63ff62c6ccc67e49760d",
-      "display_name_zh": "quip-miner｜quip 网络挖矿组件",
-      "description_zh": "quip 网络挖矿栈，包含一个协调器，并链接所有官方 quip 网络矿工。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1135492298,
       "source_full_name": "jlcodes99/cockpit-tools",
       "source_hash": "2a7bfd1f463a5da0c417afe52fbd3dd07e3a9c583f49334e9af24683197d6b65",
@@ -30538,15 +30502,6 @@
       "display_name_zh": "daily_free_vpn｜免费节点与订阅分享",
       "description_zh": "分享免费节点、免费与付费机场、电报代理、SSR 节点、v2ray 节点与订阅、clash 节点与订阅、shadowrocket 订阅、Quantumult X 订阅、Clash .NET 订阅、小火箭与小猫咪节点，以及免费翻墙、科学上网、梯子、trojan 节点、蓝灯、安卓 VPN、iPhone 翻墙节点、一键翻墙浏览器、节点分享、免费 SSR、TG 代理、Telegram 代理、ip 加速、翻墙软件、socks5、破解 VPN 与机场推荐等。",
       "generated_at": "2026-09-28T06:01:47.380329Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1145022970,
-      "source_full_name": "HBAI-Ltd/Toonflow-app",
-      "source_hash": "52f3618f56f43988d46dd7d6d531aef781e79ba391c08162d62a2f95e3dfc173",
-      "display_name_zh": "Toonflow｜开源 AI 创作平台",
-      "description_zh": "Toonflow 是开源 AI 创作平台，融合无限画布、AI Agent 与可视化工作流，支持图像生成、视频生成、智能分镜及短剧创作。支持本地部署、自由接入模型，提供跨平台桌面端，并可通过 MCP 与插件扩展创作能力。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
       "provenance": "model_api"
     },
     {
@@ -35896,15 +35851,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1273015953,
-      "source_full_name": "shy3130/tick-stock-panel",
-      "source_hash": "7683d968ab2f09d73d02953862a83bffe1ba58c714d7a6a049bac9b5fc57f782",
-      "display_name_zh": "tick-stock-panel｜TSP A 股量化工作台",
-      "description_zh": "TSP 自托管、零运维的 A 股「选股 + 监控 + 回测」量化工作台 | LLM 能力驱使策略定制 + 个股分析 + 复盘 | 自由接入第三方数据源与个性化扩展数据 | 个人开源。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1273138090,
       "source_full_name": "baidu/Unlimited-OCR",
       "source_hash": "24c0edad75c98d2672e0b4dd31439747cd6912bf134532b691593de354de4e39",
@@ -40324,15 +40270,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1346788093,
-      "source_full_name": "OpenLucasKaka/bareloop",
-      "source_hash": "720709e65fd056a638267abac37867b14f3b368856971be15c4950ae2f031693",
-      "display_name_zh": "bareloop｜裸循环工具",
-      "description_zh": null,
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1346816817,
       "source_full_name": "lxw112190/lw.PPOCR.C",
       "source_hash": "075c94d1a406d448a516c1d018c6ef75252ed13c85ffc1a85df24b89ae956956",
@@ -41994,15 +41931,6 @@
       "source_hash": "d8f5911e9dbb9105a08c59e0cc0df77d113db1d94ee6a69e6d3613961c6b3539",
       "display_name_zh": "scex-extrabotany｜SCEX 维护的 ExtraBotany 移植版",
       "description_zh": "由 SCEX 维护的非官方 ExtraBotany 移植版，适用于 Minecraft 1.21.1 / NeoForge。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1358163597,
-      "source_full_name": "DartNative/dartnative",
-      "source_hash": "0efd92a2a33556eec29e9a843e62aa21f367e45a9e7f7f7460cbec3f822921fd",
-      "display_name_zh": "dartnative｜用 Dart 构建原生移动应用",
-      "description_zh": "用 Dart 构建原生 iOS 和 Android 应用。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
