@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-11T06:35:25.018236Z",
+  "generated_at": "2026-10-11T16:14:06.014488Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4885,
-    "localized_count": 4861,
-    "pending_count": 24,
+    "localized_count": 4858,
+    "pending_count": 27,
     "failed_count": 24,
-    "coverage_ratio": 0.995087
+    "coverage_ratio": 0.994473
   },
   "repositories": [
     {
@@ -17545,15 +17545,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 521655652,
-      "source_full_name": "Infisical/infisical",
-      "source_hash": "439d1e0772012803dc5ba2ef74be81e20db651d06e6ec863040fb62bb9aa4d51",
-      "display_name_zh": "infisical｜开源机密与访问管理平台",
-      "description_zh": "开源的机密、证书及特权访问管理平台",
-      "generated_at": "2026-07-17T00:57:38.909807Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 522158088,
       "source_full_name": "zhayujie/CowAgent",
       "source_hash": "6fe1dcbc7d1dd8239dcf4a397a2479a1cb030268b8b993f43db6bb66a88e66f5",
@@ -27272,15 +27263,6 @@
       "description_zh": "RedXFreeSteamInstaller 可自动安全免费地将所有免费和付费游戏及 DLCs 添加到 Steam 账户。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1021895365,
-      "source_full_name": "slopus/happy",
-      "source_hash": "2fa433d827d3c818b7a2223bb2ef325463cdff1788fc266d55b2eaa61091ec23",
-      "display_name_zh": "happy｜Claude Code 等编码代理桌面应用",
-      "description_zh": "Happy 是面向 Claude Code、Codex 和 Grok 的开源桌面应用，并配有 iOS 和 Android 应用，让你随时随地控制编码代理。",
-      "generated_at": "2026-10-08T07:04:07.521126Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1022286339,
@@ -41950,15 +41932,6 @@
       "display_name_zh": "mador｜让任意 DOM 响应式",
       "description_zh": "让任意 DOM 变为响应式。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1358286075,
-      "source_full_name": "fidetolabs/qanat",
-      "source_hash": "f5b8384e13fb4e48ca23db4ae0a3db110158f2bb54ed8527e43303405e382ebf",
-      "display_name_zh": "qanat｜量化因子 MCP 服务器",
-      "description_zh": "用于量化因子处理与回测的 MCP 服务器，连接你的代理即可提问。",
-      "generated_at": "2026-09-30T06:05:05.752395Z",
       "provenance": "model_api"
     },
     {
