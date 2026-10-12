@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "taxonomy_version": "1.0.0",
-  "generated_at": "2026-10-11T16:14:08.587173Z",
+  "generated_at": "2026-10-12T08:25:20.359082Z",
   "repositories": [
     {
       "repository_id": 3314,
@@ -520,20 +520,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T01:04:06.946438Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 667006,
-      "source_full_name": "videojs/video.js",
-      "source_hash": "e79b6ca45e983d01f019c4608b6fdc8c12d2ae94ec9d81e95f724d1d66e77c35",
-      "primary_category": "creative-media",
-      "project_type": "application",
-      "use_cases": [
-        "web-frontend",
-        "image-video-audio"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-18T05:32:12.135995Z",
       "provenance": "github_models"
     },
     {
@@ -2057,21 +2043,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T18:30:55.656026Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 4086616,
-      "source_full_name": "shadowsocks/shadowsocks",
-      "source_hash": "0645ed0cea0f2d3df30e44398a925fc5b9d366fb1e4a65436fe75acb83b65f2b",
-      "primary_category": "security-privacy",
-      "project_type": "application",
-      "use_cases": [
-        "security-defense",
-        "privacy-local",
-        "network-tools"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-19T00:20:04.872872Z",
       "provenance": "github_models"
     },
     {
@@ -6417,20 +6388,6 @@
       "repository_id": 29219243,
       "source_full_name": "bannedbook/fanqiang",
       "source_hash": "de17b5fd6a75d7ab78a236436fe0a6813f02c13c008872e5edd2bc1d030dd388",
-      "primary_category": "security-privacy",
-      "project_type": "application",
-      "use_cases": [
-        "security-defense",
-        "privacy-local"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-18T05:32:12.135995Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 29290473,
-      "source_full_name": "XX-net/XX-Net",
-      "source_hash": "bd9ceab0c0962abfd5605f39f747514050ee2c3d6940223248baf11dc9e93229",
       "primary_category": "security-privacy",
       "project_type": "application",
       "use_cases": [
@@ -11911,20 +11868,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 92807616,
-      "source_full_name": "byoungd/up",
-      "source_hash": "f2402b50da25d04f650ac92b046f1f81bcd8e5b23c3b3fd8f2ead51a3b79ab44",
-      "primary_category": "education-resources",
-      "project_type": "tutorial-resource",
-      "use_cases": [
-        "personal-productivity",
-        "learning-tutorial"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-09-24T04:30:45.978519Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 93324141,
       "source_full_name": "FouadRaheb/Watusi-for-WhatsApp",
       "source_hash": "d3f8ea76ebc6f9a63da6d8c1b1816e81b2232124194087a9766ff63377dc8f61",
@@ -13407,20 +13350,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 119811010,
-      "source_full_name": "tabler/tabler",
-      "source_hash": "14644ca4edf351c408590b1f3ba4fac635c979bcc823fa3104e455e3fd5a839f",
-      "primary_category": "web-app-development",
-      "project_type": "library-framework",
-      "use_cases": [
-        "web-frontend",
-        "design-ui-ux"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-09-24T04:30:45.978519Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 120027694,
       "source_full_name": "featurecat/go-dataset",
       "source_hash": "86ff39ec8fa1bdf8037bd7bd127762acfb920a4fe696d0e359cfeb4258b6134c",
@@ -14476,20 +14405,6 @@
       "use_cases": [
         "web-frontend",
         "design-ui-ux"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-18T05:32:12.135995Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 137451403,
-      "source_full_name": "alibaba/nacos",
-      "source_hash": "4db0c589c378128273af1991b2e7dd28d2e4e7862b683b4dafccae776990ef20",
-      "primary_category": "data-infrastructure",
-      "project_type": "platform-service",
-      "use_cases": [
-        "api-backend",
-        "self-hosting"
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-18T05:32:12.135995Z",
@@ -26844,19 +26759,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 580836813,
-      "source_full_name": "google/comprehensive-rust",
-      "source_hash": "5e40fbef970c997dd624ad1bb341d1fd1bd3fbf3b4dc3777332c1a12e5aba6e2",
-      "primary_category": "education-resources",
-      "project_type": "tutorial-resource",
-      "use_cases": [
-        "learning-tutorial"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-25T03:56:53.240576Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 582242477,
       "source_full_name": "SHUR1K-N/Flipper-Zero-Sub-GHz-Jamming-Files",
       "source_hash": "b488d8833d962a0da01214cba9d82439504a9ffab6a306e0c7f6b2e9bde8b799",
@@ -34128,21 +34030,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 838695230,
-      "source_full_name": "DavidHDev/react-bits",
-      "source_hash": "02e3d1b7255dced0b8cea23c1801d9b97ac8f26ccacfbe71c3c5f0c0854b1f26",
-      "primary_category": "creative-media",
-      "project_type": "library-framework",
-      "use_cases": [
-        "web-frontend",
-        "content-generation",
-        "design-ui-ux"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-21T01:04:20.264126Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 838849799,
       "source_full_name": "amzxyz/rime-wanxiang",
       "source_hash": "abd2b2f58718671d6825b2ab32e89d0a618df847d21bc909b61f6bc3816a29ef",
@@ -35318,19 +35205,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-16T06:51:50.292861Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 890668799,
-      "source_full_name": "modelcontextprotocol/servers",
-      "source_hash": "916f7c5a5a4bb1bc960a2ba9782879ffe055e741d853943d9af1935542929852",
-      "primary_category": "ai-machine-learning",
-      "project_type": "platform-service",
-      "use_cases": [
-        "api-backend"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-22T04:12:02.172495Z",
       "provenance": "github_models"
     },
     {
@@ -43990,20 +43864,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1141782198,
-      "source_full_name": "jamiepine/voicebox",
-      "source_hash": "d91c4f0e53e6d8e986efc903b08a184fa0c4f28d07c895a3fdcd62e802ab5766",
-      "primary_category": "creative-media",
-      "project_type": "application",
-      "use_cases": [
-        "content-generation",
-        "image-video-audio"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-16T06:51:50.292861Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1141853351,
       "source_full_name": "joeseesun/qiaomu-anything-to-notebooklm",
       "source_hash": "d9790849febcbce73566a4db9e6a618b462ba0e536af398f3d047fd1efcbc22d",
@@ -47063,19 +46923,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-24T04:00:32.535148Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1185590488,
-      "source_full_name": "rohitg00/ai-engineering-from-scratch",
-      "source_hash": "0a41a544a1fc314bf92f85961fce41f79dd72a006fa7fcd74d2c932c378b1620",
-      "primary_category": "education-resources",
-      "project_type": "tutorial-resource",
-      "use_cases": [
-        "learning-tutorial"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-18T00:15:46.311660Z",
       "provenance": "github_models"
     },
     {

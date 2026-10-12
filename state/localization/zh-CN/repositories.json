@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-12T06:40:44.626001Z",
+  "generated_at": "2026-10-12T08:25:17.003493Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
-    "eligible_count": 4885,
-    "localized_count": 4858,
-    "pending_count": 27,
+    "eligible_count": 4883,
+    "localized_count": 4848,
+    "pending_count": 35,
     "failed_count": 27,
-    "coverage_ratio": 0.994473
+    "coverage_ratio": 0.992832
   },
   "repositories": [
     {
@@ -370,15 +370,6 @@
       "display_name_zh": "openstreetmap-website｜OpenStreetMap Rails 应用",
       "description_zh": "openstreetmap-website 是支持 OpenStreetMap 的 Rails 应用程序。",
       "generated_at": "2026-07-16T17:46:53.472669Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 667006,
-      "source_full_name": "videojs/video.js",
-      "source_hash": "36e6b3b6861e372e8c77e1c9df90bf41a6d9e7eb4bb3426c4e0cc3301d9edd46",
-      "display_name_zh": "video.js｜开源 HTML5 视频播放器",
-      "description_zh": "video.js 是一个开源的 HTML5 视频播放器。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
     },
     {
@@ -1441,15 +1432,6 @@
       "display_name_zh": "hosts｜多源整合hosts文件",
       "description_zh": "整合并扩展多个优质来源的hosts文件，支持多种分类扩展。",
       "generated_at": "2026-07-20T18:28:18.246753Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 4086616,
-      "source_full_name": "shadowsocks/shadowsocks",
-      "source_hash": "cde65f37bfd41898a9d040fa2d96a50556bc351c162079939628eb4cd3b87dc8",
-      "display_name_zh": "shadowsocks｜代理工具",
-      "description_zh": null,
-      "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
     },
     {
@@ -4428,15 +4410,6 @@
       "source_hash": "a7d3eb7102ac4ec3f5b6070ffc282e7c2a7af71f47e1f0bc79cc02c5ae9889b1",
       "display_name_zh": "fanqiang｜翻墙科学上网工具",
       "description_zh": "翻墙科学上网工具。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 29290473,
-      "source_full_name": "XX-net/XX-Net",
-      "source_hash": "950c9ecfa21ce24aaec38420fd594d0a7ba13ef892169b694ed12f15bf0eb70f",
-      "display_name_zh": "XX-Net｜绕过GFW的代理工具",
-      "description_zh": "用于绕过GFW的代理工具。",
       "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
     },
@@ -8203,15 +8176,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 92807616,
-      "source_full_name": "byoungd/up",
-      "source_hash": "8aa504050cc9c44ad4ea9e0774fa6646edc5544c68d8fd0c6493767ff4402160",
-      "display_name_zh": "up｜人生进阶与 AI 学习指南",
-      "description_zh": "一份可能让你受益匪浅的进阶指南 🎉。韩先凯的人生进阶指南 人生进阶指南 离谱的人生 人生进阶 AI学习 AI指南 韩先凯的AI学习指南 英语学习指南/英语学习教程/英语学习/学英语",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 93324141,
       "source_full_name": "FouadRaheb/Watusi-for-WhatsApp",
       "source_hash": "2ba96897b990ad64f68eee1bcc03d1cf4fd7190d86b5eb47c9159c5531ac34c4",
@@ -9211,15 +9175,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 119811010,
-      "source_full_name": "tabler/tabler",
-      "source_hash": "59664e169c6d71d1af86a6905b9a1044b914c6cba60b68f881cbacf741a39bdf",
-      "display_name_zh": "tabler｜HTML UI仪表盘套件",
-      "description_zh": "基于Bootstrap的免费开源HTML仪表盘UI套件",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 119907244,
       "source_full_name": "joelazar/dotfiles",
       "source_hash": "6ca7157ac5a4816cf9e407d62bbff43220a423c6a3e08835df23aab37fb13940",
@@ -9981,15 +9936,6 @@
       "source_hash": "3c5a548004f357416030f730b655b0b047f83f6658dfb0e727ef4328bc37de18",
       "display_name_zh": "core｜渐进式 JavaScript UI 框架",
       "description_zh": "core 是一个渐进式、可增量采用的 JavaScript 框架，用于构建网页用户界面。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 137451403,
-      "source_full_name": "alibaba/nacos",
-      "source_hash": "4daf00c400e989f79780d7650620fa68399456169799f875e9e367529c4edece",
-      "display_name_zh": "nacos｜AI 云原生服务管理平台",
-      "description_zh": "nacos 是一个易用的动态服务发现、配置和服务管理平台，支持构建 AI 云原生应用。",
       "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
     },
@@ -18517,15 +18463,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 580836813,
-      "source_full_name": "google/comprehensive-rust",
-      "source_hash": "376d270eda8bef9be1e58454f5e01a036a3e54433adb1aa59a6928921881969d",
-      "display_name_zh": "comprehensive-rust｜谷歌 Android 团队 Rust 课程",
-      "description_zh": "谷歌 Android 团队使用的 Rust 课程，快速学习 Rust 编程。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 582242477,
       "source_full_name": "SHUR1K-N/Flipper-Zero-Sub-GHz-Jamming-Files",
       "source_hash": "6a505437346846e82f8c6f4b1e5ac2da2a07b48fc95cfc318c17aaed97ddba35",
@@ -23509,15 +23446,6 @@
       "display_name_zh": "BitNet｜1位LLMs推理框架",
       "description_zh": "BitNet 是1位LLMs的官方推理框架。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 838695230,
-      "source_full_name": "DavidHDev/react-bits",
-      "source_hash": "e760452a39bdc6438fac2b7bf99eba9cac3b986c4bb2696f6e85283ff53ca56c",
-      "display_name_zh": "react-bits｜开源 React 交互组件库",
-      "description_zh": "react-bits 是一个开源的 React 组件集合，包含动画、交互和高度可定制的组件，用于构建有特色的网站。",
-      "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
     },
     {
@@ -32440,15 +32368,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1185590488,
-      "source_full_name": "rohitg00/ai-engineering-from-scratch",
-      "source_hash": "72421bb75a1803d3ef76b1a34ee76980ee10368af0bb9e327db762bb4c0077a3",
-      "display_name_zh": "ai-engineering-from-scratch｜AI 工程学习与实践资源",
-      "description_zh": "ai-engineering-from-scratch 提供从零开始学习、构建和发布 AI 工程项目的资源。",
-      "generated_at": "2026-07-18T00:14:53.937273Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1185794864,
       "source_full_name": "SolFoundry/solfoundry",
       "source_hash": "da7fdbbe2ca71e48373f77913449d4197f208828b895f95939ba8dd6fe2d9b80",
@@ -33581,15 +33500,6 @@
       "description_zh": "wtk 是一个 Windows Token Killer 命令行代理，能减少 60-90% 的 LLM 令牌消耗。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1212769188,
-      "source_full_name": "cathrynlavery/diagram-design",
-      "source_hash": "5239ed2e8219ef68c8758a5c474dd0978fd12a0594fbab06d3f35312d7c5c1ad",
-      "display_name_zh": "diagram-design｜编辑级图表设计",
-      "description_zh": "面向 Claude Code、Codex、GitHub Copilot、Factory Droid 和 Pi 的编辑级图表设计，包含 42 种图表类型，使用自包含 HTML + SVG，无阴影，无 Mermaid 劣质效果。",
-      "generated_at": "2026-10-06T06:57:21.125643Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1213049020,
