@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-13T07:11:16.264689Z",
+  "generated_at": "2026-10-13T16:16:07.443918Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4883,
-    "localized_count": 4846,
-    "pending_count": 37,
+    "localized_count": 4843,
+    "pending_count": 40,
     "failed_count": 37,
-    "coverage_ratio": 0.992423
+    "coverage_ratio": 0.991808
   },
   "repositories": [
     {
@@ -23953,15 +23953,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 872925629,
-      "source_full_name": "cosscom/coss",
-      "source_hash": "a1535ed9356f03357f47888f0f90b0852a7de57f628dc70123e3055b82b9a101",
-      "display_name_zh": "coss｜Cal.com设计系统",
-      "description_zh": "Cal.com的官方设计系统。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 873225216,
       "source_full_name": "mustbeperfect/definitive-opensource",
       "source_hash": "c1c8057f1afbb21edbb5199e821a1c80e53245ffa7f1ebf1663cc1521a4e43d5",
@@ -29704,15 +29695,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1129786550,
-      "source_full_name": "teng-lin/notebooklm-py",
-      "source_hash": "a38a209611cb3589d61c7661456afa806d13aac5c0318dc179f0bf07d7be585d",
-      "display_name_zh": "notebooklm-py｜非官方 Python API 与智能体技能",
-      "description_zh": "面向 Google Gemini Notebook 的非官方 Python API 与智能体技能，通过 Python、CLI 和 Claude Code、Codex、OpenClaw 等 AI 智能体，以编程方式完整访问 NotebookLM 功能，包括网页 UI 未开放的能力。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1129930192,
       "source_full_name": "ibelick/ui-skills",
       "source_hash": "9d2669d187b003b76cd2d549e1a6cb5591467f207a466fc1f679ec3224c92d47",
@@ -33797,15 +33779,6 @@
       "description_zh": "针对 Claude Code、Cursor 和 Codex 的反 AI 低质设计技能。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1223170290,
-      "source_full_name": "nexu-io/open-design",
-      "source_hash": "1d63e6d40019f4abb3e2f7c8a6a07163877c3cce985a8fe8da6eec9b2ec4f432",
-      "display_name_zh": "open-design｜开源本地优先设计应用",
-      "description_zh": "DeepSeek Harness 设计插件，开源版 Claude Design 替代方案。本地优先桌面应用，让编码智能体成为设计引擎：原型、落地页、仪表盘、幻灯片、图像与视频，输出真实文件并支持 HTML/PDF/PPTX/MP4 导出。通过 BYOK 接入 Claude Code、Codex、Cursor、DeepSeek Harness、OpenCode 等 20+ CLIs。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1223229944,
