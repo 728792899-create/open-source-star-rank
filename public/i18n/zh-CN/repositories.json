@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-14T05:33:50.502915Z",
+  "generated_at": "2026-10-14T16:14:13.021730Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4883,
-    "localized_count": 4843,
-    "pending_count": 40,
+    "localized_count": 4834,
+    "pending_count": 49,
     "failed_count": 40,
-    "coverage_ratio": 0.991808
+    "coverage_ratio": 0.989965
   },
   "repositories": [
     {
@@ -297,15 +297,6 @@
       "source_hash": "6f254130723eb17952d7d805fbcd6ebf1137fbe5ebd114c7b46539de15cc9f3b",
       "display_name_zh": "socket.io｜跨平台双向通信库",
       "description_zh": "socket.io 提供跨平台的双向低延迟通信。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 569041,
-      "source_full_name": "curl/curl",
-      "source_hash": "e657ab42ad372a66b133e5afd7aa3675274d2b7ce74dd88b9f9c9ca94d6fec2c",
-      "display_name_zh": "curl｜支持多协议的数据传输工具",
-      "description_zh": "curl 是一个命令行工具和库，支持使用 URL 语法传输数据，支持协议包括 DICT、FILE、FTP、FTPS、GOPHER、GOPHERS、HTTP、HTTPS、IMAP、IMAPS、LDAP、LDAPS、MQTT、MQTTS、POP3、POP3S、RTSP、SCP、SFTP、SMB、SMBS、SMTP、SMTPS、TELNET、TFTP、WS 和 WSS。",
       "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
     },
@@ -26545,15 +26536,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 993908952,
-      "source_full_name": "Lillecarl/nixkube",
-      "source_hash": "3ba6312db589d0c11fc0231a8b9d4033b5eaa27122467108de6d9ba2cc67e248",
-      "display_name_zh": "nixkube｜Kubernetes CSI 驱动",
-      "description_zh": "用于 Nixxing Kubernetes 的 CSI 驱动，详见 develop 分支！",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 994093166,
       "source_full_name": "omacom/omarchy",
       "source_hash": "59a4c5c54d55135cc75861f7e976fc08294641f5ea9daa6e342feaa437a6dab8",
@@ -31117,15 +31099,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1162099055,
-      "source_full_name": "Leonxlnx/taste-skill",
-      "source_hash": "21958dfb425b9f8902af952861617f0d76a65c6e0775fb4f0e17fad0829d4026",
-      "display_name_zh": "taste-skill｜提升AI内容品味技能",
-      "description_zh": "赋予AI良好品味，避免生成无聊和通用内容。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1162194563,
       "source_full_name": "ShinMegamiBoson/OpenPlanter",
       "source_hash": "446f56e241077eac50d60594d7b6991869cf8dcec5ec137688ed0ab5f1c17cba",
@@ -34348,15 +34321,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1239699520,
-      "source_full_name": "410979729/scope-recall-hermes",
-      "source_hash": "0c1f6815de1e2673f9e556a94a14629d493e3d82557af58e0f335c453c6f6807",
-      "display_name_zh": "scope-recall-hermes｜长期记忆工具",
-      "description_zh": "为 Hermes 和 Codex 提供长期记忆，支持本地存储、有来源依据的回忆，以及查看、修正或删除已记忆信息的工具。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1240183493,
       "source_full_name": "saeedkolivand/ai-job-hunter-app",
       "source_hash": "b7bc83a4d74d75bf0d883290006e29d0ae0e98fa10e9d89b1a35010e4d839689",
@@ -36013,15 +35977,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1278082400,
-      "source_full_name": "lemma-work/lemma-platform",
-      "source_hash": "3556b3a43d46f7521f38445f7099b492576deab88fbad003c9c86b1b2a873eee",
-      "display_name_zh": "lemma-platform｜人机协作工作空间",
-      "description_zh": "开源工作空间，让人类与 AI 智能体如同一支团队般协作。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1278312774,
       "source_full_name": "itsomg134/BodyDiet-Transform-Your-Plate",
       "source_hash": "fa7575935548af08244aa2d9295862fd7971c36aae5ada46d620547bd0fe5237",
@@ -36065,15 +36020,6 @@
       "description_zh": "修改 Apple 网络定位（gs-loc）返回坐标，支持 Surge、Quantumult X、Loon、Stash，提供快捷指令一键设置和恢复定位。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1278926400,
-      "source_full_name": "amplifthq/opentag",
-      "source_hash": "aa081ccc759ad13971b063378daf8b89fd8314445b2a35ea8f054a7556b765a4",
-      "display_name_zh": "opentag｜在协作工具中调用 ACP 编码智能体",
-      "description_zh": "在 Slack、GitHub、GitLab、Linear 或 Lark 中提及任意 ACP 编码智能体。OpenTag 在你自己的机器上运行 Claude Code、Codex、Cursor 等，并在话题中回复经过验证、有证据支撑的结果。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1279159149,
@@ -38146,15 +38092,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1302093382,
-      "source_full_name": "gakonst/nanocodex",
-      "source_hash": "a29595606a19374168e0502841dd29f4abd30e0543b47015647a035b13fbf4f4",
-      "display_name_zh": "nanocodex｜Rust 前沿 OpenAI 智能体构建块",
-      "description_zh": "用 Rust 构建前沿 OpenAI 智能体的构建块。Nanocodex 让你在任何地方都能获得 Codex 级性能。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1302120422,
       "source_full_name": "anes-laieb/codex-bar",
       "source_hash": "7f9159acce789ae07e4fd2667c4503aa209d9d60b3aa1c608cbe9b3281138b87",
@@ -39757,15 +39694,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1344908058,
-      "source_full_name": "fqgate/FQGate-agent",
-      "source_hash": "298bcd7eb211b0cb72e2950d3aba248d7741f754042f25b1624e91204db56125",
-      "display_name_zh": "FQGate｜AI 股票行情插件",
-      "description_zh": "同花顺免费开源 AI 插件 FQGate-agent（原插件名 tonghuasun-agent）：为 Codex、Claude Code、DeepSeek 等 AI 工具提供本机 A 股实时行情、K 线、Level-2、资讯、账户查询与可选交易能力。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1344968581,
       "source_full_name": "yizhiyanhua-ai/fireworks-open-eli5",
       "source_hash": "4818498846e0ccec618136d998c02aacc4f4e4b88b4894d58d7cd5356b1df247",
@@ -39880,15 +39808,6 @@
       "display_name_zh": "opensmash 工具",
       "description_zh": null,
       "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1345440309,
-      "source_full_name": "LuxAlgo/trade-journal",
-      "source_hash": "c0d879a537ec3f24701e8ffe79aecb960ab15bbf9bd090670d70f958569228fb",
-      "display_name_zh": "trade-journal｜开源交易日志",
-      "description_zh": "开源交易日志，支持券商同步、盈亏日历、深度分析与 AI 反思，可自托管，采用 MIT 许可。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
     {

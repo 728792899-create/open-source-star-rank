@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "taxonomy_version": "1.0.0",
-  "generated_at": "2026-10-13T16:16:10.726859Z",
+  "generated_at": "2026-10-14T16:14:15.832556Z",
   "repositories": [
     {
       "repository_id": 3314,
@@ -409,19 +409,6 @@
       "use_cases": [
         "api-backend",
         "mobile-cross-platform"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-18T05:32:12.135995Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 569041,
-      "source_full_name": "curl/curl",
-      "source_hash": "649cbdfb73f5d4b365b1caf399cf5d4a45e3800c4b6ccd79b33a580a1e38448d",
-      "primary_category": "developer-tools",
-      "project_type": "cli-developer-tool",
-      "use_cases": [
-        "general-tools"
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-18T05:32:12.135995Z",
@@ -43930,22 +43917,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1143312686,
-      "source_full_name": "Natively-AI-assistant/natively-cluely-ai-assistant",
-      "source_hash": "4d31237a87a3c0d2c270562eb3851e9d3cdf86bc3db1131fc443a4b0ad3a5e3c",
-      "primary_category": "ai-machine-learning",
-      "project_type": "application",
-      "use_cases": [
-        "agents-automation",
-        "rag-knowledge",
-        "privacy-local",
-        "team-collaboration"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-16T06:51:50.292861Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1144115288,
       "source_full_name": "manaflow-ai/cmux",
       "source_hash": "36b81ca800cf5655b420957aff9b9a1cee13070d3653db0e55160a2be0951b9c",
@@ -45020,19 +44991,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-24T04:00:32.535148Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1162099055,
-      "source_full_name": "Leonxlnx/taste-skill",
-      "source_hash": "3774e1a53cb57877c7d92faea2508bfbf32b3f52f9cfeafb91f3cb207cf9d792",
-      "primary_category": "ai-machine-learning",
-      "project_type": "library-framework",
-      "use_cases": [
-        "content-generation"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-16T06:51:50.292861Z",
       "provenance": "github_models"
     },
     {
@@ -46485,20 +46443,6 @@
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T03:58:39.338555Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1182082906,
-      "source_full_name": "Layr-Labs/d-inference",
-      "source_hash": "eadf7f89c046a7f58f4f065c5bf076819bdc888d1712a6a7c84d9623c1a6651c",
-      "primary_category": "ai-machine-learning",
-      "project_type": "platform-service",
-      "use_cases": [
-        "model-training-inference",
-        "privacy-local"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-10-01T06:39:08.584252Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1182180357,
@@ -49737,21 +49681,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1239699520,
-      "source_full_name": "410979729/scope-recall-hermes",
-      "source_hash": "7f05e79afda3d33420aee8396d84624ea3aa00cb1daae31398d9a8fa688f6eb4",
-      "primary_category": "ai-machine-learning",
-      "project_type": "plugin-extension",
-      "use_cases": [
-        "ai-coding",
-        "rag-knowledge",
-        "privacy-local"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-10-03T05:52:17.835370Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1240183493,
       "source_full_name": "saeedkolivand/ai-job-hunter-app",
       "source_hash": "f515589b18bd540d6ea4f74e74ad756fbffe26ed3779914d6e35b69395084c19",
@@ -52176,20 +52105,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1278082400,
-      "source_full_name": "lemma-work/lemma-platform",
-      "source_hash": "9809ee18f629ef39180ac9847c3a8773bbc2258d0cec3c2656db7c4cb661c144",
-      "primary_category": "productivity-collaboration",
-      "project_type": "platform-service",
-      "use_cases": [
-        "agents-automation",
-        "team-collaboration"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-10-01T06:39:08.584252Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1278312774,
       "source_full_name": "itsomg134/BodyDiet-Transform-Your-Plate",
       "source_hash": "1da9415eec9b741ee2c681fed741e6e4cfe5ffe661b00b8236752a4577909ef5",
@@ -52257,21 +52172,6 @@
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-17T03:58:39.338555Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1278926400,
-      "source_full_name": "amplifthq/opentag",
-      "source_hash": "f3be84681e272e8de24e0cff7ed311492ce5f84286de902c2816c865a7c90fd9",
-      "primary_category": "developer-tools",
-      "project_type": "platform-service",
-      "use_cases": [
-        "ai-coding",
-        "agents-automation",
-        "team-collaboration"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-09-24T04:30:45.978519Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1279159149,
@@ -55409,20 +55309,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1302093382,
-      "source_full_name": "gakonst/nanocodex",
-      "source_hash": "e6ab0208aa71bd38589c33caa0f3477776ebc2f70628373ccf0461097479538f",
-      "primary_category": "ai-machine-learning",
-      "project_type": "library-framework",
-      "use_cases": [
-        "ai-coding",
-        "agents-automation"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-10-01T06:39:08.584252Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1302120422,
       "source_full_name": "anes-laieb/codex-bar",
       "source_hash": "178829f0433c62e5881053146c2ca44b9674d8aefa6a1decdf065aafa0537f6a",
@@ -57334,20 +57220,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1344908058,
-      "source_full_name": "fqgate/FQGate-agent",
-      "source_hash": "89898a476c4dfddef6c32f6059e70ef9c554999a13bdb893358765ee2470d125",
-      "primary_category": "industry-solutions",
-      "project_type": "plugin-extension",
-      "use_cases": [
-        "agents-automation",
-        "finance-trading"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-10-07T06:38:45.425242Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1344968581,
       "source_full_name": "yizhiyanhua-ai/fireworks-open-eli5",
       "source_hash": "709fd38ec6e7ffa75c1a693eb787851d63f75d51955d5edb8edcde2f361e4692",
@@ -59042,21 +58914,6 @@
       "use_cases": [
         "image-video-audio",
         "personal-productivity"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-10-01T06:39:08.584252Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1363745503,
-      "source_full_name": "yjz211/vivid-figures-skill",
-      "source_hash": "f36f4dede4c2462a580a3ac1454914144e5e32cfa5d01cbbf86d66801310f1b3",
-      "primary_category": "science-research",
-      "project_type": "plugin-extension",
-      "use_cases": [
-        "data-analysis-visualization",
-        "content-generation",
-        "scientific-research"
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-10-01T06:39:08.584252Z",
