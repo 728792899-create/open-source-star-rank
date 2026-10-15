@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-15T05:21:48.421820Z",
+  "generated_at": "2026-10-15T16:11:41.919640Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4883,
-    "localized_count": 4834,
-    "pending_count": 49,
+    "localized_count": 4828,
+    "pending_count": 55,
     "failed_count": 49,
-    "coverage_ratio": 0.989965
+    "coverage_ratio": 0.988736
   },
   "repositories": [
     {
@@ -596,15 +596,6 @@
       "description_zh": "神经网络、深度学习和机器学习模型的可视化工具。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1204412,
-      "source_full_name": "TrinityCore/TrinityCore",
-      "source_hash": "d4e67b1e6a9388213d5a0d30e92b7b8188cf74c2a647a2d9b87c720444ee65dd",
-      "display_name_zh": "TrinityCore｜开源 MMO 服务器框架",
-      "description_zh": "TrinityCore 是一个开源 MMO 框架，支持 master 12.1.0.69933、3.3.5 和 cata classic 4.4.2.60895 等版本。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1212922,
@@ -20929,15 +20920,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 698663431,
-      "source_full_name": "berylliumsec/nebula",
-      "source_hash": "ae3be4295df23e88a118d8e53f07bfc6bf46f97d074ae9c95f49e37603acfe46",
-      "display_name_zh": "nebula｜AI 渗透测试助手",
-      "description_zh": "AI 驱动的渗透测试助手，用于自动化信息收集、笔记记录和漏洞分析。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 699532645,
       "source_full_name": "astral-sh/uv",
       "source_hash": "39a51886debad460266796efaf62469a489b27bb7ba19af9a7af65f6ec655337",
@@ -24106,15 +24088,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 881458615,
-      "source_full_name": "browser-use/browser-use",
-      "source_hash": "cbb7e328137ba909f6230de6173f63b34d0a040f67e66f008810f6055700f7c9",
-      "display_name_zh": "browser-use｜浏览器智能体",
-      "description_zh": "使用浏览器的智能体。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 881804112,
       "source_full_name": "xixu-me/xget",
       "source_hash": "823de5bed1afd82f58195e5d11b246a82aaadfe6f3f12a55b8f7d6e470ec3804",
@@ -25741,15 +25714,6 @@
       "display_name_zh": "animate-ui｜基于CSS和CLI的全动画组件库",
       "description_zh": "基于React、TypeScript、Tailwind CSS、Motion和Shadcn CLI构建的全动画开源组件库。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 955620917,
-      "source_full_name": "upstash/context7",
-      "source_hash": "429fd7b71f6203c1c96575622ecc645a431dca9b5ec6811e7b17945c3fe6b0cf",
-      "display_name_zh": "context7｜Context7 LLMs 与 AI 代码编辑器文档平台",
-      "description_zh": "Context7 平台，提供最新的 LLMs 和 AI 代码编辑器文档。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
     },
     {
@@ -29936,15 +29900,6 @@
       "description_zh": "ShapeR研究论文相关代码。",
       "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1134426800,
-      "source_full_name": "sickn33/agentic-awesome-skills",
-      "source_hash": "cd4af7dfc8569cad7fdbfbfaec341e45e95ce9340773ce78ae344db8ab88e30c",
-      "display_name_zh": "AAS Core｜智能体技能控制平面",
-      "description_zh": "AAS Core 是本地、智能体优先的控制平面，用于完整目录发现、智能体自主选择、技术栈验证与规划，背后有 2,400+ 智能体技能，包含 CLI、本地 MCP、目录、插件与 Workbench。",
-      "generated_at": "2026-09-28T06:01:47.380329Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1134543109,
@@ -41085,15 +41040,6 @@
       "source_hash": "bdc9b7a4bb10939bc46a3efaf786d902c73557114bb649d301feb0dcae759538",
       "display_name_zh": "bot-crossing｜AI 智能体游戏",
       "description_zh": "一款面向 AI 智能体的电子游戏，由 Jarren Rocks 创作。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1354022484,
-      "source_full_name": "coleam00/ai-software-factory",
-      "source_hash": "042b2e1e0f31cb71b337f6e992d9c66cc75cfaee7f4dd952fa38580bddb0b1ba",
-      "display_name_zh": "ai-software-factory｜自动化代码交付流水线",
-      "description_zh": "一个无需人工阅读 diff 即可交付的仓库：输入 GitHub issue，输出已合并的 pull request，并配有使该流程站得住脚的关卡。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
