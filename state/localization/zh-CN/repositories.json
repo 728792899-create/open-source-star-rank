@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-16T05:13:26.992743Z",
+  "generated_at": "2026-10-16T16:12:32.528738Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4883,
-    "localized_count": 4882,
-    "pending_count": 1,
+    "localized_count": 4877,
+    "pending_count": 6,
     "failed_count": 1,
-    "coverage_ratio": 0.999795
+    "coverage_ratio": 0.998771
   },
   "repositories": [
     {
@@ -22243,15 +22243,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 769023213,
-      "source_full_name": "get-convex/convex-backend",
-      "source_hash": "501b113eb9a1773ff6f1c0e7237efb06bc4b1b04b59a370d98cd76a857d78e7f",
-      "display_name_zh": "convex-backend｜开源响应式数据库",
-      "description_zh": "convex-backend 是一个面向应用开发者的开源响应式数据库。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 769189766,
       "source_full_name": "rolldown/tsdown",
       "source_hash": "649b4a61bf5e338f4b567cb10c31def8b4f9d4af45ad7ecc029db629c617197e",
@@ -25807,15 +25798,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 953521037,
-      "source_full_name": "DayuanJiang/next-ai-draw-io",
-      "source_hash": "242f1af7c376ec89c2ae47c5e7fedeb0e8a958a7ef06a851f1aa4d0caf7644fa",
-      "display_name_zh": "next-ai-draw-io｜集成 AI 的 draw.io 图表应用",
-      "description_zh": "基于 next.js 的 Web 应用，集成 AI 功能与 draw.io 图表，支持通过自然语言命令创建、修改和增强图表。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 953683578,
       "source_full_name": "oraios/serena",
       "source_hash": "18a785aad00a4b9033b0cc6d7017b4e221300b71cbc275423cf2bbad3bf68091",
@@ -29119,15 +29101,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1106663535,
-      "source_full_name": "Anionex/banana-slides",
-      "source_hash": "c2c2153e957b8fc1b2805f6a610be191f33e87d19191543079758841608ed815",
-      "display_name_zh": "banana-slides｜AI PPT 生成应用",
-      "description_zh": "一站式原生 AI PPT 生成应用，几分钟内生成一套幻灯片；支持上传任意模板图片与素材并智能解析，通过一句话、大纲或页面描述自动生成 PPT，可口头修改指定区域，一键导出可编辑 PPT、视频等。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1106996539,
       "source_full_name": "nextlevelbuilder/ui-ux-pro-max-skill",
       "source_hash": "49a92f600bd73fb110e7aec7820d0a352c2a96cbc99ba375fe4bef2e5b85a606",
@@ -31438,15 +31411,6 @@
       "display_name_zh": "freecode｜免费微型Claude Code实现",
       "description_zh": "免费提供的微型和纳米级Claude Code实现。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1166102148,
-      "source_full_name": "DeusData/codebase-memory-mcp",
-      "source_hash": "5ad24cbfffbf7b8081e4319742b1594b625b80c5a5b676b198cdd71b8ebc3785",
-      "display_name_zh": "codebase-memory-mcp｜高性能代码智能MCP服务器（含MCP、158、99%）",
-      "description_zh": "高性能代码智能MCP服务器，将代码库索引为持久知识图谱，支持158种语言，查询延迟亚毫秒，令牌使用减少99%，单一静态二进制文件，无依赖。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
     },
     {
@@ -34130,15 +34094,6 @@
       "description_zh": "官方Agnes AI网关及模型目录，支持OpenAI兼容的文本、图像、视频和智能体工作流。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1225384093,
-      "source_full_name": "ucxn/ZTE-Stat_Max",
-      "source_hash": "14ad768314f0de7a63ad8f564631419adcd2f92543b1210b091928853fbbb89a",
-      "display_name_zh": "ZTE-Stat_Max｜中兴路由器 Web UI 增强插件",
-      "description_zh": "中兴路由器 Web UI 增强插件，已验证星云 MAX 全屋 2.5G 有线主路由与 BE WiFi 7 全系。支持上下行网速监控、流量与比值统计、抓出 P2P 偷上行，支持 1000/1024 进制、Mbps/GiB、数学分析及 LAN/WAN 内网公网对比，设备列表平铺化与大屏可视化。",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1225427837,
