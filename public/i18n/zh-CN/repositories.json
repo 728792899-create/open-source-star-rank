@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-17T05:08:04.924337Z",
+  "generated_at": "2026-10-17T16:14:59.549141Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4883,
-    "localized_count": 4877,
-    "pending_count": 6,
+    "localized_count": 4871,
+    "pending_count": 12,
     "failed_count": 6,
-    "coverage_ratio": 0.998771
+    "coverage_ratio": 0.997542
   },
   "repositories": [
     {
@@ -18022,15 +18022,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 551376520,
-      "source_full_name": "tw93/Pake",
-      "source_hash": "0f1425b41e919d25bfc9743d3765f86206ea64750d8ab117f8f6fb35c0234756",
-      "display_name_zh": "Pake｜网站转桌面应用工具",
-      "description_zh": "把任何网站变成小巧、快速的桌面应用。",
-      "generated_at": "2026-10-16T05:13:26.992743Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 551550787,
       "source_full_name": "Sharrnah/whispering",
       "source_hash": "760290a863fa6f6aebef3cef5fe30a3e630c3d1f3d15255ad5a0ab8aa621f823",
@@ -32044,15 +32035,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1178494429,
-      "source_full_name": "h5i-dev/h5i",
-      "source_hash": "4b468402d8ce8a306ce124d5c5765b4f93d0bab8fcbeef13d445d97213647407",
-      "display_name_zh": "h5i｜代理原生 Web 安全工作站",
-      "description_zh": "一个代理原生的 Web 安全工作站：通过红队测试发现漏洞，并在 Lean 4 中形式化验证 Rust 代码的属性。",
-      "generated_at": "2026-10-03T05:52:11.665549Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1178583507,
       "source_full_name": "dylan-sutton-chavez/edge-python",
       "source_hash": "7e4673c7292830674c0c74ed2fc50db1926421334237e839b05989b5869e1801",
@@ -32428,15 +32410,6 @@
       "display_name_zh": "TeamClu｜AI Agent 桌面工作区",
       "description_zh": "TeamClu，一个 AI Agent 桌面工作区。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1183888342,
-      "source_full_name": "stablyai/orca",
-      "source_hash": "6b708e8a6a5ac7d668986a973e5f98bd774fb728324736de16dff5583259cd89",
-      "display_name_zh": "orca｜并行代理 ADE",
-      "description_zh": "Orca 是用于管理并行代理集群的 ADE。可使用自己的订阅运行任意编码代理，支持桌面、移动和远程运行时。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
       "provenance": "model_api"
     },
     {
@@ -40072,15 +40045,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1345418172,
-      "source_full_name": "omaekumiko2-create/kru",
-      "source_hash": "cb1a614a997dbd63a9bb742888afface26e8b7cd572d3d0819b800152c0fa037",
-      "display_name_zh": "kru｜本地优先 MCP 凭据管理器",
-      "description_zh": "面向 AI 智能体的本地优先 MCP 密码与凭据管理器。可使用密码、API 密钥、SSH 身份和 TOTP，而不会向模型暴露隐藏的明文。",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1345425753,
       "source_full_name": "turtlesoupy/opensmash",
       "source_hash": "91b341d7c59245a685c3e410bb00ac2958320522133e30ad42f13b60b0cc2ae3",
@@ -41683,15 +41647,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1356154557,
-      "source_full_name": "CangShui/workbuddy-gateway",
-      "source_hash": "edce2cedb70ef46a4758d10434974ad97a5f27b5b4c45eaa0a3025457ae4724a",
-      "display_name_zh": "workbuddy-gateway｜CodeBuddy 账号池网关",
-      "description_zh": "用 Go 语言编写的腾讯 CodeBuddy 账号池纯 CLI/Web 管理控制台，以及 OpenAI 兼容反向代理网关。",
-      "generated_at": "2026-10-08T07:04:07.521126Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1356156490,
       "source_full_name": "chigwell/Penelopa.ai",
       "source_hash": "607b78c37625281970f295f74ac03892c496c2a76dc39962981dc19930213af1",
@@ -42787,15 +42742,6 @@
       "display_name_zh": "iphone-duo｜iPhone Duo 折叠动画",
       "description_zh": "交互式 iPhone Duo 折叠动画，带投影屏幕 UI、渐进模糊与自定义图片上传，使用 Three.js 构建。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1363745503,
-      "source_full_name": "yjz211/vivid-figures-skill",
-      "source_hash": "f9b25bd05194d48f09b6e01a91163e677047acf8ee0c1578044ca8fd62109f28",
-      "display_name_zh": "vivid-figures-skill｜AI 科研图表生成",
-      "description_zh": "让 AI 用你的数据生成科研图表：108 个配方，鲜艳与稳重两种风格，多套配色，交付图片与源码。仅限个人非商业使用。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
     {
