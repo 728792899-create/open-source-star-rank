@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-17T16:14:59.549141Z",
+  "generated_at": "2026-10-18T05:14:20.638826Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4883,
     "localized_count": 4871,
     "pending_count": 12,
-    "failed_count": 6,
+    "failed_count": 12,
     "coverage_ratio": 0.997542
   },
   "repositories": [
@@ -43853,11 +43853,17 @@
     }
   ],
   "failed_repository_ids": [
+    551376520,
     769023213,
     953521037,
     1106663535,
     1166102148,
+    1178494429,
+    1183888342,
     1225384093,
-    1351626350
+    1345418172,
+    1351626350,
+    1356154557,
+    1363745503
   ]
 }
