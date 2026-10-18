@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-18T05:14:20.638826Z",
+  "generated_at": "2026-10-18T16:14:40.924308Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4883,
-    "localized_count": 4871,
-    "pending_count": 12,
+    "localized_count": 4863,
+    "pending_count": 20,
     "failed_count": 12,
-    "coverage_ratio": 0.997542
+    "coverage_ratio": 0.995904
   },
   "repositories": [
     {
@@ -16285,15 +16285,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 436297812,
-      "source_full_name": "usememos/memos",
-      "source_hash": "57b1de610b9e5421d90e9a4a7c952500e8ddb18ee35fe6ebbe432ce6c0e71366",
-      "display_name_zh": "memos｜个人时间线速记工具",
-      "description_zh": "一个用于快速记录的个人时间线工具。写下简短备忘录，之后可通过搜索、标签或日期找回。开源且可自托管。",
-      "generated_at": "2026-09-29T06:19:55.816330Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 436466520,
       "source_full_name": "rilldata/rill",
       "source_hash": "1c5dd9fc06766a488be45b4e2fe28a673ee13f5c4ad0ac77484be1919690c07b",
@@ -23998,15 +23989,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 872119017,
-      "source_full_name": "D4Vinci/Scrapling",
-      "source_hash": "9a4095536cdea3b4c95e6a456c38bb673af8c1642cde2c127461f1b4faf65bc8",
-      "display_name_zh": "Scrapling｜自适应网页抓取框架",
-      "description_zh": "一个自适应网页抓取框架，可处理从单次请求到大规模爬取的各种任务。欢迎加入 https://discord.gg/EMgGbDceNQ 并关注获取每日技巧。",
-      "generated_at": "2026-09-29T06:19:55.816330Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 872272362,
       "source_full_name": "ChHsiching/GitHub-Chinese-Top-Charts",
       "source_hash": "d35d805c9324136b4b1b99243247132e988128246cf6868826a5608338d4f606",
@@ -25111,15 +25093,6 @@
       "display_name_zh": "read｜轻阅读应用 517034064",
       "description_zh": "轻阅读是一款全移动端支持多端同步阅读进度的阅读应用，适配各种屏幕尺寸。后端搭建视频教程见用户517034064。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 925270205,
-      "source_full_name": "trycua/cua",
-      "source_hash": "495e235fb9dc8c595336a4276494dbb78739b43f041425e3cce2343f48d35a50",
-      "display_name_zh": "cua｜跨OS的计算使用规模2.0平台",
-      "description_zh": "基于开源驱动和跨操作系统（OS）集群，支持训练、评估及数据生成的计算使用规模2.0平台。",
-      "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
     },
     {
@@ -33952,15 +33925,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1223170290,
-      "source_full_name": "nexu-io/open-design",
-      "source_hash": "ae0f0558f041859d91e3b07fe38edf8aebaee8434e4bb56a048cbc04d513ce3c",
-      "display_name_zh": "open-design｜协作式 AI 设计智能体工作区",
-      "description_zh": "首个协作式 AI 设计智能体工作区，本地优先且开源，可与团队和 AI 智能体共同创建原型、网站、应用、仪表盘、演示文稿、图像和视频，并在同一工作区分享、反馈与迭代。",
-      "generated_at": "2026-10-16T05:13:26.992743Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1223229944,
       "source_full_name": "ESI-Bench/ESI-Bench",
       "source_hash": "f960e0b7e4fc744d0869b44cb9fe43280a731ada9ff26019f7ea3f316c5201e7",
@@ -40351,15 +40315,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1347104725,
-      "source_full_name": "Tencent/ContextPilot",
-      "source_hash": "14c02944390fb415ba1a253838edd7743a8083fab9374ef8876674d031e123b0",
-      "display_name_zh": "ContextPilot｜上下文导航工具",
-      "description_zh": null,
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1347113909,
       "source_full_name": "GENEXIS-AI/gpt-image-skill",
       "source_hash": "acee28872ce9e99b964f25f5034b403814f73af80a366b022c054eb2e40f3650",
@@ -40986,15 +40941,6 @@
       "source_hash": "d3e9fede2b41a2b6512f273b5b82cd5bd35edcce5020c3c31cf958a580b8e096",
       "display_name_zh": "AI 短剧生产总控",
       "description_zh": "AI 短剧生产总控 / 短剧 skill：专业导演与分镜、MiniMax H3、CompShare、声音资产、粗剪与 QC，默认 16:9。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1351518263,
-      "source_full_name": "khromov/gpuix-svelte",
-      "source_hash": "b393fce4c969cc6b4267d56d776d187bee9d967d30e5c36e03d52c2623861984",
-      "display_name_zh": "gpuix-svelte｜GPUI 的 Svelte 渲染器",
-      "description_zh": "通过 @gpuix/native 为 GPUI（Zed 的 GPU 加速 UI 框架）提供 Svelte 自定义渲染器。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
@@ -41737,15 +41683,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1356918624,
-      "source_full_name": "Apeireth/Apeireth",
-      "source_hash": "97e26e4446dc5ddf381dfe7eb7ffc52a8523f41a4e40866e471a3b2085d00bf0",
-      "display_name_zh": "Apeireth｜纯安全 Rust AGI 操作系统",
-      "description_zh": "Apeireth 是纯安全 Rust 编写的 AGI 操作系统与认知微内核，包含 18 个 crate：连续拓扑记忆、因果世界模型、认知调度器、Ember HUD、三重洋葱安全与便携 USB 智能体。",
-      "generated_at": "2026-09-28T06:01:47.380329Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1356960006,
       "source_full_name": "Sreehari05055/thesys-core",
       "source_hash": "142beb792697d475a9f89778a94ddceda9d3c63e60ff8bc937e611f1d8dabaa6",
@@ -42004,15 +41941,6 @@
       "display_name_zh": "mador｜让任意 DOM 响应式",
       "description_zh": "让任意 DOM 变为响应式。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1358286075,
-      "source_full_name": "fidetolabs/qanat",
-      "source_hash": "3298ee67d2c8c576039c573e47e20af77ffd5578ecf70d52c66c07a3544b08f4",
-      "display_name_zh": "qanat｜财报估值指标 MCP 服务器",
-      "description_zh": "一个 MCP 服务器，将财报与价格数据转化为估值指标，并在各自行业内进行检验，可接入智能体后直接提问。",
-      "generated_at": "2026-10-16T05:13:26.992743Z",
       "provenance": "model_api"
     },
     {
