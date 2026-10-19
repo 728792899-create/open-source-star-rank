@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-19T07:12:11.809153Z",
+  "generated_at": "2026-10-19T16:12:34.170944Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4880,
-    "localized_count": 4852,
-    "pending_count": 28,
+    "localized_count": 4849,
+    "pending_count": 31,
     "failed_count": 20,
-    "coverage_ratio": 0.994262
+    "coverage_ratio": 0.993648
   },
   "repositories": [
     {
@@ -14719,15 +14719,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 332880689,
-      "source_full_name": "coollabsio/coolify",
-      "source_hash": "36f50ccbc55b15cb42ca4b9a28e52d7bd443ebec3a12fd4bd437843043139435",
-      "display_name_zh": "coolify｜自托管 PaaS 平台",
-      "description_zh": "coolify 是一款开源自托管的 PaaS 平台，支持部署静态网站、数据库、全栈应用及 280 多种一键服务。",
-      "generated_at": "2026-07-17T00:57:38.909807Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 333303663,
       "source_full_name": "bytebase/bytebase",
       "source_hash": "3f6eec832d1cc621d78ab4faf8ed7dd336c2578c5333ee8d7eea5b31f00b9b8c",
@@ -18298,15 +18289,6 @@
       "display_name_zh": "prompts.chat｜ChatGPT提示共享平台",
       "description_zh": "prompts.chat 社区共享和收集ChatGPT提示，支持自托管和隐私保护。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 575321313,
-      "source_full_name": "langbot-app/LangBot",
-      "source_hash": "ead5e0e67e2463243f0429853f75ca6fd10682e5fa4fabf4e2642c6e7b4e73ef",
-      "display_name_zh": "LangBot｜多平台智能IM机器人开发平台",
-      "description_zh": "LangBot 生产级多平台智能IM机器人开发平台，支持LINE、QQ等，集成GPT和GLM等模型",
-      "generated_at": "2026-07-20T18:28:18.246753Z",
       "provenance": "github_models"
     },
     {
@@ -32788,15 +32770,6 @@
       "display_name_zh": "codex-plugin-cc｜在 Claude Code 中使用 Codex",
       "description_zh": "在 Claude Code 中使用 Codex 审查代码或委派任务。",
       "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1196447493,
-      "source_full_name": "google/ax",
-      "source_hash": "c154321a322e84fb1b397552277810521db5180521ce08b15b071d5ac125f767",
-      "display_name_zh": "ax｜智能体编排运行时",
-      "description_zh": "Google 开源的智能体编排运行时。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
       "provenance": "model_api"
     },
     {
