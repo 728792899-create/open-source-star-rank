@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-19T05:26:28.272378Z",
+  "generated_at": "2026-10-19T07:12:11.809153Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
-    "eligible_count": 4883,
-    "localized_count": 4863,
-    "pending_count": 20,
+    "eligible_count": 4880,
+    "localized_count": 4852,
+    "pending_count": 28,
     "failed_count": 20,
-    "coverage_ratio": 0.995904
+    "coverage_ratio": 0.994262
   },
   "repositories": [
     {
@@ -6781,15 +6781,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 64558143,
-      "source_full_name": "Blankj/AndroidUtilCode",
-      "source_hash": "97c0a104e3626121c45acdc218adb585ef65d4291cf96e2867d270a00bb97589",
-      "display_name_zh": "AndroidUtilCode｜Android 工具集",
-      "description_zh": "Android 开发者常用的工具集（持续更新中）。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 64747222,
       "source_full_name": "ucatal/awesome-ielts",
       "source_hash": "9e02762c655adf474f8d7c188c2fb7327397e5cbb8ba513c101007611448fb10",
@@ -8194,15 +8185,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 92807616,
-      "source_full_name": "byoungd/up",
-      "source_hash": "40528924fe4e8edc6b69b11ca88bbc5349127ee494bbf3d417de1ff4587d8653",
-      "display_name_zh": "up｜人生进阶与 AI 学习指南",
-      "description_zh": "韩先凯的人生进阶指南，涵盖人生进阶、英语学习、离谱的人生，以及 AI 时代的终身学习：AI、学习、创业与成长。",
-      "generated_at": "2026-10-16T05:13:26.992743Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 93324141,
       "source_full_name": "FouadRaheb/Watusi-for-WhatsApp",
       "source_hash": "2ba96897b990ad64f68eee1bcc03d1cf4fd7190d86b5eb47c9159c5531ac34c4",
@@ -9200,15 +9182,6 @@
       "description_zh": ".NET 文档参考示例代码",
       "generated_at": "2026-07-20T04:28:39.695110Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 119811010,
-      "source_full_name": "tabler/tabler",
-      "source_hash": "5daa0daffbf56e7bcca5b58c8e333b3ab4a194a439ba549bf09c5fbe06327efe",
-      "display_name_zh": "tabler｜开源后台管理 UI 套件",
-      "description_zh": "基于 Bootstrap 的开源后台管理 UI 套件：100+ 页面、5,000+ 图标、深色模式、RTL。",
-      "generated_at": "2026-10-16T05:13:26.992743Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 119907244,
@@ -10847,15 +10820,6 @@
       "description_zh": "gradio 是一个用 Python 构建和分享机器学习应用的工具。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 162723104,
-      "source_full_name": "OWASP/CheatSheetSeries",
-      "source_hash": "293a2b9539091b1face82dbc01acac369752a6e4db054d2504da4753eb4365f6",
-      "display_name_zh": "OWASP｜Cheat Sheet 系列",
-      "description_zh": "OWASP Cheat Sheet 系列旨在针对特定应用安全主题提供简明的高价值信息集合。",
-      "generated_at": "2026-10-06T06:57:21.125643Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 162998479,
@@ -13144,15 +13108,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 254832799,
-      "source_full_name": "Z4nzu/hackingtool",
-      "source_hash": "1c0e6520ce2f12a1a9cf90af069870a5f407ed013d5b0ec36c74a81f146e93df",
-      "display_name_zh": "hackingtool｜ALL IN ONE 黑客工具",
-      "description_zh": "ALL IN ONE 黑客工具集合。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 255125425,
       "source_full_name": "hebcal/hebcal-es6",
       "source_hash": "42a85798ef6d943761f496401feef68c7c14a2d8d5358d0408ada24e72b1d1b3",
@@ -13707,15 +13662,6 @@
       "source_hash": "2a66a159f734211c1176a627ff9cce45243cb105f9d1e4a99d6c1fefbc2d9e94",
       "display_name_zh": "github-readme-stats｜动态GitHub统计数据生成器",
       "description_zh": "动态生成GitHub个人资料统计数据。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 278772719,
-      "source_full_name": "vbenjs/vue-vben-admin",
-      "source_hash": "5b08b30f11a84545b6d521b0eeac7f8eb57134df9b2f1e54d91d2b0234a782ec",
-      "display_name_zh": "vue-vben-admin｜基于Vue3和UI的现代管理面板",
-      "description_zh": "基于Vue3和Shadcn UI构建的现代化管理面板，使用Vite和TypeScript，支持Monorepo。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
@@ -14815,15 +14761,6 @@
       "display_name_zh": "dataease｜开源 BI 工具",
       "description_zh": "dataease 是一款人人可用的开源 BI 工具，支持数据可视化，是 Tableau 的替代方案。",
       "generated_at": "2026-07-17T00:57:38.909807Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 335243209,
-      "source_full_name": "anoma/anoma",
-      "source_hash": "369d7717b58d464538e912ef3656f18f047dcfb2acaa5f202e2ea1c989031b7b",
-      "display_name_zh": "anoma｜Anoma 参考实现",
-      "description_zh": "Anoma 的参考实现。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
     {
@@ -19975,15 +19912,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 652712035,
-      "source_full_name": "lyogavin/airllm",
-      "source_hash": "4c4e6b5085c6efeadba17394db94ae30bc32a2fd3bc0fd562a7a3747349789a2",
-      "display_name_zh": "airllm｜AirLLM 70B 单4GB GPU推理",
-      "description_zh": "支持单个4GB显存GPU进行AirLLM 70B模型推理",
-      "generated_at": "2026-07-19T07:03:48.394229Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 652831029,
       "source_full_name": "Polymarket/neg-risk-ctf-adapter",
       "source_hash": "76765aa672709446ca10e661285e09b4aaf84cbe916220013a24f96449d437bc",
@@ -20380,15 +20308,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 668195240,
-      "source_full_name": "pathwaycom/llm-app",
-      "source_hash": "41f0fba41a8b6fd5d96f24befaf3a870d9086354d3d0ef30d372718596523b60",
-      "display_name_zh": "llm-app｜支持RAG和AI的实时数据云模板，兼容S3和多种APIs",
-      "description_zh": "支持RAG、AI流水线和企业搜索的即用型云模板，兼容Docker，实时同步Sharepoint、Google Drive、S3、Kafka、PostgreSQL及多种实时数据API。",
-      "generated_at": "2026-07-26T04:19:47.755665Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 668225190,
       "source_full_name": "aiktb/furiganamaker",
       "source_hash": "dadfd3282505695ddaa3ad8fc0999a5c646feb8c4d221e5656a4153b2a0cf869",
@@ -20612,15 +20531,6 @@
       "description_zh": "Solus 软件包单体仓库与问题追踪。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
       "provenance": "model_api"
-    },
-    {
-      "repository_id": 679237742,
-      "source_full_name": "Pythagora-io/gpt-pilot",
-      "source_hash": "52abd9dc09e329db7af5be7b4b725148497b8cc8a6799f7390b8f859909f4800",
-      "display_name_zh": "gpt-pilot｜AI开发助手",
-      "description_zh": "首个真实的AI开发者",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
-      "provenance": "github_models"
     },
     {
       "repository_id": 679280065,
@@ -30980,15 +30890,6 @@
       "description_zh": "用于 Playwright 的惯用 Clojure 封装，支持浏览器自动化、API 测试、Allure 报告和原生 CLI，兼容 Chromium、Firefox 和 WebKit。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1157102282,
-      "source_full_name": "diegosouzapw/OmniRoute",
-      "source_hash": "dfed7df1497b736fe18350483515be2a2ad3275d7402c4b82529ceb7020e3c81",
-      "display_name_zh": "OmniRoute｜AI 网关",
-      "description_zh": "MIT 许可的 AI 网关：单一端点接入 359 家提供商（150+ 免费）、1200+ 模型，涵盖 Kimi、Claude、GPT、Gemini、GLM、DeepSeek、MiniMax，兼容 Claude Code、Codex、Cursor、OpenCode、Cline 与 Copilot；支持配额感知自动回退，RTK+Caveman 压缩可节省 15-95% token，提供 MCP/A2A 与桌面/PWA 端。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1157122048,
