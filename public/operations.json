@@ -27,22 +27,22 @@
   },
   "enrichment": {
     "translation": {
-      "generated_at": "2026-10-19T16:12:34.170944Z",
+      "generated_at": "2026-10-20T05:28:14.382799Z",
       "coverage": {
         "eligible_count": 4880,
         "localized_count": 4849,
         "pending_count": 31,
-        "failed_count": 20,
+        "failed_count": 31,
         "coverage_ratio": 0.993648
       }
     },
     "classification": {
-      "generated_at": "2026-10-19T16:12:38.193042Z",
+      "generated_at": "2026-10-20T05:28:18.326966Z",
       "coverage": {
         "eligible_count": 4880,
         "classified_count": 4434,
         "pending_count": 446,
-        "failed_count": 420,
+        "failed_count": 436,
         "coverage_ratio": 0.908607
       }
     }
@@ -50,15 +50,27 @@
   "enrichment_runs": {
     "localization": {
       "version": 1,
-      "id": "016c52a14c804dfa83be97976fcfc015",
+      "id": "45e9fdd592924220859c3e4c0babfc9f",
       "kind": "localization",
-      "started_at": "2026-10-19T05:26:28.272378Z",
-      "finished_at": "2026-10-19T05:26:29.525963+00:00",
+      "started_at": "2026-10-20T05:28:14.382799Z",
+      "finished_at": "2026-10-20T05:28:15.563335+00:00",
       "model": "deepseek-flash",
       "attempted_projects": 20,
       "accepted_projects": 0,
       "failed_projects": 20,
       "failures": [
+        {
+          "repository_id": 92807616,
+          "reason": "provider_http"
+        },
+        {
+          "repository_id": 119811010,
+          "reason": "provider_http"
+        },
+        {
+          "repository_id": 332880689,
+          "reason": "provider_http"
+        },
         {
           "repository_id": 436297812,
           "reason": "provider_http"
@@ -68,11 +80,23 @@
           "reason": "provider_http"
         },
         {
-          "repository_id": 769023213,
+          "repository_id": 575321313,
+          "reason": "provider_http"
+        },
+        {
+          "repository_id": 652712035,
+          "reason": "provider_http"
+        },
+        {
+          "repository_id": 668195240,
           "reason": "provider_http"
         },
         {
           "repository_id": 872119017,
+          "reason": "provider_http"
+        },
+        {
+          "repository_id": 917868934,
           "reason": "provider_http"
         },
         {
@@ -84,7 +108,7 @@
           "reason": "provider_http"
         },
         {
-          "repository_id": 1106663535,
+          "repository_id": 1157102282,
           "reason": "provider_http"
         },
         {
@@ -96,7 +120,15 @@
           "reason": "provider_http"
         },
         {
+          "repository_id": 1180325220,
+          "reason": "provider_http"
+        },
+        {
           "repository_id": 1183888342,
+          "reason": "provider_http"
+        },
+        {
+          "repository_id": 1196447493,
           "reason": "provider_http"
         },
         {
@@ -104,39 +136,7 @@
           "reason": "provider_http"
         },
         {
-          "repository_id": 1225384093,
-          "reason": "provider_http"
-        },
-        {
-          "repository_id": 1345418172,
-          "reason": "provider_http"
-        },
-        {
-          "repository_id": 1347104725,
-          "reason": "provider_http"
-        },
-        {
-          "repository_id": 1351518263,
-          "reason": "provider_http"
-        },
-        {
-          "repository_id": 1351626350,
-          "reason": "provider_http"
-        },
-        {
-          "repository_id": 1356154557,
-          "reason": "provider_http"
-        },
-        {
-          "repository_id": 1356918624,
-          "reason": "provider_http"
-        },
-        {
-          "repository_id": 1358286075,
-          "reason": "provider_http"
-        },
-        {
-          "repository_id": 1363745503,
+          "repository_id": 1322250666,
           "reason": "provider_http"
         }
       ],
@@ -177,21 +177,29 @@
     },
     "classification": {
       "version": 1,
-      "id": "ffb351e7d0ee4432bd680d4f45ad1853",
+      "id": "2e1bc4543f6c4be2bb23ba8963779857",
       "kind": "classification",
-      "started_at": "2026-10-19T05:26:32.981572Z",
-      "finished_at": "2026-10-19T05:26:34.443954+00:00",
+      "started_at": "2026-10-20T05:28:18.326966Z",
+      "finished_at": "2026-10-20T05:28:19.616082+00:00",
       "model": "deepseek-flash",
       "attempted_projects": 20,
       "accepted_projects": 0,
       "failed_projects": 20,
       "failures": [
         {
-          "repository_id": 667006,
+          "repository_id": 92807616,
           "reason": "provider_http"
         },
         {
-          "repository_id": 19148949,
+          "repository_id": 119811010,
+          "reason": "provider_http"
+        },
+        {
+          "repository_id": 332880689,
+          "reason": "provider_http"
+        },
+        {
+          "repository_id": 420628737,
           "reason": "provider_http"
         },
         {
@@ -199,71 +207,63 @@
           "reason": "provider_http"
         },
         {
-          "repository_id": 872119017,
+          "repository_id": 522158088,
           "reason": "provider_http"
         },
         {
-          "repository_id": 925270205,
+          "repository_id": 575321313,
           "reason": "provider_http"
         },
         {
-          "repository_id": 1051763468,
+          "repository_id": 640079149,
           "reason": "provider_http"
         },
         {
-          "repository_id": 1183888342,
+          "repository_id": 652712035,
           "reason": "provider_http"
         },
         {
-          "repository_id": 1223170290,
+          "repository_id": 668195240,
           "reason": "provider_http"
         },
         {
-          "repository_id": 1344775535,
+          "repository_id": 798201435,
           "reason": "provider_http"
         },
         {
-          "repository_id": 1347104725,
+          "repository_id": 838695230,
           "reason": "provider_http"
         },
         {
-          "repository_id": 1348788035,
+          "repository_id": 890668799,
           "reason": "provider_http"
         },
         {
-          "repository_id": 1351518263,
+          "repository_id": 917868934,
           "reason": "provider_http"
         },
         {
-          "repository_id": 1353956413,
+          "repository_id": 1079456184,
           "reason": "provider_http"
         },
         {
-          "repository_id": 1356918624,
+          "repository_id": 1141782198,
           "reason": "provider_http"
         },
         {
-          "repository_id": 1356970050,
+          "repository_id": 1157102282,
           "reason": "provider_http"
         },
         {
-          "repository_id": 1358286075,
+          "repository_id": 1178494429,
           "reason": "provider_http"
         },
         {
-          "repository_id": 1358910574,
+          "repository_id": 1180325220,
           "reason": "provider_http"
         },
         {
-          "repository_id": 1359559501,
-          "reason": "provider_http"
-        },
-        {
-          "repository_id": 1360255506,
-          "reason": "provider_http"
-        },
-        {
-          "repository_id": 1367661726,
+          "repository_id": 1196447493,
           "reason": "provider_http"
         }
       ],
