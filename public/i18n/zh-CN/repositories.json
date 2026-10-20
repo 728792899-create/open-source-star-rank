@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-20T05:28:14.382799Z",
+  "generated_at": "2026-10-20T16:13:49.588447Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4880,
-    "localized_count": 4849,
-    "pending_count": 31,
+    "localized_count": 4847,
+    "pending_count": 33,
     "failed_count": 31,
-    "coverage_ratio": 0.993648
+    "coverage_ratio": 0.993238
   },
   "repositories": [
     {
@@ -23440,15 +23440,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 840302332,
-      "source_full_name": "goruck/home-generative-agent",
-      "source_hash": "9dcbd68dfb595df114deadb5602f18a402db39a5cfc583e3c7b621bd1b897829",
-      "display_name_zh": "home-generative-agent｜Home Assistant AI 智能体",
-      "description_zh": "面向 Home Assistant 的 AI 智能体：用自然语言与家居对话、创建自动化、通过人脸识别分析摄像头，并获取主动异常告警。可使用云端 LLMs，也可通过 Ollama 完全本地运行。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 840547039,
       "source_full_name": "ElsiKora/NestJS-Crud-Automator",
       "source_hash": "e92c060db9af66684c0382cfef800c6eae4173e703fdc879e219429c15c08545",
@@ -33752,15 +33743,6 @@
       "description_zh": "一款生产级CLI工具，包含100+实用工具，支持压缩、视频音频编辑、网络扫描、Git自动化及Android/Termux控制。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1222042205,
-      "source_full_name": "maddada/Ghostex",
-      "source_hash": "fe1d0641b7f7566ff9b9a09f4f81cf10a65af5530f5eecd7e1f6e9685f00c60f",
-      "display_name_zh": "Ghostex｜原生智能体工作区",
-      "description_zh": "原生智能体工作区，完全基于 Rust 与 GPUI 构建，提供移动应用，支持 20+ 智能体，并集成 Ghostty。",
-      "generated_at": "2026-10-16T05:13:26.992743Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1222469137,
