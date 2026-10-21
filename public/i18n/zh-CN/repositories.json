@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-21T05:27:31.245284Z",
+  "generated_at": "2026-10-21T16:12:49.352996Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4880,
-    "localized_count": 4847,
-    "pending_count": 33,
+    "localized_count": 4843,
+    "pending_count": 37,
     "failed_count": 33,
-    "coverage_ratio": 0.993238
+    "coverage_ratio": 0.992418
   },
   "repositories": [
     {
@@ -6878,15 +6878,6 @@
       "description_zh": "介绍学生和教职工可享受的优惠权益及相关注意事项",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 66474729,
-      "source_full_name": "prowler-cloud/prowler",
-      "source_hash": "9cc7e52277bcadb8722b4f5db4f770fa2aa0cf7a1e18fd8be79a92763215df63",
-      "display_name_zh": "prowler｜开源云安全平台",
-      "description_zh": "Prowler 是广泛使用的开源云安全平台，可在任意云环境中自动化安全与合规检查。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 66670819,
@@ -26374,15 +26365,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 987975584,
-      "source_full_name": "langchain-ai/open-swe",
-      "source_hash": "858d7c749e3443f2a9365116325c0722ff9ef0bd63530562674f3fd75e361218",
-      "display_name_zh": "open-swe｜开源异步编码智能体",
-      "description_zh": "一个开源的异步编码智能体。",
-      "generated_at": "2026-10-16T05:13:26.992743Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 988222683,
       "source_full_name": "Simon-He95/markstream-vue",
       "source_hash": "a6fa66ab770c8be5bb84a8cdc775c66f1dbd057467d6eb7589e152cc575f76f3",
@@ -39172,15 +39154,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1329291338,
-      "source_full_name": "Ephemeral-AI-Lab/layerfs",
-      "source_hash": "dd74feb4b50ff270a35b99426748d9eb2dae513ea8abc81cfb99449a79f3c60f",
-      "display_name_zh": "layerfs｜Agent 隔离文件系统分支",
-      "description_zh": "LayerFS 为每个 agent 提供隔离、可丢弃的文件系统分支，无需复制共享基础。有用状态会成为持久、去重的检查点，并带有工作区级工具历史，可分支、回退或复用于并行开发、环境实验与 MCTS 式 rollout。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1329587981,
       "source_full_name": "CatCatUncle/openworkbuddy",
       "source_hash": "c71409be16bb5b439088fc8e9166bfe5d0261c33101fcb83e6340a6971ba4d1c",
@@ -39691,15 +39664,6 @@
       "display_name_zh": "OraRL｜视频 MLLMs 强化学习",
       "description_zh": "OraRL——将标注作为 rollout，用于统一视频 MLLMs 的高效、可扩展强化学习。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1344623876,
-      "source_full_name": "XHToken/Spark-X2.5",
-      "source_hash": "366d902d194f4fcf796bdea9a848374b94bde85cf589f96bff9fb5be49cc97a4",
-      "display_name_zh": "Spark-X2.5｜端侧智能体模型系列",
-      "description_zh": "Spark-x2.5 开放模型系列，在端侧模型上推进智能体能力极限。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
     {
