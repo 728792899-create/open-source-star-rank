@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-22T05:32:51.783687Z",
+  "generated_at": "2026-10-24T16:11:56.013586Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4880,
-    "localized_count": 4843,
-    "pending_count": 37,
+    "localized_count": 4831,
+    "pending_count": 49,
     "failed_count": 37,
-    "coverage_ratio": 0.992418
+    "coverage_ratio": 0.989959
   },
   "repositories": [
     {
@@ -614,15 +614,6 @@
       "description_zh": "神经网络、深度学习和机器学习模型的可视化工具。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1204412,
-      "source_full_name": "TrinityCore/TrinityCore",
-      "source_hash": "5066c44e1ce4bcbe592d52ad9edb6cb3d0c30f367a822b7edb003d680c0fc64f",
-      "display_name_zh": "TrinityCore｜开源 MMO 框架",
-      "description_zh": "TrinityCore 开源 MMO 框架（master = 12.1.5.70391，3.3.5 = 3.3.5a.12340，cata classic = 4.4.2.60895）。",
-      "generated_at": "2026-10-16T05:13:26.992743Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1212922,
@@ -3125,15 +3116,6 @@
       "description_zh": "spark 是一个统一的大规模数据处理分析引擎。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 17420614,
-      "source_full_name": "seleniumbase/SeleniumBase",
-      "source_hash": "158eada1966154e9eb33292a691cca86ee910c622cdc7a1a763971bf60b62a09",
-      "display_name_zh": "SeleniumBase｜Web 自动化与测试 APIs",
-      "description_zh": "用于 Web 自动化、端到端测试和数据抓取的 Python APIs。CDP 模式可绕过机器人检测并处理 CAPTCHAs，还为 Playwright 提供 Stealth 模式。",
-      "generated_at": "2026-10-16T05:13:26.992743Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 17420913,
@@ -11648,15 +11630,6 @@
       "description_zh": "AdGuard Extra 旨在解决常规广告屏蔽规则无法覆盖的复杂情况。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 192925833,
-      "source_full_name": "prisma/orm",
-      "source_hash": "e712cda52203247d4dad8bb896f29648cdc8d439e00f776ce9cdd0316954197c",
-      "display_name_zh": "orm｜Node.js 与 TypeScript ORM",
-      "description_zh": "面向 Node.js 与 TypeScript 的下一代 ORM | 支持 PostgreSQL、MySQL、MariaDB、SQL Server、SQLite、MongoDB 和 CockroachDB。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 193162629,
@@ -21388,15 +21361,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 725205304,
-      "source_full_name": "unslothai/unsloth",
-      "source_hash": "250e5115923c58fc885cc7dc725275c5b7b1188d6ea227dce2b48a6ec2a692b6",
-      "display_name_zh": "unsloth｜本地 LLM 与扩散模型 UI",
-      "description_zh": "用于运行和训练 LLMs 与扩散模型的本地 UI。支持 GGUF、MLX、Qwen3.8、DeepSeek-V4、MiniMax-H3、Gemma 4、FLUX 等。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 725700931,
       "source_full_name": "paulxshen/Luminescent.jl",
       "source_hash": "f778fddd32abf7e0e287ca7d44974d555031c2bc58f08d97eb8502e0b0a15f59",
@@ -21753,15 +21717,6 @@
       "source_hash": "aed7679e07e7ba255960a8f13aebd9da5c714ada5a38a6a11cfc38da2309f04c",
       "display_name_zh": "kafka-ui｜Kafka 管理 Web UI",
       "description_zh": "用于管理 Apache Kafka 集群的开源 Web 用户界面。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 746935181,
-      "source_full_name": "DrewThomasson/ebook2audiobook",
-      "source_hash": "e65745f69d34323610f73e1fe0eeff6990e53dae641fef2903bb09b02b389a9c",
-      "display_name_zh": "ebook2audiobook｜电子书转有声书，支持 1158 种语言",
-      "description_zh": "ebook2audiobook 支持从电子书生成有声书，具备语音克隆功能，支持 1158 种语言。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
     },
@@ -29911,15 +29866,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1134426800,
-      "source_full_name": "sickn33/agentic-awesome-skills",
-      "source_hash": "827628ca0b3eeb6a9ace60fc74ec4f3926cd1d8df1a0c763a51a36fe0a864d76",
-      "display_name_zh": "AAS Core｜代理技能控制平面",
-      "description_zh": "AAS Core 是本地、代理优先的控制平面，用于完整目录发现、代理自主选择、技术栈验证与规划，背后有 2,600+ 代理技能支持。包含 CLI、本地 MCP、目录、插件与 Workbench。",
-      "generated_at": "2026-10-16T05:13:26.992743Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1134543109,
       "source_full_name": "vercel-labs/skills",
       "source_hash": "8a9e511a67ebbe727092997c05aa66fce688f45f1aabf86ba7a07e3cc8ad4258",
@@ -30070,15 +30016,6 @@
       "display_name_zh": "samyama-graph｜Rust 图向量数据库",
       "description_zh": "Rust 图向量数据库：OpenCypher（已评估 TCK 场景通过率 99.9%）、向量搜索、图算法、RESP + HTTP。LDBC SNB Interactive 和 BI 完整实现；单机支持 1B 条边。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1137711311,
-      "source_full_name": "codewhale-hq/Codewhale",
-      "source_hash": "958d575f286cc6569b71fd316963e3a19b42a6ae3f1fd0e185fa280031e1d29b",
-      "display_name_zh": "Codewhale｜Rust 智能体引擎与终端客户端",
-      "description_zh": "Codewhale 的开源 Rust 智能体引擎与终端客户端，支持选择模型提供商，并提供工具、审批与回执功能。",
-      "generated_at": "2026-10-16T05:13:26.992743Z",
       "provenance": "model_api"
     },
     {
@@ -40558,15 +40495,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1350417673,
-      "source_full_name": "Hannah2227/douyin-favorite-MyLike",
-      "source_hash": "68a62e64ba73871611b5bef55d447db42605b2138b28cac46c9afe4a229de7c6",
-      "display_name_zh": "抖音喜欢列表采集与洗牌播放器",
-      "description_zh": "采集抖音喜欢列表，并提供洗牌播放功能。",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1350419329,
       "source_full_name": "Continuum-AI-Corp/OrcaReplay",
       "source_hash": "d4339d3591d9935a1885565f5c0f0fc48542827069f26c2579e1d5a8ecd6d096",
@@ -41431,24 +41359,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1356336145,
-      "source_full_name": "browser-use/agency",
-      "source_hash": "4430c96a1aee6e730b80782aaa4b036b237d74b8e691f313fa3b45a9cd3b3e34",
-      "display_name_zh": "agency｜智能体任务卡片流",
-      "description_zh": "Agency 卡片信息流：智能体完成工作，Magnus 一键做出决定。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1356717536,
-      "source_full_name": "agfnow/agentflow",
-      "source_hash": "e4a0d335f5a3a7e2173972dac7a2cf3febb59d59b29c3c5e47f69ebe76aa6958",
-      "display_name_zh": "agentflow｜文件日志对话协议",
-      "description_zh": "基于文件日志的对话协议与按需开发流水线。",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1356772546,
       "source_full_name": "Mantitup-Org/vista",
       "source_hash": "974222ab26dbca8d91a6df288347c7930b3b2489bfc748488ea7be0eeffdb7bc",
@@ -41715,15 +41625,6 @@
       "source_hash": "a1afc4655086292572303ac0bfa6266fb31be5e573f956acc869c2e42c41988e",
       "display_name_zh": "tmax 工具",
       "description_zh": null,
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1358080066,
-      "source_full_name": "TravellingEngineer/barney",
-      "source_hash": "fd874c0cc4e5cfd9ad6fb9f1c97a36d432afd759c61a0548f6cfa682cad69013",
-      "display_name_zh": "barney｜内容旅程打包工具",
-      "description_zh": "内容旅程打包工具。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
       "provenance": "model_api"
     },
@@ -43084,15 +42985,6 @@
       "display_name_zh": "llmwiki-operational｜LLM 维护的运维知识系统",
       "description_zh": "一个由 LLM 持续维护的知识系统，面向技术手册、SOPs 与运维文档。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1372535054,
-      "source_full_name": "lakeday-org/perch",
-      "source_hash": "26ca0c680122a13b04f1f55e4e7c89875431545f4d9319b77dd849c0bad7aff3",
-      "display_name_zh": "perch｜语义代码检查",
-      "description_zh": "使用决策模型进行语义代码检查。",
-      "generated_at": "2026-10-01T06:39:02.374651Z",
       "provenance": "model_api"
     },
     {

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "taxonomy_version": "1.0.0",
-  "generated_at": "2026-10-21T16:12:53.644732Z",
+  "generated_at": "2026-10-24T16:11:58.783121Z",
   "repositories": [
     {
       "repository_id": 3314,
@@ -870,20 +870,6 @@
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T00:20:04.872872Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1204412,
-      "source_full_name": "TrinityCore/TrinityCore",
-      "source_hash": "bfca4ee0e57cc280f8664fd348a02cdcd68b90f0077344c1c31bc289db539b55",
-      "primary_category": "creative-media",
-      "project_type": "library-framework",
-      "use_cases": [
-        "self-hosting",
-        "games-emulation"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-10-16T05:13:46.875506Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1212922,
@@ -4499,21 +4485,6 @@
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T04:20:56.637414Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 17420614,
-      "source_full_name": "seleniumbase/SeleniumBase",
-      "source_hash": "05d8b1d44898a32c056c88f450ef7f531d69b44a46e3a4f7233d608ed8335f4c",
-      "primary_category": "developer-tools",
-      "project_type": "library-framework",
-      "use_cases": [
-        "agents-automation",
-        "search-scraping",
-        "security-defense"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-10-16T05:13:46.875506Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 17420913,
@@ -16947,20 +16918,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 192925833,
-      "source_full_name": "prisma/orm",
-      "source_hash": "62ec1ad0aa84d1e6521e128e2739af37212cf0beab2ed80d3c4f8b0c257a95fd",
-      "primary_category": "developer-tools",
-      "project_type": "library-framework",
-      "use_cases": [
-        "database-storage",
-        "api-backend"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-09-24T04:30:45.978519Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 193162629,
       "source_full_name": "rxhanson/Rectangle",
       "source_hash": "f9c3d28d9dba75a666d00f173b8cc261133ce3a7e3378cff88384dc76f6810e1",
@@ -26320,19 +26277,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 569870864,
-      "source_full_name": "briar-systems/mach",
-      "source_hash": "fca2bb01029a3d74880847df47c86cdf60ad9cf35a5a2ab82f09e7bf4df522e0",
-      "primary_category": "systems-network-hardware",
-      "project_type": "library-framework",
-      "use_cases": [
-        "general-tools"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-10-16T05:13:46.875506Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 569959091,
       "source_full_name": "modelscope/FunASR",
       "source_hash": "ea75d95ebb69540c7153483c9f2d527384c4c6e55b99b3366da0f2239e2fcbab",
@@ -31100,21 +31044,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 725205304,
-      "source_full_name": "unslothai/unsloth",
-      "source_hash": "a97840e17f18cb3229f03fee8816369cc36a149fd925c6036268c580558f6772",
-      "primary_category": "ai-machine-learning",
-      "project_type": "application",
-      "use_cases": [
-        "model-training-inference",
-        "privacy-local",
-        "image-video-audio"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-09-24T04:30:45.978519Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 725700931,
       "source_full_name": "paulxshen/Luminescent.jl",
       "source_hash": "123ac4060b7c5ad2800dcbee30a5f5387c83c23b16aebbb1b2f7e441b4871861",
@@ -31633,20 +31562,6 @@
       "use_cases": [
         "api-backend",
         "web-frontend"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-22T04:12:02.172495Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 746935181,
-      "source_full_name": "DrewThomasson/ebook2audiobook",
-      "source_hash": "1fd9a796adfd1a69d26f9f6705636cf47c232ebcb6e9779cfa23dbb650c0f06a",
-      "primary_category": "creative-media",
-      "project_type": "application",
-      "use_cases": [
-        "content-generation",
-        "image-video-audio"
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-22T04:12:02.172495Z",
@@ -43378,21 +43293,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1134426800,
-      "source_full_name": "sickn33/agentic-awesome-skills",
-      "source_hash": "cd38f11ba9758f65e0c51d67d0adbd640679d6cf680edd6fba4379a192038c75",
-      "primary_category": "ai-machine-learning",
-      "project_type": "platform-service",
-      "use_cases": [
-        "ai-coding",
-        "agents-automation",
-        "resource-discovery"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-10-16T05:13:46.875506Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1134543109,
       "source_full_name": "vercel-labs/skills",
       "source_hash": "2a44176687cb377b4f673aa26d165b260b142a1c57e76c1a4275f1bf85424d64",
@@ -43629,20 +43529,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-10-07T06:38:45.425242Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1137711311,
-      "source_full_name": "codewhale-hq/Codewhale",
-      "source_hash": "db668beeab736b0f6bde7ed42c60792b5308ee5654226e9dc71ce2a94103d39f",
-      "primary_category": "ai-machine-learning",
-      "project_type": "cli-developer-tool",
-      "use_cases": [
-        "ai-coding",
-        "agents-automation"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-10-16T05:13:46.875506Z",
       "provenance": "model_api"
     },
     {
@@ -45234,21 +45120,6 @@
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-16T06:51:50.292861Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1165324947,
-      "source_full_name": "agentscope-ai/QwenPaw",
-      "source_hash": "6c62a38fda6aad952d30102746299e3c0ffbec2c9c6c460e89dcbe955fd62455",
-      "primary_category": "ai-machine-learning",
-      "project_type": "application",
-      "use_cases": [
-        "agents-automation",
-        "personal-productivity",
-        "self-hosting"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-09-24T04:30:45.978519Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1165361576,
@@ -58017,20 +57888,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1350417673,
-      "source_full_name": "Hannah2227/douyin-favorite-MyLike",
-      "source_hash": "052904b9a21a0ceeb028e08df90832ec5e66791fbf2d97db1dd6bf180821d098",
-      "primary_category": "creative-media",
-      "project_type": "application",
-      "use_cases": [
-        "search-scraping",
-        "image-video-audio"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-10-07T06:38:45.425242Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1350419329,
       "source_full_name": "Continuum-AI-Corp/OrcaReplay",
       "source_hash": "0fe7b20b3910859c1168055d330e574f3b04392c11839974da641e946cbfa2c3",
@@ -58695,19 +58552,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-10-03T05:52:17.835370Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1356336145,
-      "source_full_name": "browser-use/agency",
-      "source_hash": "efc62a9bfabcd7396691c606635c41eafd26bb0577d6ffd1d28ba538a8524921",
-      "primary_category": "ai-machine-learning",
-      "project_type": "application",
-      "use_cases": [
-        "agents-automation"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-10-01T06:39:08.584252Z",
       "provenance": "model_api"
     },
     {
