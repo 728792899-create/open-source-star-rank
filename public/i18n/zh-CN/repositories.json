@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-25T05:26:14.792960Z",
+  "generated_at": "2026-10-25T16:11:13.841665Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4880,
-    "localized_count": 4831,
-    "pending_count": 49,
+    "localized_count": 4825,
+    "pending_count": 55,
     "failed_count": 49,
-    "coverage_ratio": 0.989959
+    "coverage_ratio": 0.98873
   },
   "repositories": [
     {
@@ -2333,15 +2333,6 @@
       "description_zh": "calibre电子书管理器的官方源代码仓库",
       "generated_at": "2026-07-20T18:28:18.246753Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 10671623,
-      "source_full_name": "aardappel/treesheets",
-      "source_hash": "1e868dd2fea5088260116c5c9e7b27ba8fb43b82ba1bf74b5f5588fff5447718",
-      "display_name_zh": "TreeSheets｜自由形式数据整理工具",
-      "description_zh": "TreeSheets：自由形式数据整理工具（见 strlen.com/treesheets）。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 10721619,
@@ -16879,15 +16870,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 488641606,
-      "source_full_name": "agno-agi/agno",
-      "source_hash": "1420c3c5be7eb571eba7a37b8e58136925e1ac9e7b6d36c0eab14b74a6dbac07",
-      "display_name_zh": "agno｜智能代理平台管理",
-      "description_zh": "构建、运行和管理智能代理平台。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 488804911,
       "source_full_name": "windmill-labs/windmill",
       "source_hash": "20eecb3e1aee82a7bb57fc3990e47b0a1b9ee57defe18704b50fa5e21bdd3b94",
@@ -25555,15 +25537,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 950675454,
-      "source_full_name": "sumingyd/IPTV-Scanner-Editor-Pro",
-      "source_hash": "c518d8e1148aed93497001742f1e553fc8b025f5aa2f5647cf54e0f87d5439e8",
-      "display_name_zh": "IPTV-Scanner-Editor-Pro｜IPTV 频道列表管理工具",
-      "description_zh": "专业的 IPTV 频道列表管理工具，集频道扫描、频道列表有效性检测、播放与列表编辑于一体。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 951543275,
       "source_full_name": "snap-stanford/Biomni",
       "source_hash": "63bee28dbea2637544a144b1e14952bbd01b9d2becd964eea0a046591c45613a",
@@ -30271,15 +30244,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1144520675,
-      "source_full_name": "Alishahryar1/free-claude-code",
-      "source_hash": "a7fc845304e12c5e88ffb886aae35ae960970553f85de17b3b2e1e41d69b6940",
-      "display_name_zh": "free-claude-code｜多终端免费 AI 编程工具",
-      "description_zh": "可在终端、应用、IDE 或手机中使用 Claude Code、Codex、VSCode、Pi、OpenCode 等 6 种以上工具，提供 1.3B+ 免费 token，并新增浏览器原生会话，支持多工具与多模型。",
-      "generated_at": "2026-09-28T06:01:47.380329Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1144764199,
       "source_full_name": "didilili/ai-agents-from-zero",
       "source_hash": "5b818871e4fcdc38b437eb52db7d64a014bf2da3ecf866a9d1d20828dc83dad0",
@@ -30701,15 +30665,6 @@
       "description_zh": "面向大众的分布式AI/LLM，支持私有或公开共享计算资源，驱动代理和聊天功能。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1155093426,
-      "source_full_name": "Signet-AI/signetai",
-      "source_hash": "d524be5890a13be8ae11d74b5f1787247568bb3eeca17c0a90117e3317939f2d",
-      "display_name_zh": "signetai｜跨工具记忆与身份同步",
-      "description_zh": "在常用 harness 与模型之间同步和存储记忆、共享身份文件（AGENTS.md、CLAUDE.md）、会话记录、机构知识与密钥。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1155200110,
@@ -33994,15 +33949,6 @@
       "display_name_zh": "codex-redteam-mode｜面向红队攻击思维的AI模式",
       "description_zh": "针对红队攻击思维设计的red team模式，支持适配其他AI。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1230751102,
-      "source_full_name": "BigPizzaV3/CodexPlusPlus",
-      "source_hash": "252ca407b7ded6d29fd42a2682d7832359066e0657a3a5918b5a85b3de1b5b20",
-      "display_name_zh": "CodexPlusPlus｜CodexApp增强工具",
-      "description_zh": "CodexApp 的增强工具，致力于提升 Codex 的使用体验和舒适度。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
     },
     {
