@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-26T05:30:49.276781Z",
+  "generated_at": "2026-10-26T07:18:54.692227Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
-    "eligible_count": 4880,
-    "localized_count": 4825,
-    "pending_count": 55,
+    "eligible_count": 4881,
+    "localized_count": 4814,
+    "pending_count": 67,
     "failed_count": 55,
-    "coverage_ratio": 0.98873
+    "coverage_ratio": 0.986273
   },
   "repositories": [
     {
@@ -3582,15 +3582,6 @@
       "source_hash": "933b8124c5684d4acb95013cee245d486519b798dab11d700ec9b71efff4478b",
       "display_name_zh": "awesome-shell｜优秀命令行工具集合",
       "description_zh": "精选优秀的命令行框架、工具包和指南列表。",
-      "generated_at": "2026-07-19T00:17:52.423389Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 21600440,
-      "source_full_name": "bayandin/awesome-awesomeness",
-      "source_hash": "f785eae913eacd777b210a8f8a02d64237b9f87955bdb95a00b72f287bf51359",
-      "display_name_zh": "awesome-awesomeness｜优秀资源集合",
-      "description_zh": "精选优秀资源的集合。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
     },
@@ -8293,15 +8284,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 97533102,
-      "source_full_name": "halfrost/LeetCode-Go",
-      "source_hash": "c3ed7233ccd10fd17a1d7622b8c0afad25006c1b6867ff1461a886b755cc3645",
-      "display_name_zh": "LeetCode-Go｜Go语言LeetCode题解（100%覆盖）",
-      "description_zh": "Go语言实现的LeetCode题解，测试覆盖率100%，运行速度优于100%的提交",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 97575728,
       "source_full_name": "NGSolve/netgen",
       "source_hash": "cf1b96555d990b4cfca5791dd5039e11152520aecb200a9668efff152287688f",
@@ -9958,15 +9940,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 138754790,
-      "source_full_name": "duckdb/duckdb",
-      "source_hash": "f3fd1c2ae40501852c76a2f6dc684397ff1c472812e167fe17c2fe4d511fa032",
-      "display_name_zh": "duckdb｜内嵌式分析型 SQL 数据库",
-      "description_zh": "duckdb 是一个内嵌式分析型 SQL 数据库管理系统。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 138839979,
       "source_full_name": "scutan90/DeepLearning-500-questions",
       "source_hash": "12dffa159608dbe916f69c7236bfad5f1d103a982ec0658d27f01ea679830ac3",
@@ -10126,15 +10099,6 @@
       "display_name_zh": "zbar｜ZBar条码识别软件（2012年后支持V4L2 API）",
       "description_zh": "ZBar：开源条码识别软件套件，支持多种来源，包括网络摄像头。自2012年停止开发后，持续更新以支持V4L2 API。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 144590939,
-      "source_full_name": "VSCodium/vscodium",
-      "source_hash": "9f065033050471d19f2f8f8049ce5985437b529c1433a40323f232d93de27c3a",
-      "display_name_zh": "vscodium｜无MS品牌的VS Code二进制版本",
-      "description_zh": "无微软品牌、遥测和许可的VS Code二进制发布版本。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
     {
@@ -11358,15 +11322,6 @@
       "source_hash": "d492848ce3fe4a1322832ae2a69fca8069dd5609db3fa312837c49e70b3511cf",
       "display_name_zh": "pms｜密码管理系统（支持 AES、DES、PBE）",
       "description_zh": "密码管理系统，基于 Springboot 和 Mybatis，实现 AES、DES、PBE 三种对称加密算法，支持批量加密解密、算法和秘钥管理。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 182306991,
-      "source_full_name": "pear-devs/pear-desktop",
-      "source_hash": "1c2e6974778816f90761db7e09b5e3abcb545f635ff0d5bdbfa5a67078618442",
-      "display_name_zh": "pear-desktop｜音乐播放器扩展",
-      "description_zh": "音乐播放器的扩展工具。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
@@ -13637,15 +13592,6 @@
       "description_zh": "CS-Situational-Awareness-BOF：使用Beacon Object Files实现的态势感知命令。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 280363952,
-      "source_full_name": "umami-software/umami",
-      "source_hash": "1d337ce4b1c05712dee9b056cbc2336592f424868dbdb357544923f50835a003",
-      "display_name_zh": "umami｜隐私优先分析平台",
-      "description_zh": "Umami 是隐私优先的分析平台，将流量、活动、行为、转化和收入集中在一处，无 Cookie、无监控，支持自托管或云端部署。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 280557054,
@@ -16768,15 +16714,6 @@
       "display_name_zh": "Forecasting-the-state-of-a-technological-facility｜基于 SQLite 的技术设施状态预测",
       "description_zh": "大学课程项目，使用 C# 和 SQLite 开发的桌面应用，作为当时代码写作的快照保留。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 482152820,
-      "source_full_name": "geekan/HowToLiveLonger",
-      "source_hash": "f9d572e828b73231316ec6490ebdf308206bff4fcc8b248de491b15eb4ced025",
-      "display_name_zh": "HowToLiveLonger｜程序员延寿指南",
-      "description_zh": "程序员延长寿命的指南。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
     {
@@ -22564,15 +22501,6 @@
       "display_name_zh": "Kazumi｜自定义规则番剧采集 APP",
       "description_zh": "基于自定义规则的番剧采集 APP，支持流媒体在线观看、弹幕以及实时超分辨率。",
       "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 798201435,
-      "source_full_name": "unclecode/crawl4ai",
-      "source_hash": "993a487e5d7f9b78095d4385a6a0168026dfc28999c1f98f4ba9382ad4235e09",
-      "display_name_zh": "crawl4ai｜面向 LLM 的网页爬虫",
-      "description_zh": "面向 LLMs 和 AI 智能体的开源网页爬虫与抓取工具：可将任意网站转换为干净、适合 LLM 的 Markdown。可自行运行，也可使用 Crawl4AI Cloud 一键接入。",
-      "generated_at": "2026-09-29T06:19:55.816330Z",
       "provenance": "model_api"
     },
     {
@@ -30001,15 +29929,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1137846174,
-      "source_full_name": "xai-org/x-algorithm",
-      "source_hash": "77dc5cdf92d6f7ae0efb6bc77eebe09cc8c884799c9ed1b844d1f894014ba0bb",
-      "display_name_zh": "x-algorithm｜X For You 信息流算法",
-      "description_zh": "驱动 X 上 For You 信息流的算法。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1138327045,
       "source_full_name": "F4u5t/esp32-vehicle-monitor",
       "source_hash": "359f33ca5e60a0cff12d125a553acc736dc94d1dde59c2e097bb170942547055",
@@ -32179,15 +32098,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1185389803,
-      "source_full_name": "MadsLorentzen/ai-job-search",
-      "source_hash": "feae475fa2f54924e32fc69cef55b2f4e8e6348aca94cabe9cf5cfaffe6298fd",
-      "display_name_zh": "ai-job-search｜AI求职助手",
-      "description_zh": "基于Claude Code的本地AI求职框架，支持职位评估、简历（CVs）定制、求职信撰写和面试准备。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1185505842,
       "source_full_name": "abadcafe/superteam",
       "source_hash": "dadd6e9c93f6f8ae9d058e41e8b2658382a276fcac23a243c26de5d5a47f5f63",
@@ -33338,15 +33248,6 @@
       "description_zh": "wtk 是一个 Windows Token Killer 命令行代理，能减少 60-90% 的 LLM 令牌消耗。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1212769188,
-      "source_full_name": "cathrynlavery/diagram-design",
-      "source_hash": "8477ae9e352d7e2ac8b1e0c828a931454c047e93f6725cd6fe8e6e99adde7e2b",
-      "display_name_zh": "diagram-design｜编辑级图表设计",
-      "description_zh": "面向 Claude Code、Codex、GitHub Copilot、Cursor、Factory Droid 和 Pi 的编辑级图表设计。44 种图表类型。自包含 HTML + SVG。无阴影。拒绝 Mermaid 式粗糙。",
-      "generated_at": "2026-10-16T05:13:26.992743Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1213049020,
