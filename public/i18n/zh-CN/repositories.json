@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-26T07:18:54.692227Z",
+  "generated_at": "2026-10-26T16:13:22.606679Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4881,
-    "localized_count": 4814,
-    "pending_count": 67,
+    "localized_count": 4810,
+    "pending_count": 71,
     "failed_count": 55,
-    "coverage_ratio": 0.986273
+    "coverage_ratio": 0.985454
   },
   "repositories": [
     {
@@ -16807,15 +16807,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 488804911,
-      "source_full_name": "windmill-labs/windmill",
-      "source_hash": "20eecb3e1aee82a7bb57fc3990e47b0a1b9ee57defe18704b50fa5e21bdd3b94",
-      "display_name_zh": "windmill｜开源开发者平台与 UIs 工作流引擎",
-      "description_zh": "开源开发者平台，支持将脚本转为 Webhook、工作流和 UIs，工作流引擎性能优异",
-      "generated_at": "2026-07-17T00:57:38.909807Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 490045365,
       "source_full_name": "livekit/rust-sdks",
       "source_hash": "5fe66fae7636be9616597f1fc83f720781f23467157dd818381c02a9c6bb6d09",
@@ -28181,15 +28172,6 @@
       "description_zh": "Android UI 组件库，提供实时动态高斯模糊效果，采用原生 C++ 实现高效模糊处理。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1080370450,
-      "source_full_name": "superset-sh/superset",
-      "source_hash": "5f6960e67ceabebdbf146f8b89093073958f36384864ab88229dd182c0298197",
-      "display_name_zh": "superset｜并行编码智能体 IDE",
-      "description_zh": "Superset 是一个智能体 IDE，可并行编排 100+ 编码智能体，并支持使用自己的订阅运行任意智能体。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1081140442,
@@ -39928,15 +39910,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1347150649,
-      "source_full_name": "shenysun/skills-manager",
-      "source_hash": "0a043364ed35b92bccb2e2319b89e8af37b0034742198e6fea886907de2f5447",
-      "display_name_zh": "skills-manager｜技能管理工具",
-      "description_zh": null,
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1347244924,
       "source_full_name": "RipperdocNiladri/ASCII-Art",
       "source_hash": "22f27702416de91509c88a67fca90cbfb27208e06c9acf6030e84b51e76b807c",
@@ -41806,15 +41779,6 @@
       "display_name_zh": "现代 Spring Boot 工具精选",
       "description_zh": "面向 Spring Boot 4.x 及更高版本、有明确取向且持续维护的现代轻量工具与实践清单。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1359596777,
-      "source_full_name": "jealous-sound/azerothcore-wotlk-coa",
-      "source_hash": "917013f60a27940e1a2e4164d3a0fe133db203bbf3658095d077a4f57cd867f7",
-      "display_name_zh": "azerothcore-wotlk-coa｜AzerothCore 征服版本",
-      "description_zh": "Conquest of AzerothCore 项目。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
     {
