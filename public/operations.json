@@ -1,26 +1,26 @@
 {
   "version": 1,
-  "snapshot_at": "2026-10-26T16:02:22Z",
+  "snapshot_at": "2026-10-28T16:01:59Z",
   "ranking_date": "2026-10-26",
-  "observed_count": 2000,
+  "observed_count": 1992,
   "sampling": {
     "target_local_time": "00:20",
     "valid_window_start": "00:00",
     "valid_window_end": "03:00",
-    "latest_snapshot_at": "2026-10-26T16:02:22Z",
+    "latest_snapshot_at": "2026-10-28T16:01:59Z",
     "latest_snapshot_valid": true,
     "latest_snapshot_reason": "within_window",
-    "latest_valid_snapshot_at": "2026-10-26T16:02:22Z",
-    "consecutive_valid_snapshots": 2,
-    "next_scheduled_at": "2026-10-28T00:20:00+08:00",
+    "latest_valid_snapshot_at": "2026-10-28T16:01:59Z",
+    "consecutive_valid_snapshots": 1,
+    "next_scheduled_at": "2026-10-30T00:20:00+08:00",
     "expected_first_ranking_at": null,
     "period_progress": {
       "7d": {
-        "completed": 3,
+        "completed": 0,
         "required": 7
       },
       "30d": {
-        "completed": 3,
+        "completed": 0,
         "required": 30
       }
     }
