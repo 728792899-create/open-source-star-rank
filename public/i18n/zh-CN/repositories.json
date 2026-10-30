@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-30T06:34:33.374542Z",
+  "generated_at": "2026-10-30T16:16:55.992692Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4881,
-    "localized_count": 4791,
-    "pending_count": 90,
+    "localized_count": 4783,
+    "pending_count": 98,
     "failed_count": 88,
-    "coverage_ratio": 0.981561
+    "coverage_ratio": 0.979922
   },
   "repositories": [
     {
@@ -22504,15 +22504,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 805155266,
-      "source_full_name": "CherryHQ/cherry-studio",
-      "source_hash": "22184a475c1b2bd654d5e45f58281f490cee27ac19ceb9df71fff44cfbfcd19f",
-      "display_name_zh": "cherry-studio｜AI生产力工作室（含300助手与LLMs）",
-      "description_zh": "cherry-studio 是一个集成智能聊天、自主代理和300多个助手的AI生产力工作室，提供对前沿大型语言模型（LLMs）的统一访问。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 805480923,
       "source_full_name": "natolambert/rlhf-book",
       "source_hash": "05037ca208dd25e0ddc466d9bb98f15caf015be97db995cfd4d66bc752ba2049",
@@ -23584,15 +23575,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 868173144,
-      "source_full_name": "kortix-ai/suna",
-      "source_hash": "c89f900fd9a80174a2a6b9ed58c85bfe631bdc09b019681dbb640340a40434f7",
-      "display_name_zh": "suna｜开源 AI 操作系统",
-      "description_zh": "开源 AI 操作系统。",
-      "generated_at": "2026-10-05T06:21:40.011982Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 869139913,
       "source_full_name": "lmstudio-ai/mlx-engine",
       "source_hash": "37b7d9decdc8d9df0c7a56200a8fbfd0596f1333f9e07f68817a9c0108fbf02d",
@@ -24340,15 +24322,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 908589694,
-      "source_full_name": "Zackriya-Solutions/meetily",
-      "source_hash": "9a45f8efd861638efeec394df7959e987247d4043acab6135c5dcf0243e0f7d3",
-      "display_name_zh": "meetily｜100%本地AI会议助手",
-      "description_zh": "meetily 是一款以隐私为先的AI会议助手，支持4倍速Parakeet/Whisper实时转录、说话人区分和Ollama摘要，100%本地处理，无需云服务。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 908746124,
       "source_full_name": "WildKernels/GKI_KernelSU_SUSFS",
       "source_hash": "5377d4f66bcd66d118345015c7525e244d70b98ab1d72aa7b27dc2e76dc5c480",
@@ -24887,15 +24860,6 @@
       "description_zh": null,
       "generated_at": "2026-07-19T07:03:48.394229Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 932932619,
-      "source_full_name": "leandrocp/lumis",
-      "source_hash": "6c744f7b23363829ff1ad9fae0384a0f4a68710dfe0b2af81cdd2e965e55500a",
-      "display_name_zh": "lumis｜语法高亮工具",
-      "description_zh": "由 Tree-sitter 与 Neovim 主题驱动的语法高亮工具。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 933197458,
@@ -27209,15 +27173,6 @@
       "description_zh": "uView-Pro 是基于 uView 1.8.8 用 TypeScript 重构的跨平台 UI 框架，专为 Vue 3 + TypeScript 的 uni-app 生态设计，提供 80+ 高质量组件，支持 H5、APP 等多端开发。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1031912724,
-      "source_full_name": "farion1231/cc-switch",
-      "source_hash": "df51ecb8853e50b28a593b2132d0f15e35fc5365307a83d3a998c04ea9b2b01c",
-      "display_name_zh": "cc-switch｜跨平台多智能体桌面助手",
-      "description_zh": "面向 Claude Code、Codex、OpenCode、OpenClaw、Grok Build 与 Hermes Agent 的跨平台桌面一体化助手。唯一官网：ccswitch.io",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1031945919,
@@ -30145,15 +30100,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1147094660,
-      "source_full_name": "HKUDS/nanobot",
-      "source_hash": "beaa69110fdd5042ed340d9f2e87bd235b7d72b665365b21703299716701e5cb",
-      "display_name_zh": "nanobot｜超轻量个人 AI Agent 框架",
-      "description_zh": "超轻量、开源、自托管的 Python 个人 AI Agent 框架，具备 WebUI、工具、记忆、MCP、多智能体工作流、自动化和聊天应用。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1147838400,
       "source_full_name": "anbeime/skill",
       "source_hash": "8af0650278a242745b75befb9dbf7678966b57ac0b981c194ee14c59e7f01796",
@@ -30593,15 +30539,6 @@
       "description_zh": null,
       "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1158472225,
-      "source_full_name": "edison7009/EchoBird",
-      "source_hash": "d7ad13f981cfac73a2b513f69cc4e818a3e52314841d061ac46a202612509f42",
-      "display_name_zh": "EchoBird｜多账号与多模型路由管理",
-      "description_zh": "集中管理 ChatGPT、Codex CLI 和 Claude Code 账号并追踪配额。支持带优先级与自动故障转移的多模型智能路由。一键安装 AI 工具并部署本地 LLMs。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1158479469,
@@ -32626,15 +32563,6 @@
       "display_name_zh": "Aether｜跨平台视觉小说模拟器",
       "description_zh": "使用 Godot 4 作为渲染层的跨平台、多运行时视觉小说模拟器。",
       "generated_at": "2026-10-07T06:38:40.599868Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1201476594,
-      "source_full_name": "career-ops-hq/career-ops",
-      "source_hash": "eaf4e8a29d44b01203c78de66b6b0eba19a93dba13d34c7b00d309a9a71d0606",
-      "display_name_zh": "career-ops｜AI 求职代理与职位搜索工具",
-      "description_zh": "开源 AI 求职代理与职位搜索工具：扫描招聘网站，投递前按 CV 为每个职位打 1-5 分，定制 ATS 友好的简历和求职信，并提供面试准备与求职申请跟踪。它帮你填写每份申请，由你点击提交。可在本地 AI 编程 CLI（Claude Code、Codex、OpenCode 等）中运行。",
-      "generated_at": "2026-10-03T05:52:11.665549Z",
       "provenance": "model_api"
     },
     {

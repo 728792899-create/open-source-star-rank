@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "taxonomy_version": "1.0.0",
-  "generated_at": "2026-10-29T16:17:45.617800Z",
+  "generated_at": "2026-10-30T16:16:59.445193Z",
   "repositories": [
     {
       "repository_id": 3314,
@@ -32654,21 +32654,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 805155266,
-      "source_full_name": "CherryHQ/cherry-studio",
-      "source_hash": "ef13cb2971c6bdb372b5a1c8831ea3d8f7f60c71be722d5f44ecdba7f2337595",
-      "primary_category": "ai-machine-learning",
-      "project_type": "application",
-      "use_cases": [
-        "ai-coding",
-        "agents-automation",
-        "personal-productivity"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-17T03:58:39.338555Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 805480923,
       "source_full_name": "natolambert/rlhf-book",
       "source_hash": "e830671adeca4e6713e38bb2ee4ef67fc93a0c1d6bd7384db225f59938a1c41f",
@@ -34197,21 +34182,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 868173144,
-      "source_full_name": "kortix-ai/suna",
-      "source_hash": "cf2d6b84487825312d9b4a8168d70940d10da43f681b220a2e3edecc03451290",
-      "primary_category": "ai-machine-learning",
-      "project_type": "platform-service",
-      "use_cases": [
-        "ai-coding",
-        "agents-automation",
-        "self-hosting"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-10-05T06:21:45.587343Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 869139913,
       "source_full_name": "lmstudio-ai/mlx-engine",
       "source_hash": "4b2a916108041a5ad818e5a831c1aa7ccfb57abb88894f3c68740f2a7ee4ae62",
@@ -35267,22 +35237,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-25T03:56:53.240576Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 908589694,
-      "source_full_name": "Zackriya-Solutions/meetily",
-      "source_hash": "e4c15224d4ee33af3c52a658fad70bd3825e00b7b7bf4a6e9b1f043fdf0320b5",
-      "primary_category": "ai-machine-learning",
-      "project_type": "application",
-      "use_cases": [
-        "privacy-local",
-        "content-generation",
-        "personal-productivity",
-        "team-collaboration"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-16T06:51:50.292861Z",
       "provenance": "github_models"
     },
     {
@@ -39487,20 +39441,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1031912724,
-      "source_full_name": "farion1231/cc-switch",
-      "source_hash": "56e32858b848f6dfded127e53a8b94405fa86f8307c8e1ec817d09a0e53c667e",
-      "primary_category": "developer-tools",
-      "project_type": "application",
-      "use_cases": [
-        "ai-coding",
-        "personal-productivity"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-09-24T04:30:45.978519Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1031945919,
       "source_full_name": "whyisdifficult/jiratui",
       "source_hash": "5652b1abd5165ed2643f972669f8bcf393b70940d80d2641579d144d05138255",
@@ -43149,21 +43089,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1137078255,
-      "source_full_name": "colbymchenry/codegraph",
-      "source_hash": "63f391dbf1ecc6144e9d4a3c2903c082b9336e619e54cc36508da45486f5d3ad",
-      "primary_category": "developer-tools",
-      "project_type": "cli-developer-tool",
-      "use_cases": [
-        "ai-coding",
-        "rag-knowledge",
-        "privacy-local"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-09-24T04:30:45.978519Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1137306148,
       "source_full_name": "PerryTS/perry",
       "source_hash": "6ddb678eec6fabbefd88add60ac38614f330bd8658d8f33a0556fc3ca17f4b8b",
@@ -43643,21 +43568,6 @@
       "use_cases": [
         "agents-automation",
         "personal-productivity",
-        "self-hosting"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-09-24T04:30:45.978519Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1147094660,
-      "source_full_name": "HKUDS/nanobot",
-      "source_hash": "c16cd4c453fd57d12a47be42c86fb2680be98c9a4bdf952e633eb8c1f5360d89",
-      "primary_category": "ai-machine-learning",
-      "project_type": "library-framework",
-      "use_cases": [
-        "agents-automation",
-        "privacy-local",
         "self-hosting"
       ],
       "taxonomy_version": "1.0.0",
@@ -44305,21 +44215,6 @@
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T19:37:54.117571Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1158472225,
-      "source_full_name": "edison7009/EchoBird",
-      "source_hash": "74b67655123fc8277e5955066085cb29106cf225f19b412d54a49270b77a94f0",
-      "primary_category": "developer-tools",
-      "project_type": "application",
-      "use_cases": [
-        "ai-coding",
-        "agents-automation",
-        "privacy-local"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-09-24T04:30:45.978519Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1158479469,
@@ -47275,21 +47170,6 @@
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-24T04:00:32.535148Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1201476594,
-      "source_full_name": "career-ops-hq/career-ops",
-      "source_hash": "d2e6a0a2496fad2c54f5d81bd718dd429ed45a41c1a05509cdcb29a045abae0e",
-      "primary_category": "productivity-collaboration",
-      "project_type": "application",
-      "use_cases": [
-        "ai-coding",
-        "agents-automation",
-        "personal-productivity"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-10-03T05:52:17.835370Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1201656210,
