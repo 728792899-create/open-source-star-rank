@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-10-31T06:24:06.270176Z",
+  "generated_at": "2026-10-31T16:13:28.367160Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4881,
-    "localized_count": 4783,
-    "pending_count": 98,
+    "localized_count": 4780,
+    "pending_count": 101,
     "failed_count": 98,
-    "coverage_ratio": 0.979922
+    "coverage_ratio": 0.979308
   },
   "repositories": [
     {
@@ -9832,15 +9832,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 136510559,
-      "source_full_name": "GitoxideLabs/gitoxide",
-      "source_hash": "a2daa4ce67f103e2a7c3ede66a042567b1954d1398e64b8d7b9319e41635e3b3",
-      "display_name_zh": "gitoxide｜纯 Rust 实现的 Git",
-      "description_zh": "一个符合习惯、精简、快速且安全的纯 Rust 实现的 Git。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 137078487,
       "source_full_name": "vuejs/core",
       "source_hash": "3c5a548004f357416030f730b655b0b047f83f6658dfb0e727ef4328bc37de18",
@@ -14554,15 +14545,6 @@
       "display_name_zh": "raspberry-pi-pwm-fan-control｜树莓派 PWM 风扇控制",
       "description_zh": "树莓派 PWM 风扇控制程序",
       "generated_at": "2026-07-20T04:28:39.695110Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 332585863,
-      "source_full_name": "wppconnect-team/wppconnect",
-      "source_hash": "a01dcd56d3fc71e4f531dc0a03a08cb76e46538657c8eecc485e5d8fe2c35b3c",
-      "display_name_zh": "wppconnect｜WhatsApp Web 功能导出工具",
-      "description_zh": "WPPConnect 是一个开源项目，旨在将 WhatsApp Web 的功能导出到 Node 环境，支持客服、媒体发送、基于短语的智能识别等多种交互。",
-      "generated_at": "2026-07-20T18:28:18.246753Z",
       "provenance": "github_models"
     },
     {
@@ -42543,15 +42525,6 @@
       "source_hash": "357948a8e8a983c8134ea34b692bf869239508267f9a7fdf32a0e434e6c28145",
       "display_name_zh": "Jevmind｜智能工具",
       "description_zh": null,
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1372152799,
-      "source_full_name": "dmtrKovalenko/bashka",
-      "source_hash": "7a28f72185dc3554e81a00a67b8d3101b1de5429e0b4a7ac56bf316830846951",
-      "display_name_zh": "bashka｜bash 脚本静态安全验证工具",
-      "description_zh": "不再运行未经验证的 bash 脚本安装软件！用 curl <url> | bashKA 对 bash 脚本进行静态安全验证，并管理已安装的软件。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
