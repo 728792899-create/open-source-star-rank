@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-02T06:57:23.800165Z",
+  "generated_at": "2026-11-02T08:43:50.483800Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
-    "eligible_count": 4881,
-    "localized_count": 4776,
-    "pending_count": 105,
+    "eligible_count": 4882,
+    "localized_count": 4770,
+    "pending_count": 112,
     "failed_count": 105,
-    "coverage_ratio": 0.978488
+    "coverage_ratio": 0.977059
   },
   "repositories": [
     {
@@ -514,15 +514,6 @@
       "display_name_zh": "postgres｜PostgreSQL 官方 GIT 镜像",
       "description_zh": "postgres 是官方 PostgreSQL GIT 仓库的镜像。",
       "generated_at": "2026-07-16T17:46:53.472669Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 931135,
-      "source_full_name": "Leaflet/Leaflet",
-      "source_hash": "cd98ad79c8f8696f3dbbe9ae66e0a138a7164a26e96f85313315e78affecd5ee",
-      "display_name_zh": "Leaflet｜移动友好交互式地图 JavaScript 库",
-      "description_zh": "适用于移动设备的交互式地图 JavaScript 库。",
-      "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
     },
     {
@@ -3539,15 +3530,6 @@
       "description_zh": "我的 macOS dotfiles，使用 Neovim、Zsh 以及 Ghostty 加 Tmux。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
-    },
-    {
-      "repository_id": 21467110,
-      "source_full_name": "explosion/spaCy",
-      "source_hash": "3c443a68cfd33c2cb13b31abeaa7d0ed7741773a66df223a2ee5b3fc2cee96ad",
-      "display_name_zh": "spaCy｜spaCy 自然语言处理（NLP）库",
-      "description_zh": "工业级 Python 自然语言处理（NLP）库。",
-      "generated_at": "2026-07-19T00:17:52.423389Z",
-      "provenance": "github_models"
     },
     {
       "repository_id": 21540759,
@@ -8704,15 +8686,6 @@
       "display_name_zh": "brave-browser｜Brave浏览器 Android/iOS/Linux/macOS/Windows版",
       "description_zh": "适用于Android、iOS、Linux、macOS和Windows的Brave浏览器。",
       "generated_at": "2026-07-20T18:28:18.246753Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 110211147,
-      "source_full_name": "xkcoding/spring-boot-demo",
-      "source_hash": "3fd8328bed2336c616f9994eca5470c4b49554e7eeea355a7b6ced9d2f311d8c",
-      "display_name_zh": "spring-boot-demo｜Spring Boot 学习与实战项目",
-      "description_zh": "用于深入学习和实战 Spring Boot 的示例项目。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
     },
     {
@@ -17158,15 +17131,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 515647260,
-      "source_full_name": "1Panel-dev/1Panel",
-      "source_hash": "be5181d10d8178b256d00ec14489f435f2b9650a2304ca127bd3f15b986d215d",
-      "display_name_zh": "1Panel｜Linux服务器管理与AI平台",
-      "description_zh": "1Panel 是一款现代化的开源 Linux 服务器管理面板，也是轻量级 AI 管理平台。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 516106592,
       "source_full_name": "amber-lang/amber",
       "source_hash": "a491d00f39e88f4ae8619016c75ffa9e2ebac0ccc1bd39d1c5d4bfc21527813c",
@@ -18775,15 +18739,6 @@
       "display_name_zh": "maxtext｜Jax大语言模型",
       "description_zh": "一个简单、高性能且可扩展的Jax大语言模型（LLM）。",
       "generated_at": "2026-07-20T18:28:18.246753Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 608555244,
-      "source_full_name": "chenfei-wu/TaskMatrix",
-      "source_hash": "eeb07348c2d229a8d6fa18ee655dfc20afc716e9417112831ea933d8f103b884",
-      "display_name_zh": "TaskMatrix｜任务管理工具",
-      "description_zh": null,
-      "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
     },
     {
@@ -21269,15 +21224,6 @@
       "description_zh": "支持 Apple Home Key（逆向工程实现）的 ESP32 HomeKit 门锁。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
-    },
-    {
-      "repository_id": 730534580,
-      "source_full_name": "infiniflow/ragflow",
-      "source_hash": "7c864cbce843fb411605a877d78915a92d9ea6817ffc4e1313d8094836a9fcca",
-      "display_name_zh": "ragflow｜支持RAG和LLMs的检索增强生成引擎",
-      "description_zh": "RAGFlow是开源的检索增强生成引擎，结合RAG和Agent能力，为LLMs提供优质上下文层。",
-      "generated_at": "2026-07-18T00:14:53.937273Z",
-      "provenance": "github_models"
     },
     {
       "repository_id": 730758678,
