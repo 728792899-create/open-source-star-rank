@@ -1,49 +1,49 @@
 {
   "version": 1,
-  "snapshot_at": "2026-11-01T16:02:08Z",
-  "ranking_date": "2026-11-01",
+  "snapshot_at": "2026-11-02T16:01:30Z",
+  "ranking_date": "2026-11-02",
   "observed_count": 2000,
   "sampling": {
     "target_local_time": "00:20",
     "valid_window_start": "00:00",
     "valid_window_end": "03:00",
-    "latest_snapshot_at": "2026-11-01T16:02:08Z",
+    "latest_snapshot_at": "2026-11-02T16:01:30Z",
     "latest_snapshot_valid": true,
     "latest_snapshot_reason": "within_window",
-    "latest_valid_snapshot_at": "2026-11-01T16:02:08Z",
+    "latest_valid_snapshot_at": "2026-11-02T16:01:30Z",
     "consecutive_valid_snapshots": 2,
-    "next_scheduled_at": "2026-11-03T00:20:00+08:00",
+    "next_scheduled_at": "2026-11-04T00:20:00+08:00",
     "expected_first_ranking_at": null,
     "period_progress": {
       "7d": {
-        "completed": 4,
+        "completed": 5,
         "required": 7
       },
       "30d": {
-        "completed": 4,
+        "completed": 5,
         "required": 30
       }
     }
   },
   "enrichment": {
     "translation": {
-      "generated_at": "2026-11-02T06:57:23.800165Z",
+      "generated_at": "2026-11-02T16:47:47.392866Z",
       "coverage": {
-        "eligible_count": 4881,
-        "localized_count": 4776,
-        "pending_count": 105,
+        "eligible_count": 4882,
+        "localized_count": 4765,
+        "pending_count": 117,
         "failed_count": 105,
-        "coverage_ratio": 0.978488
+        "coverage_ratio": 0.976034
       }
     },
     "classification": {
-      "generated_at": "2026-11-02T06:57:29.134160Z",
+      "generated_at": "2026-11-02T16:47:50.232864Z",
       "coverage": {
-        "eligible_count": 4881,
-        "classified_count": 4363,
-        "pending_count": 518,
+        "eligible_count": 4882,
+        "classified_count": 4351,
+        "pending_count": 531,
         "failed_count": 518,
-        "coverage_ratio": 0.893874
+        "coverage_ratio": 0.891233
       }
     }
   },

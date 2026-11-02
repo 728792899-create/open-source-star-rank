@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-02T08:43:50.483800Z",
+  "generated_at": "2026-11-02T16:47:47.392866Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4882,
-    "localized_count": 4770,
-    "pending_count": 112,
+    "localized_count": 4765,
+    "pending_count": 117,
     "failed_count": 105,
-    "coverage_ratio": 0.977059
+    "coverage_ratio": 0.976034
   },
   "repositories": [
     {
@@ -13333,15 +13333,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 270722949,
-      "source_full_name": "lucide-icons/lucide",
-      "source_hash": "878f9665623d567d0501dd212762f5a5117fba4d21b4993d3f5864fe3f0f71e8",
-      "display_name_zh": "lucide｜社区图标工具包",
-      "description_zh": "由社区打造的美观且一致的图标工具包，是开源项目，也是 Feather Icons 的分支。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 271501564,
       "source_full_name": "espressif/esp-hosted",
       "source_hash": "16d188ed7d19564f277fde8693d2a89bac05947fd670dcc637ac9bbb224a29b3",
@@ -13987,15 +13978,6 @@
       "display_name_zh": "luban｜游戏配置解决方案",
       "description_zh": "luban 是一个强大、易用、优雅且稳定的游戏配置解决方案。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 306829688,
-      "source_full_name": "nocobase/nocobase",
-      "source_hash": "b3803964bcdb1a013802ac2d68ad4057d0a260e5ea940f65a6784b3ceee18a53",
-      "display_name_zh": "nocobase｜AI + 无代码业务平台",
-      "description_zh": "NocoBase 是一个开源 AI + 无代码平台，用于快速构建业务系统。AI 基于成熟基础设施和所见即所得（WYSIWYG）无代码界面，兼顾速度与可靠性。",
-      "generated_at": "2026-07-20T18:28:18.246753Z",
       "provenance": "github_models"
     },
     {
@@ -28138,15 +28120,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1088998353,
-      "source_full_name": "NVIDIA-AI-Blueprints/Multi-Agent-Intelligent-Warehouse",
-      "source_hash": "91ecda1bd7057c3404f0f4af78e472690271645c3773c0876579d31c31386ebf",
-      "display_name_zh": "NVIDIA｜多智能体智能仓库方案",
-      "description_zh": null,
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1089969551,
       "source_full_name": "zapdos-labs/unblink",
       "source_hash": "18c7480b72f624e48050be4b3c1771133c7e748ef02c24d6169617c5f3e5d463",
@@ -38587,15 +38560,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1313901893,
-      "source_full_name": "pythops/kudu",
-      "source_hash": "34fdab7219d64098df799ae32b570fc4b19b906353e2de924fef73b9d50ed7a6",
-      "display_name_zh": "kudu｜Linux TUI VM 管理器",
-      "description_zh": "Linux 上的 TUI VM 管理器。",
-      "generated_at": "2026-10-05T06:21:40.011982Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1314624489,
       "source_full_name": "omacom/omarchy-plugin-marketplace",
       "source_hash": "415b958e2a8fd6017975b069eb32852428d57723566ef629170e7c58138456b1",
@@ -42661,15 +42625,6 @@
       "display_name_zh": "von｜System One 决策模型",
       "description_zh": "开源的 System One 决策模型，非自回归，延迟低于 15ms，可作为 TypeSafe Jev 的本地替代方案直接替换使用。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1375400473,
-      "source_full_name": "ejfkdev/ddc",
-      "source_hash": "40559580fcafa0746cc283cb7eb284cc7249da95ff2dd8889c90128f624b70e7",
-      "display_name_zh": "ddc｜Android DEX 转 Java 反编译器",
-      "description_zh": "用 Rust 编写的 Android DEX 转 Java 反编译器，为速度而构建：数秒完成完整应用、毫秒级查询。渐进式分析、javac 验证输出，支持所有 DEX 版本、多 dex 及 XAPK/APKS/APKM 容器。",
-      "generated_at": "2026-10-05T06:21:40.011982Z",
       "provenance": "model_api"
     },
     {
