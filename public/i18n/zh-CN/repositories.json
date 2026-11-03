@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-03T07:20:13.367660Z",
+  "generated_at": "2026-11-03T16:16:02.207379Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4882,
-    "localized_count": 4765,
-    "pending_count": 117,
+    "localized_count": 4761,
+    "pending_count": 121,
     "failed_count": 117,
-    "coverage_ratio": 0.976034
+    "coverage_ratio": 0.975215
   },
   "repositories": [
     {
@@ -2162,15 +2162,6 @@
       "description_zh": "《The Way to Go》中文译本，中文正式名《Go 入门指南》。",
       "generated_at": "2026-07-19T00:17:52.423389Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 9062260,
-      "source_full_name": "piotrnar/gocoin",
-      "source_hash": "f90b2681a7c7a98cddb3e13143709141f5f5d683beb1183c89415155bf8d5005",
-      "display_name_zh": "gocoin｜Go 编写的完整比特币方案",
-      "description_zh": "用 Go（golang）编写的完整比特币解决方案。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 9185792,
@@ -10001,15 +9992,6 @@
       "description_zh": "开源模型为你完成任务的统一工作空间。",
       "generated_at": "2026-09-24T04:29:49.592970Z",
       "provenance": "model_api"
-    },
-    {
-      "repository_id": 143455116,
-      "source_full_name": "google/filament",
-      "source_hash": "e0f17dc41a3a203e04606123361fbf709fc36b1c88340d362c6acc08a790099e",
-      "display_name_zh": "filament｜支持 WebGL2 的实时物理渲染引擎",
-      "description_zh": "filament 是支持 Android、iOS、Windows、Linux、macOS 和 WebGL2 的实时物理渲染引擎。",
-      "generated_at": "2026-07-17T00:57:38.909807Z",
-      "provenance": "github_models"
     },
     {
       "repository_id": 144000412,
@@ -29290,15 +29272,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1130667066,
-      "source_full_name": "nirholas/three.ws",
-      "source_hash": "ef85b2173645d47bb3ca68a8b98d1f77cd09c4ebfecfd70cd99d94418890840b",
-      "display_name_zh": "three.ws｜3D AI 智能体平台",
-      "description_zh": "面向 3D AI 智能体的开源平台。将文本或照片变成绑定骨骼并带动画的 GLB 虚拟形象，赋予其 LLM 大脑、记忆和钱包，并通过一个 Web Component 嵌入任何位置。支持远程 MCP 服务器、x402 支付、Three.js，浏览器原生。",
-      "generated_at": "2026-10-01T06:39:02.374651Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1130697338,
       "source_full_name": "gesellix/Bose-SoundTouch",
       "source_hash": "4c318e7170afc96790653120e97696ce29eef2955d7520222fd99223abab00c2",
@@ -35966,15 +35939,6 @@
       "description_zh": "将 Markdown 一键转换为可直接粘贴到微信公众号编辑器的精致 HTML，包含 6 套精选主题、主题生成器和双关卡校验，基于 AI 代理技能。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1286080397,
-      "source_full_name": "JustVugg/colibri",
-      "source_hash": "bb82c2137559dc3dbf6e08d91a19783ca5ac7ea7e187358a2c6ecb753e402ccc",
-      "display_name_zh": "colibri｜纯 C 本地运行 MoE 模型引擎",
-      "description_zh": "在自有硬件上运行前沿 MoE 模型：纯 C 实现、零依赖，专家参数从磁盘流式加载。小引擎，大模型。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1286415059,
