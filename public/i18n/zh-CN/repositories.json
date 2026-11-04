@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-04T07:02:14.675088Z",
+  "generated_at": "2026-11-04T16:16:33.932282Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4882,
-    "localized_count": 4761,
-    "pending_count": 121,
+    "localized_count": 4759,
+    "pending_count": 123,
     "failed_count": 121,
-    "coverage_ratio": 0.975215
+    "coverage_ratio": 0.974805
   },
   "repositories": [
     {
@@ -14332,15 +14332,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 324829379,
-      "source_full_name": "organicmaps/organicmaps",
-      "source_hash": "f0bea7b8a09679eedf99fa504f2c9c87e0ade74fced187974f3710b340b8bc9e",
-      "display_name_zh": "organicmaps｜离线地图应用",
-      "description_zh": "organicmaps 是一款免费离线地图应用，基于 OpenStreetMap 数据，适合旅行者、徒步者和骑行者使用，无广告无追踪。",
-      "generated_at": "2026-07-17T00:57:38.909807Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 326174741,
       "source_full_name": "ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code",
       "source_hash": "1c5cac937e7439ab4ce75eb3b0dbafd3e7ad130986c5d1cd385c62f3ce3eb39c",
@@ -19261,15 +19252,6 @@
       "display_name_zh": "sbccas｜计算机应用与科学学院项目",
       "description_zh": "Sutex银行计算机应用与科学学院相关项目。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 636693030,
-      "source_full_name": "GoogleCloudPlatform/generative-ai",
-      "source_hash": "af9757c0a3b921f1e9503540832fc81b293d9104b406c316c999540d3eb5ff26",
-      "display_name_zh": "generative-ai｜Google Cloud 生成式 AI 示例",
-      "description_zh": "generative-ai 提供了 Google Cloud 上生成式 AI 的示例代码和笔记本，包含 Gemini 企业代理平台。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
     },
     {
