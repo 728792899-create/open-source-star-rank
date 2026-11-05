@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-05T07:29:12.858166Z",
+  "generated_at": "2026-11-05T16:59:48.542417Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4882,
-    "localized_count": 4759,
-    "pending_count": 123,
+    "localized_count": 4755,
+    "pending_count": 127,
     "failed_count": 123,
-    "coverage_ratio": 0.974805
+    "coverage_ratio": 0.973986
   },
   "repositories": [
     {
@@ -12748,15 +12748,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 248372441,
-      "source_full_name": "filamentphp/filament",
-      "source_hash": "50b3b0dc4e5571054120434d0dae926ec0f84fcb0a04c371b92145d8c7e3199f",
-      "display_name_zh": "filament｜Laravel UI 框架",
-      "description_zh": "基于 Laravel 的强大开源 UI 框架，支持快速构建应用和管理面板。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 248402358,
       "source_full_name": "ngl567/CookBook-KG",
       "source_hash": "51363c821349dfc38e99600b5c0646d4e227ef88e62abf91937844b99b4b6e79",
@@ -14494,15 +14485,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 333483116,
-      "source_full_name": "dgtlmoon/changedetection.io",
-      "source_hash": "4e5d48b73bb227e0f6038304609f10da134db4a6656af0db450fce39aba1cefd",
-      "display_name_zh": "changedetection.io｜网站变更检测工具",
-      "description_zh": "简单高效的网站变更检测和监控工具，支持内容变更、价格变动和补货提醒。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 335164964,
       "source_full_name": "dataease/dataease",
       "source_hash": "06786377d5b871b8377dfed5bf851b7d82df090fc53198648d85a42a9f68b9dd",
@@ -15687,15 +15669,6 @@
       "source_hash": "6e2534343b9ce02bd6b57407e06a98ec81ac1dc87cb0112bb8b2f0c5f3126e97",
       "display_name_zh": "EasyBangumi｜Android看番软件",
       "description_zh": "基于 Compose 开发的 Android 看番软件，支持多番剧源。",
-      "generated_at": "2026-07-17T00:57:38.909807Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 413918947,
-      "source_full_name": "vercel/turborepo",
-      "source_hash": "5a492fe51b7dd4bab5cb84689e4ba2c7870e1e261191654e6d23217708bb9a0e",
-      "display_name_zh": "turborepo｜JavaScript和TypeScript构建系统",
-      "description_zh": "针对 JavaScript 和 TypeScript 优化的构建系统，使用 Rust 编写。",
       "generated_at": "2026-07-17T00:57:38.909807Z",
       "provenance": "github_models"
     },
@@ -17588,15 +17561,6 @@
       "description_zh": "FongMi影视和tvbox的配置文件，使用前请仔细阅读说明。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 543101941,
-      "source_full_name": "dream-num/univer",
-      "source_hash": "cda072fbdee6c870867fe7c4137ca5ab1d22782269c507e81f55b08f9359e860",
-      "display_name_zh": "univer｜面向 AI Agent 的 Office 运行时",
-      "description_zh": "面向 AI Agent 的 Office Harness——在同一运行时中提供电子表格、文档、幻灯片、画布、关系表和 PDF。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 543632052,
