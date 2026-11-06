@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-06T07:28:49.862527Z",
+  "generated_at": "2026-11-06T16:15:47.774217Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4882,
-    "localized_count": 4755,
-    "pending_count": 127,
+    "localized_count": 4749,
+    "pending_count": 133,
     "failed_count": 127,
-    "coverage_ratio": 0.973986
+    "coverage_ratio": 0.972757
   },
   "repositories": [
     {
@@ -19354,15 +19354,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 643445235,
-      "source_full_name": "lobehub/lobehub",
-      "source_hash": "e55ad5686597e8c5084c0df46989950013e1dac448c9ac83b083f3785b86378b",
-      "display_name_zh": "lobehub｜7×24 AI 代理运营平台",
-      "description_zh": "lobehub 是 AI 团队的智能运营平台，实现 7×24 小时代理管理、招聘、排班和报告。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 643504282,
       "source_full_name": "hiddify/hiddify-app",
       "source_hash": "3f6df38e30496371828442a0e3f766e2ea79f0e865b5e8b41b9e20437282d70e",
@@ -20324,15 +20315,6 @@
       "description_zh": "基于LLM的多代理协作开发平台2.0版本",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 684031003,
-      "source_full_name": "dataelement/bisheng",
-      "source_hash": "476800d243804fe7fed43b67407e39f2fd5c8cde4dca6cf42389fb02ec2ee6ac",
-      "display_name_zh": "BISHENG｜企业级 LLM 开发运维平台",
-      "description_zh": "BISHENG 是面向下一代企业 AI 应用的开源 LLM 开发运维平台，功能包括 GenAI 工作流、RAG、Agent、统一模型管理、评估、SFT、数据集管理、企业级系统管理、可观测性等。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 684776900,
@@ -26464,15 +26446,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1013480284,
-      "source_full_name": "davila7/claude-code-templates",
-      "source_hash": "42a56e11c7c1d45aa61c12f8d4e847b3c4eab546bc9527c3a1006fc619fdb06d",
-      "display_name_zh": "claude-code-templates｜Claude Code CLI 工具",
-      "description_zh": "claude-code-templates 是用于配置和监控 Claude Code 的命令行工具。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1013600287,
       "source_full_name": "iDC-NEU/YiGraph",
       "source_hash": "e455d19a6fa7344f5e182519b90badb70e82d2bc7dac07076d37a7a1c31a5868",
@@ -27586,15 +27559,6 @@
       "display_name_zh": "all-agentic-architectures｜35 种 AI 架构与多提供商 LLM 库（含 LATS 和 17 项基准）",
       "description_zh": "包含 35 种生产级 AI 架构（如 Reflexion、LATS、GraphRAG 等）的 Python 库和可运行教材，支持多提供商 LLM，附带 17 项任务基准排行榜。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1063641074,
-      "source_full_name": "a2ui-project/a2ui",
-      "source_hash": "b220b04b2c12a5178c3e81f871c5628bf43d126e78f84c1441f5f0332c71e2b4",
-      "display_name_zh": "a2ui｜用户界面框架",
-      "description_zh": null,
-      "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
     },
     {
@@ -30629,15 +30593,6 @@
       "description_zh": "个人AI助手，易于安装和部署，支持多聊天应用，功能可扩展。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1165361576,
-      "source_full_name": "cactus-compute/needle",
-      "source_hash": "e7a09e1f12d866f3cded64bf4094f81c95f23ee74a71d651e73e2b11fffe9fd5",
-      "display_name_zh": "needle｜微型设备自动化基础模型",
-      "description_zh": "面向微型设备的自动化基础模型：2-bit、8-29 MB，可在手机、可穿戴设备、智能家居、机器人、汽车和微控制器上实现工具调用、ASR、结构化抽取与嵌入。",
-      "generated_at": "2026-10-16T05:13:26.992743Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1165744194,
@@ -33986,15 +33941,6 @@
       "description_zh": "适用于Windows和MacOS的Android TV设备管理工具，支持ADB连接、网络扫描、APK安装、性能调节、屏幕镜像等功能。",
       "generated_at": "2026-07-21T04:09:00.150793Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1248769131,
-      "source_full_name": "luolangaga/tubatools",
-      "source_hash": "4d1ffa73296fa4d0ac0a78218c9cc498e33c57260b4759da486118a40f9e0b54",
-      "display_name_zh": "tubatools｜WinUI 3 图吧工具箱",
-      "description_zh": "图吧工具箱基于 WinUI 3 全新重构的版本，由社区驱动，契合 Windows 11 设计美学，确保使用最新版本工具，集成更丰富的实用功能，并支持高度自定义的个性化需求。",
-      "generated_at": "2026-10-06T06:57:21.125643Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1249107749,
