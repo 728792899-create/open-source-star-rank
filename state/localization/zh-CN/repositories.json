@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-07T06:41:01.504193Z",
+  "generated_at": "2026-11-07T16:12:44.811284Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4882,
-    "localized_count": 4749,
-    "pending_count": 133,
+    "localized_count": 4744,
+    "pending_count": 138,
     "failed_count": 133,
-    "coverage_ratio": 0.972757
+    "coverage_ratio": 0.971733
   },
   "repositories": [
     {
@@ -7588,15 +7588,6 @@
       "display_name_zh": "gutenberg｜WordPress 区块编辑器项目",
       "description_zh": "WordPress 及其扩展的区块编辑器项目，插件可从官方仓库获取。",
       "generated_at": "2026-07-17T00:57:38.909807Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 80945428,
-      "source_full_name": "nestjs/nest",
-      "source_hash": "019344b35829eca6e7ca767958ffc1e9f9691b1d9ecd1db9ed3e1cead5730016",
-      "display_name_zh": "nest｜Node.js 应用框架",
-      "description_zh": "基于 TypeScript/JavaScript 的渐进式 Node.js 服务器端应用框架。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
     },
     {
@@ -25735,15 +25726,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 976921297,
-      "source_full_name": "asgeirtj/system_prompts_leaks",
-      "source_hash": "f65d2271c7e06538e74a7a1d42a28755a348f2e31c71ce01f457067e39213e12",
-      "display_name_zh": "system_prompts_leaks｜系统提示词合集",
-      "description_zh": "收录并记录 Anthropic（Claude Fable 5.1、Opus 5.5、Claude Design、Claude Code）、OpenAI（ChatGPT GPT-6-Astra、Codex）、Google（Gemini 3.8 Flash、3.1 Pro、Antigravity）、xAI（Grok、Grok Bot、Cursor、Kimi 等）的系统提示词，并定期更新。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 977671574,
       "source_full_name": "stackrender/stackrender",
       "source_hash": "778988a8544e85de818dcf2179383cba6ead540adc1b6995ec7071f02086696c",
@@ -27533,15 +27515,6 @@
       "description_zh": "Agent Skills 的公共代码仓库。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1062356571,
-      "source_full_name": "tw93/Mole",
-      "source_hash": "7760a068836d3993354a0dc4f6371d1b845510ade11fc5344b2794ba2f70e960",
-      "display_name_zh": "Mole｜Mac 与 PC 清理工具",
-      "description_zh": "让 Mac 和 PC 保持干净、轻快、如新运行。提供快速的开源 CLI，以及原生 Mac 和 Windows 应用。",
-      "generated_at": "2026-10-16T05:13:26.992743Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1062458369,
@@ -40504,15 +40477,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1354991988,
-      "source_full_name": "kuuhaku1314/kairisei-ma-ch",
-      "source_hash": "da987c33d9398fbbb2e3b9607d3652f04356bc75e3b27bfdbd46deb178ff2471",
-      "display_name_zh": "kairisei-ma-ch｜乖离性百万亚瑟王国服社区保存与本地运行",
-      "description_zh": "《乖离性百万亚瑟王》国服社区保存与本地运行项目，提供自托管服务端、协议适配、客户端构建工具。",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1355063702,
       "source_full_name": "yunxiangcai88-ai/SIPM-READOUT",
       "source_hash": "91d096add7ee3a0fca5d5b214a393532d2c3c8a348b23ab1e9c063aaaf026d12",
@@ -41013,15 +40977,6 @@
       "source_hash": "1ad6f18cf59520430a53a61bd4c08efd1190c5241726f41f8202fe0f35ded2f7",
       "display_name_zh": "Dukou｜微信聊天记录导出备份",
       "description_zh": "在微信转发菜单中把聊天记录直接发送到任何 App，也能批量文本化备份群聊和朋友圈，附离线 HTML 预览，支持 macOS。",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1358465489,
-      "source_full_name": "Innei/lody-ios",
-      "source_hash": "2ba9de14e5ad9dd70226dce55cb8d14a124d8534b53da403f9a92ac3f086e67d",
-      "display_name_zh": "lody-ios｜Lody 独立 iOS 客户端",
-      "description_zh": "Lody 的独立 iOS 客户端——在 iPhone 上提供原生聊天、会话与编码代理协作。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
       "provenance": "model_api"
     },
