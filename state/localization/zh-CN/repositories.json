@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-08T06:47:25.009199Z",
+  "generated_at": "2026-11-08T16:11:27.812120Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4882,
-    "localized_count": 4744,
-    "pending_count": 138,
+    "localized_count": 4739,
+    "pending_count": 143,
     "failed_count": 138,
-    "coverage_ratio": 0.971733
+    "coverage_ratio": 0.970709
   },
   "repositories": [
     {
@@ -27733,15 +27733,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1077819522,
-      "source_full_name": "pascalorg/editor",
-      "source_hash": "588a028e143824a9c79c46e135a2c788541eca3e00c68d27f27c33b15a9ee0d9",
-      "display_name_zh": "editor｜开源 3D 建筑编辑器",
-      "description_zh": "开源 3D 建筑编辑器，提供本地 CLI、MCP 工具，以及面向人类和 AI 智能体的实用工作流。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1077889760,
       "source_full_name": "github/gh-aw-firewall",
       "source_hash": "439ceb139b1d6e729ad22236da6a6537d78eb40e1aef4ad996a5015a855f56b9",
@@ -32017,15 +32008,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1195360525,
-      "source_full_name": "calesthio/OpenMontage",
-      "source_hash": "a19cc567e092aed6e12a91b25a618caceae2cd73253885fb14c6a6eb32f6068a",
-      "display_name_zh": "OpenMontage｜代理式视频制作系统",
-      "description_zh": "全球首个开源、代理式视频制作系统。包含 12 条制作流水线、100+ 工具、700+ 代理技能与制作知识文件。将你的 AI 编码助手变成完整的视频制作工作室。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1195624057,
       "source_full_name": "Akarikev/luma",
       "source_hash": "0d28b5f1cd8f3f0a9a5d56ef27a4290d551de2219e94f63acbdb2c1b078d3e37",
@@ -35678,15 +35660,6 @@
       "description_zh": "SpectArk是macOS原生增量备份应用，支持版本快照、应用内恢复、实时/定时备份、保留策略、配额及NAS，兼容macOS 14+。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1284153858,
-      "source_full_name": "abue-ammar/tinycast",
-      "source_hash": "82b1fbc8809a43eb5e0effd5f6f97269dd6b3ca64e5103104bdc5e79884ba757",
-      "display_name_zh": "tinycast｜原生 macOS 启动器与剪贴板历史",
-      "description_zh": "Tinycast 是一款小巧、完全原生的 macOS 启动器，支持热键和剪贴板历史。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1284959612,
@@ -41143,15 +41116,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1359237856,
-      "source_full_name": "XiaochangXu/AVBox",
-      "source_hash": "de97525da29b7f62a64a41e5bcd8bc8dacaee6478fc98dce0ece199124727c3d",
-      "display_name_zh": "AVBox｜TVBox 手机版",
-      "description_zh": "TVBox 的手机版本。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1359247858,
       "source_full_name": "biusberline/cloudflare-turnstile-solver",
       "source_hash": "ce9e718e10f6199b72091e892f1e315052a326b8c60b27428f54a076cc410f40",
@@ -42004,15 +41968,6 @@
       "display_name_zh": "Trader-Archives｜交易员推文收录",
       "description_zh": "推特顶级实战派交易员推文公开收录大典，剥离噪音，沉淀真金白银实盘认知体系与全量开源数据湖，完全开源免费 by 梭哈.AI。",
       "generated_at": "2026-09-29T06:19:55.816330Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1367501425,
-      "source_full_name": "rizqinrr/viserys-agent",
-      "source_hash": "2846adf0bc25a8ce0e591943dc483d6852ecc9b929df8a50690247e6b80a5849",
-      "display_name_zh": "viserys-agent｜智能体项目",
-      "description_zh": null,
-      "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
     {
