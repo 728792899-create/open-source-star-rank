@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "id": "00c69e4e85014ba99e2b016e431a67b6",
+  "kind": "localization",
+  "started_at": "2026-11-09T07:19:28.540640Z",
+  "finished_at": "2026-11-09T07:19:29.819902+00:00",
+  "model": "deepseek-flash",
+  "attempted_projects": 20,
+  "accepted_projects": 0,
+  "failed_projects": 20,
+  "failures": [
+    {
+      "repository_id": 17420614,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 138754790,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 254832799,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 280363952,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 332880689,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 436297812,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 476507964,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 482152820,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 725205304,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 1061041576,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 1077819522,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 1157102282,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 1195360525,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 1212769188,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 1284153858,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 1345418172,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 1347104725,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 1358080066,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 1359237856,
+      "reason": "provider_http"
+    },
+    {
+      "repository_id": 1367501425,
+      "reason": "provider_http"
+    }
+  ],
+  "requests": 1,
+  "usage_responses": 0,
+  "unknown_usage_requests": 1,
+  "usage_complete": false,
+  "observed_tokens": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "cache_hit_tokens": 0,
+    "cache_miss_tokens": 0
+  },
+  "request_errors": {
+    "http_402": 1
+  },
+  "estimated_cost": null,
+  "pricing": {
+    "source": "https://api-docs.deepseek.com/quick_start/pricing",
+    "verified_on": "2026-09-24",
+    "valid_until": "2026-10-24",
+    "currency": "USD",
+    "cache_hit": [
+      "0.003",
+      "0.006"
+    ],
+    "cache_miss": [
+      "0.15",
+      "0.3"
+    ],
+    "output": [
+      "0.6",
+      "1.2"
+    ]
+  },
+  "pricing_status": "unavailable",
+  "billing_note": "估算区间并非账单；缺失用量或过期价格不计算费用。"
+}
