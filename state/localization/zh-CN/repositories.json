@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-09T08:57:11.123978Z",
+  "generated_at": "2026-11-09T16:14:42.799317Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4880,
-    "localized_count": 4731,
-    "pending_count": 149,
+    "localized_count": 4728,
+    "pending_count": 152,
     "failed_count": 143,
-    "coverage_ratio": 0.969467
+    "coverage_ratio": 0.968852
   },
   "repositories": [
     {
@@ -17218,15 +17218,6 @@
       "display_name_zh": "firedancer｜Solana 验证节点软件",
       "description_zh": "Jump Crypto 的 Solana 验证节点软件",
       "generated_at": "2026-07-17T00:57:38.909807Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 525592995,
-      "source_full_name": "invoke-ai/InvokeAI",
-      "source_hash": "0d99955c97364ce2f2f90780b6fcd3792b67920f4bcb1e8042e7bec03b2c23c1",
-      "display_name_zh": "InvokeAI｜AI创意引擎",
-      "description_zh": "InvokeAI 基于Stable Diffusion模型的AI创意引擎，支持专业和艺术创作",
-      "generated_at": "2026-07-20T18:28:18.246753Z",
       "provenance": "github_models"
     },
     {
@@ -38686,15 +38677,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1344059029,
-      "source_full_name": "jailbreakdotparty/Erosion",
-      "source_hash": "05c782005930bcb1af4aeb4dc8f2da436709dfc5c073d5e7a38c01d5534c7fec",
-      "display_name_zh": "Erosion｜iOS 定制工具箱",
-      "description_zh": "使用 bad_query 沙盒逃逸的 iOS 定制工具箱，支持 iOS 26.0 - 26.6.2 与 iOS 27.0db1-db4。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1344068353,
       "source_full_name": "Reality-JH/frontend-promotion-guard",
       "source_hash": "9afcb85ebda9f12766835b927003b62cf5dafa3f193e5d47a4d61b1c1573c692",
@@ -38926,15 +38908,6 @@
       "display_name_zh": "robinBundler-toolkit｜代币打包工具包",
       "description_zh": "robinhood 代币打包工具包，包含代币发行、打包与交易量机器人功能。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1345232342,
-      "source_full_name": "kryptamine/herdr-auto-title",
-      "source_hash": "6f6db46d977a12830bef267b30e3af63c0ca02966f8761bcfa9c32a38089586e",
-      "display_name_zh": "herdr-auto-title｜标签与窗格自动命名",
-      "description_zh": "根据当前工作内容、Git 分支、终端活动与 Claude Code 会话，自动为 Herdr 标签页和窗格命名。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
     {
