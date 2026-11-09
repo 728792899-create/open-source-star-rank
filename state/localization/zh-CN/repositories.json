@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-09T07:19:28.540640Z",
+  "generated_at": "2026-11-09T08:57:11.123978Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
-    "eligible_count": 4882,
-    "localized_count": 4739,
-    "pending_count": 143,
+    "eligible_count": 4880,
+    "localized_count": 4731,
+    "pending_count": 149,
     "failed_count": 143,
-    "coverage_ratio": 0.970709
+    "coverage_ratio": 0.969467
   },
   "repositories": [
     {
@@ -3577,15 +3577,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 21827146,
-      "source_full_name": "seaweedfs/seaweedfs",
-      "source_hash": "a9a41808b12dd89e0481e976788b2d5faedbc59cccfa3cdde57c974cf57fd03e",
-      "display_name_zh": "seaweedfs｜分布式存储系统（支持 S3）实现 O(1) 磁盘访问与水平扩展",
-      "description_zh": "SeaweedFS 是一个分布式存储系统，支持对象存储（S3）、文件系统和 Iceberg 表，设计用于处理数十亿文件，具备 O(1) 磁盘访问和轻松水平扩展能力。",
-      "generated_at": "2026-07-19T00:17:52.423389Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 21872392,
       "source_full_name": "josephmisiti/awesome-machine-learning",
       "source_hash": "ab67bb4221a8595f522c5f01655e667979266e0ee4115494c2023d6bdae51a8f",
@@ -5341,15 +5332,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 42751014,
-      "source_full_name": "zenorocha/clipboard.js",
-      "source_hash": "af8a0bbf8d965c7b6ff585b83c6ae323ef12128c641c1a3fbb24bd7e4a6fdb13",
-      "display_name_zh": "clipboard.js｜3kb 现代剪贴板库",
-      "description_zh": "clipboard.js 是一个现代剪贴板复制库，体积仅 3kb，且无需 Flash。",
-      "generated_at": "2026-07-19T00:17:52.423389Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 43425480,
       "source_full_name": "wilsonfreitas/awesome-quant",
       "source_hash": "36003325712040015af2d1e3ab32be804d17b462235389e14174b669d17b8263",
@@ -6553,15 +6535,6 @@
       "display_name_zh": "gleam｜类型安全系统语言",
       "description_zh": "gleam 是一种用于构建类型安全、可扩展系统的友好编程语言。",
       "generated_at": "2026-07-20T18:28:18.246753Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 62367558,
-      "source_full_name": "vercel/hyper",
-      "source_hash": "bf01a3fd3e1f9358a50e7e1e4709d174826b37ec86bf418f6befe68dbd34e7ca",
-      "display_name_zh": "hyper｜网页终端",
-      "description_zh": "基于网页技术构建的终端。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
     },
     {
@@ -10478,15 +10451,6 @@
       "description_zh": "开源AI与数据生态全景，展示顶级项目的GitHub数据、资金、贡献者等信息。",
       "generated_at": "2026-07-20T04:28:39.695110Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 159152904,
-      "source_full_name": "jeecgboot/JeecgBoot",
-      "source_hash": "f6e93bff482d5b7cb8aff2d873f9625946a06507688b193872bb5a028d535195",
-      "display_name_zh": "JeecgBoot｜企业级AI低代码平台v2.0",
-      "description_zh": "低代码v2.0，一句话即可生成整个系统。企业级AI低代码平台，一键生成前后端代码甚至整个系统。AI Skills 一句话画流程、设计表单、生成报表、大屏。内置 AI应用平台涵盖：AI聊天、知识库、流程编排、MCP插件等，兼容主流大模型。引领AI低代码「Skills 生成 → 在线配置 → 代码生成 → 手工合并->AI修改」开发模式，解决 Java 项目 90% 重复工作。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 159271175,
@@ -18013,15 +17977,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 577116112,
-      "source_full_name": "PlexPt/awesome-chatgpt-prompts-zh",
-      "source_hash": "a9edfe4977f57d2bec587720fba01d106424b3701a87a67ff75f5cdead5b06aa",
-      "display_name_zh": "awesome-chatgpt-prompts-zh｜ChatGPT 中文调教指南",
-      "description_zh": "ChatGPT 中文调教指南，涵盖多种使用场景。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 577603990,
       "source_full_name": "LAION-AI/Open-Assistant",
       "source_hash": "c044f67996cccfc5a24c07e2ee5d4880353480474ef21274b3f90db7fd963275",
@@ -23755,15 +23710,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 890668799,
-      "source_full_name": "modelcontextprotocol/servers",
-      "source_hash": "d0676c7aa1962d50d6def8918f62b8d58fd966f75b74115b03692a3c1defdaf5",
-      "display_name_zh": "servers｜模型上下文协议服务器",
-      "description_zh": "模型上下文协议服务器实现。",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 891642747,
       "source_full_name": "langchain-ai/open_deep_research",
       "source_hash": "cb72f3393fd0ec20c331db2bab6678c08398dacc8b61032515417fc62f52436e",
@@ -26707,15 +26653,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1025856648,
-      "source_full_name": "wshobson/agents",
-      "source_hash": "59bb19faa2ca21cd34ecd9656c4fabe426af6f2db5f8b0325aa283997ca03a97",
-      "display_name_zh": "agents｜多平台智能体插件市场",
-      "description_zh": "面向 Claude Code、Codex、Cursor、OpenCode、GitHub Copilot、Google Antigravity 和 Pi 的多平台智能体插件市场。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1026309415,
       "source_full_name": "jeffcaldwellca/mkcertWeb",
       "source_hash": "b6f348f0856729128c1f4375690f55307e8f4d0cb51ab83e6fcc8141c175e256",
@@ -27010,15 +26947,6 @@
       "display_name_zh": "SNO｜Sumudu神经算子代码库",
       "description_zh": "Sumudu神经算子（Sumudu Neural Operator）的代码仓库。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1033778670,
-      "source_full_name": "iOfficeAI/AionUi",
-      "source_hash": "92187a95af12b2f9c7f8c1b17bd01614493efbdeb2ffb390db1caaf7e74133cd",
-      "display_name_zh": "AionUi｜支持 24/7 协作的多 CLI 助手平台（20+ CLI）",
-      "description_zh": "AionUi 是一款免费、开源的本地 24/7 协作应用，支持 OpenClaw、Hermes Agent、Claude Code、Codex、OpenCode、Gemini CLI 及 20 多种 CLI，支持自定义助手。",
-      "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
     },
     {
