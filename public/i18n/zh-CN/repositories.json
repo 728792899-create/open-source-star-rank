@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-10T07:50:49.611156Z",
+  "generated_at": "2026-11-10T16:17:16.173490Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4880,
-    "localized_count": 4728,
-    "pending_count": 152,
+    "localized_count": 4726,
+    "pending_count": 154,
     "failed_count": 152,
-    "coverage_ratio": 0.968852
+    "coverage_ratio": 0.968443
   },
   "repositories": [
     {
@@ -37291,15 +37291,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1302093382,
-      "source_full_name": "gakonst/nanocode",
-      "source_hash": "54f965d828c7f5aec5eab5a53bdb74f50d7b0e4187c68072f9b307974e107ed6",
-      "display_name_zh": "nanocode｜前沿嵌入式智能体 SDK",
-      "description_zh": "面向前沿嵌入式智能体的 SDK。",
-      "generated_at": "2026-10-16T05:13:26.992743Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1302120422,
       "source_full_name": "anes-laieb/codex-bar",
       "source_hash": "7f9159acce789ae07e4fd2667c4503aa209d9d60b3aa1c608cbe9b3281138b87",
@@ -40033,15 +40024,6 @@
       "display_name_zh": "DLSS5-Autopilot｜DLSS 5 自动配置工具",
       "description_zh": "为从未支持 DLSS 5 神经渲染的游戏加入该功能，并将游戏自带的 DLSS 升级到最新版本，涵盖超分辨率、光线重建和帧生成。扫描游戏库后选择八条路线之一，运行时从发布方获取各部分，并报告结果。单个 exe，无需管理员权限；卸载后恢复游戏原状。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1352807807,
-      "source_full_name": "Iman/caspian",
-      "source_hash": "8420812dc3f5bdcd01f690e9d114b78343c2bc82a8f5a3352c1b90b14470f074",
-      "display_name_zh": "caspian｜波斯语优先反 DPI WiFi 网关",
-      "description_zh": "Caspian-BYOC：面向 Windows、macOS、树莓派和 Linux 的波斯语优先反 DPI WiFi 网关。可共享 VLESS、VMess、Trojan、Shadowsocks、SOCKS 或 Hysteria2 Xray 隧道，并可选 SNI 伪装与 TLS 拆分以绕过 DPI。",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
       "provenance": "model_api"
     },
     {
