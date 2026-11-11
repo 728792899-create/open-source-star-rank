@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-11T07:18:34.659658Z",
+  "generated_at": "2026-11-11T16:16:22.449631Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4880,
-    "localized_count": 4726,
-    "pending_count": 154,
+    "localized_count": 4724,
+    "pending_count": 156,
     "failed_count": 154,
-    "coverage_ratio": 0.968443
+    "coverage_ratio": 0.968033
   },
   "repositories": [
     {
@@ -15934,15 +15934,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 438803890,
-      "source_full_name": "LizardByte/Sunshine",
-      "source_hash": "51b232f4cb5bc5b850a6c517ae161ea78baf9372983cb571c5f36af25c7f2800",
-      "display_name_zh": "Sunshine｜自托管游戏流媒体服务器",
-      "description_zh": "支持 Moonlight 的自托管游戏流媒体服务器。",
-      "generated_at": "2026-07-17T00:57:38.909807Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 439772085,
       "source_full_name": "linera-io/linera-protocol",
       "source_hash": "63dd51a1a0e45730eb4b4123c5a0fb4a43191164d5697334a34555f7f07b8775",
@@ -19262,15 +19253,6 @@
       "description_zh": "DragGAN 是 SIGGRAPH 2023 官方发布的图像编辑代码。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 642497346,
-      "source_full_name": "langfuse/langfuse",
-      "source_hash": "11b9a0fa0bcae6886d2f678ff457b3abba461d0f4c9e4e2b7f02a505270868ae",
-      "display_name_zh": "langfuse｜开源 LLM 智能体评估与可观测平台",
-      "description_zh": "开源智能体评估与可观测平台：在一个开放平台中追踪、评估并改进 LLM 应用。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 642858415,
