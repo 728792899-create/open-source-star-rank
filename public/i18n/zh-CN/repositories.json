@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-12T07:49:46.438627Z",
+  "generated_at": "2026-11-12T16:17:40.900511Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4880,
-    "localized_count": 4724,
-    "pending_count": 156,
+    "localized_count": 4721,
+    "pending_count": 159,
     "failed_count": 156,
-    "coverage_ratio": 0.968033
+    "coverage_ratio": 0.967418
   },
   "repositories": [
     {
@@ -24187,15 +24187,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 916009087,
-      "source_full_name": "rowboatlabs/rowboat",
-      "source_hash": "f1b5cd4e753e4d3ebca386482e9a84e02bbbf63e610b41af2606cc60816112eb",
-      "display_name_zh": "rowboat｜AI 协作助手",
-      "description_zh": "具备记忆与协作能力的 AI 同事。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 916247115,
       "source_full_name": "open-telemetry/opentelemetry-go-compile-instrumentation",
       "source_hash": "d1b3e993f6a17752436c4a30fc6273a259ccd684e8ec24f93184dfdd344aeb17",
@@ -29935,15 +29926,6 @@
       "display_name_zh": "awesome-openclaw-usecases｜OpenClaw 使用案例",
       "description_zh": "OpenClaw 使用案例社区集合，旨在简化生活。",
       "generated_at": "2026-07-20T21:57:48.387086Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1153130349,
-      "source_full_name": "pingdotgg/t3code",
-      "source_hash": "5d81d5fd57e5ef6a7d8854464e9f3b19b1048673477e95ed1d661457ac021cdc",
-      "display_name_zh": "t3code｜t3code功能",
-      "description_zh": null,
-      "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
     },
     {
@@ -40491,15 +40473,6 @@
       "source_hash": "7763d0a360d52cb9018f433ee5876217f5d179eafff70e0218f0f09e4400d946",
       "display_name_zh": "infinite-world｜多模态 AI 持久世界",
       "description_zh": "一个用于构建多模态 AI 持久世界的开源系统。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1356877088,
-      "source_full_name": "DAT4RIAN/OpenVigil",
-      "source_hash": "fb4a5c1e61208a7097f1a57b5f550d3a0dca491b9a270ef3a7de1ce055df13e7",
-      "display_name_zh": "OpenVigil｜风力发电机自主智能运维",
-      "description_zh": "面向风力发电机运行的自主智能系统。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
