@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-13T07:26:58.625080Z",
+  "generated_at": "2026-11-13T16:14:44.952425Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4880,
-    "localized_count": 4721,
-    "pending_count": 159,
+    "localized_count": 4714,
+    "pending_count": 166,
     "failed_count": 159,
-    "coverage_ratio": 0.967418
+    "coverage_ratio": 0.965984
   },
   "repositories": [
     {
@@ -4810,15 +4810,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 35866694,
-      "source_full_name": "RocketChat/Rocket.Chat",
-      "source_hash": "e5ad4d26ed5741d134f7ccc60bd501ea19f527c2f58db0d60fecf7a5f219c2ec",
-      "display_name_zh": "Rocket.Chat｜安全通信操作系统",
-      "description_zh": "面向关键任务操作的安全通信操作系统。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 35955666,
       "source_full_name": "jlevy/the-art-of-command-line",
       "source_hash": "8a1d3777a8be67ee0b60cec2659a736def7a4e6c62d60e5c7de88cde9ac2b9c0",
@@ -7291,15 +7282,6 @@
       "display_name_zh": "awesome-cto｜首席技术官资源精选",
       "description_zh": "为首席技术官精选的资源列表，重点关注初创企业。",
       "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 76734068,
-      "source_full_name": "renovatebot/renovate",
-      "source_hash": "08a407d9d29eee349143da0d55b45cf57810c7a1364602214f16b8b93b3db794",
-      "display_name_zh": "renovate｜CLI 依赖自动化工具",
-      "description_zh": "renovate 提供跨平台的依赖自动化管理 CLI 工具。",
-      "generated_at": "2026-07-20T18:28:18.246753Z",
       "provenance": "github_models"
     },
     {
@@ -19471,15 +19453,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 653496050,
-      "source_full_name": "xorbitsai/inference",
-      "source_hash": "0c8ad0c2e83c5d144e161139240cfe06a6d691f722b4304bec6a7622ea35dbf1",
-      "display_name_zh": "inference｜支持GPT和LLM的推理API",
-      "description_zh": "通过修改一行代码即可替换GPT为任意LLM，支持云端、本地及笔记本运行，提供统一且生产级的推理API。",
-      "generated_at": "2026-07-20T18:28:18.246753Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 654025900,
       "source_full_name": "manaskamal/XenevaOS",
       "source_hash": "b5bba4e854b9e31e0b76bcdbff735e6dc5be72d3d8be22b1aaa85284138930e3",
@@ -24084,15 +24057,6 @@
       "source_hash": "8d2d15bc265c3636becb0a4a7f6bc3772e821c7ef5c3ae481b590240900600fd",
       "display_name_zh": "web-ui｜浏览器AI代理界面",
       "description_zh": "在浏览器中运行AI代理的界面",
-      "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 911303109,
-      "source_full_name": "iii-hq/iii",
-      "source_hash": "628ccb3cd052f0ed0130ef1cb90d59c3470ab20dec17e6b935e45d205829fd25",
-      "display_name_zh": "iii｜iii 服务组合与监控平台",
-      "description_zh": "实时轻松组合、扩展和监控各类服务。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
       "provenance": "github_models"
     },
@@ -32746,15 +32710,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1217040185,
-      "source_full_name": "tashfeenahmed/freellmapi",
-      "source_hash": "ea6bedb187a3b856c94097c1bdcff88acfa1adeb609dbdffecfa18fa2447ca53",
-      "display_name_zh": "freellmapi｜LLM 接口聚合",
-      "description_zh": "每月 7.4 亿 token，聚合 34 家免费 LLM 提供商、635 个免费模型端点，统一走一个 /v1 端点，也可接入任意兼容 OpenAI 的自定义端点；支持智能路由、自动故障转移与密钥加密，仅供个人实验使用。",
-      "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1218183854,
       "source_full_name": "avinashA-Star/insurance-suggested-rates",
       "source_hash": "328b3353c009220cf7690c7f70847553a52828bbff851f3378f4dc6053590e83",
@@ -35525,15 +35480,6 @@
       "description_zh": "WIP项目：yip是一个隐形低延迟P2P网状VPN，支持DPI隐蔽、Reed–Solomon FEC纠错和NAT穿透。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1283907968,
-      "source_full_name": "oomol-lab/open-connector",
-      "source_hash": "3b37fd650ddac7be6467e391da5e7d30d85bb73f70fa3144959b9e7dc30c62ce",
-      "display_name_zh": "open-connector｜连接 1500+ SaaS 的 AI 认证网关",
-      "description_zh": "开源认证网关，通过 SDK、CLI、MCP、HTTP 和 OpenAPI 将 1500+ SaaS 提供商连接到 AI 代理。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1284051274,
@@ -40365,15 +40311,6 @@
       "source_hash": "93481a93e2dbbb4eb1f37605721194ac39601bd38780178800bf8eb76c709d19",
       "display_name_zh": "unreel｜个人 AI 视频流媒体服务",
       "description_zh": "你的个人 AI 视频流媒体服务。",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1355626333,
-      "source_full_name": "lantunnel/lantunnel",
-      "source_hash": "83869be3536f8c4b3ebaffcde693b92d07c9b44bdbc0ce1e9385968c030a1cea",
-      "display_name_zh": "lantunnel｜点对点私有网络访问",
-      "description_zh": "无论在哪工作都能访问你的私有网络。点对点优先、端到端加密地访问自己的 LANs，无需端口转发，也无需公开 URLs。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
       "provenance": "model_api"
     },
