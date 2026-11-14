@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-14T07:07:51.673910Z",
+  "generated_at": "2026-11-14T16:14:41.700792Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4880,
-    "localized_count": 4714,
-    "pending_count": 166,
+    "localized_count": 4713,
+    "pending_count": 167,
     "failed_count": 166,
-    "coverage_ratio": 0.965984
+    "coverage_ratio": 0.965779
   },
   "repositories": [
     {
@@ -11727,15 +11727,6 @@
       "source_hash": "0f053e1de81040cb0aea998b90da528502b5f44b2d38d573d3b68fda50a55ab8",
       "display_name_zh": "hoppscotch｜API 开发生态系统与 CLI 工具",
       "description_zh": "hoppscotch 是一个开源的 API 开发生态系统，支持离线、本地和云端，提供 Web、桌面和 CLI 版本，是 Postman 和 Insomnia 的开源替代品。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 204086862,
-      "source_full_name": "streamlit/streamlit",
-      "source_hash": "a160ceda98fecaa68bf29ea57d7700a75b9e25afb8fe3719e124d735380c0988",
-      "display_name_zh": "streamlit｜数据应用构建平台",
-      "description_zh": "Streamlit 是一个快速构建和分享数据应用的平台。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
