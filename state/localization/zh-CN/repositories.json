@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-16T08:54:01.597291Z",
+  "generated_at": "2026-11-16T16:16:22.394205Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4877,
-    "localized_count": 4705,
-    "pending_count": 172,
+    "localized_count": 4703,
+    "pending_count": 174,
     "failed_count": 167,
-    "coverage_ratio": 0.964732
+    "coverage_ratio": 0.964322
   },
   "repositories": [
     {
@@ -3268,15 +3268,6 @@
       "display_name_zh": "computer-science｜计算机科学自学路径",
       "description_zh": "计算机科学的免费自学路径。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 19696006,
-      "source_full_name": "playcanvas/engine",
-      "source_hash": "b20d566129e91d21a0933fb727ae377e75bf683e9bc7b42f4c7c59bc7f5ef7e6",
-      "display_name_zh": "engine｜基于 WebGL 的网页图形引擎",
-      "description_zh": "engine 是基于 WebGL、WebGPU、WebXR 和 glTF 的强大网页图形运行时。",
-      "generated_at": "2026-07-16T17:46:53.472669Z",
       "provenance": "github_models"
     },
     {
@@ -39349,15 +39340,6 @@
       "display_name_zh": "genart-skill｜生成艺术 skill",
       "description_zh": "面向 Claude Code 的生成艺术 skill，具备确定性、哈希种子和链上就绪特性。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1349410105,
-      "source_full_name": "rokbenko/quackd",
-      "source_hash": "e93a6482c76b1de62ef2fa2b1c0b90088e5bf07d143dc6e9455afe7dadf6a572",
-      "display_name_zh": "quackd｜机器人统一 CLI",
-      "description_zh": "一个 CLI 管理所有机器人。连接、指挥并让它们协同工作，每个机器人都以 LLM 为大脑（Claude、OpenAI、Gemini、Grok，或通过 Ollama、vLLM 本地运行），用 VLAs 控制手臂，并用决策 LLMs（Jev、Laya、Kev）决策。可从笔记本以离板方式驱动 Microduck、Open Duck Mini、LeRobot、XLeRobot、AlohaMini、ToddlerBot 或任何 ROS 2 底盘。",
-      "generated_at": "2026-10-01T06:39:02.374651Z",
       "provenance": "model_api"
     },
     {
