@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "taxonomy_version": "1.0.0",
-  "generated_at": "2026-11-14T16:14:47.055211Z",
+  "generated_at": "2026-11-16T08:54:05.133226Z",
   "repositories": [
     {
       "repository_id": 3314,
@@ -1423,19 +1423,6 @@
       "project_type": "library-framework",
       "use_cases": [
         "design-ui-ux"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-18T05:32:12.135995Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 2562751,
-      "source_full_name": "zxing/zxing",
-      "source_hash": "881cce5bc413f93c95d0580ef0595cc1f590d2052fd72896023c07f6560d6fd3",
-      "primary_category": "developer-tools",
-      "project_type": "library-framework",
-      "use_cases": [
-        "general-tools"
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-18T05:32:12.135995Z",
@@ -12771,20 +12758,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 114938943,
-      "source_full_name": "NginxProxyManager/nginx-proxy-manager",
-      "source_hash": "c5bca68182cdfc7d024f5b5068a40ad77b5b192f3a9899377f190beba6bd4f40",
-      "primary_category": "devops-observability",
-      "project_type": "application",
-      "use_cases": [
-        "devops-deployment",
-        "self-hosting"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-18T05:32:12.135995Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 115039706,
       "source_full_name": "rust-lang/rust-analyzer",
       "source_hash": "42b93323111ab4810a8585f97846f411fdac9abc1c2db6e28121f72f2072adf2",
@@ -15026,19 +14999,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-20T18:30:55.656026Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 158703981,
-      "source_full_name": "lib-pku/libpku",
-      "source_hash": "dab493959c5f95ab647828a57c11c0559d9dd7f88efc93dbba1dc980f0567ed0",
-      "primary_category": "education-resources",
-      "project_type": "other",
-      "use_cases": [
-        "learning-tutorial"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-19T04:20:56.637414Z",
       "provenance": "github_models"
     },
     {
@@ -22617,20 +22577,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 419991646,
-      "source_full_name": "mli/paper-reading",
-      "source_hash": "66a6a247856c362ba89c869f84781007b105d25f0a94b90c425f6a4d1d4eb1a4",
-      "primary_category": "education-resources",
-      "project_type": "tutorial-resource",
-      "use_cases": [
-        "ai-coding",
-        "learning-tutorial"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-25T03:56:53.240576Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 420503947,
       "source_full_name": "binwiederhier/ntfy",
       "source_hash": "221ddca338720f6e2873a08ca53bc6cd45bd71d6c0bb2fb9468466eebcb30f01",
@@ -26293,20 +26239,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 595893961,
-      "source_full_name": "lllyasviel/ControlNet",
-      "source_hash": "4f2fe98668a83d4771dfce7f63f320f938dc1da54d820768393c82a103e40768",
-      "primary_category": "ai-machine-learning",
-      "project_type": "library-framework",
-      "use_cases": [
-        "model-training-inference",
-        "content-generation"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-25T03:56:53.240576Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 595973037,
       "source_full_name": "mdc-ng/mdc-ng",
       "source_hash": "a931387e18fd6712cade671c114300177ba0585ef5c46aec8c39328374084f6c",
@@ -27540,21 +27472,6 @@
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-19T07:06:22.118650Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 638513786,
-      "source_full_name": "Anil-matcha/Open-Generative-AI",
-      "source_hash": "53a47f214f91a01d2f4a89353d01a79f26bc60bd517f66e584e581e1baa8feb1",
-      "primary_category": "creative-media",
-      "project_type": "platform-service",
-      "use_cases": [
-        "content-generation",
-        "image-video-audio",
-        "self-hosting"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-22T04:12:02.172495Z",
       "provenance": "github_models"
     },
     {
@@ -34936,20 +34853,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 918932603,
-      "source_full_name": "bytedance/UI-TARS-desktop",
-      "source_hash": "3e6dac206305610aad953550b7160c71b903d8820fffb927c6f1772414e5e7ef",
-      "primary_category": "ai-machine-learning",
-      "project_type": "platform-service",
-      "use_cases": [
-        "agents-automation",
-        "model-training-inference"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-25T03:56:53.240576Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 918974884,
       "source_full_name": "tinyauthapp/tinyauth",
       "source_hash": "490ea639d247c507624c0b2f5221fb6d654e5b1d1f17db505cc4fffdde965785",
@@ -41536,19 +41439,6 @@
       "project_type": "application",
       "use_cases": [
         "content-generation"
-      ],
-      "taxonomy_version": "1.0.0",
-      "generated_at": "2026-07-21T01:04:20.264126Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1126947080,
-      "source_full_name": "kepano/obsidian-skills",
-      "source_hash": "35586f24b8fe4261fa325b080b338bfdf8ed148a8d1a9193914660f1be20b30a",
-      "primary_category": "ai-machine-learning",
-      "project_type": "library-framework",
-      "use_cases": [
-        "agents-automation"
       ],
       "taxonomy_version": "1.0.0",
       "generated_at": "2026-07-21T01:04:20.264126Z",

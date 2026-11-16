@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-15T07:18:24.193600Z",
+  "generated_at": "2026-11-16T08:54:01.597291Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
-    "eligible_count": 4880,
-    "localized_count": 4713,
-    "pending_count": 167,
+    "eligible_count": 4877,
+    "localized_count": 4705,
+    "pending_count": 172,
     "failed_count": 167,
-    "coverage_ratio": 0.965779
+    "coverage_ratio": 0.964732
   },
   "repositories": [
     {
@@ -1008,15 +1008,6 @@
       "source_hash": "dac2c0667c5a7c1a4be5f14fc4be3d3ede646f807c137df190c6ba0ac3cf222d",
       "display_name_zh": "animate.css｜CSS 动画库",
       "description_zh": "跨浏览器的 CSS 动画库，使用简单。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 2562751,
-      "source_full_name": "zxing/zxing",
-      "source_hash": "93f5d84b909872b4ba1506642f908fc46fd0958aa7cf770b112813f1d1c50514",
-      "display_name_zh": "zxing｜ZXing 条码扫描库",
-      "description_zh": "ZXing（\"Zebra Crossing\"）Java 和 Android 条码扫描库。",
       "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
     },
@@ -10408,15 +10399,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 158703981,
-      "source_full_name": "lib-pku/libpku",
-      "source_hash": "295f243f10959957eca9bfe23e517dff9b4bbbe7c2efb2b03fa1a8139af47b01",
-      "display_name_zh": "libpku｜贵校课程资料整理",
-      "description_zh": "libpku 是贵校课程资料的民间整理项目。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 158927812,
       "source_full_name": "lsd-rs/lsd",
       "source_hash": "e809823c3aa6b4f2f72a051eca5169ea96de25fa52499eee9d6da50e0711ab4c",
@@ -15673,15 +15655,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 419991646,
-      "source_full_name": "mli/paper-reading",
-      "source_hash": "1e44e119db3a7511e16b31d1a911543396bed191851174188872cd61e71422e6",
-      "display_name_zh": "paper-reading｜深度学习论文精读",
-      "description_zh": "深度学习经典及最新论文的逐段精读。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 420503947,
       "source_full_name": "binwiederhier/ntfy",
       "source_hash": "d2eed38ec793ad06d1a1e4e1867b4a37b0d347dcf4523b76f991341ef7fdbd6f",
@@ -18292,15 +18265,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 595893961,
-      "source_full_name": "lllyasviel/ControlNet",
-      "source_hash": "3e6ab4c904816189959ce1f2464905bf3f2fd9427e5a252d5d3ac9bdd7a890fa",
-      "display_name_zh": "ControlNet｜扩散模型控制工具",
-      "description_zh": "ControlNet 用于控制扩散模型的工具。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 595973037,
       "source_full_name": "mdc-ng/mdc-ng",
       "source_hash": "dd81888929c07532afb99b3b96c21f6a1614b36f4dd11f34106f8abcba636954",
@@ -19135,15 +19099,6 @@
       "display_name_zh": "0xProto｜高可读性编程字体",
       "description_zh": "一款设计用于降低认知负担的高可读性编程字体。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 638513786,
-      "source_full_name": "Anil-matcha/Open-Generative-AI",
-      "source_hash": "74b94134ec3f6f1af93fe907034c15d69da296949dc39f943f361048079db467",
-      "display_name_zh": "Open-Generative-AI｜开源 AI 图像视频生成平台",
-      "description_zh": "基于 MIT 许可的开源 AI 图像和视频生成平台，支持 200 多种模型，无内容过滤。",
-      "generated_at": "2026-07-20T05:34:33.694685Z",
       "provenance": "github_models"
     },
     {
@@ -24223,15 +24178,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 918932603,
-      "source_full_name": "bytedance/UI-TARS-desktop",
-      "source_hash": "a7a7a6d44402d7c8aea4b12d50d35c0639023e2e7e051a7ec5c66ccd9a07e320",
-      "display_name_zh": "UI-TARS-desktop｜多模态AI代理框架",
-      "description_zh": "UI-TARS-desktop 是一个开源多模态AI代理框架，连接前沿AI模型与代理基础设施。",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 918974884,
       "source_full_name": "tinyauthapp/tinyauth",
       "source_hash": "393503e6329f174e79d4626ec080dc6c13846d713fe0061cb8aa5574d02c6eb3",
@@ -28793,15 +28739,6 @@
       "description_zh": "将 TypeScript 编译为 .NET IL；并可在 TypeScript 中使用 .NET 类。",
       "generated_at": "2026-09-27T05:55:57.020638Z",
       "provenance": "model_api"
-    },
-    {
-      "repository_id": 1126947080,
-      "source_full_name": "kepano/obsidian-skills",
-      "source_hash": "500fa5f00f896bd8e7c0b7c055fad45d43c36a40a54ec7a560013957bde041a1",
-      "display_name_zh": "obsidian-skills｜Obsidian CLI 与 JSON 技能",
-      "description_zh": "Obsidian 的 Agent 技能，支持通过 CLI 操作 Obsidian 及使用包括 Markdown、Bases、JSON Canvas 在内的开放格式。",
-      "generated_at": "2026-07-20T21:57:48.387086Z",
-      "provenance": "github_models"
     },
     {
       "repository_id": 1127110039,
@@ -42418,15 +42355,6 @@
       "display_name_zh": "CometixCode｜Claude Code 终端 UI 重实现",
       "description_zh": "基于 iocraft 的 Anthropic Claude Code 终端 UI 非官方 Rust 重实现。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1398080271,
-      "source_full_name": "storytold/photocraft",
-      "source_hash": "79d973a832e1e923d2f2253ac51e4c99b21e7fca693438760ed8c595087fcf27",
-      "display_name_zh": "PhotoCraft｜纯 Rust 开源照片编辑器",
-      "description_zh": "PhotoCraft：一个用纯 Rust 从零编写的开源照片编辑器。",
-      "generated_at": "2026-10-16T05:13:26.992743Z",
       "provenance": "model_api"
     }
   ],
