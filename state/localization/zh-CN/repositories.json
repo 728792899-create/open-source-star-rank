@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-17T08:37:50.073451Z",
+  "generated_at": "2026-11-17T16:16:34.858193Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4877,
-    "localized_count": 4703,
-    "pending_count": 174,
+    "localized_count": 4699,
+    "pending_count": 178,
     "failed_count": 174,
-    "coverage_ratio": 0.964322
+    "coverage_ratio": 0.963502
   },
   "repositories": [
     {
@@ -2296,15 +2296,6 @@
       "display_name_zh": "ebiten｜Go语言2D游戏引擎",
       "description_zh": "基于Go语言的极简2D游戏引擎",
       "generated_at": "2026-07-20T18:28:18.246753Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 10744183,
-      "source_full_name": "netdata/netdata",
-      "source_hash": "d49f0d79ee9e4a6532d9cfa2f12b01a9e14f5c0b27e00fd258c7ba2b813a1262",
-      "display_name_zh": "netdata｜AI驱动的全栈监控工具netdata",
-      "description_zh": "netdata：快速实现AI驱动的全栈监控，适合精简团队。",
-      "generated_at": "2026-07-16T17:46:53.472669Z",
       "provenance": "github_models"
     },
     {
@@ -16654,15 +16645,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 500289888,
-      "source_full_name": "formbricks/formbricks",
-      "source_hash": "17a67e2aeb83d9735e1ae27a909c091242b906f59e6cf8581544bae33b5c7d32",
-      "display_name_zh": "formbricks｜问卷调查工具",
-      "description_zh": "formbricks 开源的Qualtrics替代方案",
-      "generated_at": "2026-07-20T18:28:18.246753Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 501027541,
       "source_full_name": "bluesky-social/social-app",
       "source_hash": "bfb1e3abdfdbc70177757d2ae895d7f36c4cf33c6540c51a77cca03925413fd1",
@@ -19702,15 +19684,6 @@
       "display_name_zh": "inbox-zero｜AI 邮件助手",
       "description_zh": "面向电子邮件的 AI 个人助理。开源应用，帮助你快速实现收件箱清零。",
       "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 666299222,
-      "source_full_name": "openinterpreter/openinterpreter",
-      "source_hash": "ce18a1022bd279cf4f26802288f66ca836843a9e459fc7ff786a6fc84ade3e39",
-      "display_name_zh": "openinterpreter｜开放模型编码智能体",
-      "description_zh": "面向 Kimi K3 和 GLM 5.3 等开放模型的编码智能体。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
       "provenance": "model_api"
     },
     {
@@ -29081,15 +29054,6 @@
       "description_zh": "让人类与 AI 代理作为一个团队协作——开源且可自托管。",
       "generated_at": "2026-09-24T04:29:49.592970Z",
       "provenance": "model_api"
-    },
-    {
-      "repository_id": 1133883850,
-      "source_full_name": "github/copilot-sdk",
-      "source_hash": "e9f3c9ec819fbec7a8f42ec45ade5c8dbbc7cf40769769d10909dab379cf76f5",
-      "display_name_zh": "copilot-sdk｜GitHub Copilot 多平台集成 SDK",
-      "description_zh": "copilot-sdk 是一个多平台 SDK，用于将 GitHub Copilot 代理集成到应用和服务中。",
-      "generated_at": "2026-07-19T17:30:28.788483Z",
-      "provenance": "github_models"
     },
     {
       "repository_id": 1133911335,
