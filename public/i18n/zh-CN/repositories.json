@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-18T08:00:48.261965Z",
+  "generated_at": "2026-11-18T16:20:02.965295Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4877,
-    "localized_count": 4699,
-    "pending_count": 178,
+    "localized_count": 4693,
+    "pending_count": 184,
     "failed_count": 178,
-    "coverage_ratio": 0.963502
+    "coverage_ratio": 0.962272
   },
   "repositories": [
     {
@@ -21811,15 +21811,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 787076358,
-      "source_full_name": "firecrawl/firecrawl",
-      "source_hash": "43b75b907bc7d06cbe5f4967bac1efb040d1ae749e10d7d3391eca3d3bfb1797",
-      "display_name_zh": "firecrawl｜AI 智能体网页数据抓取",
-      "description_zh": "为 AI 智能体提供来自网络及更广范围的数据，构建面向超级智能的库。",
-      "generated_at": "2026-10-04T06:28:42.337679Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 787908531,
       "source_full_name": "TagStudioDev/TagStudio",
       "source_hash": "b78eaee63f7a374522b56f6cfa62d8fb163d32e023f5cd12b88725de34dc42a3",
@@ -22385,15 +22376,6 @@
       "description_zh": "awesome-ui-agents：精选UI代理资源列表，涵盖Web、App、OS等领域，持续更新。",
       "generated_at": "2026-07-19T07:03:48.394229Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 817326197,
-      "source_full_name": "screenpipe/screenpipe",
-      "source_hash": "18173eafbac397a9d165bb3bea6764d459aa066416de6ac7485045ae109db863",
-      "display_name_zh": "screenpipe｜开放计算机历史记录",
-      "description_zh": "YC (S26) | 开放计算机历史：持续记录公司电脑上的工作，梳理工作流程，帮你找到值得自动化的环节，并为智能体提供上下文。",
-      "generated_at": "2026-10-04T06:28:42.337679Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 817354652,
@@ -29551,15 +29533,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1146738089,
-      "source_full_name": "nanocoai/nanoclaw",
-      "source_hash": "99ee9e36d3fa64a4ab78140ffef32bc5000baec19a56d8f37b2e81808519a7f6",
-      "display_name_zh": "nanoclaw｜容器化轻量消息助手",
-      "description_zh": "OpenClaw 的轻量替代方案，在容器中运行以保障安全。可连接 WhatsApp、Telegram、Slack、Discord、Gmail 等消息应用，具备记忆与定时任务，并直接运行于 Anthropic 的 Agents SDK。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1147838400,
       "source_full_name": "anbeime/skill",
       "source_hash": "8af0650278a242745b75befb9dbf7678966b57ac0b981c194ee14c59e7f01796",
@@ -30883,15 +30856,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1177402105,
-      "source_full_name": "heygen-com/hyperframes",
-      "source_hash": "4c362f83241b379c488b749a036199249e63b8be5cc61adc2efdbd305090d36e",
-      "display_name_zh": "hyperframes｜代理专用HTML与视频渲染工具（含HTML）",
-      "description_zh": "为代理设计的HTML编写与视频渲染工具。",
-      "generated_at": "2026-07-16T05:19:11.000860Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 1177483117,
       "source_full_name": "Proximal-Labs/frontier-swe",
       "source_hash": "3b1fa25a5d3fd4284d25f62ce1f6c8aa6081d84507637f2114e897cef418e83a",
@@ -31970,15 +31934,6 @@
       "description_zh": "sidestore-vpn：支持SideStore应用全网刷新，作为StosVPN/WireGuard的替代方案。",
       "generated_at": "2026-07-19T17:30:28.788483Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1201173969,
-      "source_full_name": "JuliusBrussee/caveman",
-      "source_hash": "a53785a5a45e84c6462aa6ed41f742bc191a9574d5ac2cf951b49a19798a2693",
-      "display_name_zh": "caveman｜编码智能体省 token 技能与代理",
-      "description_zh": "用更少 token 说清意思：面向编码智能体的热门技能与代理，通过“原始人式”表达减少 65% 的 token 消耗。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1201253077,
@@ -37577,15 +37532,6 @@
       "description_zh": "cache-hunter 是专注于分析测试流量以捕获缓存失效的 LLM 代理。",
       "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1304895218,
-      "source_full_name": "getkern/kern",
-      "source_hash": "918001b04a01ddf1f46603a6df74d52d8629c8fa65a081800f886dbf3c13d973",
-      "display_name_zh": "kern｜无守护进程无根容器运行时",
-      "description_zh": "无守护进程的无根容器运行时，在内核强制的容器中运行智能体工具调用和 LLM 生成的代码。",
-      "generated_at": "2026-10-05T06:21:40.011982Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1304896389,
