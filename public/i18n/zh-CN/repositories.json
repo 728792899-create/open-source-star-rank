@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-21T07:48:04.423349Z",
+  "generated_at": "2026-11-22T16:11:35.803580Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4877,
-    "localized_count": 4691,
-    "pending_count": 186,
+    "localized_count": 4689,
+    "pending_count": 188,
     "failed_count": 186,
-    "coverage_ratio": 0.961862
+    "coverage_ratio": 0.961452
   },
   "repositories": [
     {
@@ -3350,15 +3350,6 @@
       "description_zh": "flink 是 Apache 的流处理框架。",
       "generated_at": "2026-07-16T17:46:53.472669Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 20608381,
-      "source_full_name": "objeck/objeck-lang",
-      "source_hash": "c50818843f8e3af71b0caa6038711c1a697423be69eb096cce8a7ef35a366e19",
-      "display_name_zh": "objeck-lang｜面向对象函数式编程语言",
-      "description_zh": "轻量级面向对象与函数式编程语言，设计上追求直观、小巧、跨平台和快速，强调可移植性、可扩展性以及稳健的 API 支持。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 20619036,
@@ -28127,15 +28118,6 @@
       "description_zh": "Ninja 工具介绍与客户端下载",
       "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1107964800,
-      "source_full_name": "aaryansamanta/aaryansamanta.github.io",
-      "source_hash": "b1fd4dff4e8c59e03f18c9dc19f909ffe3ef1ecf5b21e05e655e5e789343602a",
-      "display_name_zh": "Aaryan Samanta｜生物医学机器学习主页",
-      "description_zh": "Aaryan Samanta 的个人主页：面向生物学与医学的机器学习，包含第一作者论文、指导研究、USACO Platinum 以及 AI Ethos, Inc.。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1108602903,
