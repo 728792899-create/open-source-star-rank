@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-23T08:22:16.857836Z",
+  "generated_at": "2026-11-23T10:07:56.480463Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4877,
-    "localized_count": 4689,
-    "pending_count": 188,
+    "localized_count": 4680,
+    "pending_count": 197,
     "failed_count": 188,
-    "coverage_ratio": 0.961452
+    "coverage_ratio": 0.959606
   },
   "repositories": [
     {
@@ -8086,15 +8086,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 97086543,
-      "source_full_name": "TheAlgorithms/JavaScript",
-      "source_hash": "e8def7eadde9f54c47c7d41665655ff617117eb25bf1f5d06d89d50f3e70a2c7",
-      "display_name_zh": "JavaScript｜初学者算法与数据结构实现",
-      "description_zh": "为初学者实现的JavaScript算法和数据结构，遵循最佳实践",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 97249406,
       "source_full_name": "denysdovhan/wtfjs",
       "source_hash": "a97c0863b979354c6ce73f6ddd9602df939f351672f366b2d1f78125efd78f0a",
@@ -10264,15 +10255,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 156084530,
-      "source_full_name": "ehang-io/nps",
-      "source_hash": "5692e4b349ab9118c85b5f23ac73d135732eea05ec39ffc4cf56312bd5135f8e",
-      "display_name_zh": "nps｜支持 socks5 的内网穿透代理服务器",
-      "description_zh": "nps 是一款轻量级、高性能的内网穿透代理服务器，支持 tcp、udp、socks5、http 等多种流量转发，配备功能强大的 web 管理端。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 156157055,
       "source_full_name": "GokuMohandas/Made-With-ML",
       "source_hash": "3f90f8e6dcb748bea8772a0c0394afb2ecdfc7c7790e0edbb2bc7f228c7f0172",
@@ -11439,15 +11421,6 @@
       "source_hash": "1db0ae4798749135d45f84285da88252a0fe9a3d5e0fae90a870e91700792cf1",
       "display_name_zh": "CPlusPlusThings｜C++那些事",
       "description_zh": "C++ 相关知识和内容的集合。",
-      "generated_at": "2026-07-19T04:16:17.702546Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 197018189,
-      "source_full_name": "xyflow/xyflow",
-      "source_hash": "cc7a4aa4a2b59708113d536391f46696b8a2f628c6ed03f1d3ce474278ad2bc4",
-      "display_name_zh": "xyflow｜基于节点的 UIs 构建库",
-      "description_zh": "xyflow 是用于构建基于节点的用户界面的强大开源库，支持 React 和 Svelte。",
       "generated_at": "2026-07-19T04:16:17.702546Z",
       "provenance": "github_models"
     },
@@ -19993,15 +19966,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 680120071,
-      "source_full_name": "microsoft/autogen",
-      "source_hash": "a25e83ac41ce6e08b8bd25a1b4e23fa368be9b7779043ab04ab244af277309e7",
-      "display_name_zh": "autogen｜智能代理AI编程框架",
-      "description_zh": "面向智能代理AI的编程框架",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 680196753,
       "source_full_name": "moesnow/March7thAssistant",
       "source_hash": "c4bde582a5534cfeb8edc4f23f543bc501e3685663c5478364f62cca151b0bb1",
@@ -21115,15 +21079,6 @@
       "display_name_zh": "windows｜Docker容器中的Windows系统",
       "description_zh": "在Docker容器中运行的Windows系统。",
       "generated_at": "2026-07-18T00:14:53.937273Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 743230067,
-      "source_full_name": "RVC-Boss/GPT-SoVITS",
-      "source_hash": "67251ea3c93ff2fe75cb737e99da6d8f66050e167653a174b4e3a2844a19d051",
-      "display_name_zh": "GPT-SoVITS｜1分钟TTS语音克隆",
-      "description_zh": "1分钟语音数据即可训练的高质量TTS模型（少量语音克隆）",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
     },
     {
@@ -22655,15 +22610,6 @@
       "description_zh": "camoufox 是一款反指纹识别浏览器。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 834369920,
-      "source_full_name": "jingyaogong/minimind",
-      "source_hash": "070b1d7fb8fe7ab23af7881700984db493631d3531240363e6b725f3fb31eb0a",
-      "display_name_zh": "minimind｜2小时从零训练64M参数LLM",
-      "description_zh": "仅用 2 小时从零训练一个 64M 参数的 LLM。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 834966974,
@@ -25381,15 +25327,6 @@
       "display_name_zh": "tablecruncher｜跨平台 CSV 编辑器",
       "description_zh": "tablecruncher 是一款轻量且强大的跨平台 CSV 编辑器，内置 JavaScript 宏功能。",
       "generated_at": "2026-07-21T00:56:52.153188Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 974186260,
-      "source_full_name": "sansan0/TrendRadar",
-      "source_hash": "bbb2c60820e36fafce75ebb9841adb32cfba0875c714702b33d64be01ca160b5",
-      "display_name_zh": "TrendRadar｜AI舆情与趋势监控",
-      "description_zh": "TrendRadar 是一个AI驱动的舆情与趋势监控工具，支持多平台聚合、RSS订阅和智能提醒，集成MCP架构，支持Docker及多渠道推送。",
-      "generated_at": "2026-07-21T19:32:19.354346Z",
       "provenance": "github_models"
     },
     {
@@ -29836,15 +29773,6 @@
       "display_name_zh": "seedance2-skill｜seedance2.0视频生成提示词技能",
       "description_zh": "用于生成seedance2.0视频的最佳提示词技能。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 1155965274,
-      "source_full_name": "Donchitos/Claude-Code-Game-Studios",
-      "source_hash": "34edbf46c9be9957d1c3ebb1722b92435c6bd2e6132bd662b14ab15798311fe9",
-      "display_name_zh": "Claude-Code-Game-Studios｜游戏开发工作室（含 49 AI 代理和 72 技能）",
-      "description_zh": "将 Claude Code 转变为完整游戏开发工作室，包含 49 个 AI 代理、72 个工作流技能及完整协调系统，模拟真实工作室层级。",
-      "generated_at": "2026-07-20T21:57:48.387086Z",
       "provenance": "github_models"
     },
     {
@@ -34831,15 +34759,6 @@
       "display_name_zh": "octane｜编译式 React 编程模型",
       "description_zh": "将 React 的编程模型编译实现，是 Inferno 的继任者。",
       "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1277471539,
-      "source_full_name": "bilawalsidhu/gods-eye-view",
-      "source_hash": "d6034e4c6bcf351c803df5b55f060a297c7cd1cd3978e4f9ae2251f07f574b97",
-      "display_name_zh": "gods-eye-view｜浏览器间谍卫星模拟器",
-      "description_zh": "浏览器中的间谍卫星模拟器，但数据是真实的。在照片级 3D 地球上提供实时开源空间情报。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
       "provenance": "model_api"
     },
     {
