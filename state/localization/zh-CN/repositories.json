@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-23T10:07:56.480463Z",
+  "generated_at": "2026-11-23T16:17:51.927586Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4877,
-    "localized_count": 4680,
-    "pending_count": 197,
+    "localized_count": 4676,
+    "pending_count": 201,
     "failed_count": 188,
-    "coverage_ratio": 0.959606
+    "coverage_ratio": 0.958786
   },
   "repositories": [
     {
@@ -8399,15 +8399,6 @@
       "description_zh": "tailwindcss｜基于实用工具的 CSS 框架，支持快速 UI 开发",
       "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 106087444,
-      "source_full_name": "electerm/electerm",
-      "source_hash": "4b50df0a7deee58f7d3bb9a6e4b1e208309efa76a1d75521f446617bd64a5658",
-      "display_name_zh": "electerm｜终端与远程连接客户端",
-      "description_zh": "免费开源的终端/ssh/sftp/ftp/telnet/serialport/RDP/VNC/Spice 客户端，支持 Linux、Mac、Windows、Android、HarmonyOS、iOS。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 106473613,
@@ -34519,15 +34510,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1273015953,
-      "source_full_name": "shy3130/tick-stock-panel",
-      "source_hash": "a6894a4751feacac97dfde9828d01fb8027abe53ac33b2f9e1815df6754b8218",
-      "display_name_zh": "tick-stock-panel｜A 股量化工作台",
-      "description_zh": "TSP 自托管、零运维的 A 股「自建策略 + 监控 + 回测」量化工作台，由 LLM 能力驱使策略定制、个股分析与复盘，可自由接入第三方数据源与个性化扩展数据。",
-      "generated_at": "2026-10-16T05:13:26.992743Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1273138090,
       "source_full_name": "baidu/Unlimited-OCR",
       "source_hash": "24c0edad75c98d2672e0b4dd31439747cd6912bf134532b691593de354de4e39",
@@ -38065,15 +38047,6 @@
       "provenance": "model_api"
     },
     {
-      "repository_id": 1342667636,
-      "source_full_name": "ZZzyy714227/Labsus",
-      "source_hash": "f8d063a83d73b450a0a69c1d8a10c1c278cc53a6b14b3be9be5b7d46f3b64220",
-      "display_name_zh": "Labsus｜FSAE 悬架 K&C 工作台",
-      "description_zh": "开源 FSAE 悬架 K&C 工作台：运动学与柔顺性、4-Post 动力学、准静态操控与瞬态赛道仿真——在单个浏览器页面中运行。",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1342754049,
       "source_full_name": "Neko3000/deepseek-whalechan",
       "source_hash": "0a6e6350edd0b48ef9bfe964467be475cbcb8e8ebb1600716688d32c2eb884c6",
@@ -38386,15 +38359,6 @@
       "display_name_zh": "XRepoTest｜多语言仓库级单元测试基准",
       "description_zh": "[EMNLP 2026] 面向仓库级单元测试生成的多语言基准，在可复现的 Docker 执行环境中评估 LLMs 在 5 种编程语言和真实代码上的表现。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1344466793,
-      "source_full_name": "oomol-lab/open-flow",
-      "source_hash": "29daf285e15bd21f857b3194c9aee9049d70f0a0ba85098960891dc1b189cb06",
-      "display_name_zh": "open-flow｜可视化工作流自动化",
-      "description_zh": "构建可见、可编码、可运行且自主掌控的工作流。开源可视化工作流自动化，使用真实 TypeScript、隔离执行和自托管 Control API。",
-      "generated_at": "2026-09-27T05:55:57.020638Z",
       "provenance": "model_api"
     },
     {
