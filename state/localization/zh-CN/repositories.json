@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-24T10:31:03.730124Z",
+  "generated_at": "2026-11-24T16:18:53.900966Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4877,
-    "localized_count": 4676,
-    "pending_count": 201,
+    "localized_count": 4675,
+    "pending_count": 202,
     "failed_count": 201,
-    "coverage_ratio": 0.958786
+    "coverage_ratio": 0.958581
   },
   "repositories": [
     {
@@ -38242,15 +38242,6 @@
       "display_name_zh": "better-voice｜屏幕上下文语音听写",
       "description_zh": "结合你所指向的屏幕上下文进行语音听写。",
       "generated_at": "2026-09-26T05:39:29.399495Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1343865323,
-      "source_full_name": "Yzw202011/OmniSpace",
-      "source_hash": "e99e1dec9a5b0ca3935740e93a55404d91dbd3df6bed98f90d2684de9dc78415",
-      "display_name_zh": "OmniSpace｜本地优先全栈 AI 创作工作站",
-      "description_zh": "本地优先的全栈 AI 创作工作站，包含 AI 对话、AI 漫画、漫剧创作、写作台、知识学习五大模块；支持 vLLM / llama.cpp / Transformers 多引擎本地推理，具备显存智能调度与舱壁隔离自愈，仅供学习使用。",
-      "generated_at": "2026-10-04T06:28:42.337679Z",
       "provenance": "model_api"
     },
     {
