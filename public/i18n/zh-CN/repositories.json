@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-25T09:19:36.544007Z",
+  "generated_at": "2026-11-25T16:44:50.395284Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4877,
-    "localized_count": 4675,
-    "pending_count": 202,
+    "localized_count": 4672,
+    "pending_count": 205,
     "failed_count": 202,
-    "coverage_ratio": 0.958581
+    "coverage_ratio": 0.957966
   },
   "repositories": [
     {
@@ -30208,15 +30208,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 1167034425,
-      "source_full_name": "NVIDIA/skills",
-      "source_hash": "2408f53354fa1bc41ed075d625c9837d8c734024e24b2718cddcc0f649753a73",
-      "display_name_zh": "NVIDIA｜skills 智能体技能集",
-      "description_zh": "面向 NVIDIA 产品的 Agent Skills，可安装到 Claude Code、Codex 等编码智能体中，端到端运行 Physical AI、机器人、仿真、CUDA 与 RAG 工作流。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
-    },
-    {
       "repository_id": 1167266433,
       "source_full_name": "developer0hye/office2pdf",
       "source_hash": "26ec89cbf85c1854b070c7ea30f63ff0d4d5bd127d92b70522905a94ec9e0b44",
@@ -32222,15 +32213,6 @@
       "description_zh": "iMessage 个人代理：支持选择 Claude Agent SDK（Claude Code）或 Codex 应用服务器运行时（Codex/ChatGPT），具备记忆、子代理、自动化和集成功能。",
       "generated_at": "2026-07-16T05:19:11.000860Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1211139949,
-      "source_full_name": "tt-a1i/archify",
-      "source_hash": "9c7add6496bed64449b8ef8e1fe2adc2af9df997021675546e46bb935fd083e6",
-      "display_name_zh": "archify｜交互式图表生成技能",
-      "description_zh": "将任何想法、计划或代码库转化为美观的交互式图表，是适用于 Claude Code、Codex 等工具的智能体技能。",
-      "generated_at": "2026-10-05T06:21:40.011982Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1211358196,
@@ -38080,15 +38062,6 @@
       "display_name_zh": "ai-infra-book｜AI Infra 开源书稿",
       "description_zh": "《深入理解 AI Infra：量化分析与系统设计》（李博杰 著）开源书稿：从硬件约束和模型架构出发，量化推导 LLM 推理与训练系统设计，含全书正文、PDF、配套计算工具与实验。",
       "generated_at": "2026-09-25T05:32:45.254187Z",
-      "provenance": "model_api"
-    },
-    {
-      "repository_id": 1342943152,
-      "source_full_name": "kgoedecke/doop",
-      "source_hash": "2846a9c5d49a54027a954586781371b62092a4b3e67878f441c0f6fbbe28b1ed",
-      "display_name_zh": "doop｜多人设计画布",
-      "description_zh": "Paper.design 的开源替代方案，一个多人设计画布，让人类与 AI 智能体实时共同设计，内置 MCP。",
-      "generated_at": "2026-09-26T05:39:29.399495Z",
       "provenance": "model_api"
     },
     {
