@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-26T08:59:13.819212Z",
+  "generated_at": "2026-11-26T16:16:42.892555Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4877,
-    "localized_count": 4672,
-    "pending_count": 205,
+    "localized_count": 4670,
+    "pending_count": 207,
     "failed_count": 205,
-    "coverage_ratio": 0.957966
+    "coverage_ratio": 0.957556
   },
   "repositories": [
     {
@@ -25528,15 +25528,6 @@
       "provenance": "github_models"
     },
     {
-      "repository_id": 985839104,
-      "source_full_name": "browseros-ai/BrowserOS",
-      "source_hash": "d495300e9f17932ad1f0eaf67579ebd62bae2427dfd95e8e7255d25b89d8aff1",
-      "display_name_zh": "BrowserOS｜开源智能代理浏览器",
-      "description_zh": "BrowserOS 是一个开源的智能代理浏览器，提供 ChatGPT Atlas、Perplexity Comet、Dia 的替代方案。",
-      "generated_at": "2026-07-17T03:53:49.761324Z",
-      "provenance": "github_models"
-    },
-    {
       "repository_id": 986672673,
       "source_full_name": "Simoxus/scpcb-unity",
       "source_hash": "d62ca6eacd8e73e9e26df3c8cdf16e3b8d23db97935a9fdad7ca06fd77ca7f1e",
@@ -28928,15 +28919,6 @@
       "description_zh": null,
       "generated_at": "2026-07-22T04:10:29.437713Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 1133707766,
-      "source_full_name": "multica-ai/multica",
-      "source_hash": "9bc97cbf3cad13370e8528a06fc4023e3743e403f47e852e296d77bb014a6ca4",
-      "display_name_zh": "multica｜人机协作团队",
-      "description_zh": "让人类与 AI 代理作为一个团队协作——开源且可自托管。",
-      "generated_at": "2026-09-24T04:29:49.592970Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 1133911335,
