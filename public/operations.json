@@ -1,18 +1,18 @@
 {
   "version": 1,
-  "snapshot_at": "2026-11-26T16:02:10Z",
-  "ranking_date": "2026-11-26",
+  "snapshot_at": "2026-11-27T16:02:48Z",
+  "ranking_date": "2026-11-27",
   "observed_count": 2000,
   "sampling": {
     "target_local_time": "00:20",
     "valid_window_start": "00:00",
     "valid_window_end": "03:00",
-    "latest_snapshot_at": "2026-11-26T16:02:10Z",
+    "latest_snapshot_at": "2026-11-27T16:02:48Z",
     "latest_snapshot_valid": true,
     "latest_snapshot_reason": "within_window",
-    "latest_valid_snapshot_at": "2026-11-26T16:02:10Z",
+    "latest_valid_snapshot_at": "2026-11-27T16:02:48Z",
     "consecutive_valid_snapshots": 2,
-    "next_scheduled_at": "2026-11-28T00:20:00+08:00",
+    "next_scheduled_at": "2026-11-29T00:20:00+08:00",
     "expected_first_ranking_at": null,
     "period_progress": {
       "7d": {
@@ -20,7 +20,7 @@
         "required": 7
       },
       "30d": {
-        "completed": 29,
+        "completed": 30,
         "required": 30
       }
     }
