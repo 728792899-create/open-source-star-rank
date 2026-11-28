@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "locale": "zh-CN",
-  "generated_at": "2026-11-27T09:12:25.555245Z",
+  "generated_at": "2026-11-28T16:15:20.121973Z",
   "model": "deepseek-flash",
   "prompt_version": "repository-localization-v2",
   "coverage": {
     "eligible_count": 4877,
-    "localized_count": 4670,
-    "pending_count": 207,
+    "localized_count": 4668,
+    "pending_count": 209,
     "failed_count": 207,
-    "coverage_ratio": 0.957556
+    "coverage_ratio": 0.957146
   },
   "repositories": [
     {
@@ -153,15 +153,6 @@
       "source_hash": "58420da26c2e034901bfc3e70b6b6a707ef19d2cfe5ed8e6e5c6010a104becac",
       "display_name_zh": "express｜Node.js Web 框架",
       "description_zh": "express 是一个快速、无偏见、极简的 Node.js Web 框架。",
-      "generated_at": "2026-07-18T05:26:34.961229Z",
-      "provenance": "github_models"
-    },
-    {
-      "repository_id": 291137,
-      "source_full_name": "ohmyzsh/ohmyzsh",
-      "source_hash": "7f096f0f23377232cfdeceba8dd6783e6e9a5a9282c4841a0d6716a63306600d",
-      "display_name_zh": "ohmyzsh｜社区驱动的 zsh 配置管理框架",
-      "description_zh": "ohmyzsh 是一个社区驱动的 zsh 配置管理框架，拥有 2,500 多名贡献者，包含 300 多个可选插件和 140 多个主题，并提供自动更新工具。",
       "generated_at": "2026-07-18T05:26:34.961229Z",
       "provenance": "github_models"
     },
@@ -12728,15 +12719,6 @@
       "description_zh": "Sandboxie Plus & Classic 是 Sandboxie 的增强和经典版本。",
       "generated_at": "2026-07-17T03:53:49.761324Z",
       "provenance": "github_models"
-    },
-    {
-      "repository_id": 254328371,
-      "source_full_name": "NangoHQ/nango",
-      "source_hash": "a82eba24edf96bcabbbdb206392e3cb1f465f13f64551c45108af531ea8189c5",
-      "display_name_zh": "nango｜连接 1,000 APIs 的集成平台",
-      "description_zh": "将你的代理与产品连接到 1,000 APIs。",
-      "generated_at": "2026-09-30T06:05:05.752395Z",
-      "provenance": "model_api"
     },
     {
       "repository_id": 255125425,
